@@ -295,8 +295,10 @@ function getClubResults() {
         if (val.club == "vacant") {return true;}
         if (val.place == "") {val.place = "-"};
         if ( val.class == "" ) { val.class = "Odefinierad";  }
+        var classUrl = val.class.replace(/\s/g,"%20");
+
         //Regular data
-        $("#results").append('<li class="table-view-cell"><span class="badge">' + val.place + '</span><div class="name">' + val.name + '</div><div class="result">' + val.result + ' <p>' + val.timeplus + '</p></div><p class="club"><a data-ignore="push" href="results.html#' + compID + '&' + val.class + '">' + val.class + '</a></p></li>');
+        $("#results").append('<li class="table-view-cell"><span class="badge">' + val.place + '</span><div class="name">' + val.name + '</div><div class="result">' + val.result + ' <p>' + val.timeplus + '</p></div><p class="club"><a data-ignore="push" href="results.html#' + compID + '&' + classUrl + '">' + val.class + '</a></p></li>');
         //Tabular data
         if (val.place == "-") {val.place = "<span class='noPlacement'>999999</span>"}
         $("#resultsTable tbody").append('<tr><td>' + val.place + '</td><td>' + val.name + '</td><td>' + val.club + '</td><td>' + val.result + '</td><td>' + val.timeplus + '</td></tr>');
