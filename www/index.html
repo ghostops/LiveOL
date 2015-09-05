@@ -32,10 +32,13 @@
       <a class="btn" href="index.html" data-ignore='push'>Försök ladda appen igen</a>
     </div>
 
-    <div id="devbox" style="display:block;background: #242424; padding: 10px">
+    <div id="devbox" style="display:none;background: #242424;padding: 10px;position:relative;">
+    <h4 style="color:white">This is the developer toolbox</h4>
     <button class="btn" onclick="todaySim(2)">Simulate today</button>
     <button class="btn" onclick="getComps()">Load comps</button>
     <button class="btn"><a href="club.html#11181&OK%20Skärmen">Club</a></button>
+
+    <span style="position:absolute;right:4px;top:4px;color:white" id="closedevbox" class="icon icon-close"></span>
     </div>
 
     <ul id="data" class="table-view"></ul>
