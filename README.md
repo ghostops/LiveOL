@@ -1,7 +1,7 @@
 # LiveOL
 
-* [Officiell Webbsida](https://liveol.xyz)
-* [Phonegap](https://www.phonegap.com)
+* [Officiell Webbsida](http://liveol.xyz)
+* [Phonegap](http://www.phonegap.com)
 
 LiveOL är en app som visar orienteringsresultat live och bygger på Peter Löfås' liveresultat.orientering.se. Du får resultaten direkt i mobilen eller på surfplattan paketerat i ett smidigt användargränssnitt.
 
