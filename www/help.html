@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>LiveOL - Hjälp</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" type="text/css" href="css/ratchet.css">
+  <!--<link rel="stylesheet" type="text/css" href="css/ratchet-theme-ios.min.css">-->
+  <!--<link rel="stylesheet" type="text/css" href="css/ratchet-theme-android.min.css">-->
+
+  <script src='js/jquery.js'></script>
+  <script src="js/ratchet.js"></script>
+  
+  <!--App-->
+  <script src="js/app.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+  <header class="bar bar-nav top-header">
+    <div class="inner">
+      <a href="#" onclick="window.history.back(); return false;" class="icon icon-left-nav pull-left" data-ignore='push'></a>
+      <a href="#popover"><span class="icon icon-more-vertical pull-right"></span></a>
+      <h1 id="title" class="title">Hjälp</h1>
+    </div>
+  </header>
+
+  <div id="popover" class="popover">
+    <header class="bar bar-nav">
+      <h1 class="title">Meny</h1>
+    </header>
+    <ul class="table-view">
+      <li class="table-view-cell"><a href="contact.html" data-ignore='push'>Kontakt</a></li>
+    </ul>
+  </div>
+  
+  <section class="content">
+    <div id="loader"></div>
+    
+    <div class="content-padded">
+      <h2>Hjälp med LiveOL</h2>
+      <p>Här nedan finns vanliga frågor och problem du som användare kan tänkas ha. 
+      Om du inte fått din fråga besvarad eller ditt problem löst, kontakta mig genom att klicka på ikonen uppe i högra hörnet.</p>
+    </div>
+
+    <div class="card">
+      <ul class="table-view">
+        <li class="table-view-cell">
+          <h4>Fråga:</h4>
+          <p>Appen säger att jag behöver en internetanslutning även fast jag vet att jag är online.</p><br>
+
+          <h4>Svar:</h4>
+          <p>
+            <ul>
+              <li>Antingen är du på ett begränsat nätverk och då inte egentligen online.</li>
+              <li>Eller så är våra servrar nere för tillfället</li>
+            </ul> 
+          </p>
+        </li>
+
+        <li class="table-view-cell">
+          <h4>Fråga:</h4>
+          <p>Varför kan jag inte se hela sorterbara tabellen?</p><br>
+
+          <h4>Svar:</h4>
+          <p>Din telefon är förmodligen för smal för att visa en hel tabell rakt av, därav de två olika vyerna. Du kan swipea åt vänster för att se resteramde delar av tabellen. Testa vända din telefon till landskapsläge för att få en bättre överblick.</p>
+        </li>
+
+        <li class="table-view-cell">
+          <h4>Fråga:</h4>
+          <p>Resultaten uppdateras inte!</p><br>
+
+          <h4>Svar:</h4>
+          <p>
+            Det kan bero på många olika saker:
+            <ul>
+              <li><a href="http://liveresultat.orientering.se">liveresultat.orientering.se</a> är nere så resultaten uppdateras inte.</li>
+              <li>Våra servarar är nere så resultaten hämtas inte.</li>
+              <li>Din internetanslutning avbröts.</li>
+            </ul>
+          </p>
+        </li>
+
+        <li class="table-view-cell">
+          <h4>Fråga:</h4>
+          <p>Varför kan man inte filtrera på en individuell klubbs resultat?</p><br>
+
+          <h4>Svar:</h4>
+          <p>Det är en funktion som kan komma att implementeras i framtiden!</p>
+        </li>
+      </ul>
+    </div>
+  
+  </section>
+</body>
+</html>
