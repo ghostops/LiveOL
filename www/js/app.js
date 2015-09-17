@@ -369,7 +369,7 @@ function todaySim(n) {
   $('#data li:lt(' + n + ')').toggleClass("today");
 }
 
-//Open index debuc console
+//Open index debug console
 var debugCount = 0;
 $("h1").click(function() {
   if ( debugCount === 4 ) { $("#devbox").show(); debugCount = 0; }
