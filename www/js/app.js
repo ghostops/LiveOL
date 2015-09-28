@@ -97,47 +97,55 @@ function getComps() {
   });
 }
 
-//Getcomp metainfo
+//Commented in Swedish for an assignment:
+//Funktion för att hämta metadata för en specifik tävling
 function getMeta() {
 
+  //Gör en AJAX-request till cache-servern för att om möjligt ladda den versionen av metadatan
   $.ajax({ 
-    url: cacheAPIUrl + "getcompetitioninfo-" + compID + ".json", 
-    success: function() { 
-      //REMEMBER TO ENCODE CALLED UPON URL
-      var str = cacheAPIUrl + "getcompetitioninfo-" + compID + ".json";
-      var encoded = str;
+    url: cacheAPIUrl + "getcompetitioninfo-" + compID + ".json", //Definiera URLen till cachen
+    success: function() { //Om det finns en cachead fil för tävlingen:
+      var str = cacheAPIUrl + "getcompetitioninfo-" + compID + ".json"; //Definiera URLen till cachen
+      var encoded = str; //Encodea stringen för att kunna köra den med AJAX igen
+      
+      //Kör funktionen appendIt (se längre ned)
       appendIt(encoded);
 
+      //Logga att cachead information används
       console.log('using cached meta');
     },
-    error: function() { 
-      //REMEMBER TO ENCODE CALLED UPON URL
-      var str = liveAPIUrl + "api.php?method=getcompetitioninfo&comp=" + compID;
-      var encoded = jsonProxyUrl + "jsonp.php?url=" + encodeURIComponent(str);
+    error: function() { //Om det INTE finns en cachead fil
+      var str = liveAPIUrl + "api.php?method=getcompetitioninfo&comp=" + compID; //Definiera URLen till live APIn
+      var encoded = jsonProxyUrl + "jsonp.php?url=" + encodeURIComponent(str); //Encodea stringen
+      
+      //Appenda informationen
       appendIt(encoded);
 
-      //Try to cache file for future reference
+      //Försök att cachea filen för framtida användare
       $.ajax({ 
-        url: cacheFunctionUrl + "getcache.php?method=getcompetitioninfo&comp=" + compID, 
-        success: function() { console.log("Meta Cached!") } 
+        url: cacheFunctionUrl + "getcache.php?method=getcompetitioninfo&comp=" + compID, //Kör en PHP-funktion för att spara ned informationen
+        success: function() { console.log("Meta Cached!") } //Logga att infon är sparad
       });
 
-      console.log('using live meta');
+      console.log('using live meta'); //Logga att live-APIn används
     } 
   });
-
+  
+  //Hämta och lägg JSON-informationen i DOMen
   function appendIt(encoded) {
-    var jsonget = $.getJSON( encoded, function( data ) {
+    var jsonget = $.getJSON( encoded, function( data ) { //AJAX med JSONGET för att hämta datan
+      //Appenda vald data vid valda klasser
       $(".compName").html(data.name);
       $(".compOrganizer").html(data.organizer);
       $(".compDate").html(data.date);
 
-      //Club Name From URL
+      //Hämta klubb-namn om den variablen existerar 
       if (typeof clubID !== 'undefined') {
-        $(".clubName").html(clubID.replace(/%20/g, ' '));
+        $(".clubName").html(clubID.replace(/%20/g, ' ')); //Byt ut encodeade mellanslag mot "riktiga" mellanslag
       }
     });
 
+    //När JSONGET är klar, ta bort klassen loading från bodyn
     jsonget.complete(function() {
       $("body").removeClass("loading");
     });
