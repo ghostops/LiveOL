@@ -20,7 +20,7 @@ var app = {
 	// Application Constructor
 	initialize: function() {
 		this.bindEvents();
-		console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n');
+		//console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n');
 	},
 	// Bind Event Listeners
 	//

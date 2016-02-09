@@ -1,7 +1,7 @@
-<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="se.liveol.app" version="1.0.0">
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="se.liveol.app" version="1.0.2">
   <name>LiveOL</name>
   <description>LiveOL by Ludvig Larsendahl http://ludvig.larsendahl.se</description>
-  <author href="http://phonegap.com" email="ludvig.larsendahl@gmail.com">Ludvig Larsendahl</author>
+  <author href="http://ludvig.larsendahl.se" email="ludvig.larsendahl@gmail.com">Ludvig Larsendahl</author>
   <content src="index.html"/>
 
   <!--Custom Prefs-->
@@ -9,7 +9,7 @@
 
   <!--Prefs-->
   <preference name="permissions" value="none"/>
-  <preference name="phonegap-version" value="3.7.0"/>
+  <preference name="phonegap-version" value="cli-5.2.0"/>
   <preference name="orientation" value="default"/>
   <preference name="target-device" value="universal"/>
   <preference name="fullscreen" value="false"/>
@@ -28,25 +28,28 @@
 
   <!--Icon-->
   <icon src="icon.png"/>
-  <icon src="res/icon/android/icon-36-ldpi.png" gap:platform="android" gap:qualifier="ldpi"/>
-  <icon src="res/icon/android/icon-48-mdpi.png" gap:platform="android" gap:qualifier="mdpi"/>
-  <icon src="res/icon/android/icon-72-hdpi.png" gap:platform="android" gap:qualifier="hdpi"/>
-  <icon src="res/icon/android/icon-96-xhdpi.png" gap:platform="android" gap:qualifier="xhdpi"/>
+  <icon src="res/icon/android/icon-36-ldpi.png" platform="android" qualifier="ldpi"/>
+  <icon src="res/icon/android/icon-48-mdpi.png" platform="android" qualifier="mdpi"/>
+  <icon src="res/icon/android/icon-72-hdpi.png" platform="android" qualifier="hdpi"/>
+  <icon src="res/icon/android/icon-96-xhdpi.png" platform="android" qualifier="xhdpi"/>
 
   <!--Splash-->
-  <gap:splash src="res/screen/splash-portrait.png" gap:qualifier="port-xhdpi" />
-  <gap:splash src="res/screen/splash-landscape.png" gap:qualifier="land-xhdpi" />
+  <splash src="res/screen/splash-portrait.png" qualifier="port-xhdpi" />
+  <splash src="res/screen/splash-landscape.png" qualifier="land-xhdpi" />
 
-  <gap:splash gap:platform="android" gap:qualifier="port-ldpi" src="res/screen/android/screen-ldpi-portrait.png" />
-  <gap:splash gap:platform="android" gap:qualifier="port-mdpi" src="res/screen/android/screen-mdpi-portrait.png" />
-  <gap:splash gap:platform="android" gap:qualifier="port-hdpi" src="res/screen/android/screen-hdpi-portrait.png" />
-  <gap:splash gap:platform="android" gap:qualifier="port-xhdpi" src="res/screen/android/screen-xhdpi-portrait.png" />
+  <splash platform="android" qualifier="port-ldpi" src="res/screen/android/screen-ldpi-portrait.png" />
+  <splash platform="android" qualifier="port-mdpi" src="res/screen/android/screen-mdpi-portrait.png" />
+  <splash platform="android" qualifier="port-hdpi" src="res/screen/android/screen-hdpi-portrait.png" />
+  <splash platform="android" qualifier="port-xhdpi" src="res/screen/android/screen-xhdpi-portrait.png" />
   
   <!--confirmed not working (phonegap/cordova bug)-->
-  <gap:splash gap:platform="android" gap:qualifier="land-ldpi" src="screen-ldpi-landscape.png" />
-  <gap:splash gap:platform="android" gap:qualifier="land-mdpi" src="screen-mdpi-landscape.png" />
-  <gap:splash gap:platform="android" gap:qualifier="land-hdpi" src="screen-hdpi-landscape.png" />
-  <gap:splash gap:platform="android" gap:qualifier="land-xhdpi" src="screen-xhdpi-landscape.png" />
+  <splash platform="android" qualifier="land-ldpi" src="screen-ldpi-landscape.png" />
+  <splash platform="android" qualifier="land-mdpi" src="screen-mdpi-landscape.png" />
+  <splash platform="android" qualifier="land-hdpi" src="screen-hdpi-landscape.png" />
+  <splash platform="android" qualifier="land-xhdpi" src="screen-xhdpi-landscape.png" />
   
+  <plugin name="cordova-plugin-whitelist" version="1"/>
   <access origin="*"/>
+  <allow-intent href="http://*/*"/>
+  <allow-intent href="https://*/*"/>
 </widget>
