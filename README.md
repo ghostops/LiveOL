@@ -1,6 +1,6 @@
 # LiveOL
 
-* [Officiell Webbsida](http://liveol.xyz)
+* [Officiell Webbsida](https://ghostops.nu/content/liveol/)
 * [Phonegap](http://www.phonegap.com)
 * [Licens](https://creativecommons.org/licenses/by/3.0/)
 
