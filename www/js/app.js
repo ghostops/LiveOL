@@ -9,11 +9,11 @@ PUBLIC VARIABLES
 //Include trailing slash in EVERY URL
 
 var liveAPIUrl = "http://liveresultat.orientering.se/"; //Source API
-var jsonProxyUrl = "http://liveol.xyz/app/jsonp/" //JSON Proxy
+var jsonProxyUrl = "https://ghostops.nu/content/liveol/app/jsonp/" //JSON Proxy
 
 //Cache
-var cacheAPIUrl = "http://liveol.xyz/app/cache/cached/"; //Cached API Resources
-var cacheFunctionUrl = "http://liveol.xyz/app/cache/"; //Run a cache-function from here
+var cacheAPIUrl = "https://ghostops.nu/content/liveol/app/cache/cached/"; //Cached API Resources
+var cacheFunctionUrl = "https://ghostops.nu/content/liveol/app/cache/"; //Run a cache-function from here
 
 
 

@@ -43,7 +43,7 @@ var app = {
 			};
 
 			$.ajax({
-					url: "http://liveol.xyz/app/status.php",
+					url: "https://ghostops.nu/content/liveol/app/status.php",
 					cache: false,
 					error: function() {
 					  appIsOffline();
