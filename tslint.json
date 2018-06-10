@@ -1,0 +1,21 @@
+{
+    "extends": "tslint-config-airbnb",
+    "rules": {
+      "ter-indent": [true, 4],
+      "import-name": [false],
+      "ter-arrow-parens": [true, "always"],
+      "variable-name": [false],
+      "no-unused-variable": [true, {"ignore-pattern": "React"}],
+      "quotemark": [true, "single", "jsx-double"],
+      "strict-type-predicates": false,
+      "no-else-after-return": false,
+      "strict-boolean-expressions": [
+        false,
+        "allow-null-union",
+        "allow-undefined-union",
+        "allow-string",
+        "allow-number"
+      ]
+    }
+  }
+  
