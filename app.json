@@ -23,7 +23,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": false
+      "supportsTablet": false,
+      "bundleIdentifier": "se.liveol.rn"
+    },
+    "android": {
+      "package": "se.liveol.rn"
     }
   }
 }
