@@ -5,7 +5,7 @@ export const getComps = async (): Promise<Comp[]> => {
 
     const data = await fetch(url).then((resp) => resp.json());
 
-    return data.competitions;
+    return data['competitions'];
 };
 
 export const getComp = async (id: number) => {
