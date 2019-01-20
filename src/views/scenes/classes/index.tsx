@@ -36,18 +36,19 @@ export class OLClasses extends React.PureComponent<Props, State> {
             backgroundColor: COLORS.MAIN,
         },
         headerTintColor: 'white',
-        headerRight: (
-            <TouchableOpacity
-                onPress={() => navigation.push(Routes.info)}
-                style={{ marginRight: UNIT }}
-            >
-                <Ionicons
-                    name="md-search"
-                    size={24}
-                    color="white"
-                />
-            </TouchableOpacity>
-        ),
+        // ToDo: Implement search
+        // headerRight: (
+        //     <TouchableOpacity
+        //         onPress={() => navigation.push(Routes.info)}
+        //         style={{ marginRight: UNIT }}
+        //     >
+        //         <Ionicons
+        //             name="md-search"
+        //             size={24}
+        //             color="white"
+        //         />
+        //     </TouchableOpacity>
+        // ),
     })
 
     state = { olClass: null };
