@@ -102,6 +102,7 @@ export class OLCompetition extends React.PureComponent<Props, State> {
                     <CardItem header>
                         <Title style={{
                             fontSize: UNIT * 1.15,
+                            color: 'black',
                         }}>
                             {this.state.comp.name}
                         </Title>
@@ -136,6 +137,7 @@ export class OLCompetition extends React.PureComponent<Props, State> {
                         <Title style={{
                             textAlign: 'left',
                             fontSize: UNIT * 1.25,
+                            color: 'black',
                         }}>
                             {Lang.print('competitions.classes')}
                         </Title>

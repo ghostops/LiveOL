@@ -121,24 +121,33 @@ export class OLPassings extends React.PureComponent<any, State> {
                         tintColor={COLORS.MAIN}
                     />
                 }
-                style={{ padding: UNIT }}
+                style={{
+
+                }}
             >
-                <Title style={{
-                    textAlign: 'left',
-                    fontSize: UNIT * 1.35,
-                    marginVertical: 10,
-                }}>
-                    {Lang.print('competitions.passings.title')}
-                </Title>
+                <View
+                    style={{
+                        padding: UNIT,
+                    }}
+                >
+                    <Title style={{
+                        textAlign: 'left',
+                        fontSize: UNIT * 1.35,
+                        marginVertical: 10,
+                        color: 'black',
+                    }}>
+                        {Lang.print('competitions.passings.title')}
+                    </Title>
 
-                {this.state.passings.map(this.renderResult)}
+                    {this.state.passings.map(this.renderResult)}
 
-                <Text style={{
-                    ...TEXT_STYLE,
-                    textAlign: 'center',
-                }}>
-                    {Lang.print('competitions.passings.info')}
-                </Text>
+                    <Text style={{
+                        ...TEXT_STYLE,
+                        textAlign: 'center',
+                    }}>
+                        {Lang.print('competitions.passings.info')}
+                    </Text>
+                </View>
             </ScrollView>
         );
     }

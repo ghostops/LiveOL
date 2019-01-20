@@ -72,6 +72,7 @@ export class OLInfo extends React.PureComponent<Props, State> {
                                     style={{
                                         textAlign: 'center',
                                         width: '100%',
+                                        color: 'black',
                                     }}
                                 >
                                     {Lang.print('info.title')}

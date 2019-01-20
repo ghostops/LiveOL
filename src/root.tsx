@@ -2,7 +2,7 @@ import * as React from 'react';
 import Router from './lib/nav/router';
 import Lang from './lib/lang';
 import { LayoutAnimation, View } from 'react-native';
-import { SplashScreen } from 'expo';
+import { SplashScreen, Font } from 'expo';
 import { COLORS } from './util/const';
 
 interface State {
@@ -21,6 +21,9 @@ export default class AppRoot extends React.PureComponent<any, State> {
 
     async componentWillMount() {
         await Lang.init();
+        await Font.loadAsync({
+            Roboto_medium: require('../assets/fonts/Roboto-Bold.ttf'),
+        });
         setTimeout(
             () => {
                 LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);

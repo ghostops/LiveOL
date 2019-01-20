@@ -80,6 +80,7 @@ export class OLClub extends React.PureComponent<Props, State> {
                     textAlign: 'left',
                     fontSize: UNIT * 1.35,
                     marginVertical: 10,
+                    color: 'black',
                 }}>
                     {Lang.print('classes.resultsFor')}: {this.state.club.clubName}
                 </Title>
