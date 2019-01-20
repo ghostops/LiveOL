@@ -6,6 +6,9 @@ import {
     ListItem,
     Text,
     View,
+    CardItem,
+    Card,
+    Body,
 } from 'native-base';
 import { NavigationScreenProp } from 'react-navigation';
 import { UNIT, COLORS } from '../../../util/const';
@@ -106,24 +109,6 @@ export class OLHome extends React.PureComponent<Props, State> {
         return output;
     }
 
-    renderListItem = (comp: Comp) => (
-        <ListItem
-            key={comp.id}
-            onPress={() => {
-                this.props.navigation.push(Routes.competition, {
-                    id: comp.id,
-                    title: comp.name,
-                });
-            }}
-        >
-            <Text style={{
-                fontSize: UNIT,
-            }}>
-                {comp.name}
-            </Text>
-        </ListItem>
-    )
-
     scrollTop = () => {
         if (this.content) {
             this.content.scrollTo({
@@ -174,6 +159,98 @@ export class OLHome extends React.PureComponent<Props, State> {
             (this.size * (page || 1)) + this.size,
         )
 
+    renderListSection = (key: string, comps: any) => {
+        return (
+            <View key={key}>
+                <ListItem
+                    itemDivider
+                    style={{
+                        marginLeft: 0,
+                        paddingHorizontal: UNIT,
+                    }}
+                >
+                    <Text style={{
+                        fontSize: UNIT,
+                        fontWeight: 'bold',
+                    }}>
+                        {key}
+                    </Text>
+                </ListItem>
+
+                <List>
+                    {comps[key].map(this.renderListItem)}
+                </List>
+            </View>
+        );
+    }
+
+    renderListItem = (comp: Comp) => (
+        <ListItem
+            key={comp.id}
+            style={{
+                marginLeft: 0,
+                paddingHorizontal: UNIT,
+                width: '100%',
+            }}
+            onPress={() => {
+                this.props.navigation.push(Routes.competition, {
+                    id: comp.id,
+                    title: comp.name,
+                });
+            }}
+        >
+            <Text style={{
+                fontSize: UNIT,
+            }}>
+                {comp.name}
+            </Text>
+        </ListItem>
+    )
+
+    renderToday = (key: string, comps: any) => {
+        return (
+            <View
+                key="today"
+                style={{
+                    padding: UNIT,
+                    backgroundColor: COLORS.MAIN,
+                }}
+            >
+
+                <Text
+                    style={{
+                        fontSize: UNIT * 1.5,
+                        textAlign: 'center',
+                        color: 'white',
+                    }}
+                >
+                    {Lang.print('home.today')}
+                </Text>
+
+                <Text
+                    style={{
+                        fontSize: UNIT,
+                        textAlign: 'center',
+                        color: 'white',
+                        fontWeight: 'bold',
+                    }}
+                >
+                    {key}
+                </Text>
+
+                <Card style={{ marginTop: UNIT }}>
+                    <CardItem>
+                        <Body style={{ width: '100%' }}>
+                            <List>
+                                {comps[key].map(this.renderListItem)}
+                            </List>
+                        </Body>
+                    </CardItem>
+                </Card>
+            </View>
+        );
+    }
+
     renderInner = () => {
         if (!this.state.comps) {
             return <Spinner color={COLORS.MAIN} />;
@@ -182,30 +259,18 @@ export class OLHome extends React.PureComponent<Props, State> {
         const comps = this.groupComps(this.getVisibleComps(this.state.page));
 
         return (
-            <List
-                style={{
-                    backgroundColor: '#FFF',
-                }}
-            >
+            <View>
                 {
                     Object.keys(comps).map((key) => {
                         return (
-                            <View key={key}>
-                                <ListItem itemDivider>
-                                    <Text style={{
-                                        fontSize: UNIT,
-                                    }}>
-                                        {key} {this.today() === key && Lang.print('home.today')}
-                                    </Text>
-                                </ListItem>
-
-                                {comps[key].map(this.renderListItem)}
-                            </View>
+                            this.today() === key
+                            ? this.renderToday(key, comps)
+                            : this.renderListSection(key, comps)
                         );
                     })
                 }
                 {this.renderPagination()}
-            </List>
+            </View>
         );
     }
 

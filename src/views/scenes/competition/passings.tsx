@@ -4,7 +4,6 @@ import {
     View,
     Spinner,
     Text,
-    List,
     Body,
     CardItem,
     Card,

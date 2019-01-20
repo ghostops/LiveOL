@@ -1,7 +1,7 @@
 export default {
     home: {
         title: 'LiveOL',
-        today: '(Today)',
+        today: 'Today',
         page: 'Page',
     },
     competitions: {
@@ -25,9 +25,9 @@ export default {
         title: 'Information',
         // tslint:disable
         body: [
-            `LiveOL är en app som visar orienteringsresultat live och bygger på Peter Löfås' liveresultat.orientering.se.`,
-            `Du får resultaten direkt i mobilen eller på surfplattan paketerat i ett smidigt användargränssnitt.`,
-            `Appen är framtagen av Ludvig Larsendahl och koden finns Open Source på GitHub (sök på LiveOL).`,
+            `LiveOL is an app that displays orienteering-results live, built upon Peter Löfås' liveresultat.orientering.se.`,
+            `You get the results conveniently on your phone or tablet packaged in a neat interface.`,
+            `The app is made by Ludvig Larsendahl and the code is Open Source on GitHub (search LiveOL).`,
         ],
         // tslint:enable
         rate: 'Rate the app',

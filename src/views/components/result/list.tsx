@@ -17,6 +17,7 @@ interface Props {
     initialResults?: Result[];
     fetcher: () => Promise<Result[]>;
     onResultPress: (result: Result) => void;
+    search?: (results: Result[]) => Result[];
 }
 
 interface State {

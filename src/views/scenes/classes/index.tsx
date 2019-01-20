@@ -13,6 +13,8 @@ import { Cache } from '../../../lib/cache';
 import { ResultList } from '../../components/result/list';
 import { NavigationScreenProp } from 'react-navigation';
 import Lang from '../../../lib/lang';
+import { TouchableOpacity } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 interface Props {
     navigation: NavigationScreenProp<any, any>;
@@ -34,6 +36,18 @@ export class OLClasses extends React.PureComponent<Props, State> {
             backgroundColor: COLORS.MAIN,
         },
         headerTintColor: 'white',
+        headerRight: (
+            <TouchableOpacity
+                onPress={() => navigation.push(Routes.info)}
+                style={{ marginRight: UNIT }}
+            >
+                <Ionicons
+                    name="md-search"
+                    size={24}
+                    color="white"
+                />
+            </TouchableOpacity>
+        ),
     })
 
     state = { olClass: null };
