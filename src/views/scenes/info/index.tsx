@@ -9,7 +9,7 @@ import {
     Title,
     Button,
 } from 'native-base';
-import { UNIT, COLORS } from '../../../util/const';
+import { UNIT, COLORS, VERSION, APP_VERSION } from '../../../util/const';
 import Lang from '../../../lib/lang';
 import { NavigationScreenProp } from 'react-navigation';
 import { Platform, AsyncStorage } from 'react-native';
@@ -108,6 +108,10 @@ export class OLInfo extends React.PureComponent<Props, State> {
                                         </Text>
                                     </Button>
                                 }
+
+                                <Text style={{ marginTop: UNIT }}>
+                                    {VERSION} {APP_VERSION}
+                                </Text>
                             </Body>
                         </CardItem>
                     </Card>
