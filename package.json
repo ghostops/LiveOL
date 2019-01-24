@@ -8,7 +8,9 @@
     "eject": "expo eject",
     "test": "node ./node_modules/jest/bin/jest.js --watchAll",
     "lint": "yarn tslint --project ./",
-    "upload": "npm version patch && expo publish"
+    "upload": "npm version patch && expo publish",
+    "build:ios": "expo build:ios",
+    "build:android": "expo build:android"
   },
   "jest": {
     "preset": "jest-expo"

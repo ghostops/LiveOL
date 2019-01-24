@@ -58,7 +58,9 @@ export class OLInfo extends React.PureComponent<Props, State> {
     };
 
     async componentWillMount() {
-        this.setState({ canReview: this.review.canReview() && !(await this.review.hasReviewed()) });
+        // You cannot review yet
+        // tslint:disable-next-line
+        // this.setState({ canReview: this.review.canReview() && !(await this.review.hasReviewed()) });
     }
 
     render() {
@@ -110,7 +112,7 @@ export class OLInfo extends React.PureComponent<Props, State> {
                                 }
 
                                 <Text style={{ marginTop: UNIT }}>
-                                    {VERSION} {APP_VERSION}
+                                    {VERSION}
                                 </Text>
                             </Body>
                         </CardItem>

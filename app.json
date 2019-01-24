@@ -8,7 +8,7 @@
       "ios",
       "android"
     ],
-    "version": "1.1.0",
+    "version": "1.2.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "splash": {
@@ -17,7 +17,9 @@
       "backgroundColor": "#e86a1e"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "enabled": true,
+      "fallbackToCacheTimeout": 30000,
+      "checkAutomatically": "ON_LOAD"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -27,7 +29,8 @@
       "bundleIdentifier": "se.liveol.rn"
     },
     "android": {
-      "package": "se.liveol.rn"
+      "package": "se.liveol.rn",
+      "versionCode": 2
     }
   }
 }
