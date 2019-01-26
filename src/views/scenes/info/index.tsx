@@ -4,7 +4,7 @@ import { NavigationScreenProp } from 'react-navigation';
 import { OLButton } from 'views/components/button';
 import { Platform, AsyncStorage, Alert } from 'react-native';
 import { StoreReview, Updates, Linking } from 'expo';
-import { UNIT, VERSION, DEFAULT_HEADER } from 'util/const';
+import { UNIT, VERSION } from 'util/const';
 import Lang from 'lib/lang';
 
 const {
@@ -42,7 +42,6 @@ class AppReview {
 
 export class OLInfo extends React.PureComponent<Props, State> {
     static navigationOptions = ({ navigation }) => ({
-        ...DEFAULT_HEADER,
         title: Lang.print('info.title'),
     })
 
@@ -97,6 +96,23 @@ export class OLInfo extends React.PureComponent<Props, State> {
         }
     }
 
+    contact = () => Linking.openURL('https://goo.gl/forms/fFmS1WGVUU1Wu0c03');
+
+    BUTTONS = [{
+        text: Lang.print('info.rate'),
+        onPress: this.review.prompt,
+        hidden: !this.state.canReview,
+    }, {
+        text: Lang.print('info.update.check'),
+        onPress: this.update,
+    }, {
+        text: Lang.print('info.appStore'),
+        onPress: this.openAppStore,
+    }, {
+        text: Lang.print('info.contact'),
+        onPress: this.contact,
+    }];
+
     render() {
         return (
             <Container>
@@ -118,19 +134,6 @@ export class OLInfo extends React.PureComponent<Props, State> {
                                     ))
                                 }
 
-                                {
-                                    this.state.canReview &&
-                                    <OLButton
-                                        full
-                                        onPress={() => this.review.prompt()}
-                                        style={{
-                                            marginBottom: UNIT,
-                                        }}
-                                    >
-                                        {Lang.print('info.rate')}
-                                    </OLButton>
-                                }
-
                                 <Text style={{
                                     marginBottom: UNIT,
                                     fontWeight: 'bold',
@@ -138,20 +141,28 @@ export class OLInfo extends React.PureComponent<Props, State> {
                                     {Lang.print('info.version')}: {VERSION}
                                 </Text>
 
-                                <OLButton
-                                    style={{ marginBottom: UNIT }}
-                                    onPress={this.update}
-                                    full
-                                >
-                                    {Lang.print('info.update.check')}
-                                </OLButton>
+                                {
+                                    this.BUTTONS.map((button, index) => {
+                                        if (button.hidden) return null;
 
-                                <OLButton
-                                    onPress={this.openAppStore}
-                                    full
-                                >
-                                    {Lang.print('info.appStore')}
-                                </OLButton>
+                                        return (
+                                            <OLButton
+                                                full
+                                                key={button.text + index}
+                                                onPress={() => button.onPress()}
+                                                style={{
+                                                    marginBottom: (
+                                                        index !== this.BUTTONS.length - 1
+                                                        ? UNIT
+                                                        : 0
+                                                    ),
+                                                }}
+                                            >
+                                                {button.text}
+                                            </OLButton>
+                                        );
+                                    })
+                                }
                             </Body>
                         </CardItem>
                     </Card>

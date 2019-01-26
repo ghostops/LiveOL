@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Text, Button, NativeBase } from 'native-base';
-import { COLORS } from 'util/const';
+import { COLORS, UNIT } from 'util/const';
 
 interface Props extends NativeBase.Button {
     beforeText?: React.ReactNode;
@@ -21,7 +21,9 @@ export const OLButton: React.SFC<Props> = (props) => {
             }}
         >
             {props.beforeText}
-            <Text>
+            <Text style={{
+                fontSize: props.small ? UNIT : UNIT * 1.15,
+            }}>
                 {props.children}
             </Text>
             {props.afterText}

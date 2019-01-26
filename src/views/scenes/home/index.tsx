@@ -8,7 +8,7 @@ import { Pagination } from 'views/components/pagination';
 import { Right, Left } from './header';
 import { Routes } from 'lib/nav/routes';
 import { ScrollView } from 'react-native';
-import { UNIT, COLORS, DEFAULT_HEADER } from 'util/const';
+import { UNIT, COLORS } from 'util/const';
 import Lang from 'lib/lang';
 
 const {
@@ -34,7 +34,6 @@ interface State {
 
 export class OLHome extends React.PureComponent<Props, State> {
     static navigationOptions = ({ navigation }) => ({
-        ...DEFAULT_HEADER,
         title: Lang.print('home.title'),
         headerRight: <Right onPress={() => navigation.push(Routes.info)} />,
         headerLeft: <Left />,
@@ -225,7 +224,10 @@ export class OLHome extends React.PureComponent<Props, State> {
                     {key}
                 </Text>
 
-                <Card style={{ marginTop: UNIT }}>
+                <Card style={{
+                    marginTop: UNIT,
+                    width: '100%',
+                }}>
                     <CardItem>
                         <Body style={{ width: '100%' }}>
                             <List>

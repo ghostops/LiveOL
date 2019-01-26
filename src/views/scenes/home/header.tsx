@@ -9,6 +9,7 @@ export const Left: React.SFC = () => (
     <TouchableOpacity
         style={{ marginLeft: UNIT }}
         hitSlop={HIT_SLOP}
+        activeOpacity={1}
     >
         <Image
             source={LOGO}

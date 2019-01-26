@@ -1,3 +1,5 @@
+import { Platform } from 'react-native';
+
 export default {
     home: {
         title: 'LiveOL',
@@ -31,5 +33,22 @@ export default {
         ],
         // tslint:enable
         rate: 'Betygsätt appen',
+        update: {
+            noUpdate: {
+                title: 'Ingen uppdatering',
+                text: 'Ingen nyare version fanns att hämta',
+            },
+            hasUpdate: {
+                title: 'Uppdatering hittad',
+                text: 'En nyare version finns att hämta',
+                cta: 'Uppdatera nu',
+                cancel: 'Avbryt',
+            },
+            check: 'Kolla efter uppdateringar',
+        },
+        version: 'Nuvarande version',
+        appStore: `Öppna ${Platform.OS === 'ios' ? 'App Store' : 'Google Play'}`,
+        contact: 'Kontakta mig',
     },
+    back: 'Bakåt',
 };

@@ -48,5 +48,7 @@ export default {
         },
         version: 'Current version',
         appStore: `Open ${Platform.OS === 'ios' ? 'App Store' : 'Google Play'}`,
+        contact: 'Contact me',
     },
+    back: 'Back',
 };

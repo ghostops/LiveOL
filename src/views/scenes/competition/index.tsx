@@ -4,8 +4,9 @@ import { Cache } from 'lib/cache';
 import { getComp, getClasses } from 'lib/api';
 import { NavigationScreenProp } from 'react-navigation';
 import { Routes } from 'lib/nav/routes';
-import { UNIT, COLORS, DEFAULT_HEADER } from 'util/const';
+import { UNIT, COLORS } from 'util/const';
 import Lang from 'lib/lang';
+import { OLButton } from 'views/components/button';
 
 const {
     Container,
@@ -19,7 +20,6 @@ const {
     Title,
     ListItem,
     List,
-    Button,
 } = NB;
 
 interface Props {
@@ -33,7 +33,6 @@ interface State {
 
 export class OLCompetition extends React.PureComponent<Props, State> {
     static navigationOptions = ({ navigation }) => ({
-        ...DEFAULT_HEADER,
         title: `${navigation.state.params.title}`,
     })
 
@@ -140,9 +139,8 @@ export class OLCompetition extends React.PureComponent<Props, State> {
                     </View>
 
                     <View>
-                        <Button
+                        <OLButton
                             small
-                            info
                             onPress={() => {
                                 const { params: { id } } = this.props.navigation.state;
 
@@ -152,12 +150,8 @@ export class OLCompetition extends React.PureComponent<Props, State> {
                                 });
                             }}
                         >
-                            <Text style={{
-                                fontSize: UNIT,
-                            }}>
-                                {Lang.print('competitions.lastPassings')}
-                            </Text>
-                        </Button>
+                            {Lang.print('competitions.lastPassings')}
+                        </OLButton>
                     </View>
                 </View>
 

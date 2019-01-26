@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as NB from 'native-base';
-import { UNIT, COLORS, DEFAULT_HEADER } from 'util/const';
+import { UNIT, COLORS } from 'util/const';
 import { getClass } from 'lib/api';
 import { Routes } from 'lib/nav/routes';
 import { Cache } from 'lib/cache';
@@ -28,7 +28,6 @@ export class OLClasses extends React.PureComponent<Props, State> {
     interval: number;
 
     static navigationOptions = ({ navigation }) => ({
-        ...DEFAULT_HEADER,
         title: `${navigation.state.params.title}`,
         // ToDo: Implement search
         // headerRight: (

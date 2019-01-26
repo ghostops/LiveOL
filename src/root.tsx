@@ -11,7 +11,7 @@ interface State {
 
 window['clog'] = (...props) => console.warn(JSON.stringify(props));
 
-export default class AppRoot extends React.PureComponent<any, State> {
+export default class AppRoot extends React.Component<{}, State> {
     state = {
         ready: false,
     };
@@ -37,9 +37,10 @@ export default class AppRoot extends React.PureComponent<any, State> {
     }
 
     render() {
+        const RouterView = Router();
         return (
             this.state.ready
-            ? <Router />
+            ? <RouterView />
             : <View style={{ flex: 1, borderStartColor: COLORS.MAIN }} />
         );
     }

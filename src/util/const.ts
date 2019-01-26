@@ -15,13 +15,3 @@ export const COLORS = {
 };
 
 export const HIT_SLOP = { top: 10, left: 10, right: 10, bottom: 10 };
-
-export const DEFAULT_HEADER = {
-    headerTitleStyle: {
-        color: 'white',
-    },
-    headerStyle: {
-        backgroundColor: COLORS.MAIN,
-    },
-    headerTintColor: 'white',
-};
