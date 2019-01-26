@@ -1,3 +1,5 @@
+import { Platform } from 'react-native';
+
 export default {
     home: {
         title: 'LiveOL',
@@ -31,5 +33,20 @@ export default {
         ],
         // tslint:enable
         rate: 'Rate the app',
+        update: {
+            noUpdate: {
+                title: 'No update',
+                text: 'No newer version found',
+            },
+            hasUpdate: {
+                title: 'Update found',
+                text: 'A newer version was found',
+                cta: 'Update now',
+                cancel: 'Cancel',
+            },
+            check: 'Check for updates',
+        },
+        version: 'Current version',
+        appStore: `Open ${Platform.OS === 'ios' ? 'App Store' : 'Google Play'}`,
     },
 };

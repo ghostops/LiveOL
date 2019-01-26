@@ -1,6 +1,11 @@
 import * as React from 'react';
+import * as NB from 'native-base';
+import { getPasses } from 'lib/api';
+import { UNIT, COLORS, DEFAULT_HEADER } from 'util/const';
 import { ScrollView, RefreshControl, TextStyle } from 'react-native';
-import {
+import Lang from 'lib/lang';
+
+const {
     View,
     Spinner,
     Text,
@@ -8,10 +13,7 @@ import {
     CardItem,
     Card,
     Title,
-} from 'native-base';
-import { getPasses } from '../../../lib/api';
-import { UNIT, COLORS } from '../../../util/const';
-import Lang from '../../../lib/lang';
+} = NB;
 
 interface State {
     passings: Passing[];
@@ -25,14 +27,8 @@ const TEXT_STYLE: TextStyle = {
 
 export class OLPassings extends React.PureComponent<any, State> {
     static navigationOptions = ({ navigation }) => ({
+        ...DEFAULT_HEADER,
         title: `${navigation.state.params.title}`,
-        headerTitleStyle: {
-            color: 'white',
-        },
-        headerStyle: {
-            backgroundColor: '#e86a1e',
-        },
-        headerTintColor: 'white',
     })
 
     state = {

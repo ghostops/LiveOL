@@ -1,19 +1,20 @@
 import * as React from 'react';
-import {
+import * as NB from 'native-base';
+import { NavigationScreenProp } from 'react-navigation';
+import { OLButton } from 'views/components/button';
+import { Platform, AsyncStorage, Alert } from 'react-native';
+import { StoreReview, Updates, Linking } from 'expo';
+import { UNIT, VERSION, DEFAULT_HEADER } from 'util/const';
+import Lang from 'lib/lang';
+
+const {
     Container,
     Content,
     Card,
     CardItem,
     Text,
     Body,
-    Title,
-    Button,
-} from 'native-base';
-import { UNIT, COLORS, VERSION, APP_VERSION } from '../../../util/const';
-import Lang from '../../../lib/lang';
-import { NavigationScreenProp } from 'react-navigation';
-import { Platform, AsyncStorage } from 'react-native';
-import { StoreReview } from 'expo';
+} = NB;
 
 interface Props {
     navigation: NavigationScreenProp<any, any>;
@@ -41,14 +42,8 @@ class AppReview {
 
 export class OLInfo extends React.PureComponent<Props, State> {
     static navigationOptions = ({ navigation }) => ({
-        title: `Info`,
-        headerTitleStyle: {
-            color: 'white',
-        },
-        headerStyle: {
-            backgroundColor: COLORS.MAIN,
-        },
-        headerTintColor: 'white',
+        ...DEFAULT_HEADER,
+        title: Lang.print('info.title'),
     })
 
     review: AppReview = new AppReview();
@@ -63,6 +58,45 @@ export class OLInfo extends React.PureComponent<Props, State> {
         // this.setState({ canReview: this.review.canReview() && !(await this.review.hasReviewed()) });
     }
 
+    openAppStore = async () => {
+        Linking.openURL(
+            Platform.OS === 'ios'
+            ? 'https://google.com'
+            : 'https://play.google.com/store/apps/details?id=se.liveol.rn',
+        );
+    }
+
+    update = async () => {
+        let canUpdate = false;
+
+        if (!__DEV__) {
+            const update = await Updates.checkForUpdateAsync() as any;
+            canUpdate = !!update.isAvailable;
+        }
+
+        if (canUpdate) {
+            Alert.alert(
+                Lang.print('info.update.hasUpdate.title'),
+                Lang.print('info.update.hasUpdate.text'),
+                [{
+                    onPress: async () => {
+                        !__DEV__ && await Updates.fetchUpdateAsync();
+                        Updates.reload();
+                    },
+                    text: Lang.print('info.update.hasUpdate.cta'),
+                }, {
+                    text: Lang.print('info.update.hasUpdate.cancel'),
+                    style: 'cancel',
+                }],
+            );
+        } else {
+            Alert.alert(
+                Lang.print('info.update.noUpdate.title'),
+                Lang.print('info.update.noUpdate.text'),
+            );
+        }
+    }
+
     render() {
         return (
             <Container>
@@ -70,23 +104,13 @@ export class OLInfo extends React.PureComponent<Props, State> {
                     <Card style={{ paddingVertical: UNIT }}>
                         <CardItem>
                             <Body>
-                                <Title
-                                    style={{
-                                        textAlign: 'center',
-                                        width: '100%',
-                                        color: 'black',
-                                    }}
-                                >
-                                    {Lang.print('info.title')}
-                                </Title>
-
                                 {
                                     (Lang.print('info.body') as any)
                                     .map((text: string) => (
                                         <Text
                                             key={text}
                                             style={{
-                                                marginTop: UNIT,
+                                                marginBottom: UNIT,
                                             }}
                                         >
                                             {text}
@@ -96,24 +120,38 @@ export class OLInfo extends React.PureComponent<Props, State> {
 
                                 {
                                     this.state.canReview &&
-                                    <Button
+                                    <OLButton
                                         full
                                         onPress={() => this.review.prompt()}
-                                        rounded
                                         style={{
-                                            marginTop: UNIT,
-                                            backgroundColor: COLORS.MAIN,
+                                            marginBottom: UNIT,
                                         }}
                                     >
-                                        <Text>
-                                            {Lang.print('info.rate')}
-                                        </Text>
-                                    </Button>
+                                        {Lang.print('info.rate')}
+                                    </OLButton>
                                 }
 
-                                <Text style={{ marginTop: UNIT }}>
-                                    {VERSION}
+                                <Text style={{
+                                    marginBottom: UNIT,
+                                    fontWeight: 'bold',
+                                }}>
+                                    {Lang.print('info.version')}: {VERSION}
                                 </Text>
+
+                                <OLButton
+                                    style={{ marginBottom: UNIT }}
+                                    onPress={this.update}
+                                    full
+                                >
+                                    {Lang.print('info.update.check')}
+                                </OLButton>
+
+                                <OLButton
+                                    onPress={this.openAppStore}
+                                    full
+                                >
+                                    {Lang.print('info.appStore')}
+                                </OLButton>
                             </Body>
                         </CardItem>
                     </Card>

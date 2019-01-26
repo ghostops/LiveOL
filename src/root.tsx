@@ -9,6 +9,8 @@ interface State {
     ready: boolean;
 }
 
+window['clog'] = (...props) => console.warn(JSON.stringify(props));
+
 export default class AppRoot extends React.PureComponent<any, State> {
     state = {
         ready: false,

@@ -5,10 +5,10 @@ import {
     View,
     Button,
 } from 'native-base';
-import { UNIT, COLORS } from '../../../util/const';
+import { UNIT, COLORS } from 'util/const';
 import { Ionicons } from '@expo/vector-icons';
 import { ViewStyle } from 'react-native';
-import Lang from '../../../lib/lang';
+import Lang from 'lib/lang';
 
 interface Props {
     page: number;

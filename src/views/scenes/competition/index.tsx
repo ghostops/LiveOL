@@ -1,5 +1,13 @@
 import * as React from 'react';
-import {
+import * as NB from 'native-base';
+import { Cache } from 'lib/cache';
+import { getComp, getClasses } from 'lib/api';
+import { NavigationScreenProp } from 'react-navigation';
+import { Routes } from 'lib/nav/routes';
+import { UNIT, COLORS, DEFAULT_HEADER } from 'util/const';
+import Lang from 'lib/lang';
+
+const {
     Container,
     Content,
     Spinner,
@@ -12,13 +20,7 @@ import {
     ListItem,
     List,
     Button,
-} from 'native-base';
-import { UNIT, COLORS } from '../../../util/const';
-import { getComp, getClasses } from '../../../lib/api';
-import { Routes } from '../../../lib/nav/routes';
-import { Cache } from '../../../lib/cache';
-import Lang from '../../../lib/lang';
-import { NavigationScreenProp } from 'react-navigation';
+} = NB;
 
 interface Props {
     navigation: NavigationScreenProp<any, any>;
@@ -31,14 +33,8 @@ interface State {
 
 export class OLCompetition extends React.PureComponent<Props, State> {
     static navigationOptions = ({ navigation }) => ({
+        ...DEFAULT_HEADER,
         title: `${navigation.state.params.title}`,
-        headerTitleStyle: {
-            color: 'white',
-        },
-        headerStyle: {
-            backgroundColor: COLORS.MAIN,
-        },
-        headerTintColor: 'white',
     })
 
     cache: Cache<{
@@ -97,7 +93,7 @@ export class OLCompetition extends React.PureComponent<Props, State> {
         }
 
         return (
-            <View style={{ padding: 10 }}>
+            <View style={{ padding: 15 }}>
                 <Card>
                     <CardItem header>
                         <Title style={{

@@ -1,3 +1,5 @@
+declare const clog: (...any) => void;
+
 interface Comp {
     date: string;
     id: number;

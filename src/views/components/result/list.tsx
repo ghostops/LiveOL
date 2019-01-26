@@ -10,8 +10,8 @@ import {
     Card,
     CardItem,
 } from 'native-base';
-import { UNIT, COLORS } from '../../../util/const';
-import Lang from '../../../lib/lang';
+import { UNIT, COLORS } from 'util/const';
+import Lang from 'lib/lang';
 
 interface Props {
     initialResults?: Result[];

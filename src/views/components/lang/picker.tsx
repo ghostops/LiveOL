@@ -2,8 +2,9 @@ import * as React from 'react';
 import { View } from 'native-base';
 import { TouchableOpacity, ScrollView } from 'react-native';
 import Flag from 'react-native-flags-kit';
-import { UNIT } from '../../../util/const';
-import Lang from '../../../lib/lang';
+import { UNIT } from 'util/const';
+import Lang from 'lib/lang';
+import { Updates } from 'expo';
 
 interface State {
     active: string;
@@ -37,7 +38,7 @@ export class LanguagePicker extends React.PureComponent<any, State> {
                             <TouchableOpacity
                                 onPress={async () => {
                                     await Lang.set(lang);
-                                    this.setState({ active: lang });
+                                    this.setState({ active: lang }, Updates.reloadFromCache);
                                 }}
                                 style={{
                                     marginRight: UNIT,

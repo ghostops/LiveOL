@@ -1,5 +1,17 @@
 import * as React from 'react';
-import {
+import * as NB from 'native-base';
+import { Cache } from 'lib/cache';
+import { getComps } from 'lib/api';
+import { LanguagePicker } from 'views/components/lang/picker';
+import { NavigationScreenProp } from 'react-navigation';
+import { Pagination } from 'views/components/pagination';
+import { Right, Left } from './header';
+import { Routes } from 'lib/nav/routes';
+import { ScrollView } from 'react-native';
+import { UNIT, COLORS, DEFAULT_HEADER } from 'util/const';
+import Lang from 'lib/lang';
+
+const {
     Container,
     Spinner,
     List,
@@ -9,17 +21,7 @@ import {
     CardItem,
     Card,
     Body,
-} from 'native-base';
-import { NavigationScreenProp } from 'react-navigation';
-import { UNIT, COLORS } from '../../../util/const';
-import { getComps } from '../../../lib/api';
-import { Cache } from '../../../lib/cache';
-import { Routes } from '../../../lib/nav/routes';
-import Lang from '../../../lib/lang';
-import { LanguagePicker } from '../../components/lang/picker';
-import { Ionicons } from '@expo/vector-icons';
-import { TouchableOpacity, ScrollView } from 'react-native';
-import { Pagination } from '../../components/pagination';
+} = NB;
 
 interface Props {
     navigation: NavigationScreenProp<any, any>;
@@ -32,25 +34,10 @@ interface State {
 
 export class OLHome extends React.PureComponent<Props, State> {
     static navigationOptions = ({ navigation }) => ({
+        ...DEFAULT_HEADER,
         title: Lang.print('home.title'),
-        headerTitleStyle: {
-            color: 'white',
-        },
-        headerStyle: {
-            backgroundColor: COLORS.MAIN,
-        },
-        headerLeft: (
-            <TouchableOpacity
-                onPress={() => navigation.push(Routes.info)}
-                style={{ marginLeft: UNIT }}
-            >
-                <Ionicons
-                    name="md-information-circle"
-                    size={24}
-                    color="white"
-                />
-            </TouchableOpacity>
-        ),
+        headerRight: <Right onPress={() => navigation.push(Routes.info)} />,
+        headerLeft: <Left />,
     })
 
     size = 20;

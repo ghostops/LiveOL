@@ -1,20 +1,20 @@
 import * as React from 'react';
-import {
+import * as NB from 'native-base';
+import { UNIT, COLORS, DEFAULT_HEADER } from 'util/const';
+import { getClass } from 'lib/api';
+import { Routes } from 'lib/nav/routes';
+import { Cache } from 'lib/cache';
+import { ResultList } from 'views/components/result/list';
+import { NavigationScreenProp } from 'react-navigation';
+import Lang from 'lib/lang';
+
+const {
     Container,
     Content,
     Spinner,
     View,
     Title,
-} from 'native-base';
-import { UNIT, COLORS } from '../../../util/const';
-import { getClass } from '../../../lib/api';
-import { Routes } from '../../../lib/nav/routes';
-import { Cache } from '../../../lib/cache';
-import { ResultList } from '../../components/result/list';
-import { NavigationScreenProp } from 'react-navigation';
-import Lang from '../../../lib/lang';
-import { TouchableOpacity } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+} = NB;
 
 interface Props {
     navigation: NavigationScreenProp<any, any>;
@@ -28,14 +28,8 @@ export class OLClasses extends React.PureComponent<Props, State> {
     interval: number;
 
     static navigationOptions = ({ navigation }) => ({
+        ...DEFAULT_HEADER,
         title: `${navigation.state.params.title}`,
-        headerTitleStyle: {
-            color: 'white',
-        },
-        headerStyle: {
-            backgroundColor: COLORS.MAIN,
-        },
-        headerTintColor: 'white',
         // ToDo: Implement search
         // headerRight: (
         //     <TouchableOpacity

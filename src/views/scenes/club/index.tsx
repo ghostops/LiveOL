@@ -1,18 +1,20 @@
 import * as React from 'react';
-import {
+import * as NB from 'native-base';
+import { UNIT, COLORS, DEFAULT_HEADER } from 'util/const';
+import { getClub } from 'lib/api';
+import { Routes } from 'lib/nav/routes';
+import { Cache } from 'lib/cache';
+import { ResultList } from 'views/components/result/list';
+import { NavigationScreenProp } from 'react-navigation';
+import Lang from 'lib/lang';
+
+const {
     Container,
     Content,
     Spinner,
     View,
     Title,
-} from 'native-base';
-import { UNIT, COLORS } from '../../../util/const';
-import { getClub } from '../../../lib/api';
-import { Routes } from '../../../lib/nav/routes';
-import { Cache } from '../../../lib/cache';
-import { ResultList } from '../../components/result/list';
-import { NavigationScreenProp } from 'react-navigation';
-import Lang from '../../../lib/lang';
+} = NB;
 
 interface Props {
     navigation: NavigationScreenProp<any, any>;
@@ -27,14 +29,8 @@ export class OLClub extends React.PureComponent<Props, State> {
     interval: number;
 
     static navigationOptions = ({ navigation }) => ({
+        ...DEFAULT_HEADER,
         title: `${navigation.state.params.title}`,
-        headerTitleStyle: {
-            color: 'white',
-        },
-        headerStyle: {
-            backgroundColor: '#e86a1e',
-        },
-        headerTintColor: 'white',
     })
 
     cacheId = () => {
