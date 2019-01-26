@@ -6,4 +6,4 @@ npm-debug.*
 *.key
 *.mobileprovision
 .DS_Store
-website/.ci
+website/.ci/cred.json
