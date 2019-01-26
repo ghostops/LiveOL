@@ -1,0 +1,102 @@
+html {
+    height: 100%;
+}
+
+body {
+    background: url(./img/bg.png) no-repeat top center #e86a1e;
+    background-size: cover;
+    min-height: 100%;
+    margin: 0;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+h1 {
+    margin: 0;
+    text-align: center;
+    background: #e86a1e;
+    padding: 30px;
+    font-size: 72px;
+    font-style: italic;
+    color: #fff;
+    box-shadow: 0px 4px 32px white;
+    cursor: default;
+}
+
+.download {
+    padding-top: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.download a {
+    transition: transform .5s ease;
+}
+
+.download a:hover {
+    transform: scale(1.25);
+}
+
+.google {
+    width: 230px;
+    position: relative;
+    left: -15px;
+}
+
+.ios {
+    width: 180px;
+}
+
+.credit {
+    position: absolute;
+    bottom: 2.5%;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+
+.credit a {
+    display: inline-block;
+    color: #fff;
+    text-decoration: none;
+    background: rgba(0,0,0,.75);
+    padding: 10px;
+    transition: transform .25s ease;
+}
+
+.credit a:hover {
+    transform: translateY(-5px);
+}
+
+@media (max-width: 700px) {
+    h1 {
+        font-size: 52px;
+        padding: 20px;
+    }
+
+    body.os-ios .download {
+        flex-direction: column-reverse;
+    }
+
+    body.os-android .download {
+        flex-direction: column;
+    }
+
+    .download {
+        padding-top: 25px;
+    }
+
+    .google {
+        width: 200px;
+        left: 0;
+    }
+
+    .ios {
+        width: 170px;
+    }
+}

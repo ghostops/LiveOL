@@ -1,4 +1,4 @@
-const ROOT = 'https://ghst-jsonp.herokuapp.com';
+const ROOT = 'https://liveol.larsendahl.se';
 
 export const getComps = async (): Promise<Comp[]> => {
     const url = `${ROOT}/api.php?method=getcompetitions`;

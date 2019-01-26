@@ -26,7 +26,7 @@ interface State {
 }
 
 export class ResultList extends React.PureComponent<Props, State> {
-    interval: number;
+    interval: NodeJS.Timeout;
     state = { results: this.props.initialResults || null, polling: false };
 
     componentWillMount() {

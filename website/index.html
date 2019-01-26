@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>LiveOL</title>
+    <link rel="stylesheet" href="./style.css">
+
+    <script>
+        const getMobileOperatingSystem = () => {
+            const userAgent = navigator.userAgent || navigator.vendor || window['opera'];
+
+            if (/android/i.test(userAgent)) {
+                return 'android';
+            }
+
+            if (/iPad|iPhone|iPod/.test(userAgent) && !window['MSStream']) {
+                return 'ios';
+            }
+
+            return 'unknown';
+        };
+    </script>
+</head>
+<body>
+    <h1>
+        LiveOL
+    </h1>
+
+    <div class="download">
+        <a href="https://play.google.com/store/apps/details?id=se.liveol.rn">
+            <img
+                class="google"
+                src="./img/google.png"
+                alt="Download on Google Play"
+            >
+        </a>
+
+        <a href="#ios">
+            <img
+                class="ios"
+                src="./img/ios.svg"
+                alt="Download on the App Store"
+            >
+        </a>
+    </div>
+
+    <div class="credit">
+        <a href="https://ludvig.larsendahl.se">
+            Created by Ludvig Larsendahl
+        </a>
+    </div>
+
+    <script>
+        const os = getMobileOperatingSystem();
+        document.body.classList.add(`os-${os}`);
+    </script>
+</body>
+</html>

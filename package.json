@@ -37,6 +37,7 @@
     "babel-preset-expo": "^5.0.0",
     "eslint-import-resolver-babel-module": "^4.0.0",
     "jest-expo": "^32.0.0",
+    "sftp-sync-deploy": "^0.7.1",
     "tslint": "^5.12.1",
     "tslint-config-airbnb": "^5.11.1",
     "typescript": "3.2.4"
