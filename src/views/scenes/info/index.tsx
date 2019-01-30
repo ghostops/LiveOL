@@ -60,7 +60,7 @@ export class OLInfo extends React.PureComponent<Props, State> {
     openAppStore = async () => {
         Linking.openURL(
             Platform.OS === 'ios'
-            ? 'https://google.com'
+            ? 'https://itunes.apple.com/us/app/liveol/id1450106846'
             : 'https://play.google.com/store/apps/details?id=se.liveol.rn',
         );
     }
