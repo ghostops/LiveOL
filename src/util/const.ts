@@ -7,6 +7,7 @@ export const PACKAGE = require('../../package.json');
 export const APP = require('../../app.json');
 export const VERSION = PACKAGE.version;
 export const APP_VERSION = APP.expo.version;
+export const ANDROID_VERSION_CODE = APP.expo.android.versionCode;
 
 export const UNIT = 16 * RESPONSIVE_UNIT;
 export const COLORS = {

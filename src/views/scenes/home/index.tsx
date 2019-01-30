@@ -170,13 +170,14 @@ export class OLHome extends React.PureComponent<Props, State> {
         );
     }
 
-    renderListItem = (comp: Comp) => (
+    renderListItem = (comp: Comp, index?: number, total?: number) => (
         <ListItem
             key={comp.id}
             style={{
                 marginLeft: 0,
                 paddingHorizontal: UNIT,
                 width: '100%',
+                borderBottomWidth: index === total - 1 ? 0 : 1,
             }}
             onPress={() => {
                 this.props.navigation.push(Routes.competition, {
@@ -230,8 +231,17 @@ export class OLHome extends React.PureComponent<Props, State> {
                 }}>
                     <CardItem>
                         <Body style={{ width: '100%' }}>
-                            <List>
-                                {comps[key].map(this.renderListItem)}
+                            <List style={{ width: '100%' }}>
+                                {
+                                    comps[key].map(
+                                        (comp, index) =>
+                                            this.renderListItem(
+                                                comp,
+                                                index,
+                                                comps[key].length,
+                                            ),
+                                    )
+                                }
                             </List>
                         </Body>
                     </CardItem>

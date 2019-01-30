@@ -2,9 +2,9 @@ import * as React from 'react';
 import * as NB from 'native-base';
 import { NavigationScreenProp } from 'react-navigation';
 import { OLButton } from 'views/components/button';
-import { Platform, AsyncStorage, Alert } from 'react-native';
+import { Platform, AsyncStorage, Alert, TouchableOpacity } from 'react-native';
 import { StoreReview, Updates, Linking } from 'expo';
-import { UNIT, VERSION } from 'util/const';
+import { UNIT, VERSION, APP_VERSION, ANDROID_VERSION_CODE } from 'util/const';
 import Lang from 'lib/lang';
 
 const {
@@ -113,6 +113,14 @@ export class OLInfo extends React.PureComponent<Props, State> {
         onPress: this.contact,
     }];
 
+    versionAlert = () => {
+        Alert.alert(
+            'VERSION',
+            `App Version: ${APP_VERSION}, Package Version: ${VERSION}, ` +
+            `Android Version Code: ${ANDROID_VERSION_CODE}`,
+        );
+    }
+
     render() {
         return (
             <Container>
@@ -134,12 +142,18 @@ export class OLInfo extends React.PureComponent<Props, State> {
                                     ))
                                 }
 
-                                <Text style={{
-                                    marginBottom: UNIT,
-                                    fontWeight: 'bold',
-                                }}>
-                                    {Lang.print('info.version')}: {VERSION}
-                                </Text>
+                                <TouchableOpacity
+                                    style={{ width: '100%' }}
+                                    onLongPress={this.versionAlert}
+                                    activeOpacity={1}
+                                >
+                                    <Text style={{
+                                        marginBottom: UNIT,
+                                        fontWeight: 'bold',
+                                    }}>
+                                        {Lang.print('info.version')}: {VERSION}
+                                    </Text>
+                                </TouchableOpacity>
 
                                 {
                                     this.BUTTONS.map((button, index) => {
