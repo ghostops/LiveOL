@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, ScrollView, RefreshControl } from 'react-native';
 import {
     View,
     Text,
@@ -12,6 +12,7 @@ import {
 } from 'native-base';
 import { UNIT, COLORS } from 'util/const';
 import Lang from 'lib/lang';
+import { statusI18n } from 'lib/lang/status';
 
 interface Props {
     initialResults?: Result[];
@@ -23,11 +24,16 @@ interface Props {
 interface State {
     results: Result[];
     polling: boolean;
+    loading: boolean;
 }
 
 export class ResultList extends React.PureComponent<Props, State> {
     interval: NodeJS.Timeout;
-    state = { results: this.props.initialResults || null, polling: false };
+    state = {
+        results: this.props.initialResults || null,
+        polling: false,
+        loading: false,
+    };
 
     componentWillMount() {
         this.poll();
@@ -108,7 +114,11 @@ export class ResultList extends React.PureComponent<Props, State> {
                                 marginLeft: 10,
                                 fontSize: UNIT * 1.35,
                             }}>
-                                {result.result}
+                                {
+                                    result.status === 0
+                                    ? result.result
+                                    : statusI18n(result.status)
+                                }
                             </Text>
                         </View>
 
@@ -132,12 +142,25 @@ export class ResultList extends React.PureComponent<Props, State> {
                                 </Text>
                             </TouchableOpacity>
 
-                            <Text style={{
-                                fontSize: UNIT,
-                                textAlign: 'right',
+                            <View style={{
+                                justifyContent: 'flex-end',
+                                alignItems: 'flex-end',
                             }}>
-                                {result.timeplus}
-                            </Text>
+                                <Text style={{
+                                    fontSize: (
+                                        result.status === 0
+                                        ? UNIT
+                                        : UNIT * .75
+                                    ),
+                                    textAlign: 'right',
+                                }}>
+                                    {
+                                        result.status === 0
+                                        ? result.timeplus
+                                        : `(${statusI18n(result.status, 'long')})`
+                                    }
+                                </Text>
+                            </View>
                         </View>
                     </View>
                 </View>
@@ -151,7 +174,20 @@ export class ResultList extends React.PureComponent<Props, State> {
         }
 
         return (
-            <View>
+            <ScrollView
+                refreshControl={
+                    <RefreshControl
+                        onRefresh={async () => {
+                            this.setState({ loading: true });
+                            await this.poll();
+                            this.setState({ loading: false });
+                        }}
+                        refreshing={this.state.loading}
+                        colors={[COLORS.MAIN]}
+                        tintColor={COLORS.MAIN}
+                    />
+                }
+            >
                 <Card style={{ marginBottom: 10 }}>
                     <CardItem style={{ paddingVertical: 8 }}>
                         <Text style={{ flex: 1, fontSize: UNIT }}>
@@ -179,7 +215,9 @@ export class ResultList extends React.PureComponent<Props, State> {
                         ) : this.state.results.map(this.renderResult)
                     }
                 </List>
-            </View>
+
+                <View style={{ height: 45 }} />
+            </ScrollView>
         );
     }
 }

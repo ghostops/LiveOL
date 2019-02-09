@@ -1,0 +1,123 @@
+{
+	"status": "OK",
+	"clubName": "Swedish Orienteering Federatio",
+	"results": [{
+		"place": "10",
+		"name": "Erik Blomgren",
+		"club": "Swedish Orienteering Federatio",
+		"class": "Men",
+		"result": "37:47",
+		"status": 0,
+		"timeplus": "+02:11",
+		"start": 4566000
+	}, {
+		"place": "1",
+		"name": "Erik Rost",
+		"club": "Swedish Orienteering Federatio",
+		"class": "Men",
+		"result": "35:36",
+		"status": 0,
+		"timeplus": "+00:00",
+		"start": 4614000
+	}, {
+		"place": "25",
+		"name": "Markus Lundholm",
+		"club": "Swedish Orienteering Federatio",
+		"class": "Men",
+		"result": "42:17",
+		"status": 0,
+		"timeplus": "+06:41",
+		"start": 4494000
+	}, {
+		"place": "14",
+		"name": "Martin Hammarberg",
+		"club": "Swedish Orienteering Federatio",
+		"class": "Men",
+		"result": "38:57",
+		"status": 0,
+		"timeplus": "+03:21",
+		"start": 4470000
+	}, {
+		"place": "20",
+		"name": "Rasmus Wickbom",
+		"club": "Swedish Orienteering Federatio",
+		"class": "Men",
+		"result": "40:58",
+		"status": 0,
+		"timeplus": "+05:22",
+		"start": 4086000
+	}, {
+		"place": "25",
+		"name": "Sixten Walheim",
+		"club": "Swedish Orienteering Federatio",
+		"class": "Men",
+		"result": "42:17",
+		"status": 0,
+		"timeplus": "+06:41",
+		"start": 4374000
+	}, {
+		"place": "19",
+		"name": "Emma Bergstroem",
+		"club": "Swedish Orienteering Federatio",
+		"class": "Women",
+		"result": "37:15",
+		"status": 0,
+		"timeplus": "+06:48",
+		"start": 4164000
+	}, {
+		"place": "-",
+		"name": "Evelina Wickbom",
+		"club": "Swedish Orienteering Federatio",
+		"class": "Women",
+		"result": "ej start",
+		"status": 1,
+		"timeplus": "+ej start",
+		"start": 4416000
+	}, {
+		"place": "27",
+		"name": "Hanna Eriksson",
+		"club": "Swedish Orienteering Federatio",
+		"class": "Women",
+		"result": "40:00",
+		"status": 0,
+		"timeplus": "+09:33",
+		"start": 4320000
+	}, {
+		"place": "13",
+		"name": "Isabel Salen",
+		"club": "Swedish Orienteering Federatio",
+		"class": "Women",
+		"result": "34:35",
+		"status": 0,
+		"timeplus": "+04:08",
+		"start": 4284000
+	}, {
+		"place": "12",
+		"name": "Linda Lindkvist",
+		"club": "Swedish Orienteering Federatio",
+		"class": "Women",
+		"result": "34:28",
+		"status": 0,
+		"timeplus": "+04:01",
+		"start": 4452000
+	}, {
+		"place": "1",
+		"name": "Magdalena Olsson",
+		"club": "Swedish Orienteering Federatio",
+		"class": "Women",
+		"result": "30:27",
+		"status": 0,
+		"timeplus": "+00:00",
+		"start": 4428000
+	}, {
+		"place": "5",
+		"name": "Tove Alexandersson",
+		"club": "Swedish Orienteering Federatio",
+		"class": "Women",
+		"result": "32:46",
+		"status": 0,
+		"timeplus": "+02:19",
+		"start": 4440000
+	}],
+	"hash": "27f94605b411988943f9106221075353"
+}

@@ -4,6 +4,7 @@ import { getPasses } from 'lib/api';
 import { UNIT, COLORS } from 'util/const';
 import { ScrollView, RefreshControl, TextStyle } from 'react-native';
 import Lang from 'lib/lang';
+import { Cache } from 'lib/cache';
 
 const {
     View,
@@ -30,6 +31,10 @@ export class OLPassings extends React.PureComponent<any, State> {
         title: `${navigation.state.params.title}`,
     })
 
+    cache: Cache<{
+        passings: Passing[];
+    }> = new Cache(`passing:${this.props.navigation.state.params.id}`, 15000);
+
     state = {
         passings: null,
         loading: false,
@@ -41,7 +46,17 @@ export class OLPassings extends React.PureComponent<any, State> {
 
     getPasses = async () => {
         const { params: { id } } = this.props.navigation.state;
-        const passings = await getPasses(id);
+
+        const data = await this.cache.get();
+        let passings;
+
+        if (!data) {
+            passings = await getPasses(id);
+            await this.cache.set({ passings });
+        } else {
+            passings = data.passings;
+        }
+
         this.setState({ passings });
     }
 
@@ -116,9 +131,6 @@ export class OLPassings extends React.PureComponent<any, State> {
                         tintColor={COLORS.MAIN}
                     />
                 }
-                style={{
-
-                }}
             >
                 <View
                     style={{

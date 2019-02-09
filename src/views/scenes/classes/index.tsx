@@ -10,7 +10,6 @@ import Lang from 'lib/lang';
 
 const {
     Container,
-    Content,
     Spinner,
     View,
     Title,
@@ -29,31 +28,25 @@ export class OLClasses extends React.PureComponent<Props, State> {
 
     static navigationOptions = ({ navigation }) => ({
         title: `${navigation.state.params.title}`,
-        // ToDo: Implement search
-        // headerRight: (
-        //     <TouchableOpacity
-        //         onPress={() => navigation.push(Routes.info)}
-        //         style={{ marginRight: UNIT }}
-        //     >
-        //         <Ionicons
-        //             name="md-search"
-        //             size={24}
-        //             color="white"
-        //         />
-        //     </TouchableOpacity>
-        // ),
     })
 
     state = { olClass: null };
 
     cacheId = () => {
         const { params: { id, className } } = this.props.navigation.state;
-        return `${id}:${className}`;
+        return `class:${id}:${className}`;
     }
-    cache: Cache<Class> = new Cache(`class:${this.cacheId()}`, 10000);
+
+    // 1000 ms less than the poller
+    cache: Cache<Class> = new Cache(`class:${this.cacheId()}`, 14000);
 
     async componentWillMount() {
+        this.poll();
+    }
+
+    poll = async (): Promise<Result[]> => {
         const { params: { id, className } } = this.props.navigation.state;
+
         let olClass: Class = await this.cache.get();
 
         if (!olClass) {
@@ -62,11 +55,7 @@ export class OLClasses extends React.PureComponent<Props, State> {
         }
 
         this.setState({ olClass });
-    }
 
-    poll = async (): Promise<Result[]> => {
-        const { params: { id, className } } = this.props.navigation.state;
-        const olClass = await getClass(id, className);
         return olClass.results;
     }
 
@@ -83,7 +72,7 @@ export class OLClasses extends React.PureComponent<Props, State> {
                 <Title style={{
                     textAlign: 'left',
                     fontSize: UNIT * 1.35,
-                    marginVertical: 10,
+                    paddingBottom: 10,
                     color: 'black',
                 }}>
                     {Lang.print('classes.resultsFor')}: {this.state.olClass.className}
@@ -108,9 +97,7 @@ export class OLClasses extends React.PureComponent<Props, State> {
     render() {
         return (
             <Container>
-                <Content>
-                    {this.renderInner()}
-                </Content>
+                {this.renderInner()}
             </Container>
         );
     }

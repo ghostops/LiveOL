@@ -5,6 +5,8 @@ interface SavedObject<T> {
     ttl: number;
 }
 
+const TURNED_ON = true;
+
 export class Cache<T> {
     key: string;
     expiry: number = 3600;
@@ -27,6 +29,8 @@ export class Cache<T> {
     }
 
     public async get(): Promise<T> {
+        if (!TURNED_ON) return null;
+
         const data = await AsyncStorage.getItem(this.key) || null;
         const parsed: SavedObject<T> = JSON.parse(data);
 

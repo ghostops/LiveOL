@@ -1,0 +1,9 @@
+{
+	"competitions": [{
+		"id": 1,
+		"name": "TEST EVENT",
+		"organizer": "TEST GUY",
+		"date": "2019-03-31",
+		"timediff": 0
+    }]
+}

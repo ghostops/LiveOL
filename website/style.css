@@ -3,7 +3,12 @@ html {
 }
 
 body {
-    background: url(./img/bg.png) no-repeat top center #e86a1e;
+    background:
+        linear-gradient(
+        rgba(0, 0, 0, 0.45),
+        rgba(0, 0, 0, 0.45)
+        ),
+        url(./img/bg.png) no-repeat top center #e86a1e;
     background-size: cover;
     min-height: 100%;
     margin: 0;
@@ -22,7 +27,7 @@ h1 {
     font-size: 72px;
     font-style: italic;
     color: #fff;
-    box-shadow: 0px 4px 32px white;
+    box-shadow: 0px 4px 32px rgba(255, 255, 255, .55);
     cursor: default;
 }
 

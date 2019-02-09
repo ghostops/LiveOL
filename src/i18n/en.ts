@@ -51,4 +51,30 @@ export default {
         contact: 'Contact me',
     },
     back: 'Back',
+    status: {
+        short: [
+            'OK',
+            'DNS',
+            'DNF',
+            'MP',
+            'DSQ',
+            'OT',
+            'Not Started Yet',
+            'Not Started Yet',
+            'Walk Over',
+            'Moved Up',
+        ],
+        long: [
+            'OKAY',
+            'Did Not Start',
+            'Did Not Finish',
+            'Missing Punch',
+            'Disqualified',
+            'Over Max Time',
+            'Not Started Yet',
+            'Not Started Yet',
+            'Walk Over',
+            'Moved Up',
+        ],
+    }
 };

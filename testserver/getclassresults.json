@@ -1,0 +1,1047 @@
+{
+	"status": "OK",
+	"className": "Men",
+	"splitcontrols": [{
+		"code": 1055,
+		"name": "(55)"
+	}, {
+		"code": 1046,
+		"name": "(46)"
+	}],
+	"results": [{
+		"place": "12",
+		"name": "Erik Rost",
+		"club": "Swedish Orienteering Federatio",
+		"result": "35:36",
+		"status": 0,
+		"timeplus": "+00:00",
+		"progress": 100,
+		"splits": {
+			"1055": 57900,
+			"1055_status": 0,
+			"1055_place": 2,
+			"1055_timeplus": 100,
+			"1046": 157100,
+			"1046_status": 0,
+			"1046_place": 1,
+			"1046_timeplus": 0
+		},
+		"start": 4614000
+	}, {
+		"place": "2",
+		"name": "Lars Moholdt",
+		"club": "Norwegian Orienteering Federat",
+		"result": "35:39",
+		"status": 0,
+		"timeplus": "+00:03",
+		"progress": 100,
+		"splits": {
+			"1055": "",
+			"1055_status": 1,
+			"1055_place": "",
+			"1046": 158900,
+			"1046_status": 0,
+			"1046_place": 2,
+			"1046_timeplus": 1800
+		},
+		"start": 4578000
+	}, {
+		"place": "3",
+		"name": "Sergey Gorlanov",
+		"club": "Russian Orienteering Federatio",
+		"result": "36:22",
+		"status": 0,
+		"timeplus": "+00:46",
+		"progress": 100,
+		"splits": {
+			"1055": 59300,
+			"1055_status": 0,
+			"1055_place": 6,
+			"1055_timeplus": 1500,
+			"1046": 162300,
+			"1046_status": 0,
+			"1046_place": 4,
+			"1046_timeplus": 5200
+		},
+		"start": 4602000
+	}, {
+		"place": "4",
+		"name": "Eduard Khrennikov",
+		"club": "Russian Orienteering Federatio",
+		"result": "36:41",
+		"status": 0,
+		"timeplus": "+01:05",
+		"progress": 100,
+		"splits": {
+			"1055": 58800,
+			"1055_status": 0,
+			"1055_place": 4,
+			"1055_timeplus": 1000,
+			"1046": 163900,
+			"1046_status": 0,
+			"1046_place": 7,
+			"1046_timeplus": 6800
+		},
+		"start": 4542000
+	}, {
+		"place": "5",
+		"name": "Stanimir Belomazhev",
+		"club": "Bulgarian Orienteering Federat",
+		"result": "36:43",
+		"status": 0,
+		"timeplus": "+01:07",
+		"progress": 100,
+		"splits": {
+			"1055": 59000,
+			"1055_status": 0,
+			"1055_place": 5,
+			"1055_timeplus": 1200,
+			"1046": 162900,
+			"1046_status": 0,
+			"1046_place": 5,
+			"1046_timeplus": 5800
+		},
+		"start": 4554000
+	}, {
+		"place": "6",
+		"name": "Jorgen Madslien",
+		"club": "Norwegian Orienteering Federat",
+		"result": "37:05",
+		"status": 0,
+		"timeplus": "+01:29",
+		"progress": 100,
+		"splits": {
+			"1055": 61800,
+			"1055_status": 0,
+			"1055_place": 14,
+			"1055_timeplus": 4000,
+			"1046": 166200,
+			"1046_status": 0,
+			"1046_place": 8,
+			"1046_timeplus": 9100
+		},
+		"start": 4590000
+	}, {
+		"place": "7",
+		"name": "Jorgen Baklid",
+		"club": "Norwegian Orienteering Federat",
+		"result": "37:13",
+		"status": 0,
+		"timeplus": "+01:37",
+		"progress": 100,
+		"splits": {
+			"1055": 57900,
+			"1055_status": 0,
+			"1055_place": 2,
+			"1055_timeplus": 100,
+			"1046": 160800,
+			"1046_status": 0,
+			"1046_place": 3,
+			"1046_timeplus": 3700
+		},
+		"start": 4290000
+	}, {
+		"place": "8",
+		"name": "Gion Schnyder",
+		"club": "Swiss Orienteering",
+		"result": "37:18",
+		"status": 0,
+		"timeplus": "+01:42",
+		"progress": 100,
+		"splits": {
+			"1055": 57800,
+			"1055_status": 0,
+			"1055_place": 1,
+			"1055_timeplus": 0,
+			"1046": 163500,
+			"1046_status": 0,
+			"1046_place": 6,
+			"1046_timeplus": 6400
+		},
+		"start": 4506000
+	}, {
+		"place": "9",
+		"name": "Vladislav Kiselev",
+		"club": "Russian Orienteering Federatio",
+		"result": "37:31",
+		"status": 0,
+		"timeplus": "+01:55",
+		"progress": 100,
+		"splits": {
+			"1055": 60500,
+			"1055_status": 0,
+			"1055_place": 11,
+			"1055_timeplus": 2700,
+			"1046": 167600,
+			"1046_status": 0,
+			"1046_place": 11,
+			"1046_timeplus": 10500
+		},
+		"start": 4530000
+	}, {
+		"place": "10",
+		"name": "Erik Blomgren",
+		"club": "Swedish Orienteering Federatio",
+		"result": "37:47",
+		"status": 0,
+		"timeplus": "+02:11",
+		"progress": 100,
+		"splits": {
+			"1055": 62000,
+			"1055_status": 0,
+			"1055_place": 16,
+			"1055_timeplus": 4200,
+			"1046": 169800,
+			"1046_status": 0,
+			"1046_place": 12,
+			"1046_timeplus": 12700
+		},
+		"start": 4566000
+	}, {
+		"place": "11",
+		"name": "Petr Horvat",
+		"club": "Czech Orienteering Federation",
+		"result": "38:00",
+		"status": 0,
+		"timeplus": "+02:24",
+		"progress": 100,
+		"splits": {
+			"1055": 61700,
+			"1055_status": 0,
+			"1055_place": 13,
+			"1055_timeplus": 3900,
+			"1046": 166900,
+			"1046_status": 0,
+			"1046_place": 10,
+			"1046_timeplus": 9800
+		},
+		"start": 4242000
+	}, {
+		"place": "12",
+		"name": "Tuomas Kotro",
+		"club": "Finnish Orienteering Federatio",
+		"result": "38:02",
+		"status": 0,
+		"timeplus": "+02:26",
+		"progress": 100,
+		"splits": {
+			"1055": "",
+			"1055_status": 1,
+			"1055_place": "",
+			"1046": 166500,
+			"1046_status": 0,
+			"1046_place": 9,
+			"1046_timeplus": 9400
+		},
+		"start": 4410000
+	}, {
+		"place": "13",
+		"name": "Oyvind Wiggen",
+		"club": "Norwegian Orienteering Federat",
+		"result": "38:09",
+		"status": 0,
+		"timeplus": "+02:33",
+		"progress": 100,
+		"splits": {
+			"1055": 61900,
+			"1055_status": 0,
+			"1055_place": 15,
+			"1055_timeplus": 4100,
+			"1046": 169800,
+			"1046_status": 0,
+			"1046_place": 12,
+			"1046_timeplus": 12700
+		},
+		"start": 4158000
+	}, {
+		"place": "14",
+		"name": "Martin Hammarberg",
+		"club": "Swedish Orienteering Federatio",
+		"result": "38:57",
+		"status": 0,
+		"timeplus": "+03:21",
+		"progress": 100,
+		"splits": {
+			"1055": 61600,
+			"1055_status": 0,
+			"1055_place": 12,
+			"1055_timeplus": 3800,
+			"1046": 173100,
+			"1046_status": 0,
+			"1046_place": 14,
+			"1046_timeplus": 16000
+		},
+		"start": 4470000
+	}, {
+		"place": "15",
+		"name": "Janne Hakkinen",
+		"club": "Finnish Orienteering Federatio",
+		"result": "39:26",
+		"status": 0,
+		"timeplus": "+03:50",
+		"progress": 100,
+		"splits": {
+			"1055": 62700,
+			"1055_status": 0,
+			"1055_place": 19,
+			"1055_timeplus": 4900,
+			"1046": 175600,
+			"1046_status": 0,
+			"1046_place": 16,
+			"1046_timeplus": 18500
+		},
+		"start": 4434000
+	}, {
+		"place": "16",
+		"name": "Tero Linnainmaa",
+		"club": "Finnish Orienteering Federatio",
+		"result": "39:37",
+		"status": 0,
+		"timeplus": "+04:01",
+		"progress": 100,
+		"splits": {
+			"1055": 62200,
+			"1055_status": 0,
+			"1055_place": 17,
+			"1055_timeplus": 4400,
+			"1046": 175300,
+			"1046_status": 0,
+			"1046_place": 15,
+			"1046_timeplus": 18200
+		},
+		"start": 4422000
+	}, {
+		"place": "17",
+		"name": "Bjornar Kvale",
+		"club": "Norwegian Orienteering Federat",
+		"result": "39:47",
+		"status": 0,
+		"timeplus": "+04:11",
+		"progress": 100,
+		"splits": {
+			"1055": "",
+			"1055_status": 1,
+			"1055_place": "",
+			"1046": 178900,
+			"1046_status": 0,
+			"1046_place": 21,
+			"1046_timeplus": 21800
+		},
+		"start": 4482000
+	}, {
+		"place": "18",
+		"name": "Jakub Skoda",
+		"club": "Czech Orienteering Federation",
+		"result": "40:10",
+		"status": 0,
+		"timeplus": "+04:34",
+		"progress": 100,
+		"splits": {
+			"1055": 63900,
+			"1055_status": 0,
+			"1055_place": 22,
+			"1055_timeplus": 6100,
+			"1046": 176900,
+			"1046_status": 0,
+			"1046_place": 18,
+			"1046_timeplus": 19800
+		},
+		"start": 4458000
+	}, {
+		"place": "19",
+		"name": "Jyri Uusitalo",
+		"club": "Finnish Orienteering Federatio",
+		"result": "40:20",
+		"status": 0,
+		"timeplus": "+04:44",
+		"progress": 100,
+		"splits": {
+			"1055": 59600,
+			"1055_status": 0,
+			"1055_place": 7,
+			"1055_timeplus": 1800,
+			"1046": 177800,
+			"1046_status": 0,
+			"1046_place": 20,
+			"1046_timeplus": 20700
+		},
+		"start": 4386000
+	}, {
+		"place": "20",
+		"name": "Rasmus Wickbom",
+		"club": "Swedish Orienteering Federatio",
+		"result": "40:58",
+		"status": 0,
+		"timeplus": "+05:22",
+		"progress": 100,
+		"splits": {
+			"1055": 65700,
+			"1055_status": 0,
+			"1055_place": 24,
+			"1055_timeplus": 7900,
+			"1046": 180700,
+			"1046_status": 0,
+			"1046_place": 22,
+			"1046_timeplus": 23600
+		},
+		"start": 4086000
+	}, {
+		"place": "21",
+		"name": "Oeyvind Watterdal",
+		"club": "Norwegian Orienteering Federat",
+		"result": "41:10",
+		"status": 0,
+		"timeplus": "+05:34",
+		"progress": 100,
+		"splits": {
+			"1055": 63300,
+			"1055_status": 0,
+			"1055_place": 21,
+			"1055_timeplus": 5500,
+			"1046": 176400,
+			"1046_status": 0,
+			"1046_place": 17,
+			"1046_timeplus": 19300
+		},
+		"start": 4398000
+	}, {
+		"place": "22",
+		"name": "Misa Tuomala",
+		"club": "Finnish Orienteering Federatio",
+		"result": "41:26",
+		"status": 0,
+		"timeplus": "+05:50",
+		"progress": 100,
+		"splits": {
+			"1055": 62600,
+			"1055_status": 0,
+			"1055_place": 18,
+			"1055_timeplus": 4800,
+			"1046": 177100,
+			"1046_status": 0,
+			"1046_place": 19,
+			"1046_timeplus": 20000
+		},
+		"start": 4446000
+	}, {
+		"place": "23",
+		"name": "Radek Laciga",
+		"club": "Czech Orienteering Federation",
+		"result": "41:47",
+		"status": 0,
+		"timeplus": "+06:11",
+		"progress": 100,
+		"splits": {
+			"1055": 67200,
+			"1055_status": 0,
+			"1055_place": 26,
+			"1055_timeplus": 9400,
+			"1046": 186200,
+			"1046_status": 0,
+			"1046_place": 25,
+			"1046_timeplus": 29100
+		},
+		"start": 4278000
+	}, {
+		"place": "24",
+		"name": "Maxim Trifonenkov",
+		"club": "Russian Orienteering Federatio",
+		"result": "41:48",
+		"status": 0,
+		"timeplus": "+06:12",
+		"progress": 100,
+		"splits": {
+			"1055": 60000,
+			"1055_status": 0,
+			"1055_place": 8,
+			"1055_timeplus": 2200,
+			"1046": 184200,
+			"1046_status": 0,
+			"1046_place": 24,
+			"1046_timeplus": 27100
+		},
+		"start": 4338000
+	}, {
+		"place": "25",
+		"name": "Markus Lundholm",
+		"club": "Swedish Orienteering Federatio",
+		"result": "42:17",
+		"status": 0,
+		"timeplus": "+06:41",
+		"progress": 100,
+		"splits": {
+			"1055": 60100,
+			"1055_status": 0,
+			"1055_place": 9,
+			"1055_timeplus": 2300,
+			"1046": 187700,
+			"1046_status": 0,
+			"1046_place": 26,
+			"1046_timeplus": 30600
+		},
+		"start": 4494000
+	}, {
+		"place": "26",
+		"name": "Sixten Walheim",
+		"club": "Swedish Orienteering Federatio",
+		"result": "42:17",
+		"status": 0,
+		"timeplus": "+06:41",
+		"progress": 100,
+		"splits": {
+			"1055": 65100,
+			"1055_status": 0,
+			"1055_place": 23,
+			"1055_timeplus": 7300,
+			"1046": 182400,
+			"1046_status": 0,
+			"1046_place": 23,
+			"1046_timeplus": 25300
+		},
+		"start": 4374000
+	}, {
+		"place": "27",
+		"name": "Andrey Lamov",
+		"club": "Russian Orienteering Federatio",
+		"result": "42:50",
+		"status": 0,
+		"timeplus": "+07:14",
+		"progress": 100,
+		"splits": {
+			"1055": 60400,
+			"1055_status": 0,
+			"1055_place": 10,
+			"1055_timeplus": 2600,
+			"1046": 192400,
+			"1046_status": 0,
+			"1046_place": 27,
+			"1046_timeplus": 35300
+		},
+		"start": 4518000
+	}, {
+		"place": "28",
+		"name": "Aleksandr Zlobin",
+		"club": "Russian Orienteering Federatio",
+		"result": "42:59",
+		"status": 0,
+		"timeplus": "+07:23",
+		"progress": 100,
+		"splits": {
+			"1055": 67900,
+			"1055_status": 0,
+			"1055_place": 27,
+			"1055_timeplus": 10100,
+			"1046": 193800,
+			"1046_status": 0,
+			"1046_place": 29,
+			"1046_timeplus": 36700
+		},
+		"start": 4062000
+	}, {
+		"place": "29",
+		"name": "Lukas Deininger",
+		"club": "Swiss Orienteering",
+		"result": "43:07",
+		"status": 0,
+		"timeplus": "+07:31",
+		"progress": 100,
+		"splits": {
+			"1055": 70800,
+			"1055_status": 0,
+			"1055_place": 30,
+			"1055_timeplus": 13000,
+			"1046": 192800,
+			"1046_status": 0,
+			"1046_place": 28,
+			"1046_timeplus": 35700
+		},
+		"start": 4182000
+	}, {
+		"place": "30",
+		"name": "Mattis Jaama",
+		"club": "Estonian Orienteering Federati",
+		"result": "43:36",
+		"status": 0,
+		"timeplus": "+08:00",
+		"progress": 100,
+		"splits": {
+			"1055": 63000,
+			"1055_status": 0,
+			"1055_place": 20,
+			"1055_timeplus": 5200,
+			"1046": 193800,
+			"1046_status": 0,
+			"1046_place": 29,
+			"1046_timeplus": 36700
+		},
+		"start": 4350000
+	}, {
+		"place": "31",
+		"name": "Voitech Matus",
+		"club": "Czech Orienteering Federation",
+		"result": "45:28",
+		"status": 0,
+		"timeplus": "+09:52",
+		"progress": 100,
+		"splits": {
+			"1055": 68000,
+			"1055_status": 0,
+			"1055_place": 28,
+			"1055_timeplus": 10200,
+			"1046": 195600,
+			"1046_status": 0,
+			"1046_place": 31,
+			"1046_timeplus": 38500
+		},
+		"start": 4098000
+	}, {
+		"place": "32",
+		"name": "Andrin Bieri",
+		"club": "Swiss Orienteering",
+		"result": "46:13",
+		"status": 0,
+		"timeplus": "+10:37",
+		"progress": 100,
+		"splits": {
+			"1055": 73900,
+			"1055_status": 0,
+			"1055_place": 33,
+			"1055_timeplus": 16100,
+			"1046": 207000,
+			"1046_status": 0,
+			"1046_place": 34,
+			"1046_timeplus": 49900
+		},
+		"start": 4026000
+	}, {
+		"place": "33",
+		"name": "Jan Hasek",
+		"club": "Czech Orienteering Federation",
+		"result": "46:44",
+		"status": 0,
+		"timeplus": "+11:08",
+		"progress": 100,
+		"splits": {
+			"1055": 72300,
+			"1055_status": 0,
+			"1055_place": 31,
+			"1055_timeplus": 14500,
+			"1046": 209700,
+			"1046_status": 0,
+			"1046_place": 36,
+			"1046_timeplus": 52600
+		},
+		"start": 4134000
+	}, {
+		"place": "34",
+		"name": "Davide Comai",
+		"club": "Italian Orienteering Federatio",
+		"result": "46:45",
+		"status": 0,
+		"timeplus": "+11:09",
+		"progress": 100,
+		"splits": {
+			"1055": 65900,
+			"1055_status": 0,
+			"1055_place": 25,
+			"1055_timeplus": 8100,
+			"1046": 203500,
+			"1046_status": 0,
+			"1046_place": 33,
+			"1046_timeplus": 46400
+		},
+		"start": 4314000
+	}, {
+		"place": "35",
+		"name": "Ignas Ambrazas",
+		"club": "Lithuanian Orienteering Federa",
+		"result": "47:07",
+		"status": 0,
+		"timeplus": "+11:31",
+		"progress": 100,
+		"splits": {
+			"1055": "",
+			"1055_status": 1,
+			"1055_place": "",
+			"1046": 211800,
+			"1046_status": 0,
+			"1046_place": 37,
+			"1046_timeplus": 54700
+		},
+		"start": 4074000
+	}, {
+		"place": "36",
+		"name": "Kevin Hallop",
+		"club": "Estonian Orienteering Federati",
+		"result": "48:15",
+		"status": 0,
+		"timeplus": "+12:39",
+		"progress": 100,
+		"splits": {
+			"1055": 69600,
+			"1055_status": 0,
+			"1055_place": 29,
+			"1055_timeplus": 11800,
+			"1046": 214500,
+			"1046_status": 0,
+			"1046_place": 40,
+			"1046_timeplus": 57400
+		},
+		"start": 4110000
+	}, {
+		"place": "37",
+		"name": "Simion Suciu",
+		"club": "Romanian Orienteering Federati",
+		"result": "48:59",
+		"status": 0,
+		"timeplus": "+13:23",
+		"progress": 100,
+		"splits": {
+			"1055": 74400,
+			"1055_status": 0,
+			"1055_place": 35,
+			"1055_timeplus": 16600,
+			"1046": 199200,
+			"1046_status": 0,
+			"1046_place": 32,
+			"1046_timeplus": 42100
+		},
+		"start": 4254000
+	}, {
+		"place": "38",
+		"name": "Nikolay Dimitrov",
+		"club": "Bulgarian Orienteering Federat",
+		"result": "49:02",
+		"status": 0,
+		"timeplus": "+13:26",
+		"progress": 100,
+		"splits": {
+			"1055": 75800,
+			"1055_status": 0,
+			"1055_place": 37,
+			"1055_timeplus": 18000,
+			"1046": 212100,
+			"1046_status": 0,
+			"1046_place": 38,
+			"1046_timeplus": 55000
+		},
+		"start": 4362000
+	}, {
+		"place": "39",
+		"name": "Mihai Tintar",
+		"club": "Romanian Orienteering Federati",
+		"result": "49:18",
+		"status": 0,
+		"timeplus": "+13:42",
+		"progress": 100,
+		"splits": {
+			"1055": 80400,
+			"1055_status": 0,
+			"1055_place": 40,
+			"1055_timeplus": 22600,
+			"1046": 214100,
+			"1046_status": 0,
+			"1046_place": 39,
+			"1046_timeplus": 57000
+		},
+		"start": 4050000
+	}, {
+		"place": "40",
+		"name": "Ondrej Vystavel",
+		"club": "Czech Orienteering Federation",
+		"result": "49:33",
+		"status": 0,
+		"timeplus": "+13:57",
+		"progress": 100,
+		"splits": {
+			"1055": "",
+			"1055_status": 1,
+			"1055_place": "",
+			"1046": 223200,
+			"1046_status": 0,
+			"1046_place": 43,
+			"1046_timeplus": 66100
+		},
+		"start": 3978000
+	}, {
+		"place": "41",
+		"name": "Zoltan Szep",
+		"club": "Romanian Orienteering Federati",
+		"result": "51:33",
+		"status": 0,
+		"timeplus": "+15:57",
+		"progress": 100,
+		"splits": {
+			"1055": 75400,
+			"1055_status": 0,
+			"1055_place": 36,
+			"1055_timeplus": 17600,
+			"1046": 217400,
+			"1046_status": 0,
+			"1046_place": 41,
+			"1046_timeplus": 60300
+		},
+		"start": 4218000
+	}, {
+		"place": "42",
+		"name": "Kostiantyn Marych",
+		"club": "Ukrainian Orienteering Federat",
+		"result": "51:50",
+		"status": 0,
+		"timeplus": "+16:14",
+		"progress": 100,
+		"splits": {
+			"1055": 74000,
+			"1055_status": 0,
+			"1055_place": 34,
+			"1055_timeplus": 16200,
+			"1046": 227600,
+			"1046_status": 0,
+			"1046_place": 44,
+			"1046_timeplus": 70500
+		},
+		"start": 4266000
+	}, {
+		"place": "43",
+		"name": "Radoslaw Jaroszek",
+		"club": "Poland Orienteering Federatio",
+		"result": "52:02",
+		"status": 0,
+		"timeplus": "+16:26",
+		"progress": 100,
+		"splits": {
+			"1055": 73000,
+			"1055_status": 0,
+			"1055_place": 32,
+			"1055_timeplus": 15200,
+			"1046": 207500,
+			"1046_status": 0,
+			"1046_place": 35,
+			"1046_timeplus": 50400
+		},
+		"start": 4326000
+	}, {
+		"place": "44",
+		"name": "Rokas Vaitkus",
+		"club": "Lithuanian Orienteering Federa",
+		"result": "53:46",
+		"status": 0,
+		"timeplus": "+18:10",
+		"progress": 100,
+		"splits": {
+			"1055": 76700,
+			"1055_status": 0,
+			"1055_place": 38,
+			"1055_timeplus": 18900,
+			"1046": 218900,
+			"1046_status": 0,
+			"1046_place": 42,
+			"1046_timeplus": 61800
+		},
+		"start": 4206000
+	}, {
+		"place": "45",
+		"name": "Alexandru Blejdea",
+		"club": "Romanian Orienteering Federati",
+		"result": "58:13",
+		"status": 0,
+		"timeplus": "+22:37",
+		"progress": 100,
+		"splits": {
+			"1055": "",
+			"1055_status": 1,
+			"1055_place": "",
+			"1046": 230200,
+			"1046_status": 0,
+			"1046_place": 45,
+			"1046_timeplus": 73100
+		},
+		"start": 4014000
+	}, {
+		"place": "46",
+		"name": "Ugur Aycicek",
+		"club": "Turkish Orienteering Federatio",
+		"result": "58:59",
+		"status": 0,
+		"timeplus": "+23:23",
+		"progress": 100,
+		"splits": {
+			"1055": 77600,
+			"1055_status": 0,
+			"1055_place": 39,
+			"1055_timeplus": 19800,
+			"1046": 244600,
+			"1046_status": 0,
+			"1046_place": 46,
+			"1046_timeplus": 87500
+		},
+		"start": 4194000
+	}, {
+		"place": "47",
+		"name": "Servet Ozcan",
+		"club": "Turkish Orienteering Federatio",
+		"result": "67:11",
+		"status": 0,
+		"timeplus": "+31:35",
+		"progress": 100,
+		"splits": {
+			"1055": "",
+			"1055_status": 1,
+			"1055_place": "",
+			"1046": 318700,
+			"1046_status": 0,
+			"1046_place": 50,
+			"1046_timeplus": 161600
+		},
+		"start": 4146000
+	}, {
+		"place": "48",
+		"name": "Emirhan Kotan",
+		"club": "Turkish Orienteering Federatio",
+		"result": "71:13",
+		"status": 0,
+		"timeplus": "+35:37",
+		"progress": 100,
+		"splits": {
+			"1055": 92600,
+			"1055_status": 0,
+			"1055_place": 41,
+			"1055_timeplus": 34800,
+			"1046": 317900,
+			"1046_status": 0,
+			"1046_place": 49,
+			"1046_timeplus": 160800
+		},
+		"start": 4002000
+	}, {
+		"place": "49",
+		"name": "Yasin Aycicek",
+		"club": "Turkish Orienteering Federatio",
+		"result": "71:17",
+		"status": 0,
+		"timeplus": "+35:41",
+		"progress": 100,
+		"splits": {
+			"1055": 98600,
+			"1055_status": 0,
+			"1055_place": 42,
+			"1055_timeplus": 40800,
+			"1046": 316200,
+			"1046_status": 0,
+			"1046_place": 48,
+			"1046_timeplus": 159100
+		},
+		"start": 4122000
+	}, {
+		"place": "50",
+		"name": "Umut Gurcan",
+		"club": "Turkish Orienteering Federatio",
+		"result": "73:36",
+		"status": 0,
+		"timeplus": "+38:00",
+		"progress": 100,
+		"splits": {
+			"1055": "",
+			"1055_status": 1,
+			"1055_place": "",
+			"1046": 297500,
+			"1046_status": 0,
+			"1046_place": 47,
+			"1046_timeplus": 140400
+		},
+		"start": 4230000
+	}, {
+		"place": "51",
+		"name": "Erkan Demir",
+		"club": "Turkish Orienteering Federatio",
+		"result": "77:11",
+		"status": 0,
+		"timeplus": "+41:35",
+		"progress": 100,
+		"splits": {
+			"1055": 146100,
+			"1055_status": 0,
+			"1055_place": 43,
+			"1055_timeplus": 88300,
+			"1046": 354100,
+			"1046_status": 0,
+			"1046_place": 51,
+			"1046_timeplus": 197000
+		},
+		"start": 3966000
+	}, {
+		"place": "-",
+		"name": "Francesco Corradini",
+		"club": "Italian Orienteering Federatio",
+		"result": "felst.",
+		"status": 3,
+		"timeplus": "+felst.",
+		"progress": 100,
+		"splits": {
+			"1055": "",
+			"1055_status": 1,
+			"1055_place": "",
+			"1046": "",
+			"1046_status": 1,
+			"1046_place": ""
+		},
+		"start": 4038000
+	}, {
+		"place": "-",
+		"name": "Vadim Ogorodnikov",
+		"club": "Russian Orienteering Federatio",
+		"result": "felst.",
+		"status": 3,
+		"timeplus": "+felst.",
+		"progress": 100,
+		"splits": {
+			"1055": "",
+			"1055_status": 1,
+			"1055_place": "",
+			"1046": 181200,
+			"1046_status": 3,
+			"1046_place": "-",
+			"1046_timeplus": 24100
+		},
+		"start": 3990000
+	}, {
+		"place": "-",
+		"name": "Ozan Aycicek",
+		"club": "Turkish Orienteering Federatio",
+		"result": "felst.",
+		"status": 3,
+		"timeplus": "+felst.",
+		"progress": 100,
+		"splits": {
+			"1055": 92800,
+			"1055_status": 3,
+			"1055_place": "-",
+			"1055_timeplus": 35000,
+			"1046": 278700,
+			"1046_status": 3,
+			"1046_place": "-",
+			"1046_timeplus": 121600
+		},
+		"start": 4170000
+	}, {
+		"place": "-",
+		"name": "Onder Aktimur",
+		"club": "Turkish Orienteering Federatio",
+		"result": "felst.",
+		"status": 3,
+		"timeplus": "+felst.",
+		"progress": 100,
+		"splits": {
+			"1055": 112700,
+			"1055_status": 3,
+			"1055_place": "-",
+			"1055_timeplus": 54900,
+			"1046": 294800,
+			"1046_status": 3,
+			"1046_place": "-",
+			"1046_timeplus": 137700
+		},
+		"start": 4302000
+	}],
+	"hash": "bfc3c678436f6dfe9138215d3d334f0f"
+}
