@@ -49,6 +49,8 @@ export default {
         version: 'Current version',
         appStore: `Open ${Platform.OS === 'ios' ? 'App Store' : 'Google Play'}`,
         contact: 'Contact me',
+        purgeCache: 'Clear cached results',
+        purged: 'saved events were removed',
     },
     back: 'Back',
     status: {
@@ -76,5 +78,5 @@ export default {
             'Walk Over',
             'Moved Up',
         ],
-    }
+    },
 };

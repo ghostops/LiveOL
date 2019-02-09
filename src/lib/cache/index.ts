@@ -6,13 +6,14 @@ interface SavedObject<T> {
 }
 
 const TURNED_ON = true;
+const PREFIX = 'CACHE:';
 
 export class Cache<T> {
     key: string;
     expiry: number = 3600;
 
     constructor(key: string, expiry?: number) {
-        this.key = key;
+        this.key = PREFIX + key;
 
         if (expiry) {
             this.expiry = expiry;
