@@ -27,7 +27,7 @@ export default {
         title: 'Information',
         // tslint:disable
         body: [
-            `LiveOL är en app som visar orienteringsresultat live och bygger på Peter Löfås' liveresultat.orientering.se.`,
+            `LiveOL är en app som visar orienteringsresultat live och bygger på liveresultat.orientering.se.`,
             `Du får resultaten direkt i mobilen eller på surfplattan paketerat i ett smidigt användargränssnitt.`,
             `Appen är framtagen av Ludvig Larsendahl och koden finns Open Source på GitHub (sök på LiveOL).`,
         ],
