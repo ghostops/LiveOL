@@ -5,6 +5,9 @@ export default {
         title: 'LiveOL',
         today: 'Today',
         page: 'Page',
+        search: 'Search',
+        goToday: 'Scroll to Today',
+        nothingToday: 'There are no competitions today',
     },
     competitions: {
         organizedBy: 'Organized by',

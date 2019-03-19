@@ -7,9 +7,10 @@ import { NavigationScreenProp } from 'react-navigation';
 import { Pagination } from 'views/components/pagination';
 import { Right, Left } from './header';
 import { Routes } from 'lib/nav/routes';
-import { ScrollView } from 'react-native';
+import { ScrollView, LayoutChangeEvent, Alert } from 'react-native';
 import { UNIT, COLORS } from 'util/const';
 import Lang from 'lib/lang';
+import { SearchBar } from 'views/components/search/bar';
 
 const {
     Container,
@@ -21,6 +22,11 @@ const {
     CardItem,
     Card,
     Body,
+    Header,
+    Item,
+    Button,
+    Icon,
+    Input,
 } = NB;
 
 interface Props {
@@ -28,8 +34,10 @@ interface Props {
 }
 
 interface State {
+    originalComps: Comp[];
     comps: Comp[];
     page: number;
+    todayOffset: number;
 }
 
 export class OLHome extends React.PureComponent<Props, State> {
@@ -44,8 +52,10 @@ export class OLHome extends React.PureComponent<Props, State> {
     cache: Cache<Comp[]> = new Cache('comps', 60000);
 
     state: State = {
+        originalComps: null,
         comps: null,
         page: 1,
+        todayOffset: null,
     };
 
     async componentWillMount() {
@@ -56,7 +66,14 @@ export class OLHome extends React.PureComponent<Props, State> {
             await this.cache.set(comps);
         }
 
-        this.setState({ comps });
+        this.setState({
+            comps,
+            originalComps: comps,
+        });
+    }
+
+    componentDidMount() {
+        // setTimeout(this.toggleSearch, 2000);
     }
 
     groupComps = (comps: Comp[]) => {
@@ -95,22 +112,22 @@ export class OLHome extends React.PureComponent<Props, State> {
         return output;
     }
 
-    scrollTop = () => {
+    scrollTo = (y?: number) => {
         if (this.content) {
             this.content.scrollTo({
-                animated: false,
+                animated: !!y,
                 x: 0,
-                y: 0,
+                y: y || 0,
             });
         }
     }
 
     paginateForward = () => {
-        this.setState({ page: this.state.page + 1 }, this.scrollTop);
+        this.setState({ page: this.state.page + 1 }, this.scrollTo);
     }
 
     paginateBackwards = () => {
-        this.setState({ page: this.state.page - 1 }, this.scrollTop);
+        this.setState({ page: this.state.page - 1 }, this.scrollTo);
     }
 
     paginateEnd = () => {
@@ -118,11 +135,11 @@ export class OLHome extends React.PureComponent<Props, State> {
             this.state.comps.length /
             this.size,
         );
-        this.setState({ page: lastPage }, this.scrollTop);
+        this.setState({ page: lastPage }, this.scrollTo);
     }
 
     paginateBegining = () => {
-        this.setState({ page: 1 }, this.scrollTop);
+        this.setState({ page: 1 }, this.scrollTo);
     }
 
     renderPagination = () => {
@@ -194,6 +211,10 @@ export class OLHome extends React.PureComponent<Props, State> {
         </ListItem>
     )
 
+    todayLayout = ({ nativeEvent: { layout } }: LayoutChangeEvent) => {
+        this.setState({ todayOffset: layout.y });
+    }
+
     renderToday = (key: string, comps: any) => {
         return (
             <View
@@ -202,6 +223,7 @@ export class OLHome extends React.PureComponent<Props, State> {
                     padding: UNIT,
                     backgroundColor: COLORS.MAIN,
                 }}
+                onLayout={this.todayLayout}
             >
 
                 <Text
@@ -273,6 +295,31 @@ export class OLHome extends React.PureComponent<Props, State> {
         );
     }
 
+    searchbar: SearchBar;
+    onSearch = (term: string) => {
+        let comps = this.state.originalComps;
+
+        comps = comps.filter((comp) => comp.name.toLowerCase().includes(term.toLowerCase()));
+
+        this.setState({ comps });
+        this.scrollTo();
+    }
+
+    scrollToday = () => {
+        const today = this.state.originalComps.find((comp) => this.today() === comp.date);
+
+        if (!today) {
+            return Alert.alert(Lang.print('home.nothingToday'));
+        }
+
+        if (!this.state.todayOffset) {
+            this.paginateForward();
+            setTimeout(this.scrollToday, 650);
+        } else {
+            this.scrollTo(this.state.todayOffset);
+        }
+    }
+
     render() {
         return (
             <Container>
@@ -280,9 +327,62 @@ export class OLHome extends React.PureComponent<Props, State> {
                     ref={(component) => this.content = component}
                     style={{ flex: 1 }}
                 >
-                    <LanguagePicker />
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                            flex: 1,
+                        }}
+                    >
+                        <LanguagePicker />
+
+                        <View
+                            style={{
+                                height: '100%',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                paddingRight: UNIT,
+                                flexDirection: 'row',
+                            }}
+                        >
+                            <Button
+                                transparent
+                                onPress={() => {
+                                    if (!this.searchbar) return;
+                                    this.searchbar.showSearch();
+                                }}
+                            >
+                                <Text>
+                                    {Lang.print('home.search')}
+                                </Text>
+                            </Button>
+                        </View>
+                    </View>
+
+                    <View
+                        style={{
+                            margin: 10,
+                        }}
+                    >
+                        <Button
+                            success
+                            full
+                            rounded
+                            small
+                            onPress={this.scrollToday}
+                        >
+                            <Text>
+                                {Lang.print('home.goToday')}
+                            </Text>
+                        </Button>
+                    </View>
+
                     {this.renderInner()}
                 </ScrollView>
+
+                <SearchBar
+                    ref={(ref) => this.searchbar = ref}
+                    onSearch={this.onSearch}
+                />
             </Container>
         );
     }

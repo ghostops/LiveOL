@@ -5,6 +5,9 @@ export default {
         title: 'LiveOL',
         today: 'Idag',
         page: 'Sida',
+        search: 'Sök',
+        goToday: 'Gå till Idag',
+        nothingToday: 'Det är inga tävlingar idag',
     },
     competitions: {
         organizedBy: 'Organiseras av',
