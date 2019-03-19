@@ -66,6 +66,10 @@ h1 {
     align-items: center;
 }
 
+a {
+    color: #fff;
+}
+
 .download a {
     transition: transform .5s ease;
 }
@@ -106,6 +110,11 @@ h1 {
 }
 
 @media (max-width: 700px) {
+    .credit {
+        position: relative;
+        bottom: 0;
+    }
+
     h1 {
         font-size: 52px;
         padding: 20px;
