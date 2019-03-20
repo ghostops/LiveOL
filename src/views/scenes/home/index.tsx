@@ -279,6 +279,26 @@ export class OLHome extends React.PureComponent<Props, State> {
 
         const comps = this.groupComps(this.getVisibleComps(this.state.page));
 
+        if (!this.state.comps.length) {
+            return (
+                <View
+                    style={{
+                        width: '100%',
+                        paddingVertical: UNIT * 4,
+                    }}
+                >
+                    <Text
+                        style={{
+                            fontSize: UNIT,
+                            textAlign: 'center',
+                        }}
+                    >
+                        {Lang.print('home.nothingSearch')}
+                    </Text>
+                </View>
+            );
+        }
+
         return (
             <View>
                 {

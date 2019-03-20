@@ -8,6 +8,7 @@ export default {
         search: 'Search',
         goToday: 'Scroll to Today',
         nothingToday: 'There are no competitions today',
+        nothingSearch: 'No competitions found',
     },
     competitions: {
         organizedBy: 'Organized by',
@@ -54,6 +55,8 @@ export default {
         contact: 'Contact me',
         purgeCache: 'Clear cached results',
         purged: 'saved events were removed',
+        donate: 'Donate to support the app',
+        donateExplanation: 'Support the development of the app by donating',
     },
     back: 'Back',
     status: {

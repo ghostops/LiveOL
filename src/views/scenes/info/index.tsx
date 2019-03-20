@@ -111,6 +111,22 @@ export class OLInfo extends React.PureComponent<Props, State> {
 
     contact = () => Linking.openURL('https://goo.gl/forms/fFmS1WGVUU1Wu0c03');
 
+    donate = () => {
+        const link = 'https://www.paypal.me/larsendahl';
+
+        Alert.alert(
+            Lang.print('info.donate'),
+            Lang.print('info.donateExplanation'),
+            [{
+                onPress: () => Linking.openURL(link),
+                text: 'PayPal',
+            }, {
+                text: Lang.print('info.update.hasUpdate.cancel'),
+                style: 'destructive',
+            }],
+        );
+    }
+
     BUTTONS = [{
         text: Lang.print('info.rate'),
         onPress: this.review.prompt,
@@ -121,6 +137,9 @@ export class OLInfo extends React.PureComponent<Props, State> {
     }, {
         text: Lang.print('info.appStore'),
         onPress: this.openAppStore,
+    }, {
+        text: Lang.print('info.donate'),
+        onPress: this.donate,
     }, {
         text: Lang.print('info.contact'),
         onPress: this.contact,

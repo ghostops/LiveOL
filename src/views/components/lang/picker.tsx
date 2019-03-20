@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { TouchableOpacity, ScrollView } from 'react-native';
 import Flag from 'react-native-flags-kit';
-import { UNIT } from 'util/const';
+import { UNIT, COLORS } from 'util/const';
 import Lang from 'lib/lang';
 import { Updates } from 'expo';
 
@@ -37,7 +37,7 @@ export class LanguagePicker extends React.PureComponent<any, State> {
                                 marginRight: UNIT,
                                 borderColor: (
                                     lang === this.state.active
-                                    ? '#e86a1e'
+                                    ? COLORS.MAIN
                                     : 'transparent'
                                 ),
                                 borderBottomWidth: 2,
