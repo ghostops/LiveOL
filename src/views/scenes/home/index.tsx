@@ -22,11 +22,7 @@ const {
     CardItem,
     Card,
     Body,
-    Header,
-    Item,
     Button,
-    Icon,
-    Input,
 } = NB;
 
 interface Props {
@@ -317,12 +313,21 @@ export class OLHome extends React.PureComponent<Props, State> {
 
     searchbar: SearchBar;
     onSearch = (term: string) => {
-        let comps = this.state.originalComps;
+        this.setState({ comps: null });
 
-        comps = comps.filter((comp) => comp.name.toLowerCase().includes(term.toLowerCase()));
+        setTimeout(
+            () => {
+                let comps = this.state.originalComps;
 
-        this.setState({ comps });
-        this.scrollTo();
+                comps = comps
+                    .filter((comp) => comp.name.toLowerCase()
+                    .includes(term.toLowerCase()));
+
+                this.setState({ comps });
+                this.scrollTo();
+            },
+            0,
+        );
     }
 
     scrollToday = () => {
@@ -378,23 +383,28 @@ export class OLHome extends React.PureComponent<Props, State> {
                         </View>
                     </View>
 
-                    <View
-                        style={{
-                            margin: 10,
-                        }}
-                    >
-                        <Button
-                            success
-                            full
-                            rounded
-                            small
-                            onPress={this.scrollToday}
+                    {
+                        this.state.page <= 1 &&
+                        (this.state.originalComps && this.state.comps) &&
+                        (this.state.originalComps.length === this.state.comps.length) &&
+                        <View
+                            style={{
+                                margin: 10,
+                            }}
                         >
-                            <Text>
-                                {Lang.print('home.goToday')}
-                            </Text>
-                        </Button>
-                    </View>
+                            <Button
+                                success
+                                full
+                                rounded
+                                small
+                                onPress={this.scrollToday}
+                            >
+                                <Text>
+                                    {Lang.print('home.goToday')}
+                                </Text>
+                            </Button>
+                        </View>
+                    }
 
                     {this.renderInner()}
                 </ScrollView>

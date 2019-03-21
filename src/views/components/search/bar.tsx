@@ -84,6 +84,7 @@ export class SearchBar extends React.PureComponent<Props, State> {
                     style={{
                         paddingTop: 0,
                         height: SEARCH_SIZE,
+                        backgroundColor: '#fafafa',
                     }}
                 >
                     <TouchableOpacity
@@ -103,6 +104,7 @@ export class SearchBar extends React.PureComponent<Props, State> {
                             ref={(ref) => this.searchInput = ref as any}
                             placeholder={Lang.print('home.search')}
                             onChangeText={(searchTerm) => this.setState({ searchTerm })}
+                            onSubmitEditing={this.search}
                         />
                     </Item>
 
