@@ -138,9 +138,6 @@ export class OLInfo extends React.PureComponent<Props, State> {
         text: Lang.print('info.appStore'),
         onPress: this.openAppStore,
     }, {
-        text: Lang.print('info.donate'),
-        onPress: this.donate,
-    }, {
         text: Lang.print('info.contact'),
         onPress: this.contact,
     }, {
