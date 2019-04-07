@@ -30,7 +30,7 @@ export class OLClasses extends React.PureComponent<Props, State> {
         title: `${navigation.state.params.title}`,
     })
 
-    state = { olClass: null };
+    state: State = { olClass: null };
 
     cacheId = () => {
         const { params: { id, className } } = this.props.navigation.state;
@@ -89,6 +89,7 @@ export class OLClasses extends React.PureComponent<Props, State> {
                         });
                     }}
                     initialResults={this.state.olClass.results}
+                    subtitle="club"
                 />
             </View>
         );

@@ -58,6 +58,8 @@ export class OLClub extends React.PureComponent<Props, State> {
 
         const club: Club = await getClub(id, clubName);
 
+        console.log(club);
+
         return club.results;
     }
 
@@ -84,13 +86,17 @@ export class OLClub extends React.PureComponent<Props, State> {
                     fetcher={this.poll}
                     onResultPress={(result) => {
                         const { params: { id } } = this.props.navigation.state;
-                        this.props.navigation.push(Routes.club, {
+
+                        const className = result.class;
+
+                        this.props.navigation.push(Routes.classes, {
                             id,
-                            clubName: result.club,
-                            title: result.club,
+                            className,
+                            title: className,
                         });
                     }}
                     initialResults={this.state.club.results}
+                    subtitle="class"
                 />
             </View>
         );

@@ -19,6 +19,8 @@ interface Props {
     fetcher: () => Promise<Result[]>;
     onResultPress: (result: Result) => void;
     search?: (results: Result[]) => Result[];
+    subtitle?: 'class' | 'club';
+    className?: string;
 }
 
 interface State {
@@ -28,6 +30,10 @@ interface State {
 }
 
 export class ResultList extends React.PureComponent<Props, State> {
+    static defaultProps: Partial<Props> = {
+        subtitle: 'class',
+    };
+
     interval: NodeJS.Timeout;
     state = {
         results: this.props.initialResults || null,
@@ -138,7 +144,11 @@ export class ResultList extends React.PureComponent<Props, State> {
                                     color: COLORS.MAIN,
                                     fontSize: UNIT,
                                 }}>
-                                    {result.club}
+                                    {
+                                        this.props.subtitle === 'class'
+                                        ? result.class
+                                        : result.club
+                                    }
                                 </Text>
                             </TouchableOpacity>
 
@@ -146,20 +156,23 @@ export class ResultList extends React.PureComponent<Props, State> {
                                 justifyContent: 'flex-end',
                                 alignItems: 'flex-end',
                             }}>
-                                <Text style={{
-                                    fontSize: (
-                                        result.status === 0
-                                        ? UNIT
-                                        : UNIT * .75
-                                    ),
-                                    textAlign: 'right',
-                                }}>
-                                    {
-                                        result.status === 0
-                                        ? result.timeplus
-                                        : `(${statusI18n(result.status, 'long')})`
-                                    }
-                                </Text>
+                                {
+                                    Boolean(result.status) &&
+                                    <Text style={{
+                                        fontSize: (
+                                            result.status === 0
+                                            ? UNIT
+                                            : UNIT * .75
+                                        ),
+                                        textAlign: 'right',
+                                    }}>
+                                        {
+                                            result.status === 0
+                                            ? result.timeplus
+                                            : `(${statusI18n(result.status, 'long')})`
+                                        }
+                                    </Text>
+                                }
                             </View>
                         </View>
                     </View>
