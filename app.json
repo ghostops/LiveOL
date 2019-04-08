@@ -30,7 +30,8 @@
     },
     "android": {
       "package": "se.liveol.rn",
-      "versionCode": 3
+      "versionCode": 3,
+      "permissions": []
     }
   }
 }
