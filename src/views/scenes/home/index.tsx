@@ -341,6 +341,66 @@ export class OLHome extends React.PureComponent<Props, State> {
         }
     }
 
+    renderHeader = () => {
+        return (
+            <React.Fragment>
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        flex: 1,
+                    }}
+                >
+                    <LanguagePicker />
+
+                    <View
+                        style={{
+                            height: '100%',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            paddingRight: UNIT,
+                            flexDirection: 'row',
+                        }}
+                    >
+                        <Button
+                            transparent
+                            onPress={() => {
+                                if (!this.searchbar) return;
+                                this.searchbar.showSearch();
+                            }}
+                        >
+                            <Text>
+                                {Lang.print('home.search')}
+                            </Text>
+                        </Button>
+                    </View>
+                </View>
+
+                {
+                    this.state.page <= 1 &&
+                    (this.state.originalComps && this.state.comps) &&
+                    (this.state.originalComps.length === this.state.comps.length) &&
+                    <View
+                        style={{
+                            margin: 10,
+                        }}
+                    >
+                        <Button
+                            success
+                            full
+                            rounded
+                            small
+                            onPress={this.scrollToday}
+                        >
+                            <Text>
+                                {Lang.print('home.goToday')}
+                            </Text>
+                        </Button>
+                    </View>
+                }
+            </React.Fragment>
+        );
+    }
+
     render() {
         return (
             <Container>
@@ -348,59 +408,7 @@ export class OLHome extends React.PureComponent<Props, State> {
                     ref={(component) => this.content = component}
                     style={{ flex: 1 }}
                 >
-                    <View
-                        style={{
-                            flexDirection: 'row',
-                            flex: 1,
-                        }}
-                    >
-                        <LanguagePicker />
-
-                        <View
-                            style={{
-                                height: '100%',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                paddingRight: UNIT,
-                                flexDirection: 'row',
-                            }}
-                        >
-                            <Button
-                                transparent
-                                onPress={() => {
-                                    if (!this.searchbar) return;
-                                    this.searchbar.showSearch();
-                                }}
-                            >
-                                <Text>
-                                    {Lang.print('home.search')}
-                                </Text>
-                            </Button>
-                        </View>
-                    </View>
-
-                    {
-                        this.state.page <= 1 &&
-                        (this.state.originalComps && this.state.comps) &&
-                        (this.state.originalComps.length === this.state.comps.length) &&
-                        <View
-                            style={{
-                                margin: 10,
-                            }}
-                        >
-                            <Button
-                                success
-                                full
-                                rounded
-                                small
-                                onPress={this.scrollToday}
-                            >
-                                <Text>
-                                    {Lang.print('home.goToday')}
-                                </Text>
-                            </Button>
-                        </View>
-                    }
+                    {this.renderHeader()}
 
                     {this.renderInner()}
                 </ScrollView>

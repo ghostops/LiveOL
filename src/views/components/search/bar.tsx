@@ -3,6 +3,7 @@ import * as NB from 'native-base';
 import { Animated, TouchableOpacity, Keyboard } from 'react-native';
 import { UNIT } from 'util/const';
 import Lang from 'lib/lang';
+import { isIphoneX, xtraSpace } from 'util/iphonex';
 
 const SEARCH_SIZE = UNIT * 3.25;
 
@@ -65,7 +66,7 @@ export class SearchBar extends React.PureComponent<Props, State> {
     render() {
         const translateY = this.state.searchAnimation.interpolate({
             inputRange: [0, 1],
-            outputRange: [-SEARCH_SIZE, 0],
+            outputRange: [-(SEARCH_SIZE + (isIphoneX ? xtraSpace : 0)), 0],
         });
 
         return (

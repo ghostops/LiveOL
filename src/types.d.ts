@@ -12,11 +12,16 @@ interface Classes {
     className: string;
 }
 
+interface SplitControl {
+    name: string;
+    code: number;
+}
+
 interface Class {
     className: string;
     hash: string;
     results: Result[];
-    splitcontrols: any[];
+    splitcontrols: SplitControl[];
     status: string;
 }
 
@@ -30,6 +35,7 @@ interface Result {
     status: number;
     timeplus: string;
     class?: string;
+    splits?: Record<string, number>;
 }
 
 interface Club {

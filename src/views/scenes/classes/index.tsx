@@ -89,6 +89,7 @@ export class OLClasses extends React.PureComponent<Props, State> {
                         });
                     }}
                     initialResults={this.state.olClass.results}
+                    splitControls={this.state.olClass.splitcontrols}
                     subtitle="club"
                 />
             </View>

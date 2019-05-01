@@ -13,6 +13,7 @@ import {
 import { UNIT, COLORS } from 'util/const';
 import Lang from 'lib/lang';
 import { statusI18n } from 'lib/lang/status';
+import { ResultsModal } from './modal';
 
 interface Props {
     initialResults?: Result[];
@@ -20,13 +21,15 @@ interface Props {
     onResultPress: (result: Result) => void;
     search?: (results: Result[]) => Result[];
     subtitle?: 'class' | 'club';
-    className?: string;
+    splitControls: SplitControl[];
 }
 
 interface State {
     results: Result[];
     polling: boolean;
     loading: boolean;
+    modalOpen: boolean;
+    modalResult: Result;
 }
 
 export class ResultList extends React.PureComponent<Props, State> {
@@ -35,10 +38,12 @@ export class ResultList extends React.PureComponent<Props, State> {
     };
 
     interval: NodeJS.Timeout;
-    state = {
+    state: State = {
         results: this.props.initialResults || null,
         polling: false,
         loading: false,
+        modalOpen: false,
+        modalResult: null,
     };
 
     componentWillMount() {
@@ -72,6 +77,9 @@ export class ResultList extends React.PureComponent<Props, State> {
     startPoll = () => this.interval = setInterval(this.poll, 15000);
     clearPoll = () => this.interval && clearInterval(this.interval);
 
+    openModal = (modalResult: Result) => this.setState({ modalResult, modalOpen: true });
+    closeModal = () => this.setState({ modalOpen: false });
+
     renderResult = (result: Result) => {
         return (
             <ListItem
@@ -80,6 +88,7 @@ export class ResultList extends React.PureComponent<Props, State> {
                     flexDirection: 'column',
                     marginLeft: 0,
                 }}
+                onPress={() => this.openModal(result)}
             >
                 <View style={{
                     flexDirection: 'row',
@@ -187,50 +196,59 @@ export class ResultList extends React.PureComponent<Props, State> {
         }
 
         return (
-            <ScrollView
-                refreshControl={
-                    <RefreshControl
-                        onRefresh={async () => {
-                            this.setState({ loading: true });
-                            await this.poll();
-                            this.setState({ loading: false });
-                        }}
-                        refreshing={this.state.loading}
-                        colors={[COLORS.MAIN]}
-                        tintColor={COLORS.MAIN}
-                    />
-                }
-            >
-                <Card style={{ marginBottom: 10 }}>
-                    <CardItem style={{ paddingVertical: 8 }}>
-                        <Text style={{ flex: 1, fontSize: UNIT }}>
-                            {Lang.print('classes.autoUpdate')}
-                        </Text>
+            <React.Fragment>
+                <ResultsModal
+                    modalOpen={this.state.modalOpen}
+                    closeModal={this.closeModal}
+                    result={this.state.modalResult}
+                    splitControls={this.props.splitControls}
+                />
 
-                        <Switch
-                            value={this.state.polling}
-                            trackColor={{ true: COLORS.MAIN, false: COLORS.DARK }}
-                            onValueChange={(polling) => this.setState({ polling })}
+                <ScrollView
+                    refreshControl={
+                        <RefreshControl
+                            onRefresh={async () => {
+                                this.setState({ loading: true });
+                                await this.poll();
+                                this.setState({ loading: false });
+                            }}
+                            refreshing={this.state.loading}
+                            colors={[COLORS.MAIN]}
+                            tintColor={COLORS.MAIN}
                         />
-                    </CardItem>
-                </Card>
-
-                <List style={{
-                    backgroundColor: '#FFF',
-                    borderRadius: 4,
-                }}>
-                    {
-                        this.state.results.length < 1 ?
-                        (
-                            <Text style={{ textAlign: 'center', paddingVertical: 10 }}>
-                                {Lang.print('competitions.noClasses')}
-                            </Text>
-                        ) : this.state.results.map(this.renderResult)
                     }
-                </List>
+                >
+                    <Card style={{ marginBottom: 10 }}>
+                        <CardItem style={{ paddingVertical: 8 }}>
+                            <Text style={{ flex: 1, fontSize: UNIT }}>
+                                {Lang.print('classes.autoUpdate')}
+                            </Text>
 
-                <View style={{ height: 45 }} />
-            </ScrollView>
+                            <Switch
+                                value={this.state.polling}
+                                trackColor={{ true: COLORS.MAIN, false: COLORS.DARK }}
+                                onValueChange={(polling) => this.setState({ polling })}
+                            />
+                        </CardItem>
+                    </Card>
+
+                    <List style={{
+                        backgroundColor: '#FFF',
+                        borderRadius: 4,
+                    }}>
+                        {
+                            this.state.results.length < 1 ?
+                            (
+                                <Text style={{ textAlign: 'center', paddingVertical: 10 }}>
+                                    {Lang.print('competitions.noClasses')}
+                                </Text>
+                            ) : this.state.results.map(this.renderResult)
+                        }
+                    </List>
+
+                    <View style={{ height: 45 }} />
+                </ScrollView>
+            </React.Fragment>
         );
     }
 }
