@@ -68,10 +68,6 @@ export class OLHome extends React.PureComponent<Props, State> {
         });
     }
 
-    componentDidMount() {
-        // setTimeout(this.toggleSearch, 2000);
-    }
-
     groupComps = (comps: Comp[]) => {
         const uniqEs6 = (arrArg) => (
             arrArg.filter((elem, pos, arr) => {
@@ -323,7 +319,7 @@ export class OLHome extends React.PureComponent<Props, State> {
                     .filter((comp) => comp.name.toLowerCase()
                     .includes(term.toLowerCase()));
 
-                this.setState({ comps });
+                this.setState({ comps, page: 1 });
                 this.scrollTo();
             },
             0,

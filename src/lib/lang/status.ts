@@ -14,5 +14,5 @@ import Language from './index';
 */
 
 export const statusI18n = (status: number, len = 'short') => {
-    return Language.print(`status.${len}`)[status - 1];
+    return Language.print(`status.${len}`)[status];
 };

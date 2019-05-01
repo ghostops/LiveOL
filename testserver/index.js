@@ -15,7 +15,8 @@ app.get('/api.php', (req, res) => {
         case 'getlastpassings':
             return res.json(require('./getlastpassings.json'));
         case 'getclassresults':
-            return res.json(require('./getclassresults.json'));
+            // return res.json(require('./getclassresults.json'));
+            return res.json(require('./getclassresults-radio.json'));
         case 'getclubresults':
             return res.json(require('./getclubresults.json'));
     }
