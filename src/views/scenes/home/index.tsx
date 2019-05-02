@@ -11,6 +11,7 @@ import { ScrollView, LayoutChangeEvent, Alert } from 'react-native';
 import { UNIT, COLORS } from 'util/const';
 import Lang from 'lib/lang';
 import { SearchBar } from 'views/components/search/bar';
+import * as _ from 'lodash';
 
 const {
     Container,
@@ -327,13 +328,14 @@ export class OLHome extends React.PureComponent<Props, State> {
     }
 
     scrollToday = () => {
-        const today = this.state.originalComps.find((comp) => this.today() === comp.date);
+        const today = this.state.comps.find((comp) => this.today() === comp.date);
 
         if (!today) {
             return Alert.alert(Lang.print('home.nothingToday'));
         }
 
-        if (!this.state.todayOffset) {
+        // The offset can be 0, which is false
+        if (!_.isNumber(this.state.todayOffset)) {
             this.paginateForward();
             setTimeout(this.scrollToday, 650);
         } else {
