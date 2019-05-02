@@ -9,7 +9,7 @@ class Language {
     public fallaback: AvailibleLanguage = 'en';
     public phoneLocale: string;
 
-    public availible: AvailibleLanguage[] = ['en', 'sv'];
+    public availible: AvailibleLanguage[] = ['en', 'sv', 'no'];
 
     public init = async (): Promise<void> => {
         this.phoneLocale = Localization.locale.substr(0, 2);

@@ -16,6 +16,7 @@ export class LanguagePicker extends React.PureComponent<any, State> {
         const flag = {
             en: 'GB',
             sv: 'SE',
+            no: 'NO',
         };
 
         return (

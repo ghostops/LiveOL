@@ -54,4 +54,4 @@ interface Passing {
     time: number;
 }
 
-type AvailibleLanguage = 'en' | 'sv';
+type AvailibleLanguage = 'en' | 'sv' | 'no';

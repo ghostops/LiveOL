@@ -9,6 +9,10 @@
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
         $data = curl_exec($ch);
         curl_close($ch);
+
+        // Parse data, remove stupid superscript UTF character
+        $data = str_replace('	', '', $data);
+
         return $data;
     }
 
