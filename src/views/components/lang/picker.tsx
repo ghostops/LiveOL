@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { TouchableOpacity, ScrollView } from 'react-native';
-import Flag from 'react-native-flags-kit';
+import { OLFlag } from './flag';
 import { UNIT, COLORS } from 'util/const';
 import Lang from 'lib/lang';
 import { Updates } from 'expo';
@@ -13,12 +13,6 @@ export class LanguagePicker extends React.PureComponent<any, State> {
     state = { active: Lang.active };
 
     render() {
-        const flag = {
-            en: 'GB',
-            sv: 'SE',
-            no: 'NO',
-        };
-
         return (
             <ScrollView
                 style={{
@@ -45,8 +39,8 @@ export class LanguagePicker extends React.PureComponent<any, State> {
                             }}
                             key={lang}
                         >
-                            <Flag
-                                code={flag[lang]}
+                            <OLFlag
+                                code={lang}
                                 size={32}
                             />
                         </TouchableOpacity>

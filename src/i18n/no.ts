@@ -55,8 +55,6 @@ export default {
         contact: 'Kontakt meg',
         purgeCache: 'Ta bort cache',
         purged: 'lagrede løp ble slettet',
-        donate: 'Donere for å støtte appen',
-        donateExplanation: 'Støtt utvikling og vedlikehold av appen ved å donere',
     },
     back: 'Tilbake',
     status: {

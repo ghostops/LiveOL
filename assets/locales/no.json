@@ -1,0 +1,92 @@
+{
+  "back": "Tilbake",
+  "classes": {
+    "autoUpdate": "Automatisk oppdatering",
+    "resultsFor": "Resultat for"
+  },
+  "competitions": {
+    "classes": "Klasser",
+    "lastPassings": "Siste passeringer",
+    "noClasses": "Ingen klasser",
+    "organizedBy": "Arrangeres av",
+    "passings": {
+      "class": "Klasse",
+      "info": "Dra for å oppdatere",
+      "name": "Navn",
+      "passTime": "Passeringstid",
+      "title": "Siste passeringer"
+    }
+  },
+  "home": {
+    "goToday": "Gå til dagens arrangement",
+    "nothingSearch": "Ingen arrangement ble funnet",
+    "nothingToday": "Det er ingen arrangement i dag",
+    "page": "Side",
+    "search": "Søk",
+    "title": "LiveOL",
+    "today": "I dag"
+  },
+  "info": {
+    "appStore": "Åpne App Store",
+    "body": [
+      "LiveOL er en app som viser resultater live og bygger på liveresultat.orientering.se.",
+      "Du får resultatene direkte i mobilen eller på nettbrettet via et enkelt brukergrensesnitt.",
+      "Appen er utviklet av Ludvig Larsendahl og koden finnes som Open Source på GitHub (søk etter LiveOL)."
+    ],
+    "contact": "Kontakt meg",
+    "purgeCache": "Ta bort cache",
+    "purged": "lagrede løp ble slettet",
+    "rate": "Sett karakter på appen",
+    "title": "Informasjon",
+    "translations": {
+      "credit": "Appen oversatt av",
+      "phraseapp": "Oversettelser med"
+    },
+    "update": {
+      "check": "Se etter oppdateringer",
+      "hasUpdate": {
+        "cancel": "Avbryt",
+        "cta": "Oppdatere nå",
+        "text": "En nyere versjon er klar for nedlasting",
+        "title": "Oppdatering funnet"
+      },
+      "noUpdate": {
+        "text": "Ingen nyere versjon funnet",
+        "title": "Ingen oppdatering"
+      }
+    },
+    "version": "Gjeldende version"
+  },
+  "status": {
+    "long": [
+      "OK",
+      "Ikke startet",
+      "Brutt",
+      "Diskvalifisert",
+      "Diskvalifisert",
+      "Over makstid",
+      "",
+      "",
+      "",
+      "Ikke startet",
+      "Ikke startet",
+      "Stått over",
+      "Byttet klasse"
+    ],
+    "short": [
+      "OK",
+      "DNS",
+      "DNF",
+      "DSQ",
+      "DSQ",
+      "OT",
+      "",
+      "",
+      "",
+      "Ikke startet",
+      "Ikke startet",
+      "Stått over",
+      "Byttet klasse"
+    ]
+  }
+}

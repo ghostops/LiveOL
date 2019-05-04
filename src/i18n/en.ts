@@ -55,8 +55,10 @@ export default {
         contact: 'Contact me',
         purgeCache: 'Clear cached results',
         purged: 'saved events were removed',
-        donate: 'Donate to support the app',
-        donateExplanation: 'Support the development of the app by donating',
+        translations: {
+            phraseapp: 'Translations powered by',
+            credit: 'App translated by',
+        },
     },
     back: 'Back',
     status: {

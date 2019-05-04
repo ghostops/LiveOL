@@ -1,0 +1,92 @@
+{
+  "back": "Bakåt",
+  "classes": {
+    "autoUpdate": "Automatisk uppdatering",
+    "resultsFor": "Resultat för"
+  },
+  "competitions": {
+    "classes": "Klasser",
+    "lastPassings": "Senaste Passeringarna",
+    "noClasses": "Inga klasser",
+    "organizedBy": "Organiseras av",
+    "passings": {
+      "class": "Klass",
+      "info": "Dra för att uppdatera",
+      "name": "Namn",
+      "passTime": "Passeringstid",
+      "title": "Senaste passeringarna"
+    }
+  },
+  "home": {
+    "goToday": "Gå till Idag",
+    "nothingSearch": "Inga tävlingar hittades",
+    "nothingToday": "Det är inga tävlingar idag",
+    "page": "Sida",
+    "search": "Sök",
+    "title": "LiveOL",
+    "today": "Idag"
+  },
+  "info": {
+    "appStore": "Öppna App Store",
+    "body": [
+      "LiveOL är en app som visar orienteringsresultat live och bygger på liveresultat.orientering.se.",
+      "Du får resultaten direkt i mobilen eller på surfplattan paketerat i ett smidigt användargränssnitt.",
+      "Appen är framtagen av Ludvig Larsendahl och koden finns Open Source på GitHub (sök på LiveOL)."
+    ],
+    "contact": "Kontakta mig",
+    "purgeCache": "Ta bort cache",
+    "purged": "sparade tävlingar togs bort",
+    "rate": "Betygsätt appen",
+    "title": "Information",
+    "translations": {
+      "credit": "Appen är översatt av",
+      "phraseapp": "Översättningar med hjälp av"
+    },
+    "update": {
+      "check": "Kolla efter uppdateringar",
+      "hasUpdate": {
+        "cancel": "Avbryt",
+        "cta": "Uppdatera nu",
+        "text": "En nyare version finns att hämta",
+        "title": "Uppdatering hittad"
+      },
+      "noUpdate": {
+        "text": "Ingen nyare version fanns att hämta",
+        "title": "Ingen uppdatering"
+      }
+    },
+    "version": "Nuvarande version"
+  },
+  "status": {
+    "long": [
+      "OKEJ",
+      "Startade Ej",
+      "Avslutade Ej",
+      "Missade Kontroll",
+      "Diskvalificerad",
+      "Över Maxtid",
+      "",
+      "",
+      "",
+      "Ej Startat",
+      "Ej Startat",
+      "Walk Over",
+      "Bytte Klass"
+    ],
+    "short": [
+      "OK",
+      "DNS",
+      "DNF",
+      "MP",
+      "DSQ",
+      "OT",
+      "",
+      "",
+      "",
+      "Ej Startat",
+      "Ej Startat",
+      "Walk Over",
+      "Bytte Klass"
+    ]
+  }
+}

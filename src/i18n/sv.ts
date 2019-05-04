@@ -55,8 +55,6 @@ export default {
         contact: 'Kontakta mig',
         purgeCache: 'Ta bort cache',
         purged: 'sparade tävlingar togs bort',
-        donate: 'Donera för att supporta appen',
-        donateExplanation: 'Stöd appens utveckling och underhåll genom att donera en slant',
     },
     back: 'Bakåt',
     status: {

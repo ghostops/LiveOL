@@ -1,6 +1,12 @@
 # LiveOL
 
-* [Webbsida](https://ghostops.nu/content/liveol/)
-* [Licens](https://creativecommons.org/licenses/by/3.0/)
+* [Website](https://ghostops.nu/content/liveol/)
+* [License](https://creativecommons.org/licenses/by/3.0/)
 
-LiveOL är en app som visar orienteringsresultat live och bygger på liveresultat.orientering.se. Du får resultaten direkt i mobilen eller på surfplattan paketerat i ett smidigt användargränssnitt.
+LiveOL is an app that displays orienteering-results live, built upon liveresultat.orientering.se.
+You get the results conveniently on your phone or tablet packaged in a neat interface.
+The app is made by Ludvig Larsendahl and the code is Open Source on GitHub (search LiveOL).
+
+### Translations powered by:
+
+<img src="/assets/images/phraseapp.png" width="140" height="28">
