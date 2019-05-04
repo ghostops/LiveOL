@@ -1,6 +1,6 @@
 # LiveOL
 
-* [Website](https://ghostops.nu/content/liveol/)
+* [Website](https://liveol.larsendahl.se/)
 * [License](https://creativecommons.org/licenses/by/3.0/)
 
 LiveOL is an app that displays orienteering-results live, built upon liveresultat.orientering.se.
