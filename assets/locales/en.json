@@ -18,7 +18,7 @@
     }
   },
   "home": {
-    "goToday": "Scroll to Today",
+    "goToday": "Scroll to todays events",
     "nothingSearch": "No competitions found",
     "nothingToday": "There are no competitions today",
     "page": "Page",
