@@ -9,4 +9,6 @@ The app is made by Ludvig Larsendahl and the code is Open Source on GitHub (sear
 
 ### Translations powered by:
 
-<img src="/assets/images/phraseapp.png" width="140" height="28">
+<a href="https://phraseapp.com/">
+    <img src="/assets/images/phraseapp.png" width="140" height="28">
+</a>
