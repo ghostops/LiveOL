@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Modal, TouchableOpacity, Text } from 'react-native';
 import { BlurView } from 'expo';
 import { View } from 'native-base';
+import * as Helpers from './helpers';
 
 interface Props {
     result: Result;
@@ -12,45 +13,41 @@ interface Props {
 
 export class ResultsModal extends React.PureComponent<Props> {
     renderSplit = (split: SplitControl) => {
-        const result = this.props.result;
+        const data = Helpers.getSplitData(split, this.props.result);
 
-        const getSplitData = () => {
-            const keys = Object.keys(result.splits);
-            const foundKeys = keys.filter((key) => key.includes(String(split.code)));
-            const keyValue = {};
+        return this.renderTime(
+            split.name,
+            Helpers.splitTimestampToReadable(data.time),
+            Helpers.timeplusToReadable(data.timeplus),
+            data.place,
+        );
+    }
 
-            for (const key of foundKeys) {
-                if (Number(key) === split.code) {
-                    keyValue['time'] = result.splits[key];
-                } else {
-                    const newKey = key.replace(`${split.code}_`, '');
-                    keyValue[newKey] = result.splits[key];
-                }
-            }
-
-            return {
-                time: keyValue['time'] || NaN,
-                status: keyValue['status'] || NaN,
-                place: keyValue['place'] || NaN,
-                timeplus: keyValue['timeplus'] || NaN,
-            };
-        };
-
+    renderTime = (
+        label: string,
+        time: string,
+        timeplus?: string,
+        place?: string,
+    ) => {
         return (
-            <View key={split.code}>
+            <View>
                 <Text style={{ color: 'white' }}>
-                    {split.name}
+                    {label}
                 </Text>
 
                 <Text>
-                    {getSplitData().time}
+                    {time} {!!place && `(${place})`}
+                </Text>
+
+                <Text>
+                    {timeplus}
                 </Text>
             </View>
         );
     }
 
     renderInner = () => {
-        const result = this.props.result;
+        const { result, splitControls } = this.props;
 
         if (!result) return null;
 
@@ -62,7 +59,9 @@ export class ResultsModal extends React.PureComponent<Props> {
                     alignItems: 'center',
                 }}
             >
-                {this.props.splitControls.map(this.renderSplit)}
+                {this.renderTime('Start', Helpers.startToReadable(result.start))}
+                {splitControls.map(this.renderSplit)}
+                {this.renderTime('Result', result.result, result.timeplus, result.place)}
             </View>
         );
     }

@@ -8,8 +8,11 @@ import { Routes } from './routes';
 import { OLInfo } from '../../views/scenes/info';
 
 export const Mappings: NavigationRouteConfigMap = {
+    // [Routes.home]: {
+    //     screen: OLHome,
+    // },
     [Routes.home]: {
-        screen: OLHome,
+        screen: OLClasses,
     },
     [Routes.competition]: {
         screen: OLCompetition,

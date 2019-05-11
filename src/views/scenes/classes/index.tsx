@@ -27,14 +27,17 @@ export class OLClasses extends React.PureComponent<Props, State> {
     interval: number;
 
     static navigationOptions = ({ navigation }) => ({
-        title: `${navigation.state.params.title}`,
+        // title: `${navigation.state.params.title}`, // !!!
+        title: 'swag',
     })
 
     state: State = { olClass: null };
 
+    // !!!
     cacheId = () => {
-        const { params: { id, className } } = this.props.navigation.state;
-        return `class:${id}:${className}`;
+        // const { params: { id, className } } = this.props.navigation.state;
+        // return `class:${id}:${className}`;
+        return 'x';
     }
 
     // 1000 ms less than the poller
@@ -45,7 +48,10 @@ export class OLClasses extends React.PureComponent<Props, State> {
     }
 
     poll = async (): Promise<Result[]> => {
-        const { params: { id, className } } = this.props.navigation.state;
+        // !!!
+        // const { params: { id, className } } = this.props.navigation.state;
+        const id = 1;
+        const className = 'xD';
 
         let olClass: Class = await this.cache.get();
 
