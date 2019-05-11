@@ -13,7 +13,7 @@ import Lang from 'lib/lang';
 interface Props {
     page: number;
     size: number;
-    lastPageComps: Comp[];
+    lastPageCompetitions: Comp[];
     paginateBegining: () => void;
     paginateBackwards: () => void;
     paginateForward: () => void;
@@ -34,7 +34,7 @@ export const Pagination: React.SFC<Props> = ({
     paginateBackwards,
     paginateEnd,
     paginateForward,
-    lastPageComps,
+    lastPageCompetitions,
     size,
 }) => {
     return (
@@ -82,8 +82,8 @@ export const Pagination: React.SFC<Props> = ({
                     </Button>
 
                     <Button
-                        style={BUTTON_STYLE(lastPageComps.length < size)}
-                        disabled={lastPageComps.length < size}
+                        style={BUTTON_STYLE(lastPageCompetitions.length < size)}
+                        disabled={lastPageCompetitions.length < size}
                         onPress={paginateForward}
                     >
                         <Ionicons
@@ -94,8 +94,8 @@ export const Pagination: React.SFC<Props> = ({
                     </Button>
 
                     <Button
-                        style={BUTTON_STYLE(lastPageComps.length < size)}
-                        disabled={lastPageComps.length < size}
+                        style={BUTTON_STYLE(lastPageCompetitions.length < size)}
+                        disabled={lastPageCompetitions.length < size}
                         onPress={paginateEnd}
                     >
                         <Ionicons

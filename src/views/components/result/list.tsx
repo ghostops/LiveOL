@@ -88,7 +88,7 @@ export class ResultList extends React.PureComponent<Props, State> {
                     flexDirection: 'column',
                     marginLeft: 0,
                 }}
-                // onPress={() => this.openModal(result)}
+                onPress={() => this.openModal(result)}
             >
                 <View style={{
                     flexDirection: 'row',

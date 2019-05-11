@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as NB from 'native-base';
 import { Cache } from 'lib/cache';
 import { getComps } from 'lib/api';
 import { LanguagePicker } from 'views/components/lang/picker';
@@ -7,11 +6,16 @@ import { NavigationScreenProp } from 'react-navigation';
 import { Pagination } from 'views/components/pagination';
 import { Right, Left } from './header';
 import { Routes } from 'lib/nav/routes';
-import { ScrollView, LayoutChangeEvent, Alert } from 'react-native';
-import { UNIT, COLORS } from 'util/const';
-import Lang from 'lib/lang';
+import { ScrollView } from 'react-native';
 import { SearchBar } from 'views/components/search/bar';
+import { today } from 'util/date';
+import { TodaysCompetitions } from 'views/components/home/today';
+import { UNIT, COLORS } from 'util/const';
 import * as _ from 'lodash';
+import * as NB from 'native-base';
+import Lang from 'lib/lang';
+import { getVisibleCompetitions, HomeList } from 'views/components/home/list';
+import { HomeListItem } from 'views/components/home/listItem';
 
 const {
     Container,
@@ -20,9 +24,6 @@ const {
     ListItem,
     Text,
     View,
-    CardItem,
-    Card,
-    Body,
     Button,
 } = NB;
 
@@ -31,10 +32,11 @@ interface Props {
 }
 
 interface State {
-    originalComps: Comp[];
-    comps: Comp[];
+    allCompetitions: Comp[];
+    visibleCompetitions: Comp[];
+    todaysCompetitions: Comp[];
+    isSearching: boolean;
     page: number;
-    todayOffset: number;
 }
 
 export class OLHome extends React.PureComponent<Props, State> {
@@ -46,63 +48,37 @@ export class OLHome extends React.PureComponent<Props, State> {
 
     size = 20;
     content: ScrollView;
-    cache: Cache<Comp[]> = new Cache('comps', 60000);
+    cache: Cache<Comp[]> = new Cache('visibleCompetitions', 60000);
 
     state: State = {
-        originalComps: null,
-        comps: null,
+        allCompetitions: null,
+        visibleCompetitions: null,
+        todaysCompetitions: null,
+        isSearching: false,
         page: 1,
-        todayOffset: null,
     };
 
-    async componentWillMount() {
-        let comps = await this.cache.get();
+    componentWillMount() {
+        this.loadCompetitions();
+    }
 
-        if (!comps) {
-            comps = await getComps();
-            await this.cache.set(comps);
+    loadCompetitions = async () => {
+        let allCompetitions = await this.cache.get();
+
+        if (!allCompetitions) {
+            allCompetitions = await getComps();
+            await this.cache.set(allCompetitions);
         }
+
+        const todaysCompetitions = allCompetitions.filter((competition) => (
+            today() === competition.date
+        ));
 
         this.setState({
-            comps,
-            originalComps: comps,
+            allCompetitions,
+            todaysCompetitions,
+            visibleCompetitions: allCompetitions,
         });
-    }
-
-    groupComps = (comps: Comp[]) => {
-        const uniqEs6 = (arrArg) => (
-            arrArg.filter((elem, pos, arr) => {
-                return arr.indexOf(elem) === pos;
-            })
-        );
-
-        const keys = uniqEs6(comps.map((comp) => comp.date));
-        const map = {};
-
-        for (const key of keys) {
-            map[key] = [];
-        }
-
-        for (const comp of comps) {
-            map[comp.date].push(comp);
-        }
-
-        return map;
-    }
-
-    today = () => {
-        const d = new Date();
-
-        const month = d.getMonth() + 1;
-        const day = d.getDate();
-
-        // tslint:disable
-        const output = d.getFullYear() + '-' +
-            (month < 10 ? '0' : '') + month + '-' +
-            (day < 10 ? '0' : '') + day;
-        // tslint:enable
-
-        return output;
     }
 
     scrollTo = (y?: number) => {
@@ -125,7 +101,7 @@ export class OLHome extends React.PureComponent<Props, State> {
 
     paginateEnd = () => {
         const lastPage = Math.floor(
-            this.state.comps.length /
+            this.state.visibleCompetitions.length /
             this.size,
         );
         this.setState({ page: lastPage }, this.scrollTo);
@@ -138,7 +114,13 @@ export class OLHome extends React.PureComponent<Props, State> {
     renderPagination = () => {
         return (
             <Pagination
-                lastPageComps={this.getVisibleComps(this.state.page + 2)}
+                lastPageCompetitions={
+                    getVisibleCompetitions(
+                        this.state.visibleCompetitions,
+                        this.state.page + 2,
+                        this.size,
+                    )
+                }
                 paginateBackwards={this.paginateBackwards}
                 paginateBegining={this.paginateBegining}
                 paginateEnd={this.paginateEnd}
@@ -149,160 +131,43 @@ export class OLHome extends React.PureComponent<Props, State> {
         );
     }
 
-    getVisibleComps = (page: number) =>
-        this.state.comps.slice(
-            this.size * (page === 1 ? 0 : (page || 1)),
-            (this.size * (page || 1)) + this.size,
-        )
-
-    renderListSection = (key: string, comps: any) => {
-        return (
-            <View key={key}>
-                <ListItem
-                    itemDivider
-                    style={{
-                        marginLeft: 0,
-                        paddingHorizontal: UNIT,
-                    }}
-                >
-                    <Text style={{
-                        fontSize: UNIT,
-                        fontWeight: 'bold',
-                    }}>
-                        {key}
-                    </Text>
-                </ListItem>
-
-                <List>
-                    {comps[key].map(this.renderListItem)}
-                </List>
-            </View>
-        );
-    }
-
-    renderListItem = (comp: Comp, index?: number, total?: number) => (
-        <ListItem
-            key={comp.id}
-            style={{
-                marginLeft: 0,
-                paddingHorizontal: UNIT,
-                width: '100%',
-                borderBottomWidth: index === total - 1 ? 0 : 1,
-            }}
-            onPress={() => {
-                this.props.navigation.push(Routes.competition, {
-                    id: comp.id,
-                    title: comp.name,
-                });
-            }}
-        >
-            <Text style={{
-                fontSize: UNIT,
-            }}>
-                {comp.name}
-            </Text>
-        </ListItem>
-    )
-
-    todayLayout = ({ nativeEvent: { layout } }: LayoutChangeEvent) => {
-        this.setState({ todayOffset: layout.y });
-    }
-
-    renderToday = (key: string, comps: any) => {
-        return (
-            <View
-                key="today"
-                style={{
-                    padding: UNIT,
-                    backgroundColor: COLORS.MAIN,
-                }}
-                onLayout={this.todayLayout}
-            >
-
-                <Text
-                    style={{
-                        fontSize: UNIT * 1.5,
-                        textAlign: 'center',
-                        color: 'white',
-                    }}
-                >
-                    {Lang.print('home.today')}
-                </Text>
-
-                <Text
-                    style={{
-                        fontSize: UNIT,
-                        textAlign: 'center',
-                        color: 'white',
-                        fontWeight: 'bold',
-                    }}
-                >
-                    {key}
-                </Text>
-
-                <Card style={{
-                    marginTop: UNIT,
-                    width: '100%',
-                }}>
-                    <CardItem>
-                        <Body style={{ width: '100%' }}>
-                            <List style={{ width: '100%' }}>
-                                {
-                                    comps[key].map(
-                                        (comp, index) =>
-                                            this.renderListItem(
-                                                comp,
-                                                index,
-                                                comps[key].length,
-                                            ),
-                                    )
-                                }
-                            </List>
-                        </Body>
-                    </CardItem>
-                </Card>
-            </View>
-        );
+    onCompetitionPress = (comp: Comp) => {
+        this.props.navigation.push(Routes.competition, {
+            id: comp.id,
+            title: comp.name,
+        });
     }
 
     renderInner = () => {
-        if (!this.state.comps) {
+        if (!this.state.visibleCompetitions) {
             return <Spinner color={COLORS.MAIN} />;
-        }
-
-        const comps = this.groupComps(this.getVisibleComps(this.state.page));
-
-        if (!this.state.comps.length) {
-            return (
-                <View
-                    style={{
-                        width: '100%',
-                        paddingVertical: UNIT * 4,
-                    }}
-                >
-                    <Text
-                        style={{
-                            fontSize: UNIT,
-                            textAlign: 'center',
-                        }}
-                    >
-                        {Lang.print('home.nothingSearch')}
-                    </Text>
-                </View>
-            );
         }
 
         return (
             <View>
                 {
-                    Object.keys(comps).map((key) => {
-                        return (
-                            this.today() === key
-                            ? this.renderToday(key, comps)
-                            : this.renderListSection(key, comps)
-                        );
-                    })
+                    this.state.page === 1 &&
+                    <TodaysCompetitions
+                        competitions={this.state.todaysCompetitions}
+                        renderListItem={(competition, index, total) => (
+                            <HomeListItem
+                                competition={competition}
+                                index={index}
+                                key={competition.id}
+                                onCompetitionPress={this.onCompetitionPress}
+                                total={total}
+                            />
+                        )}
+                    />
                 }
+
+                <HomeList
+                    competitions={this.state.visibleCompetitions}
+                    onCompetitionPress={this.onCompetitionPress}
+                    page={this.state.page}
+                    sizePerPage={this.size}
+                />
+
                 {this.renderPagination()}
             </View>
         );
@@ -310,38 +175,30 @@ export class OLHome extends React.PureComponent<Props, State> {
 
     searchbar: SearchBar;
     onSearch = (term: string) => {
-        this.setState({ comps: null });
+        this.setState({
+            visibleCompetitions: null,
+            isSearching: true,
+        });
 
         setTimeout(
             () => {
-                let comps = this.state.originalComps;
+                let visibleCompetitions = this.state.allCompetitions;
 
-                comps = comps
+                visibleCompetitions = visibleCompetitions
                     .filter((comp) => comp.name.toLowerCase()
                     .includes(term.toLowerCase()));
 
-                this.setState({ comps, page: 1 });
+                this.setState({ visibleCompetitions, page: 1 });
                 this.scrollTo();
             },
             0,
         );
     }
 
-    scrollToday = () => {
-        const today = this.state.comps.find((comp) => this.today() === comp.date);
-
-        if (!today) {
-            return Alert.alert(Lang.print('home.nothingToday'));
-        }
-
-        // The offset can be 0, which is false
-        if (!_.isNumber(this.state.todayOffset)) {
-            this.paginateForward();
-            setTimeout(this.scrollToday, 650);
-        } else {
-            this.scrollTo(this.state.todayOffset);
-        }
-    }
+    onHide = () => this.setState({
+        isSearching: false,
+        visibleCompetitions: this.state.allCompetitions,
+    })
 
     renderHeader = () => {
         return (
@@ -376,29 +233,6 @@ export class OLHome extends React.PureComponent<Props, State> {
                         </Button>
                     </View>
                 </View>
-
-                {
-                    this.state.page <= 1 &&
-                    (this.state.originalComps && this.state.comps) &&
-                    (this.state.originalComps.length === this.state.comps.length) &&
-                    <View
-                        style={{
-                            margin: 10,
-                        }}
-                    >
-                        <Button
-                            success
-                            full
-                            rounded
-                            small
-                            onPress={this.scrollToday}
-                        >
-                            <Text>
-                                {Lang.print('home.goToday')}
-                            </Text>
-                        </Button>
-                    </View>
-                }
             </React.Fragment>
         );
     }
@@ -418,6 +252,7 @@ export class OLHome extends React.PureComponent<Props, State> {
                 <SearchBar
                     ref={(ref) => this.searchbar = ref}
                     onSearch={this.onSearch}
+                    onHide={this.onHide}
                 />
             </Container>
         );

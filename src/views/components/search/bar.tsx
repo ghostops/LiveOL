@@ -9,6 +9,7 @@ const SEARCH_SIZE = UNIT * 3.25;
 
 interface Props {
     onSearch: (term: string) => void;
+    onHide: () => void;
 }
 
 interface State {
@@ -59,7 +60,7 @@ export class SearchBar extends React.PureComponent<Props, State> {
         ).start(() => {
             Keyboard.dismiss();
             this.searchInput.wrappedInstance.blur();
-            this.props.onSearch('');
+            this.props.onHide();
         });
     }
 
