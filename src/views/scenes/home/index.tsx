@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { Cache } from 'lib/cache';
 import { getComps } from 'lib/api';
+import { getVisibleCompetitions, HomeList } from 'views/components/home/list';
+import { HomeListItem } from 'views/components/home/listItem';
 import { LanguagePicker } from 'views/components/lang/picker';
 import { NavigationScreenProp } from 'react-navigation';
 import { Pagination } from 'views/components/pagination';
@@ -11,17 +13,12 @@ import { SearchBar } from 'views/components/search/bar';
 import { today } from 'util/date';
 import { TodaysCompetitions } from 'views/components/home/today';
 import { UNIT, COLORS } from 'util/const';
-import * as _ from 'lodash';
 import * as NB from 'native-base';
 import Lang from 'lib/lang';
-import { getVisibleCompetitions, HomeList } from 'views/components/home/list';
-import { HomeListItem } from 'views/components/home/listItem';
 
 const {
     Container,
     Spinner,
-    List,
-    ListItem,
     Text,
     View,
     Button,
@@ -146,7 +143,10 @@ export class OLHome extends React.PureComponent<Props, State> {
         return (
             <View>
                 {
-                    this.state.page === 1 &&
+                    Boolean(
+                        this.state.page === 1 &&
+                        !this.state.isSearching,
+                    ) &&
                     <TodaysCompetitions
                         competitions={this.state.todaysCompetitions}
                         renderListItem={(competition, index, total) => (
@@ -195,10 +195,13 @@ export class OLHome extends React.PureComponent<Props, State> {
         );
     }
 
-    onHide = () => this.setState({
-        isSearching: false,
-        visibleCompetitions: this.state.allCompetitions,
-    })
+    onHide = () => this.setState(
+        {
+            isSearching: false,
+            visibleCompetitions: this.state.allCompetitions,
+        },
+        this.scrollTo,
+    )
 
     renderHeader = () => {
         return (
