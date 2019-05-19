@@ -2,6 +2,7 @@
   "back": "Back",
   "classes": {
     "autoUpdate": "Turn on live updating results",
+    "autoUpdateEnabled": "Live updating results enabled",
     "resultsFor": "Results for"
   },
   "competitions": {
@@ -56,6 +57,10 @@
       }
     },
     "version": "Current version"
+  },
+  "promotions": {
+    "didYouKnow": "Did you know?",
+    "radioResults": "You can press on a contestant to get any eventual radio times for the event!"
   },
   "status": {
     "long": [

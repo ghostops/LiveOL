@@ -10,7 +10,8 @@
     "upload": "phraseapp pull && npm version patch && expo publish && git push",
     "build:ios": "expo build:ios",
     "build:android": "expo build:android",
-    "testserver": "nodemon testserver/"
+    "testserver": "nodemon testserver/",
+    "lang": "phraseapp pull"
   },
   "jest": {
     "preset": "jest-expo"
