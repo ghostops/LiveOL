@@ -54,12 +54,6 @@ export class OLInfo extends React.PureComponent<Props, State> {
         canReview: false,
     };
 
-    async componentWillMount() {
-        // You cannot review yet
-        // tslint:disable-next-line
-        // this.setState({ canReview: this.review.canReview() && !(await this.review.hasReviewed()) });
-    }
-
     openAppStore = async () => {
         Linking.openURL(
             Platform.OS === 'ios'
