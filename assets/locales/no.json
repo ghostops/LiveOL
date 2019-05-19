@@ -18,9 +18,9 @@
     }
   },
   "home": {
-    "goToday": "Gå til dagens arrangement",
-    "nothingSearch": "Ingen arrangement ble funnet",
-    "nothingToday": "Det er ingen arrangement i dag",
+    "goToday": "Gå til dagens løp",
+    "nothingSearch": "Ingen løp ble funnet",
+    "nothingToday": "Det er ingen løp i dag",
     "page": "Side",
     "search": "Søk",
     "title": "LiveOL",
@@ -34,7 +34,7 @@
       "Appen er utviklet av Ludvig Larsendahl og koden finnes som Open Source på GitHub (søk etter LiveOL)."
     ],
     "contact": "Kontakt meg",
-    "purgeCache": "Ta bort cache",
+    "purgeCache": "Fjern lagrede resultat",
     "purged": "lagrede løp ble slettet",
     "rate": "Sett karakter på appen",
     "title": "Informasjon",

@@ -12,6 +12,7 @@ export const ANDROID_VERSION_CODE = APP.expo.android.versionCode;
 export const UNIT = 16 * RESPONSIVE_UNIT;
 export const COLORS = {
     MAIN: '#e86a1e',
+    LIGHT: '#ff7f32',
     DARK: '#b25115',
 };
 

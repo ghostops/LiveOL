@@ -10,10 +10,12 @@ import {
     Card,
     CardItem,
 } from 'native-base';
-import { UNIT, COLORS } from 'util/const';
-import Lang from 'lib/lang';
-import { statusI18n } from 'lib/lang/status';
+import { RadioResultsPromotion } from '../promotion/radioResults';
 import { ResultsModal } from './modal';
+import { statusI18n } from 'lib/lang/status';
+import { UNIT, COLORS } from 'util/const';
+import * as _ from 'lodash';
+import Lang from 'lib/lang';
 
 interface Props {
     initialResults?: Result[];
@@ -67,6 +69,16 @@ export class ResultList extends React.PureComponent<Props, State> {
                 this.clearPoll();
             }
         }
+
+        if (!!this.state.modalResult) {
+            const modalResult =  this.state.results.find(
+                (result) => result.name === this.state.modalResult.name,
+            );
+
+            if (!!modalResult && !_.isEqual(modalResult, this.state.modalResult)) {
+                this.setState({ modalResult });
+            }
+        }
     }
 
     poll = async () => {
@@ -78,7 +90,7 @@ export class ResultList extends React.PureComponent<Props, State> {
     clearPoll = () => this.interval && clearInterval(this.interval);
 
     openModal = (modalResult: Result) => this.setState({ modalResult, modalOpen: true });
-    closeModal = () => this.setState({ modalOpen: false });
+    closeModal = () => this.setState({ modalOpen: false, modalResult: null });
 
     renderResult = (result: Result) => {
         return (
@@ -202,6 +214,7 @@ export class ResultList extends React.PureComponent<Props, State> {
                     closeModal={this.closeModal}
                     result={this.state.modalResult}
                     splitControls={this.props.splitControls}
+                    isLive={this.state.polling}
                 />
 
                 <ScrollView
@@ -218,6 +231,8 @@ export class ResultList extends React.PureComponent<Props, State> {
                         />
                     }
                 >
+                    <RadioResultsPromotion />
+
                     <Card style={{ marginBottom: 10 }}>
                         <CardItem style={{ paddingVertical: 8 }}>
                             <Text style={{ flex: 1, fontSize: UNIT }}>

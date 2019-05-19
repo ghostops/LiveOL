@@ -2,6 +2,7 @@
   "back": "Bakåt",
   "classes": {
     "autoUpdate": "Automatisk uppdatering",
+    "autoUpdateEnabled": "Automatiska uppdateringar är aktivt",
     "resultsFor": "Resultat för"
   },
   "competitions": {
@@ -56,6 +57,10 @@
       }
     },
     "version": "Nuvarande version"
+  },
+  "promotions": {
+    "didYouKnow": "Visste du att?",
+    "radioResults": "Du kan klicka på en tävlande och få eventuella radio-tider för eventet!"
   },
   "status": {
     "long": [
