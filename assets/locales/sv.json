@@ -66,17 +66,18 @@
     "long": [
       "OKEJ",
       "Startade Ej",
-      "Avslutade Ej",
-      "Missade Kontroll",
+      "Utgått",
+      "Felstämplat",
       "Diskvalificerad",
       "Över Maxtid",
       "",
       "",
       "",
-      "Ej Startat",
-      "Ej Startat",
-      "Walk Over",
-      "Bytte Klass"
+      "",
+      "",
+      "Återbud",
+      "Bytt Klass",
+      "Fullföljd"
     ],
     "short": [
       "OK",
@@ -88,10 +89,11 @@
       "",
       "",
       "",
-      "Ej Startat",
-      "Ej Startat",
-      "Walk Over",
-      "Bytte Klass"
+      "",
+      "",
+      "WO",
+      "MU",
+      "FIN"
     ]
   }
 }

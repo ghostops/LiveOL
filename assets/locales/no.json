@@ -2,6 +2,7 @@
   "back": "Tilbake",
   "classes": {
     "autoUpdate": "Automatisk oppdatering",
+    "autoUpdateEnabled": "Automatiske oppdateringer er aktivert",
     "resultsFor": "Resultat for"
   },
   "competitions": {
@@ -57,36 +58,42 @@
     },
     "version": "Gjeldende version"
   },
+  "promotions": {
+    "didYouKnow": "Visste du?",
+    "radioResults": "Du kan klikke på en deltager og få eventuelle mellomtider for løpet!"
+  },
   "status": {
     "long": [
       "OK",
       "Ikke startet",
       "Brutt",
-      "Diskvalifisert",
+      "Feilstempling",
       "Diskvalifisert",
       "Over makstid",
       "",
       "",
       "",
-      "Ikke startet",
-      "Ikke startet",
-      "Stått over",
-      "Byttet klasse"
+      "",
+      "",
+      "Avmeldt",
+      "Byttet klasse",
+      "Fullført"
     ],
     "short": [
       "OK",
       "DNS",
       "DNF",
-      "DSQ",
-      "DSQ",
+      "Disk.",
+      "Disk.",
       "OT",
       "",
       "",
       "",
-      "Ikke startet",
-      "Ikke startet",
-      "Stått over",
-      "Byttet klasse"
+      "",
+      "",
+      "WO",
+      "MU",
+      "FIN"
     ]
   }
 }

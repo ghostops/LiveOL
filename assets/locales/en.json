@@ -67,16 +67,17 @@
       "OKAY",
       "Did Not Start",
       "Did Not Finish",
-      "Missing Punch",
+      "Mispunch",
       "Disqualified",
       "Over Max Time",
       "",
       "",
       "",
-      "Not Started Yet",
-      "Not Started Yet",
+      "",
+      "",
       "Walk Over",
-      "Moved Up"
+      "Moved Up",
+      "Finished"
     ],
     "short": [
       "OK",
@@ -88,10 +89,11 @@
       "",
       "",
       "",
-      "Not Started Yet",
-      "Not Started Yet",
-      "Walk Over",
-      "Moved Up"
+      "",
+      "",
+      "WO",
+      "MU",
+      "FIN"
     ]
   }
 }
