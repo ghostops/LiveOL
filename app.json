@@ -8,7 +8,7 @@
       "ios",
       "android"
     ],
-    "version": "1.4.0",
+    "version": "1.5.0",
     "orientation": "default",
     "icon": "./assets/images/icon.png",
     "splash": {
@@ -30,7 +30,7 @@
     },
     "android": {
       "package": "se.liveol.rn",
-      "versionCode": 4,
+      "versionCode": 5,
       "permissions": []
     }
   }

@@ -12,13 +12,15 @@ export const OLButton: React.SFC<Props> = (props) => {
     return (
         <Button
             {...props}
-            style={{
-                justifyContent: 'center',
-                backgroundColor: COLORS.MAIN,
-                opacity: props.disabled ? 0.35 : 1,
-                borderRadius: 4,
-                ...props.style,
-            }}
+            style={[
+                {
+                    justifyContent: 'center',
+                    backgroundColor: COLORS.MAIN,
+                    opacity: props.disabled ? 0.35 : 1,
+                    borderRadius: 4,
+                },
+                props.style,
+            ]}
         >
             {props.beforeText}
             <Text style={{

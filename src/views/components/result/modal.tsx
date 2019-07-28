@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Modal, TouchableOpacity, Text } from 'react-native';
 import { BlurView } from 'expo-blur';
-import { View, CardItem, Card, Content, Left, Right } from 'native-base';
+import { View, CardItem, Card, Content, Left } from 'native-base';
 import * as Helpers from './helpers';
 import { UNIT, COLORS } from 'util/const';
 import { Ionicons } from '@expo/vector-icons';
