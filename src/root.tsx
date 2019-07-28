@@ -2,7 +2,8 @@ import * as React from 'react';
 import Router from './lib/nav/router';
 import Lang from './lib/lang';
 import { LayoutAnimation, View } from 'react-native';
-import { SplashScreen, Font } from 'expo';
+import { SplashScreen } from 'expo';
+import * as Font from 'expo-font';
 import { COLORS } from './util/const';
 
 interface State {

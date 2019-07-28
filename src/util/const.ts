@@ -1,6 +1,13 @@
 import { Dimensions } from 'react-native';
+const window = Dimensions.get('window');
 
-const WINDOW_WIDTH = Dimensions.get('window').width;
+export const DeviceOrientationAprox = (): 'landscape' | 'portrait' => {
+    const window = Dimensions.get('window');
+    const min = Math.min(window.width, window.height);
+    return min === window.width ? 'portrait' : 'landscape';
+};
+
+export const WINDOW_WIDTH = Math.min(window.width, window.height);
 const RESPONSIVE_UNIT = WINDOW_WIDTH / 350;
 
 export const PACKAGE = require('../../package.json');

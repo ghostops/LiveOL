@@ -7,7 +7,7 @@ import {
     Badge,
 } from 'native-base';
 import { statusI18n } from 'lib/lang/status';
-import { UNIT, COLORS } from 'util/const';
+import { UNIT, COLORS, DeviceOrientationAprox } from 'util/const';
 import * as _ from 'lodash';
 
 interface Props {

@@ -1,5 +1,5 @@
 import { AsyncStorage } from 'react-native';
-import { Localization } from 'expo-localization';
+import * as Localization from 'expo-localization';
 import * as _ from 'lodash';
 
 const LOCALES = {
