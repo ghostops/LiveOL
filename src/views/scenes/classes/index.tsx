@@ -23,6 +23,8 @@ interface State {
     olClass: Class;
 }
 
+const POLL = 15000;
+
 export class OLClasses extends React.PureComponent<Props, State> {
     interval: number;
 
@@ -38,7 +40,7 @@ export class OLClasses extends React.PureComponent<Props, State> {
     }
 
     // 1000 ms less than the poller
-    cache: Cache<Class> = new Cache(`class:${this.cacheId()}`, 14000);
+    cache: Cache<Class> = new Cache(`class:${this.cacheId()}`, POLL - 1000);
 
     async componentWillMount() {
         this.poll();
@@ -65,20 +67,25 @@ export class OLClasses extends React.PureComponent<Props, State> {
         }
 
         return (
-            <View style={{
-                padding: 10,
-            }}>
-
-                <Title style={{
-                    textAlign: 'left',
-                    fontSize: UNIT * 1.35,
-                    paddingBottom: 10,
-                    color: 'black',
-                }}>
-                    {Lang.print('classes.resultsFor')}: {this.state.olClass.className}
-                </Title>
+            <View>
+                <View
+                    style={{
+                        paddingTop: 10,
+                        paddingHorizontal: 10,
+                    }}
+                >
+                    <Title style={{
+                        textAlign: 'left',
+                        fontSize: UNIT * 1.35,
+                        paddingBottom: 10,
+                        color: 'black',
+                    }}>
+                        {Lang.print('classes.resultsFor')}: {this.state.olClass.className}
+                    </Title>
+                </View>
 
                 <ResultList
+                    refetchTimeout={POLL}
                     fetcher={this.poll}
                     onResultPress={(result) => {
                         const { params: { id } } = this.props.navigation.state;

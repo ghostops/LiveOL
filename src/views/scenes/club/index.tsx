@@ -25,6 +25,8 @@ interface State {
     polling: boolean;
 }
 
+const POLL = 15000;
+
 export class OLClub extends React.PureComponent<Props, State> {
     interval: number;
 
@@ -37,7 +39,7 @@ export class OLClub extends React.PureComponent<Props, State> {
         return `${id}:${clubName}`;
     }
 
-    cache: Cache<Club> = new Cache(`class:${this.cacheId()}`, 10000);
+    cache: Cache<Club> = new Cache(`class:${this.cacheId()}`, POLL - 5000);
 
     state: State = { club: null, polling: false };
 
@@ -69,20 +71,23 @@ export class OLClub extends React.PureComponent<Props, State> {
         }
 
         return (
-            <View style={{
-                padding: 10,
-            }}>
+            <View>
 
-                <Title style={{
-                    textAlign: 'left',
-                    fontSize: UNIT * 1.35,
-                    marginVertical: 10,
-                    color: 'black',
+                <View style={{
+                    padding: 10,
                 }}>
-                    {Lang.print('classes.resultsFor')}: {this.state.club.clubName}
-                </Title>
+                    <Title style={{
+                        textAlign: 'left',
+                        fontSize: UNIT * 1.35,
+                        marginVertical: 10,
+                        color: 'black',
+                    }}>
+                        {Lang.print('classes.resultsFor')}: {this.state.club.clubName}
+                    </Title>
+                </View>
 
                 <ResultList
+                    refetchTimeout={POLL}
                     fetcher={this.poll}
                     onResultPress={(result) => {
                         const { params: { id } } = this.props.navigation.state;
