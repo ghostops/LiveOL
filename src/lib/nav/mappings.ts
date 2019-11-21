@@ -1,6 +1,6 @@
 import { OLHome } from '../../views/scenes/home/container';
 import { NavigationRouteConfigMap } from 'react-navigation';
-import { OLCompetition } from '../../views/scenes/competition';
+import { OLCompetition } from '../../views/scenes/competition/container';
 import { OLClasses } from '../../views/scenes/classes';
 import { OLClub } from '../../views/scenes/club';
 import { OLPassings } from '../../views/scenes/competition/passings';

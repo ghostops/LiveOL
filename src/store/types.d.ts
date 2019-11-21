@@ -5,6 +5,7 @@ interface AppState {
 
 interface ApiReducer {
     competitions: Comp[];
+    classes: Classes[];
 }
 
 interface HomeReducer {

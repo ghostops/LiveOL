@@ -6,6 +6,7 @@ import { Right, Left } from './header';
 import { Routes } from 'lib/nav/routes';
 import Lang from 'lib/lang';
 import * as Actions from './store';
+import { getCompetition } from 'store/stores/api';
 
 interface OwnProps {
     navigation: NavigationScreenProp<any, any>;
@@ -18,6 +19,7 @@ interface StateProps {
 
 interface DispatchProps {
     setSearching: (value: boolean) => void;
+    getCompetition: (id: number) => void;
 }
 
 type Props = StateProps & OwnProps & DispatchProps;
@@ -34,6 +36,8 @@ class DataWrapper extends React.PureComponent<Props> {
             <Component
                 competitions={this.props.competitions}
                 onCompetitionPress={(competition) => {
+                    this.props.getCompetition(competition.id);
+
                     this.props.navigation.push(Routes.competition, {
                         id: competition.id,
                         title: competition.name,
@@ -52,6 +56,7 @@ const mapStateToProps = (state: AppState): StateProps => ({
 });
 
 const mapDispatchToProps = {
+    getCompetition,
     setSearching: Actions.setSearching,
 };
 
