@@ -1,10 +1,14 @@
 import * as React from 'react';
-import Router from './lib/nav/router';
-import Lang from './lib/lang';
+import { COLORS } from 'util/const';
 import { LayoutAnimation, View } from 'react-native';
+// import { PersistGate } from 'redux-persist/integration/react';
+import { Provider } from 'react-redux';
 import { SplashScreen } from 'expo';
+import { store } from 'store/configure';
 import * as Font from 'expo-font';
-import { COLORS } from './util/const';
+import Lang from 'lib/lang';
+import Router from 'lib/nav/router';
+import { loadCompetitions } from 'store/stores/api';
 
 interface State {
     ready: boolean;
@@ -23,10 +27,14 @@ export default class AppRoot extends React.Component<{}, State> {
     }
 
     async componentWillMount() {
+        store.store.dispatch<any>(loadCompetitions());
+
         await Lang.init();
+
         await Font.loadAsync({
             Roboto_medium: require('../assets/fonts/Roboto-Bold.ttf'),
         });
+
         setTimeout(
             () => {
                 LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
@@ -37,12 +45,23 @@ export default class AppRoot extends React.Component<{}, State> {
         );
     }
 
-    render() {
-        const RouterView = Router();
+    renderWhenReady = (children: React.ReactNode) => {
         return (
             this.state.ready
-            ? <RouterView />
-            : <View style={{ flex: 1, borderStartColor: COLORS.MAIN }} />
+            ? children
+            : <View style={{ flex: 1, backgroundColor: COLORS.MAIN }} />
+        );
+    }
+
+    render() {
+        const RouterView = Router();
+
+        return this.renderWhenReady(
+            <View style={{ flex: 1 }}>
+                <Provider store={store.store}>
+                    <RouterView />
+                </Provider>
+            </View>,
         );
     }
 }

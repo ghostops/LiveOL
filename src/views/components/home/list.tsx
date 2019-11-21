@@ -5,6 +5,7 @@ import * as NB from 'native-base';
 import Lang from 'lib/lang';
 import { HomeListItem } from './listItem';
 import { today } from 'util/date';
+import { FlatList } from 'react-native';
 
 const {
     List,
@@ -15,9 +16,8 @@ const {
 
 interface Props {
     competitions: Comp[];
-    page: number;
-    sizePerPage: number;
     onCompetitionPress: (comp: Comp) => void;
+    listHeader: React.ReactNode;
 }
 
 export const getVisibleCompetitions = (competitions: Comp[], page: number, size: number) =>
@@ -49,13 +49,10 @@ export const groupVisibleCompetitions = (visibleCompetitions: Comp[]): Record<st
 
 export const HomeList: React.SFC<Props> = ({
     competitions,
-    page,
-    sizePerPage,
     onCompetitionPress,
+    listHeader,
 }) => {
-    const visibleCompetitions = groupVisibleCompetitions(
-        getVisibleCompetitions(competitions, page, sizePerPage),
-    );
+    const visibleCompetitions = groupVisibleCompetitions(competitions);
 
     const renderListItem = (competition: Comp, index: number, total: number) => (
         <HomeListItem
@@ -115,12 +112,11 @@ export const HomeList: React.SFC<Props> = ({
     }
 
     return (
-        <View>
-            {
-                Object.keys(visibleCompetitions).map((key) => {
-                    return renderListSection(key, visibleCompetitions);
-                })
-            }
-        </View>
+        <FlatList
+            ListHeaderComponent={listHeader}
+            data={Object.keys(visibleCompetitions)}
+            renderItem={({ item }) => renderListSection(item, visibleCompetitions)}
+            keyExtractor={(item) => `${item}`}
+        />
     );
 };

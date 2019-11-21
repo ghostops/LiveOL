@@ -1,0 +1,58 @@
+import * as React from 'react';
+import { connect } from 'react-redux';
+import { NavigationScreenProp } from 'react-navigation';
+import { OLHome as Component } from './component';
+import { Right, Left } from './header';
+import { Routes } from 'lib/nav/routes';
+import Lang from 'lib/lang';
+import * as Actions from './store';
+
+interface OwnProps {
+    navigation: NavigationScreenProp<any, any>;
+}
+
+interface StateProps {
+    competitions: Comp[];
+    searching: boolean;
+}
+
+interface DispatchProps {
+    setSearching: (value: boolean) => void;
+}
+
+type Props = StateProps & OwnProps & DispatchProps;
+
+class DataWrapper extends React.PureComponent<Props> {
+    static navigationOptions = ({ navigation }) => ({
+        title: Lang.print('home.title'),
+        headerRight: <Right onPress={() => navigation.push(Routes.info)} />,
+        headerLeft: <Left />,
+    })
+
+    render() {
+        return (
+            <Component
+                competitions={this.props.competitions}
+                onCompetitionPress={(competition) => {
+                    this.props.navigation.push(Routes.competition, {
+                        id: competition.id,
+                        title: competition.name,
+                    });
+                }}
+                openSearch={() => this.props.setSearching(true)}
+                searching={this.props.searching}
+            />
+        );
+    }
+}
+
+const mapStateToProps = (state: AppState): StateProps => ({
+    competitions: state.home.visibleCompetitions || state.api.competitions,
+    searching: state.home.searching,
+});
+
+const mapDispatchToProps = {
+    setSearching: Actions.setSearching,
+};
+
+export const OLHome = connect(mapStateToProps, mapDispatchToProps)(DataWrapper);

@@ -1,4 +1,4 @@
-import { OLHome } from '../../views/scenes/home';
+import { OLHome } from '../../views/scenes/home/container';
 import { NavigationRouteConfigMap } from 'react-navigation';
 import { OLCompetition } from '../../views/scenes/competition';
 import { OLClasses } from '../../views/scenes/classes';

@@ -1,16 +1,26 @@
 import * as React from 'react';
-import * as NB from 'native-base';
 import { Animated, TouchableOpacity, Keyboard } from 'react-native';
-import { UNIT } from 'util/const';
-import Lang from 'lib/lang';
+import { connect } from 'react-redux';
 import { isIphoneX, xtraSpace } from 'util/iphonex';
+import { UNIT } from 'util/const';
+import * as Actions from 'views/scenes/home/store';
+import * as NB from 'native-base';
+import * as _ from 'lodash';
+import Lang from 'lib/lang';
 
 const SEARCH_SIZE = UNIT * 3.25;
 
-interface Props {
-    onSearch: (term: string) => void;
-    onHide: () => void;
+interface StateProps {
+    competitions: Comp[];
+    searching: boolean;
 }
+
+interface DispatchProps {
+    setVisibleCompetitions: (competitions: Comp[]) => void;
+    setSearching: (value: boolean) => void;
+}
+
+type Props = StateProps & DispatchProps;
 
 interface State {
     searchAnimation: Animated.Value;
@@ -26,7 +36,7 @@ const {
     Text,
 } = NB;
 
-export class SearchBar extends React.PureComponent<Props, State> {
+class Component extends React.PureComponent<Props, State> {
     state: State = {
         searchAnimation: new Animated.Value(0),
         searchTerm: '',
@@ -34,34 +44,56 @@ export class SearchBar extends React.PureComponent<Props, State> {
 
     searchInput: { wrappedInstance: { focus(), blur() } };
 
+    componentDidUpdate(prevProps: Props) {
+        if (
+            prevProps.searching !== this.props.searching &&
+            this.props.searching
+        ) {
+            this.showSearch();
+        }
+    }
+
     search = () => {
-        this.props.onSearch(this.state.searchTerm);
+        setTimeout(
+            () => {
+                const results = this.props.competitions
+                    .filter((comp) => comp.name.toLowerCase()
+                    .includes(this.state.searchTerm.toLowerCase()));
+
+                this.props.setVisibleCompetitions(results);
+            },
+            0,
+        );
     }
 
     showSearch = () => {
+        this.searchInput.wrappedInstance.focus();
+
         Animated.spring(
             this.state.searchAnimation,
             {
                 toValue: 1,
                 useNativeDriver: true,
             },
-        ).start(() => {
-            this.searchInput.wrappedInstance.focus();
-        });
+        ).start();
     }
 
     hideSearch = () => {
+        Keyboard.dismiss();
+        this.searchInput.wrappedInstance.blur();
+
+        _.defer(() => {
+            this.props.setSearching(false);
+            this.props.setVisibleCompetitions(null);
+        });
+
         Animated.spring(
             this.state.searchAnimation,
             {
                 toValue: 0,
                 useNativeDriver: true,
             },
-        ).start(() => {
-            Keyboard.dismiss();
-            this.searchInput.wrappedInstance.blur();
-            this.props.onHide();
-        });
+        ).start();
     }
 
     render() {
@@ -123,3 +155,15 @@ export class SearchBar extends React.PureComponent<Props, State> {
         );
     }
 }
+
+const mapStateToProps = (state: AppState): StateProps => ({
+    searching: state.home.searching,
+    competitions: state.api.competitions,
+});
+
+const mapDispatchToProps = {
+    setVisibleCompetitions: Actions.setVisibleCompetitions,
+    setSearching: Actions.setSearching,
+};
+
+export const SearchBar = connect(mapStateToProps, mapDispatchToProps)(Component);
