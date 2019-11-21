@@ -59,6 +59,11 @@ export const loadCompetitions = () => async (dispatch) => {
 };
 
 export const getCompetition = (id: number) => async (dispatch) => {
+    dispatch({
+        type: SET_CLASSES,
+        value: null,
+    });
+
     const cache = caches.competition(id);
 
     let classes: Classes;
