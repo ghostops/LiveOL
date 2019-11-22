@@ -4,10 +4,12 @@ import * as API from 'lib/api';
 
 const SET_COMPETITIONS = 'API:SET_COMPETITIONS';
 const SET_CLASSES = 'API:SET_CLASSES';
+const SET_RESULTS = 'API:SET_RESULTS';
 
 const initialState: ApiReducer = {
     competitions: null,
     classes: null,
+    results: null,
 };
 
 export function apiReducer(
@@ -25,6 +27,11 @@ export function apiReducer(
             ...state,
             classes: action.value,
         };
+    case SET_RESULTS:
+        return {
+            ...state,
+            results: action.value,
+        };
     }
 
     return state;
@@ -35,15 +42,17 @@ export function apiReducer(
 interface ICache {
     competitions: Cache<Comp[]>;
     competition: (id: number) => Cache<Classes>;
+    results: (id: string) => Cache<Class>;
 }
 
-const caches: ICache = {
+export const API_CACHES: ICache = {
     competitions: new Cache('visibleCompetitions', 60000),
     competition: (id) => new Cache(`comp:${id}`, 3600000),
+    results: (id) => new Cache(`results:${id}`, 15000),
 };
 
 export const loadCompetitions = () => async (dispatch) => {
-    const cache = caches.competitions;
+    const cache = API_CACHES.competitions;
 
     let allCompetitions = await cache.get();
 
@@ -64,7 +73,7 @@ export const getCompetition = (id: number) => async (dispatch) => {
         value: null,
     });
 
-    const cache = caches.competition(id);
+    const cache = API_CACHES.competition(id);
 
     let classes: Classes;
 
@@ -81,5 +90,21 @@ export const getCompetition = (id: number) => async (dispatch) => {
     dispatch({
         type: SET_CLASSES,
         value: classes,
+    });
+};
+
+export const getResults = (id: number, className: string) => async (dispatch) => {
+    const cache = API_CACHES.results(`class:${id}:${className}`);
+
+    let results: Class = await cache.get();
+
+    if (!results) {
+        results = await API.getClass(id, className);
+        await cache.set(results);
+    }
+
+    dispatch({
+        type: SET_RESULTS,
+        value: results,
     });
 };

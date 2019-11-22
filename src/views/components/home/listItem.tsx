@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { UNIT } from 'util/const';
+import { fontPx, px } from 'util/const';
 import { ListItem, Text } from 'native-base';
 
 interface Props {
@@ -20,14 +20,14 @@ export const HomeListItem: React.SFC<Props> = ({
             key={competition.id}
             style={{
                 marginLeft: 0,
-                paddingHorizontal: UNIT,
+                paddingHorizontal: px(16),
                 width: '100%',
                 borderBottomWidth: index === total - 1 ? 0 : 1,
             }}
             onPress={() => onCompetitionPress && onCompetitionPress(competition)}
         >
             <Text style={{
-                fontSize: UNIT,
+                fontSize: fontPx(16),
             }}>
                 {competition.name}
             </Text>

@@ -7,13 +7,14 @@ import { Routes } from 'lib/nav/routes';
 import Lang from 'lib/lang';
 import * as Actions from './store';
 import { getCompetition } from 'store/stores/api';
+import { today } from 'util/date';
 
 interface OwnProps {
     navigation: NavigationScreenProp<any, any>;
 }
 
 interface StateProps {
-    competitions: Comp[];
+    competitions: Comp[] | null;
     searching: boolean;
 }
 
@@ -35,6 +36,10 @@ class DataWrapper extends React.PureComponent<Props> {
         return (
             <Component
                 competitions={this.props.competitions}
+                todaysCompetitions={(
+                    (this.props.competitions || [])
+                        .filter((comp) => today() === comp.date)
+                )}
                 onCompetitionPress={(competition) => {
                     this.props.getCompetition(competition.id);
 

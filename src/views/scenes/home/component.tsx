@@ -2,7 +2,6 @@ import * as React from 'react';
 import { HomeList } from 'views/components/home/list';
 import { HomeListItem } from 'views/components/home/listItem';
 import { LanguagePicker } from 'views/components/lang/picker';
-import { ScrollView } from 'react-native';
 import { SearchBar } from 'views/components/search/bar';
 import { TodaysCompetitions } from 'views/components/home/today';
 import { px, COLORS } from 'util/const';
@@ -18,32 +17,13 @@ const {
 
 interface Props {
     competitions: Comp[];
+    todaysCompetitions: Comp[];
     onCompetitionPress: (competition: Comp) => void;
     openSearch: () => void;
     searching: boolean;
 }
 
-interface State {
-    todaysCompetitions: Comp[];
-}
-
-export class OLHome extends React.PureComponent<Props, State> {
-    content: ScrollView;
-
-    state: State = {
-        todaysCompetitions: null,
-    };
-
-    scrollTo = (y?: number) => {
-        if (this.content) {
-            this.content.scrollTo({
-                animated: !!y,
-                x: 0,
-                y: y || 0,
-            });
-        }
-    }
-
+export class OLHome extends React.PureComponent<Props> {
     renderTodaysCompetitions = () => {
         if (this.props.searching) {
             return null;
@@ -51,7 +31,7 @@ export class OLHome extends React.PureComponent<Props, State> {
 
         return (
             <TodaysCompetitions
-                competitions={this.state.todaysCompetitions}
+                competitions={this.props.todaysCompetitions}
                 renderListItem={(competition, index, total) => (
                     <HomeListItem
                         competition={competition}

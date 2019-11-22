@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { UNIT } from 'util/const';
-import * as _ from 'lodash';
+import { px, fontPx } from 'util/const';
+import _ from 'lodash';
 import * as NB from 'native-base';
 import Lang from 'lib/lang';
 import { HomeListItem } from './listItem';
@@ -71,11 +71,11 @@ export const HomeList: React.SFC<Props> = ({
                     itemDivider
                     style={{
                         marginLeft: 0,
-                        paddingHorizontal: UNIT,
+                        paddingHorizontal: px(16),
                     }}
                 >
                     <Text style={{
-                        fontSize: UNIT,
+                        fontSize: fontPx(16),
                         fontWeight: 'bold',
                     }}>
                         {key} {key === today() && `(${Lang.print('home.today')})`}
@@ -96,12 +96,12 @@ export const HomeList: React.SFC<Props> = ({
             <View
                 style={{
                     width: '100%',
-                    paddingVertical: UNIT * 4,
+                    paddingVertical: px(16 * 4),
                 }}
             >
                 <Text
                     style={{
-                        fontSize: UNIT,
+                        fontSize: fontPx(16),
                         textAlign: 'center',
                     }}
                 >

@@ -8,11 +8,10 @@ import {
 } from 'native-base';
 import { statusI18n } from 'lib/lang/status';
 import { UNIT, COLORS } from 'util/const';
-import * as _ from 'lodash';
+import _ from 'lodash';
 
 interface Props {
     result: Result;
-    openModal: (result: Result) => void;
     onResultPress: (result: Result) => void;
     subtitle: string;
 }
@@ -114,7 +113,7 @@ export class ResultBox extends React.PureComponent<Props, State> {
                     marginLeft: 0,
                     paddingHorizontal: 10,
                 }}
-                onPress={() => this.props.openModal(result)}
+                // onPress={() => this.props.openModal(result)}
             >
                 <View style={{
                     flexDirection: 'row',
