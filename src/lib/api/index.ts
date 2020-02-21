@@ -40,7 +40,7 @@ export const getClub = async (id: number, clubName: string): Promise<Club> => {
     return data;
 };
 
-export const getPasses = async (id: number): Promise<Passing> => {
+export const getPasses = async (id: number): Promise<Passing[]> => {
     const url = `${ROOT}/api.php?method=getlastpassings&comp=${id}`;
 
     const data = await fetch(url).then((resp) => resp.json());

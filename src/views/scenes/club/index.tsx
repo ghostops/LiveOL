@@ -5,7 +5,7 @@ import { getClub } from 'lib/api';
 import { Routes } from 'lib/nav/routes';
 import { Cache } from 'lib/cache';
 import { ResultList } from 'views/components/result/list';
-import { NavigationScreenProp } from 'react-navigation';
+import { NavigationProp } from '@react-navigation/native';
 import Lang from 'lib/lang';
 
 const {
@@ -17,7 +17,7 @@ const {
 } = NB;
 
 interface Props {
-    navigation: NavigationScreenProp<any, any>;
+    navigation: NavigationProp<any, any>;
 }
 
 interface State {
@@ -35,8 +35,8 @@ export class OLClub extends React.PureComponent<Props, State> {
     })
 
     cacheId = () => {
-        const { params: { id, clubName } } = this.props.navigation.state;
-        return `${id}:${clubName}`;
+        // const { params: { id, clubName } } = this.props.navigation.state;
+        // return `${id}:${clubName}`;
     }
 
     cache: Cache<Club> = new Cache(`class:${this.cacheId()}`, POLL - 5000);
@@ -44,25 +44,25 @@ export class OLClub extends React.PureComponent<Props, State> {
     state: State = { club: null, polling: false };
 
     async componentWillMount() {
-        const { params: { id, clubName } } = this.props.navigation.state;
-        let club: Club = await this.cache.get();
+        // const { params: { id, clubName } } = this.props.navigation.state;
+        // let club: Club = await this.cache.get();
 
-        if (!club) {
-            club = await getClub(id, clubName);
-            await this.cache.set(club);
-        }
+        // if (!club) {
+        //     club = await getClub(id, clubName);
+        //     await this.cache.set(club);
+        // }
 
-        this.setState({ club });
+        // this.setState({ club });
     }
 
     poll = async () => {
-        const { params: { id, clubName } } = this.props.navigation.state;
+        // const { params: { id, clubName } } = this.props.navigation.state;
 
-        const club: Club = await getClub(id, clubName);
+        // const club: Club = await getClub(id, clubName);
 
-        console.log(club);
+        // console.log(club);
 
-        return club.results;
+        // return club.results;
     }
 
     renderInner = () => {
@@ -88,19 +88,19 @@ export class OLClub extends React.PureComponent<Props, State> {
 
                 <ResultList
                     refetchTimeout={POLL}
-                    fetcher={this.poll}
+                    fetcher={this.poll as any}
                     onResultPress={(result) => {
-                        const { params: { id } } = this.props.navigation.state;
+                        // const { params: { id } } = this.props.navigation.state;
 
-                        const className = result.class;
+                        // const className = result.class;
 
-                        this.props.navigation.push(Routes.classes, {
-                            id,
-                            className,
-                            title: className,
-                        });
+                        // this.props.navigation.push(Routes.classes, {
+                        //     id,
+                        //     className,
+                        //     title: className,
+                        // });
                     }}
-                    initialResults={this.state.club.results}
+                    // initialResults={this.state.club.results}
                     subtitle="class"
                 />
             </View>

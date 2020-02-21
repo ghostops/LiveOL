@@ -5,11 +5,13 @@ import * as API from 'lib/api';
 const SET_COMPETITIONS = 'API:SET_COMPETITIONS';
 const SET_CLASSES = 'API:SET_CLASSES';
 const SET_RESULTS = 'API:SET_RESULTS';
+const SET_LAST_PASSINGS = 'API:SET_LAST_PASSINGS';
 
 const initialState: ApiReducer = {
     competitions: null,
     classes: null,
     results: null,
+    lastPassings: null,
 };
 
 export function apiReducer(
@@ -32,6 +34,11 @@ export function apiReducer(
             ...state,
             results: action.value,
         };
+    case SET_LAST_PASSINGS:
+        return {
+            ...state,
+            lastPassings: action.value,
+        };
     }
 
     return state;
@@ -43,12 +50,14 @@ interface ICache {
     competitions: Cache<Comp[]>;
     competition: (id: number) => Cache<Classes>;
     results: (id: string) => Cache<Class>;
+    lastPassings: (id: string) => Cache<Passing[]>;
 }
 
 export const API_CACHES: ICache = {
     competitions: new Cache('visibleCompetitions', 60000),
     competition: (id) => new Cache(`comp:${id}`, 3600000),
     results: (id) => new Cache(`results:${id}`, 15000),
+    lastPassings: (id) => new Cache(`lastpassings:${id}`, 15000),
 };
 
 export const loadCompetitions = () => async (dispatch) => {
@@ -105,6 +114,22 @@ export const getResults = (id: number, className: string) => async (dispatch) =>
 
     dispatch({
         type: SET_RESULTS,
+        value: results,
+    });
+};
+
+export const getLastPassings = (id: number) => async (dispatch) => {
+    const cache = API_CACHES.lastPassings(`comp:${id}`);
+
+    let results: Passing[] = await cache.get();
+
+    if (!results) {
+        results = await API.getPasses(id);
+        await cache.set(results);
+    }
+
+    dispatch({
+        type: SET_LAST_PASSINGS,
         value: results,
     });
 };

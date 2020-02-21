@@ -7,6 +7,7 @@ interface ApiReducer {
     competitions: Comp[];
     classes: Classes[];
     results: Class;
+    lastPassings: Passing[];
 }
 
 interface HomeReducer {

@@ -26,7 +26,8 @@ export default class AppRoot extends React.Component<{}, State> {
         SplashScreen.preventAutoHide();
     }
 
-    async componentWillMount() {
+    // tslint:disable-next-line: function-name
+    async UNSAFE_componentWillMount() {
         store.store.dispatch<any>(loadCompetitions());
 
         await Lang.init();
@@ -54,12 +55,10 @@ export default class AppRoot extends React.Component<{}, State> {
     }
 
     render() {
-        const RouterView = Router();
-
         return this.renderWhenReady(
             <View style={{ flex: 1 }}>
                 <Provider store={store.store}>
-                    <RouterView />
+                    <Router />
                 </Provider>
             </View>,
         );

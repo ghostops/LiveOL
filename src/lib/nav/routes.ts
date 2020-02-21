@@ -1,3 +1,5 @@
+import { NavigationProp } from '@react-navigation/native';
+
 export const Routes = {
     home: 'home',
     competition: 'competition',
@@ -5,4 +7,15 @@ export const Routes = {
     club: 'club',
     passings: 'competition.passings',
     info: 'info',
+};
+
+interface RouteProps<T> {
+    key: string;
+    name: string;
+    params: T;
+}
+
+export type RouterProps<T> = {
+    navigation: NavigationProp<any, any>;
+    route: RouteProps<T>;
 };

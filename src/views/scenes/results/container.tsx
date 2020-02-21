@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { OLResults as Component } from './component';
-import { NavigationScreenProp } from 'react-navigation';
+import { NavigationProp } from '@react-navigation/native';
 
 interface OwnProps {
-    navigation: NavigationScreenProp<any, any>;
+    navigation: NavigationProp<any, any>;
 }
 
 interface DispatchProps {
@@ -21,14 +21,14 @@ class DataWrapper extends React.PureComponent<Props> {
     render() {
         return (
             <Component
-                fetcher={}
+                fetcher={this.props.fetcher as any}
             />
         );
     }
 }
 
 const mapDispatchToProps = {
-    fetcher: null
+    fetcher: () => [],
 };
 
 export const OLResults = connect(null, null)(DataWrapper);

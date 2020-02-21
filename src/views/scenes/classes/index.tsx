@@ -5,7 +5,7 @@ import { getClass } from 'lib/api';
 import { Routes } from 'lib/nav/routes';
 import { Cache } from 'lib/cache';
 import { ResultList } from 'views/components/result/list';
-import { NavigationScreenProp } from 'react-navigation';
+import { NavigationProp } from '@react-navigation/native';
 import Lang from 'lib/lang';
 
 const {
@@ -16,7 +16,7 @@ const {
 } = NB;
 
 interface Props {
-    navigation: NavigationScreenProp<any, any>;
+    navigation: NavigationProp<any, any>;
 }
 
 interface State {
@@ -88,15 +88,15 @@ export class OLClasses extends React.PureComponent<Props, State> {
                     refetchTimeout={POLL}
                     fetcher={this.poll}
                     onResultPress={(result) => {
-                        const { params: { id } } = this.props.navigation.state;
-                        this.props.navigation.push(Routes.club, {
-                            id,
-                            clubName: result.club,
-                            title: result.club,
-                        });
+                        // const { params: { id } } = this.props.navigation.state;
+                        // this.props.navigation.navigate(Routes.club, {
+                        //     id,
+                        //     clubName: result.club,
+                        //     title: result.club,
+                        // });
                     }}
-                    initialResults={this.state.olClass.results}
-                    splitControls={this.state.olClass.splitcontrols}
+                    // initialResults={this.state.olClass.results}
+                    // splitControls={this.state.olClass.splitcontrols}
                     subtitle="club"
                 />
             </View>

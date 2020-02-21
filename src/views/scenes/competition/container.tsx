@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { NavigationScreenProp } from 'react-navigation';
+import { getLastPassings } from 'store/stores/api';
+import { NavigationProp, RouteProp } from '@react-navigation/native';
+import { NavigationRoute } from 'react-navigation';
 import { OLCompetition as Component } from './component';
-import { getNavigationParam } from 'util/navigation';
-import { Routes } from 'lib/nav/routes';
+import { Routes, RouterProps } from 'lib/nav/routes';
+import Lang from 'lib/lang';
 
-interface OwnProps {
-    navigation: NavigationScreenProp<any, any>;
-}
+interface OwnProps extends RouterProps<{ id, title }> {}
 
 interface StateProps {
     competition: Comp;
@@ -15,52 +15,56 @@ interface StateProps {
 }
 
 interface DispatchProps {
+    getLastPassings: (id: number) => void;
 }
 
 type Props = StateProps & OwnProps & DispatchProps;
 
-class DataWrapper extends React.PureComponent<Props> {
-    static navigationOptions = ({ navigation }) => ({
-        title: `${navigation.state.params.title}`,
-    })
+const DataWrapper: React.SFC<Props> = (props) => {
+    React.useEffect(
+        () => {
+            props.navigation.setOptions({
+                title: props.route.params.title,
+            });
+        },
+        [],
+    );
 
-    render() {
-        return (
-            <Component
-                competition={this.props.competition}
-                classes={this.props.classes}
-
-                goToLastPassings={() => {
-                    const id = getNavigationParam('id', this.props.navigation);
-
-                    this.props.navigation.push(Routes.passings, {
-                        id,
-                        title: this.props.competition.name,
-                    });
-                }}
-
-                goToClass={(className: string) => () => {
-                    const id = getNavigationParam('id', this.props.navigation);
-
-                    this.props.navigation.push(Routes.classes, {
-                        id,
-                        className,
-                        title: className,
-                    });
-                }}
-            />
-        );
+    if (!props.competition) {
+        return null;
     }
-}
+
+    return (
+        <Component
+            competition={props.competition}
+            classes={props.classes}
+
+            goToLastPassings={() => {
+                props.getLastPassings(props.route.params.id);
+
+                props.navigation.navigate(Routes.passings, {
+                    id: props.route.params.id,
+                    title: props.competition.name,
+                });
+            }}
+
+            goToClass={(className: string) => () => {
+                props.navigation.navigate(Routes.classes, {
+                    id: props.route.params.id,
+                    title: props.competition.name,
+                });
+            }}
+        />
+    );
+};
 
 const mapStateToProps = (state: AppState, props: Props): StateProps => ({
-    competition: state.api.competitions.find(
-        (comp) => comp.id === getNavigationParam('id', props.navigation),
-    ),
+    competition: state.api.competitions.find((c) => c.id === props.route.params.id),
     classes: state.api.classes,
 });
 
 const mapDispatchToProps = {
+    getLastPassings,
 };
 
 export const OLCompetition = connect(mapStateToProps, mapDispatchToProps)(DataWrapper);

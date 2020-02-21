@@ -1,9 +1,9 @@
 import * as React from 'react';
 import * as NB from 'native-base';
-import { NavigationScreenProp } from 'react-navigation';
+import { NavigationProp } from '@react-navigation/native';
 import { OLButton } from 'views/components/button';
 import { Platform, AsyncStorage, Alert, TouchableOpacity, View, Image } from 'react-native';
-import { StoreReview, Updates, Linking } from 'expo';
+import { Updates, Linking } from 'expo';
 import { UNIT, VERSION, APP_VERSION, ANDROID_VERSION_CODE } from 'util/const';
 import Lang from 'lib/lang';
 import { OLFlag } from 'views/components/lang/flag';
@@ -18,7 +18,7 @@ const {
 } = NB;
 
 interface Props {
-    navigation: NavigationScreenProp<any, any>;
+    navigation: NavigationProp<any, any>;
 }
 
 interface State {
@@ -30,7 +30,8 @@ const PHRASEAPP_IMAGE = require('../../../../assets/images/phraseapp.png');
 class AppReview {
     private key: string = 'OL:APP:REVIEW';
 
-    public canReview = (): boolean => StoreReview.isSupported() || Platform.OS === 'android';
+    public canReview = (): boolean =>
+        false // StoreReview.isSupported() || Platform.OS === 'android';
 
     public hasReviewed = async (): Promise<boolean> => {
         const saved = await AsyncStorage.getItem(this.key) || null;
@@ -38,8 +39,8 @@ class AppReview {
     }
 
     public prompt = async (): Promise<void> => {
-        StoreReview.requestReview();
-        return await AsyncStorage.setItem(this.key, 'true');
+        // StoreReview.requestReview();
+        // return await AsyncStorage.setItem(this.key, 'true');
     }
 }
 
