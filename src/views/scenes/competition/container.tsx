@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { getLastPassings } from 'store/stores/api';
+import { getCompetition } from 'store/stores/api';
 import { NavigationProp, RouteProp } from '@react-navigation/native';
 import { NavigationRoute } from 'react-navigation';
 import { OLCompetition as Component } from './component';
@@ -15,7 +15,7 @@ interface StateProps {
 }
 
 interface DispatchProps {
-    getLastPassings: (id: number) => void;
+    getCompetition: (id: number) => void;
 }
 
 type Props = StateProps & OwnProps & DispatchProps;
@@ -23,6 +23,8 @@ type Props = StateProps & OwnProps & DispatchProps;
 const DataWrapper: React.SFC<Props> = (props) => {
     React.useEffect(
         () => {
+            props.getCompetition(props.route.params.id);
+
             props.navigation.setOptions({
                 title: props.route.params.title,
             });
@@ -30,18 +32,12 @@ const DataWrapper: React.SFC<Props> = (props) => {
         [],
     );
 
-    if (!props.competition) {
-        return null;
-    }
-
     return (
         <Component
             competition={props.competition}
             classes={props.classes}
 
             goToLastPassings={() => {
-                props.getLastPassings(props.route.params.id);
-
                 props.navigation.navigate(Routes.passings, {
                     id: props.route.params.id,
                     title: props.competition.name,
@@ -49,9 +45,9 @@ const DataWrapper: React.SFC<Props> = (props) => {
             }}
 
             goToClass={(className: string) => () => {
-                props.navigation.navigate(Routes.classes, {
+                props.navigation.navigate(Routes.results, {
+                    className,
                     id: props.route.params.id,
-                    title: props.competition.name,
                 });
             }}
         />
@@ -64,7 +60,7 @@ const mapStateToProps = (state: AppState, props: Props): StateProps => ({
 });
 
 const mapDispatchToProps = {
-    getLastPassings,
+    getCompetition,
 };
 
 export const OLCompetition = connect(mapStateToProps, mapDispatchToProps)(DataWrapper);

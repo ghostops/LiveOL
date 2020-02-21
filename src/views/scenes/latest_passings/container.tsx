@@ -22,6 +22,8 @@ type Props = StateProps & OwnProps & DispatchProps;
 const DataWrapper: React.SFC<Props> = (props) => {
     React.useEffect(
         () => {
+            props.getLastPassings(props.route.params.id);
+
             props.navigation.setOptions({
                 title: props.route.params.title,
             });

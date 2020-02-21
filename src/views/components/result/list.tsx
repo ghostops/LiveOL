@@ -1,6 +1,5 @@
 import * as React from 'react';
 import _ from 'lodash';
-import { RadioResultsPromotion } from '../promotion/radioResults';
 import { ResultBox } from './result';
 import { ScrollView, RefreshControl } from 'react-native';
 import { UNIT, COLORS } from 'util/const';
@@ -14,136 +13,77 @@ const {
     Switch,
     Card,
     CardItem,
+    Spinner,
 } = NB;
 
 interface Props {
-    fetcher: () => Promise<Result[]>;
-    onResultPress: (result: Result) => void;
-    search?: (results: Result[]) => Result[];
-    subtitle?: 'class' | 'club';
-    refetchTimeout: number;
-}
-
-interface State {
     results: Result[];
-    polling: boolean;
-    loading: boolean;
+
+    // onResultPress: (result: Result) => void;
+    subText: 'class' | 'club';
+
+    refetchTimeout: number;
+    refetch: () => Promise<void>;
 }
 
-export class ResultList extends React.PureComponent<Props, State> {
-    static defaultProps: Partial<Props> = {
-        subtitle: 'class',
+export const ResultList: React.SFC<Props> = (props) => {
+    const [loading, setLoading] = React.useState(false);
+
+    let interval: NodeJS.Timeout;
+
+    const poll = async () => {
+        console.log('poll');
+        await props.refetch();
     };
 
-    interval: NodeJS.Timeout;
-    state: State = {
-        results: null,
-        polling: false,
-        loading: false,
-    };
+    const startPoll = () => interval = setInterval(poll, props.refetchTimeout);
+    const clearPoll = () => interval && clearInterval(interval);
 
-    componentWillMount() {
-        this.poll();
-    }
-
-    componentDidMount() {
-        this.state.polling && this.startPoll();
-    }
-
-    componentWillUnmount() {
-        this.clearPoll();
-    }
-
-    componentDidUpdate(prevProps, prevState: State) {
-        if (this.state.polling !== prevState.polling) {
-            if (this.state.polling) {
-                this.poll();
-                this.startPoll();
-            } else {
-                this.clearPoll();
-            }
-        }
-    }
-
-    poll = async () => {
-        const results = await this.props.fetcher();
-        this.setState({ results });
-    }
-
-    startPoll = () => this.interval = setInterval(this.poll, this.props.refetchTimeout);
-    clearPoll = () => this.interval && clearInterval(this.interval);
-
-    renderResult = (result: Result) => {
+    const renderResult = (result: Result) => {
         return (
             <ResultBox
                 key={result.start + result.name}
                 result={result}
-                onResultPress={this.props.onResultPress}
-                subtitle={this.props.subtitle}
+                onResultPress={() => alert(1)}
+                subtitle={props.subText}
             />
         );
+    };
+
+    if (!props.results) {
+        return <Spinner color={COLORS.MAIN} />;
     }
 
-    render() {
-        if (!this.state.results) {
-            return null;
-        }
-
-        return (
-            <ScrollView
-                refreshControl={
-                    <RefreshControl
-                        onRefresh={async () => {
-                            this.setState({ loading: true });
-                            await this.poll();
-                            this.setState({ loading: false });
-                        }}
-                        refreshing={this.state.loading}
-                        colors={[COLORS.MAIN]}
-                        tintColor={COLORS.MAIN}
-                    />
-                }
-            >
-                <RadioResultsPromotion />
-
-                <View
-                    style={{
-                        paddingHorizontal: 10,
+    return (
+        <ScrollView
+            refreshControl={
+                <RefreshControl
+                    onRefresh={async () => {
+                        setLoading(true);
+                        await poll();
+                        setLoading(false);
                     }}
-                >
-                    <Card style={{
-                        marginBottom: 10,
-                    }}>
-                        <CardItem style={{ paddingVertical: 8 }}>
-                            <Text style={{ flex: 1, fontSize: UNIT }}>
-                                {Lang.print('classes.autoUpdate')}
-                            </Text>
+                    refreshing={loading}
+                    colors={[COLORS.MAIN]}
+                    tintColor={COLORS.MAIN}
+                />
+            }
+        >
+            <List style={{
+                backgroundColor: 'white',
+                borderRadius: 4,
+            }}>
+                {
+                    props.results.length < 1 ?
+                    (
+                        <Text style={{ textAlign: 'center', paddingVertical: 10 }}>
+                            {Lang.print('competitions.noClasses')}
+                        </Text>
+                    ) : props.results.map(renderResult)
+                }
+            </List>
 
-                            <Switch
-                                value={this.state.polling}
-                                trackColor={{ true: COLORS.MAIN, false: COLORS.DARK }}
-                                onValueChange={(polling) => this.setState({ polling })}
-                            />
-                        </CardItem>
-                    </Card>
-                </View>
-
-                <List style={{
-                    backgroundColor: '#FFF',
-                    borderRadius: 4,
-                }}>
-                    {
-                        this.state.results.length < 1 ?
-                        (
-                            <Text style={{ textAlign: 'center', paddingVertical: 10 }}>
-                                {Lang.print('competitions.noClasses')}
-                            </Text>
-                        ) : this.state.results.map(this.renderResult)
-                    }
-                </List>
-
-                <View style={{ height: 45 }} />
-            </ScrollView>
-        );
-    }
+            <View style={{ height: 45 }} />
+        </ScrollView>
+    );
 }

@@ -4,10 +4,9 @@ import { NavigationProp } from '@react-navigation/native';
 import { OLHome as Component } from './component';
 import { Right, Left } from './header';
 import { Routes } from 'lib/nav/routes';
-import Lang from 'lib/lang';
-import * as Actions from './store';
-import { getCompetition } from 'store/stores/api';
 import { today } from 'util/date';
+import * as Actions from './store';
+import Lang from 'lib/lang';
 
 interface OwnProps {
     navigation: NavigationProp<any, any>;
@@ -45,8 +44,6 @@ const DataWrapper: React.SFC<Props> = (props) => {
                     .filter((comp) => today() === comp.date)
             )}
             onCompetitionPress={(competition) => {
-                props.getCompetition(competition.id);
-
                 props.navigation.navigate(Routes.competition, {
                     id: competition.id,
                     title: competition.name,
@@ -64,7 +61,6 @@ const mapStateToProps = (state: AppState): StateProps => ({
 });
 
 const mapDispatchToProps = {
-    getCompetition,
     setSearching: Actions.setSearching,
 };
 

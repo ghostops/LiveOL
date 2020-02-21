@@ -44,7 +44,9 @@ export default () => {
                         key={key}
                         name={key}
                         component={Mappings[key]}
-                        options={{
+                        initialParams={{
+                            id: 17075,
+                            className: 'DE',
                         }}
                     />
                 ))}
@@ -52,18 +54,3 @@ export default () => {
         </NavigationContainer>
     );
 };
-
-
-// {
-//     initialRouteName: Routes.home,
-//     defaultNavigationOptions: {
-//         headerTitleStyle: {
-//             color: 'white',
-//         },
-//         headerStyle: {
-//             backgroundColor: COLORS.MAIN,
-//         },
-//         headerTintColor: 'white',
-//         headerBackTitle: Lang.print('back'),
-//     },
-// }
