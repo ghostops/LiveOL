@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Animated, TouchableOpacity, Keyboard } from 'react-native';
 import { connect } from 'react-redux';
-import { isIphoneX, xtraSpace } from 'util/iphonex';
+import { hasNotch, xtraSpace } from 'util/hasNotch';
 import { UNIT } from 'util/const';
 import * as Actions from 'views/scenes/home/store';
 import * as NB from 'native-base';
@@ -99,7 +99,7 @@ class Component extends React.PureComponent<Props, State> {
     render() {
         const translateY = this.state.searchAnimation.interpolate({
             inputRange: [0, 1],
-            outputRange: [-(SEARCH_SIZE + (isIphoneX ? xtraSpace : 0)), 0],
+            outputRange: [-(SEARCH_SIZE + (hasNotch ? xtraSpace : 0)), 0],
         });
 
         return (

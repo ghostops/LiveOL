@@ -4,7 +4,7 @@ const { height, width } = Dimensions.get('window');
 
 export const xtraSpace = 30;
 
-export const isIphoneX = (
+export const hasNotch = (
     Platform.OS === 'ios' &&
     (
         (height === 812 || width === 812) ||

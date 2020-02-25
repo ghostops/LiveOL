@@ -1,4 +1,5 @@
-const ROOT = 'https://liveol.larsendahl.se';
+// const ROOT = 'https://liveol.larsendahl.se';
+const ROOT = 'http://localhost:3000';
 
 export const getComps = async (): Promise<Comp[]> => {
     const url = `${ROOT}/api.php?method=getcompetitions`;

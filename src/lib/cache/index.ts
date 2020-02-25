@@ -16,7 +16,7 @@ export class Cache<T> {
         this.key = PREFIX + key;
 
         if (expiry) {
-            this.expiry = expiry;
+            this.expiry = __DEV__ ? 999 : expiry;
         }
     }
 

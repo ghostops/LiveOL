@@ -5,6 +5,8 @@ import { ScrollView, RefreshControl } from 'react-native';
 import { UNIT, COLORS } from 'util/const';
 import * as NB from 'native-base';
 import Lang from 'lib/lang';
+import { OLResultItem } from './item';
+import { OLSafeAreaView } from '../safeArea';
 
 const {
     View,
@@ -18,10 +20,7 @@ const {
 
 interface Props {
     results: Result[];
-
-    // onResultPress: (result: Result) => void;
     subText: 'class' | 'club';
-
     refetchTimeout: number;
     refetch: () => Promise<void>;
 }
@@ -31,8 +30,18 @@ export const ResultList: React.SFC<Props> = (props) => {
 
     let interval: NodeJS.Timeout;
 
+    React.useEffect(
+        () => {
+            startPoll();
+
+            return () => {
+                clearPoll();
+            };
+        },
+        [],
+    );
+
     const poll = async () => {
-        console.log('poll');
         await props.refetch();
     };
 
@@ -41,13 +50,18 @@ export const ResultList: React.SFC<Props> = (props) => {
 
     const renderResult = (result: Result) => {
         return (
-            <ResultBox
+            <OLResultItem
                 key={result.start + result.name}
                 result={result}
-                onResultPress={() => alert(1)}
-                subtitle={props.subText}
             />
         );
+        // return (
+        //     <ResultBox
+        //         key={result.start + result.name}
+        //         result={result}
+        //         subtitle={props.subText}
+        //     />
+        // );
     };
 
     if (!props.results) {
@@ -55,35 +69,37 @@ export const ResultList: React.SFC<Props> = (props) => {
     }
 
     return (
-        <ScrollView
-            refreshControl={
-                <RefreshControl
-                    onRefresh={async () => {
-                        setLoading(true);
-                        await poll();
-                        setLoading(false);
-                    }}
-                    refreshing={loading}
-                    colors={[COLORS.MAIN]}
-                    tintColor={COLORS.MAIN}
-                />
-            }
-        >
-            <List style={{
-                backgroundColor: 'white',
-                borderRadius: 4,
-            }}>
-                {
-                    props.results.length < 1 ?
-                    (
-                        <Text style={{ textAlign: 'center', paddingVertical: 10 }}>
-                            {Lang.print('competitions.noClasses')}
-                        </Text>
-                    ) : props.results.map(renderResult)
+        <OLSafeAreaView>
+            <ScrollView
+                refreshControl={
+                    <RefreshControl
+                        onRefresh={async () => {
+                            setLoading(true);
+                            await poll();
+                            setLoading(false);
+                        }}
+                        refreshing={loading}
+                        colors={[COLORS.MAIN]}
+                        tintColor={COLORS.MAIN}
+                    />
                 }
-            </List>
+            >
+                <List style={{
+                    backgroundColor: 'white',
+                    borderRadius: 4,
+                }}>
+                    {
+                        props.results.length < 1 ?
+                        (
+                            <Text style={{ textAlign: 'center', paddingVertical: 10 }}>
+                                {Lang.print('competitions.noClasses')}
+                            </Text>
+                        ) : props.results.map(renderResult)
+                    }
+                </List>
 
-            <View style={{ height: 45 }} />
-        </ScrollView>
+                <View style={{ height: 45 }} />
+            </ScrollView>
+        </OLSafeAreaView>
     );
 }

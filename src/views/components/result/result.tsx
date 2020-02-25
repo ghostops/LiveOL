@@ -12,7 +12,6 @@ import _ from 'lodash';
 
 interface Props {
     result: Result;
-    onResultPress: (result: Result) => void;
     subtitle: string;
 }
 
@@ -113,7 +112,6 @@ export class ResultBox extends React.PureComponent<Props, State> {
                     marginLeft: 0,
                     paddingHorizontal: 10,
                 }}
-                // onPress={() => this.props.openModal(result)}
             >
                 <View style={{
                     flexDirection: 'row',
@@ -168,14 +166,14 @@ export class ResultBox extends React.PureComponent<Props, State> {
                             flex: 1,
                         }}>
                             <TouchableOpacity
-                                onPress={() => this.props.onResultPress(result)}
+                                activeOpacity={1}
                                 style={{
                                     flex: 1,
                                     maxWidth: '90%',
                                 }}
                             >
                                 <Text numberOfLines={1} style={{
-                                    color: COLORS.MAIN,
+                                    color: COLORS.DARK,
                                     fontSize: UNIT,
                                 }}>
                                     {
@@ -191,7 +189,7 @@ export class ResultBox extends React.PureComponent<Props, State> {
                                 alignItems: 'flex-end',
                             }}>
                                 {
-                                    Boolean(result.status) &&
+                                    Boolean(result.status > -1) &&
                                     <Text style={{
                                         fontSize: (
                                             result.status === 0

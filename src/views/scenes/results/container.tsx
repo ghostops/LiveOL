@@ -19,7 +19,7 @@ interface StateProps {
 type Props = OwnProps & DispatchProps & StateProps;
 
 const DataWrapper: React.SFC<Props> = (props) => {
-    const fetch = () => props.getResults(
+    const fetch = async () => props.getResults(
         props.route.params.id,
         props.route.params.className,
     );
