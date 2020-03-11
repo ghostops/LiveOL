@@ -1,12 +1,16 @@
 import * as React from 'react';
 import _ from 'lodash';
+import { Col, Grid } from 'react-native-easy-grid';
+import { FlatList } from 'react-native-gesture-handler';
+import { OLResultColumn } from './item/column';
+import { OLResultItem } from './item';
+import { OLSafeAreaView } from '../safeArea';
 import { ResultBox } from './result';
+import { ResultHeader } from './header';
 import { ScrollView, RefreshControl } from 'react-native';
 import { UNIT, COLORS } from 'util/const';
 import * as NB from 'native-base';
 import Lang from 'lib/lang';
-import { OLResultItem } from './item';
-import { OLSafeAreaView } from '../safeArea';
 
 const {
     View,
@@ -20,6 +24,7 @@ const {
 
 interface Props {
     results: Result[];
+    splits: SplitControl[];
     subText: 'class' | 'club';
     refetchTimeout: number;
     refetch: () => Promise<void>;
@@ -48,20 +53,15 @@ export const ResultList: React.SFC<Props> = (props) => {
     const startPoll = () => interval = setInterval(poll, props.refetchTimeout);
     const clearPoll = () => interval && clearInterval(interval);
 
-    const renderResult = (result: Result) => {
+    const renderResult = ({ item }) => {
+        const result: Result = item;
+
         return (
             <OLResultItem
                 key={result.start + result.name}
                 result={result}
             />
         );
-        // return (
-        //     <ResultBox
-        //         key={result.start + result.name}
-        //         result={result}
-        //         subtitle={props.subText}
-        //     />
-        // );
     };
 
     if (!props.results) {
@@ -70,7 +70,7 @@ export const ResultList: React.SFC<Props> = (props) => {
 
     return (
         <OLSafeAreaView>
-            <ScrollView
+            <FlatList
                 refreshControl={
                     <RefreshControl
                         onRefresh={async () => {
@@ -83,23 +83,16 @@ export const ResultList: React.SFC<Props> = (props) => {
                         tintColor={COLORS.MAIN}
                     />
                 }
-            >
-                <List style={{
-                    backgroundColor: 'white',
-                    borderRadius: 4,
-                }}>
-                    {
-                        props.results.length < 1 ?
-                        (
-                            <Text style={{ textAlign: 'center', paddingVertical: 10 }}>
-                                {Lang.print('competitions.noClasses')}
-                            </Text>
-                        ) : props.results.map(renderResult)
-                    }
-                </List>
-
-                <View style={{ height: 45 }} />
-            </ScrollView>
+                ListHeaderComponent={(
+                    <ResultHeader
+                        {...props}
+                    />
+                )}
+                ListFooterComponent={<View style={{ height: 45 }} />}
+                data={props.results}
+                renderItem={renderResult}
+                keyExtractor={(item: Result) => item.name}
+            />
         </OLSafeAreaView>
     );
-}
+};

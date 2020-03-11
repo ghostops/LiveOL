@@ -1,3 +1,5 @@
+import { getSplitData } from 'views/components/result/helpers';
+
 // const ROOT = 'https://liveol.larsendahl.se';
 const ROOT = 'http://localhost:3000';
 
@@ -28,11 +30,22 @@ export const getClasses = async (id: number): Promise<Classes> => {
 export const getClass = async (id: number, className: string): Promise<Class> => {
     const url = `${ROOT}/api.php?method=getclassresults&comp=${id}&class=${className}`;
 
-    const data = await fetch(url).then((resp) => resp.json());
+    let data: Class = await fetch(url).then((resp) => resp.json());
+
+    data = {
+        ...data,
+        results: data.results.map((result) => ({
+            ...result,
+            parsedSplits: data.splitcontrols.map((s) => {
+                return getSplitData(s)(result);
+            }),
+        })),
+    };
 
     return data;
 };
 
+// @deprecated
 export const getClub = async (id: number, clubName: string): Promise<Club> => {
     const url = `${ROOT}/api.php?method=getclubresults&comp=${id}&club=${clubName}`;
 

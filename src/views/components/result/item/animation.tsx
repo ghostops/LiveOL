@@ -18,6 +18,9 @@ const hasChanged = (prev: Result, now: Result) => (
     (
         prev.status !==
         now.status
+    ) || (
+        prev.parsedSplits.map((s) => s.time).join() !==
+        now.parsedSplits.map((s) => s.time).join()
     )
 );
 

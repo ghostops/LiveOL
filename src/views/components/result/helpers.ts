@@ -1,6 +1,6 @@
 import { timestampToObject, padTime } from 'util/date';
 
-export const getSplitData = (split: SplitControl, result: Result) => {
+export const getSplitData = (split: SplitControl) => (result: Result) => {
     const keys = Object.keys(result.splits);
     const foundKeys = keys.filter((key) => key.includes(String(split.code)));
     const keyValue = {};
@@ -15,6 +15,7 @@ export const getSplitData = (split: SplitControl, result: Result) => {
     }
 
     return {
+        name: split.name,
         time: keyValue['time'] || NaN,
         status: keyValue['status'] || NaN,
         place: keyValue['place'] || NaN,

@@ -14,6 +14,7 @@ interface DispatchProps {
 
 interface StateProps {
     results: Result[];
+    splits: SplitControl[];
 }
 
 type Props = OwnProps & DispatchProps & StateProps;
@@ -38,6 +39,7 @@ const DataWrapper: React.SFC<Props> = (props) => {
     return (
         <Component
             results={props.results}
+            splits={props.splits}
             refetch={fetch}
         />
     );
@@ -45,6 +47,7 @@ const DataWrapper: React.SFC<Props> = (props) => {
 
 const mapStateToProps = (state: AppState): StateProps => ({
     results: (!!state.api.results && state.api.results.results),
+    splits: (!!state.api.results && state.api.results.splitcontrols),
 });
 
 const mapDispatchToProps = {

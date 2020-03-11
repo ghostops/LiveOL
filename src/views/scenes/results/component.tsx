@@ -13,18 +13,18 @@ const {
 interface Props {
     refetch: () => Promise<void>;
     results: Result[];
+    splits: SplitControl[];
 }
 
-export const OLResults: React.SFC<Props> = ({ refetch, results }) => {
+export const OLResults: React.SFC<Props> = ({ refetch, results, splits }) => {
     return (
-        <Container>
-            <ResultList
-                results={results}
-                // cache is every 15 seconds, but poll a little more often
-                refetchTimeout={__DEV__ ? 1000 : 5000}
-                refetch={refetch}
-                subText="club"
-            />
-        </Container>
+        <ResultList
+            results={results}
+            splits={splits}
+            // cache is every 15 seconds, but poll a little more often
+            refetchTimeout={__DEV__ ? 3000 : 10000}
+            refetch={refetch}
+            subText="club"
+        />
     );
 };

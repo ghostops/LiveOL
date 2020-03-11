@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { COLORS } from 'util/const';
 import { LayoutAnimation, View } from 'react-native';
-// import { PersistGate } from 'redux-persist/integration/react';
+import { loadCompetitions } from 'store/stores/api';
 import { Provider } from 'react-redux';
 import { SplashScreen } from 'expo';
 import { store } from 'store/configure';
 import * as Font from 'expo-font';
 import Lang from 'lib/lang';
 import Router from 'lib/nav/router';
-import { loadCompetitions } from 'store/stores/api';
+import { OLRotationWatcher } from 'views/components/watcher/rotation';
 
 interface State {
     ready: boolean;
@@ -58,7 +58,9 @@ export default class AppRoot extends React.Component<{}, State> {
         return this.renderWhenReady(
             <View style={{ flex: 1 }}>
                 <Provider store={store.store}>
-                    <Router />
+                    <OLRotationWatcher>
+                        <Router />
+                    </OLRotationWatcher>
                 </Provider>
             </View>,
         );

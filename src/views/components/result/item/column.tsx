@@ -1,20 +1,32 @@
 import * as React from 'react';
 import { View } from 'native-base';
-import { ViewProps } from 'react-native';
+import { ViewProps, FlexAlignType } from 'react-native';
+import { Col, ColProps } from 'react-native-easy-grid';
 
-export const OLResultColumn: React.SFC<ViewProps> = (props) => {
+interface Props extends ColProps {
+    align?: FlexAlignType;
+}
+
+export const OLResultColumn: React.SFC<Props> = (props) => {
     return (
-        <View
+        <Col
             {...props}
             style={[
                 props.style,
                 {
                     height: '100%',
-                    justifyContent: 'center',
                 },
             ]}
         >
-            {props.children}
-        </View>
+            <View
+                style={{
+                    flex: 1,
+                    alignItems: props.align || 'flex-start',
+                    justifyContent: 'center',
+                }}
+            >
+                {props.children}
+            </View>
+        </Col>
     );
 };

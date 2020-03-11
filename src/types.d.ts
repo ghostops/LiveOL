@@ -17,6 +17,14 @@ interface SplitControl {
     code: number;
 }
 
+interface ParsedSplit {
+    name: string;
+    time: number;
+    status: number;
+    place: number;
+    timeplus: number;
+}
+
 interface Class {
     className: string;
     hash: string;
@@ -36,6 +44,7 @@ interface Result {
     timeplus: string;
     class?: string;
     splits?: Record<string, number>;
+    parsedSplits?: ParsedSplit[];
 }
 
 interface Club {

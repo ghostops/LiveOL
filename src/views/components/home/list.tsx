@@ -17,7 +17,7 @@ const {
 interface Props {
     competitions: Comp[];
     onCompetitionPress: (comp: Comp) => void;
-    listHeader: React.ReactNode;
+    listHeader: React.ReactElement;
 }
 
 export const getVisibleCompetitions = (competitions: Comp[], page: number, size: number) =>

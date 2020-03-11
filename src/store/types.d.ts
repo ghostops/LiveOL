@@ -1,6 +1,11 @@
 interface AppState {
     api: ApiReducer;
     home: HomeReducer;
+    general: GeneralReducer;
+}
+
+interface GeneralReducer {
+    rotation: any;
 }
 
 interface ApiReducer {

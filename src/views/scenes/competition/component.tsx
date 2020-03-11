@@ -124,12 +124,6 @@ export class OLCompetition extends React.PureComponent<Props> {
     }
 
     render() {
-        return (
-            <Container>
-                <Content>
-                    {this.renderInner()}
-                </Content>
-            </Container>
-        );
+        return this.renderInner();
     }
 }
