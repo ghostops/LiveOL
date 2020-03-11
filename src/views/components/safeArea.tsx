@@ -1,10 +1,13 @@
 import * as React from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { useSafeArea } from 'react-native-safe-area-context';
+import { View } from 'native-base';
 
 export const OLSafeAreaView: React.SFC = ({ children }) => {
+    const insets = useSafeArea();
+
     return (
-        <SafeAreaView>
+        <View>
             {children}
-        </SafeAreaView>
+        </View>
     );
 };
