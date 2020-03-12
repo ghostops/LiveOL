@@ -3,6 +3,7 @@ import { today } from 'util/date';
 import { UNIT, COLORS } from 'util/const';
 import * as NB from 'native-base';
 import Lang from 'lib/lang';
+import { OLSafeAreaView } from '../safeArea';
 
 const {
     List,
@@ -44,27 +45,29 @@ export const TodaysCompetitions: React.SFC<Props> = ({ competitions, renderListI
                 {today()}
             </Text>
 
-            <Card style={{
-                marginTop: UNIT,
-                width: '100%',
-            }}>
-                <CardItem>
-                    <Body style={{ width: '100%' }}>
-                        <List style={{ width: '100%' }}>
-                            {
-                                competitions.map(
-                                    (comp, index) =>
-                                        renderListItem(
-                                            comp,
-                                            index,
-                                            competitions.length,
-                                        ),
-                                )
-                            }
-                        </List>
-                    </Body>
-                </CardItem>
-            </Card>
+            <OLSafeAreaView>
+                <Card style={{
+                    marginTop: UNIT,
+                    width: '100%',
+                }}>
+                    <CardItem>
+                        <Body style={{ width: '100%' }}>
+                            <List style={{ width: '100%' }}>
+                                {
+                                    competitions.map(
+                                        (comp, index) =>
+                                            renderListItem(
+                                                comp,
+                                                index,
+                                                competitions.length,
+                                            ),
+                                    )
+                                }
+                            </List>
+                        </Body>
+                    </CardItem>
+                </Card>
+            </OLSafeAreaView>
         </React.Fragment>
     );
 

@@ -6,6 +6,7 @@ import Lang from 'lib/lang';
 import { HomeListItem } from './listItem';
 import { today } from 'util/date';
 import { FlatList } from 'react-native';
+import { OLSafeAreaView } from '../safeArea';
 
 const {
     List,
@@ -66,28 +67,30 @@ export const HomeList: React.SFC<Props> = ({
 
     const renderListSection = (key: string, competitions: Record<string, Comp[]>) => {
         return (
-            <View key={key}>
-                <ListItem
-                    itemDivider
-                    style={{
-                        marginLeft: 0,
-                        paddingHorizontal: px(16),
-                    }}
-                >
-                    <Text style={{
-                        fontSize: fontPx(16),
-                        fontWeight: 'bold',
-                    }}>
-                        {key} {key === today() && `(${Lang.print('home.today')})`}
-                    </Text>
-                </ListItem>
+            <OLSafeAreaView key={key}>
+                <View>
+                    <ListItem
+                        itemDivider
+                        style={{
+                            marginLeft: 0,
+                            paddingHorizontal: px(16),
+                        }}
+                    >
+                        <Text style={{
+                            fontSize: fontPx(16),
+                            fontWeight: 'bold',
+                        }}>
+                            {key} {key === today() && `(${Lang.print('home.today')})`}
+                        </Text>
+                    </ListItem>
 
-                <List>
-                    {competitions[key].map((comp, index) => (
-                        renderListItem(comp, index, competitions[key].length)
-                    ))}
-                </List>
-            </View>
+                    <List>
+                        {competitions[key].map((comp, index) => (
+                            renderListItem(comp, index, competitions[key].length)
+                        ))}
+                    </List>
+                </View>
+            </OLSafeAreaView>
         );
     };
 

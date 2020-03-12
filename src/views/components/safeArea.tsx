@@ -35,4 +35,7 @@ const mapStateToProps = (state: AppState): StateProps => ({
     rotation: state.general.rotation,
 });
 
-export const OLSafeAreaView = connect(mapStateToProps, null)(Component);
+export const OLSafeAreaView = connect(
+    mapStateToProps,
+    null,
+)(Component) as unknown as React.ComponentClass<any>;
