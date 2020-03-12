@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View, Text } from 'native-base';
 import { COLORS, UNIT } from 'util/const';
-import Lang from 'lib/lang';
+import { Lang } from 'lib/lang';
 import { TouchableOpacity, LayoutAnimation } from 'react-native';
 import { promotion } from './handler';
 import { Ionicons } from '@expo/vector-icons';

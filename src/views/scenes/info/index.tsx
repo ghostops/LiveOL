@@ -5,7 +5,7 @@ import { OLButton } from 'views/components/button';
 import { Platform, AsyncStorage, Alert, TouchableOpacity, View, Image } from 'react-native';
 import { Updates, Linking } from 'expo';
 import { UNIT, VERSION, APP_VERSION, ANDROID_VERSION_CODE } from 'util/const';
-import Lang from 'lib/lang';
+import { Lang } from 'lib/lang';
 import { OLFlag } from 'views/components/lang/flag';
 
 const {

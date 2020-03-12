@@ -6,7 +6,7 @@ import { UNIT } from 'util/const';
 import * as Actions from 'views/scenes/home/store';
 import * as NB from 'native-base';
 import * as _ from 'lodash';
-import Lang from 'lib/lang';
+import { Lang } from 'lib/lang';
 
 const SEARCH_SIZE = UNIT * 3.25;
 

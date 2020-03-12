@@ -10,7 +10,7 @@ import { ResultHeader } from './header';
 import { ScrollView, RefreshControl } from 'react-native';
 import { UNIT, COLORS } from 'util/const';
 import * as NB from 'native-base';
-import Lang from 'lib/lang';
+import { Lang } from 'lib/lang';
 
 const {
     View,

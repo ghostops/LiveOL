@@ -2,7 +2,7 @@ import * as React from 'react';
 import { px, fontPx } from 'util/const';
 import _ from 'lodash';
 import * as NB from 'native-base';
-import Lang from 'lib/lang';
+import { Lang } from 'lib/lang';
 import { HomeListItem } from './listItem';
 import { today } from 'util/date';
 import { FlatList } from 'react-native';

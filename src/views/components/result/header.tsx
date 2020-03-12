@@ -7,6 +7,7 @@ import { ScreenOrientation } from 'expo';
 import { SIZE } from './item';
 import { randomColor } from 'util/random';
 import { UNIT } from 'util/const';
+import { Lang } from 'lib/lang';
 
 interface OwnProps {
     splits: SplitControl[];
@@ -22,10 +23,10 @@ const labels = (landscape: boolean, splits?: SplitControl[]) => {
     const overflowSize = Object.keys(size).map((k) => size[k]).reduce((a, b) => a + b, 0);
 
     const all = {
-        place: { size: size.place, text: '#' },
-        name: { size: size.name, text: 'Namn' },
-        time: { size: size.time, text: 'Tid', align: 'flex-end' },
-        start: { size: size.start, text: 'Start' },
+        place: { size: size.place, text: Lang.print('classes.header.place') },
+        name: { size: size.name, text: Lang.print('classes.header.name') },
+        time: { size: size.time, text: Lang.print('classes.header.time'), align: 'flex-end' },
+        start: { size: size.start, text: Lang.print('classes.header.start') },
     };
 
     const inPortrait = [

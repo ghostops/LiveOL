@@ -4,7 +4,7 @@ import { OLButton } from 'views/components/button';
 import { OLSafeAreaView } from 'views/components/safeArea';
 import { ScrollView, FlatList } from 'react-native-gesture-handler';
 import * as NB from 'native-base';
-import Lang from 'lib/lang';
+import { Lang } from 'lib/lang';
 
 const {
     Container,
@@ -47,7 +47,7 @@ export const OLCompetition: React.SFC<Props> = (props) => {
 
     const renderListHeader = () => (
         <>
-            <Card style={{ marginTop: px(15) }}>
+            <Card>
                 <CardItem header>
                     <Title style={{
                         fontSize: fontPx(18),
@@ -121,6 +121,7 @@ export const OLCompetition: React.SFC<Props> = (props) => {
                 ListHeaderComponent={renderListHeader()}
                 keyExtractor={(item: Classes) => item.className}
                 ListFooterComponent={<View style={{ height: px(45) }} />}
+                style={{ padding: px(15) }}
             />
         </OLSafeAreaView>
     );

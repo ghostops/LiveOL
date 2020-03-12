@@ -6,7 +6,7 @@ import { SearchBar } from 'views/components/search/bar';
 import { TodaysCompetitions } from 'views/components/home/today';
 import { px, COLORS } from 'util/const';
 import * as NB from 'native-base';
-import Lang from 'lib/lang';
+import { Lang } from 'lib/lang';
 
 const {
     Spinner,

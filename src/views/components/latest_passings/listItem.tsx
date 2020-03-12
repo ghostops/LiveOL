@@ -2,7 +2,7 @@ import * as React from 'react';
 import { px, fontPx } from 'util/const';
 import { TextStyle } from 'react-native';
 import * as NB from 'native-base';
-import Lang from 'lib/lang';
+import { Lang } from 'lib/lang';
 
 const {
     View,

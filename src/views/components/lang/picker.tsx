@@ -2,7 +2,7 @@ import * as React from 'react';
 import { TouchableOpacity, ScrollView } from 'react-native';
 import { OLFlag } from './flag';
 import { UNIT, COLORS } from 'util/const';
-import Lang from 'lib/lang';
+import { Lang } from 'lib/lang';
 import { Updates } from 'expo';
 
 interface State {

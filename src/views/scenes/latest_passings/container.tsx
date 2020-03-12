@@ -5,7 +5,7 @@ import { NavigationProp, RouteProp } from '@react-navigation/native';
 import { NavigationRoute } from 'react-navigation';
 import { OLPassings as Component } from './component';
 import { Routes, RouterProps } from 'lib/nav/routes';
-import Lang from 'lib/lang';
+import { Lang } from 'lib/lang';
 import { ScreenOrientation } from 'expo';
 
 interface OwnProps extends RouterProps<{ id, title }> {}

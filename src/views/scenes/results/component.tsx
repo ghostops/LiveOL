@@ -2,7 +2,7 @@ import * as React from 'react';
 import { ResultList } from 'views/components/result/list';
 import { UNIT } from 'util/const';
 import * as NB from 'native-base';
-import Lang from 'lib/lang';
+import { Lang } from 'lib/lang';
 
 const {
     Container,

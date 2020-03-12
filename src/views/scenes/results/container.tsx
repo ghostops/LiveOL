@@ -4,7 +4,7 @@ import { OLResults as Component } from './component';
 import { NavigationProp } from '@react-navigation/native';
 import { getResults } from 'store/stores/api';
 import { RouterProps } from 'lib/nav/routes';
-import lang from 'lib/lang';
+import { Lang } from 'lib/lang';
 
 interface OwnProps extends RouterProps<{ id, className }> {}
 
@@ -30,7 +30,7 @@ const DataWrapper: React.SFC<Props> = (props) => {
             fetch();
 
             props.navigation.setOptions({
-                title: `${lang.print('classes.resultsFor')}: ${props.route.params.className}`,
+                title: `${Lang.print('classes.resultsFor')}: ${props.route.params.className}`,
             });
         },
         [],

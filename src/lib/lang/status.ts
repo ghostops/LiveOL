@@ -1,4 +1,4 @@
-import Language from './index';
+import { Lang } from './index';
 
 /*
     0 - OK
@@ -14,5 +14,5 @@ import Language from './index';
 */
 
 export const statusI18n = (status: number, len = 'short') => {
-    return Language.print(`status.${len}`)[status];
+    return Lang.print(`status.${len}`)[status];
 };

@@ -43,4 +43,4 @@ class Language {
     }
 }
 
-export default new Language();
+export const Lang = new Language();

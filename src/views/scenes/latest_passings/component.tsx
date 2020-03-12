@@ -5,7 +5,7 @@ import { OLLastPassingResult } from 'views/components/latest_passings/listItem';
 import { ScrollView, RefreshControl, TextStyle } from 'react-native';
 import { UNIT, COLORS, px } from 'util/const';
 import * as NB from 'native-base';
-import Lang from 'lib/lang';
+import { Lang } from 'lib/lang';
 import { OLSafeAreaView } from 'views/components/safeArea';
 
 const {

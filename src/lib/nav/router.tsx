@@ -5,7 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { Mappings } from './mappings';
 import { NavigationContainer, TypedNavigator, ParamListBase } from '@react-navigation/native';
 import { Routes } from './routes';
-import Lang from 'lib/lang';
+import { Lang } from 'lib/lang';
 import { ScreenOrientation } from 'expo';
 
 interface StateProps {

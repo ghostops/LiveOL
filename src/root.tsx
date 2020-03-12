@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import { SplashScreen } from 'expo';
 import { store } from 'store/configure';
 import * as Font from 'expo-font';
-import Lang from 'lib/lang';
+import { Lang } from 'lib/lang';
 import Router from 'lib/nav/router';
 
 interface State {

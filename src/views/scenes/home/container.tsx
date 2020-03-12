@@ -6,7 +6,7 @@ import { Right, Left } from './header';
 import { Routes } from 'lib/nav/routes';
 import { today } from 'util/date';
 import * as Actions from './store';
-import Lang from 'lib/lang';
+import { Lang } from 'lib/lang';
 
 interface OwnProps {
     navigation: NavigationProp<any, any>;

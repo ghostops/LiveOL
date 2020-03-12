@@ -2,7 +2,7 @@ import * as React from 'react';
 import { today } from 'util/date';
 import { UNIT, COLORS } from 'util/const';
 import * as NB from 'native-base';
-import Lang from 'lib/lang';
+import { Lang } from 'lib/lang';
 import { OLSafeAreaView } from '../safeArea';
 
 const {

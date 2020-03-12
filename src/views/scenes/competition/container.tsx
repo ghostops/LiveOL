@@ -5,7 +5,7 @@ import { NavigationProp, RouteProp } from '@react-navigation/native';
 import { NavigationRoute } from 'react-navigation';
 import { OLCompetition as Component } from './component';
 import { Routes, RouterProps } from 'lib/nav/routes';
-import Lang from 'lib/lang';
+import { Lang } from 'lib/lang';
 
 interface OwnProps extends RouterProps<{ id, title }> {}
 
