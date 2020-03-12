@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { COLORS } from 'util/const';
+import { Lang } from 'lib/lang';
 import { LayoutAnimation, View } from 'react-native';
 import { loadCompetitions } from 'store/stores/api';
 import { OLRotationWatcher } from 'views/components/watcher/rotation';
 import { Provider } from 'react-redux';
+import { Root } from 'native-base';
 import { SplashScreen } from 'expo';
 import { store } from 'store/configure';
 import * as Font from 'expo-font';
-import { Lang } from 'lib/lang';
 import Router from 'lib/nav/router';
 
 interface State {
@@ -56,13 +57,15 @@ export default class AppRoot extends React.Component<{}, State> {
 
     render() {
         return this.renderWhenReady(
-            <View style={{ flex: 1 }}>
-                <Provider store={store.store}>
-                    <OLRotationWatcher>
-                        <Router />
-                    </OLRotationWatcher>
-                </Provider>
-            </View>,
+            <Root>
+                <View style={{ flex: 1 }}>
+                    <Provider store={store.store}>
+                        <OLRotationWatcher>
+                            <Router />
+                        </OLRotationWatcher>
+                    </Provider>
+                </View>
+            </Root>,
         );
     }
 }
