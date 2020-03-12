@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { View, Text } from 'native-base';
-import { UNIT } from 'util/const';
+import { fontPx } from 'util/const';
 import { statusI18n } from 'lib/lang/status';
+import { View, Text } from 'native-base';
 
 interface Props {
     timeplus: string;
@@ -17,8 +17,8 @@ export const OLResultTimeplus: React.SFC<Props> = ({ timeplus, status }) => {
         <Text style={{
             fontSize: (
                 status === 0
-                ? UNIT
-                : UNIT * .75
+                ? fontPx(14)
+                : fontPx(12)
             ),
             textAlign: 'right',
         }}>

@@ -1,12 +1,14 @@
 import * as React from 'react';
+import { API_CACHES_EXPIRY } from 'store/stores/api';
 import { Cache } from 'lib/cache';
+import { COLORS, px, fontPx } from 'util/const';
 import { getPasses } from 'lib/api';
-import { OLLastPassingResult } from 'views/components/latest_passings/listItem';
-import { ScrollView, RefreshControl, TextStyle } from 'react-native';
-import { UNIT, COLORS, px } from 'util/const';
-import * as NB from 'native-base';
 import { Lang } from 'lib/lang';
+import { OLLastPassingResult } from 'views/components/latest_passings/listItem';
+import { OLRefetcher } from 'views/components/refetcher';
 import { OLSafeAreaView } from 'views/components/safeArea';
+import { ScrollView, RefreshControl, TextStyle } from 'react-native';
+import * as NB from 'native-base';
 
 const {
     View,
@@ -54,7 +56,7 @@ export const OLPassings: React.SFC<Props> = (props) => {
                 >
                     <Title style={{
                         textAlign: 'left',
-                        fontSize: UNIT * 1.35,
+                        fontSize: fontPx(20),
                         marginVertical: 10,
                         color: 'black',
                     }}>
@@ -77,15 +79,14 @@ export const OLPassings: React.SFC<Props> = (props) => {
                                 landscape={props.landscape}
                             />)}
                     </View>
-
-                    <Text style={{
-                        paddingTop: UNIT,
-                        textAlign: 'center',
-                    }}>
-                        {Lang.print('competitions.passings.info')}
-                    </Text>
                 </View>
             </ScrollView>
+
+            <OLRefetcher
+                refetch={props.refresh}
+                interval={API_CACHES_EXPIRY.lastPassings}
+                circle
+            />
         </OLSafeAreaView>
     );
 };

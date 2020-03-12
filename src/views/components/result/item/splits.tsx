@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View, Text } from 'native-base';
 import * as Helpers from '../helpers';
-import { UNIT } from 'util/const';
+import { fontPx } from 'util/const';
 
 interface Props {
     split: ParsedSplit;
@@ -15,7 +15,7 @@ export const OLSplits: React.SFC<Props> = ({ split }) => {
             }}
         >
             <Text style={{
-                fontSize: UNIT * .9,
+                fontSize: fontPx(14),
             }}>
                 {Helpers.splitTimestampToReadable(split.time)}
                 {' '}
@@ -27,7 +27,7 @@ export const OLSplits: React.SFC<Props> = ({ split }) => {
             </Text>
 
             <Text style={{
-                fontSize: UNIT * .75,
+                fontSize: fontPx(12),
                 color: 'gray',
             }}>
                 {Helpers.timeplusToReadable(split.timeplus)}

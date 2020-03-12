@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { View, Text } from 'native-base';
-import { UNIT } from 'util/const';
+import { fontPx } from 'util/const';
 import { statusI18n } from 'lib/lang/status';
 
 interface Props {
@@ -11,7 +11,7 @@ interface Props {
 export const OLResultTime: React.SFC<Props> = ({ time, status }) => (
     <Text style={{
         marginLeft: 10,
-        fontSize: UNIT * 1.35,
+        fontSize: fontPx(20),
     }}>
         {
             status === 0

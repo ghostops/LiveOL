@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { UNIT } from 'util/const';
+import { fontPx } from 'util/const';
 import { View, Text } from 'native-base';
 import * as Helpers from '../helpers';
 
@@ -14,7 +14,7 @@ export const OLStartTime: React.SFC<Props> = ({ time }) => (
         }}
     >
         <Text style={{
-            fontSize: UNIT,
+            fontSize: fontPx(16),
         }}>
             {Helpers.startToReadable(time)}
         </Text>

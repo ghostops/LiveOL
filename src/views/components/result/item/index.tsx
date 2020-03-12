@@ -10,7 +10,7 @@ import { OLResultName } from './name';
 import { OLResultTime } from './time';
 import { OLResultTimeplus } from './timeplus';
 import { ScreenOrientation } from 'expo';
-import { UNIT, COLORS } from 'util/const';
+import { COLORS, px } from 'util/const';
 import { OLSplits } from './splits';
 import { OLStartTime } from './start';
 
@@ -26,7 +26,7 @@ type Props = StateProps & OwnProps;
 
 export const SIZE = {
     landscape: {
-        place: 5,
+        place: 7,
         name: 18,
         start: 15,
         time: 12,
@@ -53,7 +53,7 @@ const Component: React.SFC<Props> = ({ result, rotation }) => {
                 style={{
                     flexDirection: 'row',
                     marginLeft: 0,
-                    height: 85,
+                    height: px(80),
                     paddingHorizontal: 10,
                 }}
             >
@@ -63,9 +63,11 @@ const Component: React.SFC<Props> = ({ result, rotation }) => {
                     </OLResultColumn>
 
                     <OLResultColumn size={size.name}>
-                        <OLResultName name={result.name} />
+                        <View style={{ flex: 1 }}>
+                            <OLResultName name={result.name} />
 
-                        <OLResultClub club={result.club} />
+                            <OLResultClub club={result.club} />
+                        </View>
                     </OLResultColumn>
 
                     {
@@ -99,7 +101,7 @@ const Component: React.SFC<Props> = ({ result, rotation }) => {
                             time={result.result}
                         />
 
-                        <View style={{ height: UNIT / 4 }} />
+                        <View style={{ height: px(4) }} />
 
                         <OLResultTimeplus
                             status={result.status}
