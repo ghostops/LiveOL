@@ -45,10 +45,12 @@ const DataWrapper: React.SFC<Props> = (props) => {
     );
 };
 
-const mapStateToProps = (state: AppState): StateProps => ({
-    results: (!!state.api.results && state.api.results.results),
-    splits: (!!state.api.results && state.api.results.splitcontrols),
-});
+const mapStateToProps = (state: AppState): StateProps => {
+    return {
+        results: (!!state.api.results && state.api.results.results),
+        splits: (!!state.api.results && state.api.results.splitcontrols),
+    };
+};
 
 const mapDispatchToProps = {
     getResults,

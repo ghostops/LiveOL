@@ -9,7 +9,11 @@ interface Props {
 
 export const OLSplits: React.SFC<Props> = ({ split }) => {
     return (
-        <View>
+        <View
+            style={{
+                flex: 1,
+            }}
+        >
             <Text style={{
                 fontSize: UNIT * .9,
             }}>

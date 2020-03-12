@@ -1,1354 +1,151 @@
 {
 	"status": "OK",
-	"className": "D14 ",
+	"className": "M20-1",
 	"splitcontrols": [{
-		"code": 1049,
-		"name": "Trapphuset"
+		"code": 1075,
+		"name": "1075"
 	}, {
-		"code": 1067,
-		"name": "Förvarning"
+		"code": 1082,
+		"name": "1082"
+	}, {
+		"code": 1036,
+		"name": "1036"
+	}, {
+		"code": 99,
+		"name": "99"
+	}, {
+		"code": 98,
+		"name": "98"
 	}],
 	"results": [{
 		"place": "1",
-		"name": "Nilla Enquist",
-		"club": "OK Hammaren",
-		"result": "16:00",
+		"name": "Kasper Fosser",
+		"club": "NOR",
+		"result": "21:59",
 		"status": 0,
 		"timeplus": "+00:00",
 		"progress": 100,
 		"splits": {
-			"1049": 56500,
-			"1049_status": 0,
-			"1049_place": 1,
-			"1049_timeplus": 0,
-			"1067": 87800,
-			"1067_status": 0,
-			"1067_place": 1,
-			"1067_timeplus": 0
+			"1036": 125200,
+			"1075": 75600,
+			"1082": 102300,
+			"1075_status": 0,
+			"1075_place": 1,
+			"1075_timeplus": 0,
+			"1082_status": 0,
+			"1082_place": 1,
+			"1082_timeplus": 0,
+			"1036_status": 0,
+			"1036_place": 1,
+			"1036_timeplus": 0,
+
+			"99": 125211,
+			"99_status": 0,
+			"99_place": 1,
+			"99_timeplus": 0,
+
+			"98": 125200,
+			"98_status": 0,
+			"98_place": 1,
+			"98_timeplus": 0,
+
+			"97": 125200,
+			"97_status": 0,
+			"97_place": 1,
+			"97_timeplus": 0,
+
+			"96": 125200,
+			"96_status": 0,
+			"96_place": 1,
+			"96_timeplus": 0
 		},
-		"start": 4884000
+		"start": 4590000
 	}, {
 		"place": "2",
-		"name": "Elsa Golsäter",
-		"club": "Korsnäs IF OK",
-		"result": "18:04",
+		"name": "Guilhem Elias",
+		"club": "FRA",
+		"result": "22:38",
 		"status": 0,
-		"timeplus": "+02:04",
+		"timeplus": "+00:39",
 		"progress": 100,
 		"splits": {
-			"1049": 72500,
-			"1049_status": 0,
-			"1049_place": 8,
-			"1049_timeplus": 16000,
-			"1067": 98200,
-			"1067_status": 0,
-			"1067_place": 3,
-			"1067_timeplus": 10400
+			"1036": 128900,
+			"1075": 76700,
+			"1082": 105500,
+			"1075_status": 0,
+			"1075_place": 2,
+			"1075_timeplus": 1100,
+			"1082_status": 0,
+			"1082_place": 2,
+			"1082_timeplus": 3200,
+			"1036_status": 0,
+			"1036_place": 2,
+			"1036_timeplus": 3700,
+
+			"99": 125200,
+			"99_status": 0,
+			"99_place": 1,
+			"99_timeplus": 0,
+
+			"98": 125200,
+			"98_status": 0,
+			"98_place": 1,
+			"98_timeplus": 0,
+
+			"97": 125200,
+			"97_status": 0,
+			"97_place": 1,
+			"97_timeplus": 0,
+
+			"96": 125200,
+			"96_status": 0,
+			"96_place": 1,
+			"96_timeplus": 0
 		},
-		"start": 4494000
+		"start": 4572000
 	}, {
 		"place": "3",
-		"name": "Amanda Cliffordson",
-		"club": "Tolered-Utby Ol-klubb",
-		"result": "18:09",
+		"name": "Aaro Aho",
+		"club": "FIN",
+		"result": "22:58",
 		"status": 0,
-		"timeplus": "+02:09",
-		"progress": 100,
-		"splits": {
-			"1049": 73400,
-			"1049_status": 0,
-			"1049_place": 9,
-			"1049_timeplus": 16900,
-			"1067": 101800,
-			"1067_status": 0,
-			"1067_place": 4,
-			"1067_timeplus": 14000
-		},
-		"start": 4062000
-	}, {
-		"place": "4",
-		"name": "Nova Sahlén",
-		"club": "Västerås SOK",
-		"result": "18:40",
-		"status": 0,
-		"timeplus": "+02:40",
-		"progress": 100,
-		"splits": {
-			"1049": 66300,
-			"1049_status": 0,
-			"1049_place": 2,
-			"1049_timeplus": 9800,
-			"1067": 96800,
-			"1067_status": 0,
-			"1067_place": 2,
-			"1067_timeplus": 9000
-		},
-		"start": 4656000
-	}, {
-		"place": "5",
-		"name": "Felicia Persson",
-		"club": "Helsingborgs SOK",
-		"result": "18:51",
-		"status": 0,
-		"timeplus": "+02:51",
-		"progress": 100,
-		"splits": {
-			"1049": 68300,
-			"1049_status": 0,
-			"1049_place": 3,
-			"1049_timeplus": 11800,
-			"1067": 103800,
-			"1067_status": 0,
-			"1067_place": 5,
-			"1067_timeplus": 16000
-		},
-		"start": 3702000
-	}, {
-		"place": "6",
-		"name": "Aprilia Cinthio",
-		"club": "Skåneslättens OL",
-		"result": "19:10",
-		"status": 0,
-		"timeplus": "+03:10",
-		"progress": 100,
-		"splits": {
-			"1049": 68800,
-			"1049_status": 0,
-			"1049_place": 5,
-			"1049_timeplus": 12300,
-			"1067": 106600,
-			"1067_status": 0,
-			"1067_place": 6,
-			"1067_timeplus": 18800
-		},
-		"start": 3720000
-	}, {
-		"place": "7",
-		"name": "Alva Hagelberg",
-		"club": "Eksjö SOK",
-		"result": "19:50",
-		"status": 0,
-		"timeplus": "+03:50",
-		"progress": 100,
-		"splits": {
-			"1049": 69900,
-			"1049_status": 0,
-			"1049_place": 6,
-			"1049_timeplus": 13400,
-			"1067": 111200,
-			"1067_status": 0,
-			"1067_place": 8,
-			"1067_timeplus": 23400
-		},
-		"start": 5124000
-	}, {
-		"place": "8",
-		"name": "Miriam Gustafsson",
-		"club": "Nyköpings OK",
-		"result": "20:24",
-		"status": 0,
-		"timeplus": "+04:24",
-		"progress": 100,
-		"splits": {
-			"1049": 70900,
-			"1049_status": 0,
-			"1049_place": 7,
-			"1049_timeplus": 14400,
-			"1067": 106700,
-			"1067_status": 0,
-			"1067_place": 7,
-			"1067_timeplus": 18900
-		},
-		"start": 4170000
-	}, {
-		"place": "9",
-		"name": "Rebecka Åkärbjär",
-		"club": "IFK Mora OK",
-		"result": "20:33",
-		"status": 0,
-		"timeplus": "+04:33",
-		"progress": 100,
-		"splits": {
-			"1049": 90200,
-			"1049_status": 0,
-			"1049_place": 23,
-			"1049_timeplus": 33700,
-			"1067": 115100,
-			"1067_status": 0,
-			"1067_place": 10,
-			"1067_timeplus": 27300
-		},
-		"start": 4638000
-	}, {
-		"place": "10",
-		"name": "Alice Ljungberg",
-		"club": "Tumba-Mälarhöjden OK",
-		"result": "20:38",
-		"status": 0,
-		"timeplus": "+04:38",
-		"progress": 100,
-		"splits": {
-			"1049": 76400,
-			"1049_status": 0,
-			"1049_place": 12,
-			"1049_timeplus": 19900,
-			"1067": 115800,
-			"1067_status": 0,
-			"1067_place": 11,
-			"1067_timeplus": 28000
-		},
-		"start": 4188000
-	}, {
-		"place": "11",
-		"name": "Stina Pedersen",
-		"club": "Järfälla OK",
-		"result": "20:38",
-		"status": 0,
-		"timeplus": "+04:38",
-		"progress": 100,
-		"splits": {
-			"1049": 75100,
-			"1049_status": 0,
-			"1049_place": 10,
-			"1049_timeplus": 18600,
-			"1067": 113600,
-			"1067_status": 0,
-			"1067_place": 9,
-			"1067_timeplus": 25800
-		},
-		"start": 5178000
-	}, {
-		"place": "12",
-		"name": "Saga Palmertz",
-		"club": "Helsingborgs SOK",
-		"result": "21:03",
-		"status": 0,
-		"timeplus": "+05:03",
-		"progress": 100,
-		"splits": {
-			"1049": 76100,
-			"1049_status": 0,
-			"1049_place": 11,
-			"1049_timeplus": 19600,
-			"1067": 117400,
-			"1067_status": 0,
-			"1067_place": 12,
-			"1067_timeplus": 29600
-		},
-		"start": 3864000
-	}, {
-		"place": "13",
-		"name": "Emma Henriques",
-		"club": "OK Södertörn",
-		"result": "21:39",
-		"status": 0,
-		"timeplus": "+05:39",
-		"progress": 100,
-		"splits": {
-			"1049": 84400,
-			"1049_status": 0,
-			"1049_place": 16,
-			"1049_timeplus": 27900,
-			"1067": 122100,
-			"1067_status": 0,
-			"1067_place": 14,
-			"1067_timeplus": 34300
-		},
-		"start": 4224000
-	}, {
-		"place": "14",
-		"name": "Signe Eskilsson",
-		"club": "IK Hakarpspojkarna",
-		"result": "22:00",
-		"status": 0,
-		"timeplus": "+06:00",
-		"progress": 100,
-		"splits": {
-			"1049": 80600,
-			"1049_status": 0,
-			"1049_place": 14,
-			"1049_timeplus": 24100,
-			"1067": 121900,
-			"1067_status": 0,
-			"1067_place": 13,
-			"1067_timeplus": 34100
-		},
-		"start": 4080000
-	}, {
-		"place": "15",
-		"name": "Svea Forsslund",
-		"club": "Gävle OK",
-		"result": "22:05",
-		"status": 0,
-		"timeplus": "+06:05",
-		"progress": 100,
-		"splits": {
-			"1049": 80500,
-			"1049_status": 0,
-			"1049_place": 13,
-			"1049_timeplus": 24000,
-			"1067": 124100,
-			"1067_status": 0,
-			"1067_place": 16,
-			"1067_timeplus": 36300
-		},
-		"start": 4314000
-	}, {
-		"place": "16",
-		"name": "Ida Warvelin",
-		"club": "Långhundra IF",
-		"result": "22:09",
-		"status": 0,
-		"timeplus": "+06:09",
-		"progress": 100,
-		"splits": {
-			"1049": 87000,
-			"1049_status": 0,
-			"1049_place": 20,
-			"1049_timeplus": 30500,
-			"1067": 122400,
-			"1067_status": 0,
-			"1067_place": 15,
-			"1067_timeplus": 34600
-		},
-		"start": 3648000
-	}, {
-		"place": "17",
-		"name": "Maja Mases",
-		"club": "Stora Tuna OK",
-		"result": "22:13",
-		"status": 0,
-		"timeplus": "+06:13",
-		"progress": 100,
-		"splits": {
-			"1049": 85500,
-			"1049_status": 0,
-			"1049_place": 17,
-			"1049_timeplus": 29000,
-			"1067": 125400,
-			"1067_status": 0,
-			"1067_place": 17,
-			"1067_timeplus": 37600
-		},
-		"start": 4620000
-	}, {
-		"place": "18",
-		"name": "Adele Palmqvist",
-		"club": "Nyköpings OK",
-		"result": "22:31",
-		"status": 0,
-		"timeplus": "+06:31",
-		"progress": 100,
-		"splits": {
-			"1049": 86700,
-			"1049_status": 0,
-			"1049_place": 19,
-			"1049_timeplus": 30200,
-			"1067": 125600,
-			"1067_status": 0,
-			"1067_place": 18,
-			"1067_timeplus": 37800
-		},
-		"start": 4260000
-	}, {
-		"place": "19",
-		"name": "Maja Thimberg",
-		"club": "Söders-Tyresö",
-		"result": "22:50",
-		"status": 0,
-		"timeplus": "+06:50",
-		"progress": 100,
-		"splits": {
-			"1049": 94400,
-			"1049_status": 0,
-			"1049_place": 25,
-			"1049_timeplus": 37900,
-			"1067": 128400,
-			"1067_status": 0,
-			"1067_place": 19,
-			"1067_timeplus": 40600
-		},
-		"start": 5160000
-	}, {
-		"place": "20",
-		"name": "Tuva Holmström",
-		"club": "OK Ravinen",
-		"result": "23:54",
-		"status": 0,
-		"timeplus": "+07:54",
-		"progress": 100,
-		"splits": {
-			"1049": 68700,
-			"1049_status": 0,
-			"1049_place": 4,
-			"1049_timeplus": 12200,
-			"1067": 133900,
-			"1067_status": 0,
-			"1067_place": 20,
-			"1067_timeplus": 46100
-		},
-		"start": 4956000
-	}, {
-		"place": "21",
-		"name": "Liv Lundsgaard",
-		"club": "OK Kontinent",
-		"result": "24:17",
-		"status": 0,
-		"timeplus": "+08:17",
-		"progress": 100,
-		"splits": {
-			"1049": 104200,
-			"1049_status": 0,
-			"1049_place": 34,
-			"1049_timeplus": 47700,
-			"1067": 136800,
-			"1067_status": 0,
-			"1067_place": 23,
-			"1067_timeplus": 49000
-		},
-		"start": 3792000
-	}, {
-		"place": "22",
-		"name": "Märta Ahlquist",
-		"club": "Järla Orientering",
-		"result": "24:32",
-		"status": 0,
-		"timeplus": "+08:32",
-		"progress": 100,
-		"splits": {
-			"1049": 96100,
-			"1049_status": 0,
-			"1049_place": 26,
-			"1049_timeplus": 39600,
-			"1067": 138200,
-			"1067_status": 0,
-			"1067_place": 24,
-			"1067_timeplus": 50400
-		},
-		"start": 3882000
-	}, {
-		"place": "23",
-		"name": "Lina Widelund",
-		"club": "OK Kåre",
-		"result": "25:06",
-		"status": 0,
-		"timeplus": "+09:06",
-		"progress": 100,
-		"splits": {
-			"1049": 84000,
-			"1049_status": 0,
-			"1049_place": 15,
-			"1049_timeplus": 27500,
-			"1067": 135800,
-			"1067_status": 0,
-			"1067_place": 22,
-			"1067_timeplus": 48000
-		},
-		"start": 4476000
-	}, {
-		"place": "24",
-		"name": "Wilma Reinholdsson",
-		"club": "OK Alehof",
-		"result": "25:09",
-		"status": 0,
-		"timeplus": "+09:09",
-		"progress": 100,
-		"splits": {
-			"1049": 107000,
-			"1049_status": 0,
-			"1049_place": 35,
-			"1049_timeplus": 50500,
-			"1067": 139900,
-			"1067_status": 0,
-			"1067_place": 25,
-			"1067_timeplus": 52100
-		},
-		"start": 3990000
-	}, {
-		"place": "25",
-		"name": "Ebba Flodman",
-		"club": "OK Hammaren",
-		"result": "25:12",
-		"status": 0,
-		"timeplus": "+09:12",
-		"progress": 100,
-		"splits": {
-			"1049": 88100,
-			"1049_status": 0,
-			"1049_place": 21,
-			"1049_timeplus": 31600,
-			"1067": 142300,
-			"1067_status": 0,
-			"1067_place": 26,
-			"1067_timeplus": 54500
-		},
-		"start": 4602000
-	}, {
-		"place": "26",
-		"name": "Klara Möller",
-		"club": "OK Kontinent",
-		"result": "25:15",
-		"status": 0,
-		"timeplus": "+09:15",
-		"progress": 100,
-		"splits": {
-			"1049": 112300,
-			"1049_status": 0,
-			"1049_place": 39,
-			"1049_timeplus": 55800,
-			"1067": 142700,
-			"1067_status": 0,
-			"1067_place": 27,
-			"1067_timeplus": 54900
-		},
-		"start": 3684000
-	}, {
-		"place": "27",
-		"name": "Hilda Trofast",
-		"club": "Tullinge SK",
-		"result": "25:38",
-		"status": 0,
-		"timeplus": "+09:38",
-		"progress": 100,
-		"splits": {
-			"1049": 102200,
-			"1049_status": 0,
-			"1049_place": 30,
-			"1049_timeplus": 45700,
-			"1067": 134800,
-			"1067_status": 0,
-			"1067_place": 21,
-			"1067_timeplus": 47000
-		},
-		"start": 4134000
-	}, {
-		"place": "28",
-		"name": "Amalia Erlandsson",
-		"club": "SOK Viljan",
-		"result": "26:33",
-		"status": 0,
-		"timeplus": "+10:33",
-		"progress": 100,
-		"splits": {
-			"1049": 103800,
-			"1049_status": 0,
-			"1049_place": 33,
-			"1049_timeplus": 47300,
-			"1067": 144100,
-			"1067_status": 0,
-			"1067_place": 28,
-			"1067_timeplus": 56300
-		},
-		"start": 4530000
-	}, {
-		"place": "29",
-		"name": "Rut Lundin",
-		"club": "OK Södertörn",
-		"result": "26:46",
-		"status": 0,
-		"timeplus": "+10:46",
-		"progress": 100,
-		"splits": {
-			"1049": 91000,
-			"1049_status": 0,
-			"1049_place": 24,
-			"1049_timeplus": 34500,
-			"1067": 151400,
-			"1067_status": 0,
-			"1067_place": 32,
-			"1067_timeplus": 63600
-		},
-		"start": 3810000
-	}, {
-		"place": "30",
-		"name": "Kerstin Christie",
-		"club": "Snättringe SK",
-		"result": "26:55",
-		"status": 0,
-		"timeplus": "+10:55",
-		"progress": 100,
-		"splits": {
-			"1049": 89800,
-			"1049_status": 0,
-			"1049_place": 22,
-			"1049_timeplus": 33300,
-			"1067": 151500,
-			"1067_status": 0,
-			"1067_place": 33,
-			"1067_timeplus": 63700
-		},
-		"start": 5196000
-	}, {
-		"place": "31",
-		"name": "Moa Glanshed",
-		"club": "Haninge SOK",
-		"result": "26:56",
-		"status": 0,
-		"timeplus": "+10:56",
-		"progress": 100,
-		"splits": {
-			"1049": 85900,
-			"1049_status": 0,
-			"1049_place": 18,
-			"1049_timeplus": 29400,
-			"1067": 151000,
-			"1067_status": 0,
-			"1067_place": 31,
-			"1067_timeplus": 63200
-		},
-		"start": 3918000
-	}, {
-		"place": "32",
-		"name": "Paulina Alzén",
-		"club": "Gustavsbergs OK",
-		"result": "27:05",
-		"status": 0,
-		"timeplus": "+11:05",
-		"progress": 100,
-		"splits": {
-			"1049": 103100,
-			"1049_status": 0,
-			"1049_place": 32,
-			"1049_timeplus": 46600,
-			"1067": 149100,
-			"1067_status": 0,
-			"1067_place": 30,
-			"1067_timeplus": 61300
-		},
-		"start": 3666000
-	}, {
-		"place": "33",
-		"name": "Anna Frankling",
-		"club": "IFK Lidingö SOK",
-		"result": "27:10",
-		"status": 0,
-		"timeplus": "+11:10",
-		"progress": 100,
-		"splits": {
-			"1049": 101900,
-			"1049_status": 0,
-			"1049_place": 29,
-			"1049_timeplus": 45400,
-			"1067": 147900,
-			"1067_status": 0,
-			"1067_place": 29,
-			"1067_timeplus": 60100
-		},
-		"start": 4938000
-	}, {
-		"place": "34",
-		"name": "Linnea Stéen",
-		"club": "Helsingborgs SOK",
-		"result": "27:16",
-		"status": 0,
-		"timeplus": "+11:16",
-		"progress": 100,
-		"splits": {
-			"1049": 122000,
-			"1049_status": 0,
-			"1049_place": 46,
-			"1049_timeplus": 65500,
-			"1067": 154600,
-			"1067_status": 0,
-			"1067_place": 34,
-			"1067_timeplus": 66800
-		},
-		"start": 3774000
-	}, {
-		"place": "35",
-		"name": "Ellen Wångberg Aneland",
-		"club": "OK Ravinen",
-		"result": "27:25",
-		"status": 0,
-		"timeplus": "+11:25",
-		"progress": 100,
-		"splits": {
-			"1049": 124700,
-			"1049_status": 0,
-			"1049_place": 50,
-			"1049_timeplus": 68200,
-			"1067": 155000,
-			"1067_status": 0,
-			"1067_place": 35,
-			"1067_timeplus": 67200
-		},
-		"start": 4866000
-	}, {
-		"place": "36",
-		"name": "Sara Storm-Andersson",
-		"club": "OK Tyr",
-		"result": "27:47",
-		"status": 0,
-		"timeplus": "+11:47",
-		"progress": 100,
-		"splits": {
-			"1049": 108800,
-			"1049_status": 0,
-			"1049_place": 36,
-			"1049_timeplus": 52300,
-			"1067": 156100,
-			"1067_status": 0,
-			"1067_place": 37,
-			"1067_timeplus": 68300
-		},
-		"start": 3756000
-	}, {
-		"place": "37",
-		"name": "Tilde Sveder",
-		"club": "Domnarvets GOIF",
-		"result": "27:49",
-		"status": 0,
-		"timeplus": "+11:49",
-		"progress": 100,
-		"splits": {
-			"1049": 118400,
-			"1049_status": 0,
-			"1049_place": 43,
-			"1049_timeplus": 61900,
-			"1067": 155700,
-			"1067_status": 0,
-			"1067_place": 36,
-			"1067_timeplus": 67900
-		},
-		"start": 4548000
-	}, {
-		"place": "38",
-		"name": "Sara Bengtsson",
-		"club": "OK Alehof",
-		"result": "28:30",
-		"status": 0,
-		"timeplus": "+12:30",
-		"progress": 100,
-		"splits": {
-			"1049": 113500,
-			"1049_status": 0,
-			"1049_place": 42,
-			"1049_timeplus": 57000,
-			"1067": 159500,
-			"1067_status": 0,
-			"1067_place": 39,
-			"1067_timeplus": 71700
-		},
-		"start": 4278000
-	}, {
-		"place": "39",
-		"name": "Linnéa Westlin",
-		"club": "Valbo AIF",
-		"result": "28:55",
-		"status": 0,
-		"timeplus": "+12:55",
-		"progress": 100,
-		"splits": {
-			"1049": 123800,
-			"1049_status": 0,
-			"1049_place": 48,
-			"1049_timeplus": 67300,
-			"1067": 163200,
-			"1067_status": 0,
-			"1067_place": 40,
-			"1067_timeplus": 75400
-		},
-		"start": 4992000
-	}, {
-		"place": "40",
-		"name": "Filippa Bäcklund",
-		"club": "Järla Orientering",
-		"result": "28:59",
-		"status": 0,
-		"timeplus": "+12:59",
-		"progress": 100,
-		"splits": {
-			"1049": 121700,
-			"1049_status": 0,
-			"1049_place": 45,
-			"1049_timeplus": 65200,
-			"1067": 158400,
-			"1067_status": 0,
-			"1067_place": 38,
-			"1067_timeplus": 70600
-		},
-		"start": 3630000
-	}, {
-		"place": "41",
-		"name": "Minna Kökeritz",
-		"club": "Sundbybergs IK",
-		"result": "29:37",
-		"status": 0,
-		"timeplus": "+13:37",
-		"progress": 100,
-		"splits": {
-			"1049": 110400,
-			"1049_status": 0,
-			"1049_place": 37,
-			"1049_timeplus": 53900,
-			"1067": 163600,
-			"1067_status": 0,
-			"1067_place": 41,
-			"1067_timeplus": 75800
-		},
-		"start": 4242000
-	}, {
-		"place": "42",
-		"name": "Olivia Unnerud",
-		"club": "Långhundra IF",
-		"result": "29:56",
-		"status": 0,
-		"timeplus": "+13:56",
-		"progress": 100,
-		"splits": {
-			"1049": 123800,
-			"1049_status": 0,
-			"1049_place": 48,
-			"1049_timeplus": 67300,
-			"1067": 169300,
-			"1067_status": 0,
-			"1067_place": 43,
-			"1067_timeplus": 81500
-		},
-		"start": 5142000
-	}, {
-		"place": "43",
-		"name": "Signe Eriksson Björling",
-		"club": "Domnarvets GOIF",
-		"result": "30:05",
-		"status": 0,
-		"timeplus": "+14:05",
-		"progress": 100,
-		"splits": {
-			"1049": 121000,
-			"1049_status": 0,
-			"1049_place": 44,
-			"1049_timeplus": 64500,
-			"1067": 165700,
-			"1067_status": 0,
-			"1067_place": 42,
-			"1067_timeplus": 77900
-		},
-		"start": 4422000
-	}, {
-		"place": "44",
-		"name": "Anna Benatti",
-		"club": "Skåneslättens OL",
-		"result": "30:55",
-		"status": 0,
-		"timeplus": "+14:55",
-		"progress": 100,
-		"splits": {
-			"1049": 102600,
-			"1049_status": 0,
-			"1049_place": 31,
-			"1049_timeplus": 46100,
-			"1067": 172000,
-			"1067_status": 0,
-			"1067_place": 44,
-			"1067_timeplus": 84200
-		},
-		"start": 3612000
-	}, {
-		"place": "45",
-		"name": "Elin Helgesson",
-		"club": "Klubblös",
-		"result": "31:04",
-		"status": 0,
-		"timeplus": "+15:04",
-		"progress": 100,
-		"splits": {
-			"1049": 97100,
-			"1049_status": 0,
-			"1049_place": 27,
-			"1049_timeplus": 40600,
-			"1067": 172100,
-			"1067_status": 0,
-			"1067_place": 45,
-			"1067_timeplus": 84300
-		},
-		"start": 4794000
-	}, {
-		"place": "46",
-		"name": "Sara Strömqvist",
-		"club": "Attunda OK",
-		"result": "31:05",
-		"status": 0,
-		"timeplus": "+15:05",
-		"progress": 100,
-		"splits": {
-			"1049": 101700,
-			"1049_status": 0,
-			"1049_place": 28,
-			"1049_timeplus": 45200,
-			"1067": 177300,
-			"1067_status": 0,
-			"1067_place": 46,
-			"1067_timeplus": 89500
-		},
-		"start": 4152000
-	}, {
-		"place": "47",
-		"name": "Alicia Hermann",
-		"club": "Västerås SOK",
-		"result": "31:40",
-		"status": 0,
-		"timeplus": "+15:40",
-		"progress": 100,
-		"splits": {
-			"1049": 112000,
-			"1049_status": 0,
-			"1049_place": 38,
-			"1049_timeplus": 55500,
-			"1067": 180400,
-			"1067_status": 0,
-			"1067_place": 47,
-			"1067_timeplus": 92600
-		},
-		"start": 4458000
-	}, {
-		"place": "48",
-		"name": "Emelie Holmström",
-		"club": "Täby OK",
-		"result": "31:50",
-		"status": 0,
-		"timeplus": "+15:50",
-		"progress": 100,
-		"splits": {
-			"1049": 143600,
-			"1049_status": 0,
-			"1049_place": 54,
-			"1049_timeplus": 87100,
-			"1067": 181400,
-			"1067_status": 0,
-			"1067_place": 48,
-			"1067_timeplus": 93600
-		},
-		"start": 4974000
-	}, {
-		"place": "49",
-		"name": "Olivia Tillander",
-		"club": "Ystads OK",
-		"result": "32:42",
-		"status": 0,
-		"timeplus": "+16:42",
-		"progress": 100,
-		"splits": {
-			"1049": 129900,
-			"1049_status": 0,
-			"1049_place": 52,
-			"1049_timeplus": 73400,
-			"1067": 182700,
-			"1067_status": 0,
-			"1067_place": 49,
-			"1067_timeplus": 94900
-		},
-		"start": 3900000
-	}, {
-		"place": "50",
-		"name": "Elsa Nilsson",
-		"club": "Dalaportens OL",
-		"result": "33:35",
-		"status": 0,
-		"timeplus": "+17:35",
-		"progress": 100,
-		"splits": {
-			"1049": 113400,
-			"1049_status": 0,
-			"1049_place": 41,
-			"1049_timeplus": 56900,
-			"1067": 191100,
-			"1067_status": 0,
-			"1067_place": 51,
-			"1067_timeplus": 103300
-		},
-		"start": 4512000
-	}, {
-		"place": "51",
-		"name": "Britta Börjesson",
-		"club": "Järla Orientering",
-		"result": "33:43",
-		"status": 0,
-		"timeplus": "+17:43",
-		"progress": 100,
-		"splits": {
-			"1049": 140200,
-			"1049_status": 0,
-			"1049_place": 53,
-			"1049_timeplus": 83700,
-			"1067": 192800,
-			"1067_status": 0,
-			"1067_place": 52,
-			"1067_timeplus": 105000
-		},
-		"start": 4098000
-	}, {
-		"place": "52",
-		"name": "Linnéa Bjärby",
-		"club": "Frosta OK",
-		"result": "34:15",
-		"status": 0,
-		"timeplus": "+18:15",
-		"progress": 100,
-		"splits": {
-			"1049": 157200,
-			"1049_status": 0,
-			"1049_place": 56,
-			"1049_timeplus": 100700,
-			"1067": 194700,
-			"1067_status": 0,
-			"1067_place": 53,
-			"1067_timeplus": 106900
-		},
-		"start": 3828000
-	}, {
-		"place": "53",
-		"name": "Elin Lindhagen",
-		"club": "IFK Enskede",
-		"result": "35:08",
-		"status": 0,
-		"timeplus": "+19:08",
-		"progress": 100,
-		"splits": {
-			"1049": 155200,
-			"1049_status": 0,
-			"1049_place": 55,
-			"1049_timeplus": 98700,
-			"1067": 200000,
-			"1067_status": 0,
-			"1067_place": 54,
-			"1067_timeplus": 112200
-		},
-		"start": 4674000
-	}, {
-		"place": "54",
-		"name": "Felice Gardelin",
-		"club": "Gotlands Bro OK",
-		"result": "36:12",
-		"status": 0,
-		"timeplus": "+20:12",
-		"progress": 100,
-		"splits": {
-			"1049": 124700,
-			"1049_status": 0,
-			"1049_place": 50,
-			"1049_timeplus": 68200,
-			"1067": 187600,
-			"1067_status": 0,
-			"1067_place": 50,
-			"1067_timeplus": 99800
-		},
-		"start": 3738000
-	}, {
-		"place": "55",
-		"name": "Linda Strömqvist",
-		"club": "Attunda OK",
-		"result": "38:10",
-		"status": 0,
-		"timeplus": "+22:10",
-		"progress": 100,
-		"splits": {
-			"1049": 159900,
-			"1049_status": 0,
-			"1049_place": 57,
-			"1049_timeplus": 103400,
-			"1067": 217000,
-			"1067_status": 0,
-			"1067_place": 58,
-			"1067_timeplus": 129200
-		},
-		"start": 4044000
-	}, {
-		"place": "56",
-		"name": "Tilda Malmström",
-		"club": "Tjalve IF Norrköping",
-		"result": "38:18",
-		"status": 0,
-		"timeplus": "+22:18",
-		"progress": 100,
-		"splits": {
-			"1049": 112700,
-			"1049_status": 0,
-			"1049_place": 40,
-			"1049_timeplus": 56200,
-			"1067": 208600,
-			"1067_status": 0,
-			"1067_place": 55,
-			"1067_timeplus": 120800
-		},
-		"start": 4440000
-	}, {
-		"place": "57",
-		"name": "Ylva Remén",
-		"club": "Snättringe SK",
-		"result": "38:26",
-		"status": 0,
-		"timeplus": "+22:26",
-		"progress": 100,
-		"splits": {
-			"1049": 122800,
-			"1049_status": 0,
-			"1049_place": 47,
-			"1049_timeplus": 66300,
-			"1067": 213700,
-			"1067_status": 0,
-			"1067_place": 56,
-			"1067_timeplus": 125900
-		},
-		"start": 4296000
-	}, {
-		"place": "58",
-		"name": "Elise Nilsen Berg",
-		"club": "Fossum IF",
-		"result": "38:27",
-		"status": 0,
-		"timeplus": "+22:27",
-		"progress": 100,
-		"splits": {
-			"1049": 168600,
-			"1049_status": 0,
-			"1049_place": 60,
-			"1049_timeplus": 112100,
-			"1067": 214000,
-			"1067_status": 0,
-			"1067_place": 57,
-			"1067_timeplus": 126200
-		},
-		"start": 5088000
-	}, {
-		"place": "59",
-		"name": "Marika Mäkelä",
-		"club": "Haninge SOK",
-		"result": "39:54",
-		"status": 0,
-		"timeplus": "+23:54",
-		"progress": 100,
-		"splits": {
-			"1049": 176400,
-			"1049_status": 0,
-			"1049_place": 61,
-			"1049_timeplus": 119900,
-			"1067": 227400,
-			"1067_status": 0,
-			"1067_place": 60,
-			"1067_timeplus": 139600
-		},
-		"start": 4812000
-	}, {
-		"place": "60",
-		"name": "Nora Svedin Jakobsson",
-		"club": "Långhundra IF",
-		"result": "40:19",
-		"status": 0,
-		"timeplus": "+24:19",
-		"progress": 100,
-		"splits": {
-			"1049": 163700,
-			"1049_status": 0,
-			"1049_place": 59,
-			"1049_timeplus": 107200,
-			"1067": 225900,
-			"1067_status": 0,
-			"1067_place": 59,
-			"1067_timeplus": 138100
-		},
-		"start": 4008000
-	}, {
-		"place": "61",
-		"name": "Filippa Guttke",
-		"club": "Nyköpings OK",
-		"result": "41:55",
-		"status": 0,
-		"timeplus": "+25:55",
-		"progress": 100,
-		"splits": {
-			"1049": 215900,
-			"1049_status": 0,
-			"1049_place": 63,
-			"1049_timeplus": 159400,
-			"1067": 243300,
-			"1067_status": 0,
-			"1067_place": 62,
-			"1067_timeplus": 155500
-		},
-		"start": 4116000
-	}, {
-		"place": "62",
-		"name": "Tilda Mattsson",
-		"club": "OK Södertörn",
-		"result": "42:13",
-		"status": 0,
-		"timeplus": "+26:13",
-		"progress": 100,
-		"splits": {
-			"1049": 179500,
-			"1049_status": 0,
-			"1049_place": 62,
-			"1049_timeplus": 123000,
-			"1067": 239800,
-			"1067_status": 0,
-			"1067_place": 61,
-			"1067_timeplus": 152000
-		},
-		"start": 5010000
-	}, {
-		"place": "63",
-		"name": "Evelina Petersson",
-		"club": "Nyköpings OK",
-		"result": "48:22",
-		"status": 0,
-		"timeplus": "+32:22",
-		"progress": 100,
-		"splits": {
-			"1049": 224800,
-			"1049_status": 0,
-			"1049_place": 64,
-			"1049_timeplus": 168300,
-			"1067": 278400,
-			"1067_status": 0,
-			"1067_place": 63,
-			"1067_timeplus": 190600
-		},
-		"start": 4026000
-	}, {
-		"place": "64",
-		"name": "Tyra Fogelbrink",
-		"club": "Väsby OK",
-		"result": "53:11",
-		"status": 0,
-		"timeplus": "+37:11",
-		"progress": 100,
-		"splits": {
-			"1049": 262300,
-			"1049_status": 0,
-			"1049_place": 65,
-			"1049_timeplus": 205800,
-			"1067": 305700,
-			"1067_status": 0,
-			"1067_place": 64,
-			"1067_timeplus": 217900
-		},
-		"start": 4830000
-	}, {
-		"place": "65",
-		"name": "Nellie Eliasson",
-		"club": "Dalaportens OL",
-		"result": "53:12",
-		"status": 0,
-		"timeplus": "+37:12",
-		"progress": 100,
-		"splits": {
-			"1049": 162700,
-			"1049_status": 0,
-			"1049_place": 58,
-			"1049_timeplus": 106200,
-			"1067": 307200,
-			"1067_status": 0,
-			"1067_place": 65,
-			"1067_timeplus": 219400
-		},
-		"start": 4566000
-	}, {
-		"place": "-",
-		"name": "Ella Lindqvist",
-		"club": "Täby OK",
-		"result": "ej start",
-		"status": 1,
-		"timeplus": "+ej start",
-		"progress": 100,
-		"splits": {
-			"1049": "",
-			"1049_status": 1,
-			"1049_place": "",
-			"1067": "",
-			"1067_status": 1,
-			"1067_place": ""
-		},
-		"start": 4848000
-	}, {
-		"place": "-",
-		"name": "Elin Abel",
-		"club": "Snättringe SK",
-		"result": "ej start",
-		"status": 1,
-		"timeplus": "+ej start",
-		"progress": 100,
-		"splits": {
-			"1049": "",
-			"1049_status": 1,
-			"1049_place": "",
-			"1067": "",
-			"1067_status": 1,
-			"1067_place": ""
-		},
-		"start": 4206000
-	}, {
-		"place": "-",
-		"name": "Tova Sandgren",
-		"club": "Bromma-Vällingby SOK",
-		"result": "ej start",
-		"status": 1,
-		"timeplus": "+ej start",
-		"progress": 100,
-		"splits": {
-			"1049": "",
-			"1049_status": 1,
-			"1049_place": "",
-			"1067": "",
-			"1067_status": 1,
-			"1067_place": ""
-		},
-		"start": 5106000
-	}, {
-		"place": "-",
-		"name": "Blenda Sandén",
-		"club": "OK Södertörn",
-		"result": "ej start",
-		"status": 1,
-		"timeplus": "+ej start",
-		"progress": 100,
-		"splits": {
-			"1049": "",
-			"1049_status": 1,
-			"1049_place": "",
-			"1067": "",
-			"1067_status": 1,
-			"1067_place": ""
-		},
-		"start": 4584000
-	}, {
-		"place": "-",
-		"name": "Pauline Haglund",
-		"club": "IFK Hedemora OK",
-		"result": "felst.",
-		"status": 3,
-		"timeplus": "+felst.",
-		"progress": 100,
-		"splits": {
-			"1049": 112400,
-			"1049_status": 3,
-			"1049_place": "-",
-			"1049_timeplus": 55900,
-			"1067": 201000,
-			"1067_status": 3,
-			"1067_place": "-",
-			"1067_timeplus": 113200
-		},
-		"start": 4920000
-	}, {
-		"place": "-",
-		"name": "Cajsa Alenius",
-		"club": "Nyköpings OK",
-		"result": "felst.",
-		"status": 3,
-		"timeplus": "+felst.",
-		"progress": 100,
-		"splits": {
-			"1049": 135700,
-			"1049_status": 3,
-			"1049_place": "-",
-			"1049_timeplus": 79200,
-			"1067": 223200,
-			"1067_status": 3,
-			"1067_place": "-",
-			"1067_timeplus": 135400
-		},
-		"start": 3846000
+		"timeplus": "+00:59",
+		"progress": 100,
+		"splits": {
+			"1036": 130100,
+			"1075": 78600,
+			"1082": 106200,
+			"1075_status": 0,
+			"1075_place": 3,
+			"1075_timeplus": 3000,
+			"1082_status": 0,
+			"1082_place": 3,
+			"1082_timeplus": 3900,
+			"1036_status": 0,
+			"1036_place": 3,
+			"1036_timeplus": 4900,
+
+			"99": 125200,
+			"99_status": 0,
+			"99_place": 1,
+			"99_timeplus": 0,
+
+			"98": 125200,
+			"98_status": 0,
+			"98_place": 1,
+			"98_timeplus": 0,
+
+			"97": 125200,
+			"97_status": 0,
+			"97_place": 1,
+			"97_timeplus": 0,
+
+			"96": 125200,
+			"96_status": 0,
+			"96_place": 1,
+			"96_timeplus": 0
+		},
+		"start": 4518000
 	}],
-	"hash": "22edf059b2ae869292c738c7b38c60f4"
+	"hash": "ca8e7c474051af2b5b11be6e869ebf93"
 }

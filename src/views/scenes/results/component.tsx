@@ -22,7 +22,7 @@ export const OLResults: React.SFC<Props> = ({ refetch, results, splits }) => {
             results={results}
             splits={splits}
             // cache is every 15 seconds, but poll a little more often
-            refetchTimeout={__DEV__ ? 3000 : 10000}
+            refetchTimeout={__DEV__ ? 999999999 : 10000}
             refetch={refetch}
             subText="club"
         />

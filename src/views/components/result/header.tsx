@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { ScreenOrientation } from 'expo';
 import { SIZE } from './item';
 import { randomColor } from 'util/random';
+import { UNIT } from 'util/const';
 
 interface OwnProps {
     splits: SplitControl[];
@@ -15,34 +16,58 @@ interface StateProps {
     rotation: ScreenOrientation.Orientation;
 }
 
-const Component: React.SFC<StateProps & OwnProps> = ({ rotation, splits }) => {
-    const landscape = rotation === ScreenOrientation.Orientation.LANDSCAPE;
+const labels = (landscape: boolean, splits?: SplitControl[]) => {
     const size = landscape ? SIZE.landscape : SIZE.portrait;
 
-    const overflowSize = size.reduce((a, b) => a + b, 0);
+    const overflowSize = Object.keys(size).map((k) => size[k]).reduce((a, b) => a + b, 0);
 
-    const labels = [
-        { size: size[0], text: '#' },
-        { size: size[1], text: 'Namn' },
-        ...(
-            landscape
-            ? splits.map((s) => ({
-                size: (overflowSize / splits.length),
-                text: s.name,
-                align: 'center',
-            })) : []
-        ),
-        { size: size[2], text: 'Tid', align: 'flex-end' },
+    const all = {
+        place: { size: size.place, text: '#' },
+        name: { size: size.name, text: 'Namn' },
+        time: { size: size.time, text: 'Tid', align: 'flex-end' },
+        start: { size: size.start, text: 'Start' },
+    };
+
+    const inPortrait = [
+        all.place,
+        all.name,
+        all.time,
     ];
 
-    const renderCol = ({ text, size, align }) => {
+    const inLandscape = [
+        all.place,
+        all.name,
+        all.start,
+        ...splits.map((s) => ({
+            size: (overflowSize / splits.length),
+            text: s.name,
+        })),
+        all.time,
+    ];
+
+    return landscape ? inLandscape : inPortrait;
+};
+
+const Component: React.SFC<StateProps & OwnProps> = ({ rotation, splits }) => {
+    const landscape = rotation === ScreenOrientation.Orientation.LANDSCAPE;
+
+    const renderCol = ({ text, size, align }, index) => {
+        const key = `${text}:${index}`;
+
         return (
             <OLResultColumn
                 size={size}
-                key={text}
+                key={key}
                 align={align}
             >
-                <Text>
+                <Text
+                    numberOfLines={1}
+                    style={{
+                        fontSize: UNIT,
+                        fontWeight: 'bold',
+                        color: '#444444',
+                    }}
+                >
                     {text}
                 </Text>
             </OLResultColumn>
@@ -58,7 +83,7 @@ const Component: React.SFC<StateProps & OwnProps> = ({ rotation, splits }) => {
             }}
         >
             <Grid>
-                {labels.map(renderCol)}
+                {labels(landscape, splits).map(renderCol)}
             </Grid>
         </View>
     );

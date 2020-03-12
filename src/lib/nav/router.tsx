@@ -1,18 +1,20 @@
 import * as React from 'react';
-import { NavigationContainer, TypedNavigator, ParamListBase } from '@react-navigation/native';
-import { StackNavigationOptions } from '@react-navigation/stack';
-import { Routes } from './routes';
-import { Mappings } from './mappings';
 import { COLORS } from 'util/const';
+import { connect } from 'react-redux';
+import { createStackNavigator } from '@react-navigation/stack';
+import { Mappings } from './mappings';
+import { NavigationContainer, TypedNavigator, ParamListBase } from '@react-navigation/native';
+import { Routes } from './routes';
 import Lang from 'lib/lang';
-import { StackNavigator } from 'react-navigation';
+import { ScreenOrientation } from 'expo';
 
-// Import hack
-const StackImport = require('@react-navigation/stack/lib/commonjs');
-const Stack: TypedNavigator<ParamListBase, StackNavigationOptions, any> =
-    StackImport.createStackNavigator();
+interface StateProps {
+    landscape: boolean;
+}
 
-export default () => {
+const Stack = createStackNavigator();
+
+const Component: React.SFC<StateProps> = ({ landscape }) => {
     return (
         <NavigationContainer
             theme={{
@@ -37,6 +39,7 @@ export default () => {
                         width: '65%',
                         alignItems: 'center',
                     },
+                    headerStatusBarHeight: landscape ? 30 : 50,
                 }}
             >
                 {Object.keys(Mappings).map((key) => (
@@ -54,3 +57,9 @@ export default () => {
         </NavigationContainer>
     );
 };
+
+const mapStateToProps = (state: AppState): StateProps => ({
+    landscape: state.general.rotation === ScreenOrientation.Orientation.LANDSCAPE,
+});
+
+export default connect(mapStateToProps, null)(Component);

@@ -2,13 +2,13 @@ import * as React from 'react';
 import { COLORS } from 'util/const';
 import { LayoutAnimation, View } from 'react-native';
 import { loadCompetitions } from 'store/stores/api';
+import { OLRotationWatcher } from 'views/components/watcher/rotation';
 import { Provider } from 'react-redux';
 import { SplashScreen } from 'expo';
 import { store } from 'store/configure';
 import * as Font from 'expo-font';
 import Lang from 'lib/lang';
 import Router from 'lib/nav/router';
-import { OLRotationWatcher } from 'views/components/watcher/rotation';
 
 interface State {
     ready: boolean;

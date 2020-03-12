@@ -12,6 +12,7 @@ import { OLResultTimeplus } from './timeplus';
 import { ScreenOrientation } from 'expo';
 import { UNIT, COLORS } from 'util/const';
 import { OLSplits } from './splits';
+import { OLStartTime } from './start';
 
 interface OwnProps {
     result: Result;
@@ -24,23 +25,25 @@ interface StateProps {
 type Props = StateProps & OwnProps;
 
 export const SIZE = {
-    landscape: [
-        8,
-        22,
-        20,
-    ],
-    portrait: [
-        15,
-        50,
-        35,
-    ],
+    landscape: {
+        place: 5,
+        name: 18,
+        start: 15,
+        time: 12,
+    },
+    portrait: {
+        place: 15,
+        name: 50,
+        start: 0,
+        time: 35,
+    },
 };
 
 const Component: React.SFC<Props> = ({ result, rotation }) => {
     const landscape = rotation === ScreenOrientation.Orientation.LANDSCAPE;
     const size = landscape ? SIZE.landscape : SIZE.portrait;
 
-    const overflowSize = size.reduce((a, b) => a + b, 0);
+    const overflowSize = Object.keys(size).map((k) => size[k]).reduce((a, b) => a + b, 0);
 
     return (
         <OLResultAnimation
@@ -55,11 +58,11 @@ const Component: React.SFC<Props> = ({ result, rotation }) => {
                 }}
             >
                 <Grid>
-                    <OLResultColumn size={size[0]}>
+                    <OLResultColumn size={size.place}>
                         <OLResultBadge place={result.place} />
                     </OLResultColumn>
 
-                    <OLResultColumn size={size[1]}>
+                    <OLResultColumn size={size.name}>
                         <OLResultName name={result.name} />
 
                         <OLResultClub club={result.club} />
@@ -67,11 +70,18 @@ const Component: React.SFC<Props> = ({ result, rotation }) => {
 
                     {
                         landscape &&
-                        result.parsedSplits.map((split) => {
+                        <OLResultColumn size={size.start}>
+                            <OLStartTime time={result.start} />
+                        </OLResultColumn>
+                    }
+
+                    {
+                        landscape &&
+                        result.parsedSplits.map((split, index) => {
                             return (
                                 <OLResultColumn
                                     size={overflowSize / result.parsedSplits.length}
-                                    key={`${split.name}:${result.name}`}
+                                    key={`${split.name}:${result.name}:${index}`}
                                     align="center"
                                 >
                                     <OLSplits split={split} />
@@ -82,7 +92,7 @@ const Component: React.SFC<Props> = ({ result, rotation }) => {
 
                     <OLResultColumn
                         align="flex-end"
-                        size={size[2]}
+                        size={size.time}
                     >
                         <OLResultTime
                             status={result.status}

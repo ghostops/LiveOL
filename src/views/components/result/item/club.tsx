@@ -8,7 +8,7 @@ interface Props {
 
 export const OLResultClub: React.SFC<Props> = ({ club }) => (
     <Text numberOfLines={1} style={{
-        color: COLORS.DARK,
+        color: 'grey',
         fontSize: UNIT,
     }}>
         {club}
