@@ -9,7 +9,8 @@
       "start": "Start",
       "time": "Time"
     },
-    "resultsFor": "Results for"
+    "resultsFor": "Results for",
+    "timerHint": "This is how it auto updates"
   },
   "competitions": {
     "classes": "Classes",

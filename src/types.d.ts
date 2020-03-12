@@ -25,7 +25,7 @@ interface ParsedSplit {
     timeplus: number;
 }
 
-interface Class {
+interface OLClass {
     className: string;
     hash: string;
     results: Result[];

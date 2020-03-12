@@ -9,8 +9,8 @@ const TURNED_ON = true;
 const PREFIX = 'CACHE:';
 
 export class Cache<T> {
-    key: string;
-    expiry: number = 3600;
+    public key: string;
+    public expiry: number = 3600;
 
     constructor(key: string, expiry?: number) {
         this.key = PREFIX + key;

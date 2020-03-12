@@ -14,24 +14,23 @@ interface DispatchProps {
 }
 
 interface StateProps {
-    results: Result[];
-    splits: SplitControl[];
+    olClass: OLClass;
 }
 
 type Props = OwnProps & DispatchProps & StateProps;
 
-const DataWrapper: React.SFC<Props> = (props) => {
-    const fetch = async () => props.getResults(
-        props.route.params.id,
-        props.route.params.className,
+const DataWrapper: React.SFC<Props> = ({ olClass, getResults, route, navigation }) => {
+    const fetch = async () => getResults(
+        route.params.id,
+        route.params.className,
     );
 
     React.useEffect(
         () => {
             fetch();
 
-            props.navigation.setOptions({
-                title: `${Lang.print('classes.resultsFor')}: ${props.route.params.className}`,
+            navigation.setOptions({
+                title: `${Lang.print('classes.resultsFor')}: ${route.params.className}`,
             });
 
             showToast();
@@ -41,8 +40,8 @@ const DataWrapper: React.SFC<Props> = (props) => {
 
     return (
         <Component
-            results={props.results}
-            splits={props.splits}
+            results={olClass.results}
+            splits={olClass.splitcontrols}
             refetch={fetch}
         />
     );
@@ -50,8 +49,7 @@ const DataWrapper: React.SFC<Props> = (props) => {
 
 const mapStateToProps = (state: AppState): StateProps => {
     return {
-        results: (!!state.api.results && state.api.results.results),
-        splits: (!!state.api.results && state.api.results.splitcontrols),
+        olClass: (!!state.api.results && state.api.results),
     };
 };
 

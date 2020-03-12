@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { COLORS } from 'util/const';
+import { COLORS, px } from 'util/const';
 import { connect } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Mappings } from './mappings';
@@ -39,7 +39,7 @@ const Component: React.SFC<StateProps> = ({ landscape }) => {
                         width: '65%',
                         alignItems: 'center',
                     },
-                    headerStatusBarHeight: landscape ? 30 : 50,
+                    headerStatusBarHeight: px(20),
                 }}
             >
                 {Object.keys(Mappings).map((key) => (

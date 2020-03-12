@@ -1,8 +1,10 @@
 import * as React from 'react';
+import { API_CACHES_EXPIRY } from 'store/stores/api';
+import { Lang } from 'lib/lang';
+import { OLRefetcher } from 'views/components/refetcher';
 import { ResultList } from 'views/components/result/list';
 import { UNIT } from 'util/const';
 import * as NB from 'native-base';
-import { Lang } from 'lib/lang';
 
 const {
     Container,
@@ -18,13 +20,18 @@ interface Props {
 
 export const OLResults: React.SFC<Props> = ({ refetch, results, splits }) => {
     return (
-        <ResultList
-            results={results}
-            splits={splits}
-            // cache is every 15 seconds, but poll a little more often
-            refetchTimeout={__DEV__ ? 999999999 : 10000}
-            refetch={refetch}
-            subText="club"
-        />
+        <>
+            <ResultList
+                results={results}
+                splits={splits}
+                refetch={refetch}
+            />
+
+            <OLRefetcher
+                interval={API_CACHES_EXPIRY.results}
+                refetch={refetch}
+                circle
+            />
+        </>
     );
 };

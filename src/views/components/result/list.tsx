@@ -25,33 +25,11 @@ const {
 interface Props {
     results: Result[];
     splits: SplitControl[];
-    subText: 'class' | 'club';
-    refetchTimeout: number;
     refetch: () => Promise<void>;
 }
 
 export const ResultList: React.SFC<Props> = (props) => {
     const [loading, setLoading] = React.useState(false);
-
-    let interval: NodeJS.Timeout;
-
-    React.useEffect(
-        () => {
-            startPoll();
-
-            return () => {
-                clearPoll();
-            };
-        },
-        [],
-    );
-
-    const poll = async () => {
-        await props.refetch();
-    };
-
-    const startPoll = () => interval = setInterval(poll, props.refetchTimeout);
-    const clearPoll = () => interval && clearInterval(interval);
 
     const renderResult = ({ item }) => {
         const result: Result = item;
@@ -75,7 +53,7 @@ export const ResultList: React.SFC<Props> = (props) => {
                     <RefreshControl
                         onRefresh={async () => {
                             setLoading(true);
-                            await poll();
+                            await props.refetch();
                             setLoading(false);
                         }}
                         refreshing={loading}

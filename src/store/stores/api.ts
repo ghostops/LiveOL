@@ -1,6 +1,7 @@
 
 import { Cache } from 'lib/cache';
 import * as API from 'lib/api';
+import ms from 'ms';
 
 const SET_COMPETITIONS = 'API:SET_COMPETITIONS';
 const SET_CLASSES = 'API:SET_CLASSES';
@@ -49,15 +50,22 @@ export function apiReducer(
 interface ICache {
     competitions: Cache<Comp[]>;
     competition: (id: number) => Cache<Classes>;
-    results: (id: string) => Cache<Class>;
+    results: (id: string) => Cache<OLClass>;
     lastPassings: (id: string) => Cache<Passing[]>;
 }
 
+export const API_CACHES_EXPIRY = {
+    competitions: ms('1 hour'),
+    competition: ms('30 minutes'),
+    results: ms('15 seconds'),
+    lastPassings: ms('15 seconds'),
+};
+
 export const API_CACHES: ICache = {
-    competitions: new Cache('visibleCompetitions', 60000),
-    competition: (id) => new Cache(`comp:${id}`, 3600000),
-    results: (id) => new Cache(`results:${id}`, 15000),
-    lastPassings: (id) => new Cache(`lastpassings:${id}`, 15000),
+    competitions: new Cache('visibleCompetitions', API_CACHES_EXPIRY.competitions),
+    competition: (id) => new Cache(`comp:${id}`, API_CACHES_EXPIRY.competition),
+    results: (id) => new Cache(`results:${id}`, API_CACHES_EXPIRY.results),
+    lastPassings: (id) => new Cache(`lastpassings:${id}`, API_CACHES_EXPIRY.lastPassings),
 };
 
 export const loadCompetitions = () => async (dispatch) => {
@@ -105,7 +113,7 @@ export const getCompetition = (id: number) => async (dispatch) => {
 export const getResults = (id: number, className: string) => async (dispatch) => {
     const cache = API_CACHES.results(`class:${id}:${className}`);
 
-    let results: Class = await cache.get();
+    let results: OLClass = await cache.get();
 
     if (!results) {
         results = await API.getClass(id, className);

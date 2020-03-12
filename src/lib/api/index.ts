@@ -1,7 +1,8 @@
 import { getSplitData } from 'views/components/result/helpers';
 
-const ROOT = 'https://liveol.larsendahl.se';
+// const ROOT = 'https://liveol.larsendahl.se';
 // const ROOT = 'http://localhost:3000';
+const ROOT = 'https://1285928f.ngrok.io';
 
 export const getComps = async (): Promise<Comp[]> => {
     const url = `${ROOT}/api.php?method=getcompetitions`;
@@ -30,7 +31,7 @@ export const getClasses = async (id: number): Promise<Classes> => {
 export const getClass = async (id: number, className: string): Promise<Class> => {
     const url = `${ROOT}/api.php?method=getclassresults&comp=${id}&class=${className}`;
 
-    let data: Class = await fetch(url).then((resp) => resp.json());
+    let data: OLClass = await fetch(url).then((resp) => resp.json());
 
     data = {
         ...data,

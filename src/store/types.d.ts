@@ -11,7 +11,7 @@ interface GeneralReducer {
 interface ApiReducer {
     competitions: Comp[];
     classes: Classes[];
-    results: Class;
+    results: OLClass;
     lastPassings: Passing[];
 }
 

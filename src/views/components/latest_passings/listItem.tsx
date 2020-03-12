@@ -36,23 +36,26 @@ export const OLLastPassingResult: React.SFC<Props> = ({ passing, landscape }) =>
                         flexDirection: 'row',
                     }}
                 >
-                    <View>
-                        <Text
-                            style={TEXT_STYLE}
-                        >
-                            {Lang.print('competitions.passings.class')}:
-                        </Text>
-                        <Text
-                            style={TEXT_STYLE}
-                        >
-                            {Lang.print('competitions.passings.name')}:
-                        </Text>
-                        <Text
-                            style={TEXT_STYLE}
-                        >
-                            {Lang.print('competitions.passings.passTime')}:
-                        </Text>
-                    </View>
+                    {
+                        !landscape &&
+                        <View>
+                            <Text
+                                style={TEXT_STYLE}
+                            >
+                                {Lang.print('competitions.passings.class')}:
+                            </Text>
+                            <Text
+                                style={TEXT_STYLE}
+                            >
+                                {Lang.print('competitions.passings.name')}:
+                            </Text>
+                            <Text
+                                style={TEXT_STYLE}
+                            >
+                                {Lang.print('competitions.passings.passTime')}:
+                            </Text>
+                        </View>
+                    }
                     <View
                         style={{
                             flex: 1,

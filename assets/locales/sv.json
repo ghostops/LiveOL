@@ -9,7 +9,8 @@
       "start": "Start",
       "time": "Tid"
     },
-    "resultsFor": "Resultat för"
+    "resultsFor": "Resultat för",
+    "timerHint": "Hur ofta listan auto uppdateras"
   },
   "competitions": {
     "classes": "Klasser",

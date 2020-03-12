@@ -9,3 +9,4 @@ npm-debug.*
 website/.ci/cred.json
 build
 /.phraseapp.yml
+.secret
