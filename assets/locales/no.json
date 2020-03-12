@@ -59,8 +59,7 @@
     "version": "Gjeldende version"
   },
   "promotions": {
-    "didYouKnow": "Visste du?",
-    "radioResults": "Du kan klikke på en deltager og få eventuelle mellomtider for løpet!"
+    "didYouKnow": "Visste du?"
   },
   "status": {
     "long": [

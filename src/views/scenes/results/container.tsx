@@ -5,6 +5,7 @@ import { NavigationProp } from '@react-navigation/native';
 import { getResults } from 'store/stores/api';
 import { RouterProps } from 'lib/nav/routes';
 import { Lang } from 'lib/lang';
+import { showToast } from 'lib/toasts/rotate';
 
 interface OwnProps extends RouterProps<{ id, className }> {}
 
@@ -32,6 +33,8 @@ const DataWrapper: React.SFC<Props> = (props) => {
             props.navigation.setOptions({
                 title: `${Lang.print('classes.resultsFor')}: ${props.route.params.className}`,
             });
+
+            showToast();
         },
         [],
     );
