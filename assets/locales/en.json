@@ -3,6 +3,12 @@
   "classes": {
     "autoUpdate": "Turn on live updating results",
     "autoUpdateEnabled": "Live updating results enabled",
+    "header": {
+      "name": "Name",
+      "place": "#",
+      "start": "Start",
+      "time": "Time"
+    },
     "resultsFor": "Results for"
   },
   "competitions": {

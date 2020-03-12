@@ -3,6 +3,12 @@
   "classes": {
     "autoUpdate": "Automatisk uppdatering",
     "autoUpdateEnabled": "Automatiska uppdateringar är aktivt",
+    "header": {
+      "name": "Namn",
+      "place": "#",
+      "start": "Start",
+      "time": "Tid"
+    },
     "resultsFor": "Resultat för"
   },
   "competitions": {
