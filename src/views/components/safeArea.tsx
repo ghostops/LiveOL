@@ -24,6 +24,7 @@ const Component: React.SFC<StateProps> = ({ children, rotation }) => {
                     ? insets.left
                     : 0
                 ),
+                flex: 1,
             }}
         >
             {children}

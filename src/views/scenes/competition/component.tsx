@@ -1,6 +1,8 @@
 import * as React from 'react';
+import { fontPx, px } from 'util/const';
 import { OLButton } from 'views/components/button';
-import { fontPx } from 'util/const';
+import { OLSafeAreaView } from 'views/components/safeArea';
+import { ScrollView, FlatList } from 'react-native-gesture-handler';
 import * as NB from 'native-base';
 import Lang from 'lib/lang';
 
@@ -24,13 +26,15 @@ interface Props {
     goToClass: (name: string) => () => void;
 }
 
-export class OLCompetition extends React.PureComponent<Props> {
-    renderClass = ({ className }) => {
+export const OLCompetition: React.SFC<Props> = (props) => {
+    const renderClass = ({ item }) => {
+        const { className }: Classes = item;
+
         return (
             <ListItem
                 key={className}
                 style={{ marginLeft: 0 }}
-                onPress={this.props.goToClass(className)}
+                onPress={props.goToClass(className)}
             >
                 <Text style={{
                     fontSize: fontPx(16),
@@ -39,91 +43,85 @@ export class OLCompetition extends React.PureComponent<Props> {
                 </Text>
             </ListItem>
         );
-    }
+    };
 
-    renderInner = () => {
-        return (
-            <View style={{ padding: 15 }}>
-                <Card>
-                    <CardItem header>
-                        <Title style={{
-                            fontSize: fontPx(18),
-                            color: 'black',
-                        }}>
-                            {this.props.competition.name}
-                        </Title>
-                    </CardItem>
+    const renderListHeader = () => (
+        <>
+            <Card style={{ marginTop: px(15) }}>
+                <CardItem header>
+                    <Title style={{
+                        fontSize: fontPx(18),
+                        color: 'black',
+                    }}>
+                        {props.competition.name}
+                    </Title>
+                </CardItem>
 
-                    <CardItem>
-                        <Body>
-                            <Text style={{
-                                fontSize: fontPx(16),
-                            }}>
-                                {Lang.print('competitions.organizedBy')}:
-                                {' '}
-                                {this.props.competition.organizer}
-                            </Text>
-                        </Body>
-                    </CardItem>
-
-                    <CardItem footer>
+                <CardItem>
+                    <Body>
                         <Text style={{
                             fontSize: fontPx(16),
                         }}>
-                            {this.props.competition.date}
+                            {Lang.print('competitions.organizedBy')}:
+                            {' '}
+                            {props.competition.organizer}
                         </Text>
-                    </CardItem>
-                </Card>
+                    </Body>
+                </CardItem>
 
-                <View style={{
-                    marginVertical: 15,
-                    flexDirection: 'row',
-                }}>
-                    <View style={{ flex: 1 }}>
-                        <Title style={{
-                            textAlign: 'left',
-                            fontSize: fontPx(20),
-                            color: 'black',
-                        }}>
-                            {Lang.print('competitions.classes')}
-                        </Title>
-                    </View>
+                <CardItem footer>
+                    <Text style={{
+                        fontSize: fontPx(16),
+                    }}>
+                        {props.competition.date}
+                    </Text>
+                </CardItem>
+            </Card>
 
-                    <View>
-                        <OLButton
-                            small
-                            onPress={this.props.goToLastPassings}
-                        >
-                            {Lang.print('competitions.lastPassings')}
-                        </OLButton>
-                    </View>
+            <View style={{
+                marginVertical: 15,
+                flexDirection: 'row',
+            }}>
+                <View style={{ flex: 1 }}>
+                    <Title style={{
+                        textAlign: 'left',
+                        fontSize: fontPx(20),
+                        color: 'black',
+                    }}>
+                        {Lang.print('competitions.classes')}
+                    </Title>
                 </View>
 
-                {
-                    !!this.props.classes &&
-                    <List style={{
-                        backgroundColor: '#FFF',
-                        borderRadius: 4,
-                    }}>
-                        {
-                            this.props.classes.length < 1 ?
-                            (
-                                <Text style={{
-                                    textAlign: 'center',
-                                    paddingVertical: 10,
-                                    fontSize: fontPx(14),
-                                }}>
-                                    {Lang.print('competitions.noClasses')}
-                                </Text>
-                            ) : this.props.classes.map(this.renderClass)
-                        }
-                    </List>
-                }
+                <View>
+                    <OLButton
+                        small
+                        onPress={props.goToLastPassings}
+                    >
+                        {Lang.print('competitions.lastPassings')}
+                    </OLButton>
+                </View>
             </View>
-        );
-    }
+        </>
+    );
 
-    render() {
-        return this.renderInner();
-    }
-}
+    return (
+        <OLSafeAreaView>
+            <FlatList
+                data={props.classes}
+                renderItem={renderClass}
+                ListEmptyComponent={(
+                    <Text style={{
+                        textAlign: 'center',
+                        paddingVertical: 10,
+                        fontSize: fontPx(14),
+                    }}>
+                        {Lang.print('competitions.noClasses')}
+                    </Text>
+                )}
+                ListHeaderComponent={renderListHeader()}
+                keyExtractor={(item: Classes) => item.className}
+                ListFooterComponent={<View style={{ height: px(45) }} />}
+            />
+        </OLSafeAreaView>
+    );
+};

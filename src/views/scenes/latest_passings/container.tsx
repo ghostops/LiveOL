@@ -6,11 +6,13 @@ import { NavigationRoute } from 'react-navigation';
 import { OLPassings as Component } from './component';
 import { Routes, RouterProps } from 'lib/nav/routes';
 import Lang from 'lib/lang';
+import { ScreenOrientation } from 'expo';
 
 interface OwnProps extends RouterProps<{ id, title }> {}
 
 interface StateProps {
     passings: Passing[];
+    landscape: boolean;
 }
 
 interface DispatchProps {
@@ -37,14 +39,14 @@ const DataWrapper: React.SFC<Props> = (props) => {
         <Component
             passings={props.passings}
             refresh={refresh}
+            landscape={props.landscape}
         />
     );
 };
 
 const mapStateToProps = (state: AppState, props: Props): StateProps => ({
-    // competition: state.api.competitions.find((c) => c.id === props.route.params.id),
-    // classes: state.api.classes,
     passings: state.api.lastPassings,
+    landscape: state.general.rotation === ScreenOrientation.Orientation.LANDSCAPE,
 });
 
 const mapDispatchToProps = {

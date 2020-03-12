@@ -1,6 +1,6 @@
 import * as React from 'react';
+import { px, fontPx } from 'util/const';
 import { TextStyle } from 'react-native';
-import { UNIT } from 'util/const';
 import * as NB from 'native-base';
 import Lang from 'lib/lang';
 
@@ -16,16 +16,20 @@ const {
 
 interface Props {
     passing: Passing;
+    landscape?: boolean;
 }
 
 const TEXT_STYLE: TextStyle = {
-    fontSize: UNIT,
-    paddingVertical: UNIT / 2,
+    fontSize: fontPx(16),
+    paddingVertical: px(8),
 };
 
-export const OLLastPassingResult: React.SFC<Props> = ({ passing }) => {
+export const OLLastPassingResult: React.SFC<Props> = ({ passing, landscape }) => {
     return (
-        <Card key={passing.time + passing.runnerName}>
+        <Card
+            key={passing.time + passing.runnerName}
+            style={{ flex: 1 }}
+        >
             <CardItem>
                 <Body
                     style={{
@@ -52,7 +56,7 @@ export const OLLastPassingResult: React.SFC<Props> = ({ passing }) => {
                     <View
                         style={{
                             flex: 1,
-                            paddingLeft: UNIT,
+                            paddingLeft: landscape ? px(8) : px(16),
                         }}
                     >
                         <Text
@@ -62,6 +66,7 @@ export const OLLastPassingResult: React.SFC<Props> = ({ passing }) => {
                         </Text>
                         <Text
                             style={TEXT_STYLE}
+                            numberOfLines={1}
                         >
                             {passing.runnerName}
                         </Text>
