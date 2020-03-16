@@ -10,3 +10,4 @@ website/.ci/cred.json
 app/build
 .phraseapp.yml
 .secret
+server/build
