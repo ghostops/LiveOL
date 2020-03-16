@@ -1,14 +1,14 @@
-import { GraphQLObjectType, GraphQLString } from 'graphql';
+import { GraphQLObjectType, GraphQLString, GraphQLInt } from 'graphql';
 import { LiveresultatApi } from 'lib/api/types';
 
-export interface OLCompetition {
+export interface IOLCompetition {
     id: number;
     name: string;
     organizer: string;
     date: string;
 }
 
-export const marshallCompetition = (res: LiveresultatApi.competition): OLCompetition => {
+export const marshallCompetition = (res: LiveresultatApi.competition): IOLCompetition => {
     return {
         id: res.id,
         name: res.name,
@@ -22,19 +22,51 @@ export const OLCompetition = new GraphQLObjectType({
     fields: () => ({
         id: {
             type: GraphQLString,
-            resolve: (comp: OLCompetition) => comp.id,
+            resolve: (comp: IOLCompetition) => comp.id,
         },
         name: {
             type: GraphQLString,
-            resolve: (comp: OLCompetition) => comp.name,
+            resolve: (comp: IOLCompetition) => comp.name,
         },
         organizer: {
             type: GraphQLString,
-            resolve: (comp: OLCompetition) => comp.organizer,
+            resolve: (comp: IOLCompetition) => comp.organizer,
         },
         date: {
             type: GraphQLString,
-            resolve: (comp: OLCompetition) => comp.date,
+            resolve: (comp: IOLCompetition) => comp.date,
+        },
+    }),
+});
+
+export interface IOLClass {
+    id: string;
+    name: string;
+    competition: number;
+}
+
+export const marshallClass = (id: number) => (res: LiveresultatApi._class): IOLClass => {
+    return {
+        id: `${id}:${res.className}`,
+        competition: id,
+        name: res.className,
+    };
+}
+
+export const OLClass = new GraphQLObjectType({
+    name: 'OLClass',
+    fields: () => ({
+        id: {
+            type: GraphQLString,
+            resolve: (comp: IOLClass) => comp.id,
+        },
+        competition: {
+            type: GraphQLInt,
+            resolve: (comp: IOLClass) => comp.competition,
+        },
+        name: {
+            type: GraphQLString,
+            resolve: (comp: IOLClass) => comp.name,
         },
     }),
 });

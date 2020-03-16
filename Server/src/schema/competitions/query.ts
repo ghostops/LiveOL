@@ -1,4 +1,11 @@
-import { OLCompetition, marshallCompetition } from 'schema/competitions';
+import {
+    OLCompetition,
+    marshallCompetition,
+    marshallClass,
+    OLClass,
+    IOLCompetition,
+    IOLClass,
+} from 'schema/competitions';
 import { GraphQLObjectType, GraphQLList, GraphQLInt, GraphQLString } from 'graphql';
 import { GQLContext } from 'lib/server';
 
@@ -7,7 +14,7 @@ export const CompetitionsQuery = new GraphQLObjectType({
     fields: () => ({
         getAllCompetitions: {
             type: GraphQLList(OLCompetition),
-            resolve: async (_, args, { Api }: GQLContext): Promise<OLCompetition[]> => {
+            resolve: async (_, args, { Api }: GQLContext): Promise<IOLCompetition[]> => {
                 const { competitions } = await Api.getcompetitions();
                 return competitions.map(marshallCompetition);
             },
@@ -19,7 +26,7 @@ export const CompetitionsQuery = new GraphQLObjectType({
                 },
             },
             type: OLCompetition,
-            resolve: async (_, args, { Api }: GQLContext): Promise<OLCompetition> => {
+            resolve: async (_, args, { Api }: GQLContext): Promise<IOLCompetition> => {
                 if (!args.competitionId) {
                     throw new Error('No competition id present');
                 }
@@ -34,19 +41,16 @@ export const CompetitionsQuery = new GraphQLObjectType({
                 competitionId: {
                     type: GraphQLInt,
                 },
-                className: {
-                    type: GraphQLString,
-                },
             },
-            type: OLCompetition,
-            resolve: async (_, args, { Api }: GQLContext): Promise<OLCompetition> => {
-                if (!args.competitionId || !args.className) {
+            type: GraphQLList(OLClass),
+            resolve: async (_, args, { Api }: GQLContext): Promise<IOLClass[]> => {
+                if (!args.competitionId) {
                     throw new Error('No competition id and/or class name present');
                 }
 
-                const competition = await Api.getcompetition(args.competitionId);
+                const { classes } = await Api.getclasses(args.competitionId);
 
-                return marshallCompetition(competition);
+                return classes.map(marshallClass(args.competitionId));
             },
         }
     }),
