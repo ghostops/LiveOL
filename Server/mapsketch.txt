@@ -1,0 +1,109 @@
+// getallcomps
+[{
+    "id": 17075,
+    "name": "ZHL2020",
+    "organizer": "PHK",
+    "date": "2020-08-09",
+    "timediff": 0
+} ... ]
+
+// getcompinfo
+{
+	"id": 17075,
+	"name": "ZHL2020",
+	"organizer": "PHK",
+	"date": "2020-08-09",
+	"timediff": 0,
+	"timezone": "",
+	"isPublic": 1
+}
+
+// getclasses
+{
+	"status": "OK",
+	"classes": [{
+		"className": "D"
+	}, {
+		"className": "DE"
+	}, {
+		"className": "DK"
+	}, {
+		"className": "H"
+	}, {
+		"className": "HE"
+	}, {
+		"className": "HK"
+	}, {
+		"className": "P"
+	}],
+	"hash": "f4652f902bbeb30f9934e184eebf7c52"
+}
+
+// getclass
+{
+	"status": "OK",
+	"className": "M17-1",
+	"splitcontrols": [{
+		"code": 1052,
+		"name": "Pre Finnish"
+	}, {
+		"code": 1054,
+		"name": "Pre Finnish"
+	}, {
+		"code": 1038,
+		"name": "Radio"
+	}],
+	"results": [{
+		"place": "1",
+		"name": "Petter Erlandsson",
+		"club": "Sweden 1",
+		"result": "29:14",
+		"status": 0,
+		"timeplus": "+00:00",
+		"progress": 100,
+		"splits": {
+			"1052": 165300,
+			"1052_status": 0,
+			"1052_place": 1,
+			"1052_timeplus": 0,
+			"1054": 161500,
+			"1054_status": 0,
+			"1054_place": 1,
+			"1054_timeplus": 0,
+			"1038": 133200,
+			"1038_status": 0,
+			"1038_place": 1,
+			"1038_timeplus": 0
+		},
+		"start": 3420000
+	} ... ],
+	"hash": "ea04af73dd35ba35692cb057b384e39e"
+}
+
+// lastpassings
+{
+	"status": "OK",
+	"passings": [{
+		"passtime": "13:14:08",
+		"runnerName": "Kasim Karatas",
+		"class": "M20-3",
+		"control": 1000,
+		"controlName": "",
+		"time": "felst."
+	}, {
+		"passtime": "13:12:39",
+		"runnerName": "Nazlican Duzce",
+		"class": "W21-2",
+		"control": 1052,
+		"controlName": "Pre Finnish",
+		"time": "51:56"
+	}, {
+		"passtime": "13:12:39",
+		"runnerName": "Nazlican Duzce",
+		"class": "W21-2",
+		"control": 1000,
+		"controlName": "",
+		"time": "felst."
+	}],
+	"hash": "58c5f82e0c5e8df04af006a81fc30297"
+}

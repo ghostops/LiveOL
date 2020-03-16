@@ -11,3 +11,4 @@ app/build
 .phraseapp.yml
 .secret
 server/build
+yarn-error.log
