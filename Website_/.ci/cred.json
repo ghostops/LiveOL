@@ -1,7 +1,0 @@
-{
-    "host": "ghst.co",
-    "port": 1337,
-    "username": "ghost",
-    "localDir": "./",
-    "remoteDir": "/var/www/liveol.larsendahl.se/public"
-}
