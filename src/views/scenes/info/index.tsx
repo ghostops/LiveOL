@@ -3,10 +3,11 @@ import * as NB from 'native-base';
 import { NavigationProp } from '@react-navigation/native';
 import { OLButton } from 'views/components/button';
 import { Platform, AsyncStorage, Alert, TouchableOpacity, View, Image } from 'react-native';
-import { Updates, Linking } from 'expo';
+import { Updates, Linking, ScreenOrientation } from 'expo';
 import { UNIT, VERSION, APP_VERSION, ANDROID_VERSION_CODE } from 'util/const';
 import { Lang } from 'lib/lang';
 import { OLFlag } from 'views/components/lang/flag';
+import { connect } from 'react-redux';
 
 const {
     Container,
@@ -17,9 +18,15 @@ const {
     Body,
 } = NB;
 
-interface Props {
+interface OwnProps {
     navigation: NavigationProp<any, any>;
 }
+
+interface StateProps {
+    landscape: boolean;
+}
+
+type Props = StateProps & OwnProps;
 
 interface State {
     canReview: boolean;
@@ -27,33 +34,16 @@ interface State {
 
 const PHRASEAPP_IMAGE = require('../../../../assets/images/phraseapp.png');
 
-class AppReview {
-    private key: string = 'OL:APP:REVIEW';
-
-    public canReview = (): boolean =>
-        false // StoreReview.isSupported() || Platform.OS === 'android';
-
-    public hasReviewed = async (): Promise<boolean> => {
-        const saved = await AsyncStorage.getItem(this.key) || null;
-        return (!!saved && saved === 'true');
-    }
-
-    public prompt = async (): Promise<void> => {
-        // StoreReview.requestReview();
-        // return await AsyncStorage.setItem(this.key, 'true');
-    }
-}
-
-export class OLInfo extends React.PureComponent<Props, State> {
-    static navigationOptions = ({ navigation }) => ({
-        title: Lang.print('info.title'),
-    })
-
-    review: AppReview = new AppReview();
-
+class Component extends React.PureComponent<Props, State> {
     state: State = {
         canReview: false,
     };
+
+    componentDidMount() {
+        this.props.navigation.setOptions({
+            title: Lang.print('info.title'),
+        });
+    }
 
     openAppStore = async () => {
         Linking.openURL(
@@ -110,10 +100,6 @@ export class OLInfo extends React.PureComponent<Props, State> {
     contact = () => Linking.openURL('https://goo.gl/forms/fFmS1WGVUU1Wu0c03');
 
     BUTTONS = [{
-        text: Lang.print('info.rate'),
-        onPress: this.review.prompt,
-        hidden: !this.state.canReview,
-    }, {
         text: Lang.print('info.update.check'),
         onPress: this.update,
     }, {
@@ -138,7 +124,7 @@ export class OLInfo extends React.PureComponent<Props, State> {
     }
 
     renderGeneralCard = () => (
-        <Card style={{ paddingVertical: UNIT }}>
+        <Card style={{ paddingVertical: UNIT, flex: 1, }}>
             <CardItem>
                 <Body>
                     {
@@ -160,7 +146,7 @@ export class OLInfo extends React.PureComponent<Props, State> {
     )
 
     renderActionCard = () => (
-        <Card style={{ paddingVertical: UNIT }}>
+        <Card style={{ paddingVertical: UNIT, flex: 1 }}>
             <CardItem>
                 <Body>
                     <TouchableOpacity
@@ -178,8 +164,6 @@ export class OLInfo extends React.PureComponent<Props, State> {
 
                     {
                         this.BUTTONS.map((button, index) => {
-                            if (button.hidden) return null;
-
                             return (
                                 <OLButton
                                     full
@@ -286,9 +270,22 @@ export class OLInfo extends React.PureComponent<Props, State> {
                         padding: 10,
                     }}
                 >
-                    {this.renderGeneralCard()}
-                    {this.renderActionCard()}
-                    {this.renderCreditCard()}
+                    <View
+                        style={{
+                            flexDirection: (
+                                this.props.landscape
+                                ? 'row'
+                                : 'column'
+                            ),
+                        }}
+                    >
+                        {this.renderGeneralCard()}
+                        {this.renderActionCard()}
+                    </View>
+
+                    <View>
+                        {this.renderCreditCard()}
+                    </View>
 
                     <View style={{ height: 25 }} />
                 </Content>
@@ -296,3 +293,9 @@ export class OLInfo extends React.PureComponent<Props, State> {
         );
     }
 }
+
+const mapStateToProps = (state: AppState): StateProps => ({
+    landscape: state.general.rotation === ScreenOrientation.Orientation.LANDSCAPE,
+});
+
+export const OLInfo = connect(mapStateToProps, null)(Component);

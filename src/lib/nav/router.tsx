@@ -7,6 +7,7 @@ import { NavigationContainer, TypedNavigator, ParamListBase } from '@react-navig
 import { Routes } from './routes';
 import { Lang } from 'lib/lang';
 import { ScreenOrientation } from 'expo';
+import { xtraSpace, hasNotch } from 'util/hasNotch';
 
 interface StateProps {
     landscape: boolean;
@@ -39,7 +40,7 @@ const Component: React.SFC<StateProps> = ({ landscape }) => {
                         width: '65%',
                         alignItems: 'center',
                     },
-                    headerStatusBarHeight: px(20),
+                    headerStatusBarHeight: px(20) + (hasNotch && !landscape ? xtraSpace : 0),
                 }}
             >
                 {Object.keys(Mappings).map((key) => (
