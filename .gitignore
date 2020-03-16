@@ -7,6 +7,6 @@ npm-debug.*
 *.mobileprovision
 .DS_Store
 website/.ci/cred.json
-build
-/.phraseapp.yml
+app/build
+.phraseapp.yml
 .secret
