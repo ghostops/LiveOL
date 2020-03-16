@@ -5,7 +5,7 @@ export interface IOLCompetition {
     id: number;
     name: string;
     organizer: string;
-    date: string;
+    date: UTCTime;
 }
 
 export const marshallCompetition = (res: LiveresultatApi.competition): IOLCompetition => {
@@ -21,7 +21,7 @@ export const OLCompetition = new GraphQLObjectType({
     name: 'OLCompetition',
     fields: () => ({
         id: {
-            type: GraphQLString,
+            type: GraphQLInt,
             resolve: (comp: IOLCompetition) => comp.id,
         },
         name: {

@@ -26,7 +26,7 @@ export declare namespace LiveresultatApi {
 
     export interface getclassresults extends hashed {
         className: string;
-        splitControlls: splits[];
+        splitControlls: split[];
         results: result[];
     }
 
@@ -42,7 +42,7 @@ export declare namespace LiveresultatApi {
         splits: Record<string, number>;
     }
 
-    export interface splits {
+    export interface split {
         code: number;
         name: string;
     }
