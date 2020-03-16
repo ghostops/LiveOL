@@ -1,6 +1,6 @@
 export declare namespace LiveresultatApi {
     export interface hashed {
-        last_hash: string;
+        hash: string;
         status: 'OK' | 'NOT MODIFIED';
     }
 
@@ -22,5 +22,41 @@ export declare namespace LiveresultatApi {
 
     export interface _class {
         className: string;
+    }
+
+    export interface getclassresults extends hashed {
+        className: string;
+        splitControlls: splits[];
+        results: result[];
+    }
+
+    export interface result {
+        place: string;
+        name: string;
+        club: string;
+        result: string;
+        status: string;
+        timeplus: string;
+        progress: number;
+        start: number;
+        splits: Record<string, number>;
+    }
+
+    export interface splits {
+        code: number;
+        name: string;
+    }
+
+    export interface lastpassings extends hashed {
+        passings: passing[];
+    }
+
+    export interface passing {
+        passtime: string;
+		runnerName: string;
+		class: string;
+		control: number;
+		controlName: string;
+		time: string;
     }
 }

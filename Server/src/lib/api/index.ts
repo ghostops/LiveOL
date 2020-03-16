@@ -35,6 +35,20 @@ export class APIClient {
             '30 minutes',
         );
 
+    public getclassresults = async (id: number, _class: string): Promise<LiveresultatApi.getclassresults> =>
+        this.cachedRequest(
+            this.client.get(`${this.root}/api.php?method=getclassresults&comp=${id}&class=${_class}`),
+            `getclassresults:${id}:${_class}`,
+            '15 seconds',
+        );
+
+    public getlastpassings = async (id: number): Promise<LiveresultatApi.lastpassings> =>
+        this.cachedRequest(
+            this.client.get(`${this.root}/api.php?method=getlastpassings&comp=${id}`),
+            `getlastpassings:${id}`,
+            '15 seconds',
+        );
+
     private cachedRequest = async (
         request: Promise<AxiosResponse<any>>,
         key: string,
