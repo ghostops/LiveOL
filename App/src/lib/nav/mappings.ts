@@ -1,9 +1,7 @@
-import { OLClasses } from '../../views/scenes/classes';
-import { OLClub } from '../../views/scenes/club';
 import { OLCompetition } from '../../views/scenes/competition/container';
 import { OLHome } from '../../views/scenes/home/container';
 import { OLInfo } from '../../views/scenes/info';
-import { OLPassings } from '../../views/scenes/latest_passings/container';
+import { OLPassings } from '../../views/scenes/last_passings/container';
 import { Routes } from './routes';
 import { OLResults } from 'views/scenes/results/container';
 
@@ -13,7 +11,4 @@ export const Mappings = {
     [Routes.passings]: OLPassings,
     [Routes.info]: OLInfo,
     [Routes.results]: OLResults,
-
-    // [Routes.classes]: OLClasses,
-    // [Routes.club]: OLClub,
 };

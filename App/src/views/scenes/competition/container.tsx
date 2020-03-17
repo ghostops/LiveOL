@@ -17,23 +17,13 @@ import { OLLoading } from 'views/components/loading';
 
 interface OwnProps extends RouterProps<{ id, title }> {}
 
-interface StateProps {
-    classes: Classes[];
-}
-
-interface DispatchProps {
-    getCompetition: (id: number) => void;
-}
-
-type Props = StateProps & OwnProps & DispatchProps;
+type Props = OwnProps;
 
 const DataWrapper: React.SFC<Props> = (props) => {
     const competitionId: number = props.route.params.id;
 
     React.useEffect(
         () => {
-            props.getCompetition(props.route.params.id);
-
             props.navigation.setOptions({
                 title: props.route.params.title,
             });
@@ -75,12 +65,4 @@ const DataWrapper: React.SFC<Props> = (props) => {
     );
 };
 
-const mapStateToProps = (state: AppState, props: Props): StateProps => ({
-    classes: state.api.classes,
-});
-
-const mapDispatchToProps = {
-    getCompetition,
-};
-
-export const OLCompetition = connect(mapStateToProps, mapDispatchToProps)(DataWrapper);
+export const OLCompetition = connect(null, null)(DataWrapper);
