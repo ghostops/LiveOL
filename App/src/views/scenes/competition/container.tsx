@@ -6,11 +6,18 @@ import { NavigationRoute } from 'react-navigation';
 import { OLCompetition as Component } from './component';
 import { Routes, RouterProps } from 'lib/nav/routes';
 import { Lang } from 'lib/lang';
+import { useQuery } from '@apollo/react-hooks';
+import { GetCompetition, GetCompetitionVariables } from 'lib/graphql/queries/types/GetCompetition';
+import { GET_COMPETITION } from 'lib/graphql/queries/competitions';
+import { OLError } from 'views/components/error';
+import { Competition } from 'lib/graphql/fragments/types/Competition';
+import { Class } from 'lib/graphql/fragments/types/Class';
+import * as _ from 'lodash';
+import { OLLoading } from 'views/components/loading';
 
 interface OwnProps extends RouterProps<{ id, title }> {}
 
 interface StateProps {
-    competition: Comp;
     classes: Classes[];
 }
 
@@ -21,6 +28,8 @@ interface DispatchProps {
 type Props = StateProps & OwnProps & DispatchProps;
 
 const DataWrapper: React.SFC<Props> = (props) => {
+    const competitionId: number = props.route.params.id;
+
     React.useEffect(
         () => {
             props.getCompetition(props.route.params.id);
@@ -32,15 +41,27 @@ const DataWrapper: React.SFC<Props> = (props) => {
         [],
     );
 
+    const { data, loading, error } =
+        useQuery<GetCompetition, GetCompetitionVariables>(
+            GET_COMPETITION,
+            { variables: { competitionId } },
+        );
+
+    if (error) return <OLError error={error} />;
+
+    const competition: Competition = _.get(data, 'competitions.getCompetition', null);
+    const classes: Class[] = _.get(data, 'competitions.getCompetitionClasses', null);
+
     return (
         <Component
-            competition={props.competition}
-            classes={props.classes}
+            loading={loading}
+            competition={competition}
+            classes={classes}
 
             goToLastPassings={() => {
                 props.navigation.navigate(Routes.passings, {
                     id: props.route.params.id,
-                    title: props.competition.name,
+                    title: competition.name,
                 });
             }}
 
@@ -55,7 +76,6 @@ const DataWrapper: React.SFC<Props> = (props) => {
 };
 
 const mapStateToProps = (state: AppState, props: Props): StateProps => ({
-    competition: state.api.competitions.find((c) => c.id === props.route.params.id),
     classes: state.api.classes,
 });
 

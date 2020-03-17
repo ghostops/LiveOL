@@ -8,3 +8,11 @@ export const CompetitionFragment = gql`
         date
     }
 `;
+
+export const ClassFragment = gql`
+    fragment Class on OLClass {
+        id
+        competition
+        name
+    }
+`;

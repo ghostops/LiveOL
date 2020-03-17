@@ -15,6 +15,11 @@ export const today = () => {
     return output;
 };
 
+export const datesAreOnSameDay = (first: Date, second: Date) =>
+    first.getFullYear() === second.getFullYear() &&
+    first.getMonth() === second.getMonth() &&
+    first.getDate() === second.getDate();
+
 export const timestampToObject = (time: number) => {
     const hours = Math.floor(time / 360000);
     const minutes = Math.floor((time - hours * 360000) / 6000);

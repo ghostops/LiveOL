@@ -1,4 +1,5 @@
 import * as React from 'react';
+import _ from 'lodash';
 import { ALL_COMPETITIONS } from 'lib/graphql/queries/competitions';
 import { AllCompetitions } from 'lib/graphql/queries/types/AllCompetitions';
 import { Competition } from 'lib/graphql/fragments/types/Competition';
@@ -9,9 +10,8 @@ import { OLError } from 'views/components/error';
 import { OLHome as Component } from './component';
 import { Right, Left } from './header';
 import { Routes } from 'lib/nav/routes';
-import { today } from 'util/date';
+import { today, datesAreOnSameDay } from 'util/date';
 import { useQuery } from '@apollo/react-hooks';
-import * as _ from 'lodash';
 import * as Actions from './store';
 
 interface OwnProps {
@@ -52,18 +52,20 @@ const DataWrapper: React.SFC<Props> = (props) => {
         <Component
             loading={loading}
             competitions={props.searchResults || competitions}
+            openSearch={() => props.setSearching(true)}
+            searching={props.searching}
+
             todaysCompetitions={(
                 (competitions || [])
-                    .filter((comp) => today() === comp.date)
+                    .filter((comp) => datesAreOnSameDay(new Date(comp.date), new Date()))
             )}
+
             onCompetitionPress={(competition) => {
                 props.navigation.navigate(Routes.competition, {
                     id: competition.id,
                     title: competition.name,
                 });
             }}
-            openSearch={() => props.setSearching(true)}
-            searching={props.searching}
         />
     );
 };

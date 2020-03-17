@@ -2,7 +2,7 @@ import * as React from 'react';
 import { View, Text } from 'native-base';
 import { ApolloError } from 'apollo-boost';
 
-export const OLError: React.SFC<{ error: ApolloError }> = ({ error }) => (
+export const OLError: React.SFC<{ error?: ApolloError }> = ({ error }) => (
     <View
         style={{
             flex: 1,

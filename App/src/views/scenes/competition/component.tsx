@@ -1,10 +1,13 @@
 import * as React from 'react';
+import { Class } from 'lib/graphql/fragments/types/Class';
+import { Competition } from 'lib/graphql/fragments/types/Competition';
 import { fontPx, px } from 'util/const';
+import { Lang } from 'lib/lang';
 import { OLButton } from 'views/components/button';
+import { OLLoading } from 'views/components/loading';
 import { OLSafeAreaView } from 'views/components/safeArea';
 import { ScrollView, FlatList } from 'react-native-gesture-handler';
 import * as NB from 'native-base';
-import { Lang } from 'lib/lang';
 
 const {
     Container,
@@ -20,26 +23,27 @@ const {
 } = NB;
 
 interface Props {
-    competition: Comp;
-    classes: Classes[] | null;
+    loading: boolean;
+    competition: Competition;
+    classes: Class[] | null;
     goToLastPassings: () => void;
     goToClass: (name: string) => () => void;
 }
 
 export const OLCompetition: React.SFC<Props> = (props) => {
     const renderClass = ({ item }) => {
-        const { className }: Classes = item;
+        const { name }: Class = item;
 
         return (
             <ListItem
-                key={className}
+                key={name}
                 style={{ marginLeft: 0 }}
-                onPress={props.goToClass(className)}
+                onPress={props.goToClass(name)}
             >
                 <Text style={{
                     fontSize: fontPx(16),
                 }}>
-                    {className}
+                    {name}
                 </Text>
             </ListItem>
         );
@@ -104,6 +108,10 @@ export const OLCompetition: React.SFC<Props> = (props) => {
         </>
     );
 
+    if (props.loading) {
+        return <OLLoading />;
+    }
+
     return (
         <OLSafeAreaView>
             <FlatList
@@ -119,7 +127,7 @@ export const OLCompetition: React.SFC<Props> = (props) => {
                     </Text>
                 )}
                 ListHeaderComponent={renderListHeader()}
-                keyExtractor={(item: Classes) => item.className}
+                keyExtractor={(item: Class) => item.id}
                 ListFooterComponent={<View style={{ height: px(45) }} />}
                 style={{ padding: px(15) }}
             />
