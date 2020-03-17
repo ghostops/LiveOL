@@ -7,6 +7,7 @@ jobs:
       name: node/default
     steps:
       - checkout
+      - run: sudo apt-get install sshpass
       - run: sshpass -p '$SSH_PASSWORD' ssh $SSH_STRING -p $SSH_PORT 'ls'
 workflows:
     deploy-server:
