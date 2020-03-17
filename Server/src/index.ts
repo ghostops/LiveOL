@@ -3,7 +3,7 @@ import { Cache } from 'lib/redis';
 
 (async () => {
     Cache.init({
-        host: 'localhost',
+        host: process.env.ENV.toLowerCase() === 'live' ? 'redis' : 'localhost',
         port: 6379,
     });
 
