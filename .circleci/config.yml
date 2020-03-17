@@ -1,19 +1,32 @@
 version: 2.1
+
 orbs:
   node: circleci/node@1.1.6
+
 jobs:
-  deploy-server:
-    executor:
-      name: node/default
-    steps:
-      - checkout
-      - run:
-            command: |
-                echo "Host ${SSH_DOMAIN}
-                StrictHostKeyChecking no
-                UserKnownHostsFile /dev/null" > ~/.ssh/config
-      - run: sudo apt-get install sshpass
-      - run: sshpass -p "${SSH_PASSWORD}" ssh ${SSH_USER}@${SSH_DOMAIN} -p ${SSH_PORT} 'ls'
+    deploy-server:
+        executor:
+            name: node/default
+        steps:
+            - checkout
+            - run:
+                name: Disable known hosts for the ssh domain
+                command: |
+                    echo "Host ${SSH_DOMAIN}
+                    StrictHostKeyChecking no
+                    UserKnownHostsFile /dev/null" > ~/.ssh/config
+
+            - run:
+                name: Install sshpass
+                command: sudo apt-get install sshpass
+
+            - run:
+                name: Pull changes on server
+                command: sshpass -p "${SSH_PASSWORD}" ssh ${SSH_USER}@${SSH_DOMAIN} -p ${SSH_PORT} "cd ${PROJECT_ROOT} && git pull"
+
+            - run:
+                name: Rebuild the Docker containers and restart
+                command: sshpass -p "${SSH_PASSWORD}" ssh ${SSH_USER}@${SSH_DOMAIN} -p ${SSH_PORT} "cd ${PROJECT_ROOT} && docker-compose up --build -d"
 workflows:
     deploy-server:
       jobs:
