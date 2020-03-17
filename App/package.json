@@ -17,7 +17,7 @@
     "schema": "yarn schema:download && yarn schema:tots && yarn schema:cleanup",
     "schema:download": "yarn run apollo schema:download --endpoint=$npm_package_schema_url graphql-schema.json",
     "schema:tots": "yarn run apollo codegen:generate --localSchemaFile=graphql-schema.json --target=typescript --includes=src/**/*.ts --tagName=gql --addTypename --globalTypesFile=src/lib/graphql/types/graphql-global-types.ts types",
-    "schema:cleanup": "rm -rf graphql-schema.json"
+    "schema:cleanup": "rm -rf graphql-schema.json types"
   },
   "jest": {
     "preset": "jest-expo"
