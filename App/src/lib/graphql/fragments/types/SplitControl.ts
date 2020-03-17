@@ -4,15 +4,12 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL fragment: Split
+// GraphQL fragment: SplitControl
 // ====================================================
 
-export interface Split {
-  __typename: "OLSplit";
+export interface SplitControl {
+  __typename: "OLSplitControl";
   id: string | null;
   name: string | null;
-  time: string | null;
-  status: number | null;
-  place: number | null;
-  timeplus: string | null;
+  code: number | null;
 }

@@ -11,10 +11,10 @@ export interface Result_splits {
   __typename: "OLSplit";
   id: string | null;
   name: string | null;
-  time: number | null;
+  time: string | null;
   status: number | null;
   place: number | null;
-  timeplus: number | null;
+  timeplus: string | null;
 }
 
 export interface Result {

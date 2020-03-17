@@ -29,7 +29,7 @@ export const SIZE = {
     landscape: {
         place: 7,
         name: 18,
-        start: 15,
+        start: 12,
         time: 12,
     },
     portrait: {

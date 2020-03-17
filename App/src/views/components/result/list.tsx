@@ -25,8 +25,10 @@ const {
 
 interface Props {
     results: Result[];
-    splits: SplitControl[];
     refetch: () => Promise<void>;
+
+    competitionId: number;
+    className: string;
 }
 
 export const ResultList: React.SFC<Props> = (props) => {
@@ -64,7 +66,8 @@ export const ResultList: React.SFC<Props> = (props) => {
                 }
                 ListHeaderComponent={(
                     <ResultHeader
-                        {...props}
+                        className={props.className}
+                        competitionId={props.competitionId}
                     />
                 )}
                 ListFooterComponent={<View style={{ height: 45 }} />}

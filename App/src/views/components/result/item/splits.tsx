@@ -18,7 +18,7 @@ export const OLSplits: React.SFC<Props> = ({ split }) => {
             <Text style={{
                 fontSize: fontPx(14),
             }}>
-                {Helpers.splitTimestampToReadable(split.time)}
+                {split.time}
                 {' '}
                 <Text style={{
                     color: 'gray',
@@ -31,7 +31,7 @@ export const OLSplits: React.SFC<Props> = ({ split }) => {
                 fontSize: fontPx(12),
                 color: 'gray',
             }}>
-                {Helpers.timeplusToReadable(split.timeplus)}
+                {split.timeplus}
             </Text>
         </View>
     );

@@ -1,5 +1,5 @@
 import { gql } from 'apollo-boost';
-import { ResultFragment } from '../fragments/results';
+import { ResultFragment, SplitControlFragment } from '../fragments/results';
 
 export const GET_RESULTS = gql`
     query GetResults($competitionId: Int!, $className: String!) {
@@ -11,4 +11,16 @@ export const GET_RESULTS = gql`
     }
 
     ${ResultFragment}
+`;
+
+export const GET_SPLIT_CONTROLS = gql`
+    query GetSplitControls($competitionId: Int!, $className: String!) {
+        results {
+            getSplitControls(competitionId: $competitionId, className: $className) {
+                ...SplitControl
+            }
+        }
+    }
+
+    ${SplitControlFragment}
 `;

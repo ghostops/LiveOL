@@ -12,6 +12,7 @@ import { OLError } from 'views/components/error';
 import { Result } from 'lib/graphql/fragments/types/Result';
 import _ from 'lodash';
 import { OLLoading } from 'views/components/loading';
+import { SplitControl } from 'lib/graphql/fragments/types/SplitControl';
 
 interface OwnProps extends RouterProps<{ id, className }> {}
 
@@ -46,8 +47,10 @@ const DataWrapper: React.SFC<Props> = ({ route, navigation }) => {
     return (
         <Component
             results={results}
-            splits={[]}
             refetch={() => void refetch({ className, competitionId })}
+
+            className={className}
+            competitionId={competitionId}
         />
     );
 };

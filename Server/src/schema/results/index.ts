@@ -48,7 +48,7 @@ export const OLSplit = new GraphQLObjectType({
             resolve: (res: IOLSplit) => res.name,
         },
         time: {
-            type: GraphQLInt,
+            type: GraphQLString,
             resolve: (res: IOLSplit) => res.time,
         },
         status: {
@@ -60,7 +60,7 @@ export const OLSplit = new GraphQLObjectType({
             resolve: (res: IOLSplit) => res.place,
         },
         timeplus: {
-            type: GraphQLInt,
+            type: GraphQLString,
             resolve: (res: IOLSplit) => res.timeplus,
         },
     }),
@@ -155,6 +155,36 @@ export const OLResult = new GraphQLObjectType({
         _progress: {
             type: GraphQLInt,
             resolve: (res: IOLResult) => res._progress,
+        },
+    }),
+});
+
+export interface IOLSplitControl {
+    id: string;
+    code: number;
+    name: string;
+}
+
+export const marshallSplitControl = (res: LiveresultatApi.split): IOLSplitControl => ({
+    id: `${res.code}`,
+    code: res.code,
+    name: res.name,
+});
+
+export const OLSplitControl = new GraphQLObjectType({
+    name: 'OLSplitControl',
+    fields: () => ({
+        id: {
+            type: GraphQLString,
+            resolve: (res: IOLSplitControl) => res.id,
+        },
+        code: {
+            type: GraphQLInt,
+            resolve: (res: IOLSplitControl) => res.code,
+        },
+        name: {
+            type: GraphQLString,
+            resolve: (res: IOLSplitControl) => res.name,
         },
     }),
 });

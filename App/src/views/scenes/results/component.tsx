@@ -15,16 +15,20 @@ const {
 interface Props {
     refetch: () => Promise<void>;
     results: Result[];
-    splits: SplitControl[];
+
+    competitionId: number;
+    className: string;
 }
 
-export const OLResults: React.SFC<Props> = ({ refetch, results, splits }) => {
+export const OLResults: React.SFC<Props> = ({ refetch, results, className, competitionId }) => {
     return (
         <>
             <ResultList
                 results={results}
-                splits={splits}
                 refetch={refetch}
+
+                competitionId={competitionId}
+                className={className}
             />
 
             <OLRefetcher

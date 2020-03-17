@@ -26,7 +26,7 @@ export declare namespace LiveresultatApi {
 
     export interface getclassresults extends hashed {
         className: string;
-        splitControlls: split[];
+        splitcontrols: split[];
         results: result[];
     }
 
