@@ -1,15 +1,14 @@
 import * as React from 'react';
-import { API_CACHES_EXPIRY } from 'store/stores/api';
 import { Cache } from 'lib/cache';
 import { COLORS, px, fontPx } from 'util/const';
-import { getPasses } from 'lib/api';
 import { Lang } from 'lib/lang';
 import { OLLastPassingResult } from 'views/components/latest_passings/listItem';
+import { OLLoading } from 'views/components/loading';
 import { OLRefetcher } from 'views/components/refetcher';
 import { OLSafeAreaView } from 'views/components/safeArea';
+import { Passing } from 'lib/graphql/fragments/types/Passing';
 import { ScrollView, RefreshControl, TextStyle } from 'react-native';
 import * as NB from 'native-base';
-import { OLLoading } from 'views/components/loading';
 
 const {
     View,

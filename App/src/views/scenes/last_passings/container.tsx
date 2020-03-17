@@ -2,7 +2,6 @@ import * as React from 'react';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import { GET_LAST_PASSINGS } from 'lib/graphql/queries/passings';
-import { getLastPassings } from 'store/stores/api';
 import { GetLastPassingsVariables, GetLastPassings } from 'lib/graphql/queries/types/GetLastPassings';
 import { Lang } from 'lib/lang';
 import { NavigationProp, RouteProp } from '@react-navigation/native';

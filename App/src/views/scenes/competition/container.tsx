@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { getCompetition } from 'store/stores/api';
 import { NavigationProp, RouteProp } from '@react-navigation/native';
 import { NavigationRoute } from 'react-navigation';
 import { OLCompetition as Component } from './component';
