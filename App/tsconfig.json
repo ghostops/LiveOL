@@ -9,5 +9,7 @@
     "resolveJsonModule": true,
     "baseUrl": "./src",
     "esModuleInterop": true
-  }
+  },
+  "include": ["src"],
+  "exclude": ["src/types/graphql-global-types.ts", "node_modules"]
 }
