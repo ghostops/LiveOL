@@ -7,8 +7,13 @@ jobs:
       name: node/default
     steps:
       - checkout
+      - run:
+            command: |
+                echo "Host ${SSH_DOMAIN}
+                StrictHostKeyChecking no
+                UserKnownHostsFile /dev/null" > ~/.ssh/config
       - run: sudo apt-get install sshpass
-      - run: sshpass -p "${SSH_PASSWORD}" ssh ${SSH_STRING} -p ${SSH_PORT} 'ls'
+      - run: sshpass -p "${SSH_PASSWORD}" ssh ${SSH_USER}@${SSH_DOMAIN} -p ${SSH_PORT} 'ls'
 workflows:
     deploy-server:
       jobs:
