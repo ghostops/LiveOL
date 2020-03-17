@@ -3,24 +3,19 @@ import { Animated, TouchableOpacity, Keyboard } from 'react-native';
 import { connect } from 'react-redux';
 import { hasNotch, xtraSpace } from 'util/hasNotch';
 import { UNIT } from 'util/const';
-import * as Actions from 'views/scenes/home/store';
 import * as NB from 'native-base';
 import * as _ from 'lodash';
 import { Lang } from 'lib/lang';
+import { Competition } from 'lib/graphql/fragments/types/Competition';
 
 const SEARCH_SIZE = UNIT * 3.25;
 
-interface StateProps {
-    competitions: Comp[];
+interface Props {
+    competitions: Competition[];
     searching: boolean;
-}
-
-interface DispatchProps {
-    setVisibleCompetitions: (competitions: Comp[]) => void;
+    setVisibleCompetitions: (competitions: Competition[]) => void;
     setSearching: (value: boolean) => void;
 }
-
-type Props = StateProps & DispatchProps;
 
 interface State {
     searchAnimation: Animated.Value;
@@ -36,7 +31,7 @@ const {
     Text,
 } = NB;
 
-class Component extends React.PureComponent<Props, State> {
+export class OLSearch extends React.PureComponent<Props, State> {
     state: State = {
         searchAnimation: new Animated.Value(0),
         searchTerm: '',
@@ -155,15 +150,3 @@ class Component extends React.PureComponent<Props, State> {
         );
     }
 }
-
-const mapStateToProps = (state: AppState): StateProps => ({
-    searching: state.home.searching,
-    competitions: state.api.competitions,
-});
-
-const mapDispatchToProps = {
-    setVisibleCompetitions: Actions.setVisibleCompetitions,
-    setSearching: Actions.setSearching,
-};
-
-export const SearchBar = connect(mapStateToProps, mapDispatchToProps)(Component);

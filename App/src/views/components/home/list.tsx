@@ -7,6 +7,7 @@ import { HomeListItem } from './listItem';
 import { today } from 'util/date';
 import { FlatList } from 'react-native';
 import { OLSafeAreaView } from '../safeArea';
+import { Competition } from 'lib/graphql/fragments/types/Competition';
 
 const {
     List,
@@ -16,8 +17,8 @@ const {
 } = NB;
 
 interface Props {
-    competitions: Comp[];
-    onCompetitionPress: (comp: Comp) => void;
+    competitions: Competition[];
+    onCompetitionPress: (comp: Competition) => void;
     listHeader: React.ReactElement;
 }
 
@@ -27,7 +28,9 @@ export const getVisibleCompetitions = (competitions: Comp[], page: number, size:
         (size * (page || 1)) + size,
     );
 
-export const groupVisibleCompetitions = (visibleCompetitions: Comp[]): Record<string, Comp[]> => {
+export const groupVisibleCompetitions = (
+    visibleCompetitions: Competition[],
+): Record<string, Competition[]> => {
     const uniqEs6 = (arrArg) => (
         arrArg.filter((elem, pos, arr) => {
             return arr.indexOf(elem) === pos;
@@ -55,7 +58,7 @@ export const HomeList: React.SFC<Props> = ({
 }) => {
     const visibleCompetitions = groupVisibleCompetitions(competitions);
 
-    const renderListItem = (competition: Comp, index: number, total: number) => (
+    const renderListItem = (competition: Competition, index: number, total: number) => (
         <HomeListItem
             key={competition.id}
             competition={competition}
@@ -65,7 +68,7 @@ export const HomeList: React.SFC<Props> = ({
         />
     );
 
-    const renderListSection = (key: string, competitions: Record<string, Comp[]>) => {
+    const renderListSection = (key: string, competitions: Record<string, Competition[]>) => {
         return (
             <OLSafeAreaView key={key}>
                 <View>

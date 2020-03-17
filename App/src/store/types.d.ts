@@ -16,7 +16,7 @@ interface ApiReducer {
 }
 
 interface HomeReducer {
-    visibleCompetitions: Comp[];
+    visibleCompetitions: any[];
     searching: boolean;
 }
 

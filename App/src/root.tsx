@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { ApolloProvider } from '@apollo/react-hooks';
+import { client } from 'lib/graphql/client';
 import { COLORS } from 'util/const';
 import { Lang } from 'lib/lang';
 import { LayoutAnimation, View } from 'react-native';
@@ -47,25 +49,23 @@ export default class AppRoot extends React.Component<{}, State> {
         );
     }
 
-    renderWhenReady = (children: React.ReactNode) => {
-        return (
-            this.state.ready
-            ? children
-            : <View style={{ flex: 1, backgroundColor: COLORS.MAIN }} />
-        );
-    }
-
     render() {
-        return this.renderWhenReady(
-            <Root>
-                <View style={{ flex: 1 }}>
-                    <Provider store={store.store}>
-                        <OLRotationWatcher>
-                            <Router />
-                        </OLRotationWatcher>
-                    </Provider>
-                </View>
-            </Root>,
+        if (!this.state.ready) {
+            return <View style={{ flex: 1, backgroundColor: COLORS.MAIN }} />;
+        }
+
+        return (
+            <ApolloProvider client={client}>
+                <Root>
+                    <View style={{ flex: 1 }}>
+                        <Provider store={store.store}>
+                            <OLRotationWatcher>
+                                <Router />
+                            </OLRotationWatcher>
+                        </Provider>
+                    </View>
+                </Root>
+            </ApolloProvider>
         );
     }
 }

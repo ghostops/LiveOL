@@ -1,11 +1,17 @@
 import * as React from 'react';
+import { ALL_COMPETITIONS } from 'lib/graphql/queries/competitions';
+import { AllCompetitions } from 'lib/graphql/queries/types/AllCompetitions';
+import { Competition } from 'lib/graphql/fragments/types/Competition';
 import { connect } from 'react-redux';
 import { Lang } from 'lib/lang';
 import { NavigationProp } from '@react-navigation/native';
+import { OLError } from 'views/components/error';
 import { OLHome as Component } from './component';
 import { Right, Left } from './header';
 import { Routes } from 'lib/nav/routes';
 import { today } from 'util/date';
+import { useQuery } from '@apollo/react-hooks';
+import * as _ from 'lodash';
 import * as Actions from './store';
 
 interface OwnProps {
@@ -13,7 +19,7 @@ interface OwnProps {
 }
 
 interface StateProps {
-    competitions: Comp[] | null;
+    searchResults: Competition[] | null;
     searching: boolean;
 }
 
@@ -36,11 +42,18 @@ const DataWrapper: React.SFC<Props> = (props) => {
         [],
     );
 
+    const { data, loading, error } = useQuery<AllCompetitions>(ALL_COMPETITIONS);
+
+    if (error) return <OLError error={error} />;
+
+    const competitions: Competition[] = _.get(data, 'competitions.getAllCompetitions', null);
+
     return (
         <Component
-            competitions={props.competitions}
+            loading={loading}
+            competitions={props.searchResults || competitions}
             todaysCompetitions={(
-                (props.competitions || [])
+                (competitions || [])
                     .filter((comp) => today() === comp.date)
             )}
             onCompetitionPress={(competition) => {
@@ -56,7 +69,7 @@ const DataWrapper: React.SFC<Props> = (props) => {
 };
 
 const mapStateToProps = (state: AppState): StateProps => ({
-    competitions: state.home.visibleCompetitions || state.api.competitions,
+    searchResults: state.home.visibleCompetitions,
     searching: state.home.searching,
 });
 

@@ -1,12 +1,14 @@
 import * as React from 'react';
+import { Competition } from 'lib/graphql/fragments/types/Competition';
 import { HomeList } from 'views/components/home/list';
 import { HomeListItem } from 'views/components/home/listItem';
-import { LanguagePicker } from 'views/components/lang/picker';
-import { SearchBar } from 'views/components/search/bar';
-import { TodaysCompetitions } from 'views/components/home/today';
-import { px, COLORS } from 'util/const';
-import * as NB from 'native-base';
 import { Lang } from 'lib/lang';
+import { LanguagePicker } from 'views/components/lang/picker';
+import { OLLoading } from 'views/components/loading';
+import { OLSearch } from 'views/components/search/container';
+import { px, COLORS } from 'util/const';
+import { TodaysCompetitions } from 'views/components/home/today';
+import * as NB from 'native-base';
 
 const {
     Spinner,
@@ -16,11 +18,12 @@ const {
 } = NB;
 
 interface Props {
-    competitions: Comp[];
-    todaysCompetitions: Comp[];
-    onCompetitionPress: (competition: Comp) => void;
+    competitions: Competition[];
+    todaysCompetitions: Competition[];
+    onCompetitionPress: (competition: Competition) => void;
     openSearch: () => void;
     searching: boolean;
+    loading: boolean;
 }
 
 export class OLHome extends React.PureComponent<Props> {
@@ -46,8 +49,8 @@ export class OLHome extends React.PureComponent<Props> {
     }
 
     renderInner = () => {
-        if (!this.props.competitions) {
-            return <Spinner color={COLORS.MAIN} />;
+        if (this.props.loading) {
+            return <OLLoading />;
         }
 
         return (
@@ -103,7 +106,7 @@ export class OLHome extends React.PureComponent<Props> {
                     {this.renderInner()}
                 </View>
 
-                <SearchBar />
+                <OLSearch />
             </View>
         );
     }

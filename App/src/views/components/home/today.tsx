@@ -4,6 +4,7 @@ import { UNIT, COLORS } from 'util/const';
 import * as NB from 'native-base';
 import { Lang } from 'lib/lang';
 import { OLSafeAreaView } from '../safeArea';
+import { Competition } from 'lib/graphql/fragments/types/Competition';
 
 const {
     List,
@@ -15,8 +16,8 @@ const {
 } = NB;
 
 interface Props {
-    competitions: Comp[];
-    renderListItem: (comp: Comp, index?: number, total?: number) => React.ReactChild;
+    competitions: Competition[];
+    renderListItem: (comp: Competition, index?: number, total?: number) => React.ReactChild;
 }
 
 export const TodaysCompetitions: React.SFC<Props> = ({ competitions, renderListItem }) => {

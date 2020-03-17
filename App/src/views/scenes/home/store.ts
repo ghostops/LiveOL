@@ -1,3 +1,5 @@
+import { Competition } from 'lib/graphql/fragments/types/Competition';
+
 const SET_VISIBLE_COMPETITIONS = 'HOME:SET_VISIBLE_COMPETITIONS';
 const SET_SEARCHING = 'HOME:SET_SEARCHING';
 
@@ -28,7 +30,7 @@ export function homeReducer(
 
 // Actions //
 
-export const setVisibleCompetitions = (competitions: Comp[]) => (dispatch) => {
+export const setVisibleCompetitions = (competitions: Competition[]) => (dispatch) => {
     dispatch({
         type: SET_VISIBLE_COMPETITIONS,
         value: competitions,

@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { fontPx, px } from 'util/const';
 import { ListItem, Text } from 'native-base';
+import { Competition } from 'lib/graphql/fragments/types/Competition';
 
 interface Props {
-    competition: Comp;
+    competition: Competition;
     index?: number;
     total?: number;
-    onCompetitionPress?: (comp: Comp) => void;
+    onCompetitionPress?: (comp: Competition) => void;
 }
 
 export const HomeListItem: React.SFC<Props> = ({

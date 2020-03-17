@@ -23,6 +23,7 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "@apollo/react-hooks": "^3.1.3",
     "@expo/samples": "2.1.1",
     "@expo/vector-icons": "^10.0.0",
     "@react-native-community/masked-view": "0.1.5",
@@ -38,7 +39,6 @@
     "ms": "^2.1.2",
     "native-base": "^2.13.4",
     "react": "16.9.0",
-    "react-apollo": "^3.1.3",
     "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.1.tar.gz",
     "react-native-circular-progress": "^1.3.6",
     "react-native-easy-grid": "^0.2.2",
