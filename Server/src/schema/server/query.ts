@@ -4,5 +4,10 @@ import { schema } from 'schema';
 
 export const ServerQuery = new GraphQLObjectType({
     name: 'ServerQuery',
-    fields: () => ({}),
+    fields: () => ({
+        test: {
+            type: GraphQLString,
+            resolve: () => 'ok',
+        },
+    }),
 });
