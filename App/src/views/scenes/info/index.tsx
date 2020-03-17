@@ -84,19 +84,6 @@ class Component extends React.PureComponent<Props, State> {
         }
     }
 
-    purgeCache = async () => {
-        const keys: string[] = await AsyncStorage.getAllKeys();
-        const removeable = keys.filter((key) => !key.startsWith('OL:'));
-
-        const promises: Promise<void>[] = [];
-        for (const key of removeable) {
-            promises.push(AsyncStorage.removeItem(key));
-        }
-        await Promise.all(promises);
-
-        Alert.alert(`${removeable.length} ${Lang.print('info.purged')}`);
-    }
-
     contact = () => Linking.openURL('https://goo.gl/forms/fFmS1WGVUU1Wu0c03');
 
     BUTTONS = [{
@@ -108,9 +95,6 @@ class Component extends React.PureComponent<Props, State> {
     }, {
         text: Lang.print('info.contact'),
         onPress: this.contact,
-    }, {
-        text: Lang.print('info.purgeCache'),
-        onPress: this.purgeCache,
     }];
 
     openPhraseApp = () => Linking.openURL('https://phraseapp.com');
