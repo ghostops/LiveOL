@@ -86,7 +86,7 @@ export const marshallResult =
     (comp: number, _class: string, splitControlls: LiveresultatApi.split[]) =>
     (res: LiveresultatApi.result): IOLResult => {
     return {
-        id: `${comp}:${_class}`,
+        id: `${comp}:${_class}:${res.name.replace(/ /g, '_')}`,
         splits: (
             !!splitControlls
             ? splitControlls.map((split) => {
@@ -143,7 +143,7 @@ export const OLResult = new GraphQLObjectType({
             resolve: (res: IOLResult) => res.result,
         },
         status: {
-            type: GraphQLString,
+            type: GraphQLInt,
             resolve: (res: IOLResult) => res.status,
         },
         timeplus: {

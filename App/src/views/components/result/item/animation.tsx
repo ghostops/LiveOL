@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { View } from 'native-base';
 import { Animated } from 'react-native';
+import { Result } from 'lib/graphql/fragments/types/Result';
 
 interface Props {
     result: Result;
@@ -19,8 +20,8 @@ const hasChanged = (prev: Result, now: Result) => (
         prev.status !==
         now.status
     ) || (
-        prev.parsedSplits.map((s) => s.time).join() !==
-        now.parsedSplits.map((s) => s.time).join()
+        prev.splits.map((s) => s.time).join() !==
+        now.splits.map((s) => s.time).join()
     )
 );
 

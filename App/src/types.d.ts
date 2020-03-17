@@ -1,6 +1,6 @@
 declare const clog: (...any) => void;
 
-interface Comp {
+interface _Comp {
     date: string;
     id: number;
     name: string;
@@ -8,16 +8,16 @@ interface Comp {
     timediff: number;
 }
 
-interface Classes {
+interface _Classes {
     className: string;
 }
 
-interface SplitControl {
+interface _SplitControl {
     name: string;
     code: number;
 }
 
-interface ParsedSplit {
+interface _ParsedSplit {
     name: string;
     time: number;
     status: number;
@@ -25,7 +25,7 @@ interface ParsedSplit {
     timeplus: number;
 }
 
-interface OLClass {
+interface _OLClass {
     className: string;
     hash: string;
     results: Result[];
@@ -33,7 +33,7 @@ interface OLClass {
     status: string;
 }
 
-interface Result {
+interface _Result {
     club: string;
     name: string;
     place: string;
@@ -47,14 +47,14 @@ interface Result {
     parsedSplits?: ParsedSplit[];
 }
 
-interface Club {
+interface _Club {
     clubName: number;
     status: string;
     results: Result[];
     hash: string;
 }
 
-interface Passing {
+interface _Passing {
     passtime: string;
     runnerName: string;
     class: string,

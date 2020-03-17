@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { Grid } from 'react-native-easy-grid';
+import { COLORS, px } from 'util/const';
 import { connect } from 'react-redux';
+import { Grid } from 'react-native-easy-grid';
 import { ListItem, View, Text, Badge } from 'native-base';
 import { OLResultAnimation } from './animation';
 import { OLResultBadge } from './badge';
@@ -9,10 +10,10 @@ import { OLResultColumn } from './column';
 import { OLResultName } from './name';
 import { OLResultTime } from './time';
 import { OLResultTimeplus } from './timeplus';
-import { ScreenOrientation } from 'expo';
-import { COLORS, px } from 'util/const';
 import { OLSplits } from './splits';
 import { OLStartTime } from './start';
+import { Result } from 'lib/graphql/fragments/types/Result';
+import { ScreenOrientation } from 'expo';
 
 interface OwnProps {
     result: Result;
@@ -79,11 +80,11 @@ const Component: React.SFC<Props> = ({ result, rotation }) => {
 
                     {
                         landscape &&
-                        result.parsedSplits.map((split, index) => {
+                        result.splits.map((split, index) => {
                             return (
                                 <OLResultColumn
-                                    size={overflowSize / result.parsedSplits.length}
-                                    key={`${split.name}:${result.name}:${index}`}
+                                    size={overflowSize / result.splits.length}
+                                    key={split.id}
                                     align="center"
                                 >
                                     <OLSplits split={split} />

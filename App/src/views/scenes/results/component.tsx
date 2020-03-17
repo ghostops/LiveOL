@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { API_CACHES_EXPIRY } from 'store/stores/api';
 import { Lang } from 'lib/lang';
 import { OLRefetcher } from 'views/components/refetcher';
+import { Result } from 'lib/graphql/fragments/types/Result';
 import { ResultList } from 'views/components/result/list';
 import { UNIT } from 'util/const';
 import * as NB from 'native-base';
@@ -28,7 +28,7 @@ export const OLResults: React.SFC<Props> = ({ refetch, results, splits }) => {
             />
 
             <OLRefetcher
-                interval={API_CACHES_EXPIRY.results}
+                interval={15000}
                 refetch={refetch}
                 circle
             />

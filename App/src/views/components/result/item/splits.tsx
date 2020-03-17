@@ -1,10 +1,11 @@
 import * as React from 'react';
+import { fontPx } from 'util/const';
+import { Split } from 'lib/graphql/fragments/types/Split';
 import { View, Text } from 'native-base';
 import * as Helpers from '../helpers';
-import { fontPx } from 'util/const';
 
 interface Props {
-    split: ParsedSplit;
+    split: Split;
 }
 
 export const OLSplits: React.SFC<Props> = ({ split }) => {

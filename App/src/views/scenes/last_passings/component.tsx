@@ -9,6 +9,7 @@ import { OLRefetcher } from 'views/components/refetcher';
 import { OLSafeAreaView } from 'views/components/safeArea';
 import { ScrollView, RefreshControl, TextStyle } from 'react-native';
 import * as NB from 'native-base';
+import { OLLoading } from 'views/components/loading';
 
 const {
     View,
@@ -24,13 +25,15 @@ interface Props {
     passings: Passing[];
     refresh: () => Promise<void>;
     landscape: boolean;
+    loading: boolean;
 }
 
 export const OLPassings: React.SFC<Props> = (props) => {
-    const [loading, setLoading] = React.useState(false);
-
-    if (!props.passings) {
-        return <Spinner color={COLORS.MAIN} />;
+    if (
+        props.loading &&
+        (!props.passings || !props.passings.length)
+    ) {
+        return <OLLoading />;
     }
 
     return (
@@ -38,12 +41,8 @@ export const OLPassings: React.SFC<Props> = (props) => {
             <ScrollView
                 refreshControl={
                     <RefreshControl
-                        onRefresh={async () => {
-                            setLoading(true);
-                            await props.refresh();
-                            setLoading(false);
-                        }}
-                        refreshing={loading}
+                        onRefresh={props.refresh}
+                        refreshing={props.loading}
                         colors={[COLORS.MAIN]}
                         tintColor={COLORS.MAIN}
                     />
@@ -84,7 +83,7 @@ export const OLPassings: React.SFC<Props> = (props) => {
 
             <OLRefetcher
                 refetch={props.refresh}
-                interval={API_CACHES_EXPIRY.lastPassings}
+                interval={15000}
                 circle
             />
         </OLSafeAreaView>

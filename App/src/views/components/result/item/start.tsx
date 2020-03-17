@@ -4,7 +4,7 @@ import { View, Text } from 'native-base';
 import * as Helpers from '../helpers';
 
 interface Props {
-    time: number;
+    time: string;
 }
 
 export const OLStartTime: React.SFC<Props> = ({ time }) => (
@@ -16,7 +16,7 @@ export const OLStartTime: React.SFC<Props> = ({ time }) => (
         <Text style={{
             fontSize: fontPx(16),
         }}>
-            {Helpers.startToReadable(time)}
+            {time}
         </Text>
     </View>
 );

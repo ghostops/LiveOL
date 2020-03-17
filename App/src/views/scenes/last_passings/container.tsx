@@ -9,10 +9,10 @@ import { NavigationProp, RouteProp } from '@react-navigation/native';
 import { NavigationRoute } from 'react-navigation';
 import { OLError } from 'views/components/error';
 import { OLPassings as Component } from './component';
+import { Passing } from 'lib/graphql/fragments/types/Passing';
 import { Routes, RouterProps } from 'lib/nav/routes';
 import { ScreenOrientation } from 'expo';
 import { useQuery } from '@apollo/react-hooks';
-import { OLLoading } from 'views/components/loading';
 
 interface OwnProps extends RouterProps<{ id, title }> {}
 
@@ -41,12 +41,12 @@ const DataWrapper: React.SFC<Props> = (props) => {
         );
 
     if (error) return <OLError error={error} />;
-    if (loading) return <OLLoading />;
 
     const passings: Passing[] = _.get(data, 'lastPassings.getLastPassings', null);
 
     return (
         <Component
+            loading={loading}
             passings={passings}
             refresh={() => void refetch({ competitionId })}
             landscape={props.landscape}
