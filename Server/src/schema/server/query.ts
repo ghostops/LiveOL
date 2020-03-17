@@ -5,9 +5,9 @@ import { schema } from 'schema';
 export const ServerQuery = new GraphQLObjectType({
     name: 'ServerQuery',
     fields: () => ({
-        test: {
+        version: {
             type: GraphQLString,
-            resolve: () => 'ok',
+            resolve: () => require('../../../package.json').version,
         },
     }),
 });
