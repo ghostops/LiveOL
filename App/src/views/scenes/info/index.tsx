@@ -1,13 +1,13 @@
 import * as React from 'react';
-import * as NB from 'native-base';
+import { connect } from 'react-redux';
+import { Lang } from 'lib/lang';
 import { NavigationProp } from '@react-navigation/native';
 import { OLButton } from 'views/components/button';
-import { Platform, AsyncStorage, Alert, TouchableOpacity, View, Image } from 'react-native';
-import { Updates, Linking, ScreenOrientation } from 'expo';
-import { UNIT, VERSION, APP_VERSION, ANDROID_VERSION_CODE } from 'util/const';
-import { Lang } from 'lib/lang';
 import { OLFlag } from 'views/components/lang/flag';
-import { connect } from 'react-redux';
+import { Platform, AsyncStorage, Alert, TouchableOpacity, View, Image } from 'react-native';
+import { UNIT, VERSION, APP_VERSION, ANDROID_VERSION_CODE } from 'util/const';
+import { Updates, Linking, ScreenOrientation } from 'expo';
+import * as NB from 'native-base';
 
 const {
     Container,
@@ -124,7 +124,7 @@ class Component extends React.PureComponent<Props, State> {
     }
 
     renderGeneralCard = () => (
-        <Card style={{ paddingVertical: UNIT, flex: 1, }}>
+        <Card style={{ paddingVertical: UNIT, flex: 1 }}>
             <CardItem>
                 <Body>
                     {

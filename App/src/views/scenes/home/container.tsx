@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { Lang } from 'lib/lang';
 import { NavigationProp } from '@react-navigation/native';
 import { OLHome as Component } from './component';
 import { Right, Left } from './header';
 import { Routes } from 'lib/nav/routes';
 import { today } from 'util/date';
 import * as Actions from './store';
-import { Lang } from 'lib/lang';
 
 interface OwnProps {
     navigation: NavigationProp<any, any>;
@@ -53,7 +53,7 @@ const DataWrapper: React.SFC<Props> = (props) => {
             searching={props.searching}
         />
     );
-}
+};
 
 const mapStateToProps = (state: AppState): StateProps => ({
     competitions: state.home.visibleCompetitions || state.api.competitions,
