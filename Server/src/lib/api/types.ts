@@ -35,7 +35,7 @@ export declare namespace LiveresultatApi {
         name: string;
         club: string;
         result: string;
-        status: string;
+        status: number;
         timeplus: string;
         progress: number;
         start: number;

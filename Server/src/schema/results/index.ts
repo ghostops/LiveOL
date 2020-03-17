@@ -1,12 +1,14 @@
 import { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLList, GraphQLBoolean } from 'graphql';
 import { LiveresultatApi } from 'lib/api/types';
+import { OLTime } from 'types';
+import * as Helpers from 'lib/helpers/time';
 
 export interface IOLSplit {
     id: string;
     name: string;
+    status: number;
+    place: number;
     time: OLTime;
-    status: OLTime;
-    place: OLTime;
     timeplus: OLTime;
 }
 
@@ -24,17 +26,13 @@ export const marshallSplits = (split: LiveresultatApi.split) => (result: Liveres
         }
     }
 
-    // TODO:
-    // PARSE THE NUMBERS TO OLTime
-    // GQL WILL FAIL RIGHT NOW
-
     return {
         id: `${split.code}:${result.name.replace(/ /g, '_')}`,
         name: split.name,
-        time: keyValue['time'] || NaN,
+        time: Helpers.splitTimestampToReadable(keyValue['time'] || 0),
         status: keyValue['status'] || NaN,
-        place: keyValue['place'] || NaN,
-        timeplus: keyValue['timeplus'] || NaN,
+        place: keyValue['place'] || 0,
+        timeplus: Helpers.timeplusToReadable(keyValue['timeplus'] || 0),
     };
 };
 
@@ -73,6 +71,12 @@ export interface IOLResult {
     splits: IOLSplit[];
     hasSplits: boolean;
     start: OLTime;
+    place: string;
+    name: string;
+    club: string;
+    result: string;
+    status: number;
+    timeplus: string;
 
     // unused
     _progress: number;
@@ -90,9 +94,16 @@ export const marshallResult =
             }) : []
         ),
         hasSplits: Boolean(!!splitControlls && splitControlls.length),
+        start: Helpers.startToReadable(res.start),
+
+        place: res.place,
+        club: res.club,
+        name: res.name,
+        result: res.result,
+        status: res.status,
+        timeplus: res.timeplus,
+
         _progress: res.progress,
-        // FIX ME
-        start: res.start.toString(),
     };
 }
 
@@ -114,6 +125,30 @@ export const OLResult = new GraphQLObjectType({
         start: {
             type: GraphQLString,
             resolve: (res: IOLResult) => res.start,
+        },
+        place: {
+            type: GraphQLString,
+            resolve: (res: IOLResult) => res.place,
+        },
+        name: {
+            type: GraphQLString,
+            resolve: (res: IOLResult) => res.name,
+        },
+        club: {
+            type: GraphQLString,
+            resolve: (res: IOLResult) => res.club,
+        },
+        result: {
+            type: GraphQLString,
+            resolve: (res: IOLResult) => res.result,
+        },
+        status: {
+            type: GraphQLString,
+            resolve: (res: IOLResult) => res.status,
+        },
+        timeplus: {
+            type: GraphQLString,
+            resolve: (res: IOLResult) => res.timeplus,
         },
 
         // Unused

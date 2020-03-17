@@ -24,4 +24,5 @@ export const server = new ApolloServer({
             return context;
         }
     },
+    cors: true,
 });

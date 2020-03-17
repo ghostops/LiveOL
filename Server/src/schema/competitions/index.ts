@@ -1,5 +1,6 @@
 import { GraphQLObjectType, GraphQLString, GraphQLInt } from 'graphql';
 import { LiveresultatApi } from 'lib/api/types';
+import { UTCTime } from 'types';
 
 export interface IOLCompetition {
     id: number;
