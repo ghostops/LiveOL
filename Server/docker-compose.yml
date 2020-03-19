@@ -2,8 +2,8 @@ version: '3.7'
 services:
     server:
         build: .
-        ports:
-            - "4000:4000"
+        # ports:
+        #     - "4000:4000"
     redis:
         image: redis:latest
         ports:

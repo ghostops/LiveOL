@@ -1,4 +1,4 @@
-import { APIClient } from 'lib/api';
+import { LiveresultatAPIClient } from 'lib/liveresultat';
 import { Cache } from 'lib/redis';
 import { gql, ApolloServer } from 'apollo-server';
 import { GraphQLSchema, GraphQLObjectType, GraphQLString, GraphQLList } from 'graphql';
@@ -6,7 +6,7 @@ import { schema } from 'schema';
 
 export interface GQLContext {
     userId: string;
-    Api: APIClient
+    Api: LiveresultatAPIClient
 }
 
 export const server = new ApolloServer({
@@ -15,7 +15,7 @@ export const server = new ApolloServer({
         if (req && res) {
             const context: GQLContext = {
                 userId: req['userId'],
-                Api: new APIClient(
+                Api: new LiveresultatAPIClient(
                     'https://liveresultat.orientering.se',
                     Cache,
                 ),

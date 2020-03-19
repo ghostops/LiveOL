@@ -1,5 +1,5 @@
 import { GraphQLObjectType, GraphQLString, GraphQLInt } from 'graphql';
-import { LiveresultatApi } from 'lib/api/types';
+import { LiveresultatApi } from 'lib/liveresultat/types';
 
 export interface IOLClass {
     id: string;

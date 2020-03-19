@@ -3,7 +3,7 @@ import { LiveresultatApi } from './types';
 import * as ms from 'ms';
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 
-export class APIClient {
+export class LiveresultatAPIClient {
     private client: AxiosInstance;
 
     constructor(private root: string, private cache: Cacher) {

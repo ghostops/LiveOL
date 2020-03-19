@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "docker-compose up -d && yarn dev",
-    "build": "yarn tsc && babel build --out-dir build",
+    "build": "yarn tsc && yarn babel build --out-dir build",
     "dev": "nodemon -L -e ts -w ./src -x yarn dev:serve",
     "dev:serve": "ts-node -r tsconfig-paths/register src/index.ts"
   },
@@ -17,6 +17,7 @@
     "axios": "^0.19.2",
     "babel-cli": "^6.26.0",
     "babel-plugin-module-resolver": "^4.0.0",
+    "cheerio": "^1.0.0-rc.3",
     "graphql": "^14.6.0",
     "ioredis": "^4.16.0",
     "lodash": "^4.17.15",
@@ -27,6 +28,7 @@
     "typescript": "^3.8.3"
   },
   "devDependencies": {
+    "@types/cheerio": "^0.22.16",
     "@types/ioredis": "^4.14.9",
     "@types/lodash": "^4.14.149",
     "@types/node": "^13.9.1"

@@ -1,5 +1,5 @@
 import { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLList, GraphQLBoolean } from 'graphql';
-import { LiveresultatApi } from 'lib/api/types';
+import { LiveresultatApi } from 'lib/liveresultat/types';
 import { OLTime } from 'types';
 import * as Helpers from 'lib/helpers/time';
 
