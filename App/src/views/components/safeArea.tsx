@@ -1,42 +1,25 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
-import { ScreenOrientation } from 'expo';
-import { useSafeArea } from 'react-native-safe-area-context';
+import { SafeAreaConsumer } from 'react-native-safe-area-context';
 import { View } from 'native-base';
 
-interface StateProps {
-    rotation: ScreenOrientation.Orientation;
+export class OLSafeAreaView extends React.PureComponent {
+    render() {
+        return (
+            <SafeAreaConsumer>
+                {(insets) => {
+                    return (
+                        <View
+                            style={{
+                                paddingLeft: insets.left,
+                                paddingRight: insets.right,
+                                flex: 1,
+                            }}
+                        >
+                            {this.props.children}
+                        </View>
+                    );
+                }}
+            </SafeAreaConsumer>
+        );
+    }
 }
-
-const Component: React.SFC<StateProps> = ({ children, rotation }) => {
-    const insets = useSafeArea();
-
-    return (
-        <View
-            style={{
-                paddingRight: (
-                    rotation === ScreenOrientation.Orientation.LANDSCAPE
-                    ? insets.right
-                    : 0
-                ),
-                paddingLeft: (
-                    rotation === ScreenOrientation.Orientation.LANDSCAPE
-                    ? insets.left
-                    : 0
-                ),
-                flex: 1,
-            }}
-        >
-            {children}
-        </View>
-    );
-};
-
-const mapStateToProps = (state: AppState): StateProps => ({
-    rotation: state.general.rotation,
-});
-
-export const OLSafeAreaView = connect(
-    mapStateToProps,
-    null,
-)(Component) as unknown as React.ComponentClass<any>;

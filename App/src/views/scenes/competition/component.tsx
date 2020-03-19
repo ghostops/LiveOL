@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Class } from 'lib/graphql/fragments/types/Class';
 import { Competition } from 'lib/graphql/fragments/types/Competition';
+import { dateToReadable } from 'util/date';
 import { fontPx, px } from 'util/const';
 import { Lang } from 'lib/lang';
 import { OLButton } from 'views/components/button';
@@ -77,7 +78,9 @@ export const OLCompetition: React.SFC<Props> = (props) => {
                     <Text style={{
                         fontSize: fontPx(16),
                     }}>
-                        {props.competition.date}
+                        {dateToReadable(
+                            new Date(props.competition.date),
+                        )}
                     </Text>
                 </CardItem>
             </Card>
@@ -120,7 +123,8 @@ export const OLCompetition: React.SFC<Props> = (props) => {
                 ListEmptyComponent={(
                     <Text style={{
                         textAlign: 'center',
-                        paddingVertical: 10,
+                        paddingVertical: px(10),
+                        paddingTop: px(45),
                         fontSize: fontPx(14),
                     }}>
                         {Lang.print('competitions.noClasses')}
