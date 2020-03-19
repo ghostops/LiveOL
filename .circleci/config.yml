@@ -20,13 +20,13 @@ jobs:
                 name: Install sshpass
                 command: sudo apt-get install sshpass
 
-            - run:
-                name: Pull changes on server
-                command: sshpass -p "${SSH_PASSWORD}" ssh ${SSH_USER}@${SSH_DOMAIN} -p ${SSH_PORT} "cd ${PROJECT_ROOT} && git pull"
+            # - run:
+            #     name: Pull changes on server
+            #     command: sshpass -p "${SSH_PASSWORD}" ssh ${SSH_USER}@${SSH_DOMAIN} -p ${SSH_PORT} "cd ${PROJECT_ROOT} && git pull"
 
-            - run:
-                name: Rebuild the Docker containers and restart
-                command: sshpass -p "${SSH_PASSWORD}" ssh ${SSH_USER}@${SSH_DOMAIN} -p ${SSH_PORT} "cd ${PROJECT_ROOT} && docker-compose up --build -d"
+            # - run:
+            #     name: Rebuild the Docker containers and restart
+            #     command: sshpass -p "${SSH_PASSWORD}" ssh ${SSH_USER}@${SSH_DOMAIN} -p ${SSH_PORT} "cd ${PROJECT_ROOT} && docker-compose up --build -d"
 workflows:
     deploy-server:
       jobs:
