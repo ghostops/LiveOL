@@ -25,8 +25,6 @@ export const OLResults: React.SFC<Props> = ({ refetch, results, className, compe
         <>
             <ResultList
                 results={results}
-                refetch={refetch}
-
                 competitionId={competitionId}
                 className={className}
             />

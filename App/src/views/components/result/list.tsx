@@ -11,29 +11,16 @@ import { ResultBox } from './result';
 import { ResultHeader } from './header';
 import { ScrollView, RefreshControl } from 'react-native';
 import { UNIT, COLORS } from 'util/const';
-import * as NB from 'native-base';
-
-const {
-    View,
-    Text,
-    List,
-    Switch,
-    Card,
-    CardItem,
-    Spinner,
-} = NB;
+import { View, Spinner } from 'native-base';
 
 interface Props {
     results: Result[];
-    refetch: () => Promise<void>;
 
     competitionId: number;
     className: string;
 }
 
 export const ResultList: React.SFC<Props> = (props) => {
-    const [loading, setLoading] = React.useState(false);
-
     const renderResult = ({ item }) => {
         const result: Result = item;
 
@@ -52,18 +39,6 @@ export const ResultList: React.SFC<Props> = (props) => {
     return (
         <OLSafeAreaView>
             <FlatList
-                refreshControl={
-                    <RefreshControl
-                        onRefresh={async () => {
-                            setLoading(true);
-                            await props.refetch();
-                            setLoading(false);
-                        }}
-                        refreshing={loading}
-                        colors={[COLORS.MAIN]}
-                        tintColor={COLORS.MAIN}
-                    />
-                }
                 ListHeaderComponent={(
                     <ResultHeader
                         className={props.className}
