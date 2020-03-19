@@ -30,7 +30,7 @@ const Component: React.SFC<StateProps> = ({ landscape }) => {
             }}
         >
             <Stack.Navigator
-                initialRouteName={Routes.results}
+                initialRouteName={Routes.home}
                 screenOptions={{
                     headerBackTitle: Lang.print('back'),
                     headerBackTitleStyle: {
