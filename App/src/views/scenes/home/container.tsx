@@ -8,7 +8,6 @@ import { Lang } from 'lib/lang';
 import { NavigationProp } from '@react-navigation/native';
 import { OLError } from 'views/components/error';
 import { OLHome as Component } from './component';
-import { Right, Left } from './header';
 import { Routes } from 'lib/nav/routes';
 import { datesAreOnSameDay } from 'util/date';
 import { useQuery } from '@apollo/react-hooks';
@@ -31,17 +30,6 @@ interface DispatchProps {
 type Props = StateProps & OwnProps & DispatchProps;
 
 const DataWrapper: React.SFC<Props> = (props) => {
-    React.useEffect(
-        () => {
-            props.navigation.setOptions({
-                title: Lang.print('home.title'),
-                headerLeft: Left,
-                headerRight: () => <Right onPress={() => props.navigation.navigate(Routes.info)} />,
-            });
-        },
-        [],
-    );
-
     const { data, loading, error } = useQuery<AllCompetitions>(ALL_COMPETITIONS);
 
     if (error) return <OLError error={error} />;

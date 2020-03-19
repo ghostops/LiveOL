@@ -19,20 +19,11 @@ interface OwnProps extends RouterProps<{ id, className }> {}
 type Props = OwnProps;
 
 const DataWrapper: React.SFC<Props> = ({ route, navigation }) => {
-    // const className: string = route.params.className;
-    // const competitionId: number = route.params.id;
-
-    const className = 'M20-1';
-    const competitionId = 16011;
+    const className: string = route.params.className;
+    const competitionId: number = route.params.id;
 
     React.useEffect(
-        () => {
-            navigation.setOptions({
-                title: `${Lang.print('classes.resultsFor')}: ${route.params.className}`,
-            });
-
-            showToast();
-        },
+        () => { showToast(); },
         [],
     );
 

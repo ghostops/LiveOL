@@ -3,8 +3,6 @@ import { NavigationProp } from '@react-navigation/native';
 export const Routes = {
     home: 'home',
     competition: 'competition',
-    classes: 'classes',
-    club: 'club',
     passings: 'competition.passings',
     info: 'info',
     results: 'results',

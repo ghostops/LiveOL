@@ -21,15 +21,6 @@ type Props = OwnProps;
 const DataWrapper: React.SFC<Props> = (props) => {
     const competitionId: number = props.route.params.id;
 
-    React.useEffect(
-        () => {
-            props.navigation.setOptions({
-                title: props.route.params.title,
-            });
-        },
-        [],
-    );
-
     const { data, loading, error } =
         useQuery<GetCompetition, GetCompetitionVariables>(
             GET_COMPETITION,

@@ -39,12 +39,6 @@ class Component extends React.PureComponent<Props, State> {
         canReview: false,
     };
 
-    componentDidMount() {
-        this.props.navigation.setOptions({
-            title: Lang.print('info.title'),
-        });
-    }
-
     openAppStore = async () => {
         Linking.openURL(
             Platform.OS === 'ios'

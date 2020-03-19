@@ -24,15 +24,6 @@ type Props = StateProps & OwnProps;
 const DataWrapper: React.SFC<Props> = (props) => {
     const competitionId: number = props.route.params.id;
 
-    React.useEffect(
-        () => {
-            props.navigation.setOptions({
-                title: props.route.params.title,
-            });
-        },
-        [],
-    );
-
     const { data, loading, error, refetch } =
         useQuery<GetLastPassings, GetLastPassingsVariables>(
             GET_LAST_PASSINGS,
