@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { today } from 'util/date';
+import { dateToReadable } from 'util/date';
 import { UNIT, COLORS } from 'util/const';
 import * as NB from 'native-base';
 import { Lang } from 'lib/lang';
@@ -43,7 +43,7 @@ export const TodaysCompetitions: React.SFC<Props> = ({ competitions, renderListI
                     fontWeight: 'bold',
                 }}
             >
-                {today()}
+                {dateToReadable(new Date(competitions[0].date))}
             </Text>
 
             <OLSafeAreaView>

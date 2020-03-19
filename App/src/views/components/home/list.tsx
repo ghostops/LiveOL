@@ -4,7 +4,7 @@ import _ from 'lodash';
 import * as NB from 'native-base';
 import { Lang } from 'lib/lang';
 import { HomeListItem } from './listItem';
-import { today } from 'util/date';
+import { datesAreOnSameDay, dateToReadable } from 'util/date';
 import { FlatList } from 'react-native';
 import { OLSafeAreaView } from '../safeArea';
 import { Competition } from 'lib/graphql/fragments/types/Competition';
@@ -21,12 +21,6 @@ interface Props {
     onCompetitionPress: (comp: Competition) => void;
     listHeader: React.ReactElement;
 }
-
-export const getVisibleCompetitions = (competitions: Comp[], page: number, size: number) =>
-    competitions.slice(
-        size * (page === 1 ? 0 : (page || 1)),
-        (size * (page || 1)) + size,
-    );
 
 export const groupVisibleCompetitions = (
     visibleCompetitions: Competition[],
@@ -68,9 +62,12 @@ export const HomeList: React.SFC<Props> = ({
         />
     );
 
-    const renderListSection = (key: string, competitions: Record<string, Competition[]>) => {
+    const renderListSection = (date: string, competitions: Record<string, Competition[]>) => {
+        const isToday = datesAreOnSameDay(new Date(date), new Date());
+        const dateStr = dateToReadable(new Date(date));
+
         return (
-            <OLSafeAreaView key={key}>
+            <OLSafeAreaView key={date}>
                 <View>
                     <ListItem
                         itemDivider
@@ -83,13 +80,13 @@ export const HomeList: React.SFC<Props> = ({
                             fontSize: fontPx(16),
                             fontWeight: 'bold',
                         }}>
-                            {key} {key === today() && `(${Lang.print('home.today')})`}
+                            {dateStr} {isToday && `(${Lang.print('home.today')})`}
                         </Text>
                     </ListItem>
 
                     <List>
-                        {competitions[key].map((comp, index) => (
-                            renderListItem(comp, index, competitions[key].length)
+                        {competitions[date].map((comp, index) => (
+                            renderListItem(comp, index, competitions[date].length)
                         ))}
                     </List>
                 </View>

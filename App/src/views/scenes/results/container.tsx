@@ -19,8 +19,11 @@ interface OwnProps extends RouterProps<{ id, className }> {}
 type Props = OwnProps;
 
 const DataWrapper: React.SFC<Props> = ({ route, navigation }) => {
-    const className: string = route.params.className;
-    const competitionId: number = route.params.id;
+    // const className: string = route.params.className;
+    // const competitionId: number = route.params.id;
+
+    const className = 'M20-1';
+    const competitionId = 16011;
 
     React.useEffect(
         () => {
@@ -43,6 +46,8 @@ const DataWrapper: React.SFC<Props> = ({ route, navigation }) => {
     if (loading) return <OLLoading />;
 
     const results: Result[] = _.get(data, 'results.getResults', null);
+
+    console.log(className, competitionId);
 
     return (
         <Component

@@ -1,6 +1,6 @@
 {
   "name": "@liveol/app",
-  "version": "1.5.0",
+  "version": "2.0.0",
   "main": "node_modules/expo/AppEntry.js",
   "schema_url": "http://localhost:4000",
   "scripts": {

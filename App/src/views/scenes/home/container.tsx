@@ -10,7 +10,7 @@ import { OLError } from 'views/components/error';
 import { OLHome as Component } from './component';
 import { Right, Left } from './header';
 import { Routes } from 'lib/nav/routes';
-import { today, datesAreOnSameDay } from 'util/date';
+import { datesAreOnSameDay } from 'util/date';
 import { useQuery } from '@apollo/react-hooks';
 import * as Actions from './store';
 
@@ -57,7 +57,12 @@ const DataWrapper: React.SFC<Props> = (props) => {
 
             todaysCompetitions={(
                 (competitions || [])
-                    .filter((comp) => datesAreOnSameDay(new Date(comp.date), new Date()))
+                    .filter((comp) => {
+                        return datesAreOnSameDay(
+                            new Date(comp.date),
+                            new Date(),
+                        );
+                    })
             )}
 
             onCompetitionPress={(competition) => {
