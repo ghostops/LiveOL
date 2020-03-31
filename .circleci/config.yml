@@ -22,7 +22,7 @@ jobs:
 
             - run:
                 name: Pull changes on server
-                command: sshpass -p "${SSH_PASSWORD}" ssh ${SSH_USER}@${SSH_DOMAIN} -p ${SSH_PORT} "cd ${PROJECT_ROOT} && git pull"
+                command: sshpass -p "${SSH_PASSWORD}" ssh ${SSH_USER}@${SSH_DOMAIN} -p ${SSH_PORT} "cd ${PROJECT_ROOT} && git stash && git pull"
 
             - run:
                 name: Rebuild the Docker containers and restart
