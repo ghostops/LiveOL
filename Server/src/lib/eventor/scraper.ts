@@ -1,16 +1,17 @@
 import { Cacher } from 'lib/redis';
 import { ListResponseParser, EventResponseParser } from './parser';
 import * as fs from 'fs';
+import * as ms from 'ms';
 import axios, { AxiosInstance } from 'axios';
 
-const DEV = true;
+const DEV = false;
 
 export class EventorScraper {
     private client: AxiosInstance;
 
     constructor(
         private baseUrl: string,
-        // private cache: Cacher,
+        private cache: Cacher,
     ) {
         this.client = axios.create({
             headers: {
@@ -31,7 +32,19 @@ export class EventorScraper {
             console.info('Read range from DEV cache');
             data = fs.readFileSync(`${__dirname}/test/list-body.html`).toString();
         } else {
-            data = (await this.client.get(url)).data;
+            const key = `eventor:range:${start}-${end}`;
+
+            data = await this.cache.get(key);
+
+            if (!data) {
+                data = (await this.client.get(url)).data;
+
+                await this.cache.set(
+                    key,
+                    data,
+                    { ttlMs: ms('12 hours') },
+                );
+            }
         }
 
         const parser = new ListResponseParser(data, this.baseUrl);
@@ -49,7 +62,19 @@ export class EventorScraper {
             console.info('Read event from DEV cache');
             data = fs.readFileSync(`${__dirname}/test/event-body.html`).toString();
         } else {
-            data = (await this.client.get(url)).data;
+            const key = `eventor:event:${id}`;
+
+            data = await this.cache.get(key);
+
+            if (!data) {
+                data = (await this.client.get(url)).data;
+
+                await this.cache.set(
+                    key,
+                    data,
+                    { ttlMs: ms('12 hours') },
+                );
+            }
         }
 
         const parser = new EventResponseParser(data, this.baseUrl);
