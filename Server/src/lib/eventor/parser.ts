@@ -1,30 +1,93 @@
 import * as cheerio from 'cheerio';
 import * as _ from 'lodash';
+import { invertKeyValues } from '../helpers/invert';
 
 export type EventorClubIconSize = 'MediumIcon' | 'InlineIcon';
 
+export type EventorCompetitionDistance = 'ultralong' | 'long' | 'middle' | 'sprint';
+
+export type EventorCompetitionType = 'foot' | 'ski' | 'mountainbike' | 'trail' | 'precision';
+
 interface EventorEventBase {
-    date: string;
+    date: Date;
     name: string;
     club: string;
     clubLogoUrl: string;
     district: string;
-    competitionDistance: string;
-    raceType: string;
+    competitionDistance: EventorCompetitionDistance;
+    competitionType: EventorCompetitionType;
     canceled: boolean;
 }
 
 export interface EventorEventItem extends EventorEventBase {
-    cancelReason?: string;
+    info?: string;
+    links: {
+        href: string;
+        text: string;
+    }[];
 }
 
 export interface EventorListItem extends EventorEventBase {
-    // competitionType:  'L' | 'S' | 'M' | 'P';
-    // competitionFormat: string;
     liveloxLink: string;
     resultsLink: string;
 }
 
+const parseDate = (input: string): Date | null => {
+    if (!input) return null;
+
+    // TODO: Parse the date to JS here!
+
+    return new Date('2100-01-01');
+};
+
+const parseClubLogo = (base: string, path: string): string | null => {
+    if (!base || !path) return null;
+
+    let clubLogoUrl: string = path;
+    clubLogoUrl = clubLogoUrl.split('?')[0];
+    clubLogoUrl = `${base}${clubLogoUrl}`;
+
+    return clubLogoUrl;
+};
+
+const parseCompetitionType = (input: string): EventorCompetitionType => {
+    switch (input.toLowerCase()) {
+        case 'p':
+        case 'precisionsorientering':
+            return 'precision';
+        case 's':
+        case 'skidorientering':
+            return 'ski';
+        case 'm':
+        case 'mountainbikeorientering':
+            return 'mountainbike';
+        case 't':
+        case 'trailorienteering':
+                return 'trail';
+        case 'l':
+        case 'orienteringslöpning':
+        default:
+            return 'foot';
+    };
+};
+
+const parseCompetitionDistance = (input: string): EventorCompetitionDistance => {
+    switch (input.toLowerCase()) {
+        case 'u':
+        case 'ultralång':
+            return 'ultralong';
+        case 'l':
+        case 'lång':
+            return 'long';
+        case 's':
+        case 'sprint':
+            return 'sprint';
+        case 'm':
+        case 'medel':
+        default:
+            return 'middle';
+    };
+};
 
 export class ListResponseParser {
     constructor(private body: string, private base: string) {}
@@ -67,28 +130,31 @@ export class ListResponseParser {
                 this.currentDay = _.get(row, `children.1.children.0.data`);
             }
 
-            // TODO: Parse this to a JS date
-            const date = this.currentDay;
+            const date = parseDate(this.currentDay);
 
             const canceled = !!(row.attribs.class && row.attribs.class.includes('canceled'));
 
             const name = _.get(row, `children[${0 + indexModifier}].children.0.children.0.data`);
             const club = _.get(row, `children[${1 + indexModifier}].children.0.children.1.data`);
 
-            let clubLogoUrl = _.get(row, `children[${1 + indexModifier}].children.0.children.0.attribs.src`);
-            if (clubLogoUrl) {
-                clubLogoUrl = clubLogoUrl.split('?')[0];
-                clubLogoUrl = `${this.base}${clubLogoUrl}`;
-            }
+            let clubLogoUrl = parseClubLogo(
+                this.base,
+                _.get(row, `children[${1 + indexModifier}].children.0.children.0.attribs.src`)
+            );
 
             const district = _.get(row, `children[${2 + indexModifier}].children.0.data`);
-            // TODO: parse to common type
-            const raceType = _.get(row, `children[${3 + indexModifier}].children.0.children.0.data`, 'L');
 
-            // const competitionType = _.get(row, `children[${4 + indexModifier}].children.0.children.0.data`);
-            // const competitionFormat = _.get(row, `children[${5 + indexModifier}].children.0.children.0.data`, 'D');
-            // TODO: parse to common type
-            const competitionDistance = _.get(row, `children[${6 + indexModifier}].children.0.children.0.data`);
+            const competitionType = parseCompetitionType(
+                _.get(
+                    row,
+                    `children[${3 + indexModifier}].children.0.children.0.data`,
+                    'foot' as EventorCompetitionType,
+                )
+            );
+
+            const competitionDistance = parseCompetitionDistance(
+                _.get(row, `children[${6 + indexModifier}].children.0.children.0.data`)
+            );
 
             let liveloxLink = _.get(row, `children[${9 + indexModifier}].children.0.children.0.attribs.href`);
             if (liveloxLink) {
@@ -106,7 +172,7 @@ export class ListResponseParser {
                 club,
                 clubLogoUrl,
                 district,
-                raceType,
+                competitionType,
                 competitionDistance,
                 liveloxLink,
                 resultsLink,
@@ -124,37 +190,71 @@ export class EventResponseParser {
 
     public parse = (): EventorEventItem => {
         const $ = cheerio.load(this.body);
-        
-        const date = $('#main > div > div.eventInfoTableContainer > table:nth-child(1) > tbody > tr:nth-child(5) > td').text().trim();
-        const name = $('#main > div > h2').text();
-        const club = $('#main > div > div.eventInfoTableContainer > table:nth-child(1) > tbody > tr:nth-child(2) > td > span').text();
-        
-        let clubLogoUrl = $('#main > div > div.eventInfoTableContainer > table:nth-child(1) > tbody > tr:nth-child(2) > td > span > img').attr('src');
-        if (clubLogoUrl) {
-            clubLogoUrl = clubLogoUrl.split('?')[0];
-            clubLogoUrl = `${this.base}${clubLogoUrl}`;
-        }
 
-        
-        const district = $('#main > div > div.eventInfoTableContainer > table:nth-child(1) > tbody > tr:nth-child(3) > td').text();
-        // TODO: parse to common type
-        const competitionDistance = $('#main > div > div.eventInfoTableContainer > table:nth-child(1) > tbody > tr:nth-child(9) > td').text();
-        // TODO: parse to common type
-        const raceType = $('#main > div > div.eventInfoTableContainer > table:nth-child(1) > tbody > tr:nth-child(11) > td').text();
-        
-        const cancelReason = $('#main > div > p.info').text();
+        const infoMap = invertKeyValues({
+            name: 'Tävling',
+            date: 'Datum',
+            club: 'Arrangörsorganisation',
+            clubLogoUrl: 'Arrangörsorganisation',
+            district: 'Distrikt',
+            competitionDistance: 'Tävlingsdistans',
+            competitionType: 'Gren',
+            status: 'Status',
+        });
 
-        console.log('------');
+        const mappedInfoData: Partial<EventorEventItem> = {};
+
+        // This array contains all the table data to the left on the event page
+        const infoTable = $('.eventInfo tbody tr').toArray();
+        
+        infoTable.forEach((element) => {
+            const title = _.get(element, 'children.1.children.0.data');
+            const value = _.get(element, 'children.3.children.0.data', '').trim();
+
+            if (infoMap[title]) {
+                // Hacky special case for club data
+                if (
+                    infoMap[title].includes('club') ||
+                    infoMap[title].includes('clubLogoUrl')
+                ) {
+                    const imageUrl = _.get(element, 'children.3.children.0.children.0.attribs.src');
+                    const club = _.get(element, 'children.3.children.0.children.1.data');
+                    
+                    mappedInfoData.club = club;
+                    mappedInfoData.clubLogoUrl = imageUrl;
+
+                    return;
+                }
+
+                mappedInfoData[infoMap[title]] = value;
+            }
+        });
+        
+        const info = $('#main > div > p.info').text().trim();
+        
+        const links = $('.documents .documentName').toArray().map((element) => {
+            const href = (
+                element.attribs.href.startsWith('/')
+                ? `${this.base}${element.attribs.href}`
+                : element.attribs.href
+            );
+
+            const text = _.get(element, 'children.0.data', 'Unnamed Link');
+
+            return { href, text };
+        });
+
         return {
-            date,
-            name,
-            club,
-            clubLogoUrl,
-            district,
-            competitionDistance,
-            raceType,
-            cancelReason,
-            canceled: !!cancelReason,
+            date: parseDate(mappedInfoData.date as unknown as string),
+            name: mappedInfoData.name,
+            club: mappedInfoData.club,
+            district: mappedInfoData.district,
+            competitionDistance: parseCompetitionDistance(mappedInfoData.competitionDistance),
+            competitionType: parseCompetitionType(mappedInfoData.competitionType),
+            canceled: (mappedInfoData as any).status === 'inställd',
+            clubLogoUrl: parseClubLogo(this.base, mappedInfoData.clubLogoUrl),
+            links,
+            info,
         };
     }
 }

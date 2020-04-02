@@ -1,6 +1,7 @@
-import axios, { AxiosInstance } from 'axios';
+import { Cacher } from 'lib/redis';
 import { ListResponseParser, EventResponseParser } from './parser';
 import * as fs from 'fs';
+import axios, { AxiosInstance } from 'axios';
 
 const DEV = true;
 
@@ -9,6 +10,7 @@ export class EventorScraper {
 
     constructor(
         private baseUrl: string,
+        // private cache: Cacher,
     ) {
         this.client = axios.create({
             headers: {
@@ -26,7 +28,7 @@ export class EventorScraper {
         let data: string;
 
         if (DEV) {
-            console.info('Read from DEV cache');
+            console.info('Read range from DEV cache');
             data = fs.readFileSync(`${__dirname}/test/list-body.html`).toString();
         } else {
             data = (await this.client.get(url)).data;
@@ -44,7 +46,7 @@ export class EventorScraper {
         let data: string;
 
         if (DEV) {
-            console.info('Read from DEV cache');
+            console.info('Read event from DEV cache');
             data = fs.readFileSync(`${__dirname}/test/event-body.html`).toString();
         } else {
             data = (await this.client.get(url)).data;
