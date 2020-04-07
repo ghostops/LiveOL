@@ -8,9 +8,9 @@ export const CompetitionsQuery = new GraphQLObjectType({
     fields: () => ({
         getAllCompetitions: {
             type: GraphQLList(OLCompetition),
-            resolve: async (_, args, { Api }: GQLContext): Promise<IOLCompetition[]> => {
-                const { competitions } = await Api.getcompetitions();
-                return competitions.map(marshallCompetition);
+            resolve: async (_, args, { Liveresultat }: GQLContext): Promise<IOLCompetition[]> => {
+                const { competitions } = await Liveresultat.getcompetitions();
+                return competitions.map(marshallCompetition(null));
             },
         },
         getCompetition: {
@@ -20,14 +20,15 @@ export const CompetitionsQuery = new GraphQLObjectType({
                 },
             },
             type: OLCompetition,
-            resolve: async (_, args, { Api }: GQLContext): Promise<IOLCompetition> => {
+            resolve: async (_, args, { Liveresultat, Eventor }: GQLContext): Promise<IOLCompetition> => {
                 if (!args.competitionId) {
                     throw new Error('No competition id present');
                 }
 
-                const competition = await Api.getcompetition(args.competitionId);
+                const liveresultatComp = await Liveresultat.getcompetition(args.competitionId);
+                const eventorComp = await Eventor.getEventorData(liveresultatComp);
 
-                return marshallCompetition(competition);
+                return marshallCompetition(eventorComp)(liveresultatComp);
             },
         },
         getCompetitionClasses: {
@@ -37,12 +38,12 @@ export const CompetitionsQuery = new GraphQLObjectType({
                 },
             },
             type: GraphQLList(OLClass),
-            resolve: async (_, args, { Api }: GQLContext): Promise<IOLClass[]> => {
+            resolve: async (_, args, { Liveresultat }: GQLContext): Promise<IOLClass[]> => {
                 if (!args.competitionId) {
                     throw new Error('No competition id present');
                 }
 
-                const { classes } = await Api.getclasses(args.competitionId);
+                const { classes } = await Liveresultat.getclasses(args.competitionId);
 
                 return classes.map(marshallClass(args.competitionId));
             },

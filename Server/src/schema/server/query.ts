@@ -1,6 +1,9 @@
 import { GraphQLObjectType, GraphQLString, GraphQLBoolean } from 'graphql';
 import { EventorScraper } from 'lib/eventor/scraper';
+import { EventorExtractor } from 'lib/eventor/exctractor';
+import { LiveresultatAPIClient } from 'lib/liveresultat';
 import { Cache } from 'lib/redis';
+import { GQLContext } from 'lib/server';
 
 export const ServerQuery = new GraphQLObjectType({
     name: 'ServerQuery',
@@ -11,13 +14,7 @@ export const ServerQuery = new GraphQLObjectType({
         },
         test: {
             type: GraphQLBoolean,
-            resolve: async () => {
-                const scraper = new EventorScraper('https://eventor.orientering.se', Cache);
-
-                const res = await scraper.scrapeDateRange(new Date('2020-01-01'), new Date('2020-01-01'));
-
-                console.log(res);
-
+            resolve: async (_, args, { }: GQLContext) => {
                 return true;
             },
         },

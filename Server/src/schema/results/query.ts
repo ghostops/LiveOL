@@ -15,12 +15,12 @@ export const ResultsQuery = new GraphQLObjectType({
                 },
             },
             type: GraphQLList(OLResult),
-            resolve: async (_, args, { Api }: GQLContext): Promise<IOLResult[]> => {
+            resolve: async (_, args, { Liveresultat }: GQLContext): Promise<IOLResult[]> => {
                 if (!args.competitionId || !args.className) {
                     throw new Error('No competition id and/or class name present');
                 }
 
-                const res = await Api.getclassresults(args.competitionId, args.className);
+                const res = await Liveresultat.getclassresults(args.competitionId, args.className);
 
                 return res.results.map(marshallResult(args.competitionId, args.className, res.splitcontrols));
             },
@@ -35,12 +35,12 @@ export const ResultsQuery = new GraphQLObjectType({
                 },
             },
             type: GraphQLList(OLSplitControl),
-            resolve: async (_, args, { Api }: GQLContext): Promise<IOLSplitControl[]> => {
+            resolve: async (_, args, { Liveresultat }: GQLContext): Promise<IOLSplitControl[]> => {
                 if (!args.competitionId || !args.className) {
                     throw new Error('No competition id and/or class name present');
                 }
 
-                const res = await Api.getclassresults(args.competitionId, args.className);
+                const res = await Liveresultat.getclassresults(args.competitionId, args.className);
 
                 return res.splitcontrols.map(marshallSplitControl);
             },

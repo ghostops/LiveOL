@@ -61,3 +61,33 @@ export const timeplusToReadable = (time: number): string => {
 
     return `+${padTime(realMinutes)}:${padTime(seconds)}`;
 };
+
+export const getWeek = (date: Date): number => {
+    date = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+    
+    date.setUTCDate(date.getUTCDate() + 4 - (date.getUTCDay() || 7));
+    
+    const yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
+    
+    const diff = (date as any) - (yearStart as any);
+
+    const weekNo = Math.ceil(((diff / 86400000) + 1) / 7);
+    
+    return weekNo;
+};
+
+export const weekNumberToDate = (weekNumber: number, year: number): Date => {
+    const day = (1 + (weekNumber - 1) * 7);
+    const date = new Date(year, 0, day);
+    return date;
+};
+
+export const getDatesFromWeek = (weekNumber: number, year: number): [Date, Date] => {
+    const start = weekNumberToDate(weekNumber, year);
+    
+    // Add 6 days to get the last day of the week
+    const end = new Date(start);
+    end.setDate(start.getDate() + 6);
+
+    return [start, end];
+};

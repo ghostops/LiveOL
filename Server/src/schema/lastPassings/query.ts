@@ -12,12 +12,12 @@ export const LastPassingsQuery = new GraphQLObjectType({
                 },
             },
             type: GraphQLList(OLPassing),
-            resolve: async (_, args, { Api }: GQLContext): Promise<IOLPassing[]> => {
+            resolve: async (_, args, { Liveresultat }: GQLContext): Promise<IOLPassing[]> => {
                 if (!args.competitionId) {
                     throw new Error('No competition id present');
                 }
 
-                const { passings } = await Api.getlastpassings(args.competitionId);
+                const { passings } = await Liveresultat.getlastpassings(args.competitionId);
 
                 return passings.map(marshallPassing);
             },
