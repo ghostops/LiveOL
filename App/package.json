@@ -2,7 +2,6 @@
   "name": "@liveol/app",
   "version": "2.0.0",
   "main": "node_modules/expo/AppEntry.js",
-  "schema_url": "http://localhost:4000",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
@@ -15,9 +14,9 @@
     "testserver": "nodemon testserver/",
     "lang": "phraseapp pull",
     "schema": "yarn schema:download && yarn schema:tots && yarn schema:cleanup",
-    "schema:download": "yarn run apollo schema:download --endpoint=$npm_package_schema_url graphql-schema.json",
+    "schema:download": "yarn run apollo schema:download --endpoint=http://localhost:4000 graphql-schema.json",
     "schema:tots": "yarn run apollo codegen:generate --localSchemaFile=graphql-schema.json --target=typescript --includes=src/**/*.ts --tagName=gql --addTypename --globalTypesFile=src/lib/graphql/types/graphql-global-types.ts types",
-    "schema:cleanup": "rm -rf graphql-schema.json types"
+    "schema:cleanup": "yarn rimraf graphql-schema.json types"
   },
   "jest": {
     "preset": "jest-expo"
@@ -69,6 +68,7 @@
     "express": "^4.16.4",
     "jest-expo": "^36.0.0",
     "nodemon": "^1.18.10",
+    "rimraf": "^3.0.2",
     "sftp-sync-deploy": "^0.7.1",
     "tslint": "^5.12.1",
     "tslint-config-airbnb": "^5.11.1",

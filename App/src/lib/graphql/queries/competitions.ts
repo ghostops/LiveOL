@@ -1,5 +1,5 @@
 import { gql } from 'apollo-boost';
-import { CompetitionFragment, ClassFragment } from '../fragments/competition';
+import { CompetitionFragment, ClassFragment, EventorCompetitionFragment } from '../fragments/competition';
 
 export const ALL_COMPETITIONS = gql`
     query AllCompetitions {
@@ -18,6 +18,7 @@ export const GET_COMPETITION = gql`
         competitions {
             getCompetition(competitionId: $competitionId) {
                 ...Competition
+                ...EventorCompetitionFragment
             }
             getCompetitionClasses(competitionId: $competitionId) {
                 ...Class
@@ -26,5 +27,6 @@ export const GET_COMPETITION = gql`
     }
 
     ${CompetitionFragment}
+    ${EventorCompetitionFragment}
     ${ClassFragment}
 `;

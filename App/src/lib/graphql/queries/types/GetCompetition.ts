@@ -13,6 +13,13 @@ export interface GetCompetition_competitions_getCompetition {
   name: string | null;
   organizer: string | null;
   date: string | null;
+  info: string | null;
+  club: string | null;
+  clubLogoUrl: string | null;
+  clubLogoSizes: (string | null)[] | null;
+  canceled: boolean | null;
+  distance: string | null;
+  district: string | null;
 }
 
 export interface GetCompetition_competitions_getCompetitionClasses {

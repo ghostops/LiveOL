@@ -9,6 +9,18 @@ export const CompetitionFragment = gql`
     }
 `;
 
+export const EventorCompetitionFragment = gql`
+    fragment EventorCompetitionFragment on OLCompetition {
+        info
+        club
+        clubLogoUrl
+        clubLogoSizes
+        canceled
+        distance
+        district
+    }
+`;
+
 export const ClassFragment = gql`
     fragment Class on OLClass {
         id
