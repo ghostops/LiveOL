@@ -12,3 +12,5 @@ app/build
 .secret
 server/build
 yarn-error.log
+
+/Server/.env
