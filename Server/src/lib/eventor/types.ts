@@ -1,4 +1,5 @@
-export type EventorClubIconSize = 'MediumIcon' | 'InlineIcon';
+export type EventorClubIconSize = 'MediumIcon' | 'InlineIcon' | 'LargeIcon';
+export const EVENTOR_CLUB_ICON_SIZES: EventorClubIconSize[] = ['InlineIcon', 'MediumIcon', 'LargeIcon'];
 
 export type EventorCompetitionDistance = 'ultralong' | 'long' | 'middle' | 'sprint';
 
@@ -27,4 +28,14 @@ export interface EventorEventItem extends EventorEventBase {
 export interface EventorListItem extends EventorEventBase {
     liveloxLink: string;
     resultsLink: string;
+}
+
+export interface EventorClub {
+    id: number;
+    name: string;
+    country: string;
+    address: string;
+    website: string;
+    email: string;
+    clubLogoUrl: string;
 }

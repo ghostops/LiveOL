@@ -1,6 +1,6 @@
 import { GQLContext } from 'lib/server';
 import { GraphQLObjectType, GraphQLList, GraphQLInt, GraphQLString } from 'graphql';
-import { marshallPassing, IOLPassing, OLPassing } from 'schema/lastPassings';
+import { OLClub, IOLClub, marshallClub  } from 'schema/clubs';
 
 export const ClubsQuery = new GraphQLObjectType({
     name: 'ClubsQuery',
@@ -11,15 +11,36 @@ export const ClubsQuery = new GraphQLObjectType({
                     type: GraphQLInt,
                 },
             },
-            type: GraphQLList(OLPassing),
-            resolve: async (_, args, { Liveresultat }: GQLContext): Promise<IOLPassing[]> => {
-                if (!args.competitionId) {
-                    throw new Error('No competition id present');
+            type: OLClub,
+            resolve: async (_, args, { Eventor }: GQLContext): Promise<IOLClub> => {
+                if (!args.clubId) {
+                    throw new Error('No club id present');
                 }
 
-                const { passings } = await Liveresultat.getlastpassings(args.competitionId);
+                const clubs = await Eventor.api.getClubs();
 
-                return passings.map(marshallPassing);
+                const club = clubs.find((c) => c.id === args.clubId);
+
+                return marshallClub(club);
+            },
+        },
+        getClubByName: {
+            args: {
+                clubName: {
+                    type: GraphQLString,
+                },
+            },
+            type: OLClub,
+            resolve: async (_, args, { Eventor }: GQLContext): Promise<IOLClub> => {
+                if (!args.clubName) {
+                    throw new Error('No club name present');
+                }
+
+                const clubs = await Eventor.api.getClubs();
+
+                const club = clubs.find((c) => c.name.toLowerCase() === args.clubName.toLowerCase());
+
+                return marshallClub(club);
             },
         },
     }),

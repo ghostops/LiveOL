@@ -20,16 +20,21 @@ export const server = new ApolloServer({
     context: ({ req, res }): GQLContext => {
         if (req && res) {
             const scraper = new EventorScraper('https://eventor.orientering.se', Cache);
+            const eventorScraper = new EventorExtractor(scraper);
+
+            const eventorApi = new EventorApi('https://eventor.orientering.se', process.env.EVENTOR_API_KEY, Cache);
+
+            const liveresultatApi = new LiveresultatAPIClient(
+                'https://liveresultat.orientering.se',
+                Cache,
+            );
 
             const context: GQLContext = {
                 userId: req['userId'],
-                Liveresultat: new LiveresultatAPIClient(
-                    'https://liveresultat.orientering.se',
-                    Cache,
-                ),
+                Liveresultat: liveresultatApi,
                 Eventor: {
-                    api: new EventorApi(process.env.EVENTOR_API_KEY, Cache),
-                    scraper:  new EventorExtractor(scraper),
+                    api: eventorApi,
+                    scraper: eventorScraper,
                 },
             };
 

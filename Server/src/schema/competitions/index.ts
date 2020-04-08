@@ -1,5 +1,5 @@
-import { EventorEventItem, EventorCompetitionDistance } from 'lib/eventor/types';
-import { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLBoolean, GraphQLEnumType } from 'graphql';
+import { EventorEventItem, EventorCompetitionDistance, EventorClubIconSize, EVENTOR_CLUB_ICON_SIZES } from 'lib/eventor/types';
+import { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLBoolean, GraphQLList } from 'graphql';
 import { LiveresultatApi } from 'lib/liveresultat/types';
 import { UTCTime } from 'types';
 import * as _ from 'lodash';
@@ -14,6 +14,7 @@ export interface IOLCompetition {
     info?: string;
     club?: string;
     clubLogoUrl?: string;
+    clubLogoSizes: EventorClubIconSize[];
     canceled?: boolean | null;
     distance?: EventorCompetitionDistance;
     district?: string;
@@ -25,6 +26,7 @@ export const marshallCompetition = (eventor?: EventorEventItem) => (liveres: Liv
         name: liveres.name,
         organizer: liveres.organizer,
         date: new Date(liveres.date).toUTCString(),
+        clubLogoSizes: EVENTOR_CLUB_ICON_SIZES,
     };
 
     if (eventor) {
@@ -73,6 +75,10 @@ export const OLCompetition = new GraphQLObjectType({
         clubLogoUrl: {
             type: GraphQLString,
             resolve: (comp: IOLCompetition) => comp.clubLogoUrl,
+        },
+        clubLogoSizes: {
+            type: new GraphQLList(GraphQLString),
+            resolve: (comp: IOLCompetition) => comp.clubLogoSizes,
         },
         canceled: {
             type: GraphQLBoolean,

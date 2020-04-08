@@ -3,6 +3,7 @@ import { CompetitionsQuery } from 'schema/competitions/query';
 import { LastPassingsQuery } from 'schema/lastPassings/query';
 import { ResultsQuery } from 'schema/results/query';
 import { ServerQuery } from 'schema/server/query';
+import { ClubsQuery } from 'schema/clubs/query';
 
 const query = new GraphQLObjectType({
     name: 'Query',
@@ -11,6 +12,7 @@ const query = new GraphQLObjectType({
         lastPassings: { type: LastPassingsQuery, resolve: () => true },
         results: { type: ResultsQuery, resolve: () => true },
         server: { type: ServerQuery, resolve: () => true },
+        clubs: { type: ClubsQuery, resolve: () => true },
     }),
 })
 
