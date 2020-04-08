@@ -1,8 +1,4 @@
 import { GraphQLObjectType, GraphQLString, GraphQLBoolean } from 'graphql';
-import { EventorScraper } from 'lib/eventor/scraper';
-import { EventorExtractor } from 'lib/eventor/exctractor';
-import { LiveresultatAPIClient } from 'lib/liveresultat';
-import { Cache } from 'lib/redis';
 import { GQLContext } from 'lib/server';
 
 export const ServerQuery = new GraphQLObjectType({

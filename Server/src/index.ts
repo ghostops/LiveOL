@@ -15,7 +15,7 @@ import * as dotenv from 'dotenv';
         port: 6379,
     });
 
-    server.listen().then(({ url }) => {
-        console.log(`🚀  Server ready at ${url}`);
-    });
+    const { url } = await server.listen();
+
+    console.info(`🚀  Server ready at ${url}`);
 })();
