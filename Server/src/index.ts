@@ -1,7 +1,10 @@
 import { server } from 'lib/server';
 import { Cache } from 'lib/redis';
+import * as dotenv from 'dotenv';
 
 (async () => {
+    dotenv.config();
+
     Cache.init({
         host: (
             process.env.ENV &&

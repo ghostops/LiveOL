@@ -2,6 +2,9 @@ import { EventorScraper } from './src/lib/eventor/scraper';
 import { Cacher } from './src/lib/redis';
 import Axios from 'axios';
 import * as xmlJs from 'xml-js';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 (async () => {
     // const c = new EventorScraper('https://eventor.orientering.se', new Cacher);
@@ -17,7 +20,7 @@ import * as xmlJs from 'xml-js';
 
     const res = await Axios.get('https://eventor.orientering.se/api/organisations', {
         headers: {
-           ApiKey: '', 
+           ApiKey: process.env.EVENTOR_API_KEY, 
         },
     });
 
