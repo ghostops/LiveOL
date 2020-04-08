@@ -43,5 +43,13 @@ export const ClubsQuery = new GraphQLObjectType({
                 return marshallClub(club);
             },
         },
+        getAllClubs: {
+            type: new GraphQLList(OLClub),
+            resolve: async (_, args, { Eventor }: GQLContext): Promise<IOLClub[]> => {
+                const clubs = await Eventor.api.getClubs();
+
+                return clubs.map(marshallClub);
+            },
+        },
     }),
 });
