@@ -13,6 +13,7 @@ export interface GetCompetition_competitions_getCompetition {
   name: string | null;
   organizer: string | null;
   date: string | null;
+  eventor: boolean | null;
   info: string | null;
   club: string | null;
   clubLogoUrl: string | null;

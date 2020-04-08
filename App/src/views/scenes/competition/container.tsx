@@ -35,7 +35,7 @@ const DataWrapper: React.SFC<Props> = (props) => {
     return (
         <Component
             loading={loading}
-            competition={competition}
+            competition={competition as any}
             classes={classes}
 
             goToLastPassings={() => {

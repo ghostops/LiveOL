@@ -13,6 +13,7 @@ export interface AllCompetitions_competitions_getAllCompetitions {
   name: string | null;
   organizer: string | null;
   date: string | null;
+  eventor: boolean | null;
 }
 
 export interface AllCompetitions_competitions {

@@ -4,14 +4,17 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL fragment: Competition
+// GraphQL fragment: Club
 // ====================================================
 
-export interface Competition {
-  __typename: "OLCompetition";
+export interface Club {
+  __typename: "OLClub";
   id: number | null;
   name: string | null;
-  organizer: string | null;
-  date: string | null;
-  eventor: boolean | null;
+  country: string | null;
+  address: string | null;
+  website: string | null;
+  email: string | null;
+  clubLogoUrl: string | null;
+  clubLogoSizes: (string | null)[] | null;
 }

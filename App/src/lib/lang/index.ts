@@ -11,7 +11,7 @@ const LOCALES = {
 class Language {
     private key: string = 'OL:LANG';
     public active: AvailibleLanguage = null;
-    public fallaback: AvailibleLanguage = 'en';
+    public fallback: AvailibleLanguage = 'en';
     public phoneLocale: string;
 
     public availible: AvailibleLanguage[] = ['en', 'sv', 'no'];
@@ -27,7 +27,7 @@ class Language {
             if ((this.availible as string[]).indexOf(this.phoneLocale) > -1) {
                 this.active = this.phoneLocale as AvailibleLanguage;
             } else {
-                this.active = this.fallaback;
+                this.active = this.fallback;
             }
         }
     }
@@ -39,7 +39,7 @@ class Language {
     }
 
     public print = (key: string): string => {
-        return _.get(LOCALES, `${this.active}.${key}`, _.get(LOCALES[this.fallaback], key));
+        return _.get(LOCALES, `${this.active}.${key}`, _.get(LOCALES[this.fallback], key, key));
     }
 }
 

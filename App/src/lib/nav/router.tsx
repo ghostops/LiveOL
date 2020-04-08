@@ -23,7 +23,7 @@ const Component: React.SFC<StateProps> = ({ landscape }) => {
                 colors: {
                     text: 'white',
                     background: 'white',
-                    border: 'white',
+                    border: 'transparent',
                     card: COLORS.MAIN,
                     primary: 'white',
                 },

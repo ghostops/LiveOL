@@ -11,6 +11,7 @@ export interface IOLCompetition {
     date: UTCTime;
 
     // Eventor props
+    eventorAvailable: boolean;
     info?: string;
     club?: string;
     clubLogoUrl?: string;
@@ -27,11 +28,13 @@ export const marshallCompetition = (eventor?: EventorEventItem) => (liveres: Liv
         organizer: liveres.organizer,
         date: new Date(liveres.date).toUTCString(),
         clubLogoSizes: EVENTOR_CLUB_ICON_SIZES,
+        eventorAvailable: false,
     };
 
     if (eventor) {
         marshall = {
             ...marshall,
+            eventorAvailable: true,
             info: eventor.info,
             club: eventor.club,
             clubLogoUrl: eventor.clubLogoUrl,
@@ -91,6 +94,10 @@ export const OLCompetition = new GraphQLObjectType({
         district: {
             type: GraphQLString,
             resolve: (comp: IOLCompetition) => comp.district,
+        },
+        eventor: {
+            type: GraphQLBoolean,
+            resolve: (comp: IOLCompetition) => comp.eventorAvailable,
         },
     }),
 });

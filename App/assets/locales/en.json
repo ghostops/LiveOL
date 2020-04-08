@@ -12,7 +12,14 @@
     "resultsFor": "Results for",
     "timerHint": "How often it auto updates"
   },
+  "distances": {
+    "ultralong": "Ultra Long",
+    "long": "Long",
+    "middle": "Middle",
+    "sprint": "Sprint"
+  },
   "competitions": {
+    "signups": "Signed up",
     "classes": "Classes",
     "lastPassings": "Last Passings",
     "noClasses": "No classes",

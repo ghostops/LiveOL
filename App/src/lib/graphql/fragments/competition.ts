@@ -6,6 +6,7 @@ export const CompetitionFragment = gql`
         name
         organizer
         date
+        eventor
     }
 `;
 
