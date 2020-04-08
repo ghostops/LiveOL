@@ -29,8 +29,11 @@ export const server = new ApolloServer({
                 Cache,
             );
 
+            // Headers will transform to lower case
+            const userId = req.headers.userid;
+
             const context: GQLContext = {
-                userId: req['userId'],
+                userId,
                 Liveresultat: liveresultatApi,
                 Eventor: {
                     api: eventorApi,

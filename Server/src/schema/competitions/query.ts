@@ -8,7 +8,7 @@ export const CompetitionsQuery = new GraphQLObjectType({
     fields: () => ({
         getAllCompetitions: {
             type: GraphQLList(OLCompetition),
-            resolve: async (_, args, { Liveresultat }: GQLContext): Promise<IOLCompetition[]> => {
+            resolve: async (_, args, { Liveresultat, userId }: GQLContext): Promise<IOLCompetition[]> => {
                 const { competitions } = await Liveresultat.getcompetitions();
                 return competitions.map(marshallCompetition(null));
             },

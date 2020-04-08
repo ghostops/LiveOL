@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "docker-compose up -d && yarn dev",
+    "tunnel": "ngrok http 4000",
     "build": "yarn tsc && yarn babel build --out-dir build",
     "dev": "nodemon -L -e ts -w ./src -x yarn dev:serve",
     "dev:serve": "ts-node -r tsconfig-paths/register src/index.ts"
@@ -32,6 +33,7 @@
   "devDependencies": {
     "@types/cheerio": "^0.22.16",
     "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.4",
     "@types/ioredis": "^4.14.9",
     "@types/lodash": "^4.14.149",
     "@types/node": "^13.9.1"

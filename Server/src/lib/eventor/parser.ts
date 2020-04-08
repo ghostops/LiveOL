@@ -19,6 +19,10 @@ const parseClubLogo = (base: string, path: string): string | null => {
 };
 
 const parseCompetitionType = (input: string): EventorCompetitionType => {
+    if (!input) {
+        return null;
+    }
+
     switch (input.toLowerCase()) {
         case 'p':
         case 'precisionsorientering':
@@ -40,6 +44,10 @@ const parseCompetitionType = (input: string): EventorCompetitionType => {
 };
 
 const parseCompetitionDistance = (input: string): EventorCompetitionDistance => {
+    if (!input) {
+        return null;
+    }
+
     switch (input.toLowerCase()) {
         case 'u':
         case 'ultralång':

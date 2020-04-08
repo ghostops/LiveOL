@@ -1,4 +1,6 @@
 import { Dimensions, PixelRatio } from 'react-native';
+import Constants from 'expo-constants';
+
 const window = Dimensions.get('window');
 
 export const DeviceOrientationAprox = (): 'landscape' | 'portrait' => {
@@ -12,6 +14,8 @@ export const APP = require('../../app.json');
 export const VERSION = PACKAGE.version;
 export const APP_VERSION = APP.expo.version;
 export const ANDROID_VERSION_CODE = APP.expo.android.versionCode;
+
+export const DEVICE_NAME = Constants.deviceName;
 
 export const COLORS = {
     MAIN: '#e86a1e',

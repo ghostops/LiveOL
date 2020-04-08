@@ -32,6 +32,7 @@
     "apollo-boost": "^0.4.7",
     "expo": "^36.0.0",
     "expo-blur": "~8.0.0",
+    "expo-constants": "~8.0.0",
     "expo-font": "~8.0.0",
     "expo-localization": "~8.0.0",
     "graphql": "^14.6.0",
