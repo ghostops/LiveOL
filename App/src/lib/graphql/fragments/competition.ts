@@ -19,6 +19,7 @@ export const EventorCompetitionFragment = gql`
         canceled
         distance
         district
+        signups
     }
 `;
 

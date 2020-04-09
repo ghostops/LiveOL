@@ -16,4 +16,5 @@ export interface EventorCompetitionFragment {
   canceled: boolean | null;
   distance: string | null;
   district: string | null;
+  signups: number | null;
 }

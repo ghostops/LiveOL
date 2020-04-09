@@ -23,6 +23,7 @@ export interface EventorEventItem extends EventorEventBase {
         href: string;
         text: string;
     }[];
+    signups: number;
 }
 
 export interface EventorListItem extends EventorEventBase {

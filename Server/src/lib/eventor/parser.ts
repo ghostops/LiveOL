@@ -272,6 +272,11 @@ export class EventResponseParser {
             return { href, text };
         });
 
+        let signups: string | number = $('#main > div > div.eventInfoBoxContainer > div.eventInfoBox.entryBox > div > ul > li:nth-child(1) > span').text();
+        if (signups) {
+            signups = Number(signups.replace('(', '').replace(')', ''));
+        }
+
         const date = this.parseDate(mappedInfoData.date as unknown as string);
 
         // Hacky way of selecting the id
@@ -286,6 +291,7 @@ export class EventResponseParser {
             date,
             links,
             info,
+            signups: signups as number,
             name: mappedInfoData.name,
             club: mappedInfoData.club,
             district: mappedInfoData.district,

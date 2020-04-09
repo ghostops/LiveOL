@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { Text, Button, NativeBase } from 'native-base';
+import { Button, NativeBase } from 'native-base';
 import { COLORS, fontPx } from 'util/const';
+import { OLText } from '../text';
 
 interface Props extends NativeBase.Button {
     beforeText?: React.ReactNode;
@@ -23,11 +24,15 @@ export const OLButton: React.SFC<Props> = (props) => {
             ]}
         >
             {props.beforeText}
-            <Text style={{
-                fontSize: props.small ? fontPx(14) : fontPx(16),
-            }}>
+            <OLText
+                font="Rift_Bold"
+                size={props.small ? 14 : 16}
+                style={{
+                    color: 'white',
+                }}
+            >
                 {props.children}
-            </Text>
+            </OLText>
             {props.afterText}
         </Button>
     );

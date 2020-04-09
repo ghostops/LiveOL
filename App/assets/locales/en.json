@@ -19,11 +19,14 @@
     "sprint": "Sprint"
   },
   "competitions": {
+    "date": "Date",
+    "distance": "Distance",
     "signups": "Signed up",
     "classes": "Classes",
     "lastPassings": "Last Passings",
     "noClasses": "No classes",
     "organizedBy": "Organized by",
+    "info": "Info",
     "passings": {
       "class": "Class",
       "info": "Pull to refresh",

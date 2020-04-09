@@ -19,6 +19,7 @@ export interface IOLCompetition {
     canceled?: boolean | null;
     distance?: EventorCompetitionDistance;
     district?: string;
+    signups?: number;
 }
 
 export const marshallCompetition = (eventor?: EventorEventItem) => (liveres: LiveresultatApi.competition): IOLCompetition => {
@@ -41,6 +42,7 @@ export const marshallCompetition = (eventor?: EventorEventItem) => (liveres: Liv
             canceled: eventor.canceled,
             distance: eventor.competitionDistance,
             district: eventor.district,
+            signups: eventor.signups,
         };
     }
 
@@ -98,6 +100,10 @@ export const OLCompetition = new GraphQLObjectType({
         eventor: {
             type: GraphQLBoolean,
             resolve: (comp: IOLCompetition) => comp.eventorAvailable,
+        },
+        signups: {
+            type: GraphQLInt,
+            resolve: (comp: IOLCompetition) => comp.signups,
         },
     }),
 });

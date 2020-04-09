@@ -13,6 +13,7 @@ import * as NB from 'native-base';
 import { OLCompetitionClub } from 'views/components/competition/club';
 import { OLText } from 'views/components/text';
 import { Svg, Path } from 'react-native-svg';
+import _ from 'lodash';
 
 const {
     Container,
@@ -42,7 +43,10 @@ export const OLCompetition: React.SFC<Props> = (props) => {
         return (
             <ListItem
                 key={name}
-                style={{ marginLeft: 0 }}
+                style={{
+                    marginLeft: 0,
+                    paddingHorizontal: px(15),
+                }}
                 onPress={props.goToClass(name)}
             >
                 <Text style={{
@@ -55,65 +59,118 @@ export const OLCompetition: React.SFC<Props> = (props) => {
     };
 
     const renderListHeader = () => (
-        <>
+        <View>
             <View>
-                <>
-                    <View style={{
-                        height: 1000,
-                        width: 1000,
-                        position: 'absolute',
-                        top: -1000,
-                        left: -100,
-                        backgroundColor: COLORS.MAIN,
-                    }} />
-                    <Svg
-                        viewBox="0 0 1440 320"
-                        width="720"
-                        height="160"
-                        style={{
-                            position: 'absolute',
-                            left: -px(15),
-                            top: -px(20),
-                            right: 0,
-                        }}
-                    >
-                            <Path fill={COLORS.MAIN} fill-opacity="1" d="M0,224L60,218.7C120,213,240,203,360,202.7C480,203,600,213,720,208C840,203,960,181,1080,181.3C1200,181,1320,203,1380,213.3L1440,224L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z" />
-                    </Svg>
-                </>
-
-                <OLText
-                    size={46}
-                    font="Rift_Bold"
-                    style={{
-                        textAlign: 'center',
-                        color: 'white',
-                    }}
-                >
-                    {props.competition.name}
-                </OLText>
+                <View style={{
+                    height: 1000,
+                    width: 1000,
+                    position: 'absolute',
+                    top: -1000,
+                    left: -100,
+                    backgroundColor: COLORS.MAIN,
+                }} />
 
                 <View
                     style={{
-                        paddingTop: px(65),
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
+                        backgroundColor: COLORS.MAIN,
+                        zIndex: 1,
+                        elevation: 1,
+                        paddingVertical: px(15),
                     }}
                 >
                     <OLText
-                        size={16}
-                        font="Proxima_Nova_Bold"
+                        size={42}
+                        font="Rift_Bold"
+                        style={{
+                            paddingHorizontal: px(15),
+                            textAlign: 'center',
+                            color: 'white',
+                        }}
                     >
-                        {Lang.print(`distances.${props.competition.distance}`)}
-                    </OLText>
-
-                    <OLText
-                        font="Proxima_Nova"
-                        size={16}
-                    >
-                        543 {Lang.print('competitions.signups')}
+                        {props.competition.name}
                     </OLText>
                 </View>
+
+                <Svg
+                    viewBox="0 0 1440 320"
+                    width="720"
+                    height="160"
+                    style={{
+                        top: -px(80),
+                        width: '100%',
+                        zIndex: 0,
+                        elevation: 0,
+                    }}
+                >
+                        <Path fill={COLORS.MAIN} fill-opacity="1" d="M0,224L60,218.7C120,213,240,203,360,202.7C480,203,600,213,720,208C840,203,960,181,1080,181.3C1200,181,1320,203,1380,213.3L1440,224L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z" />
+                </Svg>
+            </View>
+
+            {/* Negative margin for the SVG */}
+            <View style={{ marginTop: -px(120) }} />
+
+            <View
+                style={{
+                    paddingHorizontal: px(20),
+                }}
+            >
+                {
+                    props.competition.eventor &&
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                        }}
+                    >
+                        <View
+                            style={{
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                            }}
+                        >
+                            {
+                                props.competition.eventor &&
+                                <OLCompetitionClub
+                                    name={props.competition.club}
+                                    logoUrl={props.competition.clubLogoUrl}
+                                    size={_.last(props.competition.clubLogoSizes)}
+                                />
+                            }
+                        </View>
+
+                        <View
+                            style={{
+                                alignItems: 'flex-end',
+                                flex: 1,
+                            }}
+                        >
+                            <OLText
+                                size={16}
+                                font="Proxima_Nova"
+                                style={{ marginBottom: px(15) }}
+                            >
+                                {Lang.print('competitions.date')}:{' '}
+                                {dateToReadable(
+                                    new Date(props.competition.date),
+                                )}
+                            </OLText>
+
+                            <OLText
+                                size={16}
+                                font="Proxima_Nova"
+                                style={{ marginBottom: px(15) }}
+                            >
+                                {Lang.print('competitions.distance')}: {Lang.print(`distances.${props.competition.distance}`)}
+                            </OLText>
+
+                            <OLText
+                                font="Proxima_Nova"
+                                size={16}
+                            >
+                                {Lang.print('competitions.signups')}: {props.competition.signups}
+                            </OLText>
+                        </View>
+                    </View>
+                }
 
                 <View
                     style={{
@@ -123,23 +180,46 @@ export const OLCompetition: React.SFC<Props> = (props) => {
                         alignItems: 'center',
                     }}
                 >
-                    <OLCompetitionClub
-                        clubName={props.competition.club}
-                    />
-
-                    <OLText
-                        size={16}
-                        font="Proxima_Nova_Bold"
-                    >
-                        {dateToReadable(
-                            new Date(props.competition.date),
-                        )}
-                    </OLText>
+                    
                 </View>
+
+                {
+                    props.competition.eventor &&
+                    !!props.competition.info &&
+                    <View
+                        style={{
+                            backgroundColor: '#3867d6',
+                            padding: px(20),
+                            borderRadius: 4,
+                            marginTop: px(25),
+                        }}
+                    >
+                        <OLText
+                            size={26}
+                            font="Rift_Bold"
+                            style={{
+                                color: 'white',
+                                paddingBottom: px(10),
+                            }}
+                        >
+                            {Lang.print('competitions.info')}
+                        </OLText>
+
+                        <OLText
+                            size={14}
+                            font="Proxima_Nova"
+                            style={{ color: 'white' }}
+                        >
+                            {props.competition.info}
+                        </OLText>
+                    </View>
+                }
             </View>
 
             <View style={{
-                marginVertical: 15,
+                paddingHorizontal: px(15),
+                marginBottom: px(15),
+                marginTop: px(25),
                 flexDirection: 'row',
             }}>
                 <View style={{ flex: 1 }}>
@@ -161,7 +241,7 @@ export const OLCompetition: React.SFC<Props> = (props) => {
                     </OLButton>
                 </View>
             </View>
-        </>
+        </View>
     );
 
     if (props.loading) {
@@ -176,7 +256,6 @@ export const OLCompetition: React.SFC<Props> = (props) => {
                 ListEmptyComponent={(
                     <Text style={{
                         textAlign: 'center',
-                        paddingVertical: px(10),
                         paddingTop: px(45),
                         fontSize: fontPx(14),
                     }}>
@@ -186,7 +265,6 @@ export const OLCompetition: React.SFC<Props> = (props) => {
                 ListHeaderComponent={renderListHeader()}
                 keyExtractor={(item: Class) => item.id}
                 ListFooterComponent={<View style={{ height: px(45) }} />}
-                style={{ padding: px(15) }}
             />
         </OLSafeAreaView>
     );

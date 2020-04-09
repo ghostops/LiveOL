@@ -21,6 +21,7 @@ export interface GetCompetition_competitions_getCompetition {
   canceled: boolean | null;
   distance: string | null;
   district: string | null;
+  signups: number | null;
 }
 
 export interface GetCompetition_competitions_getCompetitionClasses {
