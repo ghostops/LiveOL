@@ -272,9 +272,12 @@ export class EventResponseParser {
             return { href, text };
         });
 
-        let signups: string | number = $('#main > div > div.eventInfoBoxContainer > div.eventInfoBox.entryBox > div > ul > li:nth-child(1) > span').text();
-        if (signups) {
+        let signups: string | number = $('.entryBox span.count').text();
+        
+        if (signups && signups.length) {
             signups = Number(signups.replace('(', '').replace(')', ''));
+        } else {
+            signups = 0;
         }
 
         const date = this.parseDate(mappedInfoData.date as unknown as string);

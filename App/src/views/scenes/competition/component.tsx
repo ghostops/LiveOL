@@ -89,6 +89,23 @@ export const OLCompetition: React.SFC<Props> = (props) => {
                     >
                         {props.competition.name}
                     </OLText>
+
+                    {
+                        !props.competition.eventor &&
+                        <OLText
+                            font="Proxima_Nova_Bold"
+                            size={14}
+                            style={{
+                                marginTop: px(25),
+                                textAlign: 'center',
+                                color: 'white',
+                            }}
+                        >
+                            {dateToReadable(
+                                new Date(props.competition.date),
+                            )}
+                        </OLText>
+                    }
                 </View>
 
                 <Svg
@@ -108,6 +125,31 @@ export const OLCompetition: React.SFC<Props> = (props) => {
 
             {/* Negative margin for the SVG */}
             <View style={{ marginTop: -px(120) }} />
+
+            {
+                props.competition.eventor &&
+                props.competition.canceled &&
+                <View
+                    style={{
+                        borderTopColor: '#b81c1c',
+                        borderTopWidth: 4,
+                        backgroundColor: '#ff3838',
+                        padding: px(10),
+                        top: -px(35),
+                    }}
+                >
+                    <OLText
+                        font="Proxima_Nova_Bold"
+                        size={18}
+                        style={{
+                            textAlign: 'center',
+                            color: 'white',
+                        }}
+                    >
+                        {Lang.print('competitions.canceled')}
+                    </OLText>
+                </View>
+            }
 
             <View
                 style={{
@@ -171,17 +213,6 @@ export const OLCompetition: React.SFC<Props> = (props) => {
                         </View>
                     </View>
                 }
-
-                <View
-                    style={{
-                        paddingTop: px(20),
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                    }}
-                >
-                    
-                </View>
 
                 {
                     props.competition.eventor &&

@@ -10,7 +10,6 @@ export const CompetitionsQuery = new GraphQLObjectType({
             type: GraphQLList(OLCompetition),
             resolve: async (_, args, { Liveresultat, userId }: GQLContext): Promise<IOLCompetition[]> => {
                 let { competitions } = await Liveresultat.getcompetitions();
-                competitions = competitions.filter((c) => c.id === 17049);
                 return competitions.map(marshallCompetition(null));
             },
         },

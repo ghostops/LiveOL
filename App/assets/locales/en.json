@@ -19,6 +19,7 @@
     "sprint": "Sprint"
   },
   "competitions": {
+    "canceled": "The competition has been canceled",
     "date": "Date",
     "distance": "Distance",
     "signups": "Signed up",
