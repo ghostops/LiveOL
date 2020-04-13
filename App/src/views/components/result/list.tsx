@@ -10,8 +10,9 @@ import { Result } from 'lib/graphql/fragments/types/Result';
 import { ResultBox } from './result';
 import { ResultHeader } from './header';
 import { ScrollView, RefreshControl } from 'react-native';
-import { UNIT, COLORS } from 'util/const';
+import { UNIT, COLORS, px } from 'util/const';
 import { View, Spinner } from 'native-base';
+import { OLText } from '../text';
 
 interface Props {
     results: Result[];
@@ -49,6 +50,23 @@ export const ResultList: React.SFC<Props> = (props) => {
                 data={props.results}
                 renderItem={renderResult}
                 keyExtractor={(item: Result) => item.name}
+                ListEmptyComponent={(
+                    <View
+                        style={{
+                            paddingVertical: px(50),
+                        }}
+                    >
+                        <OLText
+                            font="Proxima_Nova_Bold"
+                            size={18}
+                            style={{
+                                textAlign: 'center',
+                            }}
+                        >
+                            {Lang.print('classes.empty')}
+                        </OLText>
+                    </View>
+                )}
             />
         </OLSafeAreaView>
     );

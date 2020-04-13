@@ -10,7 +10,8 @@
       "time": "Time"
     },
     "resultsFor": "Results for",
-    "timerHint": "How often it auto updates"
+    "timerHint": "How often it auto updates",
+    "empty": "No competitors in this class"
   },
   "distances": {
     "ultralong": "Ultra Long",

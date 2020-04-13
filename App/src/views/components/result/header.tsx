@@ -64,8 +64,6 @@ const Component: React.SFC<StateProps & OwnProps> = ({ rotation, className, comp
             { variables: { competitionId, className } },
         );
 
-    if (loading || error) return null;
-
     const splits: Split[] = _.get(data, 'results.getSplitControls', []);
 
     const renderCol = ({ text, size, align }, index) => {
@@ -99,9 +97,12 @@ const Component: React.SFC<StateProps & OwnProps> = ({ rotation, className, comp
                 paddingHorizontal: 20,
             }}
         >
-            <Grid>
-                {labels(landscape, splits).map(renderCol)}
-            </Grid>
+            {
+                (!loading && !error) &&
+                <Grid>
+                    {labels(landscape, splits).map(renderCol)}
+                </Grid>
+            }
         </View>
     );
 };
