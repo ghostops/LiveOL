@@ -25,8 +25,8 @@ jobs:
                 command: docker login --username=${CANISTER_ID} --password=${CANISTER_PASSWORD} cloud.canister.io:5000
 
             - run:
-                name: Build container
-                command: yarn docker:latest
+                name: Build server container
+                command: cd ./Server && yarn docker:latest
 
             - run:
                 name: Set up Docker on server
