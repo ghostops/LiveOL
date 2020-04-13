@@ -26,7 +26,7 @@ jobs:
 
             - run:
                 name: Rebuild the Docker containers and restart
-                command: sshpass -p "${SSH_PASSWORD}" ssh ${SSH_USER}@${SSH_DOMAIN} -p ${SSH_PORT} "cd ${PROJECT_ROOT} && docker-compose up -f docker-compose.live.yml --build -d"
+                command: sshpass -p "${SSH_PASSWORD}" ssh ${SSH_USER}@${SSH_DOMAIN} -p ${SSH_PORT} "cd ${PROJECT_ROOT} && docker-compose -f docker-compose.live.yml up --build -d"
 workflows:
     deploy-server:
       jobs:
