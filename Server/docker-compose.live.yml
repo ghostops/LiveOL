@@ -1,7 +1,7 @@
 version: '3.7'
 services:
     server:
-        build: .
+        build: ghostops/liveol
         ports:
             - "4000:4000"
     redis:
