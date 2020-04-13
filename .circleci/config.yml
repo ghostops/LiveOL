@@ -9,6 +9,10 @@ jobs:
                     aws_access_key_id: $AWS_ACCESS_KEY_ID
                     aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
         steps:
+            - add_ssh_keys:
+                fingerprints:
+                    - "fe:fc:8f:b8:00:d8:ba:d4:7c:e9:bb:10:92:2d:0e:1d"
+
             - checkout
 
             - setup_remote_docker
@@ -21,10 +25,6 @@ jobs:
                     UserKnownHostsFile /dev/null" > ~/.ssh/config
 
             - run:
-                name: Install sshpass
-                command: apk add sshpass
-
-            - run:
                 name: Set up Docker
                 command: eval $(aws ecr get-login --no-include-email --region=eu-north-1)
 
@@ -35,17 +35,17 @@ jobs:
             - run:
                 name: Authenticate ECR
                 command: |
-                    sshpass -p "${SSH_PASSWORD}" ssh ${SSH_USER}@${SSH_DOMAIN} -p ${SSH_PORT} "aws ecr get-login --no-include-email --region=eu-north-1"
+                    ssh ${SSH_USER}@${SSH_DOMAIN} -p ${SSH_PORT} "aws ecr get-login --no-include-email --region=eu-north-1"
 
             - run:
                 name: Pull changes on server
                 command: |
-                    sshpass -p "${SSH_PASSWORD}" ssh ${SSH_USER}@${SSH_DOMAIN} -p ${SSH_PORT} "cd ${PROJECT_ROOT} && git stash && git pull"
+                    ssh ${SSH_USER}@${SSH_DOMAIN} -p ${SSH_PORT} "cd ${PROJECT_ROOT} && git stash && git pull"
 
             - run:
                 name: Rebuild the Docker containers and restart server
                 command: |
-                    sshpass -p "${SSH_PASSWORD}" ssh ${SSH_USER}@${SSH_DOMAIN} -p ${SSH_PORT} "cd ${PROJECT_ROOT} && docker-compose -f docker-compose.live.yml up --build -d"
+                    ssh ${SSH_USER}@${SSH_DOMAIN} -p ${SSH_PORT} "cd ${PROJECT_ROOT} && docker-compose -f docker-compose.live.yml up --build -d"
 workflows:
     deploy-server:
       jobs:
