@@ -1,12 +1,8 @@
-version: 2.1
-
-orbs:
-  node: circleci/node@1.1.6
-
+version: 2
 jobs:
     deploy-server:
-        executor:
-            name: node/default
+        docker:
+            - image: danvk/yarn-python36:0.0.1
         steps:
             - checkout
 
