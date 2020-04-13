@@ -1,5 +1,5 @@
 node_modules
-app/.expo/*
+app/.expo
 npm-debug.*
 *.jks
 *.p12

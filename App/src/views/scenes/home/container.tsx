@@ -56,7 +56,7 @@ const DataWrapper: React.SFC<Props> = (props) => {
             onCompetitionPress={(competition) => {
                 props.navigation.navigate(Routes.competition, {
                     id: competition.id,
-                    title: competition.name,
+                    title: '',
                 });
             }}
         />
