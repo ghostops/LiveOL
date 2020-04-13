@@ -3,7 +3,11 @@ version: 2.1
 jobs:
     deploy-server:
         docker:
-            - image: danvk/yarn-python36:0.0.1
+            -
+                image: "237763290421.dkr.ecr.eu-north-1.amazonaws.com/deploy:latest"
+                aws_auth:
+                    aws_access_key_id: $AWS_ACCESS_KEY_ID
+                    aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
         steps:
             - checkout
 
