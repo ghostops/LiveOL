@@ -14,6 +14,8 @@ import { OLSplits } from './splits';
 import { OLStartTime } from './start';
 import { Result } from 'lib/graphql/fragments/types/Result';
 import { ScreenOrientation } from 'expo';
+import { TouchableOpacity } from 'react-native';
+import { showToast } from 'lib/toasts/competitiorInfo';
 
 interface OwnProps {
     result: Result;
@@ -46,6 +48,10 @@ const Component: React.SFC<Props> = ({ result, rotation }) => {
 
     const overflowSize = Object.keys(size).map((k) => size[k]).reduce((a, b) => a + b, 0);
 
+    const moreInfo = () => {
+        showToast(result.name, result.club);
+    };
+
     return (
         <OLResultAnimation
             result={result}
@@ -64,11 +70,14 @@ const Component: React.SFC<Props> = ({ result, rotation }) => {
                     </OLResultColumn>
 
                     <OLResultColumn size={size.name}>
-                        <View style={{ flex: 1 }}>
+                        <TouchableOpacity
+                            style={{ flex: 1 }}
+                            onPress={moreInfo}
+                        >
                             <OLResultName name={result.name} />
 
                             <OLResultClub club={result.club} />
-                        </View>
+                        </TouchableOpacity>
                     </OLResultColumn>
 
                     {

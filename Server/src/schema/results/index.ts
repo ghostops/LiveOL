@@ -2,6 +2,7 @@ import { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLList, GraphQLBoole
 import { LiveresultatApi } from 'lib/liveresultat/types';
 import { OLTime } from 'types';
 import * as Helpers from 'lib/helpers/time';
+import * as _ from 'lodash';
 
 export interface IOLSplit {
     id: string;
@@ -10,6 +11,16 @@ export interface IOLSplit {
     place: number;
     time: OLTime;
     timeplus: OLTime;
+}
+
+const parsePlace = (place: any): number => {
+    if (_.isNumber(place)) {
+        return place;
+    } else if (place.trim() === '-') {
+        return -1;
+    }
+
+    return 0;
 }
 
 export const marshallSplits = (split: LiveresultatApi.split) => (result: LiveresultatApi.result): IOLSplit => {
@@ -31,7 +42,7 @@ export const marshallSplits = (split: LiveresultatApi.split) => (result: Liveres
         name: split.name,
         time: Helpers.splitTimestampToReadable(keyValue['time'] || 0),
         status: keyValue['status'] || NaN,
-        place: keyValue['place'] || 0,
+        place: parsePlace(keyValue['place'] || 0),
         timeplus: Helpers.timeplusToReadable(keyValue['timeplus'] || 0),
     };
 };

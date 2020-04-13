@@ -38,8 +38,6 @@ const DataWrapper: React.SFC<Props> = ({ route, navigation }) => {
 
     const results: Result[] = _.get(data, 'results.getResults', null);
 
-    console.log(className, competitionId);
-
     return (
         <Component
             results={results}
