@@ -3,6 +3,7 @@
   "classes": {
     "autoUpdate": "Automatisk uppdatering",
     "autoUpdateEnabled": "Automatiska uppdateringar är aktivt",
+    "empty": "Inga tävlande i klassen",
     "header": {
       "name": "Namn",
       "place": "#",
@@ -13,17 +14,29 @@
     "timerHint": "Hur ofta listan auto uppdateras"
   },
   "competitions": {
+    "canceled": "Tävlingen har blivit inställd",
     "classes": "Klasser",
+    "date": "Datum",
+    "distance": "Distans",
+    "info": "Info",
     "lastPassings": "Senaste Passeringarna",
     "noClasses": "Inga klasser",
     "organizedBy": "Organiseras av",
     "passings": {
       "class": "Klass",
+      "empty": "Inga senaste passeringar",
       "info": "Dra för att uppdatera",
       "name": "Namn",
       "passTime": "Passeringstid",
       "title": "Senaste passeringarna"
-    }
+    },
+    "signups": "Anmälda"
+  },
+  "distances": {
+    "long": "Lång",
+    "middle": "Medel",
+    "sprint": "Sprint",
+    "ultralong": "Ultralång"
   },
   "home": {
     "goToday": "Gå till dagens arrangemang",

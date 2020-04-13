@@ -3,7 +3,14 @@
   "classes": {
     "autoUpdate": "Automatisk oppdatering",
     "autoUpdateEnabled": "Automatiske oppdateringer er aktivert",
-    "resultsFor": "Resultat for"
+    "header": {
+      "name": "Navn",
+      "place": "#",
+      "start": "Start",
+      "time": "Tid"
+    },
+    "resultsFor": "Resultat for",
+    "timerHint": "Hvor ofte listen oppdateres automatisk"
   },
   "competitions": {
     "classes": "Klasser",
@@ -59,7 +66,8 @@
     "version": "Gjeldende version"
   },
   "promotions": {
-    "didYouKnow": "Visste du?"
+    "didYouKnow": "Visste du?",
+    "rotate": "Roter telefonen for å se mellomtider"
   },
   "status": {
     "long": [

@@ -3,6 +3,7 @@
   "classes": {
     "autoUpdate": "Turn on live updating results",
     "autoUpdateEnabled": "Live updating results enabled",
+    "empty": "No competitors in this class",
     "header": {
       "name": "Name",
       "place": "#",
@@ -10,33 +11,32 @@
       "time": "Time"
     },
     "resultsFor": "Results for",
-    "timerHint": "How often it auto updates",
-    "empty": "No competitors in this class"
-  },
-  "distances": {
-    "ultralong": "Ultra Long",
-    "long": "Long",
-    "middle": "Middle",
-    "sprint": "Sprint"
+    "timerHint": "How often it auto updates"
   },
   "competitions": {
     "canceled": "The competition has been canceled",
+    "classes": "Classes",
     "date": "Date",
     "distance": "Distance",
-    "signups": "Signed up",
-    "classes": "Classes",
+    "info": "Info",
     "lastPassings": "Last Passings",
     "noClasses": "No classes",
     "organizedBy": "Organized by",
-    "info": "Info",
     "passings": {
       "class": "Class",
+      "empty": "No latest passings",
       "info": "Pull to refresh",
       "name": "Name",
       "passTime": "Pass-time",
-      "title": "Latest passings",
-      "empty": "No latest passings"
-    }
+      "title": "Latest passings"
+    },
+    "signups": "Signed up"
+  },
+  "distances": {
+    "long": "Long",
+    "middle": "Middle",
+    "sprint": "Sprint",
+    "ultralong": "Ultra Long"
   },
   "home": {
     "goToday": "Scroll to todays events",
