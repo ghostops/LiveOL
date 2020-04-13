@@ -24,8 +24,12 @@ jobs:
                 command: sudo apt-get install sshpass
 
             - run:
-                name: Set up AWS
-                command: pip install --user awscli
+                name: Install python
+                command: sudo apt-get install python3.6
+
+            - run:
+                name: Install AWS
+                command: pip3 install --user awscli
 
             - run:
                 name: Set up Docker
