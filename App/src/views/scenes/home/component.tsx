@@ -4,7 +4,6 @@ import { HomeList } from 'views/components/home/list';
 import { HomeListItem } from 'views/components/home/listItem';
 import { Lang } from 'lib/lang';
 import { LanguagePicker } from 'views/components/lang/picker';
-import { OLLoading } from 'views/components/loading';
 import { OLSearch } from 'views/components/search/container';
 import { px, COLORS } from 'util/const';
 import { TodaysCompetitions } from 'views/components/home/today';
@@ -24,6 +23,8 @@ interface Props {
     openSearch: () => void;
     searching: boolean;
     loading: boolean;
+
+    loadMore: () => void;
 }
 
 export class OLHome extends React.PureComponent<Props> {
@@ -44,20 +45,6 @@ export class OLHome extends React.PureComponent<Props> {
                         total={total}
                     />
                 )}
-            />
-        );
-    }
-
-    renderInner = () => {
-        if (this.props.loading) {
-            return <OLLoading />;
-        }
-
-        return (
-            <HomeList
-                competitions={this.props.competitions}
-                onCompetitionPress={this.props.onCompetitionPress}
-                listHeader={this.renderTodaysCompetitions()}
             />
         );
     }
@@ -103,7 +90,13 @@ export class OLHome extends React.PureComponent<Props> {
                 <View style={{ flex: 1 }}>
                     {this.renderHeader()}
 
-                    {this.renderInner()}
+                    <HomeList
+                        loading={this.props.loading}
+                        competitions={this.props.competitions}
+                        onCompetitionPress={this.props.onCompetitionPress}
+                        listHeader={this.renderTodaysCompetitions()}
+                        loadMore={this.props.loadMore}
+                    />
                 </View>
 
                 <OLSearch />

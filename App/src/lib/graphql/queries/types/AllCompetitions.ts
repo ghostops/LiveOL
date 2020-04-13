@@ -18,6 +18,9 @@ export interface AllCompetitions_competitions_getAllCompetitions {
 
 export interface AllCompetitions_competitions {
   __typename: "CompetitionsQuery";
+  /**
+   * We will paginate all future requests
+   */
   getAllCompetitions: (AllCompetitions_competitions_getAllCompetitions | null)[] | null;
 }
 

@@ -4,6 +4,13 @@ import { LiveresultatApi } from 'lib/liveresultat/types';
 import { UTCTime } from 'types';
 import * as _ from 'lodash';
 
+export interface IOLCompetitionResponse {
+    competitions: IOLCompetition[];
+    today: IOLCompetition[];
+    page: number;
+    search: string | null;
+}
+
 export interface IOLCompetition {
     id: number;
     name: string;
@@ -48,6 +55,28 @@ export const marshallCompetition = (eventor?: EventorEventItem) => (liveres: Liv
 
     return marshall;
 }
+
+export const OLCompetitionResponse = new GraphQLObjectType({
+    name: 'OLCompetitionResponse',
+    fields: () => ({
+        competitions: {
+            type: new GraphQLList(OLCompetition),
+            resolve: (res: IOLCompetitionResponse) => res.competitions,
+        },
+        today: {
+            type: new GraphQLList(OLCompetition),
+            resolve: (res: IOLCompetitionResponse) => res.today,
+        },
+        search: {
+            type: GraphQLString,
+            resolve: (res: IOLCompetitionResponse) => res.search,
+        },
+        page: {
+            type: GraphQLInt,
+            resolve: (res: IOLCompetitionResponse) => res.page,
+        },
+    }),
+});
 
 export const OLCompetition = new GraphQLObjectType({
     name: 'OLCompetition',

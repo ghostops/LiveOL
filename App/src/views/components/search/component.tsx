@@ -11,9 +11,8 @@ import { Competition } from 'lib/graphql/fragments/types/Competition';
 const SEARCH_SIZE = UNIT * 3.25;
 
 interface Props {
-    competitions: Competition[];
     searching: boolean;
-    setVisibleCompetitions: (competitions: Competition[]) => void;
+    setSearchTerm: (term: string) => void;
     setSearching: (value: boolean) => void;
 }
 
@@ -51,11 +50,7 @@ export class OLSearch extends React.PureComponent<Props, State> {
     search = () => {
         setTimeout(
             () => {
-                const results = this.props.competitions
-                    .filter((comp) => comp.name.toLowerCase()
-                    .includes(this.state.searchTerm.toLowerCase()));
-
-                this.props.setVisibleCompetitions(results);
+                this.props.setSearchTerm(this.state.searchTerm);
             },
             0,
         );
@@ -79,7 +74,7 @@ export class OLSearch extends React.PureComponent<Props, State> {
 
         _.defer(() => {
             this.props.setSearching(false);
-            this.props.setVisibleCompetitions(null);
+            this.props.setSearchTerm(null);
         });
 
         Animated.spring(

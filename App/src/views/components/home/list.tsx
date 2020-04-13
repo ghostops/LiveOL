@@ -8,6 +8,7 @@ import { datesAreOnSameDay, dateToReadable } from 'util/date';
 import { FlatList } from 'react-native';
 import { OLSafeAreaView } from '../safeArea';
 import { Competition } from 'lib/graphql/fragments/types/Competition';
+import { OLLoading } from '../loading';
 
 const {
     List,
@@ -20,6 +21,8 @@ interface Props {
     competitions: Competition[];
     onCompetitionPress: (comp: Competition) => void;
     listHeader: React.ReactElement;
+    loadMore: () => void;
+    loading: boolean;
 }
 
 export const groupVisibleCompetitions = (
@@ -49,7 +52,11 @@ export const HomeList: React.SFC<Props> = ({
     competitions,
     onCompetitionPress,
     listHeader,
+    loadMore,
+    loading,
 }) => {
+    const [moreLoading, setMoreLoading] = React.useState(false);
+
     const visibleCompetitions = groupVisibleCompetitions(competitions);
 
     const renderListItem = (competition: Competition, index: number, total: number) => (
@@ -94,24 +101,8 @@ export const HomeList: React.SFC<Props> = ({
         );
     };
 
-    if (!Object.keys(visibleCompetitions).length) {
-        return (
-            <View
-                style={{
-                    width: '100%',
-                    paddingVertical: px(16 * 4),
-                }}
-            >
-                <Text
-                    style={{
-                        fontSize: fontPx(16),
-                        textAlign: 'center',
-                    }}
-                >
-                    {Lang.print('home.nothingSearch')}
-                </Text>
-            </View>
-        );
+    if (loading) {
+        return <OLLoading />;
     }
 
     return (
@@ -120,6 +111,34 @@ export const HomeList: React.SFC<Props> = ({
             data={Object.keys(visibleCompetitions)}
             renderItem={({ item }) => renderListSection(item, visibleCompetitions)}
             keyExtractor={(item) => `${item}`}
+            onEndReached={async () => {
+                setMoreLoading(true);
+                await loadMore();
+                setMoreLoading(false);
+            }}
+            onEndReachedThreshold={0.1}
+            ListFooterComponent={(
+                moreLoading &&
+                <OLLoading />
+            )}
+            ListEmptyComponent={(
+                !loading &&
+                <View
+                    style={{
+                        width: '100%',
+                        paddingVertical: px(16 * 4),
+                    }}
+                >
+                    <Text
+                        style={{
+                            fontSize: fontPx(16),
+                            textAlign: 'center',
+                        }}
+                    >
+                        {Lang.print('home.nothingSearch')}
+                    </Text>
+                </View>
+            )}
         />
     );
 };

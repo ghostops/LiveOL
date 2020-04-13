@@ -1,16 +1,60 @@
 import { GQLContext } from 'lib/server';
 import { GraphQLObjectType, GraphQLList, GraphQLInt, GraphQLString } from 'graphql';
 import { OLClass, IOLClass, marshallClass } from 'schema/classes';
-import { OLCompetition, marshallCompetition, IOLCompetition } from 'schema/competitions';
+import { OLCompetition, marshallCompetition, IOLCompetition, IOLCompetitionResponse, OLCompetitionResponse } from 'schema/competitions';
+import { datesAreOnSameDay } from 'lib/helpers/time';
+import * as _ from 'lodash';
 
 export const CompetitionsQuery = new GraphQLObjectType({
     name: 'CompetitionsQuery',
     fields: () => ({
         getAllCompetitions: {
+            description: 'We will paginate all future requests',
+            deprecationReason: 'pagination',
             type: GraphQLList(OLCompetition),
             resolve: async (_, args, { Liveresultat, userId }: GQLContext): Promise<IOLCompetition[]> => {
                 let { competitions } = await Liveresultat.getcompetitions();
                 return competitions.map(marshallCompetition(null));
+            },
+        },
+        getCompetitions: {
+            type: OLCompetitionResponse,
+            args: {
+                page: {
+                    type: GraphQLInt,
+                },
+                search: {
+                    type: GraphQLString,
+                },
+            },
+            resolve: async (x, args, { Liveresultat, userId }: GQLContext): Promise<IOLCompetitionResponse> => {
+                const page: number = args.page ? (args.page < 1 ? 1 : args.page) : 1;
+                const search: string = args.search || null;
+
+                const PER_PAGE = 50;
+                const offset = (page - 1) * PER_PAGE;
+
+                let { competitions } = await Liveresultat.getcompetitions();
+
+                const today = competitions.filter((comp) => {
+                    return datesAreOnSameDay(
+                        new Date(comp.date),
+                        new Date(),
+                    );
+                });
+
+                if (search) {
+                    competitions = competitions.filter((comp) => comp.name.toLowerCase().includes(search.toLowerCase()));
+                }
+
+                competitions = _.drop(competitions, offset).slice(0, PER_PAGE);
+
+                return {
+                    page,
+                    search,
+                    competitions: competitions.map(marshallCompetition(null)),
+                    today: today.map(marshallCompetition(null)),
+                };
             },
         },
         getCompetition: {

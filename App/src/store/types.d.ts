@@ -8,7 +8,7 @@ interface GeneralReducer {
 }
 
 interface HomeReducer {
-    visibleCompetitions: any[];
+    searchTerm: string;
     searching: boolean;
 }
 

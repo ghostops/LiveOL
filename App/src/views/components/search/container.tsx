@@ -12,23 +12,18 @@ interface StateProps {
 }
 
 interface DispatchProps {
-    setVisibleCompetitions: (competitions: Competition[]) => void;
+    setSearchTerm: (term: string) => void;
     setSearching: (value: boolean) => void;
 }
 
 type Props = StateProps & DispatchProps;
 
 const DataWrapper: React.SFC<Props> = (props) => {
-    const { data, loading, error } = useQuery<AllCompetitions>(ALL_COMPETITIONS);
-
-    if (loading || error) return null;
-
     return (
         <Component
-            competitions={data.competitions.getAllCompetitions}
             searching={props.searching}
             setSearching={props.setSearching}
-            setVisibleCompetitions={props.setVisibleCompetitions}
+            setSearchTerm={props.setSearchTerm}
         />
     );
 };
@@ -38,7 +33,7 @@ const mapStateToProps = (state: AppState): StateProps => ({
 });
 
 const mapDispatchToProps = {
-    setVisibleCompetitions: Actions.setVisibleCompetitions,
+    setSearchTerm: Actions.setSearchTerm,
     setSearching: Actions.setSearching,
 };
 

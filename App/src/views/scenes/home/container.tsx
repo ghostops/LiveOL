@@ -1,7 +1,7 @@
 import * as React from 'react';
 import _ from 'lodash';
-import { ALL_COMPETITIONS } from 'lib/graphql/queries/competitions';
-import { AllCompetitions } from 'lib/graphql/queries/types/AllCompetitions';
+import { COMPETITIONS } from 'lib/graphql/queries/competitions';
+import { Competitions, CompetitionsVariables } from 'lib/graphql/queries/types/Competitions';
 import { Competition } from 'lib/graphql/fragments/types/Competition';
 import { connect } from 'react-redux';
 import { Lang } from 'lib/lang';
@@ -18,7 +18,7 @@ interface OwnProps {
 }
 
 interface StateProps {
-    searchResults: Competition[] | null;
+    searchTerm: string;
     searching: boolean;
 }
 
@@ -30,28 +30,42 @@ interface DispatchProps {
 type Props = StateProps & OwnProps & DispatchProps;
 
 const DataWrapper: React.SFC<Props> = (props) => {
-    const { data, loading, error } = useQuery<AllCompetitions>(ALL_COMPETITIONS);
+    const {
+        data,
+        loading,
+        error,
+        fetchMore,
+    } = useQuery<Competitions, CompetitionsVariables>(
+        COMPETITIONS,
+        {
+            variables: {
+                search: props.searchTerm,
+            },
+        },
+    );
 
     if (error) return <OLError error={error} />;
 
-    const competitions: Competition[] = _.get(data, 'competitions.getAllCompetitions', null);
+    const competitions: Competition[] = _.get(
+        data,
+        'competitions.getCompetitions.competitions',
+        [],
+    );
+
+    const today: Competition[] = _.get(
+        data,
+        'competitions.getCompetitions.today',
+        [],
+    );
 
     return (
         <Component
             loading={loading}
-            competitions={props.searchResults || competitions}
+            competitions={competitions}
             openSearch={() => props.setSearching(true)}
             searching={props.searching}
 
-            todaysCompetitions={(
-                (competitions || [])
-                    .filter((comp) => {
-                        return datesAreOnSameDay(
-                            new Date(comp.date),
-                            new Date(),
-                        );
-                    })
-            )}
+            todaysCompetitions={today}
 
             onCompetitionPress={(competition) => {
                 props.navigation.navigate(Routes.competition, {
@@ -59,12 +73,51 @@ const DataWrapper: React.SFC<Props> = (props) => {
                     title: '',
                 });
             }}
+
+            loadMore={async () => {
+                if (loading) return;
+
+                const page = data.competitions.getCompetitions.page + 1;
+
+                await fetchMore({
+                    variables: {
+                        page,
+                    },
+                    updateQuery: (prev: Competitions, { fetchMoreResult }) => {
+                        if (!fetchMoreResult) return prev;
+
+                        const competitions = _.uniqBy(
+                            [
+                                ...prev.competitions
+                                    .getCompetitions
+                                    .competitions,
+                                ...fetchMoreResult
+                                    .competitions
+                                    .getCompetitions
+                                    .competitions,
+                            ],
+                            'id',
+                        );
+
+                        return Object.assign({}, prev, {
+                            ...fetchMoreResult.competitions,
+                            competitions: {
+                                ...fetchMoreResult.competitions,
+                                getCompetitions: {
+                                    ...fetchMoreResult.competitions.getCompetitions,
+                                    competitions,
+                                },
+                            },
+                        } as Competitions);
+                    },
+                });
+            }}
         />
     );
 };
 
 const mapStateToProps = (state: AppState): StateProps => ({
-    searchResults: state.home.visibleCompetitions,
+    searchTerm: state.home.searchTerm,
     searching: state.home.searching,
 });
 

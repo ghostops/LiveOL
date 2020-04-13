@@ -1,11 +1,11 @@
 import { Competition } from 'lib/graphql/fragments/types/Competition';
 
-const SET_VISIBLE_COMPETITIONS = 'HOME:SET_VISIBLE_COMPETITIONS';
+const SET_SEARCH_TERM = 'HOME:SET_SEARCH_TERM';
 const SET_SEARCHING = 'HOME:SET_SEARCHING';
 
 const initialState: HomeReducer = {
-    visibleCompetitions: null,
     searching: false,
+    searchTerm: null,
 };
 
 export function homeReducer(
@@ -13,10 +13,10 @@ export function homeReducer(
     action: DispatchAction<any>,
 ): HomeReducer {
     switch (action.type) {
-    case SET_VISIBLE_COMPETITIONS:
+    case SET_SEARCH_TERM:
         return {
             ...state,
-            visibleCompetitions: action.value,
+            searchTerm: action.value,
         };
     case SET_SEARCHING:
         return {
@@ -30,10 +30,10 @@ export function homeReducer(
 
 // Actions //
 
-export const setVisibleCompetitions = (competitions: Competition[]) => (dispatch) => {
+export const setSearchTerm = (term: string) => (dispatch) => {
     dispatch({
-        type: SET_VISIBLE_COMPETITIONS,
-        value: competitions,
+        type: SET_SEARCH_TERM,
+        value: term,
     });
 };
 
