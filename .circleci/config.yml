@@ -9,6 +9,9 @@ jobs:
             name: node/default
         steps:
             - checkout
+
+            - setup_remote_docker
+
             - run:
                 name: Disable known hosts for the ssh domain
                 command: |
