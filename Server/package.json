@@ -8,7 +8,8 @@
     "tunnel": "ngrok http 4000",
     "build": "yarn tsc && yarn babel build --out-dir build",
     "dev": "nodemon -L -e ts -w ./src -x yarn dev:serve",
-    "dev:serve": "ts-node -r tsconfig-paths/register src/index.ts"
+    "dev:serve": "ts-node -r tsconfig-paths/register src/index.ts",
+    "docker:latest": "NAMESPACE=ghostops REPO=liveol ./deploy/deploy.sh"
   },
   "keywords": [],
   "author": "",

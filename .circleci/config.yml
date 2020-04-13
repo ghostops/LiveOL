@@ -21,12 +21,30 @@ jobs:
                 command: sudo apt-get install sshpass
 
             - run:
-                name: Pull changes on server
-                command: sshpass -p "${SSH_PASSWORD}" ssh ${SSH_USER}@${SSH_DOMAIN} -p ${SSH_PORT} "cd ${PROJECT_ROOT} && git stash && git pull"
+                name: Set up Docker
+                command: docker login --username=${CANISTER_ID} --password=${CANISTER_PASSWORD} cloud.canister.io:5000
 
             - run:
-                name: Rebuild the Docker containers and restart
-                command: sshpass -p "${SSH_PASSWORD}" ssh ${SSH_USER}@${SSH_DOMAIN} -p ${SSH_PORT} "cd ${PROJECT_ROOT} && docker-compose -f docker-compose.live.yml up --build -d"
+                name: Build container
+                command: yarn docker:latest
+
+            - run:
+                name: Set up Docker on server
+                command: |
+                    sshpass -p "${SSH_PASSWORD}" ssh ${SSH_USER}@${SSH_DOMAIN} -p ${SSH_PORT}
+                    "docker login --username=${CANISTER_ID} --password=${CANISTER_PASSWORD} cloud.canister.io:5000"
+
+            - run:
+                name: Pull changes on server
+                command: |
+                    sshpass -p "${SSH_PASSWORD}" ssh ${SSH_USER}@${SSH_DOMAIN} -p ${SSH_PORT}
+                    "cd ${PROJECT_ROOT} && git stash && git pull"
+
+            - run:
+                name: Rebuild the Docker containers and restart server
+                command: |
+                    sshpass -p "${SSH_PASSWORD}" ssh ${SSH_USER}@${SSH_DOMAIN} -p ${SSH_PORT}
+                    "cd ${PROJECT_ROOT} && docker-compose -f docker-compose.live.yml up --build -d"
 workflows:
     deploy-server:
       jobs:
