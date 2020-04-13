@@ -4,3 +4,10 @@ services:
         image: redis:latest
         ports:
             - "6379:6379"
+    redis-commander:
+        build: https://github.com/joeferner/redis-commander.git
+        command: --redis-host redis
+        links:
+            - "redis:redis"
+        ports:
+            - 8081

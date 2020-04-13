@@ -1,7 +1,7 @@
 version: '3.7'
 services:
     server:
-        build: ghostops/liveol
+        image: 237763290421.dkr.ecr.eu-north-1.amazonaws.com/liveol:latest
         ports:
             - "4000:4000"
     redis:
