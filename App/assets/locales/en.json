@@ -34,7 +34,8 @@
       "info": "Pull to refresh",
       "name": "Name",
       "passTime": "Pass-time",
-      "title": "Latest passings"
+      "title": "Latest passings",
+      "empty": "No latest passings"
     }
   },
   "home": {

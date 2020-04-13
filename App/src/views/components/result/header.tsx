@@ -73,7 +73,7 @@ const Component: React.SFC<StateProps & OwnProps> = ({ rotation, className, comp
             <OLResultColumn
                 size={size}
                 key={key}
-                align={align || (landscape ? 'center' : 'flex-start')}
+                align={align || 'flex-start'}
             >
                 <Text
                     numberOfLines={1}
