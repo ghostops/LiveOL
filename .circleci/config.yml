@@ -22,11 +22,7 @@ jobs:
 
             - run:
                 name: Install sshpass
-                command: sudo apt-get install sshpass
-
-            - run:
-                name: Install python
-                command: sudo apt-get install python3.6
+                command: apk add sshpass
 
             - run:
                 name: Install AWS
