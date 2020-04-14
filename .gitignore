@@ -7,7 +7,7 @@ npm-debug.*
 *.key
 *.mobileprovision
 .DS_Store
-website/.ci/cred.json
+Website/.ci/cred.json
 app/build
 .phraseapp.yml
 .secret
