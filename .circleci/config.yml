@@ -16,6 +16,13 @@ jobs:
             - checkout
 
             - run:
+                name: Disable known hosts for the ssh domain
+                command: |
+                    echo "Host ${SSH_DOMAIN}
+                    StrictHostKeyChecking no
+                    UserKnownHostsFile /dev/null" > ~/.ssh/config
+
+            - run:
                 name: Upload website
                 command: |
                     scp -P ${SSH_PORT} -r ./Website/* ${SSH_USER}@${SSH_DOMAIN}:${WEBROOT}
