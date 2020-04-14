@@ -1,6 +1,24 @@
 version: 2.1
 
 jobs:
+    deploy-website:
+        docker:
+            -
+                image: "237763290421.dkr.ecr.eu-north-1.amazonaws.com/deploy:latest"
+                aws_auth:
+                    aws_access_key_id: $AWS_ACCESS_KEY_ID
+                    aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
+        steps:
+            - add_ssh_keys:
+                fingerprints:
+                    - "fe:fc:8f:b8:00:d8:ba:d4:7c:e9:bb:10:92:2d:0e:1d"
+
+            - checkout
+
+            - run:
+                name: Upload website
+                command: |
+                    scp -r ./Website/* ${SSH_USER}@${SSH_DOMAIN}:${WEBROOT}
     deploy-server:
         docker:
             -
@@ -52,6 +70,7 @@ jobs:
                 command: |
                     ssh ${SSH_USER}@${SSH_DOMAIN} -p ${SSH_PORT} "cd ${PROJECT_ROOT} && docker-compose -f docker-compose.live.yml up -d"
 workflows:
-    deploy-server:
+    deploy:
       jobs:
         - deploy-server
+        - deploy-website
