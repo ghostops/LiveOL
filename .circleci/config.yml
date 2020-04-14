@@ -43,9 +43,14 @@ jobs:
                     ssh ${SSH_USER}@${SSH_DOMAIN} -p ${SSH_PORT} "cd ${PROJECT_ROOT} && git stash && git pull"
 
             - run:
+                name: Pull latest Docker container
+                command: |
+                    ssh ${SSH_USER}@${SSH_DOMAIN} -p ${SSH_PORT} "cd ${PROJECT_ROOT} && docker-compose -f docker-compose.live.yml pull"
+
+            - run:
                 name: Rebuild the Docker containers and restart server
                 command: |
-                    ssh ${SSH_USER}@${SSH_DOMAIN} -p ${SSH_PORT} "cd ${PROJECT_ROOT} && docker-compose -f docker-compose.live.yml up --build -d"
+                    ssh ${SSH_USER}@${SSH_DOMAIN} -p ${SSH_PORT} "cd ${PROJECT_ROOT} && docker-compose -f docker-compose.live.yml up -d"
 workflows:
     deploy-server:
       jobs:

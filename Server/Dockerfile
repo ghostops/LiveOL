@@ -2,6 +2,9 @@ FROM node:10
 
 WORKDIR /app
 
+ARG EVENTOR_API_KEY
+
+ENV VAR_B $EVENTOR_API_KEY
 ENV ENV LIVE
 
 ADD package.json package.json
