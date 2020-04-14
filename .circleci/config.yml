@@ -18,7 +18,7 @@ jobs:
             - run:
                 name: Upload website
                 command: |
-                    scp -r ./Website/* ${SSH_USER}@${SSH_DOMAIN}:${WEBROOT}
+                    scp -P ${SSH_PORT} -r ./Website/* ${SSH_USER}@${SSH_DOMAIN}:${WEBROOT}
     deploy-server:
         docker:
             -
