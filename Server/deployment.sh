@@ -58,14 +58,9 @@ git clone git@github.com:ghostops/LiveOL.git "$HOME/LiveOL"
 
 # Auth ECR
 eval $(aws ecr get-login --no-include-email --region=$AWS_REGION)
-# also on reboot
-(crontab -l 2>/dev/null; echo "@reboot (eval $(aws ecr get-login --no-include-email --region=$AWS_REGION) )&") | crontab -
 
 # Pull all live containers
-cd $SERVER_ROOT ; $DOCKER_COMPOSE pull ; cd $HOME
-
-# Add docker-compose up on reboot
-(crontab -l 2>/dev/null; echo "@reboot (sleep 30s ; cd $SERVER_ROOT ; /usr/local/bin/${DOCKER_COMPOSE} up -d )&") | crontab -
+cd $SERVER_ROOT ; $DOCKER_COMPOSE up -d ; cd $HOME
 
 # Add Apache2 VHost
 $AWS_BINARY s3 cp $S3_ROOT/vhost.conf .
