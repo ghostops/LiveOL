@@ -57,7 +57,7 @@ chmod +x /usr/local/bin/docker-compose
 git clone git@github.com:ghostops/LiveOL.git "$HOME/LiveOL"
 
 # Auth ECR
-eval $(aws ecr get-login --no-include-email --region=$AWS_REGION)
+eval $($AWS_BINARY ecr get-login --no-include-email --region=$AWS_REGION)
 
 # Pull all live containers
 cd $SERVER_ROOT ; $DOCKER_COMPOSE up -d ; cd $HOME
