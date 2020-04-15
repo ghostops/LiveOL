@@ -59,7 +59,7 @@ git clone git@github.com:ghostops/LiveOL.git "$HOME/LiveOL"
 # Auth ECR
 eval $(aws ecr get-login --no-include-email --region=$AWS_REGION)
 # also on reboot
-(crontab -l 2>/dev/null; echo "@reboot (aws ecr get-login --no-include-email --region=$AWS_REGION )&") | crontab -
+(crontab -l 2>/dev/null; echo "@reboot (eval $(aws ecr get-login --no-include-email --region=$AWS_REGION) )&") | crontab -
 
 # Pull all live containers
 cd $SERVER_ROOT ; $DOCKER_COMPOSE pull ; cd $HOME
