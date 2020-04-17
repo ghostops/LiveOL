@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Lang } from 'lib/lang';
 import { OLRefetcher } from 'views/components/refetcher';
 import { Result } from 'lib/graphql/fragments/types/Result';
-import { ResultList } from 'views/components/result/list';
+import { OLResultsTable } from 'views/components/result/table';
 import { UNIT } from 'util/const';
 import * as NB from 'native-base';
 
@@ -23,7 +23,7 @@ interface Props {
 export const OLResults: React.SFC<Props> = ({ refetch, results, className, competitionId }) => {
     return (
         <>
-            <ResultList
+            <OLResultsTable
                 results={results}
                 competitionId={competitionId}
                 className={className}

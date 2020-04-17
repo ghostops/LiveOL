@@ -8,7 +8,6 @@ import { Lang } from 'lib/lang';
 import { OLResultColumn } from './item/column';
 import { randomColor } from 'util/random';
 import { ScreenOrientation } from 'expo';
-import { SIZE } from './item';
 import { Split } from 'lib/graphql/fragments/types/Split';
 import { Text, View } from 'native-base';
 import { UNIT } from 'util/const';
@@ -17,22 +16,16 @@ import { useQuery } from '@apollo/react-hooks';
 interface OwnProps {
     competitionId: number;
     className: string;
+    table?: boolean;
+    maxRowSize?: number;
 }
 
-interface StateProps {
-    rotation: ScreenOrientation.Orientation;
-}
-
-const labels = (landscape: boolean, splits?: Split[]) => {
-    const size = landscape ? SIZE.landscape : SIZE.portrait;
-
-    const overflowSize = Object.keys(size).map((k) => size[k]).reduce((a, b) => a + b, 0);
-
+const labels = (table: boolean, maxSize: number, splits?: Split[]) => {
     const all = {
-        place: { size: size.place, text: Lang.print('classes.header.place') },
-        name: { size: size.name, text: Lang.print('classes.header.name') },
-        time: { size: size.time, text: Lang.print('classes.header.time'), align: 'flex-end' },
-        start: { size: size.start, text: Lang.print('classes.header.start') },
+        place: { size: 1, text: Lang.print('classes.header.place') },
+        name: { size: 1, text: Lang.print('classes.header.name') },
+        time: { size: 1, text: Lang.print('classes.header.time'), align: 'flex-end' },
+        start: { size: 1, text: Lang.print('classes.header.start') },
     };
 
     const inPortrait = [
@@ -45,19 +38,14 @@ const labels = (landscape: boolean, splits?: Split[]) => {
         all.place,
         all.name,
         all.start,
-        ...splits.map((s) => ({
-            size: (overflowSize / splits.length),
-            text: s.name,
-        })),
+        ...splits.map((s) => ({ text: s.name })),
         all.time,
-    ];
+    ].map((s) => ({ ...s, style: { width: maxSize } }));
 
-    return landscape ? inLandscape : inPortrait;
+    return table ? inLandscape : inPortrait;
 };
 
-const Component: React.SFC<StateProps & OwnProps> = ({ rotation, className, competitionId }) => {
-    const landscape = rotation === ScreenOrientation.Orientation.LANDSCAPE;
-
+const Component: React.SFC<OwnProps> = ({ table, className, competitionId, maxRowSize }) => {
     const { data, loading, error } =
         useQuery<GetSplitControls, GetSplitControlsVariables>(
             GET_SPLIT_CONTROLS,
@@ -66,7 +54,7 @@ const Component: React.SFC<StateProps & OwnProps> = ({ rotation, className, comp
 
     const splits: Split[] = _.get(data, 'results.getSplitControls', []);
 
-    const renderCol = ({ text, size, align }, index) => {
+    const renderCol = ({ text, size, align, style }, index) => {
         const key = `${text}:${index}`;
 
         return (
@@ -74,6 +62,7 @@ const Component: React.SFC<StateProps & OwnProps> = ({ rotation, className, comp
                 size={size}
                 key={key}
                 align={align || 'flex-start'}
+                style={style}
             >
                 <Text
                     numberOfLines={1}
@@ -94,21 +83,21 @@ const Component: React.SFC<StateProps & OwnProps> = ({ rotation, className, comp
             style={{
                 height: 60,
                 flexDirection: 'row',
-                paddingHorizontal: 20,
             }}
         >
             {
                 (!loading && !error) &&
                 <Grid>
-                    {labels(landscape, splits).map(renderCol)}
+                    {labels(table, maxRowSize || 0, splits).map(renderCol)}
                 </Grid>
             }
         </View>
     );
 };
 
-const mapStateToProps = (state: AppState): StateProps => ({
-    rotation: state.general.rotation,
-});
+const mapStateToProps = (state: AppState) => ({});
 
-export const ResultHeader = connect(mapStateToProps, null)(Component);
+export const ResultHeader = connect(
+    null,
+    null,
+)(Component) as unknown as React.ComponentClass<OwnProps>;

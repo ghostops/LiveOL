@@ -3,51 +3,29 @@ import { COLORS, px } from 'util/const';
 import { connect } from 'react-redux';
 import { Grid } from 'react-native-easy-grid';
 import { ListItem, View, Text, Badge } from 'native-base';
-import { OLResultAnimation } from './animation';
-import { OLResultBadge } from './badge';
-import { OLResultClub } from './club';
-import { OLResultColumn } from './column';
-import { OLResultName } from './name';
-import { OLResultTime } from './time';
-import { OLResultTimeplus } from './timeplus';
-import { OLSplits } from './splits';
-import { OLStartTime } from './start';
+import { OLResultAnimation } from 'views/components/result/item/animation';
+import { OLResultBadge } from 'views/components/result/item/badge';
+import { OLResultClub } from 'views/components/result/item/club';
+import { OLResultColumn } from 'views/components/result/item/column';
+import { OLResultName } from 'views/components/result/item/name';
+import { OLResultTime } from 'views/components/result/item/time';
+import { OLResultTimeplus } from 'views/components/result/item/timeplus';
+import { OLSplits } from 'views/components/result/item/splits';
+import { OLStartTime } from 'views/components/result/item/start';
 import { Result } from 'lib/graphql/fragments/types/Result';
 import { ScreenOrientation } from 'expo';
-import { TouchableOpacity } from 'react-native';
 import { showToast } from 'lib/toasts/competitiorInfo';
+import { TouchableOpacity } from 'react-native';
 
 interface OwnProps {
     result: Result;
 }
 
-interface StateProps {
-    rotation: ScreenOrientation.Orientation;
-}
+type Props = OwnProps;
 
-type Props = StateProps & OwnProps;
+const tmpW = px(200);
 
-export const SIZE = {
-    landscape: {
-        place: 7,
-        name: 18,
-        start: 12,
-        time: 12,
-    },
-    portrait: {
-        place: 15,
-        name: 50,
-        start: 0,
-        time: 35,
-    },
-};
-
-const Component: React.SFC<Props> = ({ result, rotation }) => {
-    const landscape = rotation === ScreenOrientation.Orientation.LANDSCAPE;
-    const size = landscape ? SIZE.landscape : SIZE.portrait;
-
-    const overflowSize = Object.keys(size).map((k) => size[k]).reduce((a, b) => a + b, 0);
-
+export const OLTableRow: React.SFC<Props> = ({ result }) => {
     const moreInfo = () => {
         showToast(result.name, result.club);
     };
@@ -62,15 +40,14 @@ const Component: React.SFC<Props> = ({ result, rotation }) => {
                     marginLeft: 0,
                     height: px(80),
                     paddingHorizontal: 10,
-                    // width: 5000,
                 }}
             >
                 <Grid>
-                    <OLResultColumn size={size.place}>
+                    <OLResultColumn style={{ width: tmpW }}>
                         <OLResultBadge place={result.place} />
                     </OLResultColumn>
 
-                    <OLResultColumn size={size.name}>
+                    <OLResultColumn style={{ width: tmpW }}>
                         <TouchableOpacity
                             style={{ flex: 1 }}
                             onPress={moreInfo}
@@ -81,21 +58,17 @@ const Component: React.SFC<Props> = ({ result, rotation }) => {
                         </TouchableOpacity>
                     </OLResultColumn>
 
-                    {
-                        landscape &&
-                        <OLResultColumn size={size.start}>
-                            <OLStartTime time={result.start} />
-                        </OLResultColumn>
-                    }
+                    <OLResultColumn style={{ width: tmpW }}>
+                        <OLStartTime time={result.start} />
+                    </OLResultColumn>
 
                     {
-                        landscape &&
                         result.splits.map((split, index) => {
                             return (
                                 <OLResultColumn
-                                    size={overflowSize / result.splits.length}
+                                    style={{ width: tmpW }}
                                     key={split.id}
-                                    align="center"
+                                    align="flex-start"
                                 >
                                     <OLSplits split={split} />
                                 </OLResultColumn>
@@ -105,7 +78,7 @@ const Component: React.SFC<Props> = ({ result, rotation }) => {
 
                     <OLResultColumn
                         align="flex-end"
-                        size={size.time}
+                        style={{ width: tmpW }}
                     >
                         <OLResultTime
                             status={result.status}
@@ -124,9 +97,3 @@ const Component: React.SFC<Props> = ({ result, rotation }) => {
         </OLResultAnimation>
     );
 };
-
-const mapStateToProps = (state: AppState): StateProps => ({
-    rotation: state.general.rotation,
-});
-
-export const OLResultItem = connect(mapStateToProps, null)(Component);
