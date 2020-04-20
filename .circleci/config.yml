@@ -78,6 +78,14 @@ jobs:
                     ssh ${SSH_USER}@${SSH_DOMAIN} -p ${SSH_PORT} "cd ${PROJECT_ROOT} && docker-compose -f docker-compose.live.yml up -d"
 workflows:
     deploy:
-      jobs:
-        - deploy-server
-        - deploy-website
+        jobs:
+            - deploy-server:
+                filters:
+                    branches:
+                        only:
+                            - master
+            - deploy-website:
+                filters:
+                    branches:
+                        only:
+                            - master
