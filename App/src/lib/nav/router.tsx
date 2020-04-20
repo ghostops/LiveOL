@@ -2,12 +2,12 @@ import * as React from 'react';
 import { COLORS, px } from 'util/const';
 import { connect } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
+import { isLandscape } from 'util/landscape';
 import { Lang } from 'lib/lang';
 import { Mappings } from './mappings';
 import { NavigationContainer, TypedNavigator, ParamListBase } from '@react-navigation/native';
 import { Right, Left } from 'views/scenes/home/header';
 import { Routes } from './routes';
-import { ScreenOrientation } from 'expo';
 import { xtraSpace, hasNotch } from 'util/hasNotch';
 
 interface StateProps {
@@ -97,7 +97,7 @@ const Component: React.SFC<StateProps> = ({ landscape }) => {
 };
 
 const mapStateToProps = (state: AppState): StateProps => ({
-    landscape: state.general.rotation === ScreenOrientation.Orientation.LANDSCAPE,
+    landscape: isLandscape(state.general.rotation),
 });
 
 export default connect(mapStateToProps, null)(Component);

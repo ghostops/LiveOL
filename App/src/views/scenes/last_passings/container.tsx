@@ -10,8 +10,8 @@ import { OLError } from 'views/components/error';
 import { OLPassings as Component } from './component';
 import { Passing } from 'lib/graphql/fragments/types/Passing';
 import { Routes, RouterProps } from 'lib/nav/routes';
-import { ScreenOrientation } from 'expo';
 import { useQuery } from '@apollo/react-hooks';
+import { isLandscape } from 'util/landscape';
 
 interface OwnProps extends RouterProps<{ id, title }> {}
 
@@ -45,7 +45,7 @@ const DataWrapper: React.SFC<Props> = (props) => {
 };
 
 const mapStateToProps = (state: AppState, props: Props): StateProps => ({
-    landscape: state.general.rotation === ScreenOrientation.Orientation.LANDSCAPE,
+    landscape: isLandscape(state.general.rotation),
 });
 
 export const OLPassings = connect(mapStateToProps, null)(DataWrapper);

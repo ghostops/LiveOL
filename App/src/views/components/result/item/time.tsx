@@ -10,7 +10,6 @@ interface Props {
 
 export const OLResultTime: React.SFC<Props> = ({ time, status }) => (
     <Text style={{
-        marginLeft: 10,
         fontSize: fontPx(20),
     }}>
         {

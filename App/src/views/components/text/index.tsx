@@ -7,11 +7,13 @@ interface Props {
     size: number;
     font: 'Proxima_Nova_Bold' | 'Proxima_Nova' | 'Rift_Bold' | 'Rift_Bold_Italic';
     style?: TextStyle;
+    numberOfLines?: number;
 }
 
 export const OLText: React.SFC<Props> = (props) => {
     return (
         <Text
+            {...props}
             style={{
                 color: '#141823',
                 fontSize: fontPx(props.size),

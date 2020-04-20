@@ -17,7 +17,7 @@ export class EventorExtractor {
         const week = getWeek(eventDate);
 
         const [startDate, endDate] = getDatesFromWeek(week, eventDate.getFullYear());
-        
+
         const range = await this.scraper.scrapeDateRange(startDate, endDate);
 
         const eventInList = this.findInRange(liveresultatComp, range, 2);
@@ -32,8 +32,8 @@ export class EventorExtractor {
     }
 
     private findInRange = (
-        comp: LiveresultatApi.competition, 
-        range: EventorListItem[], 
+        comp: LiveresultatApi.competition,
+        range: EventorListItem[],
         threshold: number,
     ): EventorListItem | null => {
         const weightList = range.map((item) => this.weighItem(comp, item));
@@ -43,13 +43,13 @@ export class EventorExtractor {
         if (!winner || winner.weight < threshold) {
             return null;
         }
-        
+
         return range.find((item) => item.id === winner.id);
     }
 
     private weighItem = (comp: LiveresultatApi.competition, item: EventorListItem): { id: string, weight: number } => {
         let weight = 0;
-        
+
         const compDate = new Date(comp.date);
 
         if (this.datesMatch(item.date, compDate)){
@@ -60,7 +60,10 @@ export class EventorExtractor {
             weight += 1;
         }
 
-        if (item.club.toLowerCase() === comp.organizer.toLowerCase()) {
+        if (
+            !!comp.organizer &&
+            item.club.toLowerCase() === comp.organizer.toLowerCase()
+        ) {
             weight += 1;
         }
 
@@ -70,7 +73,7 @@ export class EventorExtractor {
         };
     }
 
-    private datesMatch = (a: Date, b: Date): boolean => 
+    private datesMatch = (a: Date, b: Date): boolean =>
         `${a.getFullYear()}-${a.getMonth() + 1}-${a.getDate()}` ===
         `${b.getFullYear()}-${b.getMonth() + 1}-${b.getDate()}`
 }

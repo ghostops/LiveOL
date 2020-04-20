@@ -1,4 +1,4 @@
-import { ScreenOrientation } from 'expo';
+import { Orientation } from 'expo-screen-orientation';
 
 export const SET_ROTATION = 'GENERAL:SET_ROTATION';
 
@@ -21,7 +21,7 @@ export function generalReducer(
     return state;
 }
 
-export const setRotation = (rotation: ScreenOrientation.Orientation) => (dispatch) => {
+export const setRotation = (rotation: Orientation) => (dispatch) => {
     dispatch({
         type: SET_ROTATION,
         value: rotation,

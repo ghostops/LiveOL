@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ScreenOrientation } from 'expo';
+import * as ScreenOrientation from 'expo-screen-orientation';
 import { connect } from 'react-redux';
 import { setRotation } from 'store/stores/general';
 
@@ -17,7 +17,7 @@ const Component: React.SFC<DispatchProps> = ({ children, setRotation }) => {
     React.useEffect(
         () => {
             ScreenOrientation.getOrientationAsync()
-                .then((o) => setRotation(o.orientation));
+                .then((o) => setRotation(o));
 
             subscription = ScreenOrientation.addOrientationChangeListener(onRotate);
 
