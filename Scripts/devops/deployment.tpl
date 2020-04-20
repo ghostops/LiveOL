@@ -58,10 +58,10 @@ mkdir $HOME/duckdns
 echo $DUCKDNS_SCRIPT >> $HOME/duckdns/duck.sh
 chmod 700 $HOME/duckdns/duck.sh
 
-# cron poll
+## cron poll
 (crontab -l 2>/dev/null; echo "*/5 * * * * $HOME/duckdns/duck.sh >/dev/null 2>&1") | crontab -
 
-# cron reboot
+## cron reboot
 (crontab -l 2>/dev/null; echo "@reboot $HOME/duckdns/duck.sh >/dev/null 2>&1") | crontab -
 
 # Clone repo
@@ -72,7 +72,7 @@ EOF
 # Auth ECR
 export AWS_ACCOUNT_ID=$(aws sts get-caller-identity | jq .Account --raw-output)
 
-# Add ecr auth quick function
+## Add ecr auth quick function
 export ECR_COMMAND="$AWS_BINARY ecr get-login-password --region=eu-north-1 | sudo docker login --password-stdin --username AWS \"$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com\""
 cat <<EOF >>$SCRIPT_HOME/.bashrc
 function ecr {
@@ -89,6 +89,7 @@ cd $SERVER_ROOT ; $DOCKER_COMPOSE up -d ; cd $SCRIPT_HOME
 mkdir -p /var/www/liveol.larsendahl.se/public
 rm -rf /var/www/html
 
+## Copy website from git repo
 cp -R $WEB_ROOT/* /var/www/liveol.larsendahl.se/public
 
 chown -R $SCRIPT_USER:$SCRIPT_USER /var/www/liveol.larsendahl.se
@@ -98,7 +99,7 @@ $AWS_BINARY s3 cp $S3_ROOT/vhost.conf .
 mv ./vhost.conf /etc/apache2/sites-available/vhost.conf
 a2ensite vhost.conf
 
-# enable reverse proxies
+## enable reverse proxies
 a2enmod proxy proxy_http
 
 systemctl restart apache2
