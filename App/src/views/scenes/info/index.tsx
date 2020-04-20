@@ -6,8 +6,9 @@ import { OLButton } from 'views/components/button';
 import { OLFlag } from 'views/components/lang/flag';
 import { Platform, AsyncStorage, Alert, TouchableOpacity, View, Image } from 'react-native';
 import { UNIT, VERSION, APP_VERSION, ANDROID_VERSION_CODE } from 'util/const';
-import { Updates, Linking, ScreenOrientation } from 'expo';
+import { Updates, Linking } from 'expo';
 import * as NB from 'native-base';
+import { isLandscape } from 'util/landscape';
 
 const {
     Container,
@@ -273,7 +274,7 @@ class Component extends React.PureComponent<Props, State> {
 }
 
 const mapStateToProps = (state: AppState): StateProps => ({
-    landscape: state.general.rotation === ScreenOrientation.Orientation.LANDSCAPE,
+    landscape: isLandscape(state.general.rotation),
 });
 
 export const OLInfo = connect(mapStateToProps, null)(Component);

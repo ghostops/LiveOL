@@ -7,7 +7,6 @@ import { Grid } from 'react-native-easy-grid';
 import { Lang } from 'lib/lang';
 import { OLResultColumn } from './item/column';
 import { randomColor } from 'util/random';
-import { ScreenOrientation } from 'expo';
 import { Split } from 'lib/graphql/fragments/types/Split';
 import { Text, View } from 'native-base';
 import { UNIT } from 'util/const';

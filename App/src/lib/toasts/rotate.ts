@@ -1,8 +1,8 @@
-import { Toast } from 'native-base';
 import { Cache } from 'lib/cache';
+import { isLandscape } from 'util/landscape';
 import { Lang } from 'lib/lang';
 import { store } from 'store/configure';
-import { ScreenOrientation } from 'expo';
+import { Toast } from 'native-base';
 import ms from 'ms';
 
 export const showToast = async () => {
@@ -14,7 +14,7 @@ export const showToast = async () => {
 
     if (
         value !== 'seen' &&
-        state.general.rotation !== ScreenOrientation.Orientation.LANDSCAPE
+        !isLandscape(state.general.rotation)
     ) {
         Toast.show({
             text: Lang.print('promotions.rotate'),

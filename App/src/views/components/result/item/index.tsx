@@ -13,16 +13,17 @@ import { OLResultTimeplus } from './timeplus';
 import { OLSplits } from './splits';
 import { OLStartTime } from './start';
 import { Result } from 'lib/graphql/fragments/types/Result';
-import { ScreenOrientation } from 'expo';
+import { Orientation } from 'expo-screen-orientation';
 import { TouchableOpacity } from 'react-native';
 import { showToast } from 'lib/toasts/competitiorInfo';
+import { isLandscape } from 'util/landscape';
 
 interface OwnProps {
     result: Result;
 }
 
 interface StateProps {
-    rotation: ScreenOrientation.Orientation;
+    rotation: Orientation;
 }
 
 type Props = StateProps & OwnProps;
@@ -43,7 +44,7 @@ export const SIZE = {
 };
 
 const Component: React.SFC<Props> = ({ result, rotation }) => {
-    const landscape = rotation === ScreenOrientation.Orientation.LANDSCAPE;
+    const landscape = isLandscape(rotation);
     const size = landscape ? SIZE.landscape : SIZE.portrait;
 
     const overflowSize = Object.keys(size).map((k) => size[k]).reduce((a, b) => a + b, 0);

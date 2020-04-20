@@ -13,7 +13,6 @@ import { OLResultTimeplus } from 'views/components/result/item/timeplus';
 import { OLSplits } from 'views/components/result/item/splits';
 import { OLStartTime } from 'views/components/result/item/start';
 import { Result } from 'lib/graphql/fragments/types/Result';
-import { ScreenOrientation } from 'expo';
 import { showToast } from 'lib/toasts/competitiorInfo';
 import { TouchableOpacity } from 'react-native';
 
