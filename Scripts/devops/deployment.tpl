@@ -74,12 +74,10 @@ export AWS_ACCOUNT_ID=$(aws sts get-caller-identity | jq .Account --raw-output)
 
 ## Add ecr auth quick function
 export ECR_COMMAND="$AWS_BINARY ecr get-login-password --region=eu-north-1 | sudo docker login --password-stdin --username AWS \"$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com\""
-cat <<EOF >>$SCRIPT_HOME/.bashrc
-function ecr {
-    $ECR_COMMAND
-}
-EOF
+echo $ECR_COMMAND > "$SCRIPT_HOME/ecr.sh"
+chmod +x "$SCRIPT_HOME/ecr.sh"
 
+## eval for script
 eval $ECR_COMMAND
 
 # Pull all live containers

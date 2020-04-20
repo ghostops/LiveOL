@@ -60,7 +60,7 @@ jobs:
             - run:
                 name: Authenticate ECR
                 command: |
-                    ssh ${SSH_USER}@${SSH_DOMAIN} -p ${SSH_PORT} "ecr"
+                    ssh ${SSH_USER}@${SSH_DOMAIN} -p ${SSH_PORT} "./ecr.sh"
 
             - run:
                 name: Pull changes on server
