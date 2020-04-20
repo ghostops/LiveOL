@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { COLORS, px } from 'util/const';
 import { connect } from 'react-redux';
-import { Grid } from 'react-native-easy-grid';
 import { ListItem, View, Text, Badge } from 'native-base';
 import { OLResultAnimation } from 'views/components/result/item/animation';
 import { OLResultBadge } from 'views/components/result/item/badge';
@@ -23,21 +22,20 @@ interface OwnProps {
 
 type Props = OwnProps;
 
-export const LANDSCAPE_WIDTH = {
-    place: px(60),
-    name: px(200),
-    start: px(100),
-    time: px(80),
-    splits: px(100),
+export const PORTRAIT_SIZE = {
+    place: 15,
+    name: 50,
+    start: 0,
+    time: 35,
 };
 
-export class OLTableRow extends React.PureComponent<Props> {
-    private moreInfo = () => {
-        showToast(this.props.result.name, this.props.result.club);
-    }
-
+export class OLResultItem extends React.PureComponent<Props> {
     render() {
         const { result } = this.props;
+
+        const moreInfo = () => {
+            showToast(result.name, result.club);
+        };
 
         return (
             <OLResultAnimation
@@ -45,16 +43,16 @@ export class OLTableRow extends React.PureComponent<Props> {
             >
                 <OLResultListItem>
                     <OLResultColumn
+                        size={PORTRAIT_SIZE.place}
                         align="center"
-                        style={{ width: LANDSCAPE_WIDTH.place }}
                     >
                         <OLResultBadge place={result.place} />
                     </OLResultColumn>
 
-                    <OLResultColumn style={{ width: LANDSCAPE_WIDTH.name }}>
+                    <OLResultColumn size={PORTRAIT_SIZE.name}>
                         <TouchableOpacity
                             style={{ flex: 1 }}
-                            onPress={this.moreInfo}
+                            onPress={moreInfo}
                         >
                             <OLResultName name={result.name} />
 
@@ -62,27 +60,9 @@ export class OLTableRow extends React.PureComponent<Props> {
                         </TouchableOpacity>
                     </OLResultColumn>
 
-                    <OLResultColumn style={{ width: LANDSCAPE_WIDTH.start }}>
-                        <OLStartTime time={result.start} />
-                    </OLResultColumn>
-
-                    {
-                        result.splits.map((split, index) => {
-                            return (
-                                <OLResultColumn
-                                    style={{ width: LANDSCAPE_WIDTH.splits }}
-                                    key={split.id}
-                                    align="flex-start"
-                                >
-                                    <OLSplits split={split} />
-                                </OLResultColumn>
-                            );
-                        })
-                    }
-
                     <OLResultColumn
                         align="flex-end"
-                        style={{ width: LANDSCAPE_WIDTH.time }}
+                        size={PORTRAIT_SIZE.time}
                     >
                         <OLResultTime
                             status={result.status}
@@ -100,4 +80,4 @@ export class OLTableRow extends React.PureComponent<Props> {
             </OLResultAnimation>
         );
     }
-}
+};

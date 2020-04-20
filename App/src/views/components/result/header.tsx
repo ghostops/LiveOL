@@ -9,8 +9,12 @@ import { OLResultColumn } from './item/column';
 import { randomColor } from 'util/random';
 import { Split } from 'lib/graphql/fragments/types/Split';
 import { Text, View } from 'native-base';
-import { UNIT } from 'util/const';
+import { UNIT, px, COLORS } from 'util/const';
 import { useQuery } from '@apollo/react-hooks';
+import { ViewStyle, FlexAlignType } from 'react-native';
+import { LANDSCAPE_WIDTH } from 'views/components/result/table/row';
+import { PORTRAIT_SIZE } from 'views/components/result/list/item';
+import { OLText } from '../text';
 
 interface OwnProps {
     competitionId: number;
@@ -19,27 +23,65 @@ interface OwnProps {
     maxRowSize?: number;
 }
 
-const labels = (table: boolean, maxSize: number, splits?: Split[]) => {
-    const all = {
-        place: { size: 1, text: Lang.print('classes.header.place') },
-        name: { size: 1, text: Lang.print('classes.header.name') },
-        time: { size: 1, text: Lang.print('classes.header.time'), align: 'flex-end' },
-        start: { size: 1, text: Lang.print('classes.header.start') },
+interface Label {
+    text: string;
+    size?: number;
+    style?: ViewStyle;
+    align?: FlexAlignType;
+}
+
+const labels = (table: boolean, maxSize: number, splits?: Split[]): Label[] => {
+    const all: Record<string, Label> = {
+        place: {
+            size: PORTRAIT_SIZE.place,
+            text: Lang.print('classes.header.place'),
+            style: {
+                width: table ? LANDSCAPE_WIDTH.place : 'auto',
+            },
+            align: 'center',
+        },
+        name: {
+            size: PORTRAIT_SIZE.name,
+            text: Lang.print('classes.header.name'),
+            style: {
+                width: table ? LANDSCAPE_WIDTH.name : 'auto',
+            },
+        },
+        time: {
+            size: PORTRAIT_SIZE.time,
+            text: Lang.print('classes.header.time'),
+            align: 'flex-end',
+            style: {
+                width: table ? LANDSCAPE_WIDTH.time : 'auto',
+            },
+        },
+        start: {
+            size: PORTRAIT_SIZE.start,
+            text: Lang.print('classes.header.start'),
+            style: {
+                width: table ? LANDSCAPE_WIDTH.start : 'auto',
+            },
+        },
     };
 
-    const inPortrait = [
+    const inPortrait: Label[] = [
         all.place,
         all.name,
         all.time,
     ];
 
-    const inLandscape = [
+    const inLandscape: Label[] = [
         all.place,
         all.name,
         all.start,
-        ...splits.map((s) => ({ text: s.name })),
+        ...splits.map((s) => ({
+            text: s.name,
+            style: {
+                width: LANDSCAPE_WIDTH.splits,
+            },
+        } as Label)),
         all.time,
-    ].map((s) => ({ ...s, style: { width: maxSize } }));
+    ];
 
     return table ? inLandscape : inPortrait;
 };
@@ -63,16 +105,16 @@ const Component: React.SFC<OwnProps> = ({ table, className, competitionId, maxRo
                 align={align || 'flex-start'}
                 style={style}
             >
-                <Text
-                    numberOfLines={1}
+                <OLText
+                    font="Rift_Bold"
+                    size={18}
                     style={{
-                        fontSize: UNIT,
-                        fontWeight: 'bold',
                         color: '#444444',
                     }}
+                    numberOfLines={1}
                 >
                     {text}
-                </Text>
+                </OLText>
             </OLResultColumn>
         );
     };
@@ -80,8 +122,12 @@ const Component: React.SFC<OwnProps> = ({ table, className, competitionId, maxRo
     return (
         <View
             style={{
-                height: 60,
                 flexDirection: 'row',
+                paddingVertical: px(20),
+                paddingRight: px(20),
+                backgroundColor: '#e3e3e3',
+                borderBottomColor: '#cccccc',
+                borderBottomWidth: 1,
             }}
         >
             {

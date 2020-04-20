@@ -22,7 +22,7 @@ export const OLResultColumn: React.SFC<Props> = (props) => {
                 style={{
                     flex: 1,
                     alignItems: props.align || 'flex-start',
-                    justifyContent: 'center',
+                    justifyContent: 'flex-start',
                 }}
             >
                 {props.children}
