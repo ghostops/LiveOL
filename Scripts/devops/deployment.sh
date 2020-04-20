@@ -62,6 +62,10 @@ eval $($AWS_BINARY ecr get-login --no-include-email --region=$AWS_REGION)
 # Pull all live containers
 cd $SERVER_ROOT ; $DOCKER_COMPOSE up -d ; cd $HOME
 
+# Add website dir
+mkdir -p /var/www/liveol.larsendahl.se/public
+rm -rf /var/www/html
+
 # Add Apache2 VHost
 $AWS_BINARY s3 cp $S3_ROOT/vhost.conf .
 mv ./vhost.conf /etc/apache2/sites-available/vhost.conf
