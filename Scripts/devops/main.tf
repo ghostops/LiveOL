@@ -64,3 +64,4 @@ resource "aws_autoscaling_group" "liveol_server" {
     create_before_destroy = true
   }
 }
+
