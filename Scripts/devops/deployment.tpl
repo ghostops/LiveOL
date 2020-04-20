@@ -11,6 +11,7 @@ export SCRIPT_HOME="/home/$SCRIPT_USER"
 
 export DOCKER_COMPOSE_VERSION="1.25.4"
 export SERVER_ROOT="$SCRIPT_HOME/LiveOL/Server"
+export WEB_ROOT="$SCRIPT_HOME/LiveOL/Website"
 
 export AWS_BINARY="/usr/local/bin/aws"
 export AWS_REGION="eu-north-1"
@@ -27,7 +28,7 @@ chown -R $SCRIPT_USER:$SCRIPT_USER $SCRIPT_HOME
 
 # Install required
 apt update
-apt -y install apache2 apt-transport-https ca-certificates curl software-properties-common unzip
+apt -y install apache2 apt-transport-https ca-certificates curl software-properties-common unzip jq
 
 ## AWS CLI
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "$SCRIPT_HOME/awscliv2.zip"
@@ -52,18 +53,16 @@ chmod 600 $SCRIPT_HOME/.ssh/id_rsa
 ssh-keyscan github.com >> ~/.ssh/known_hosts
 EOF
 
-# Install DuckDNS on $SCRIPT_USER
-su $SCRIPT_USER <<'EOF'
-mkdir $SCRIPT_HOME/duckdns
-echo $DUCKDNS_SCRIPT >> $SCRIPT_HOME/duckdns/duck.sh
-chmod 700 $SCRIPT_HOME/duckdns/duck.sh
+# Install DuckDNS in root
+mkdir $HOME/duckdns
+echo $DUCKDNS_SCRIPT >> $HOME/duckdns/duck.sh
+chmod 700 $HOME/duckdns/duck.sh
 
 # cron poll
-(crontab -l 2>/dev/null; echo "*/5 * * * * $SCRIPT_HOME/duckdns/duck.sh >/dev/null 2>&1") | crontab -
+(crontab -l 2>/dev/null; echo "*/5 * * * * $HOME/duckdns/duck.sh >/dev/null 2>&1") | crontab -
 
 # cron reboot
-(crontab -l 2>/dev/null; echo "@reboot $SCRIPT_HOME/duckdns/duck.sh >/dev/null 2>&1") | crontab -
-EOF
+(crontab -l 2>/dev/null; echo "@reboot $HOME/duckdns/duck.sh >/dev/null 2>&1") | crontab -
 
 # Clone repo
 su $SCRIPT_USER <<'EOF'
@@ -71,7 +70,17 @@ git clone git@github.com:ghostops/LiveOL.git "$SCRIPT_HOME/LiveOL"
 EOF
 
 # Auth ECR
-eval $($AWS_BINARY ecr get-login --no-include-email --region=$AWS_REGION)
+export AWS_ACCOUNT_ID=$(aws sts get-caller-identity | jq .Account --raw-output)
+
+# Add ecr auth quick function
+export ECR_COMMAND="$AWS_BINARY ecr get-login-password --region=eu-north-1 | sudo docker login --password-stdin --username AWS \"$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com\""
+cat <<EOF >>$SCRIPT_HOME/.bashrc
+function ecr {
+    $ECR_COMMAND
+}
+EOF
+
+eval $ECR_COMMAND
 
 # Pull all live containers
 cd $SERVER_ROOT ; $DOCKER_COMPOSE up -d ; cd $SCRIPT_HOME
@@ -79,6 +88,9 @@ cd $SERVER_ROOT ; $DOCKER_COMPOSE up -d ; cd $SCRIPT_HOME
 # Add website dir
 mkdir -p /var/www/liveol.larsendahl.se/public
 rm -rf /var/www/html
+
+cp -R $WEB_ROOT/* /var/www/liveol.larsendahl.se/public
+
 chown -R $SCRIPT_USER:$SCRIPT_USER /var/www/liveol.larsendahl.se
 
 # Add Apache2 VHost
