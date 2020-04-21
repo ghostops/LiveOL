@@ -1,5 +1,8 @@
 import * as React from 'react';
+import { client } from 'lib/graphql/client';
 import { connect } from 'react-redux';
+import { GET_SERVER_VERSION } from 'lib/graphql/queries/server';
+import { isLandscape } from 'util/landscape';
 import { Lang } from 'lib/lang';
 import { NavigationProp } from '@react-navigation/native';
 import { OLButton } from 'views/components/button';
@@ -8,7 +11,7 @@ import { Platform, AsyncStorage, Alert, TouchableOpacity, View, Image } from 're
 import { UNIT, VERSION, APP_VERSION, ANDROID_VERSION_CODE } from 'util/const';
 import { Updates, Linking } from 'expo';
 import * as NB from 'native-base';
-import { isLandscape } from 'util/landscape';
+import { ServerVersion } from 'lib/graphql/queries/types/ServerVersion';
 
 const {
     Container,
@@ -30,14 +33,14 @@ interface StateProps {
 type Props = StateProps & OwnProps;
 
 interface State {
-    canReview: boolean;
+    secretTaps: number;
 }
 
 const PHRASEAPP_IMAGE = require('../../../../assets/images/phraseapp.png');
 
 class Component extends React.PureComponent<Props, State> {
     state: State = {
-        canReview: false,
+        secretTaps: 0,
     };
 
     openAppStore = async () => {
@@ -94,12 +97,19 @@ class Component extends React.PureComponent<Props, State> {
 
     openPhraseApp = () => Linking.openURL('https://phraseapp.com');
 
-    versionAlert = () => {
+    versionAlert = async () => {
+        const { data } = await client.query<ServerVersion>({
+            query: GET_SERVER_VERSION,
+        });
+
+        // tslint:disable: prefer-template
         Alert.alert(
             'VERSION',
-            `App Version: ${APP_VERSION}, Package Version: ${VERSION}, ` +
-            `Android Version Code: ${ANDROID_VERSION_CODE}`,
+            `App Version: ${APP_VERSION}\n` +
+            `Package Version: ${VERSION}\n` +
+            `Server Version: ${data.server.version}\n`,
         );
+        // tslint:enable: prefer-template
     }
 
     renderGeneralCard = () => (
@@ -130,7 +140,7 @@ class Component extends React.PureComponent<Props, State> {
                 <Body>
                     <TouchableOpacity
                         style={{ width: '100%' }}
-                        onLongPress={this.versionAlert}
+                        onPress={this.secretTap}
                         activeOpacity={1}
                     >
                         <Text style={{
@@ -240,6 +250,19 @@ class Component extends React.PureComponent<Props, State> {
             </CardItem>
         </Card>
     )
+
+    secretTap = () => {
+        this.setState(
+            { secretTaps: this.state.secretTaps + 1 },
+            () => {
+                if (this.state.secretTaps > 5) {
+                    this.setState({ secretTaps: 0 });
+
+                    this.versionAlert();
+                }
+            },
+        );
+    }
 
     render() {
         return (
