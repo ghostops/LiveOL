@@ -12,7 +12,7 @@ import { Text, View } from 'native-base';
 import { UNIT, px, COLORS } from 'util/const';
 import { useQuery } from '@apollo/react-hooks';
 import { ViewStyle, FlexAlignType } from 'react-native';
-import { LANDSCAPE_WIDTH } from 'views/components/result/table/row';
+import { LANDSCAPE_WIDTH, getExtraSize } from 'views/components/result/table/row';
 import { PORTRAIT_SIZE } from 'views/components/result/list/item';
 import { OLText } from '../text';
 
@@ -44,7 +44,11 @@ const labels = (table: boolean, maxSize: number, splits?: Split[]): Label[] => {
             size: PORTRAIT_SIZE.name,
             text: Lang.print('classes.header.name'),
             style: {
-                width: table ? LANDSCAPE_WIDTH.name : 'auto',
+                width: (
+                    table
+                    ? LANDSCAPE_WIDTH.name + getExtraSize(splits.length)
+                    : 'auto'
+                ),
             },
         },
         time: {

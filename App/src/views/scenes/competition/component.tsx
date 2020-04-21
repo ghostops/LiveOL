@@ -3,7 +3,7 @@ import { Class } from 'lib/graphql/fragments/types/Class';
 import { Competition } from 'lib/graphql/fragments/types/Competition';
 import { EventorCompetitionFragment } from 'lib/graphql/fragments/types/EventorCompetitionFragment';
 import { dateToReadable } from 'util/date';
-import { fontPx, px, COLORS, WINDOW_WIDTH } from 'util/const';
+import { fontPx, px, COLORS } from 'util/const';
 import { Lang } from 'lib/lang';
 import { OLButton } from 'views/components/button';
 import { OLLoading } from 'views/components/loading';

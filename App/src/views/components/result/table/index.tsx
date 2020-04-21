@@ -10,7 +10,7 @@ import { Result } from 'lib/graphql/fragments/types/Result';
 import { ResultBox } from 'views/components/result/result';
 import { ResultHeader } from 'views/components/result/header';
 import { ScrollView, RefreshControl } from 'react-native';
-import { UNIT, COLORS, px, WINDOW_WIDTH } from 'util/const';
+import { UNIT, COLORS, px } from 'util/const';
 import { View, Spinner } from 'native-base';
 import { OLText } from 'views/components/text';
 
@@ -41,7 +41,6 @@ export const OLResultsTable: React.SFC<Props> = (props) => {
         <OLSafeAreaView>
             <ScrollView
                 horizontal
-                style={{ flex: 1 }}
             >
                 <FlatList
                     nestedScrollEnabled
