@@ -23,7 +23,7 @@ export class EventorScraper {
     public scrapeDateRange = async (startDate: Date, endDate: Date) => {
         const start = this.dateToString(startDate);
         const end = this.dateToString(endDate);
-        
+
         const url = `${this.baseUrl}/Events?startDate=${start}&endDate=${end}`;
 
         let data: string;
@@ -49,13 +49,13 @@ export class EventorScraper {
 
         const parser = new ListResponseParser(data, this.baseUrl);
         const parsed = parser.parse();
-        
+
         return parsed;
     }
 
-    public scrapeEvent = async (id: string | number) => {        
+    public scrapeEvent = async (id: string | number) => {
         const url = `${this.baseUrl}/Events/Show/${id}`;
-        
+
         let data: string;
 
         if (DEV) {

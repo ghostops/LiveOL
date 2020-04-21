@@ -1,8 +1,8 @@
 import * as cheerio from 'cheerio';
 import * as _ from 'lodash';
 import { invertKeyValues } from '../helpers/invert';
-import { 
-    EventorCompetitionType, 
+import {
+    EventorCompetitionType,
     EventorCompetitionDistance,
     EventorEventItem,
     EventorListItem,
@@ -80,7 +80,7 @@ export class ListResponseParser {
         this.setStartAndEndDates($('#main > div.noAutofocus > p').text());
 
         const entries = $('#eventCalendar tbody tr').toArray();
-        
+
         return entries.map(this.parseRow).filter((row) => !!row);
     }
 
@@ -105,11 +105,11 @@ export class ListResponseParser {
 
     private parseDate = (input: string): Date | null => {
         if (!input || !this.startDate || !this.endDate) return null;
-    
+
         const [day, month] = input.split(' ')[1].split('/');
-    
+
         let year = this.startDate.getFullYear();
-    
+
         // If we have an end date for the range, and the year on that date
         // does not match the start, and the month is 1 we can assume
         // it will be January in the end-date
@@ -119,7 +119,7 @@ export class ListResponseParser {
         ) {
             year = this.endDate.getFullYear();
         }
-    
+
         return new Date(`${year}-${month}-${day}`);
     };
 
@@ -192,7 +192,12 @@ export class ListResponseParser {
             if (resultsLink) {
                 resultsLink = `${this.base}${resultsLink}`;
             }
-            
+
+            // If no id is found just return null
+            if (!id) {
+                return null;
+            }
+
             return {
                 id,
                 date,
@@ -234,7 +239,7 @@ export class EventResponseParser {
 
         // This array contains all the table data to the left on the event page
         const infoTable = $('.eventInfo tbody tr').toArray();
-        
+
         infoTable.forEach((element) => {
             const title = _.get(element, 'children.1.children.0.data');
             const value = _.get(element, 'children.3.children.0.data', '').trim();
@@ -247,7 +252,7 @@ export class EventResponseParser {
                 ) {
                     const imageUrl = _.get(element, 'children.3.children.0.children.0.attribs.src');
                     const club = _.get(element, 'children.3.children.0.children.1.data');
-                    
+
                     mappedInfoData.club = club;
                     mappedInfoData.clubLogoUrl = imageUrl;
 
@@ -257,9 +262,9 @@ export class EventResponseParser {
                 mappedInfoData[infoMap[title]] = value;
             }
         });
-        
+
         const info = $('#main > div > p.info').text().trim();
-        
+
         const links = $('.documents .documentName').toArray().map((element) => {
             const href = (
                 element.attribs.href.startsWith('/')
@@ -273,7 +278,7 @@ export class EventResponseParser {
         });
 
         let signups: string | number = $('.entryBox span.count').text();
-        
+
         if (signups && signups.length) {
             signups = Number(signups.replace('(', '').replace(')', ''));
         } else {
@@ -333,11 +338,11 @@ export class EventResponseParser {
         const [hours, minutes] = (time || '00:00').split(':')
 
         return new Date(Date.UTC(
-            Number(year), 
-            monthsInSwedish.indexOf(monthname) + 1, 
+            Number(year),
+            monthsInSwedish.indexOf(monthname) + 1,
             Number(date),
             Number(hours),
             Number(minutes),
-        )); 
+        ));
     }
 }

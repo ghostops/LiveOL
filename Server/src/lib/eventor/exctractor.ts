@@ -20,6 +20,8 @@ export class EventorExtractor {
 
         const range = await this.scraper.scrapeDateRange(startDate, endDate);
 
+        console.log(range);
+
         const eventInList = this.findInRange(liveresultatComp, range, 2);
 
         if (!eventInList) {
