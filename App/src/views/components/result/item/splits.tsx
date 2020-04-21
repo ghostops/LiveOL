@@ -2,7 +2,7 @@ import * as React from 'react';
 import { fontPx } from 'util/const';
 import { Split } from 'lib/graphql/fragments/types/Split';
 import { View, Text } from 'native-base';
-import * as Helpers from '../helpers';
+import { OLText } from 'views/components/text';
 
 interface Props {
     split: Split;
@@ -15,24 +15,32 @@ export const OLSplits: React.SFC<Props> = ({ split }) => {
                 flex: 1,
             }}
         >
-            <Text style={{
-                fontSize: fontPx(14),
-            }}>
+            <OLText
+                font="Proxima_Nova"
+                size={16}
+            >
                 {split.time}
                 {' '}
-                <Text style={{
-                    color: 'gray',
-                }}>
+                <OLText
+                    font="Proxima_Nova"
+                    size={16}
+                    style={{
+                        color: 'gray',
+                    }}
+                >
                     ({split.place})
-                </Text>
-            </Text>
+                </OLText>
+            </OLText>
 
-            <Text style={{
-                fontSize: fontPx(12),
-                color: 'gray',
-            }}>
+            <OLText
+                font="Proxima_Nova"
+                size={14}
+                style={{
+                    color: 'gray',
+                }}
+            >
                 {split.timeplus}
-            </Text>
+            </OLText>
         </View>
     );
 };
