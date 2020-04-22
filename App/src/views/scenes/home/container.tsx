@@ -12,6 +12,7 @@ import { OLHome as Component } from './component';
 import { Routes } from 'lib/nav/routes';
 import { useQuery } from '@apollo/react-hooks';
 import * as Actions from './store';
+import { Platform } from 'react-native';
 
 interface OwnProps {
     navigation: NavigationProp<any, any>;
@@ -108,7 +109,7 @@ const DataWrapper: React.SFC<Props> = (props) => {
             onCompetitionPress={(competition) => {
                 props.navigation.navigate(Routes.competition, {
                     id: competition.id,
-                    title: '',
+                    title: Platform.OS === 'android' ? competition.name : '',
                 });
             }}
         />

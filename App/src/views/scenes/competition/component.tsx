@@ -14,6 +14,7 @@ import { OLCompetitionClub } from 'views/components/competition/club';
 import { OLText } from 'views/components/text';
 import { Svg, Path } from 'react-native-svg';
 import _ from 'lodash';
+import { Platform } from 'react-native';
 
 const {
     Container,
@@ -58,8 +59,8 @@ export const OLCompetition: React.SFC<Props> = (props) => {
         );
     };
 
-    const renderListHeader = () => (
-        <View>
+    const renderIOSHeader = () => (
+        <>
             <View>
                 <View style={{
                     height: 1000,
@@ -125,6 +126,13 @@ export const OLCompetition: React.SFC<Props> = (props) => {
 
             {/* Negative margin for the SVG */}
             <View style={{ marginTop: -px(120) }} />
+        </>
+    )
+
+    const renderListHeader = () => (
+        <View>
+            {Platform.OS === 'ios' && renderIOSHeader()}
+            {Platform.OS === 'android' && <View style={{ height: px(30) }} />}
 
             {
                 props.competition.eventor &&
@@ -135,7 +143,7 @@ export const OLCompetition: React.SFC<Props> = (props) => {
                         borderTopWidth: 4,
                         backgroundColor: '#ff3838',
                         padding: px(10),
-                        top: -px(35),
+                        top: Platform.OS === 'ios' ? -px(35) : -px(30),
                     }}
                 >
                     <OLText
@@ -240,6 +248,7 @@ export const OLCompetition: React.SFC<Props> = (props) => {
                             size={14}
                             font="Proxima_Nova"
                             style={{ color: 'white' }}
+                            selectable
                         >
                             {props.competition.info}
                         </OLText>
