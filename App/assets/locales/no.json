@@ -3,6 +3,7 @@
   "classes": {
     "autoUpdate": "Automatisk oppdatering",
     "autoUpdateEnabled": "Automatiske oppdateringer er aktivert",
+    "empty": "Ingen påmeldte i klassen",
     "header": {
       "name": "Navn",
       "place": "#",
@@ -13,17 +14,29 @@
     "timerHint": "Hvor ofte listen oppdateres automatisk"
   },
   "competitions": {
+    "canceled": "Løpet er avlyst",
     "classes": "Klasser",
+    "date": "Dato",
+    "distance": "Distanse",
+    "info": "Info",
     "lastPassings": "Siste passeringer",
     "noClasses": "Ingen klasser",
     "organizedBy": "Arrangeres av",
     "passings": {
       "class": "Klasse",
+      "empty": "Ingen passeringer",
       "info": "Dra for å oppdatere",
       "name": "Navn",
       "passTime": "Passeringstid",
       "title": "Siste passeringer"
-    }
+    },
+    "signups": "Påmeldte"
+  },
+  "distances": {
+    "long": "Lang",
+    "middle": "Mellom",
+    "sprint": "Sprint",
+    "ultralong": "Ultralang"
   },
   "home": {
     "goToday": "Gå til dagens løp",

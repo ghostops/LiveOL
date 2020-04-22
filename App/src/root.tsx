@@ -34,6 +34,10 @@ export default class AppRoot extends React.Component<{}, State> {
         await Lang.init();
 
         await Font.loadAsync({
+            // Android??
+            Roboto_medium: require('../assets/fonts/Proxima-Nova-Bold-regular.otf'),
+            Roboto: require('../assets/fonts/Proxima-Nova.ttf'),
+
             Proxima_Nova_Bold: require('../assets/fonts/Proxima-Nova-Bold-regular.otf'),
             Proxima_Nova: require('../assets/fonts/Proxima-Nova.ttf'),
             Rift_Bold: require('../assets/fonts/Rift-Bold.otf'),
