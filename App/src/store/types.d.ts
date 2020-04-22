@@ -5,6 +5,7 @@ interface AppState {
 
 interface GeneralReducer {
     rotation: any;
+    expoPushToken: string;
 }
 
 interface HomeReducer {

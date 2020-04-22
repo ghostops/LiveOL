@@ -4,6 +4,7 @@ import { client } from 'lib/graphql/client';
 import { COLORS } from 'util/const';
 import { Lang } from 'lib/lang';
 import { LayoutAnimation, View } from 'react-native';
+import { OLPush } from 'views/components/notifications/push';
 import { OLRotationWatcher } from 'views/components/watcher/rotation';
 import { Provider } from 'react-redux';
 import { Root } from 'native-base';
@@ -62,6 +63,8 @@ export default class AppRoot extends React.Component<{}, State> {
                             <OLRotationWatcher>
                                 <Router />
                             </OLRotationWatcher>
+
+                            {/* <OLPush /> */}
                         </Provider>
                     </View>
                 </Root>

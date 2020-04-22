@@ -28,7 +28,7 @@ export const LANDSCAPE_WIDTH = {
     name: px(200),
     start: px(100),
     time: px(80),
-    splits: px(100),
+    splits: px(120),
 };
 
 export const getExtraSize = (splits: number): number => {
@@ -97,7 +97,10 @@ export class OLTableRow extends React.PureComponent<Props> {
                                     key={split.id}
                                     align="flex-start"
                                 >
-                                    <OLSplits split={split} />
+                                    <OLSplits
+                                        split={split}
+                                        best={split.place === 1}
+                                    />
                                 </OLResultColumn>
                             );
                         })

@@ -6,9 +6,12 @@ import { OLText } from 'views/components/text';
 
 interface Props {
     split: Split;
+    best?: boolean;
 }
 
-export const OLSplits: React.SFC<Props> = ({ split }) => {
+const BEST_COLOR = '#EA2027';
+
+export const OLSplits: React.SFC<Props> = ({ split, best }) => {
     return (
         <View
             style={{
@@ -16,16 +19,19 @@ export const OLSplits: React.SFC<Props> = ({ split }) => {
             }}
         >
             <OLText
-                font="Proxima_Nova"
+                font={best ? 'Proxima_Nova_Bold' : 'Proxima_Nova'}
                 size={16}
+                style={{
+                    color: best ? BEST_COLOR : 'black',
+                }}
             >
                 {split.time}
                 {' '}
                 <OLText
-                    font="Proxima_Nova"
-                    size={16}
+                    font={best ? 'Proxima_Nova_Bold' : 'Proxima_Nova'}
+                    size={14}
                     style={{
-                        color: 'gray',
+                        color: best ? BEST_COLOR : 'gray',
                     }}
                 >
                     ({split.place})
@@ -33,10 +39,10 @@ export const OLSplits: React.SFC<Props> = ({ split }) => {
             </OLText>
 
             <OLText
-                font="Proxima_Nova"
+                font={best ? 'Proxima_Nova_Bold' : 'Proxima_Nova'}
                 size={14}
                 style={{
-                    color: 'gray',
+                    color: best ? BEST_COLOR : 'gray',
                 }}
             >
                 {split.timeplus}
