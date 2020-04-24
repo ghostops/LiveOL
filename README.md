@@ -21,6 +21,8 @@ Our vision is to be the best orienteering platform for mobile devices.
 The project resides mostly in 2 folders, App and Server. The other folders are used for the website and other
 non-critical aspects of the application.
 
+# Links
+
 * [Website](https://liveol.larsendahl.se/)
 * [License](https://creativecommons.org/licenses/by/3.0/)
 
