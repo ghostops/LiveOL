@@ -51,7 +51,7 @@
 }
 
 .theme-bg {
-  background: red;
+  background: #e86a1e;
 }
 
 .brand-bg {
@@ -72,7 +72,7 @@
 }
 
 .theme-color {
-  color: red;
+  color: #e86a1e;
 }
 
 /*------------------- Responsive --------------------------*/
@@ -82,24 +82,24 @@
 */
 .boxed-btn {
   background: #fff;
-  color: red !important;
+  color: #e86a1e !important;
   display: inline-block;
   padding: 18px 44px;
   font-family: "Nunito", sans-serif;
   font-size: 14px;
   font-weight: 400;
   border: 0;
-  border: 1px solid red;
+  border: 1px solid #e86a1e;
   letter-spacing: 3px;
   text-align: center;
-  color: red;
+  color: #e86a1e;
   text-transform: uppercase;
   cursor: pointer;
 }
 .boxed-btn:hover {
-  background: red;
+  background: #e86a1e;
   color: #fff !important;
-  border: 1px solid red;
+  border: 1px solid #e86a1e;
 }
 .boxed-btn:focus {
   outline: none;
@@ -418,7 +418,7 @@ hr {
 }
 .owl-carousel:hover .owl-nav div:hover {
   color: #fff;
-  background: #ff3500;
+  background: #e86a1e;
 }
 
 .btn {
@@ -499,11 +499,11 @@ hr {
 .border-btn {
   background: none;
   -moz-user-select: none;
-  border: 2px solid red;
+  border: 2px solid #e86a1e;
   padding: 18px 38px;
   margin: 10px;
   text-transform: capitalize;
-  color: red;
+  color: #e86a1e;
   cursor: pointer;
   display: inline-block;
   font-size: 14px;
@@ -525,7 +525,7 @@ hr {
   top: 0;
   width: 100%;
   height: 100%;
-  background: red;
+  background: #e86a1e;
   z-index: -1;
   transition: transform 0.5s;
   transition-timing-function: ease;
@@ -544,7 +544,7 @@ hr {
 }
 
 .send-btn {
-  background: red;
+  background: #e86a1e;
   color: #fff;
   font-size: 14px;
   width: 100%;
@@ -566,7 +566,7 @@ hr {
   width: 100%;
   height: 100%;
   background: #e6373d;
-  color: red;
+  color: #e86a1e;
   z-index: -1;
   transition: transform 0.5s;
   transition-timing-function: ease;
@@ -588,7 +588,7 @@ hr {
 
 /* scrollUp */
 #scrollUp {
-  background: red;
+  background: #e86a1e;
   height: 50px;
   width: 50px;
   right: 31px;
@@ -2019,7 +2019,7 @@ hr {
   position: relative;
   border-style: solid;
   border-width: 3px;
-  border-top-color: red;
+  border-top-color: #e86a1e;
   border-bottom-color: transparent;
   border-left-color: transparent;
   border-right-color: transparent;
@@ -2497,7 +2497,7 @@ hr {
 }
 
 .theme-bg {
-  background: red;
+  background: #e86a1e;
 }
 
 .brand-bg {
@@ -2518,7 +2518,7 @@ hr {
 }
 
 .theme-color {
-  color: red;
+  color: #e86a1e;
 }
 
 /* Start Blog Area css
@@ -2533,7 +2533,7 @@ hr {
   transition: 0.4s;
 }
 .blog_area a:hover, .blog_area a :hover {
-  background: -webkit-linear-gradient(131deg, red 0%, red 99%);
+  background: -webkit-linear-gradient(131deg, #e86a1e 0%, #e86a1e 99%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-decoration: none;
@@ -2984,7 +2984,7 @@ hr {
   left: 10px;
   display: block;
   color: #fff;
-  background-color: red;
+  background-color: #e86a1e;
   padding: 8px 15px;
   border-radius: 5px;
 }
@@ -3054,7 +3054,7 @@ hr {
   box-shadow: none;
 }
 .blog_right_sidebar .search_widget .input-group button {
-  background: red;
+  background: #e86a1e;
   border-left: 0;
   border: 1px solid #f0e9ff;
   padding: 4px 15px;
@@ -3152,7 +3152,7 @@ hr {
   font-size: 13px;
 }
 .blog_right_sidebar .tag_cloud_widget ul li a:hover {
-  background: red;
+  background: #e86a1e;
   color: #fff !important;
   -webkit-text-fill-color: #fff;
   text-decoration: none;
@@ -5083,7 +5083,7 @@ del {
 }
 
 .slicknav_menu .slicknav_icon-bar {
-  background-color: red !important;
+  background-color: #e86a1e !important;
 }
 
 .slicknav_nav {
@@ -5100,7 +5100,7 @@ del {
 
 .slicknav_menu .slicknav_nav a:hover {
   background: transparent;
-  color: red;
+  color: #e86a1e;
 }
 
 .slicknav_menu {
@@ -5801,7 +5801,7 @@ z .slider-area .hero-cap h2 {
   }
 }
 .our-customer .single-customer .what-cap h4 a:hover {
-  color: red;
+  color: #e86a1e;
 }
 @media (max-width: 767px) {
   .our-customer .single-customer .what-cap p {
@@ -6196,7 +6196,7 @@ z .slider-area .hero-cap h2 {
   color: #fff;
   opacity: 0;
   visibility: hidden;
-  background: red;
+  background: #e86a1e;
 }
 @media only screen and (min-width: 576px) and (max-width: 767px) {
   .testimonial-area .h1-testimonial-active button.slick-arrow {
@@ -6270,7 +6270,7 @@ z .slider-area .hero-cap h2 {
   font-weight: 300;
 }
 .footer-area .footer-tittle ul li a:hover {
-  color: red;
+  color: #e86a1e;
   padding-left: 5px;
 }
 .footer-area .footer-form {
@@ -6294,11 +6294,11 @@ z .slider-area .hero-cap h2 {
   border: 0;
   cursor: pointer;
   padding: 11px 22px;
-  background: red;
+  background: #e86a1e;
   line-height: 1;
 }
 .footer-area .info.error {
-  color: red;
+  color: #e86a1e;
 }
 .footer-area .footer-social a {
   width: 40px;
@@ -6338,11 +6338,11 @@ z .slider-area .hero-cap h2 {
   color: #f9218d;
 }
 .footer-area .footer-copy-right p a:hover {
-  color: red;
+  color: #e86a1e;
 }
 
 .footer-social a:hover {
-  background: red;
+  background: #e86a1e;
 }
 .footer-social a:hover i {
   color: #fff;
@@ -6366,7 +6366,7 @@ z .slider-area .hero-cap h2 {
   content: "";
   width: 75px;
   height: 3px;
-  background: red;
+  background: #e86a1e;
   left: 0;
   top: 52%;
   transform: translateY(-50%);
