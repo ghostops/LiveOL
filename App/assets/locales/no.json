@@ -49,11 +49,6 @@
   },
   "info": {
     "appStore": "Åpne App Store",
-    "body": [
-      "LiveOL er en app som viser resultater live og bygger på liveresultat.orientering.se.",
-      "Du får resultatene direkte i mobilen eller på nettbrettet via et enkelt brukergrensesnitt.",
-      "Appen er utviklet av Ludvig Larsendahl og koden finnes som Open Source på GitHub (søk etter LiveOL)."
-    ],
     "contact": "Kontakt meg",
     "purgeCache": "Fjern lagrede resultat",
     "purged": "lagrede løp ble slettet",

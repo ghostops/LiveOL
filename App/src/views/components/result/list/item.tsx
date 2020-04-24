@@ -80,4 +80,4 @@ export class OLResultItem extends React.PureComponent<Props> {
             </OLResultAnimation>
         );
     }
-};
+}
