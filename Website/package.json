@@ -1,5 +1,6 @@
 {
   "name": "@liveol/website",
+  "version": "1.0.0",
   "scripts": {
     "start": "yarn run-p start:serve build:sass:watch",
     "build:sass": "yarn sass assets/scss/style.scss assets/css/style.css",
