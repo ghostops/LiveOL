@@ -47,14 +47,11 @@ resource "aws_launch_configuration" "liveol_conf" {
   enable_monitoring    = false
   key_name             = var.ssh_key_name
 
-  ebs_block_device = [
-    {
-      device_name           = "/dev/xvdz"
-      volume_type           = "standard"
-      volume_size           = "16"
-      delete_on_termination = true
-    },
-  ]
+  root_block_device = {
+    volume_type           = "standard"
+    volume_size           = "16"
+    delete_on_termination = true
+  }
 
   lifecycle {
     create_before_destroy = true
