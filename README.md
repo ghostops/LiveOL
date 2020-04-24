@@ -13,7 +13,7 @@ Our vision is to be the best orienteering platform for mobile devices.
 </a>
 
 <a href="https://play.google.com/store/apps/details?id=se.liveol.rn">
-    <img class="google" src="/Website/img/google.png" alt="Download on Google Play" width="140">
+    <img class="google" src="/Website/img/google.png" alt="Download on Google Play" width="120">
 </a>
 
 # Project structure
