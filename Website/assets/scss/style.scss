@@ -27,6 +27,21 @@
 -------------------------------------------------
 */
 
+// Vendor
+
+@import 'vendor/animate';
+@import 'vendor/bootstrap';
+@import 'vendor/flaticon';
+@import 'vendor/fontawesome-all';
+@import 'vendor/magnific-popup';
+@import 'vendor/nice-select';
+@import 'vendor/owl.carousel';
+@import 'vendor/responsive';
+@import 'vendor/slick';
+@import 'vendor/slicknav';
+@import 'vendor/themify-icons';
+
+
 // Defult
 @import 'variables';
 @import 'mixins';
@@ -51,9 +66,6 @@
 @import 'best-priceing';
 @import 'our-customer';
 @import 'available-app';
-
-
-
 
 
 @import 'testimonial';
