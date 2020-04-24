@@ -47,7 +47,7 @@ resource "aws_launch_configuration" "liveol_conf" {
   enable_monitoring    = false
   key_name             = var.ssh_key_name
 
-  root_block_device = {
+  root_block_device {
     volume_type           = "standard"
     volume_size           = "16"
     delete_on_termination = true
