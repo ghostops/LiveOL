@@ -21,7 +21,7 @@ display: flex;
     background-image: -webkit-linear-gradient( 0deg, rgb(241,68,55) 0%, rgb(237,91,13) 99%);
     background-image: -ms-linear-gradient( 0deg, rgb(241,68,55) 0%, rgb(237,91,13) 99%);
   }
-  
+
   %haveProject{
     background-image: -moz-linear-gradient( 0deg, rgb(255,92,152) 0%, rgb(123,64,192) 100%);
     background-image: -webkit-linear-gradient( 0deg, rgb(255,92,152) 0%, rgb(123,64,192) 100%);
@@ -53,10 +53,10 @@ display: flex;
 
 }
 
-%bestPrince{
-  background-image: -moz-linear-gradient( 0deg, rgb(249,33,141) 0%, rgb(108,25,246) 100%);
-  background-image: -webkit-linear-gradient( 0deg, rgb(249,33,141) 0%, rgb(108,25,246) 100%);
-  background-image: -ms-linear-gradient( 0deg, rgb(249,33,141) 0%, rgb(108,25,246) 100%);
+%bestPrice{
+  background-image: -moz-linear-gradient( 0deg, $theme-color 0%, $theme-color2 100%);
+  background-image: -webkit-linear-gradient( 0deg, $theme-color 0%, $theme-color2 100%);
+  background-image: -ms-linear-gradient( 0deg, $theme-color 0%, $theme-color2 100%);
 }
 
 %available-app{

@@ -282,7 +282,7 @@ hr {
 		transition-timing-function: ease;
 		transform-origin: 0 0;
 		transition-timing-function: cubic-bezier(0.5,1.6,0.4,0.7);
-		// 
+		//
 		transform: scaleX(0);
 	}
 }
@@ -308,18 +308,18 @@ hr {
 
 
 .card-btn1{
-	background: #712fda;
+	background: $theme-color;
 	border-radius: 6px;
 	padding: 30px 40px;
 	text-transform: uppercase;
 	&::before{
-		background:#ff374b
+		background:$theme-color3;
 	}
 }
 
 .btn.focus, .btn:focus {
 	outline: 0;
-	box-shadow:none; 
+	box-shadow:none;
 }
 .radius-btn{
 	padding:30px 43px;
@@ -363,7 +363,7 @@ hr {
 		transition-timing-function: ease;
 		transform-origin: 0 0;
 		transition-timing-function: cubic-bezier(0.5,1.6,0.4,0.7);
-		// 
+		//
 		transform: scaleY(0);
 	}
 }
@@ -406,7 +406,7 @@ hr {
 		transition-timing-function: ease;
 		transform-origin: 0 0;
 		transition-timing-function: cubic-bezier(0.5,1.6,0.4,0.7);
-		// 
+		//
 		transform: scaleX(0);
 	}
 }
@@ -414,7 +414,7 @@ hr {
 	transform: scaleY(1);
 	order: 2px solid transparent;
 	color:red;
-	
+
 }
 
 
@@ -547,7 +547,7 @@ hr {
 	100% {
 	  -webkit-transform: translateY(-20px);
 	  transform: translateY(-20px); } }
-	  
+
 /* heartbeat */
 	.heartbeat {
 		animation: heartbeat 1s infinite alternate;
@@ -723,7 +723,7 @@ hr {
 			padding-bottom: 50px;
 		}
 	}
-	
+
 	.inner-padding{
 		padding-top: 450px;
 		@media #{$laptop}{
@@ -841,7 +841,7 @@ hr {
 			padding-bottom: 15px;
 		}
 	}
-	
+
 
 	.testimonial-padding{
 		padding-top: 157px;
@@ -898,7 +898,7 @@ hr {
 	.footer-padding{
 		padding-top: 200px;
 		padding-bottom: 100px;
-	
+
 		@media #{$laptop}{
 			padding-top: 200px;
 			padding-bottom: 100px;
@@ -924,7 +924,7 @@ hr {
 	.footer-padding2{
 		padding-top: 100px;
 		padding-bottom: 100px;
-	
+
 		@media #{$laptop}{
 			padding-top: 100px;
 			padding-bottom: 100px;
@@ -948,7 +948,7 @@ hr {
 	}
 	.footer-padding3{
 		padding-bottom: 100px;
-	
+
 		@media #{$laptop}{
 			padding-bottom: 100px;
 		}
