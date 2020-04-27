@@ -1,11 +1,12 @@
 import { Cacher } from 'lib/redis';
+import { getEnv } from 'lib/helpers/env';
 import { LiveresultatApi } from './types';
+import { today } from 'lib/helpers/time';
 import * as fs from 'fs';
 import * as ms from 'ms';
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
-import { today } from 'lib/helpers/time';
 
-const DEV = false;
+const DEV = getEnv('env') !== 'live';
 
 export class LiveresultatAPIClient {
     private client: AxiosInstance;
