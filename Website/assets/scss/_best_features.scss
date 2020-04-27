@@ -6,7 +6,7 @@
             margin-bottom: 30px;
         }
         .features-icon{
-            span{
+            i{
                 position: relative;
                 color:#fff;
                 font-size: 30px;
@@ -16,9 +16,14 @@
                 line-height: 67px;
                 border-radius: 50%;
                 text-align: center;
-                background-image: -moz-linear-gradient( 90deg, rgb(231,138,233) 0%, rgb(146,110,248) 100%);
-                background-image: -webkit-linear-gradient( 90deg, rgb(231,138,233) 0%, rgb(146,110,248) 100%);
-                background-image: -ms-linear-gradient( 90deg, rgb(231,138,233) 0%, rgb(146,110,248) 100%);
+                background-image: -moz-linear-gradient( 90deg, $theme-color 0%, $theme-color4 100%);
+                background-image: -webkit-linear-gradient( 90deg, $theme-color 0%, $theme-color4 100%);
+                background-image: -ms-linear-gradient( 90deg, $theme-color 0%, $theme-color4 100%);
+
+                &:nth-child(2) {
+                    position: relative;
+                    top: -20px;
+                }
             }
         }
         .features-caption{
