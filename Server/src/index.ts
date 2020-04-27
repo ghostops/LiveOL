@@ -1,5 +1,6 @@
-import { server } from 'lib/server';
 import { Cache } from 'lib/redis';
+import { getEnv } from 'lib/helpers/env';
+import { server } from 'lib/server';
 import * as dotenv from 'dotenv';
 
 (async () => {
@@ -7,8 +8,7 @@ import * as dotenv from 'dotenv';
 
     Cache.init({
         host: (
-            process.env.ENV &&
-            process.env.ENV.toLowerCase() === 'live'
+            getEnv('env') === 'live'
             ? 'redis'
             : 'localhost'
         ),
@@ -17,5 +17,5 @@ import * as dotenv from 'dotenv';
 
     const { url } = await server.listen();
 
-    console.info(`🚀  Server ready at ${url}`);
+    console.info(`🚀  Server ready at "${url}" with env "${getEnv('env') || 'dev'}"`);
 })();

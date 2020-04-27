@@ -8,6 +8,7 @@ export interface IOLCompetitionResponse {
     competitions: IOLCompetition[];
     today: IOLCompetition[];
     page: number;
+    lastPage: number;
     search: string | null;
 }
 
@@ -74,6 +75,10 @@ export const OLCompetitionResponse = new GraphQLObjectType({
         page: {
             type: GraphQLInt,
             resolve: (res: IOLCompetitionResponse) => res.page,
+        },
+        lastPage: {
+            type: GraphQLInt,
+            resolve: (res: IOLCompetitionResponse) => res.lastPage,
         },
     }),
 });

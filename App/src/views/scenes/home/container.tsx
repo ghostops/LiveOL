@@ -63,6 +63,9 @@ const DataWrapper: React.SFC<Props> = (props) => {
         if (loading) return;
 
         const page = data.competitions.getCompetitions.page + 1;
+        const lastPage = data.competitions.getCompetitions.lastPage;
+
+        if (page >= lastPage) return;
 
         await fetchMore({
             variables: {

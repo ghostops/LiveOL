@@ -28,6 +28,7 @@ export interface Competitions_competitions_getCompetitions_competitions {
 export interface Competitions_competitions_getCompetitions {
   __typename: "OLCompetitionResponse";
   page: number | null;
+  lastPage: number | null;
   search: string | null;
   today: (Competitions_competitions_getCompetitions_today | null)[] | null;
   competitions: (Competitions_competitions_getCompetitions_competitions | null)[] | null;

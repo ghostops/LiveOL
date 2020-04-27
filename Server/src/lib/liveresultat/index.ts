@@ -1,7 +1,12 @@
 import { Cacher } from 'lib/redis';
+import { getEnv } from 'lib/helpers/env';
 import { LiveresultatApi } from './types';
+import { today } from 'lib/helpers/time';
+import * as fs from 'fs';
 import * as ms from 'ms';
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
+
+const DEV = getEnv('env') !== 'live';
 
 export class LiveresultatAPIClient {
     private client: AxiosInstance;
@@ -54,6 +59,10 @@ export class LiveresultatAPIClient {
         key: string,
         ttlString: string,
     ): Promise<any> => {
+        if (DEV) {
+            return this.testRequest(key);
+        }
+
         try {
             let data = await this.cache.get(key);
 
@@ -73,5 +82,51 @@ export class LiveresultatAPIClient {
             console.error(err);
             return null;
         }
+    };
+
+    private testRequest = (key: string): any => {
+        const file = (() => {
+            if (key === 'getcompetitions') {
+                return 'allcompetitions';
+            }
+
+            if (key.startsWith('getcompetition')) {
+                return 'getcompetitioninfo';
+            }
+
+            if (key.startsWith('getclasses')) {
+                return 'getclasses';
+            }
+
+            if (key.startsWith('getlastpassings')) {
+                return 'getlastpassings';
+            }
+
+            if (key.startsWith('getclassresults')) {
+                return 'getclassresults';
+            }
+
+            return null;
+        })();
+
+        if (!file) {
+            return null;
+        }
+
+        console.info(`Read ${file}.json from DEV cache ${new Date().toISOString()}`);
+
+        const str = fs.readFileSync(`${__dirname}/test/${file}.json`).toString();
+        let data = JSON.parse(str);
+
+        if (file === 'allcompetitions') {
+            data = {
+                competitions: (data as LiveresultatApi.getcompetitions).competitions.map((v) => ({
+                    ...v,
+                    date: v.date === 'TODAY' ? today() : v.date,
+                })),
+            } as LiveresultatApi.getcompetitions;
+        }
+
+        return data;
     };
 }

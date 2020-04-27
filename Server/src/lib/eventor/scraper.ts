@@ -1,10 +1,11 @@
 import { Cacher } from 'lib/redis';
+import { getEnv } from 'lib/helpers/env';
 import { ListResponseParser, EventResponseParser } from './parser';
 import * as fs from 'fs';
 import * as ms from 'ms';
 import axios, { AxiosInstance } from 'axios';
 
-const DEV = false;
+const DEV = getEnv('env') !== 'live';
 
 export class EventorScraper {
     private client: AxiosInstance;

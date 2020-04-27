@@ -36,6 +36,8 @@ export const CompetitionsQuery = new GraphQLObjectType({
 
                 let { competitions } = await Liveresultat.getcompetitions();
 
+                const lastPage = Math.ceil(competitions.length / PER_PAGE);
+
                 const today = competitions.filter((comp) => {
                     return datesAreOnSameDay(
                         new Date(comp.date),
@@ -52,6 +54,7 @@ export const CompetitionsQuery = new GraphQLObjectType({
                 return {
                     page,
                     search,
+                    lastPage,
                     competitions: competitions.map(marshallCompetition(null)),
                     today: today.map(marshallCompetition(null)),
                 };

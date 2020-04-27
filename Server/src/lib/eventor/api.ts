@@ -30,9 +30,9 @@ export class EventorApi {
             data = (await this.client.get(`${this.base}/api/organisations`)).data;
             await this.cache.set(cacheKey, data, { ttlMs: ms('1 day') });
         }
-        
+
         const parsed = xmlJs.xml2js(data);
-        
+
         const orgs: any[] = _.get(parsed, 'elements.0.elements');
 
         return orgs.map(this.mapClub);
