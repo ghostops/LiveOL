@@ -1,7 +1,10 @@
 import { Cacher } from 'lib/redis';
 import { LiveresultatApi } from './types';
+import * as fs from 'fs';
 import * as ms from 'ms';
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
+
+const DEV = true;
 
 export class LiveresultatAPIClient {
     private client: AxiosInstance;
@@ -54,6 +57,10 @@ export class LiveresultatAPIClient {
         key: string,
         ttlString: string,
     ): Promise<any> => {
+        if (DEV) {
+            return this.testRequest(key);
+        }
+
         try {
             let data = await this.cache.get(key);
 
@@ -73,5 +80,41 @@ export class LiveresultatAPIClient {
             console.error(err);
             return null;
         }
+    };
+
+    private testRequest = async (key: string) => {
+        console.log(key);
+
+        const file = (() => {
+            if (key === 'getcompetitions') {
+                return 'allcompetitions';
+            }
+
+            if (key.startsWith('getcompetition')) {
+                return 'getcompetitioninfo';
+            }
+
+            if (key.startsWith('getclasses')) {
+                return 'getclasses';
+            }
+
+            if (key.startsWith('getlastpassings')) {
+                return 'getlastpassings';
+            }
+
+            if (key.startsWith('getclassresults')) {
+                return 'getclassresults';
+            }
+
+            return null;
+        })();
+
+        if (!file) {
+            return null;
+        }
+
+        console.info(`Read ${file} from DEV cache`);
+        const data = fs.readFileSync(`${__dirname}/test/${file}.json`).toString();
+        return JSON.parse(data);
     };
 }

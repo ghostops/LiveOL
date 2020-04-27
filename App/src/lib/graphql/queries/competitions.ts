@@ -6,6 +6,7 @@ export const COMPETITIONS = gql`
         competitions {
             getCompetitions(page: $page, search: $search) {
                 page
+                lastPage
                 search
                 today {
                     ...Competition
