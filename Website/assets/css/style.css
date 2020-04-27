@@ -16694,7 +16694,7 @@ hr {
   position: relative;
   border-style: solid;
   border-width: 3px;
-  border-top-color: #e86a1e;
+  border-top-color: #fff;
   border-bottom-color: transparent;
   border-left-color: transparent;
   border-right-color: transparent;
@@ -16702,7 +16702,7 @@ hr {
   border-radius: 50%;
   -webkit-box-shadow: 0 1px 5px 0 rgba(35, 181, 185, 0.15);
   box-shadow: 0 1px 5px 0 rgba(35, 181, 185, 0.15);
-  background-color: #ffffff;
+  background-color: #e86a1e;
   -webkit-animation: zoom 2000ms infinite ease;
   animation: zoom 2000ms infinite ease;
   -webkit-transition: 0.6s;
@@ -20340,7 +20340,7 @@ z .slider-area .hero-cap h2 {
   transition: 0.4s;
 }
 .pricing-card-area .single-card::before {
-  background-image: url(../img/gallery/card_dot.png);
+  background-image: url(../img/_liveol/card_dot.png);
   content: "";
   width: 171px;
   height: 134px;

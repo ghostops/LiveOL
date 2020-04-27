@@ -616,7 +616,7 @@ hr {
 		position: relative;
 		border-style: solid;
 		border-width: 3px;
-		border-top-color:$theme-color;
+		border-top-color: #fff;
 		border-bottom-color: transparent;
 		border-left-color: transparent;
 		border-right-color: transparent;
@@ -624,7 +624,7 @@ hr {
 		border-radius: 50%;
 		-webkit-box-shadow: 0 1px 5px 0 rgba(35, 181, 185, 0.15);
 		box-shadow: 0 1px 5px 0 rgba(35, 181, 185, 0.15);
-		background-color: #ffffff;
+		background-color: $theme-color;
 		-webkit-animation: zoom 2000ms infinite ease;
 		animation: zoom 2000ms infinite ease;
 		-webkit-transition: .6s;
