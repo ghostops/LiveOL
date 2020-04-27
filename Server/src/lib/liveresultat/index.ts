@@ -3,8 +3,9 @@ import { LiveresultatApi } from './types';
 import * as fs from 'fs';
 import * as ms from 'ms';
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import { today } from 'lib/helpers/time';
 
-const DEV = true;
+const DEV = false;
 
 export class LiveresultatAPIClient {
     private client: AxiosInstance;
@@ -82,9 +83,7 @@ export class LiveresultatAPIClient {
         }
     };
 
-    private testRequest = async (key: string) => {
-        console.log(key);
-
+    private testRequest = (key: string): any => {
         const file = (() => {
             if (key === 'getcompetitions') {
                 return 'allcompetitions';
@@ -113,8 +112,20 @@ export class LiveresultatAPIClient {
             return null;
         }
 
-        console.info(`Read ${file} from DEV cache`);
-        const data = fs.readFileSync(`${__dirname}/test/${file}.json`).toString();
-        return JSON.parse(data);
+        console.info(`Read ${file}.json from DEV cache ${new Date().toISOString()}`);
+
+        const str = fs.readFileSync(`${__dirname}/test/${file}.json`).toString();
+        let data = JSON.parse(str);
+
+        if (file === 'allcompetitions') {
+            data = {
+                competitions: (data as LiveresultatApi.getcompetitions).competitions.map((v) => ({
+                    ...v,
+                    date: v.date === 'TODAY' ? today() : v.date,
+                })),
+            } as LiveresultatApi.getcompetitions;
+        }
+
+        return data;
     };
 }

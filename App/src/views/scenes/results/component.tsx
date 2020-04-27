@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { Lang } from 'lib/lang';
-import { OLRefetcher } from 'views/components/refetcher';
-import { Result } from 'lib/graphql/fragments/types/Result';
-import { OLResultsTable } from 'views/components/result/table';
-import { OLResultsList } from 'views/components/result/list';
-import * as ScreenOrientation from 'expo-screen-orientation';
-import { LayoutAnimation } from 'react-native';
 import _ from 'lodash';
+import { Lang } from 'lib/lang';
+import { LayoutAnimation } from 'react-native';
+import { OLRefetcher } from 'views/components/refetcher';
+import { OLResultsList } from 'views/components/result/list';
+import { OLResultsTable } from 'views/components/result/table';
+import { Result } from 'lib/graphql/fragments/types/Result';
+import * as ScreenOrientation from 'expo-screen-orientation';
 
 interface Props {
     refetch: () => Promise<void>;
@@ -94,11 +94,11 @@ export class OLResults extends React.PureComponent<Props, State> {
                     />
                 }
 
-                {/* <OLRefetcher
+                <OLRefetcher
                     interval={15000}
                     refetch={refetch}
                     circle
-                /> */}
+                />
             </>
         );
     }
