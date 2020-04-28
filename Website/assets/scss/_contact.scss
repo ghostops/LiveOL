@@ -46,6 +46,7 @@
   font-size: 27px;
   font-weight: 600;
   margin-bottom: 20px;
+  text-align: center;
 }
 
 .form-contact{
@@ -148,7 +149,7 @@
     margin-top: 0;
     &:hover{
       background-color: $theme-color2;
-      
+
     }
   }
 }
