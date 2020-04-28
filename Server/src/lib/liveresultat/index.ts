@@ -6,7 +6,7 @@ import * as fs from 'fs';
 import * as ms from 'ms';
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 
-const DEV = getEnv('env') !== 'live';
+const DEV = false; // getEnv('env') !== 'live';
 
 export class LiveresultatAPIClient {
     private client: AxiosInstance;
@@ -23,7 +23,7 @@ export class LiveresultatAPIClient {
         this.cachedRequest(
             this.client.get(`${this.root}/api.php?method=getcompetitions`),
             'getcompetitions',
-            '1 day',
+            '12 hours',
         );
 
     public getcompetition = async (id: number): Promise<LiveresultatApi.competition> =>
