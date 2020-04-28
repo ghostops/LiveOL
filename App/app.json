@@ -31,6 +31,7 @@
       "package": "se.liveol.rn",
       "versionCode": 6,
       "permissions": []
-    }
+    },
+    "entryPoint": "node_modules/expo/AppEntry.js"
   }
 }
