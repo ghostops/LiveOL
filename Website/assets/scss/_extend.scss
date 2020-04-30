@@ -54,15 +54,15 @@ display: flex;
 }
 
 %bestPrice{
-  background-image: -moz-linear-gradient( 0deg, $theme-color 0%, $theme-color2 100%);
-  background-image: -webkit-linear-gradient( 0deg, $theme-color 0%, $theme-color2 100%);
-  background-image: -ms-linear-gradient( 0deg, $theme-color 0%, $theme-color2 100%);
+  background-image: -moz-linear-gradient( 0deg, $theme-color 0%, $theme-color3 100%);
+  background-image: -webkit-linear-gradient( 0deg, $theme-color 0%, $theme-color3 100%);
+  background-image: -ms-linear-gradient( 0deg, $theme-color 0%, $theme-color3 100%);
 }
 
 %available-app{
-  background-image: -moz-linear-gradient( 0deg, rgb(108,25,246) 0%, rgb(249,33,141) 100%);
-  background-image: -webkit-linear-gradient( 0deg, rgb(108,25,246) 0%, rgb(249,33,141) 100%);
-  background-image: -ms-linear-gradient( 0deg, rgb(108,25,246) 0%, rgb(249,33,141) 100%);
+  background-image: -moz-linear-gradient( 0deg, $theme-color 0%, $theme-color3 100%);
+  background-image: -webkit-linear-gradient( 0deg, $theme-color 0%, $theme-color3 100%);
+  background-image: -ms-linear-gradient( 0deg, $theme-color 0%, $theme-color3 100%);
 }
 
 

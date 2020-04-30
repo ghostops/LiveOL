@@ -15097,7 +15097,7 @@ hr {
 }
 
 .btn {
-  background: #f9218d;
+  background: #e86a1e;
   -moz-user-select: none;
   text-transform: capitalize;
   color: #fff;
@@ -15125,7 +15125,7 @@ hr {
   top: 0;
   width: 100%;
   height: 100%;
-  background: #da1276;
+  background: #b25115;
   z-index: 1;
   border-radius: 5px;
   transition: transform 0.5s;
@@ -17609,7 +17609,7 @@ hr {
   color: #ff8b23;
 }
 .blog_details a:hover {
-  color: #ff5c97;
+  color: #e86a1e;
 }
 .blog_details h2 {
   font-size: 18px;
@@ -18007,7 +18007,7 @@ hr {
   display: inline-block;
 }
 .single-post-area .blog-author a:hover {
-  color: #ff5c97;
+  color: #e86a1e;
 }
 .single-post-area .blog-author p {
   margin-bottom: 0;
@@ -18605,15 +18605,15 @@ hr {
 }
 
 .best-pricing::before {
-  background-image: -moz-linear-gradient(0deg, #e86a1e 0%, #222222 100%);
-  background-image: -webkit-linear-gradient(0deg, #e86a1e 0%, #222222 100%);
-  background-image: -ms-linear-gradient(0deg, #e86a1e 0%, #222222 100%);
+  background-image: -moz-linear-gradient(0deg, #e86a1e 0%, #b25115 100%);
+  background-image: -webkit-linear-gradient(0deg, #e86a1e 0%, #b25115 100%);
+  background-image: -ms-linear-gradient(0deg, #e86a1e 0%, #b25115 100%);
 }
 
 .available-app-area {
-  background-image: -moz-linear-gradient(0deg, #6c19f6 0%, #f9218d 100%);
-  background-image: -webkit-linear-gradient(0deg, #6c19f6 0%, #f9218d 100%);
-  background-image: -ms-linear-gradient(0deg, #6c19f6 0%, #f9218d 100%);
+  background-image: -moz-linear-gradient(0deg, #e86a1e 0%, #b25115 100%);
+  background-image: -webkit-linear-gradient(0deg, #e86a1e 0%, #b25115 100%);
+  background-image: -ms-linear-gradient(0deg, #e86a1e 0%, #b25115 100%);
 }
 
 .sample-text-area {
@@ -20618,7 +20618,8 @@ z .slider-area .hero-cap h2 {
   }
 }
 .available-app-area .app-img img {
-  width: 100%;
+  width: 200px;
+  float: right;
 }
 .available-app-area .app-shape .app-shape-top {
   position: absolute;
@@ -21038,6 +21039,11 @@ z .slider-area .hero-cap h2 {
   color: #fff;
   font-size: 50px;
   font-weight: 700;
+}
+
+.owl-carousel .owl-stage {
+  display: flex;
+  align-items: center;
 }
 
 /*# sourceMappingURL=style.css.map */

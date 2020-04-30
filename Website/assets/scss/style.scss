@@ -73,3 +73,9 @@
 @import 'services';
 
 
+// LiveOL Custom
+
+.owl-carousel .owl-stage {
+	display: flex;
+	align-items: center;
+}

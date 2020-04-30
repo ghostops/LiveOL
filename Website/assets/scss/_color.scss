@@ -21,7 +21,8 @@ $hr-border-color:#eceff8;
 
 // btn and Section color
 
-$btn_bg: #ff5c97;
+$btn_bg: $theme-color;
+$btn_bg2: $theme-color3;
 
 $btn_hover: #dca73a;
 $section_bg: #f7f7f7;
