@@ -87,36 +87,41 @@
     mainSlider();
 
 /* 5.  Applic App */
-    var client_list = $('.app-active');
-    if(client_list.length){
-      client_list.owlCarousel({
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        loop: true,
-        autoplay:true,
-        speed: 3000,
-        smartSpeed:2000,
-        dots: false,
-        margin: 15,
-        nav  : false,
-        autoWidth: true,
-        autoplayHoverPause: true,
-        responsive : {
-          0 : {
-            items: 1
-          },
-          768 : {
-            items: 2
-          },
-          992 : {
-            items: 2
-          },
-          1200:{
-            items: 4
-          }
+    setTimeout(
+      function() {
+        var client_list = $('.app-active');
+        if(client_list.length){
+          client_list.owlCarousel({
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            loop: true,
+            autoplay:true,
+            speed: 3000,
+            smartSpeed:2000,
+            dots: false,
+            margin: 15,
+            nav  : false,
+            autoWidth: true,
+            autoplayHoverPause: true,
+            responsive : {
+              0 : {
+                items: 1
+              },
+              768 : {
+                items: 2
+              },
+              992 : {
+                items: 2
+              },
+              1200:{
+                items: 4
+              }
+            }
+          });
         }
-      });
-    }
+      },
+      3000,
+    );
 
 
 /* 7.  Custom Sticky Menu  */

@@ -19909,6 +19909,12 @@ del {
   position: relative;
   margin: 0px 10px;
 }
+@media (max-width: 768px) {
+  .slider-area .hero__caption .slider-btns img {
+    width: 140px;
+    margin: 0 5px;
+  }
+}
 .slider-area .hero__img img {
   position: relative;
   right: -63px;
