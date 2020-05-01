@@ -6,7 +6,7 @@ import * as fs from 'fs';
 import * as ms from 'ms';
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 
-const DEV = false; // getEnv('env') !== 'live';
+const DEV = getEnv('env') !== 'live';
 
 export class LiveresultatAPIClient {
     private client: AxiosInstance;

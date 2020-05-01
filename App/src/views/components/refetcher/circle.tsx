@@ -7,6 +7,7 @@ import { Lang } from 'lib/lang';
 
 interface Props {
     interval: number;
+    promise?: () => Promise<void>;
 }
 
 interface State {
@@ -22,7 +23,7 @@ export class OLRefetcherCircle extends React.PureComponent<Props, State> {
 
     circularProgress;
 
-    interval: NodeJS.Timeout;
+    interval: NodeJS.Timeout | number;
 
     invert = () => {
         if (this.state.backgroundColor === 'white') {
@@ -38,7 +39,11 @@ export class OLRefetcherCircle extends React.PureComponent<Props, State> {
         }
     }
 
-    animate = () => {
+    animate = async () => {
+        if (this.props.promise) {
+            await this.props.promise();
+        }
+
         setTimeout(
             () => {
                 this.invert();
@@ -61,7 +66,7 @@ export class OLRefetcherCircle extends React.PureComponent<Props, State> {
 
     componentWillUnmount() {
         if (this.interval) {
-            clearInterval(this.interval);
+            clearInterval(this.interval as number);
         }
     }
 

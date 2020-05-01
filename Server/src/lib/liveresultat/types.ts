@@ -28,6 +28,7 @@ export declare namespace LiveresultatApi {
         className: string;
         splitcontrols: split[];
         results: result[];
+        DT_RowClass?: 'new_result';
     }
 
     export interface result {

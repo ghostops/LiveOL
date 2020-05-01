@@ -7,36 +7,17 @@ interface Props {
     circle?: boolean;
 }
 
-export const OLRefetcher: React.SFC<Props> = ({ refetch, interval, circle }) => {
-    let poller: NodeJS.Timeout;
+export class OLRefetcher extends React.PureComponent<Props> {
+    render() {
+        if (!this.props.circle) {
+            return null;
+        }
 
-    React.useEffect(
-        () => {
-            startPoll();
-
-            return () => {
-                clearPoll();
-            };
-        },
-        [],
-    );
-
-    const startPoll = () => {
-        refetch();
-        poller = setInterval(refetch, interval);
-    };
-
-    const clearPoll = () => {
-        poller && clearInterval(poller);
-    };
-
-    if (!circle) {
-        return null;
+        return (
+            <OLRefetcherCircle
+                interval={this.props.interval}
+                promise={this.props.refetch}
+            />
+        );
     }
-
-    return (
-        <OLRefetcherCircle
-            interval={interval}
-        />
-    );
-};
+}

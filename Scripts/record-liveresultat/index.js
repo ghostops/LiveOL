@@ -1,44 +1,54 @@
 const { Sequelize, Model, DataTypes } = require('sequelize');
 const axios = require('axios').default;
 const uuid = require('uuid');
-const { host, database, password, username } = require('./.secret/db');
+const fs = require('fs');
+// const { host, database, password, username } = require('./.secret/db');
 
 // CONFIG
-const ROOT = 'https://liveol.larsendahl.se';
-const COMPETITION = '16009';
-const CLASSNAME = 'M20-1';
+const ROOT = 'https://liveresultat.orientering.se';
+const COMPETITION = '17320';
+const CLASSNAME = 'D14';
 
 // How often to scrape
 const INTERVAL_IN_MS = 60000;
 // END CONFIG
 
-const sequelize = new Sequelize({
-    database,
-    host,
-    password,
-    username,
-    dialect: 'mysql',
-});
+// const sequelize = new Sequelize({
+//     database,
+//     host,
+//     password,
+//     username,
+//     dialect: 'mysql',
+// });
 
-class Result extends Model {}
+// class Result extends Model {}
 
-Result.init({
-    id: {
-        type: DataTypes.UUID,
-        primaryKey: true,
-    },
-    data: DataTypes.TEXT,
-    competition: DataTypes.TEXT,
-    classname: DataTypes.TEXT,
-}, { sequelize, modelName: 'result' });
+// Result.init({
+//     id: {
+//         type: DataTypes.UUID,
+//         primaryKey: true,
+//     },
+//     data: DataTypes.TEXT,
+//     competition: DataTypes.TEXT,
+//     classname: DataTypes.TEXT,
+// }, { sequelize, modelName: 'result' });
 
 const saveData = async (data) => {
-    await Result.create({
-        id: uuid.v4(),
-        data,
-        competition: COMPETITION,
-        classname: CLASSNAME,
-    });
+    // await Result.create({
+    //     id: uuid.v4(),
+    //     data,
+    //     competition: COMPETITION,
+    //     classname: CLASSNAME,
+    // });
+
+    fs.writeFileSync(`./out-${Date.now()}`, JSON.stringify(
+        {
+            id: uuid.v4(),
+            data,
+            competition: COMPETITION,
+            classname: CLASSNAME,
+        }
+    ));
 };
 
 const fetchData = async () => {
@@ -71,7 +81,7 @@ const scrape = async () => {
 }
 
 (async () => {
-    await sequelize.sync();
+    // await sequelize.sync();
 
     await scrape();
 

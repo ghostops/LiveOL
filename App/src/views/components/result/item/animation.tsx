@@ -44,7 +44,12 @@ export const OLResultAnimation: React.SFC<Props> = (props) => {
                 toValue: 1,
                 duration: 500,
             },
-        ).start(stopAnimation);
+        ).start(() => {
+            setTimeout(
+                () => stopAnimation(),
+                5000,
+            );
+        });
     };
 
     const stopAnimation = () => {
@@ -59,7 +64,7 @@ export const OLResultAnimation: React.SFC<Props> = (props) => {
 
     const backgroundColor = animation.interpolate({
         inputRange: [0, 1],
-        outputRange: ['rgba(0,0,0,0)', 'rgba(255,0,0,.5)'],
+        outputRange: ['rgba(0,0,0,0)', 'rgba(255,0,0,.25)'],
     });
 
     return (
