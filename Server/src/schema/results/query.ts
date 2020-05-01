@@ -23,22 +23,7 @@ export const ResultsQuery = new GraphQLObjectType({
 
                 const res = await Liveresultat.getclassresults(args.competitionId, args.className);
 
-                const sortedByStart = _.sortBy(res.results, 'start');
-
-                const sortedByPlace = sortedByStart.sort((a, b) => {
-                    if (
-                        a.place !== '' &&
-                        b.place !== '' &&
-                        a.place !== '-' &&
-                        b.place !== '-'
-                    ) {
-                        return _.toNumber(a.place) > _.toNumber(b.place) ? 0 : -1;
-                    }
-
-                    return 1;
-                });
-
-                return sortedByPlace.map(marshallResult(args.competitionId, args.className, res.splitcontrols));
+                return res.results.map(marshallResult(args.competitionId, args.className, res.splitcontrols));
             },
         },
         getSplitControls: {
