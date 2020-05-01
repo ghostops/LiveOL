@@ -44,8 +44,14 @@ resource "aws_launch_configuration" "liveol_conf" {
   iam_instance_profile = var.iam_profile
   user_data            = file("deployment.tpl")
   security_groups      = var.security_groups
-  enable_monitoring = false
-  key_name = var.ssh_key_name
+  enable_monitoring    = false
+  key_name             = var.ssh_key_name
+
+  root_block_device {
+    volume_type           = "standard"
+    volume_size           = "16"
+    delete_on_termination = true
+  }
 
   lifecycle {
     create_before_destroy = true
