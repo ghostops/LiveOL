@@ -16,3 +16,4 @@ yarn-error.log
 
 /Server/.env
 .terraform
+Scripts/record-liveresultat/out-*
