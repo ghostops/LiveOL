@@ -1,47 +1,20 @@
-const { Sequelize, Model, DataTypes } = require('sequelize');
 const axios = require('axios').default;
 const uuid = require('uuid');
 const fs = require('fs');
-// const { host, database, password, username } = require('./.secret/db');
 
 // CONFIG
 const ROOT = 'https://liveresultat.orientering.se';
 const COMPETITION = '17320';
 const CLASSNAME = 'D14';
+const OUT_DIR = './out';
 
 // How often to scrape
 const INTERVAL_IN_MS = 60000;
 // END CONFIG
 
-// const sequelize = new Sequelize({
-//     database,
-//     host,
-//     password,
-//     username,
-//     dialect: 'mysql',
-// });
-
-// class Result extends Model {}
-
-// Result.init({
-//     id: {
-//         type: DataTypes.UUID,
-//         primaryKey: true,
-//     },
-//     data: DataTypes.TEXT,
-//     competition: DataTypes.TEXT,
-//     classname: DataTypes.TEXT,
-// }, { sequelize, modelName: 'result' });
 
 const saveData = async (data) => {
-    // await Result.create({
-    //     id: uuid.v4(),
-    //     data,
-    //     competition: COMPETITION,
-    //     classname: CLASSNAME,
-    // });
-
-    fs.writeFileSync(`./out-${Date.now()}`, JSON.stringify(
+    fs.writeFileSync(`${OUT_DIR}/${Date.now()}.json`, JSON.stringify(
         {
             id: uuid.v4(),
             data,
@@ -67,9 +40,7 @@ const scrape = async () => {
 
     if (data) {
         try {
-            const json = JSON.stringify(data);
-
-            await saveData(json);
+            await saveData(data);
 
             scrapeCount++;
         } catch {
@@ -81,7 +52,11 @@ const scrape = async () => {
 }
 
 (async () => {
-    // await sequelize.sync();
+    try {
+        fs.opendirSync(OUT_DIR);
+    } catch (e) {
+        fs.mkdirSync(OUT_DIR);
+    }
 
     await scrape();
 
