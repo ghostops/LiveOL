@@ -89,6 +89,9 @@ export interface IOLResult {
     status: number;
     timeplus: string;
 
+    liveRunning: boolean;
+    liveRunningStart: string;
+
     // unused
     _progress: number;
 }
@@ -96,6 +99,9 @@ export interface IOLResult {
 export const marshallResult =
     (comp: number, _class: string, splitControlls: LiveresultatApi.split[]) =>
     (res: LiveresultatApi.result): IOLResult => {
+    const now = new Date();
+    const liveRunningDate = Helpers.getLiveRunningStart(res.start);
+
     return {
         id: `${comp}:${_class}:${res.name.replace(/ /g, '_')}`,
         splits: (
@@ -113,6 +119,9 @@ export const marshallResult =
         result: res.result,
         status: res.status,
         timeplus: res.timeplus,
+
+        liveRunning: res.progress < 100 && (now > liveRunningDate),
+        liveRunningStart: liveRunningDate.toString(),
 
         _progress: res.progress,
     };
@@ -160,6 +169,15 @@ export const OLResult = new GraphQLObjectType({
         timeplus: {
             type: GraphQLString,
             resolve: (res: IOLResult) => res.timeplus,
+        },
+
+        liveRunning: {
+            type: GraphQLBoolean,
+            resolve: (res: IOLResult) => res.liveRunning,
+        },
+        liveRunningStart: {
+            type: GraphQLString,
+            resolve: (res: IOLResult) => res.liveRunningStart,
         },
 
         // Unused

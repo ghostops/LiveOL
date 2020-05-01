@@ -8,14 +8,16 @@ interface Props {
     status: number;
 }
 
-export const OLResultTime: React.SFC<Props> = ({ time, status }) => (
-    <Text style={{
-        fontSize: fontPx(20),
-    }}>
-        {
-            status === 0
-            ? time
-            : statusI18n(status)
-        }
-    </Text>
-);
+export const OLResultTime: React.SFC<Props> = ({ time, status }) => {
+    return (
+        <Text style={{
+            fontSize: fontPx(20),
+        }}>
+            {
+                status === 0
+                ? time
+                : statusI18n(status)
+            }
+        </Text>
+    );
+};

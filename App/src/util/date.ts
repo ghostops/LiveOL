@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export const datesAreOnSameDay = (first: Date, second: Date) =>
     first.getFullYear() === second.getFullYear() &&
     first.getMonth() === second.getMonth() &&
@@ -10,3 +12,14 @@ export const dateToReadable = (date: Date): string => {
 
     return `${year}-${month}-${day}`;
 };
+
+export const secondsFromDate = (datestring: string): number => {
+    const date = new Date(datestring);
+    const now = new Date();
+
+    const difference = (now.getTime() - date.getTime()) / 1000;
+
+    return Math.abs(difference);
+};
+
+export const padTime = (time: number, len: number = 2) => _.padStart(String(time), len, '0');

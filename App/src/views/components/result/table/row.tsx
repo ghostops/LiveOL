@@ -16,6 +16,7 @@ import { Result } from 'lib/graphql/fragments/types/Result';
 import { showToast } from 'lib/toasts/competitiorInfo';
 import { TouchableOpacity, Dimensions } from 'react-native';
 import { OLResultListItem } from '../item/listItem';
+import { OLResultLiveRunning } from '../item/liveRunning';
 
 interface OwnProps {
     result: Result;
@@ -110,17 +111,28 @@ export class OLTableRow extends React.PureComponent<Props> {
                         align="flex-end"
                         style={{ width: LANDSCAPE_WIDTH.time }}
                     >
-                        <OLResultTime
-                            status={result.status}
-                            time={result.result}
-                        />
+                        {
+                            result.liveRunning &&
+                            <OLResultLiveRunning
+                                date={result.liveRunningStart}
+                            />
+                        }
+                        {
+                            !result.liveRunning &&
+                            <>
+                                <OLResultTime
+                                    status={result.status}
+                                    time={result.result}
+                                />
 
-                        <View style={{ height: px(4) }} />
+                                    <View style={{ height: px(4) }} />
 
-                        <OLResultTimeplus
-                            status={result.status}
-                            timeplus={result.timeplus}
-                        />
+                                <OLResultTimeplus
+                                    status={result.status}
+                                    timeplus={result.timeplus}
+                                />
+                            </>
+                        }
                     </OLResultColumn>
                 </OLResultListItem>
             </OLResultAnimation>

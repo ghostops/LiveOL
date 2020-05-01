@@ -96,3 +96,15 @@ export const getDatesFromWeek = (weekNumber: number, year: number): [Date, Date]
 
     return [start, end];
 };
+
+export const getLiveRunningStart = (start: number): Date => {
+    const [hours, seconds, ms] = startToReadable(start).split(':').map((n) => Number(n));
+
+    const year = new Date().getFullYear();
+    const month = new Date().getMonth();
+    const date = new Date().getDate();
+
+    const constructed = new Date(year, month, date, hours, seconds, ms)
+
+    return constructed;
+};

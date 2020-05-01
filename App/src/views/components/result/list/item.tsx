@@ -15,6 +15,7 @@ import { Result } from 'lib/graphql/fragments/types/Result';
 import { showToast } from 'lib/toasts/competitiorInfo';
 import { TouchableOpacity } from 'react-native';
 import { OLResultListItem } from '../item/listItem';
+import { OLResultLiveRunning } from '../item/liveRunning';
 
 interface OwnProps {
     result: Result;
@@ -64,17 +65,38 @@ export class OLResultItem extends React.PureComponent<Props> {
                         align="flex-end"
                         size={PORTRAIT_SIZE.time}
                     >
-                        <OLResultTime
-                            status={result.status}
-                            time={result.result}
-                        />
+                        {
+                            (result.liveRunning) &&
+                            <OLResultLiveRunning
+                                date={result.liveRunningStart}
+                            />
+                        }
+                        {
+                            (
+                                !result.liveRunning &&
+                                result.result !== ''
+                            ) &&
+                            <>
+                                <OLResultTime
+                                    status={result.status}
+                                    time={result.result}
+                                />
 
-                        <View style={{ height: px(4) }} />
+                                    <View style={{ height: px(4) }} />
 
-                        <OLResultTimeplus
-                            status={result.status}
-                            timeplus={result.timeplus}
-                        />
+                                <OLResultTimeplus
+                                    status={result.status}
+                                    timeplus={result.timeplus}
+                                />
+                            </>
+                        }
+                        {
+                            (
+                                !result.liveRunning &&
+                                result.result === ''
+                            ) &&
+                            <OLStartTime time={result.start} />
+                        }
                     </OLResultColumn>
                 </OLResultListItem>
             </OLResultAnimation>
