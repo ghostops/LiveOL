@@ -8,6 +8,7 @@ import { Mappings } from './mappings';
 import { NavigationContainer, TypedNavigator, ParamListBase } from '@react-navigation/native';
 import { Right, Left } from 'views/scenes/home/header';
 import { Routes } from './routes';
+import { StatusBar } from 'react-native';
 import { xtraSpace, hasNotch } from 'util/hasNotch';
 
 interface StateProps {
@@ -30,6 +31,8 @@ const Component: React.SFC<StateProps> = ({ landscape }) => {
                 dark: false,
             }}
         >
+            <StatusBar translucent />
+
             <Stack.Navigator
                 initialRouteName={Routes.home}
                 screenOptions={{
