@@ -23,21 +23,21 @@ export class LiveresultatAPIClient {
         this.cachedRequest(
             this.client.get(`${this.root}/api.php?method=getcompetitions`),
             'getcompetitions',
-            '12 hours',
+            '30 minutes',
         );
 
     public getcompetition = async (id: number): Promise<LiveresultatApi.competition> =>
         this.cachedRequest(
             this.client.get(`${this.root}/api.php?method=getcompetitioninfo&comp=${id}`),
             `getcompetition:${id}`,
-            '2 hours',
+            '5 minutes',
         );
 
     public getclasses = async (id: number): Promise<LiveresultatApi.getclasses> =>
         this.cachedRequest(
             this.client.get(`${this.root}/api.php?method=getclasses&comp=${id}`),
             `getclasses:${id}`,
-            '30 minutes',
+            '5 minutes',
         );
 
     public getclassresults = async (id: number, _class: string): Promise<LiveresultatApi.getclassresults> =>
