@@ -1,8 +1,22 @@
+### Swedish:
+
+# LiveOL
+
+LiveOL är en app som ger dig orienteringsresultat live.
+
+Du får de senaste resultaten till din telefon eller surfplatta med en smidig design på flera språk.
+LiveOL integrerar med flertalet Orientering-relaterade tjänster, så som liveresultat.orientering.se samt Eventor Sverige.
+
+Vår vision är att bli den bästa orienteringsplatformen på mobilen.
+
+Appen är framtagen Ludvig Larsendahl och koden är Open Source på GitHub: sök efter LiveOL
+
 ### English:
 
 # LiveOL
 
 LiveOL is an app that displays orienteering-results live.
+
 You get the latest results on your phone or tablet with a convenient interface in multiple languages.
 LiveOL integrates many Orienteering related services, like liveresultat.orientering.se and Eventor Sweden.
 
