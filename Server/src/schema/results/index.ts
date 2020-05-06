@@ -99,7 +99,6 @@ export interface IOLResult {
 export const marshallResult =
     (comp: number, _class: string, splitControlls: LiveresultatApi.split[]) =>
     (res: LiveresultatApi.result): IOLResult => {
-    const now = new Date();
     const liveRunningDate = Helpers.getLiveRunningStart(res.start);
 
     return {
@@ -120,7 +119,7 @@ export const marshallResult =
         status: res.status,
         timeplus: res.timeplus,
 
-        liveRunning: res.progress < 100 && (now > liveRunningDate),
+        liveRunning: res.progress < 100,
         liveRunningStart: liveRunningDate.toString(),
 
         _progress: res.progress,

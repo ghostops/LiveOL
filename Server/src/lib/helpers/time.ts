@@ -104,7 +104,7 @@ export const getLiveRunningStart = (start: number): Date => {
     const month = new Date().getMonth();
     const date = new Date().getDate();
 
-    const constructed = new Date(year, month, date, hours, seconds, ms)
+    const constructed = new Date(year, month, date, hours, seconds, ms);
 
     return constructed;
 };
