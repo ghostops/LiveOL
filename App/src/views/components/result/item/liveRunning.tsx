@@ -45,6 +45,9 @@ export class OLResultLiveRunning extends React.PureComponent<Props, State> {
     }
 
     render() {
+        // DISABLE UNTIL FIXED
+        return null;
+
         if (!this.state.value) return null;
 
         return (

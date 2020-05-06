@@ -4,8 +4,8 @@ const fs = require('fs');
 
 // CONFIG
 const ROOT = 'https://liveresultat.orientering.se';
-const COMPETITION = '17320';
-const CLASSNAME = 'D14';
+const COMPETITION = '17337';
+const CLASSNAME = 'Insk';
 const OUT_DIR = './out';
 
 // How often to scrape
