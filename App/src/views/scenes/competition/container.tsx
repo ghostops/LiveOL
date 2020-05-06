@@ -21,13 +21,20 @@ type Props = OwnProps;
 const DataWrapper: React.SFC<Props> = (props) => {
     const competitionId: number = props.route.params.id;
 
-    const { data, loading, error } =
+    const { data, loading, error, refetch } =
         useQuery<GetCompetition, GetCompetitionVariables>(
             GET_COMPETITION,
             { variables: { competitionId } },
         );
 
-    if (error) return <OLError error={error} />;
+    if (error) {
+        return (
+            <OLError
+                error={error}
+                refetch={refetch}
+            />
+        );
+    }
 
     const competition: Competition = _.get(data, 'competitions.getCompetition', null);
     const classes: Class[] = _.get(data, 'competitions.getCompetitionClasses', null);

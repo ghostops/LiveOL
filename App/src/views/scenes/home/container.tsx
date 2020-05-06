@@ -36,6 +36,7 @@ const DataWrapper: React.SFC<Props> = (props) => {
         loading,
         error,
         fetchMore,
+        refetch,
     } = useQuery<Competitions, CompetitionsVariables>(
         COMPETITIONS,
         {
@@ -45,7 +46,14 @@ const DataWrapper: React.SFC<Props> = (props) => {
         },
     );
 
-    if (error) return <OLError error={error} />;
+    if (error) {
+        return (
+            <OLError
+                error={error}
+                refetch={refetch}
+            />
+        );
+    }
 
     const competitions: Competition[] = _.get(
         data,

@@ -38,7 +38,15 @@ const DataWrapper: React.SFC<Props> = ({ route, navigation, landscape }) => {
             { variables: { competitionId, className } },
         );
 
-    if (error) return <OLError error={error} />;
+    if (error) {
+        return (
+            <OLError
+                error={error}
+                refetch={refetch}
+            />
+        );
+    }
+
     if (loading) return <OLLoading />;
 
     const results: Result[] = _.get(data, 'results.getResults', null);

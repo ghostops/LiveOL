@@ -30,7 +30,14 @@ const DataWrapper: React.SFC<Props> = (props) => {
             { variables: { competitionId } },
         );
 
-    if (error) return <OLError error={error} />;
+    if (error) {
+        return (
+            <OLError
+                error={error}
+                refetch={refetch}
+            />
+        );
+    }
 
     const passings: Passing[] = _.get(data, 'lastPassings.getLastPassings', null);
 
