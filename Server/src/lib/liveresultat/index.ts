@@ -7,7 +7,7 @@ import * as ms from 'ms';
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { Replayer } from './replay';
 
-const DEV = getEnv('env') !== 'live';
+const DEV = getEnv('test') === 'true';
 
 export class LiveresultatAPIClient {
     private client: AxiosInstance;

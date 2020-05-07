@@ -6,7 +6,7 @@ import * as moment from 'moment';
 import * as ms from 'ms';
 import axios, { AxiosInstance } from 'axios';
 
-const DEV = getEnv('env') !== 'live';
+const DEV = getEnv('test') === 'true';
 
 export class EventorScraper {
     private client: AxiosInstance;
