@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import * as moment from 'moment';
+import moment from 'moment';
 import 'moment-duration-format';
 
 export const isDateToday = (date: string): boolean => {
@@ -14,8 +14,8 @@ export const dateToReadable = (date: string): string => {
 };
 
 export const diffDateNow = (datestring: string): string | null => {
-    const date = moment.utc(datestring);
-    const now = moment.utc();
+    const date = moment(datestring).utcOffset(-120);
+    const now = moment();
 
     const difference = now.diff(date);
 
@@ -24,8 +24,9 @@ export const diffDateNow = (datestring: string): string | null => {
     }
 
     const duration: any = moment.duration(difference);
+    const formated = duration.format('mm:ss');
 
-    return duration.format('mm:ss');
+    return formated;
 };
 
 export const padTime = (time: number, len: number = 2) => _.padStart(String(time), len, '0');

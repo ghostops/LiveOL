@@ -17,6 +17,7 @@ import { showToast } from 'lib/toasts/competitiorInfo';
 import { TouchableOpacity, Dimensions } from 'react-native';
 import { OLResultListItem } from '../item/listItem';
 import { OLResultLiveRunning } from '../item/liveRunning';
+import { isLiveRunning, startIsAfterNow } from 'util/isLive';
 
 interface OwnProps {
     result: Result;
@@ -56,6 +57,44 @@ export const getExtraSize = (splits: number): number => {
 export class OLTableRow extends React.PureComponent<Props> {
     private moreInfo = () => {
         showToast(this.props.result.name, this.props.result.club);
+    }
+
+    renderTime = () => {
+        const { result } = this.props;
+
+        if (!result.result.length) {
+            if (isLiveRunning(result)) {
+                return (
+                    <OLResultLiveRunning
+                        date={result.liveRunningStart}
+                    />
+                );
+            }
+
+            if (!startIsAfterNow(result)) {
+                return (
+                    <OLStartTime
+                        time={result.start}
+                    />
+                );
+            }
+        }
+
+        return (
+            <>
+                <OLResultTime
+                    status={result.status}
+                    time={result.result}
+                />
+
+                    <View style={{ height: px(4) }} />
+
+                <OLResultTimeplus
+                    status={result.status}
+                    timeplus={result.timeplus}
+                />
+            </>
+        );
     }
 
     render() {
@@ -111,28 +150,7 @@ export class OLTableRow extends React.PureComponent<Props> {
                         align="flex-end"
                         style={{ width: LANDSCAPE_WIDTH.time }}
                     >
-                        {
-                            result.liveRunning &&
-                            <OLResultLiveRunning
-                                date={result.liveRunningStart}
-                            />
-                        }
-                        {
-                            !result.liveRunning &&
-                            <>
-                                <OLResultTime
-                                    status={result.status}
-                                    time={result.result}
-                                />
-
-                                    <View style={{ height: px(4) }} />
-
-                                <OLResultTimeplus
-                                    status={result.status}
-                                    timeplus={result.timeplus}
-                                />
-                            </>
-                        }
+                        {this.renderTime()}
                     </OLResultColumn>
                 </OLResultListItem>
             </OLResultAnimation>
