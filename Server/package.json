@@ -23,6 +23,8 @@
     "graphql": "^14.6.0",
     "ioredis": "^4.16.0",
     "lodash": "^4.17.15",
+    "moment": "^2.25.3",
+    "moment-timezone": "^0.5.28",
     "ms": "^2.1.2",
     "nodemon": "^2.0.2",
     "ts-node": "^8.6.2",
@@ -36,6 +38,7 @@
     "@types/express": "^4.17.4",
     "@types/ioredis": "^4.14.9",
     "@types/lodash": "^4.14.149",
+    "@types/moment-timezone": "^0.5.13",
     "@types/node": "^13.9.1"
   }
 }

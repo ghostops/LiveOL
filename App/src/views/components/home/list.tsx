@@ -4,7 +4,7 @@ import _ from 'lodash';
 import * as NB from 'native-base';
 import { Lang } from 'lib/lang';
 import { HomeListItem } from './listItem';
-import { datesAreOnSameDay, dateToReadable } from 'util/date';
+import { isDateToday, dateToReadable } from 'util/date';
 import { FlatList } from 'react-native';
 import { OLSafeAreaView } from '../safeArea';
 import { Competition } from 'lib/graphql/fragments/types/Competition';
@@ -70,8 +70,8 @@ export const HomeList: React.SFC<Props> = ({
     );
 
     const renderListSection = (date: string, competitions: Record<string, Competition[]>) => {
-        const isToday = datesAreOnSameDay(new Date(date), new Date());
-        const dateStr = dateToReadable(new Date(date));
+        const isToday = isDateToday(date);
+        const dateStr = dateToReadable(date);
 
         return (
             <OLSafeAreaView key={date}>

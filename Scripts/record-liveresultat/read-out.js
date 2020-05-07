@@ -3,7 +3,7 @@ const readline = require('readline');
 
 // CONFIG
 const OUT_DIR = './out';
-const FOLLOW = 'Joline Petri';
+const FOLLOW = 'Dominykas Prakapas';
 // END CONFIG
 
 const rl = readline.createInterface({

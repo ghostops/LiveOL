@@ -38,6 +38,8 @@
     "expo-screen-orientation": "~1.0.0",
     "graphql": "^14.6.0",
     "lodash": "^4.17.13",
+    "moment": "^2.25.3",
+    "moment-duration-format": "^2.3.2",
     "ms": "^2.1.2",
     "native-base": "^2.13.4",
     "react": "16.9.0",

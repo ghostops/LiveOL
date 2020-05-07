@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { fontPx } from 'util/const';
 import { View, Text } from 'native-base';
-import * as Helpers from '../helpers';
 
 interface Props {
     time: string;

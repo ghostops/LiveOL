@@ -89,9 +89,7 @@ export const OLCompetitionHeader: React.SFC<Props> = (props) => (
                         style={{ marginBottom: px(15) }}
                     >
                         {Lang.print('competitions.date')}:{' '}
-                        {dateToReadable(
-                            new Date(props.competition.date),
-                        )}
+                        {dateToReadable(props.competition.date)}
                     </OLText>
 
                     <OLText

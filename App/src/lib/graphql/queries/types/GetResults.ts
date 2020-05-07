@@ -28,7 +28,7 @@ export interface GetResults_results_getResults {
   result: string | null;
   status: number | null;
   timeplus: string | null;
-  liveRunning: boolean | null;
+  progress: number | null;
   liveRunningStart: string | null;
   splits: (GetResults_results_getResults_splits | null)[] | null;
 }

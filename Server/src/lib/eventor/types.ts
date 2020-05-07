@@ -7,7 +7,7 @@ export type EventorCompetitionType = 'foot' | 'ski' | 'mountainbike' | 'trail' |
 
 interface EventorEventBase {
     id: string;
-    date: Date;
+    date: string;
     name: string;
     club: string;
     clubLogoUrl: string;

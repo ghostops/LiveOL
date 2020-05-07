@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { View, Text } from 'native-base';
+import { diffDateNow, padTime } from 'util/date';
 import { fontPx } from 'util/const';
 import { statusI18n } from 'lib/lang/status';
-import { secondsFromDate, padTime } from 'util/date';
+import { View, Text } from 'native-base';
 
 interface Props {
     date: string;
@@ -34,10 +34,7 @@ export class OLResultLiveRunning extends React.PureComponent<Props, State> {
     startCounting = () => {
         this.interval = setInterval(
             () => {
-                const minutes = Math.floor(secondsFromDate(this.props.date) / 60);
-                const seconds = Math.floor(secondsFromDate(this.props.date) - (minutes * 60));
-
-                const value = `${padTime(minutes)}:${padTime(seconds)}`;
+                const value = diffDateNow(this.props.date);
 
                 this.setState({ value });
             },
@@ -45,10 +42,9 @@ export class OLResultLiveRunning extends React.PureComponent<Props, State> {
     }
 
     render() {
-        // DISABLE UNTIL FIXED
-        return null;
-
-        if (!this.state.value) return null;
+        if (!this.state.value) {
+            return null;
+        }
 
         return (
             <Text style={{

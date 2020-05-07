@@ -30,8 +30,8 @@ export const ResultFragment = gql`
         result
         status
         timeplus
+        progress
 
-        liveRunning
         liveRunningStart
 
         splits {

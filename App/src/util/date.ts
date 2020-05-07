@@ -1,25 +1,31 @@
 import _ from 'lodash';
+import * as moment from 'moment';
+import 'moment-duration-format';
 
-export const datesAreOnSameDay = (first: Date, second: Date) =>
-    first.getFullYear() === second.getFullYear() &&
-    first.getMonth() === second.getMonth() &&
-    first.getDate() === second.getDate();
+export const isDateToday = (date: string): boolean => {
+    const input = moment.utc(date);
+    const today = moment.utc();
 
-export const dateToReadable = (date: Date): string => {
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
-
-    return `${year}-${month}-${day}`;
+    return today.isSame(input, 'date');
 };
 
-export const secondsFromDate = (datestring: string): number => {
-    const date = new Date(datestring);
-    const now = new Date();
+export const dateToReadable = (date: string): string => {
+    return moment.utc(date).format('YYYY-MM-DD');
+};
 
-    const difference = (now.getTime() - date.getTime()) / 1000;
+export const diffDateNow = (datestring: string): string | null => {
+    const date = moment.utc(datestring);
+    const now = moment.utc();
 
-    return Math.abs(difference);
+    const difference = now.diff(date);
+
+    if (difference < 0) {
+        return null;
+    }
+
+    const duration: any = moment.duration(difference);
+
+    return duration.format('mm:ss');
 };
 
 export const padTime = (time: number, len: number = 2) => _.padStart(String(time), len, '0');

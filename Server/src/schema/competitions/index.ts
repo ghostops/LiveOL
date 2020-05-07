@@ -3,6 +3,7 @@ import { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLBoolean, GraphQLLi
 import { LiveresultatApi } from 'lib/liveresultat/types';
 import { UTCTime } from 'types';
 import * as _ from 'lodash';
+import * as moment from 'moment';
 
 export interface IOLCompetitionResponse {
     competitions: IOLCompetition[];
@@ -35,7 +36,7 @@ export const marshallCompetition = (eventor?: EventorEventItem) => (liveres: Liv
         id: liveres.id,
         name: liveres.name,
         organizer: liveres.organizer,
-        date: new Date(liveres.date).toUTCString(),
+        date: moment.utc(liveres.date).format(),
         clubLogoSizes: EVENTOR_CLUB_ICON_SIZES,
         eventorAvailable: false,
     };

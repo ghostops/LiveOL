@@ -1,6 +1,7 @@
 import * as cheerio from 'cheerio';
 import * as _ from 'lodash';
 import { invertKeyValues } from '../helpers/invert';
+import * as moment from 'moment-timezone';
 import {
     EventorCompetitionType,
     EventorCompetitionDistance,
@@ -71,8 +72,8 @@ export class ListResponseParser {
     private currentWeek: string;
     private currentDay: string;
 
-    private startDate: Date;
-    private endDate: Date;
+    private startDate: moment.Moment;
+    private endDate: moment.Moment;
 
     public parse = (): EventorListItem[] => {
         const $ = cheerio.load(this.body);
@@ -94,33 +95,33 @@ export class ListResponseParser {
             const parsed = text.trim().split(splitWords[0]);
             const split = parsed[1].split(splitWords[1]);
 
-            this.startDate = new Date(split[0].trim());
-            this.endDate = new Date(split[1].replace('.', '').trim());
+            this.startDate = moment.utc(split[0].trim());
+            this.endDate = moment.utc(split[1].replace('.', '').trim());
         } catch (err) {
             console.error('No start or end date could be extracted', err);
-            this.startDate = new Date();
-            this.endDate = new Date();
+            this.startDate = moment.utc();
+            this.endDate = moment.utc();
         }
     }
 
-    private parseDate = (input: string): Date | null => {
+    private parseDate = (input: string): moment.Moment | null => {
         if (!input || !this.startDate || !this.endDate) return null;
 
         const [day, month] = input.split(' ')[1].split('/');
 
-        let year = this.startDate.getFullYear();
+        let year = this.startDate.year();
 
         // If we have an end date for the range, and the year on that date
         // does not match the start, and the month is 1 we can assume
         // it will be January in the end-date
         if (
-            this.startDate.getFullYear() !== this.endDate.getFullYear() &&
+            this.startDate.year() !== this.endDate.year() &&
             month === '1'
         ) {
-            year = this.endDate.getFullYear();
+            year = this.endDate.year();
         }
 
-        return new Date(`${year}-${month}-${day}`);
+        return moment.utc(`${year}-${month}-${day}`, 'YYYY-MM-DD');
     };
 
     private parseRow = (row: CheerioElement): EventorListItem => {
@@ -150,7 +151,7 @@ export class ListResponseParser {
                 this.currentDay = _.get(row, `children.0.children.0.data`);
             }
 
-            const date = this.parseDate(this.currentDay);
+            const date = this.parseDate(this.currentDay).format();
 
             const canceled = !!(row.attribs.class && row.attribs.class.includes('canceled'));
 
@@ -285,7 +286,7 @@ export class EventResponseParser {
             signups = 0;
         }
 
-        const date = this.parseDate(mappedInfoData.date as unknown as string);
+        const date = moment.utc(this.parseEventorDate(mappedInfoData.date as unknown as string)).format();
 
         // Hacky way of selecting the id
         let id = $('#main > div > p.toolbar16 > a.hoverableImageAndText16x16.calendar16x16').attr('href');
@@ -310,7 +311,7 @@ export class EventResponseParser {
         };
     }
 
-    private parseDate = (input: string): Date => {
+    private parseEventorDate = (input: string): string => {
         const [
             _dayname,
             date,
@@ -335,14 +336,18 @@ export class EventResponseParser {
             'december',
         ];
 
-        const [hours, minutes] = (time || '00:00').split(':')
+        const [hours, minutes] = (time || '00:00').split(':');
 
-        return new Date(Date.UTC(
-            Number(year),
-            monthsInSwedish.indexOf(monthname) + 1,
-            Number(date),
-            Number(hours),
-            Number(minutes),
-        ));
+        const toMoment = moment(
+            new Date(
+                Number(year),
+                monthsInSwedish.indexOf(monthname) + 1,
+                Number(date),
+                Number(hours),
+                Number(minutes),
+            ),
+        ).tz('Europe/Stockholm').format();
+
+        return toMoment;
     }
 }

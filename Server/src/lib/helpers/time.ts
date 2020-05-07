@@ -1,23 +1,11 @@
 import * as _ from 'lodash';
+import * as moment from 'moment';
 
-export const datesAreOnSameDay = (first: Date, second: Date) =>
-    first.getFullYear() === second.getFullYear() &&
-    first.getMonth() === second.getMonth() &&
-    first.getDate() === second.getDate();
+export const isDateToday = (date: string): boolean => {
+    const input = moment.utc(date);
+    const today = moment.utc();
 
-export const today = () => {
-    const d = new Date();
-
-    const month = d.getMonth() + 1;
-    const day = d.getDate();
-
-    // tslint:disable
-    const output = d.getFullYear() + '-' +
-        (month < 10 ? '0' : '') + month + '-' +
-        (day < 10 ? '0' : '') + day;
-    // tslint:enable
-
-    return output;
+    return today.isSame(input, 'date');
 };
 
 export const timestampToObject = (time: number) => {
@@ -67,44 +55,26 @@ export const timeplusToReadable = (time: number): string => {
     return `+${padTime(realMinutes)}:${padTime(seconds)}`;
 };
 
-export const getWeek = (date: Date): number => {
-    date = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-
-    date.setUTCDate(date.getUTCDate() + 4 - (date.getUTCDay() || 7));
-
-    const yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
-
-    const diff = (date as any) - (yearStart as any);
-
-    const weekNo = Math.ceil(((diff / 86400000) + 1) / 7);
-
-    return weekNo;
-};
-
-export const weekNumberToDate = (weekNumber: number, year: number): Date => {
+export const weekNumberToMoment = (weekNumber: number, year: number): moment.Moment => {
     const day = (1 + (weekNumber - 1) * 7);
     const date = new Date(year, 0, day);
-    return date;
+    return moment.utc(date);
 };
 
-export const getDatesFromWeek = (weekNumber: number, year: number): [Date, Date] => {
-    const start = weekNumberToDate(weekNumber, year);
+export const getMomentsFromWeek = (weekNumber: number, year: number): [moment.Moment, moment.Moment] => {
+    const start = weekNumberToMoment(weekNumber, year);
 
     // Add 6 days to get the last day of the week
-    const end = new Date(start);
-    end.setDate(start.getDate() + 6);
+    const end = moment.utc(start).add(6, 'days');
 
     return [start, end];
 };
 
-export const getLiveRunningStart = (start: number): Date => {
-    const [hours, seconds, ms] = startToReadable(start).split(':').map((n) => Number(n));
+export const getLiveRunningStart = (start: number): moment.Moment => {
+    const [hours, minutes, seconds] = startToReadable(start).split(':').map((n) => Number(n));
+    const today = moment.utc().format('YYYY-MM-DD');
 
-    const year = new Date().getFullYear();
-    const month = new Date().getMonth();
-    const date = new Date().getDate();
+    const startTime = moment.utc(`${today} ${hours}:${minutes}:${seconds}`, 'YYYY-MM-DD HH:mm:ss');
 
-    const constructed = new Date(year, month, date, hours, seconds, ms);
-
-    return constructed;
+    return startTime;
 };

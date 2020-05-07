@@ -4,15 +4,14 @@ import { Competition } from 'lib/graphql/fragments/types/Competition';
 import { COMPETITIONS } from 'lib/graphql/queries/competitions';
 import { Competitions, CompetitionsVariables } from 'lib/graphql/queries/types/Competitions';
 import { connect } from 'react-redux';
-import { datesAreOnSameDay } from 'util/date';
 import { Lang } from 'lib/lang';
 import { NavigationProp } from '@react-navigation/native';
 import { OLError } from 'views/components/error';
 import { OLHome as Component } from './component';
+import { Platform } from 'react-native';
 import { Routes } from 'lib/nav/routes';
 import { useQuery } from '@apollo/react-hooks';
 import * as Actions from './store';
-import { Platform } from 'react-native';
 
 interface OwnProps {
     navigation: NavigationProp<any, any>;

@@ -1,8 +1,9 @@
 import { EventorScraper } from 'lib/eventor/scraper';
 import { LiveresultatApi } from 'lib/liveresultat/types';
 import { EventorEventItem, EventorListItem } from 'lib/eventor/types';
-import { getWeek, getDatesFromWeek } from 'lib/helpers/time';
+import { getMomentsFromWeek } from 'lib/helpers/time';
 import * as _ from 'lodash';
+import * as moment from 'moment';
 
 export class EventorExtractor {
     constructor(
@@ -10,13 +11,13 @@ export class EventorExtractor {
     ) {}
 
     public getEventorData = async (liveresultatComp: LiveresultatApi.competition): Promise<EventorEventItem | null> => {
-        const eventDate = new Date(liveresultatComp.date);
+        const eventDate = moment.utc(liveresultatComp.date);
 
         // We batch our searches in to the week numbers,
         // this way we keep our number of hits on Eventor down.
-        const week = getWeek(eventDate);
+        const week = eventDate.week();
 
-        const [startDate, endDate] = getDatesFromWeek(week, eventDate.getFullYear());
+        const [startDate, endDate] = getMomentsFromWeek(week, eventDate.get('year'));
 
         const range = await this.scraper.scrapeDateRange(startDate, endDate);
 
@@ -50,11 +51,13 @@ export class EventorExtractor {
     private weighItem = (comp: LiveresultatApi.competition, item: EventorListItem): { id: string, weight: number } => {
         let weight = 0;
 
-        const compDate = new Date(comp.date);
+        const compDate = moment.utc(comp.date);
 
-        if (this.datesMatch(item.date, compDate)){
+        if (compDate.isSame(moment.utc(item.date), 'date')){
             weight += 1;
         }
+
+        weight += 1;
 
         if (item.name === comp.name) {
             weight += 1;
@@ -72,8 +75,4 @@ export class EventorExtractor {
             id: item.id,
         };
     }
-
-    private datesMatch = (a: Date, b: Date): boolean =>
-        `${a.getFullYear()}-${a.getMonth() + 1}-${a.getDate()}` ===
-        `${b.getFullYear()}-${b.getMonth() + 1}-${b.getDate()}`
 }

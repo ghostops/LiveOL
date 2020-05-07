@@ -1,12 +1,12 @@
 import { Cacher } from 'lib/redis';
 import { getEnv } from 'lib/helpers/env';
 import { LiveresultatApi } from './types';
-import { today } from 'lib/helpers/time';
 import * as fs from 'fs';
+import * as moment from 'moment';
 import * as ms from 'ms';
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 
-const DEV = false; // getEnv('env') !== 'live';
+const DEV = getEnv('env') !== 'live';
 
 export class LiveresultatAPIClient {
     private client: AxiosInstance;
@@ -113,7 +113,7 @@ export class LiveresultatAPIClient {
             return null;
         }
 
-        console.info(`Read ${file}.json from DEV cache ${new Date().toISOString()}`);
+        console.info(`Read ${file}.json from DEV cache ${moment().format()}`);
 
         const str = fs.readFileSync(`${__dirname}/test/${file}.json`).toString();
         let data = JSON.parse(str);
@@ -122,7 +122,7 @@ export class LiveresultatAPIClient {
             data = {
                 competitions: (data as LiveresultatApi.getcompetitions).competitions.map((v) => ({
                     ...v,
-                    date: v.date === 'TODAY' ? today() : v.date,
+                    date: v.date === 'TODAY' ? moment().format('YYYY-MM-DD') : v.date,
                 })),
             } as LiveresultatApi.getcompetitions;
         }

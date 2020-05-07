@@ -92,8 +92,7 @@ export interface IOLResult {
     liveRunning: boolean;
     liveRunningStart: string;
 
-    // unused
-    _progress: number;
+    progress: number;
 }
 
 export const marshallResult =
@@ -120,9 +119,9 @@ export const marshallResult =
         timeplus: res.timeplus,
 
         liveRunning: res.progress < 100,
-        liveRunningStart: liveRunningDate.toString(),
+        liveRunningStart: liveRunningDate.format(),
 
-        _progress: res.progress,
+        progress: res.progress,
     };
 }
 
@@ -169,20 +168,19 @@ export const OLResult = new GraphQLObjectType({
             type: GraphQLString,
             resolve: (res: IOLResult) => res.timeplus,
         },
+        progress: {
+            type: GraphQLInt,
+            resolve: (res: IOLResult) => res.progress,
+        },
 
         liveRunning: {
             type: GraphQLBoolean,
+            deprecationReason: 'No longer used',
             resolve: (res: IOLResult) => res.liveRunning,
         },
         liveRunningStart: {
             type: GraphQLString,
             resolve: (res: IOLResult) => res.liveRunningStart,
-        },
-
-        // Unused
-        _progress: {
-            type: GraphQLInt,
-            resolve: (res: IOLResult) => res._progress,
         },
     }),
 });

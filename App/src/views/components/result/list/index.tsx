@@ -50,7 +50,7 @@ export const OLResultsList: React.SFC<Props> = (props) => {
                 ListFooterComponent={<View style={{ height: 45 }} />}
                 data={props.results}
                 renderItem={renderResult}
-                keyExtractor={(item: Result) => item.name}
+                keyExtractor={(item: Result, index: number) => item.name}
                 ListEmptyComponent={(
                     <View
                         style={{

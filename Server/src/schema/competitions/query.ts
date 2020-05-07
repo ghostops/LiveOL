@@ -2,7 +2,7 @@ import { GQLContext } from 'lib/server';
 import { GraphQLObjectType, GraphQLList, GraphQLInt, GraphQLString } from 'graphql';
 import { OLClass, IOLClass, marshallClass } from 'schema/classes';
 import { OLCompetition, marshallCompetition, IOLCompetition, IOLCompetitionResponse, OLCompetitionResponse } from 'schema/competitions';
-import { datesAreOnSameDay } from 'lib/helpers/time';
+import { isDateToday } from 'lib/helpers/time';
 import * as _ from 'lodash';
 
 export const CompetitionsQuery = new GraphQLObjectType({
@@ -39,10 +39,7 @@ export const CompetitionsQuery = new GraphQLObjectType({
                 const lastPage = Math.ceil(competitions.length / PER_PAGE);
 
                 const today = competitions.filter((comp) => {
-                    return datesAreOnSameDay(
-                        new Date(comp.date),
-                        new Date(),
-                    );
+                    return isDateToday(comp.date);
                 });
 
                 if (search) {
