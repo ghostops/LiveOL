@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { TouchableOpacity, Easing } from 'react-native';
+import { TouchableOpacity, Easing, AppState, AppStateStatus } from 'react-native';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import { COLORS, px } from 'util/const';
 import { Toast } from 'native-base';
@@ -47,13 +47,15 @@ export class OLRefetcherCircle extends React.PureComponent<Props, State> {
         setTimeout(
             () => {
                 this.invert();
-                this.circularProgress.reAnimate(0, 100, this.props.interval, Easing.linear);
+                if (this.circularProgress) {
+                    this.circularProgress.reAnimate(0, 100, this.props.interval, Easing.linear);
+                }
             },
             100,
         );
     }
 
-    componentDidMount() {
+    startAnimation = () => {
         if (this.circularProgress) {
             this.animate();
 
@@ -64,9 +66,31 @@ export class OLRefetcherCircle extends React.PureComponent<Props, State> {
         }
     }
 
-    componentWillUnmount() {
+    stopAnimation = () => {
+        if (this.circularProgress) {
+            this.circularProgress.animate(0, 0, Easing.linear);
+        }
+
         if (this.interval) {
             clearInterval(this.interval as number);
+        }
+    }
+
+    componentDidMount() {
+        AppState.addEventListener('change', this.appStateChange);
+        this.startAnimation();
+    }
+
+    componentWillUnmount() {
+        AppState.removeEventListener('change', this.appStateChange);
+        this.stopAnimation();
+    }
+
+    appStateChange = (event: AppStateStatus) => {
+        if (event === 'active') {
+            this.startAnimation();
+        } else {
+            this.stopAnimation();
         }
     }
 

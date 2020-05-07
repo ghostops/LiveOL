@@ -97,7 +97,6 @@ export class OLResults extends React.PureComponent<Props, State> {
                 <OLRefetcher
                     interval={15000}
                     refetch={refetch}
-                    circle
                 />
             </>
         );

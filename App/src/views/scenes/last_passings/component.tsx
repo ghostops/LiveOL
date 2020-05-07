@@ -101,7 +101,6 @@ export const OLPassings: React.SFC<Props> = (props) => {
             <OLRefetcher
                 refetch={props.refresh}
                 interval={15000}
-                circle
             />
         </OLSafeAreaView>
     );
