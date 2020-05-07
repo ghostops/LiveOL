@@ -43,7 +43,9 @@ apt-cache policy docker-ce
 apt -y install docker-ce
 
 # cronjob deleting all cache at 2am every night
-(crontab -l 2>/dev/null; echo "0 2 * * * docker system prune -a -f") | crontab -
+su $SCRIPT_USER <<'EOF'
+(crontab -l 2>/dev/null; echo "0 2 * * * sudo docker system prune -a -f") | crontab -
+EOF
 
 ## Docker-Compose
 curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
