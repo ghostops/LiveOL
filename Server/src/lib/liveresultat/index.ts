@@ -5,11 +5,13 @@ import * as fs from 'fs';
 import * as moment from 'moment';
 import * as ms from 'ms';
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
-import { Replayer } from './replay';
+import { LiveresultatReplayer } from './replay';
 
 const DEV = getEnv('test') === 'true';
 
 export class LiveresultatAPIClient {
+    private replayer: LiveresultatReplayer;
+
     private client: AxiosInstance;
 
     constructor(private root: string, private cache: Cacher) {
@@ -117,7 +119,11 @@ export class LiveresultatAPIClient {
         console.info(`Read ${file}.json from DEV cache ${moment().format()}`);
 
         if (file === 'getclassresults') {
-            return Replayer.getCurrentResults();
+            if (!this.replayer) {
+                this.replayer = new LiveresultatReplayer(`${__dirname}/test/getclassresults-replay`);
+            }
+
+            return this.replayer.getCurrentResults();
         }
 
         const str = fs.readFileSync(`${__dirname}/test/${file}.json`).toString();

@@ -2,7 +2,7 @@ import { LiveresultatApi } from 'lib/liveresultat/types';
 import * as fs from 'fs';
 import * as ms from 'ms';
 
-class LiveresultatReplayer {
+export class LiveresultatReplayer {
     private files: string[];
 
     private currentIndex: number = 0;
@@ -35,5 +35,3 @@ class LiveresultatReplayer {
         return data;
     }
 }
-
-export const Replayer = new LiveresultatReplayer(`${__dirname}/test/getclassresults-replay`);
