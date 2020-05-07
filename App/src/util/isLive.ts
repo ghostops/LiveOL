@@ -7,6 +7,7 @@ export const isLiveRunning = (result: Result): boolean => {
     return (
         result.progress < 100 &&
         startIsAfterNow(result) &&
-        result.start !== '00:00:00'
+        result.start !== '00:00:00' &&
+        (result.status !== 9 && result.status !== 10)
     );
 };

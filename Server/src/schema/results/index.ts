@@ -117,11 +117,11 @@ export const marshallResult =
         result: res.result,
         status: res.status,
         timeplus: res.timeplus,
-
-        liveRunning: res.progress < 100,
         liveRunningStart: liveRunningDate.format(),
-
         progress: res.progress,
+
+        // deprecated
+        liveRunning: res.progress < 100,
     };
 }
 

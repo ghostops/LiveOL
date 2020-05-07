@@ -9,7 +9,11 @@ interface Props {
 }
 
 export const OLResultTimeplus: React.SFC<Props> = ({ timeplus, status }) => {
-    if (status < 0) {
+    if (
+        status < 0 ||
+        status === 10 ||
+        status === 9
+    ) {
         return null;
     }
 

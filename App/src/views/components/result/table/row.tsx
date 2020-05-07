@@ -17,7 +17,7 @@ import { showToast } from 'lib/toasts/competitiorInfo';
 import { TouchableOpacity, Dimensions } from 'react-native';
 import { OLResultListItem } from '../item/listItem';
 import { OLResultLiveRunning } from '../item/liveRunning';
-import { isLiveRunning, startIsAfterNow } from 'util/isLive';
+import { isLiveRunning } from 'util/isLive';
 
 interface OwnProps {
     result: Result;
@@ -67,14 +67,6 @@ export class OLTableRow extends React.PureComponent<Props> {
                 return (
                     <OLResultLiveRunning
                         date={result.liveRunningStart}
-                    />
-                );
-            }
-
-            if (!startIsAfterNow(result)) {
-                return (
-                    <OLStartTime
-                        time={result.start}
                     />
                 );
             }
