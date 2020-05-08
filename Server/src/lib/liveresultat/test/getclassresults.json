@@ -1,151 +1,67 @@
 {
-	"status": "OK",
-	"className": "M20-1",
-	"splitcontrols": [{
-		"code": 1075,
-		"name": "1075"
-	}, {
-		"code": 1082,
-		"name": "1082"
-	}, {
-		"code": 1036,
-		"name": "1036"
-	}, {
-		"code": 99,
-		"name": "99"
-	}, {
-		"code": 98,
-		"name": "98"
-	}],
-	"results": [{
-		"place": "1",
-		"name": "Kasper Fosser",
-		"club": "NOR",
-		"result": "21:59",
-		"status": 0,
-		"timeplus": "+00:00",
-		"progress": 100,
-		"splits": {
-			"1036": 125200,
-			"1075": 75600,
-			"1082": 102300,
-			"1075_status": 0,
-			"1075_place": 1,
-			"1075_timeplus": 0,
-			"1082_status": 0,
-			"1082_place": 1,
-			"1082_timeplus": 0,
-			"1036_status": 0,
-			"1036_place": 1,
-			"1036_timeplus": 0,
-
-			"99": 125211,
-			"99_status": 0,
-			"99_place": 1,
-			"99_timeplus": 0,
-
-			"98": 125200,
-			"98_status": 0,
-			"98_place": 1,
-			"98_timeplus": 0,
-
-			"97": 125200,
-			"97_status": 0,
-			"97_place": 1,
-			"97_timeplus": 0,
-
-			"96": 125200,
-			"96_status": 0,
-			"96_place": 1,
-			"96_timeplus": 0
-		},
-		"start": 4590000
-	}, {
-		"place": "2",
-		"name": "Guilhem Elias",
-		"club": "FRA",
-		"result": "22:55",
-		"status": 0,
-		"timeplus": "+00:39",
-		"progress": 100,
-		"splits": {
-			"1036": 128900,
-			"1075": 76700,
-			"1082": 105500,
-			"1075_status": 0,
-			"1075_place": 2,
-			"1075_timeplus": 1100,
-			"1082_status": 0,
-			"1082_place": 2,
-			"1082_timeplus": 3200,
-			"1036_status": 0,
-			"1036_place": 2,
-			"1036_timeplus": 3700,
-
-			"99": 125500,
-			"99_status": 0,
-			"99_place": 1,
-			"99_timeplus": 0,
-
-			"98": 125200,
-			"98_status": 0,
-			"98_place": 1,
-			"98_timeplus": 0,
-
-			"97": 125200,
-			"97_status": 0,
-			"97_place": 1,
-			"97_timeplus": 0,
-
-			"96": 125200,
-			"96_status": 0,
-			"96_place": 1,
-			"96_timeplus": 0
-		},
-		"start": 4572000
-	}, {
-		"place": "3",
-		"name": "Aaro Aho",
-		"club": "FIN",
-		"result": "22:58",
-		"status": 0,
-		"timeplus": "+00:59",
-		"progress": 100,
-		"splits": {
-			"1036": 130100,
-			"1075": 78600,
-			"1082": 106200,
-			"1075_status": 0,
-			"1075_place": 3,
-			"1075_timeplus": 3000,
-			"1082_status": 0,
-			"1082_place": 3,
-			"1082_timeplus": 3900,
-			"1036_status": 0,
-			"1036_place": 3,
-			"1036_timeplus": 4900,
-
-			"99": 125200,
-			"99_status": 0,
-			"99_place": 1,
-			"99_timeplus": 0,
-
-			"98": 125200,
-			"98_status": 0,
-			"98_place": 1,
-			"98_timeplus": 0,
-
-			"97": 125200,
-			"97_status": 0,
-			"97_place": 1,
-			"97_timeplus": 0,
-
-			"96": 125200,
-			"96_status": 0,
-			"96_place": 1,
-			"96_timeplus": 0
-		},
-		"start": 4518000
-	}],
-	"hash": "ca8e7c474051af2b5b11be6e869ebf93"
+    "status": "OK",
+    "className": "D17-20",
+    "splitcontrols": [{
+        "code": 1095,
+        "name": "95"
+    }],
+    "results": [{
+        "place": "",
+        "name": "Nora Tydal",
+        "club": "OK Österåker",
+        "result": "",
+        "status": 9,
+        "timeplus": "+",
+        "progress": 0,
+        "splits": {
+            "1095": "",
+            "1095_status": 1,
+            "1095_place": ""
+        },
+        "start": 6360000
+    }, {
+        "place": "",
+        "name": "Sofia Sundin",
+        "club": "Waxholms OK",
+        "result": "",
+        "status": 9,
+        "timeplus": "+",
+        "progress": 0,
+        "splits": {
+            "1095": "",
+            "1095_status": 1,
+            "1095_place": ""
+        },
+        "start": 6600000
+    }, {
+        "place": "",
+        "name": "Sara Sundin",
+        "club": "Waxholms OK",
+        "result": "",
+        "status": 9,
+        "timeplus": "+",
+        "progress": 0,
+        "splits": {
+            "1095": "",
+            "1095_status": 1,
+            "1095_place": ""
+        },
+        "start": 6600000
+    }, {
+        "place": "",
+        "name": "Tilde Jonsson",
+        "club": "OK Österåker",
+        "result": "",
+        "status": 9,
+        "timeplus": "+",
+        "progress": 50,
+        "splits": {
+            "1095": 257400,
+            "1095_status": 0,
+            "1095_place": 1,
+            "1095_timeplus": 0
+        },
+        "start": 6120000
+    }],
+    "hash": "aa29398132251d7c1e76b2a954bd04a0"
 }
