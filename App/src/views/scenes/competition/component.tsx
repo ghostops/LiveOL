@@ -34,7 +34,7 @@ export const OLCompetition: React.SFC<Props> = (props) => {
             >
                 <OLText
                     font="Proxima_Nova"
-                    size={16}
+                    size={18}
                 >
                     {name}
                 </OLText>

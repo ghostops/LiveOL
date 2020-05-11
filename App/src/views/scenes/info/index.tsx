@@ -8,10 +8,11 @@ import { NavigationProp } from '@react-navigation/native';
 import { OLButton } from 'views/components/button';
 import { OLFlag } from 'views/components/lang/flag';
 import { Platform, AsyncStorage, Alert, TouchableOpacity, View, Image } from 'react-native';
-import { UNIT, VERSION, APP_VERSION, ANDROID_VERSION_CODE } from 'util/const';
+import { VERSION, APP_VERSION, ANDROID_VERSION_CODE, px } from 'util/const';
 import { Updates, Linking } from 'expo';
 import * as NB from 'native-base';
 import { ServerVersion } from 'lib/graphql/queries/types/ServerVersion';
+import { OLText } from 'views/components/text';
 
 const {
     Container,
@@ -82,7 +83,7 @@ class Component extends React.PureComponent<Props, State> {
         }
     }
 
-    contact = () => Linking.openURL('https://goo.gl/forms/fFmS1WGVUU1Wu0c03');
+    contact = () => Linking.openURL('https://liveol.larsendahl.se/contact.html');
 
     BUTTONS = [{
         text: Lang.print('info.update.check'),
@@ -113,7 +114,7 @@ class Component extends React.PureComponent<Props, State> {
     }
 
     renderGeneralCard = () => (
-        <Card style={{ paddingVertical: UNIT, flex: 1 }}>
+        <Card style={{ paddingVertical: px(16), flex: 1 }}>
             <CardItem>
                 <Body>
                     {
@@ -122,7 +123,7 @@ class Component extends React.PureComponent<Props, State> {
                             <Text
                                 key={text}
                                 style={{
-                                    marginBottom: UNIT,
+                                    marginBottom: px(16),
                                 }}
                             >
                                 {text}
@@ -135,7 +136,7 @@ class Component extends React.PureComponent<Props, State> {
     )
 
     renderActionCard = () => (
-        <Card style={{ paddingVertical: UNIT, flex: 1 }}>
+        <Card style={{ paddingVertical: px(16), flex: 1 }}>
             <CardItem>
                 <Body>
                     <TouchableOpacity
@@ -144,7 +145,7 @@ class Component extends React.PureComponent<Props, State> {
                         activeOpacity={1}
                     >
                         <Text style={{
-                            marginBottom: UNIT,
+                            marginBottom: px(16),
                             fontWeight: 'bold',
                         }}>
                             {Lang.print('info.version')}: {VERSION}
@@ -161,7 +162,7 @@ class Component extends React.PureComponent<Props, State> {
                                     style={{
                                         marginBottom: (
                                             index !== this.BUTTONS.length - 1
-                                            ? UNIT
+                                            ? px(16)
                                             : 0
                                         ),
                                     }}
@@ -194,18 +195,20 @@ class Component extends React.PureComponent<Props, State> {
                 size={32}
             />
 
-            <Text
+            <OLText
+                font="Proxima_Nova"
+                size={16}
                 style={{
-                    marginLeft: 5,
+                    marginLeft: px(5),
                 }}
             >
                 {name}
-            </Text>
+            </OLText>
         </View>
     )
 
     renderCreditCard = () => (
-        <Card style={{ paddingVertical: UNIT }}>
+        <Card style={{ paddingVertical: px(16) }}>
             <CardItem>
                 <Body>
                     <TouchableOpacity
@@ -216,7 +219,7 @@ class Component extends React.PureComponent<Props, State> {
                         }}
                     >
                         <Text style={{
-                            marginBottom: UNIT,
+                            marginBottom: px(16),
                             fontWeight: 'bold',
                             textAlign: 'center',
                         }}>
@@ -238,12 +241,12 @@ class Component extends React.PureComponent<Props, State> {
                         }}
                     />
 
-                    <Text style={{
-                        marginBottom: UNIT,
-                        fontWeight: 'bold',
-                    }}>
+                    <OLText
+                        font="Proxima_Nova_Bold"
+                        size={18}
+                    >
                         {Lang.print('info.translations.credit')}:
-                    </Text>
+                    </OLText>
 
                     {this.translationCredits.map(this.renderTranslationCredit)}
                 </Body>

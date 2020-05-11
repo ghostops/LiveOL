@@ -1,4 +1,5 @@
 import { Dimensions, PixelRatio } from 'react-native';
+import { scale } from 'react-native-size-matters';
 import Constants from 'expo-constants';
 
 const window = Dimensions.get('window');
@@ -35,5 +36,5 @@ export const UNIT = BASE_UNIT * RESPONSIVE_UNIT;
 
 export const FONT_UNIT = BASE_UNIT * (1 + (1 - PixelRatio.getFontScale()));
 
-export const px = (pixels: number) => UNIT * (pixels / BASE_UNIT);
+export const px = (pixels: number) => scale(pixels);
 export const fontPx = (pixels: number) => FONT_UNIT * (pixels / BASE_UNIT);

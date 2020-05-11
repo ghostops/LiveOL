@@ -134,7 +134,7 @@ export const OLCompetitionHeader: React.SFC<Props> = (props) => (
                         backgroundColor: '#3867d6',
                         padding: px(20),
                         borderRadius: 4,
-                        marginTop: px(25),
+                        marginTop: px(5),
                     }}
                 >
                     <OLText

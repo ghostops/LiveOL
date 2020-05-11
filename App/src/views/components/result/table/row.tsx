@@ -27,10 +27,10 @@ type Props = OwnProps;
 
 export const LANDSCAPE_WIDTH = {
     place: px(60),
-    name: px(200),
+    name: px(160),
     start: px(100),
-    time: px(80),
-    splits: px(120),
+    time: px(60),
+    splits: px(90),
 };
 
 export const getExtraSize = (splits: number): number => {
