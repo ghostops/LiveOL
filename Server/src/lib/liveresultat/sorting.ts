@@ -1,6 +1,6 @@
 import { firstBy } from 'thenby';
-import * as _ from 'lodash';
 import { LiveresultatApi } from './types';
+import * as _ from 'lodash';
 
 interface ResultCopy extends LiveresultatApi.result {
     place: any;
@@ -8,17 +8,25 @@ interface ResultCopy extends LiveresultatApi.result {
 }
 
 const parseToNumber = (maybeNumber: any, fallback: number): number => {
-    let asNumber = _.isNaN(_.toNumber(maybeNumber)) ? 0 : _.toNumber(maybeNumber);
+    let asNumber = (
+        _.isNaN(_.toNumber(maybeNumber))
+        ? 0
+        : _.toNumber(maybeNumber)
+    );
+
     if (asNumber === 0) asNumber = fallback;
+
     return asNumber;
 };
 
-export const sortOptimal = (original: LiveresultatApi.result[]): LiveresultatApi.result[] => {
+export const sortOptimal = (
+    original: LiveresultatApi.result[],
+): LiveresultatApi.result[] => {
     let copy: ResultCopy[] = [...original];
 
     copy = copy.map((result) => {
         const place = parseToNumber(result.place, copy.length);
-        const start = parseToNumber(result.start, 999999999);
+        const start = parseToNumber(result.start, Number.MAX_SAFE_INTEGER);
 
         return {
             ...result,
