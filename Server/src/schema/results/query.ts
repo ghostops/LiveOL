@@ -2,6 +2,7 @@ import { GQLContext } from 'lib/server';
 import { GraphQLObjectType, GraphQLList, GraphQLInt, GraphQLString } from 'graphql';
 import { marshallResult, IOLResult, OLResult, OLSplitControl, IOLSplitControl, marshallSplitControl } from 'schema/results';
 import * as _ from 'lodash';
+import { sortOptimal } from 'lib/liveresultat/sorting';
 
 export const ResultsQuery = new GraphQLObjectType({
     name: 'ResultsQuery',
@@ -23,7 +24,9 @@ export const ResultsQuery = new GraphQLObjectType({
 
                 const res = await Liveresultat.getclassresults(args.competitionId, args.className);
 
-                return res.results.map(marshallResult(args.competitionId, args.className, res.splitcontrols));
+                const sorted = sortOptimal(res.results);
+
+                return sorted.map(marshallResult(args.competitionId, args.className, res.splitcontrols));
             },
         },
         getSplitControls: {
