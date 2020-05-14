@@ -9,7 +9,10 @@ export class Cacher {
     public client: Redis.Redis;
     public options: CacheOptions;
 
-    public init(config: Redis.RedisOptions, cacheOptions: CacheOptions = { ttl: 5, expire: true }) {
+    constructor(
+        config: Redis.RedisOptions,
+        cacheOptions: CacheOptions = { ttl: 5, expire: true }
+    ) {
         this.client = new Redis(config);
         this.options = cacheOptions;
     }
@@ -53,5 +56,3 @@ export class Cacher {
         }
     }
 }
-
-export const Cache = new Cacher();

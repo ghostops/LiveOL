@@ -70,7 +70,7 @@ export const CompetitionsQuery = new GraphQLObjectType({
                 }
 
                 const liveresultatComp = await Liveresultat.getcompetition(args.competitionId);
-                const eventorComp = await Eventor.scraper.getEventorData(liveresultatComp);
+                const eventorComp = await Eventor.extractor.getEventorData(liveresultatComp);
 
                 return marshallCompetition(eventorComp)(liveresultatComp);
             },
