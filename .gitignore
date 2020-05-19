@@ -18,3 +18,4 @@ yarn-error.log
 .terraform
 Scripts/record-liveresultat/out
 Scripts/record-liveresultat/outold
+Scripts/devops/terraform.tfvars
