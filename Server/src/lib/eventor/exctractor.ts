@@ -39,7 +39,9 @@ export class EventorExtractor {
     ): EventorListItem | null => {
         const weightList = range.map((item) => this.weighItem(comp, item));
 
-        const winner = _(weightList).sortBy('weight').last();
+        const sorted = _(weightList).sortBy('weight');
+
+        const winner = sorted.last();
 
         if (!winner || winner.weight < threshold) {
             return null;
@@ -48,19 +50,20 @@ export class EventorExtractor {
         return range.find((item) => item.id === winner.id);
     }
 
-    private weighItem = (comp: LiveresultatApi.competition, item: EventorListItem): { id: string, weight: number } => {
+    private weighItem = (comp: LiveresultatApi.competition, item: EventorListItem): { id: string, weight: number, weightBy: string[] } => {
         let weight = 0;
+        const weightBy = [];
 
         const compDate = moment.utc(comp.date);
 
         if (compDate.isSame(moment.utc(item.date), 'date')){
             weight += 1;
+            weightBy.push('date');
         }
 
-        weight += 1;
-
-        if (item.name === comp.name) {
+        if (item.name.toLowerCase() === comp.name.toLowerCase()) {
             weight += 1;
+            weightBy.push('name');
         }
 
         if (
@@ -68,10 +71,12 @@ export class EventorExtractor {
             item.club.toLowerCase() === comp.organizer.toLowerCase()
         ) {
             weight += 1;
+            weightBy.push('club');
         }
 
         return {
             weight,
+            weightBy,
             id: item.id,
         };
     }
