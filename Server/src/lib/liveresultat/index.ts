@@ -72,13 +72,23 @@ export class LiveresultatAPIClient {
             if (!data) {
                 const res = await request;
                 data = res.data;
+
+                await this.cache.set(
+                    key,
+                    data,
+                    { ttlMs: ms(ttlString) },
+                );
             }
 
-            await this.cache.set(
-                key,
-                data,
-                { ttlMs: ms(ttlString) },
-            );
+            // Anti-tab measure
+            if (typeof data === 'string') {
+                try {
+                    data = data.replace('\t', '');
+                    data = JSON.parse(data);
+                } catch {
+                    console.error('json still could not be parsed!');
+                }
+            }
 
             return data;
         } catch (err) {
