@@ -36,6 +36,8 @@ export const CompetitionsQuery = new GraphQLObjectType({
 
                 let { competitions } = await Liveresultat.getcompetitions();
 
+                competitions = null;
+
                 const lastPage = Math.ceil(competitions.length / PER_PAGE);
 
                 const today = competitions.filter((comp) => {
