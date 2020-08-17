@@ -20,7 +20,6 @@ export AWS_REGION="eu-north-1"
 export S3_ROOT="s3://liveol/deploy"
 
 export DOCKER_COMPOSE="docker-compose -f docker-compose.live.yml"
-export DUCKDNS_SCRIPT="echo url='https://www.duckdns.org/update?domains=liveol-server&token=db0ac24f-5f69-427d-a144-9f7503650513&ip=' | curl -k -o $SCRIPT_HOME/duckdns/duck.log -K -"
 
 # Make home dir
 mkdir -p $SCRIPT_HOME
@@ -60,17 +59,6 @@ $AWS_BINARY s3 cp $S3_ROOT/id_ci $SCRIPT_HOME/.ssh/id_rsa
 chmod 600 $SCRIPT_HOME/.ssh/id_rsa
 ssh-keyscan github.com >> ~/.ssh/known_hosts
 EOF
-
-# Install DuckDNS in root
-mkdir -p $HOME/duckdns
-echo $DUCKDNS_SCRIPT >> $HOME/duckdns/duck.sh
-chmod 700 $HOME/duckdns/duck.sh
-
-## cron poll
-(crontab -l 2>/dev/null; echo "*/5 * * * * $HOME/duckdns/duck.sh >/dev/null 2>&1") | crontab -
-
-## cron reboot
-(crontab -l 2>/dev/null; echo "@reboot $HOME/duckdns/duck.sh >/dev/null 2>&1") | crontab -
 
 # Clone repo
 su $SCRIPT_USER <<'EOF'
