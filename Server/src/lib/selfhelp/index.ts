@@ -11,7 +11,8 @@ export class OLSelfHelper {
 
     constructor() {
         if (!process.env.SLACK_WEBHOOK) {
-            throw new Error('No SLACK_WEBHOOK defined, error reporting not started!');
+            console.warn('No SLACK_WEBHOOK defined, error reporting not started!');
+            return;
         }
 
         this.webhook = new IncomingWebhook(process.env.SLACK_WEBHOOK, {
