@@ -18,6 +18,10 @@ default_platform(:android)
 platform :android do
   desc "Deploy a new version to the Google Play"
   lane :deploy do
+    increment_version_code(
+      gradle_file_path: "app/build.gradle"
+    )
+
     gradle(
       task: 'assemble',
       build_type: 'Release'
