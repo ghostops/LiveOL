@@ -46,10 +46,6 @@ platform :ios do
       xcargs: "-allowProvisioningUpdates"
     )
 
-    # upload_to_app_store(skip_metadata: true, skip_screenshots: true)
-  end
-
-  lane :test do
-    getPackageVersion
+    upload_to_app_store(skip_metadata: true, skip_screenshots: true)
   end
 end
