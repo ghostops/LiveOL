@@ -15,6 +15,12 @@
 
 default_platform(:android)
 
+def getPackageVersion()
+  file = File.open("../../package.json")
+  data = JSON.parse(file.read)
+  return data["version"]
+end
+
 platform :android do
   desc "Deploy a new version to the Google Play"
   lane :deploy do
@@ -26,6 +32,11 @@ platform :android do
       task: 'assemble',
       build_type: 'Release'
     )
-    upload_to_play_store
+
+    upload_to_play_store(
+      track: 'production',
+      release_status: 'draft',
+      version_name: getPackageVersion
+    )
   end
 end

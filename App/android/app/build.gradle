@@ -142,7 +142,7 @@ android {
         applicationId 'se.liveol.rn'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 7
+        versionCode 13
         versionName "2.1.0"
     }
     splits {
@@ -160,6 +160,12 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release {
+            storeFile file('../../LiveOL.jks')
+            storePassword System.getenv('LIVE_OL_STORE_PASSWORD')
+            keyAlias System.getenv('LIVE_OL_KEY_ALIAS')
+            keyPassword System.getenv('LIVE_OL_KEY_PASSWORD')
+        }
     }
     buildTypes {
         debug {
@@ -168,7 +174,7 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://facebook.github.io/react-native/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
