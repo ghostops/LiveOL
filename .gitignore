@@ -19,3 +19,6 @@ yarn-error.log
 Scripts/record-liveresultat/out
 Scripts/record-liveresultat/outold
 Scripts/devops/terraform.tfvars
+
+App/android/app/build
+App/android/.gradle
