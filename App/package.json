@@ -52,6 +52,7 @@
     "react-native-flags-kit": "^1.0.1",
     "react-native-gesture-handler": "~1.6.0",
     "react-native-reanimated": "~1.9.0",
+    "react-native-restart": "^0.0.17",
     "react-native-safe-area-context": "~3.0.7",
     "react-native-screens": "~2.9.0",
     "react-native-size-matters": "^0.3.0",
