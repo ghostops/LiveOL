@@ -21,4 +21,5 @@ Scripts/record-liveresultat/outold
 Scripts/devops/terraform.tfvars
 
 App/android/app/build
+App/android/build
 App/android/.gradle
