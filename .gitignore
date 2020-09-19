@@ -23,3 +23,5 @@ Scripts/devops/terraform.tfvars
 App/android/app/build
 App/android/build
 App/android/.gradle
+App/ios/rn.ipa
+App/ios/rn.app.dSYM.zip

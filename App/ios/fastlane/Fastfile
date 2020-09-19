@@ -20,6 +20,8 @@ platform :ios do
   lane :release do
     xcodeproj = "LiveOL.xcodeproj"
 
+    match(type: "appstore")
+
     update_project_team(
       path: xcodeproj,
       teamid: CredentialsManager::AppfileConfig.try_fetch_value(:team_id)
