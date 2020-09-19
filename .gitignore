@@ -28,3 +28,4 @@ App/ios/rn.app.dSYM.zip
 App/ios/fastlane/report.xml
 
 google-key.json
+App/android/fastlane/report.xml
