@@ -3,7 +3,7 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import { client } from 'lib/graphql/client';
 import { COLORS } from 'util/const';
 import { Lang } from 'lib/lang';
-import { LayoutAnimation, View } from 'react-native';
+import { View } from 'react-native';
 import { OLPush } from 'views/components/notifications/push';
 import { OLRotationWatcher } from 'views/components/watcher/rotation';
 import { Provider } from 'react-redux';
@@ -13,7 +13,6 @@ import * as Font from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Updates from 'expo-updates';
 import Router from 'lib/nav/router';
-
 
 interface State {
     ready: boolean;
@@ -26,8 +25,7 @@ export default class AppRoot extends React.Component<{}, State> {
         ready: false,
     };
 
-    constructor(props) {
-        super(props);
+    componentDidMount() {
         this.onLaunch();
     }
 
@@ -51,10 +49,9 @@ export default class AppRoot extends React.Component<{}, State> {
 
         setTimeout(
             () => {
-                LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
                 this.setState({ ready: true }, () => SplashScreen.hideAsync());
             },
-            1000,
+            3000,
         );
     }
 
