@@ -48,8 +48,7 @@ export default class AppRoot extends React.Component<{}, State> {
         setTimeout(
             () => {
                 LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-                SplashScreen.hideAsync();
-                this.setState({ ready: true });
+                this.setState({ ready: true }, () => SplashScreen.hideAsync());
             },
             1000,
         );
@@ -57,7 +56,7 @@ export default class AppRoot extends React.Component<{}, State> {
 
     render() {
         if (!this.state.ready) {
-            return <View style={{ flex: 1, backgroundColor: COLORS.MAIN }} />;
+            return null;
         }
 
         return (
