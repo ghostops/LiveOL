@@ -122,8 +122,16 @@ def jscFlavor = 'org.webkit:android-jsc:+'
  */
 def enableHermes = project.ext.react.get("enableHermes", false);
 
+// https://stackoverflow.com/questions/56075455/expiring-daemon-because-jvm-heap-space-is-exhausted
+//org.gradle.daemon=true
+//org.gradle.jvmargs=-Xmx2560m
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
+
+    dexOptions {
+       javaMaxHeapSize "3g"
+    }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
