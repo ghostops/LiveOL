@@ -1,4 +1,4 @@
-import { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLList, GraphQLBoolean } from 'graphql';
+import { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLList, GraphQLBoolean, GraphQLFloat } from 'graphql';
 import { LiveresultatApi } from 'lib/liveresultat/types';
 import { OLTime } from 'types';
 import * as Helpers from 'lib/helpers/time';
@@ -169,7 +169,7 @@ export const OLResult = new GraphQLObjectType({
             resolve: (res: IOLResult) => res.timeplus,
         },
         progress: {
-            type: GraphQLInt,
+            type: GraphQLFloat,
             resolve: (res: IOLResult) => res.progress,
         },
 

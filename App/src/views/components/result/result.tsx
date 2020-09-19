@@ -76,7 +76,7 @@ export class ResultBox extends React.PureComponent<Props, State> {
             {
                 toValue: 1,
                 duration: 500,
-                useNativeDriver: true,
+                useNativeDriver: false,
             },
         ).start();
     }
@@ -87,7 +87,7 @@ export class ResultBox extends React.PureComponent<Props, State> {
             {
                 toValue: 0,
                 duration: 500,
-                useNativeDriver: true,
+                useNativeDriver: false,
             },
         ).start();
     }
