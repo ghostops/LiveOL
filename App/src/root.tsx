@@ -8,10 +8,11 @@ import { OLPush } from 'views/components/notifications/push';
 import { OLRotationWatcher } from 'views/components/watcher/rotation';
 import { Provider } from 'react-redux';
 import { Root } from 'native-base';
-import { SplashScreen } from 'expo';
 import { store } from 'store/configure';
 import * as Font from 'expo-font';
 import Router from 'lib/nav/router';
+import * as SplashScreen from 'expo-splash-screen';
+
 
 interface State {
     ready: boolean;
@@ -26,7 +27,7 @@ export default class AppRoot extends React.Component<{}, State> {
 
     constructor(props) {
         super(props);
-        SplashScreen.preventAutoHide();
+        SplashScreen.preventAutoHideAsync();
     }
 
     // tslint:disable-next-line: function-name
@@ -47,7 +48,7 @@ export default class AppRoot extends React.Component<{}, State> {
         setTimeout(
             () => {
                 LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-                SplashScreen.hide();
+                SplashScreen.hideAsync();
                 this.setState({ ready: true });
             },
             1000,
