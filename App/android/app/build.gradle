@@ -142,7 +142,7 @@ android {
         applicationId 'se.liveol.rn'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 13
+        versionCode 14
         versionName "2.1.0"
     }
     splits {
