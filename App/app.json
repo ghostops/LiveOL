@@ -31,6 +31,7 @@
       "package": "se.liveol.rn",
       "versionCode": 7,
       "permissions": []
-    }
+    },
+    "sdkVersion": "38.0.0"
   }
 }

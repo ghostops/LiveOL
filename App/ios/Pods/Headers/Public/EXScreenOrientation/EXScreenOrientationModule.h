@@ -1,0 +1,1 @@
+../../../../../node_modules/expo-screen-orientation/ios/EXScreenOrientation/EXScreenOrientationModule.h
