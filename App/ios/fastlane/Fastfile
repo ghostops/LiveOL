@@ -12,8 +12,15 @@
 
 # Uncomment the line if you want fastlane to automatically update itself
 # update_fastlane
+require 'json'
 
 default_platform(:ios)
+
+def getPackageVersion()
+  file = File.open("../../package.json")
+  data = JSON.parse(file.read)
+  return data["version"]
+end
 
 platform :ios do
   desc "Push a new release build to the App Store"
@@ -27,12 +34,22 @@ platform :ios do
       teamid: CredentialsManager::AppfileConfig.try_fetch_value(:team_id)
     )
 
+    increment_version_number_in_plist(
+      version_number: getPackageVersion
+    )
+
     increment_build_number(xcodeproj: xcodeproj)
+
     build_app(
       workspace: "LiveOL.xcworkspace",
       scheme: "LiveOL",
       xcargs: "-allowProvisioningUpdates"
     )
-    upload_to_app_store(skip_metadata: true, skip_screenshots: true)
+
+    # upload_to_app_store(skip_metadata: true, skip_screenshots: true)
+  end
+
+  lane :test do
+    getPackageVersion
   end
 end
