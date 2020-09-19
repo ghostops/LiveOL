@@ -1,6 +1,6 @@
 {
   "name": "@liveol/app",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
@@ -12,8 +12,8 @@
     "build:ios": "expo build:ios",
     "build:android": "expo build:android",
     "testserver": "nodemon testserver/",
-    "lang:pull": "phraseapp pull",
-    "lang:push": "phraseapp push",
+    "lang:pull": "phrase pull",
+    "lang:push": "phrase push",
     "schema": "yarn schema:download && yarn schema:tots && yarn schema:cleanup",
     "schema:download": "yarn run apollo schema:download --endpoint=http://localhost:4000 graphql-schema.json",
     "schema:tots": "yarn run apollo codegen:generate --localSchemaFile=graphql-schema.json --target=typescript --includes=src/**/*.ts --tagName=gql --addTypename --globalTypesFile=src/lib/graphql/types/graphql-global-types.ts types",
