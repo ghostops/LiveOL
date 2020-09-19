@@ -43,7 +43,7 @@ export const OLResultAnimation: React.SFC<Props> = (props) => {
             {
                 toValue: 1,
                 duration: 500,
-                useNativeDriver: true,
+                useNativeDriver: false,
             },
         ).start(() => {
             setTimeout(
@@ -59,7 +59,7 @@ export const OLResultAnimation: React.SFC<Props> = (props) => {
             {
                 toValue: 0,
                 duration: 500,
-                useNativeDriver: true,
+                useNativeDriver: false,
             },
         ).start();
     };
