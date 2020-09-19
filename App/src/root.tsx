@@ -10,8 +10,9 @@ import { Provider } from 'react-redux';
 import { Root } from 'native-base';
 import { store } from 'store/configure';
 import * as Font from 'expo-font';
-import Router from 'lib/nav/router';
 import * as SplashScreen from 'expo-splash-screen';
+import * as Updates from 'expo-updates';
+import Router from 'lib/nav/router';
 
 
 interface State {
@@ -27,11 +28,14 @@ export default class AppRoot extends React.Component<{}, State> {
 
     constructor(props) {
         super(props);
-        SplashScreen.preventAutoHideAsync();
+        this.onLaunch();
     }
 
-    // tslint:disable-next-line: function-name
-    async UNSAFE_componentWillMount() {
+    onLaunch = async () => {
+        await SplashScreen.preventAutoHideAsync();
+
+        await this.checkForUpdates();
+
         await Lang.init();
 
         await Font.loadAsync({
@@ -52,6 +56,17 @@ export default class AppRoot extends React.Component<{}, State> {
             },
             1000,
         );
+    }
+
+    checkForUpdates = async () => {
+        if (__DEV__) return;
+
+        const { isAvailable } = await Updates.checkForUpdateAsync();
+
+        if (isAvailable) {
+            await Updates.fetchUpdateAsync();
+            await Updates.reloadAsync();
+        }
     }
 
     render() {

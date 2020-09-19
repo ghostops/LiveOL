@@ -37,7 +37,7 @@
     "expo-screen-orientation": "~1.1.1",
     "expo-splash-screen": "^0.5.0",
     "expo-status-bar": "^1.0.0",
-    "expo-updates": "~0.2.10",
+    "expo-updates": "~0.2.8",
     "graphql": "^14.6.0",
     "lodash": "^4.17.19",
     "moment": "^2.25.3",
