@@ -76,6 +76,24 @@ jobs:
                 name: Rebuild the Docker containers and restart server
                 command: |
                     ssh ${SSH_USER}@${SSH_DOMAIN} -p ${SSH_PORT} "cd ${PROJECT_ROOT} && sudo docker-compose -f docker-compose.live.yml up -d"
+        deploy-ios:
+            macos:
+                xcode: 12.0.0
+            steps:
+                - checkout
+
+                - run:
+                    name: Yarn install
+                    command: yarn install
+
+                - run:
+                    name: Bundle install
+                    command: bundle install
+
+                - run:
+                    name: Fastlane
+                    command: cd ios && bundle exec fastlane
+
 workflows:
     deploy:
         jobs:
@@ -89,3 +107,9 @@ workflows:
                     branches:
                         only:
                             - master
+            - deploy-ios:
+                filters:
+                    branches:
+                        only:
+                            - master
+                            - eject-expo
