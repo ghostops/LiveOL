@@ -17,14 +17,17 @@ const Component: React.FC<DispatchProps> = ({ children, setRotation }) => {
         setDimensions({ screen });
     };
 
-    React.useEffect(() => {
-        setRotation(screen.height >= screen.width ? 'portrait' : 'landscape');
-        Dimensions.addEventListener('change', onChange);
+    React.useEffect(
+        () => {
+            setRotation(screen.height >= screen.width ? 'portrait' : 'landscape');
+            Dimensions.addEventListener('change', onChange);
 
-        return () => {
-            Dimensions.removeEventListener('change', onChange);
-        };
-    });
+            return () => {
+                Dimensions.removeEventListener('change', onChange);
+            };
+        },
+        [],
+    );
 
     return <>{children}</>;
 };

@@ -1,4 +1,3 @@
-import { Orientation } from 'expo-screen-orientation';
 import { Notification } from 'expo/build/Notifications/Notifications.types';
 
 export const SET_ROTATION = 'GENERAL:SET_ROTATION';
@@ -29,7 +28,11 @@ export function generalReducer(
     return state;
 }
 
-export const setRotation = (rotation: Orientation) => (dispatch) => {
+export const setRotation = (rotation: string) => (dispatch, getState: GetState) => {
+    const currentRotation = getState().general.rotation;
+
+    if (rotation === currentRotation) return;
+
     dispatch({
         type: SET_ROTATION,
         value: rotation,
