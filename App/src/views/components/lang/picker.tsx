@@ -36,6 +36,7 @@ export class LanguagePicker extends React.PureComponent<any, State> {
                                     : 'transparent'
                                 ),
                                 borderBottomWidth: 2,
+                                justifyContent: 'center',
                             }}
                             key={lang}
                         >
