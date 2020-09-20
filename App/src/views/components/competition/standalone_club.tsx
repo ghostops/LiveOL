@@ -18,7 +18,7 @@ interface Props {
     style?: ViewStyle;
 }
 
-export const OLCompetitionClub: React.SFC<Props> = ({ clubName, style, logoUrl }) => {
+export const OLCompetitionClub: React.FC<Props> = ({ clubName, style, logoUrl }) => {
     const { data, loading, error } =
         useQuery<GetClubByName, GetClubByNameVariables>(
             GET_CLUB_BY_NAME,

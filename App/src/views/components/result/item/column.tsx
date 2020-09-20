@@ -7,7 +7,7 @@ interface Props extends ColProps {
     align?: FlexAlignType;
 }
 
-export const OLResultColumn: React.SFC<Props> = (props) => {
+export const OLResultColumn: React.FC<Props> = (props) => {
     return (
         <Col
             {...props}

@@ -48,7 +48,7 @@ export const groupVisibleCompetitions = (
     return map;
 };
 
-export const HomeList: React.SFC<Props> = ({
+export const HomeList: React.FC<Props> = ({
     competitions,
     onCompetitionPress,
     listHeader,

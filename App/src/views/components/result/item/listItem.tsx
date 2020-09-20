@@ -3,7 +3,7 @@ import { Grid } from 'react-native-easy-grid';
 import { View } from 'native-base';
 import { px } from 'util/const';
 
-export const OLResultListItem: React.SFC = ({ children }) => {
+export const OLResultListItem: React.FC = ({ children }) => {
     return (
         <View
             style={{

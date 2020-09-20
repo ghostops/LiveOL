@@ -12,7 +12,7 @@ interface Props {
     style?: ViewStyle;
 }
 
-export const OLCompetitionClub: React.SFC<Props> = ({ name, style, logoUrl, size }) => {
+export const OLCompetitionClub: React.FC<Props> = ({ name, style, logoUrl, size }) => {
     return (
         <View style={style}>
             <View

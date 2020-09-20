@@ -23,7 +23,7 @@ interface StateProps {
 
 type Props = OwnProps & StateProps;
 
-const DataWrapper: React.SFC<Props> = ({ route, navigation, landscape }) => {
+const DataWrapper: React.FC<Props> = ({ route, navigation, landscape }) => {
     const className: string = route.params.className;
     const competitionId: number = route.params.id;
 

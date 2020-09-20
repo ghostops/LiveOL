@@ -10,7 +10,7 @@ interface Props {
     onCompetitionPress?: (comp: Competition) => void;
 }
 
-export const HomeListItem: React.SFC<Props> = ({
+export const HomeListItem: React.FC<Props> = ({
     competition,
     index,
     total,

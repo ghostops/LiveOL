@@ -12,7 +12,7 @@ const remapCode = {
     no: 'NO',
 };
 
-export const OLFlag: React.SFC<Props> = ({ code, size }) => (
+export const OLFlag: React.FC<Props> = ({ code, size }) => (
     <Flag
         code={remapCode[code]}
         size={size}

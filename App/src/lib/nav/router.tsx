@@ -17,7 +17,7 @@ interface StateProps {
 
 const Stack = createStackNavigator();
 
-const Component: React.SFC<StateProps> = ({ landscape }) => {
+const Component: React.FC<StateProps> = ({ landscape }) => {
     return (
         <NavigationContainer
             theme={{

@@ -10,7 +10,7 @@ interface Props {
     refetch?: () => Promise<any>;
 }
 
-export const OLError: React.SFC<Props> = ({ error, refetch }) => {
+export const OLError: React.FC<Props> = ({ error, refetch }) => {
     const [loading, setLoading] = React.useState(false);
 
     return (

@@ -28,7 +28,7 @@ const BUTTON_STYLE = (disabled: boolean): ViewStyle => ({
     opacity: disabled ? 0.35 : 1,
 });
 
-export const Pagination: React.SFC<Props> = ({
+export const Pagination: React.FC<Props> = ({
     page,
     paginateBegining,
     paginateBackwards,

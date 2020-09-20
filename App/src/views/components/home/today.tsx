@@ -20,7 +20,7 @@ interface Props {
     renderListItem: (comp: Competition, index?: number, total?: number) => React.ReactChild;
 }
 
-export const TodaysCompetitions: React.SFC<Props> = ({ competitions, renderListItem }) => {
+export const TodaysCompetitions: React.FC<Props> = ({ competitions, renderListItem }) => {
     const nothingToday = !competitions || competitions.length === 0;
 
     const innerCompetitions = () => (

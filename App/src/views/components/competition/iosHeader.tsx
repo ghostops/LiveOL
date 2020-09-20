@@ -8,7 +8,7 @@ interface Props {
     name: string;
 }
 
-export const OLCompetitionIOSHeader: React.SFC<Props> = ({ name }) => (
+export const OLCompetitionIOSHeader: React.FC<Props> = ({ name }) => (
     <>
         <View>
             <View style={{

@@ -7,7 +7,7 @@ interface DispatchProps {
     setRotation: (rotation: ScreenOrientation.Orientation) => void;
 }
 
-const Component: React.SFC<DispatchProps> = ({ children, setRotation }) => {
+const Component: React.FC<DispatchProps> = ({ children, setRotation }) => {
     let subscription;
 
     const onRotate = (event: ScreenOrientation.OrientationChangeEvent) => {

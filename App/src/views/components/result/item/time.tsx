@@ -8,7 +8,7 @@ interface Props {
     status: number;
 }
 
-export const OLResultTime: React.SFC<Props> = ({ time, status }) => {
+export const OLResultTime: React.FC<Props> = ({ time, status }) => {
     return (
         <Text style={{
             fontSize: fontPx(20),

@@ -9,7 +9,7 @@ interface Props extends NativeBase.Button {
     children: string;
 }
 
-export const OLButton: React.SFC<Props> = (props) => {
+export const OLButton: React.FC<Props> = (props) => {
     return (
         <Button
             {...props}

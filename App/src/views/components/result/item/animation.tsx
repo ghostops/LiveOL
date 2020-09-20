@@ -25,7 +25,7 @@ const hasChanged = (prev: Result, now: Result) => (
     )
 );
 
-export const OLResultAnimation: React.SFC<Props> = (props) => {
+export const OLResultAnimation: React.FC<Props> = (props) => {
     const [animation, setAnimation] = React.useState(new Animated.Value(0));
     const [result, setResult] = React.useState(props.result);
 

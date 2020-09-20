@@ -6,7 +6,7 @@ interface Props {
     place: string;
 }
 
-export const OLResultBadge: React.SFC<Props> = ({ place }) => (
+export const OLResultBadge: React.FC<Props> = ({ place }) => (
     <View style={{
         alignItems: 'center',
         justifyContent: 'flex-start',

@@ -11,7 +11,7 @@ interface Props {
     selectable?: boolean;
 }
 
-export const OLText: React.SFC<Props> = (props) => {
+export const OLText: React.FC<Props> = (props) => {
     return (
         <Text
             {...props}

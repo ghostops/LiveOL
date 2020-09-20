@@ -6,7 +6,7 @@ interface Props {
     time: string;
 }
 
-export const OLStartTime: React.SFC<Props> = ({ time }) => (
+export const OLStartTime: React.FC<Props> = ({ time }) => (
     <View
         style={{
             flex: 1,
