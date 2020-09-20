@@ -56,7 +56,7 @@ export default class AppRoot extends React.Component<{}, State> {
     }
 
     checkForUpdates = async () => {
-        if (__DEV__) return;
+        if (__DEV__ || Updates.isEmergencyLaunch) return;
 
         const { isAvailable } = await Updates.checkForUpdateAsync();
 
