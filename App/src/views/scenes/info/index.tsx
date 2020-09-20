@@ -85,11 +85,14 @@ class Component extends React.PureComponent<Props, State> {
         }
     }
 
+    expoManifest = () => Alert.alert('Expo Manifest', JSON.stringify(Updates.manifest));
+
     contact = () => Linking.openURL('https://liveol.larsendahl.se/contact.html');
 
     BUTTONS = [{
         text: Lang.print('info.update.check'),
         onPress: this.update,
+        onLongPress: this.expoManifest,
     }, {
         text: Lang.print('info.contact'),
         onPress: this.contact,
@@ -156,7 +159,8 @@ class Component extends React.PureComponent<Props, State> {
                                 <OLButton
                                     full
                                     key={button.text + index}
-                                    onPress={() => button.onPress()}
+                                    onPress={() => button.onPress && button.onPress()}
+                                    onLongPress={() => button.onLongPress && button.onLongPress()}
                                     style={{
                                         marginBottom: (
                                             index !== this.BUTTONS.length - 1
