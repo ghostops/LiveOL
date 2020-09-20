@@ -2,7 +2,6 @@ import * as React from 'react';
 import { client } from 'lib/graphql/client';
 import { connect } from 'react-redux';
 import { GET_SERVER_VERSION } from 'lib/graphql/queries/server';
-import { isLandscape } from 'util/landscape';
 import { Lang } from 'lib/lang';
 import { NavigationProp } from '@react-navigation/native';
 import { OLButton } from 'views/components/button';
@@ -302,7 +301,7 @@ class Component extends React.PureComponent<Props, State> {
 }
 
 const mapStateToProps = (state: AppState): StateProps => ({
-    landscape: isLandscape(state.general.rotation),
+    landscape: state.general.rotation === 'landscape',
 });
 
 export const OLInfo = connect(mapStateToProps, null)(Component);

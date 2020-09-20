@@ -13,7 +13,6 @@ import { RouterProps } from 'lib/nav/routes';
 import { showToast } from 'lib/toasts/rotate';
 import { SplitControl } from 'lib/graphql/fragments/types/SplitControl';
 import { useQuery } from '@apollo/react-hooks';
-import { isLandscape } from 'util/landscape';
 
 interface OwnProps extends RouterProps<{ id, className }> {}
 
@@ -64,7 +63,7 @@ const DataWrapper: React.FC<Props> = ({ route, navigation, landscape }) => {
 };
 
 const mapStateToProps = (state: AppState): StateProps => ({
-    landscape: isLandscape(state.general.rotation),
+    landscape: state.general.rotation === 'landscape',
 });
 
 export const OLResults = connect(mapStateToProps, null)(DataWrapper);

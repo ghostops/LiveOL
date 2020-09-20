@@ -4,7 +4,7 @@ interface AppState {
 }
 
 interface GeneralReducer {
-    rotation: any;
+    rotation: 'landscape' | 'portrait';
     expoPushToken: string;
 }
 

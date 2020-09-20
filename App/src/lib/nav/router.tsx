@@ -2,7 +2,6 @@ import * as React from 'react';
 import { COLORS, px } from 'util/const';
 import { connect } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
-import { isLandscape } from 'util/landscape';
 import { Lang } from 'lib/lang';
 import { Mappings } from './mappings';
 import { NavigationContainer, TypedNavigator, ParamListBase } from '@react-navigation/native';
@@ -100,7 +99,7 @@ const Component: React.FC<StateProps> = ({ landscape }) => {
 };
 
 const mapStateToProps = (state: AppState): StateProps => ({
-    landscape: isLandscape(state.general.rotation),
+    landscape: state.general.rotation === 'landscape',
 });
 
 export default connect(mapStateToProps, null)(Component);
