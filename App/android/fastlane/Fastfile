@@ -39,4 +39,14 @@ platform :android do
       version_name: getPackageVersion
     )
   end
+
+  desc "Build a release APK and move it to the desktop"
+  lane :apk do
+    gradle(
+      task: 'assemble',
+      build_type: 'Release'
+    )
+
+    sh "mv ../app/build/outputs/apk/release/app-release.apk ~/Desktop"
+  end
 end

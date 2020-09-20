@@ -45,6 +45,7 @@ export default class AppRoot extends React.Component<{}, State> {
             Proxima_Nova: require('../assets/fonts/Proxima-Nova.ttf'),
             Rift_Bold: require('../assets/fonts/Rift-Bold.otf'),
             Rift_Bold_Italic: require('../assets/fonts/Rift-Bold-Italic-regular.otf'),
+            'PTMono-Regular': require('../assets/fonts/PTMono-Regular.ttf'),
         });
 
         setTimeout(

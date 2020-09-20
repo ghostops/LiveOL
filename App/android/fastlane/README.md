@@ -21,6 +21,11 @@ or alternatively using `brew install fastlane`
 fastlane android deploy
 ```
 Deploy a new version to the Google Play
+### android apk
+```
+fastlane android apk
+```
+Build a release APK and move it to the desktop
 
 ----
 
