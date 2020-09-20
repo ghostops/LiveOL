@@ -18,7 +18,7 @@ import {
     Linking,
 } from 'react-native';
 import { ServerVersion } from 'lib/graphql/queries/types/ServerVersion';
-import { VERSION, APP_VERSION, ANDROID_VERSION_CODE, px } from 'util/const';
+import { VERSION, px } from 'util/const';
 import * as NB from 'native-base';
 import * as Updates from 'expo-updates';
 
@@ -105,7 +105,6 @@ class Component extends React.PureComponent<Props, State> {
         // tslint:disable: prefer-template
         Alert.alert(
             'VERSION',
-            `App Version: ${APP_VERSION}\n` +
             `Package Version: ${VERSION}\n` +
             `Server Version: ${data.server.version}\n`,
         );

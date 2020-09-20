@@ -3,7 +3,7 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import { client } from 'lib/graphql/client';
 import { COLORS } from 'util/const';
 import { Lang } from 'lib/lang';
-import { View } from 'react-native';
+import { Image, View } from 'react-native';
 import { OLPush } from 'views/components/notifications/push';
 import { OLRotationWatcher } from 'views/components/watcher/rotation';
 import { Provider } from 'react-redux';
@@ -20,6 +20,8 @@ interface State {
 
 window['clog'] = (...props) => console.warn(JSON.stringify(props));
 
+SplashScreen.preventAutoHideAsync();
+
 export default class AppRoot extends React.Component<{}, State> {
     state = {
         ready: false,
@@ -30,8 +32,6 @@ export default class AppRoot extends React.Component<{}, State> {
     }
 
     onLaunch = async () => {
-        await SplashScreen.preventAutoHideAsync();
-
         await this.checkForUpdates();
 
         await Lang.init();
@@ -68,7 +68,20 @@ export default class AppRoot extends React.Component<{}, State> {
 
     render() {
         if (!this.state.ready) {
-            return null;
+            return (
+                <Image
+                    source={require('../assets/images/splash.png')} style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        bottom: 0,
+                        right: 0,
+                        height: '100%',
+                        width: '100%',
+                    }}
+                    resizeMode="cover"
+                />
+            );
         }
 
         return (
