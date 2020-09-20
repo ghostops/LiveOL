@@ -8587,12 +8587,6 @@ react-native-easy-grid@0.2.2, react-native-easy-grid@^0.2.2:
   dependencies:
     lodash "^4.17.15"
 
-react-native-flags-kit@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/react-native-flags-kit/-/react-native-flags-kit-1.0.1.tgz#236d77d96ec648bdbb4b692b1af1e541a7e29ca5"
-  dependencies:
-    prop-types "^15.6.2"
-
 react-native-gesture-handler@~1.6.0:
   version "1.6.1"
   resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-1.6.1.tgz#678e2dce250ed66e93af409759be22cd6375dd17"

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Image } from 'react-native';
-import Flag from 'react-native-flags-kit';
 
 interface Props {
     code: string;
