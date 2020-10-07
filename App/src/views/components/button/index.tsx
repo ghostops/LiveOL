@@ -19,6 +19,7 @@ export const OLButton: React.FC<Props> = (props) => {
                     backgroundColor: COLORS.MAIN,
                     opacity: props.disabled ? 0.35 : 1,
                     borderRadius: 4,
+                    paddingHorizontal: 10,
                 },
                 props.style,
             ]}

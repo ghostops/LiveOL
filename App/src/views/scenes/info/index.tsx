@@ -15,6 +15,7 @@ import {
     View,
     Image,
     Linking,
+    ScrollView,
 } from 'react-native';
 import { ServerVersion } from 'lib/graphql/queries/types/ServerVersion';
 import { VERSION, px } from 'util/const';
@@ -23,7 +24,6 @@ import * as Updates from 'expo-updates';
 
 const {
     Container,
-    Content,
     Card,
     CardItem,
     Text,
@@ -271,7 +271,7 @@ class Component extends React.PureComponent<Props, State> {
     render() {
         return (
             <Container>
-                <Content
+                <ScrollView
                     style={{
                         padding: 10,
                     }}
@@ -294,7 +294,7 @@ class Component extends React.PureComponent<Props, State> {
                     </View>
 
                     <View style={{ height: 25 }} />
-                </Content>
+                </ScrollView>
             </Container>
         );
     }
