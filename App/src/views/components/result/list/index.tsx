@@ -21,7 +21,7 @@ interface Props {
     className: string;
 }
 
-export const OLResultsList: React.SFC<Props> = (props) => {
+export const OLResultsList: React.FC<Props> = (props) => {
     const renderResult = ({ item }) => {
         const result: Result = item;
 

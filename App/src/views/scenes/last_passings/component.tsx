@@ -28,7 +28,7 @@ interface Props {
     loading: boolean;
 }
 
-export const OLPassings: React.SFC<Props> = (props) => {
+export const OLPassings: React.FC<Props> = (props) => {
     if (
         props.loading &&
         Boolean(!props.passings || !props.passings.length)

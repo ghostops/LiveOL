@@ -2,7 +2,8 @@ import * as React from 'react';
 import { diffDateNow, padTime } from 'util/date';
 import { fontPx } from 'util/const';
 import { statusI18n } from 'lib/lang/status';
-import { View, Text } from 'native-base';
+import { View } from 'native-base';
+import { OLText } from 'views/components/text';
 
 interface Props {
     date: string;
@@ -47,11 +48,17 @@ export class OLResultLiveRunning extends React.PureComponent<Props, State> {
         }
 
         return (
-            <Text style={{
-                fontSize: fontPx(20),
+            <View style={{
+                flex: 1,
+                justifyContent: 'center',
             }}>
-                {this.state.value}
-            </Text>
+                <OLText
+                    size={18}
+                    font="PTMono-Regular"
+                >
+                    {this.state.value}
+                </OLText>
+            </View>
         );
     }
 }

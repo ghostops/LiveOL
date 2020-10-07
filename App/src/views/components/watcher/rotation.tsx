@@ -1,28 +1,29 @@
 import * as React from 'react';
-import * as ScreenOrientation from 'expo-screen-orientation';
 import { connect } from 'react-redux';
 import { setRotation } from 'store/stores/general';
+import { Dimensions } from 'react-native';
 
 interface DispatchProps {
-    setRotation: (rotation: ScreenOrientation.Orientation) => void;
+    setRotation: (rotation: string) => void;
 }
 
-const Component: React.SFC<DispatchProps> = ({ children, setRotation }) => {
-    let subscription;
+const screen = Dimensions.get('screen');
 
-    const onRotate = (event: ScreenOrientation.OrientationChangeEvent) => {
-        setRotation(event.orientationInfo.orientation);
+const Component: React.FC<DispatchProps> = ({ children, setRotation }) => {
+    const [dimensions, setDimensions] = React.useState({ screen });
+
+    const onChange = ({ screen }) => {
+        setRotation(screen.height >= screen.width ? 'portrait' : 'landscape');
+        setDimensions({ screen });
     };
 
     React.useEffect(
         () => {
-            ScreenOrientation.getOrientationAsync()
-                .then((o) => setRotation(o));
-
-            subscription = ScreenOrientation.addOrientationChangeListener(onRotate);
+            setRotation(screen.height >= screen.width ? 'portrait' : 'landscape');
+            Dimensions.addEventListener('change', onChange);
 
             return () => {
-                ScreenOrientation.removeOrientationChangeListener(subscription);
+                Dimensions.removeEventListener('change', onChange);
             };
         },
         [],

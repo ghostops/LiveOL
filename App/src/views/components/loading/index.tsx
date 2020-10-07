@@ -3,7 +3,7 @@ import { View, Text, Spinner } from 'native-base';
 import { ApolloError } from 'apollo-boost';
 import { COLORS } from 'util/const';
 
-export const OLLoading: React.SFC = () => (
+export const OLLoading: React.FC = () => (
     <View
         style={{
             flex: 1,

@@ -8,7 +8,7 @@ interface Props {
     status: number;
 }
 
-export const OLResultTimeplus: React.SFC<Props> = ({ timeplus, status }) => {
+export const OLResultTimeplus: React.FC<Props> = ({ timeplus, status }) => {
     if (
         status < 0 ||
         status === 10 ||

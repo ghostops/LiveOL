@@ -29,7 +29,7 @@ interface DispatchProps {
 
 type Props = StateProps & OwnProps & DispatchProps;
 
-const DataWrapper: React.SFC<Props> = (props) => {
+const DataWrapper: React.FC<Props> = (props) => {
     const {
         data,
         loading,

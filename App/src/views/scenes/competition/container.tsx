@@ -18,7 +18,7 @@ interface OwnProps extends RouterProps<{ id, title }> {}
 
 type Props = OwnProps;
 
-const DataWrapper: React.SFC<Props> = (props) => {
+const DataWrapper: React.FC<Props> = (props) => {
     const competitionId: number = props.route.params.id;
 
     const { data, loading, error, refetch } =

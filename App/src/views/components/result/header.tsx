@@ -90,7 +90,7 @@ const labels = (table: boolean, maxSize: number, splits?: Split[]): Label[] => {
     return table ? inLandscape : inPortrait;
 };
 
-const Component: React.SFC<OwnProps> = ({ table, className, competitionId, maxRowSize }) => {
+const Component: React.FC<OwnProps> = ({ table, className, competitionId, maxRowSize }) => {
     const { data, loading, error } =
         useQuery<GetSplitControls, GetSplitControlsVariables>(
             GET_SPLIT_CONTROLS,

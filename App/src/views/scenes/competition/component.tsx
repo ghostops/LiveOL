@@ -19,7 +19,7 @@ interface Props {
     goToClass: (name: string) => () => void;
 }
 
-export const OLCompetition: React.SFC<Props> = (props) => {
+export const OLCompetition: React.FC<Props> = (props) => {
     const renderClass = ({ item }) => {
         const { name }: Class = item;
 

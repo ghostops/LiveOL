@@ -1,0 +1,53 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+require 'json'
+
+default_platform(:ios)
+
+def getPackageVersion()
+  file = File.open("../../package.json")
+  data = JSON.parse(file.read)
+  return data["version"]
+end
+
+platform :ios do
+  desc "Push a new release build to Testflight"
+  lane :release do
+    xcodeproj = "LiveOL.xcodeproj"
+    scheme = "LiveOLRelease"
+
+    match(type: "appstore")
+
+    update_project_team(
+      path: xcodeproj,
+      teamid: CredentialsManager::AppfileConfig.try_fetch_value(:team_id),
+    )
+
+    increment_version_number_in_plist(
+      version_number: getPackageVersion,
+      scheme: scheme
+    )
+
+    increment_build_number(xcodeproj: xcodeproj)
+
+    build_app(
+      workspace: "LiveOL.xcworkspace",
+      xcargs: "-allowProvisioningUpdates",
+      scheme: scheme
+    )
+
+    upload_to_testflight(skip_waiting_for_build_processing: true)
+  end
+end

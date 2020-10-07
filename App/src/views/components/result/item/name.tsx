@@ -6,7 +6,7 @@ interface Props {
     name: string;
 }
 
-export const OLResultName: React.SFC<Props> = ({ name }) => (
+export const OLResultName: React.FC<Props> = ({ name }) => (
     <Text numberOfLines={1} style={{
         textAlign: 'left',
         fontSize: fontPx(16),

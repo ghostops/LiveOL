@@ -6,7 +6,6 @@ import { OLRefetcher } from 'views/components/refetcher';
 import { OLResultsList } from 'views/components/result/list';
 import { OLResultsTable } from 'views/components/result/table';
 import { Result } from 'lib/graphql/fragments/types/Result';
-import * as ScreenOrientation from 'expo-screen-orientation';
 
 interface Props {
     refetch: () => Promise<void>;

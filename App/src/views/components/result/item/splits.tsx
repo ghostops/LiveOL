@@ -11,7 +11,7 @@ interface Props {
 
 const BEST_COLOR = '#EA2027';
 
-export const OLSplits: React.SFC<Props> = ({ split, best }) => {
+export const OLSplits: React.FC<Props> = ({ split, best }) => {
     // If the place is 0 the runner hasn't passed the split yet
     if (split.place === 0) {
         return null;

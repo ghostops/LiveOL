@@ -6,7 +6,7 @@ interface Props {
     club: string;
 }
 
-export const OLResultClub: React.SFC<Props> = ({ club }) => (
+export const OLResultClub: React.FC<Props> = ({ club }) => (
     <Text numberOfLines={1} style={{
         color: 'grey',
         fontSize: fontPx(16),

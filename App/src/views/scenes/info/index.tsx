@@ -2,17 +2,24 @@ import * as React from 'react';
 import { client } from 'lib/graphql/client';
 import { connect } from 'react-redux';
 import { GET_SERVER_VERSION } from 'lib/graphql/queries/server';
-import { isLandscape } from 'util/landscape';
 import { Lang } from 'lib/lang';
 import { NavigationProp } from '@react-navigation/native';
 import { OLButton } from 'views/components/button';
 import { OLFlag } from 'views/components/lang/flag';
-import { Platform, AsyncStorage, Alert, TouchableOpacity, View, Image } from 'react-native';
-import { VERSION, APP_VERSION, ANDROID_VERSION_CODE, px } from 'util/const';
-import { Updates, Linking } from 'expo';
-import * as NB from 'native-base';
-import { ServerVersion } from 'lib/graphql/queries/types/ServerVersion';
 import { OLText } from 'views/components/text';
+import {
+    Platform,
+    AsyncStorage,
+    Alert,
+    TouchableOpacity,
+    View,
+    Image,
+    Linking,
+} from 'react-native';
+import { ServerVersion } from 'lib/graphql/queries/types/ServerVersion';
+import { VERSION, px } from 'util/const';
+import * as NB from 'native-base';
+import * as Updates from 'expo-updates';
 
 const {
     Container,
@@ -44,14 +51,6 @@ class Component extends React.PureComponent<Props, State> {
         secretTaps: 0,
     };
 
-    openAppStore = async () => {
-        Linking.openURL(
-            Platform.OS === 'ios'
-            ? 'https://itunes.apple.com/us/app/liveol/id1450106846'
-            : 'https://play.google.com/store/apps/details?id=se.liveol.rn',
-        );
-    }
-
     update = async () => {
         let canUpdate = false;
 
@@ -66,8 +65,10 @@ class Component extends React.PureComponent<Props, State> {
                 Lang.print('info.update.hasUpdate.text'),
                 [{
                     onPress: async () => {
-                        !__DEV__ && await Updates.fetchUpdateAsync();
-                        Updates.reload();
+                        if (!__DEV__) {
+                            await Updates.fetchUpdateAsync();
+                            await Updates.reloadAsync();
+                        }
                     },
                     text: Lang.print('info.update.hasUpdate.cta'),
                 }, {
@@ -83,14 +84,14 @@ class Component extends React.PureComponent<Props, State> {
         }
     }
 
+    expoManifest = () => Alert.alert('Expo Manifest', JSON.stringify(Updates.manifest));
+
     contact = () => Linking.openURL('https://liveol.larsendahl.se/contact.html');
 
     BUTTONS = [{
         text: Lang.print('info.update.check'),
         onPress: this.update,
-    }, {
-        text: Lang.print('info.appStore'),
-        onPress: this.openAppStore,
+        onLongPress: this.expoManifest,
     }, {
         text: Lang.print('info.contact'),
         onPress: this.contact,
@@ -106,7 +107,6 @@ class Component extends React.PureComponent<Props, State> {
         // tslint:disable: prefer-template
         Alert.alert(
             'VERSION',
-            `App Version: ${APP_VERSION}\n` +
             `Package Version: ${VERSION}\n` +
             `Server Version: ${data.server.version}\n`,
         );
@@ -158,7 +158,8 @@ class Component extends React.PureComponent<Props, State> {
                                 <OLButton
                                     full
                                     key={button.text + index}
-                                    onPress={() => button.onPress()}
+                                    onPress={() => button.onPress && button.onPress()}
+                                    onLongPress={() => button.onLongPress && button.onLongPress()}
                                     style={{
                                         marginBottom: (
                                             index !== this.BUTTONS.length - 1
@@ -300,7 +301,7 @@ class Component extends React.PureComponent<Props, State> {
 }
 
 const mapStateToProps = (state: AppState): StateProps => ({
-    landscape: isLandscape(state.general.rotation),
+    landscape: state.general.rotation === 'landscape',
 });
 
 export const OLInfo = connect(mapStateToProps, null)(Component);

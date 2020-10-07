@@ -5,13 +5,18 @@ import { fontPx } from 'util/const';
 
 interface Props {
     size: number;
-    font: 'Proxima_Nova_Bold' | 'Proxima_Nova' | 'Rift_Bold' | 'Rift_Bold_Italic';
+    font:
+        'Proxima_Nova_Bold' |
+        'Proxima_Nova' |
+        'Rift_Bold' |
+        'Rift_Bold_Italic' |
+        'PTMono-Regular';
     style?: TextStyle;
     numberOfLines?: number;
     selectable?: boolean;
 }
 
-export const OLText: React.SFC<Props> = (props) => {
+export const OLText: React.FC<Props> = (props) => {
     return (
         <Text
             {...props}

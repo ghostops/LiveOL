@@ -11,7 +11,6 @@ import { OLPassings as Component } from './component';
 import { Passing } from 'lib/graphql/fragments/types/Passing';
 import { Routes, RouterProps } from 'lib/nav/routes';
 import { useQuery } from '@apollo/react-hooks';
-import { isLandscape } from 'util/landscape';
 
 interface OwnProps extends RouterProps<{ id, title }> {}
 
@@ -21,7 +20,7 @@ interface StateProps {
 
 type Props = StateProps & OwnProps;
 
-const DataWrapper: React.SFC<Props> = (props) => {
+const DataWrapper: React.FC<Props> = (props) => {
     const competitionId: number = props.route.params.id;
 
     const { data, loading, error, refetch } =
@@ -52,7 +51,7 @@ const DataWrapper: React.SFC<Props> = (props) => {
 };
 
 const mapStateToProps = (state: AppState, props: Props): StateProps => ({
-    landscape: isLandscape(state.general.rotation),
+    landscape: state.general.rotation === 'landscape',
 });
 
 export const OLPassings = connect(mapStateToProps, null)(DataWrapper);

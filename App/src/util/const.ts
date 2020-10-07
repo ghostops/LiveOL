@@ -11,10 +11,7 @@ export const DeviceOrientationAprox = (): 'landscape' | 'portrait' => {
 };
 
 export const PACKAGE = require('../../package.json');
-export const APP = require('../../app.json');
 export const VERSION = PACKAGE.version;
-export const APP_VERSION = APP.expo.version;
-export const ANDROID_VERSION_CODE = APP.expo.android.versionCode;
 
 export const DEVICE_NAME = Constants.deviceName;
 

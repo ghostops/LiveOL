@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Flag from 'react-native-flags-kit';
+import { Image } from 'react-native';
 
 interface Props {
     code: string;
@@ -7,14 +7,24 @@ interface Props {
 }
 
 const remapCode = {
-    en: 'GB',
-    sv: 'SE',
-    no: 'NO',
+    en: 'gb',
+    sv: 'se',
+    no: 'no',
 };
 
-export const OLFlag: React.SFC<Props> = ({ code, size }) => (
-    <Flag
-        code={remapCode[code]}
-        size={size}
-    />
+const FLAGS = {
+    se: require('../../../../assets/images/flags/se.png'),
+    no: require('../../../../assets/images/flags/no.png'),
+    gb: require('../../../../assets/images/flags/gb.png'),
+};
+
+export const OLFlag: React.FC<Props> = ({ code, size }) => (
+    FLAGS[remapCode[code]] ?
+    <Image
+        source={FLAGS[remapCode[code]]}
+        style={{
+            height: size * .65,
+            width: size,
+        }}
+    /> : null
 );

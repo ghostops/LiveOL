@@ -17,7 +17,7 @@ interface Props {
     goToLastPassings: () => void;
 }
 
-export const OLCompetitionHeader: React.SFC<Props> = (props) => (
+export const OLCompetitionHeader: React.FC<Props> = (props) => (
     <View>
         {Platform.OS === 'ios' && <OLCompetitionIOSHeader name={props.competition.name} />}
         {Platform.OS === 'android' && <View style={{ height: px(30) }} />}

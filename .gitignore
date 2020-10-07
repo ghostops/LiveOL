@@ -19,3 +19,14 @@ yarn-error.log
 Scripts/record-liveresultat/out
 Scripts/record-liveresultat/outold
 Scripts/devops/terraform.tfvars
+
+App/android/app/build
+App/android/build
+App/android/.gradle
+App/ios/rn.ipa
+App/ios/rn.app.dSYM.zip
+App/ios/fastlane/report.xml
+
+google-key.json
+App/android/fastlane/report.xml
+App/ios/LiveOL.xcworkspace/xcuserdata/*

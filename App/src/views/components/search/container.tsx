@@ -18,7 +18,7 @@ interface DispatchProps {
 
 type Props = StateProps & DispatchProps;
 
-const DataWrapper: React.SFC<Props> = (props) => {
+const DataWrapper: React.FC<Props> = (props) => {
     return (
         <Component
             searching={props.searching}

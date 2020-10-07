@@ -24,7 +24,7 @@ const TEXT_STYLE: TextStyle = {
     paddingVertical: px(8),
 };
 
-export const OLLastPassingResult: React.SFC<Props> = ({ passing, landscape }) => {
+export const OLLastPassingResult: React.FC<Props> = ({ passing, landscape }) => {
     return (
         <Card
             key={passing.time + passing.runnerName}

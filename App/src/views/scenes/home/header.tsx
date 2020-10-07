@@ -5,7 +5,7 @@ import { UNIT, HIT_SLOP } from 'util/const';
 
 const LOGO = require('../../../../assets/images/icon.png');
 
-export const Left: React.SFC = () => (
+export const Left: React.FC = () => (
     <TouchableOpacity
         style={{ marginLeft: UNIT }}
         hitSlop={HIT_SLOP}
@@ -22,7 +22,7 @@ export const Left: React.SFC = () => (
     </TouchableOpacity>
 );
 
-export const Right: React.SFC<{ onPress }> = ({ onPress }) => (
+export const Right: React.FC<{ onPress }> = ({ onPress }) => (
     <TouchableOpacity
         onPress={onPress}
         style={{ marginRight: UNIT }}
