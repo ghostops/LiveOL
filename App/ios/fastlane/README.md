@@ -20,7 +20,7 @@ or alternatively using `brew install fastlane`
 ```
 fastlane ios release
 ```
-Push a new release build to the App Store
+Push a new release build to Testflight
 
 ----
 

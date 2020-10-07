@@ -23,29 +23,31 @@ def getPackageVersion()
 end
 
 platform :ios do
-  desc "Push a new release build to the App Store"
+  desc "Push a new release build to Testflight"
   lane :release do
     xcodeproj = "LiveOL.xcodeproj"
+    scheme = "LiveOLRelease"
 
     match(type: "appstore")
 
     update_project_team(
       path: xcodeproj,
-      teamid: CredentialsManager::AppfileConfig.try_fetch_value(:team_id)
+      teamid: CredentialsManager::AppfileConfig.try_fetch_value(:team_id),
     )
 
     increment_version_number_in_plist(
-      version_number: getPackageVersion
+      version_number: getPackageVersion,
+      scheme: scheme
     )
 
     increment_build_number(xcodeproj: xcodeproj)
 
     build_app(
       workspace: "LiveOL.xcworkspace",
-      scheme: "LiveOL",
-      xcargs: "-allowProvisioningUpdates"
+      xcargs: "-allowProvisioningUpdates",
+      scheme: scheme
     )
 
-    upload_to_app_store(skip_metadata: true, skip_screenshots: true)
+    upload_to_testflight(skip_waiting_for_build_processing: true)
   end
 end
