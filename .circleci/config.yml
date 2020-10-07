@@ -90,9 +90,3 @@ workflows:
                     branches:
                         only:
                             - master
-            - deploy-ios:
-                filters:
-                    branches:
-                        only:
-                            - master
-                            - eject-expo
