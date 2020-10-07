@@ -1,6 +1,7 @@
 apply plugin: "com.android.application"
 
 import com.android.build.OutputFile
+import groovy.json.JsonSlurper
 
 /**
  * The react.gradle file registers a task for each build variant (e.g. bundleDebugJsAndAssets
@@ -126,6 +127,14 @@ def enableHermes = project.ext.react.get("enableHermes", false);
 //org.gradle.daemon=true
 //org.gradle.jvmargs=-Xmx2560m
 
+def getNpmVersion() {
+    def inputFile = new File("../package.json")
+    def packageJson = new JsonSlurper().parseText(inputFile.text)
+    return packageJson["version"]
+}
+
+def vname = getNpmVersion()
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
@@ -142,8 +151,8 @@ android {
         applicationId 'se.liveol.rn'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 14
-        versionName "2.1.0"
+        versionCode 16
+        versionName vname
     }
     splits {
         abi {
