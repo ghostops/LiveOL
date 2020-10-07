@@ -2,6 +2,7 @@ import * as React from 'react';
 import { View, Text } from 'native-base';
 import { fontPx } from 'util/const';
 import { statusI18n } from 'lib/lang/status';
+import { OLText } from '../../text';
 
 interface Props {
     time: string;
@@ -10,14 +11,12 @@ interface Props {
 
 export const OLResultTime: React.FC<Props> = ({ time, status }) => {
     return (
-        <Text style={{
-            fontSize: fontPx(20),
-        }}>
+        <OLText font="Proxima_Nova" size={20}>
             {
                 status === 0
                 ? time
                 : statusI18n(status)
             }
-        </Text>
+        </OLText>
     );
 };

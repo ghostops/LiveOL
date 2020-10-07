@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { fontPx } from 'util/const';
 import { View, Text } from 'native-base';
+import { OLText } from '../../text';
 
 interface Props {
     time: string;
@@ -12,10 +13,8 @@ export const OLStartTime: React.FC<Props> = ({ time }) => (
             flex: 1,
         }}
     >
-        <Text style={{
-            fontSize: fontPx(16),
-        }}>
+        <OLText font="Proxima_Nova" size={16}>
             {time}
-        </Text>
+        </OLText>
     </View>
 );

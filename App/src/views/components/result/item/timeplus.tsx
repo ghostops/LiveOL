@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { fontPx } from 'util/const';
 import { statusI18n } from 'lib/lang/status';
 import { View, Text } from 'native-base';
+import { OLText } from '../../text';
 
 interface Props {
     timeplus: string;
@@ -18,19 +18,22 @@ export const OLResultTimeplus: React.FC<Props> = ({ timeplus, status }) => {
     }
 
     return (
-        <Text style={{
-            fontSize: (
+        <OLText
+            font="Proxima_Nova"
+            style={{
+                textAlign: 'right',
+            }}
+            size={(
                 status === 0
-                ? fontPx(14)
-                : fontPx(12)
-            ),
-            textAlign: 'right',
-        }}>
+                ? 14
+                : 12
+            )}
+        >
             {
                 status === 0
                 ? timeplus
                 : `(${statusI18n(status, 'long')})`
             }
-        </Text>
+        </OLText>
     );
 };

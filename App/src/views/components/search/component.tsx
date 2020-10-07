@@ -7,6 +7,7 @@ import * as NB from 'native-base';
 import * as _ from 'lodash';
 import { Lang } from 'lib/lang';
 import { Competition } from 'lib/graphql/fragments/types/Competition';
+import { OLText } from '../text';
 
 const SEARCH_SIZE = UNIT * 3.25;
 
@@ -136,9 +137,9 @@ export class OLSearch extends React.PureComponent<Props, State> {
                         transparent
                         onPress={this.search}
                     >
-                        <Text>
+                        <OLText font="Proxima_Nova" size={16}>
                             {Lang.print('home.search')}
-                        </Text>
+                        </OLText>
                     </Button>
                 </Header>
             </Animated.View>

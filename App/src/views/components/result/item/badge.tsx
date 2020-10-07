@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { View, Badge, Text } from 'native-base';
 import { COLORS, fontPx } from 'util/const';
+import { OLText } from '../../../components/text';
 
 interface Props {
     place: string;
@@ -16,11 +17,9 @@ export const OLResultBadge: React.FC<Props> = ({ place }) => (
             place.length > 0 &&
             place !== '-' &&
             <Badge style={{ backgroundColor: COLORS.MAIN }}>
-                <Text style={{
-                    fontSize: fontPx(12),
-                }}>
+                <OLText size={12} font="Proxima_Nova">
                     {place}
-                </Text>
+                </OLText>
             </Badge>
         }
     </View>

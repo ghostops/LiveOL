@@ -9,6 +9,7 @@ import { FlatList } from 'react-native';
 import { OLSafeAreaView } from '../safeArea';
 import { Competition } from 'lib/graphql/fragments/types/Competition';
 import { OLLoading } from '../loading';
+import { OLText } from '../text';
 
 const {
     List,
@@ -83,12 +84,9 @@ export const HomeList: React.FC<Props> = ({
                             paddingHorizontal: px(16),
                         }}
                     >
-                        <Text style={{
-                            fontSize: fontPx(16),
-                            fontWeight: 'bold',
-                        }}>
+                        <OLText size={16} font="Proxima_Nova_Bold">
                             {dateStr} {isToday && `(${Lang.print('home.today')})`}
-                        </Text>
+                        </OLText>
                     </ListItem>
 
                     <List>
@@ -129,14 +127,15 @@ export const HomeList: React.FC<Props> = ({
                         paddingVertical: px(16 * 4),
                     }}
                 >
-                    <Text
+                    <OLText
+                        font="Proxima_Nova"
+                        size={16}
                         style={{
-                            fontSize: fontPx(16),
                             textAlign: 'center',
                         }}
                     >
                         {Lang.print('home.nothingSearch')}
-                    </Text>
+                    </OLText>
                 </View>
             )}
         />

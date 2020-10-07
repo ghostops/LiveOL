@@ -1,7 +1,6 @@
 import * as React from 'react';
 
 import {
-    Text,
     View,
     Button,
 } from 'native-base';
@@ -9,6 +8,7 @@ import { UNIT, COLORS } from 'util/const';
 import { Ionicons } from '@expo/vector-icons';
 import { ViewStyle } from 'react-native';
 import { Lang } from 'lib/lang';
+import { OLText } from '../text';
 
 interface Props {
     page: number;
@@ -43,13 +43,12 @@ export const Pagination: React.FC<Props> = ({
             paddingVertical: UNIT,
             paddingHorizontal: UNIT,
         }}>
-                <Text style={{
+                <OLText font="Proxima_Nova" size={16} style={{
                     width: '100%',
                     textAlign: 'center',
-                    paddingBottom: UNIT,
                 }}>
                     {Lang.print('home.page')} {page}
-                </Text>
+                </OLText>
 
                 <View
                     style={{

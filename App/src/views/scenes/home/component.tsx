@@ -8,6 +8,7 @@ import { OLSearch } from 'views/components/search/container';
 import { px, COLORS } from 'util/const';
 import { TodaysCompetitions } from 'views/components/home/today';
 import * as NB from 'native-base';
+import { OLText } from 'views/components/text';
 
 const {
     Spinner,
@@ -72,9 +73,9 @@ export class OLHome extends React.PureComponent<Props> {
                         transparent
                         onPress={this.props.openSearch}
                     >
-                        <Text>
+                        <OLText font="Proxima_Nova" size={16}>
                             {Lang.print('home.search')}
-                        </Text>
+                        </OLText>
                     </Button>
                 </View>
             </View>

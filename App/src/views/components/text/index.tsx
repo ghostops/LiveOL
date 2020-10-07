@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { Text } from 'native-base';
-import { TextStyle } from 'react-native';
+import { TextStyle, Text } from 'react-native';
 import { fontPx } from 'util/const';
 
 interface Props {

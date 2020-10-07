@@ -5,6 +5,7 @@ import * as NB from 'native-base';
 import { Lang } from 'lib/lang';
 import { OLSafeAreaView } from '../safeArea';
 import { Competition } from 'lib/graphql/fragments/types/Competition';
+import { OLText } from '../text';
 
 const {
     List,
@@ -25,26 +26,27 @@ export const TodaysCompetitions: React.FC<Props> = ({ competitions, renderListIt
 
     const innerCompetitions = () => (
         <React.Fragment>
-            <Text
+            <OLText
+                font="Rift_Bold"
+                size={18}
                 style={{
-                    fontSize: UNIT * 1.5,
                     textAlign: 'center',
                     color: 'white',
                 }}
             >
                 {Lang.print('home.today')}
-            </Text>
+            </OLText>
 
-            <Text
+            <OLText
+                font="Proxima_Nova_Bold"
+                size={16}
                 style={{
-                    fontSize: UNIT,
                     textAlign: 'center',
                     color: 'white',
-                    fontWeight: 'bold',
                 }}
             >
-                {dateToReadable(new Date(competitions[0].date))}
-            </Text>
+                {dateToReadable(new Date(competitions[0].date).toString())}
+            </OLText>
 
             <OLSafeAreaView>
                 <Card style={{
@@ -74,14 +76,16 @@ export const TodaysCompetitions: React.FC<Props> = ({ competitions, renderListIt
 
     const innerNothing = () => (
         <React.Fragment>
-            <Text
+            <OLText
+                font="Rift_Bold_Italic"
+                size={18}
                 style={{
                     color: 'white',
                     textAlign: 'center',
                 }}
             >
                 {Lang.print('home.nothingToday')}
-            </Text>
+            </OLText>
         </React.Fragment>
     );
 

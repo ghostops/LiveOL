@@ -2,12 +2,12 @@ import * as React from 'react';
 import { TouchableOpacity, Animated } from 'react-native';
 import {
     View,
-    Text,
     ListItem,
     Badge,
 } from 'native-base';
 import { statusI18n } from 'lib/lang/status';
 import { UNIT, COLORS } from 'util/const';
+import { OLText } from '../text';
 import _ from 'lodash';
 
 interface Props {
@@ -58,7 +58,7 @@ export class ResultBox extends React.PureComponent<Props, State> {
                             );
                         },
                         600,
-                    );
+                    ) as any;
                 },
             );
         }
@@ -128,11 +128,9 @@ export class ResultBox extends React.PureComponent<Props, State> {
                             result.place.length > 0 &&
                             result.place !== '-' &&
                             <Badge style={{ backgroundColor: COLORS.MAIN }}>
-                                <Text style={{
-                                    fontSize: UNIT,
-                                }}>
+                                <OLText  font="Proxima_Nova" size={16}>
                                     {result.place}
-                                </Text>
+                                </OLText>
                             </Badge>
                         }
                     </View>
@@ -143,23 +141,21 @@ export class ResultBox extends React.PureComponent<Props, State> {
                             justifyContent: 'space-between',
                             flex: 1,
                         }}>
-                            <Text numberOfLines={1} style={{
+                            <OLText font="Proxima_Nova" size={16} numberOfLines={1} style={{
                                 textAlign: 'left',
-                                fontSize: UNIT,
                                 flex: 1,
                             }}>
                                 {result.name}
-                            </Text>
-                            <Text style={{
+                            </OLText>
+                            <OLText font="Proxima_Nova" size={18} style={{
                                 marginLeft: 10,
-                                fontSize: UNIT * 1.35,
                             }}>
                                 {
                                     result.status === 0
                                     ? result.result
                                     : statusI18n(result.status)
                                 }
-                            </Text>
+                            </OLText>
                         </View>
 
                         <View style={{
@@ -174,16 +170,15 @@ export class ResultBox extends React.PureComponent<Props, State> {
                                     maxWidth: '90%',
                                 }}
                             >
-                                <Text numberOfLines={1} style={{
+                                <OLText numberOfLines={1} size={16} font="Proxima_Nova" style={{
                                     color: COLORS.DARK,
-                                    fontSize: UNIT,
                                 }}>
                                     {
                                         this.props.subtitle === 'class'
                                         ? result.class
                                         : result.club
                                     }
-                                </Text>
+                                </OLText>
                             </TouchableOpacity>
 
                             <View style={{
@@ -192,12 +187,11 @@ export class ResultBox extends React.PureComponent<Props, State> {
                             }}>
                                 {
                                     Boolean(result.status > -1) &&
-                                    <Text style={{
-                                        fontSize: (
-                                            result.status === 0
-                                            ? UNIT
-                                            : UNIT * .75
-                                        ),
+                                    <OLText font="Proxima_Nova" size={(
+                                        result.status === 0
+                                        ? 16
+                                        : 14
+                                    )} style={{
                                         textAlign: 'right',
                                     }}>
                                         {
@@ -205,7 +199,7 @@ export class ResultBox extends React.PureComponent<Props, State> {
                                             ? result.timeplus
                                             : `(${statusI18n(result.status, 'long')})`
                                         }
-                                    </Text>
+                                    </OLText>
                                 }
                             </View>
                         </View>

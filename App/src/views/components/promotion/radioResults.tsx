@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { View, Text } from 'native-base';
+import { View } from 'native-base';
 import { COLORS, UNIT } from 'util/const';
 import { Lang } from 'lib/lang';
 import { TouchableOpacity, LayoutAnimation } from 'react-native';
 import { promotion } from './handler';
 import { Ionicons } from '@expo/vector-icons';
+import { OLText } from '../text';
 
 interface State {
     show: boolean;
@@ -43,25 +44,26 @@ export class RadioResultsPromotion extends React.PureComponent<any, State> {
                     padding: 15,
                 }}
             >
-                <Text
+                <OLText
+                    font="Proxima_Nova_Bold"
+                    size={18}
                     style={{
-                        fontSize: UNIT * 1.2,
                         color: 'white',
-                        fontWeight: 'bold',
                     }}
                 >
                     {Lang.print('promotions.didYouKnow')}
-                </Text>
+                </OLText>
 
-                <Text
+                <OLText
+                    font="Proxima_Nova"
+                    size={16}
                     style={{
-                        fontSize: UNIT,
                         color: 'white',
                         marginTop: 5,
                     }}
                 >
                     {Lang.print('promotions.radioResults')}
-                </Text>
+                </OLText>
 
                 <TouchableOpacity
                     onPress={this.close}

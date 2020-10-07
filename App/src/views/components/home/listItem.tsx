@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { fontPx, px } from 'util/const';
-import { ListItem, Text } from 'native-base';
+import { ListItem } from 'native-base';
 import { Competition } from 'lib/graphql/fragments/types/Competition';
+import { OLText } from '../text';
 
 interface Props {
     competition: Competition;
@@ -27,11 +28,12 @@ export const HomeListItem: React.FC<Props> = ({
             }}
             onPress={() => onCompetitionPress && onCompetitionPress(competition)}
         >
-            <Text style={{
-                fontSize: fontPx(16),
-            }}>
+            <OLText
+                size={16}
+                font="Proxima_Nova"
+            >
                 {competition.name}
-            </Text>
+            </OLText>
         </ListItem>
     );
 };

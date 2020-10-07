@@ -120,14 +120,16 @@ class Component extends React.PureComponent<Props, State> {
                     {
                         (Lang.print('info.body') as any)
                         .map((text: string) => (
-                            <Text
+                            <OLText
+                                font="Proxima_Nova"
+                                size={16}
                                 key={text}
                                 style={{
                                     marginBottom: px(16),
                                 }}
                             >
                                 {text}
-                            </Text>
+                            </OLText>
                         ))
                     }
                 </Body>
@@ -144,12 +146,11 @@ class Component extends React.PureComponent<Props, State> {
                         onPress={this.secretTap}
                         activeOpacity={1}
                     >
-                        <Text style={{
+                        <OLText font="Proxima_Nova_Bold" size={16} style={{
                             marginBottom: px(16),
-                            fontWeight: 'bold',
                         }}>
                             {Lang.print('info.version')}: {VERSION}
-                        </Text>
+                        </OLText>
                     </TouchableOpacity>
 
                     {
@@ -219,13 +220,12 @@ class Component extends React.PureComponent<Props, State> {
                             width: '100%',
                         }}
                     >
-                        <Text style={{
+                        <OLText font="Proxima_Nova_Bold" size={16} style={{
                             marginBottom: px(16),
-                            fontWeight: 'bold',
                             textAlign: 'center',
                         }}>
                             {Lang.print('info.translations.phraseapp')}:
-                        </Text>
+                        </OLText>
 
                         <Image
                             source={PHRASEAPP_IMAGE}

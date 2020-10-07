@@ -3,11 +3,11 @@ import { px, fontPx } from 'util/const';
 import { TextStyle } from 'react-native';
 import * as NB from 'native-base';
 import { Lang } from 'lib/lang';
+import { OLText } from '../text';
 
 const {
     View,
     Spinner,
-    Text,
     Body,
     CardItem,
     Card,
@@ -39,21 +39,27 @@ export const OLLastPassingResult: React.FC<Props> = ({ passing, landscape }) => 
                     {
                         !landscape &&
                         <View>
-                            <Text
+                            <OLText
+                                font="Proxima_Nova"
+                                size={16}
                                 style={TEXT_STYLE}
                             >
                                 {Lang.print('competitions.passings.class')}:
-                            </Text>
-                            <Text
+                            </OLText>
+                            <OLText
+                                font="Proxima_Nova"
+                                size={16}
                                 style={TEXT_STYLE}
                             >
                                 {Lang.print('competitions.passings.name')}:
-                            </Text>
-                            <Text
+                            </OLText>
+                            <OLText
+                                font="Proxima_Nova"
+                                size={16}
                                 style={TEXT_STYLE}
                             >
                                 {Lang.print('competitions.passings.passTime')}:
-                            </Text>
+                            </OLText>
                         </View>
                     }
                     <View
@@ -62,22 +68,28 @@ export const OLLastPassingResult: React.FC<Props> = ({ passing, landscape }) => 
                             paddingLeft: landscape ? px(8) : px(16),
                         }}
                     >
-                        <Text
+                        <OLText
+                            font="Proxima_Nova"
+                            size={16}
                             style={TEXT_STYLE}
                         >
                             {passing.class}
-                        </Text>
-                        <Text
+                        </OLText>
+                        <OLText
+                            font="Proxima_Nova"
+                            size={16}
                             style={TEXT_STYLE}
                             numberOfLines={1}
                         >
                             {passing.runnerName}
-                        </Text>
-                        <Text
+                        </OLText>
+                        <OLText
+                            font="Proxima_Nova"
+                            size={16}
                             style={TEXT_STYLE}
                         >
                             {passing.passtime}
-                        </Text>
+                        </OLText>
                     </View>
                 </Body>
             </CardItem>
