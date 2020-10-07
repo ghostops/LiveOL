@@ -16,8 +16,8 @@ export const OLResultBadge: React.FC<Props> = ({ place }) => (
         {
             place.length > 0 &&
             place !== '-' &&
-            <Badge style={{ backgroundColor: COLORS.MAIN }}>
-                <OLText size={12} font="Proxima_Nova">
+            <Badge style={{ backgroundColor: COLORS.MAIN, justifyContent: 'center', alignItems: 'center' }}>
+                <OLText size={12} font="Proxima_Nova" style={{ color: 'white' }}>
                     {place}
                 </OLText>
             </Badge>

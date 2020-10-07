@@ -128,7 +128,7 @@ export class ResultBox extends React.PureComponent<Props, State> {
                             result.place.length > 0 &&
                             result.place !== '-' &&
                             <Badge style={{ backgroundColor: COLORS.MAIN }}>
-                                <OLText  font="Proxima_Nova" size={16}>
+                                <OLText font="Proxima_Nova" size={16} style={{ color: 'white' }}>
                                     {result.place}
                                 </OLText>
                             </Badge>
