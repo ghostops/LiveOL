@@ -45,7 +45,7 @@ export const TodaysCompetitions: React.FC<Props> = ({ competitions, renderListIt
                     color: 'white',
                 }}
             >
-                {dateToReadable(new Date(competitions[0].date).toString())}
+                {dateToReadable(new Date(competitions[0].date).toISOString())}
             </OLText>
 
             <OLSafeAreaView>
