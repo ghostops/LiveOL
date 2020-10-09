@@ -7,301 +7,252 @@ import { NavigationProp } from '@react-navigation/native';
 import { OLButton } from 'views/components/button';
 import { OLFlag } from 'views/components/lang/flag';
 import { OLText } from 'views/components/text';
-import {
-    Platform,
-    AsyncStorage,
-    Alert,
-    TouchableOpacity,
-    View,
-    Image,
-    Linking,
-    ScrollView,
-} from 'react-native';
+import { Platform, AsyncStorage, Alert, TouchableOpacity, View, Image, Linking, ScrollView } from 'react-native';
 import { ServerVersion } from 'lib/graphql/queries/types/ServerVersion';
 import { VERSION, px } from 'util/const';
 import * as NB from 'native-base';
 import * as Updates from 'expo-updates';
 
-const {
-    Container,
-    Card,
-    CardItem,
-    Text,
-    Body,
-} = NB;
+const { Container, Card, CardItem, Text, Body } = NB;
 
 interface OwnProps {
-    navigation: NavigationProp<any, any>;
+	navigation: NavigationProp<any, any>;
 }
 
 interface StateProps {
-    landscape: boolean;
+	landscape: boolean;
 }
 
 type Props = StateProps & OwnProps;
 
 interface State {
-    secretTaps: number;
+	secretTaps: number;
 }
 
 const PHRASEAPP_IMAGE = require('../../../../assets/images/phraseapp.png');
 
 class Component extends React.PureComponent<Props, State> {
-    state: State = {
-        secretTaps: 0,
-    };
+	state: State = {
+		secretTaps: 0,
+	};
 
-    update = async () => {
-        let canUpdate = false;
+	update = async () => {
+		let canUpdate = false;
 
-        if (!__DEV__) {
-            const update = await Updates.checkForUpdateAsync() as any;
-            canUpdate = !!update.isAvailable;
-        }
+		if (!__DEV__) {
+			const update = (await Updates.checkForUpdateAsync()) as any;
+			canUpdate = !!update.isAvailable;
+		}
 
-        if (canUpdate) {
-            Alert.alert(
-                Lang.print('info.update.hasUpdate.title'),
-                Lang.print('info.update.hasUpdate.text'),
-                [{
-                    onPress: async () => {
-                        if (!__DEV__) {
-                            await Updates.fetchUpdateAsync();
-                            await Updates.reloadAsync();
-                        }
-                    },
-                    text: Lang.print('info.update.hasUpdate.cta'),
-                }, {
-                    text: Lang.print('info.update.hasUpdate.cancel'),
-                    style: 'cancel',
-                }],
-            );
-        } else {
-            Alert.alert(
-                Lang.print('info.update.noUpdate.title'),
-                Lang.print('info.update.noUpdate.text'),
-            );
-        }
-    }
+		if (canUpdate) {
+			Alert.alert(Lang.print('info.update.hasUpdate.title'), Lang.print('info.update.hasUpdate.text'), [
+				{
+					onPress: async () => {
+						if (!__DEV__) {
+							await Updates.fetchUpdateAsync();
+							await Updates.reloadAsync();
+						}
+					},
+					text: Lang.print('info.update.hasUpdate.cta'),
+				},
+				{
+					text: Lang.print('info.update.hasUpdate.cancel'),
+					style: 'cancel',
+				},
+			]);
+		} else {
+			Alert.alert(Lang.print('info.update.noUpdate.title'), Lang.print('info.update.noUpdate.text'));
+		}
+	};
 
-    expoManifest = () => Alert.alert('Expo Manifest', JSON.stringify(Updates.manifest));
+	expoManifest = () => Alert.alert('Expo Manifest', JSON.stringify(Updates.manifest));
 
-    contact = () => Linking.openURL('https://liveol.larsendahl.se/contact.html');
+	contact = () => Linking.openURL('https://liveol.larsendahl.se/contact.html');
 
-    BUTTONS = [{
-        text: Lang.print('info.update.check'),
-        onPress: this.update,
-        onLongPress: this.expoManifest,
-    }, {
-        text: Lang.print('info.contact'),
-        onPress: this.contact,
-    }];
+	BUTTONS = [
+		{
+			text: Lang.print('info.update.check'),
+			onPress: this.update,
+			onLongPress: this.expoManifest,
+		},
+		{
+			text: Lang.print('info.contact'),
+			onPress: this.contact,
+		},
+	];
 
-    openPhraseApp = () => Linking.openURL('https://phraseapp.com');
+	openPhraseApp = () => Linking.openURL('https://phraseapp.com');
 
-    versionAlert = async () => {
-        const { data } = await client.query<ServerVersion>({
-            query: GET_SERVER_VERSION,
-        });
+	versionAlert = async () => {
+		const { data } = await client.query<ServerVersion>({
+			query: GET_SERVER_VERSION,
+		});
 
-        // tslint:disable: prefer-template
-        Alert.alert(
-            'VERSION',
-            `Package Version: ${VERSION}\n` +
-            `Server Version: ${data.server.version}\n`,
-        );
-        // tslint:enable: prefer-template
-    }
+		// tslint:disable: prefer-template
+		Alert.alert('VERSION', `Package Version: ${VERSION}\n` + `Server Version: ${data.server.version}\n`);
+		// tslint:enable: prefer-template
+	};
 
-    renderGeneralCard = () => (
-        <Card style={{ paddingVertical: px(16), flex: 1 }}>
-            <CardItem>
-                <Body>
-                    {
-                        (Lang.print('info.body') as any)
-                        .map((text: string) => (
-                            <OLText
-                                font="Proxima_Nova"
-                                size={16}
-                                key={text}
-                                style={{
-                                    marginBottom: px(16),
-                                }}
-                            >
-                                {text}
-                            </OLText>
-                        ))
-                    }
-                </Body>
-            </CardItem>
-        </Card>
-    )
+	renderGeneralCard = () => (
+		<Card style={{ paddingVertical: px(16), flex: 1 }}>
+			<CardItem>
+				<Body>
+					{(Lang.print('info.body') as any).map((text: string) => (
+						<OLText
+							font="Proxima_Nova"
+							size={16}
+							key={text}
+							style={{
+								marginBottom: px(16),
+							}}>
+							{text}
+						</OLText>
+					))}
+				</Body>
+			</CardItem>
+		</Card>
+	);
 
-    renderActionCard = () => (
-        <Card style={{ paddingVertical: px(16), flex: 1 }}>
-            <CardItem>
-                <Body>
-                    <TouchableOpacity
-                        style={{ width: '100%' }}
-                        onPress={this.secretTap}
-                        activeOpacity={1}
-                    >
-                        <OLText font="Proxima_Nova_Bold" size={16} style={{
-                            marginBottom: px(16),
-                        }}>
-                            {Lang.print('info.version')}: {VERSION}
-                        </OLText>
-                    </TouchableOpacity>
+	renderActionCard = () => (
+		<Card style={{ paddingVertical: px(16), flex: 1 }}>
+			<CardItem>
+				<Body>
+					<TouchableOpacity style={{ width: '100%' }} onPress={this.secretTap} activeOpacity={1}>
+						<OLText
+							font="Proxima_Nova_Bold"
+							size={16}
+							style={{
+								marginBottom: px(16),
+							}}>
+							{Lang.print('info.version')}: {VERSION}
+						</OLText>
+					</TouchableOpacity>
 
-                    {
-                        this.BUTTONS.map((button, index) => {
-                            return (
-                                <OLButton
-                                    full
-                                    key={button.text + index}
-                                    onPress={() => button.onPress && button.onPress()}
-                                    onLongPress={() => button.onLongPress && button.onLongPress()}
-                                    style={{
-                                        marginBottom: (
-                                            index !== this.BUTTONS.length - 1
-                                            ? px(16)
-                                            : 0
-                                        ),
-                                    }}
-                                >
-                                    {button.text}
-                                </OLButton>
-                            );
-                        })
-                    }
-                </Body>
-            </CardItem>
-        </Card>
-    )
+					{this.BUTTONS.map((button, index) => {
+						return (
+							<OLButton
+								full
+								key={button.text + index}
+								onPress={() => button.onPress && button.onPress()}
+								onLongPress={() => button.onLongPress && button.onLongPress()}
+								style={{
+									marginBottom: index !== this.BUTTONS.length - 1 ? px(16) : 0,
+								}}>
+								{button.text}
+							</OLButton>
+						);
+					})}
+				</Body>
+			</CardItem>
+		</Card>
+	);
 
-    translationCredits = [{
-        code: 'no',
-        name: 'Pål Kittilsen',
-    }];
+	translationCredits = [
+		{
+			code: 'no',
+			name: 'Pål Kittilsen',
+		},
+	];
 
-    renderTranslationCredit = ({ code, name }: { code, name }, index) => (
-        <View
-            key={`${code}:${index}`}
-            style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-            }}
-        >
-            <OLFlag
-                code={code}
-                size={32}
-            />
+	renderTranslationCredit = ({ code, name }: { code; name }, index) => (
+		<View
+			key={`${code}:${index}`}
+			style={{
+				flexDirection: 'row',
+				alignItems: 'center',
+			}}>
+			<OLFlag code={code} size={32} />
 
-            <OLText
-                font="Proxima_Nova"
-                size={16}
-                style={{
-                    marginLeft: px(5),
-                }}
-            >
-                {name}
-            </OLText>
-        </View>
-    )
+			<OLText
+				font="Proxima_Nova"
+				size={16}
+				style={{
+					marginLeft: px(5),
+				}}>
+				{name}
+			</OLText>
+		</View>
+	);
 
-    renderCreditCard = () => (
-        <Card style={{ paddingVertical: px(16) }}>
-            <CardItem>
-                <Body>
-                    <TouchableOpacity
-                        onPress={this.openPhraseApp}
-                        style={{
-                            alignItems: 'center',
-                            width: '100%',
-                        }}
-                    >
-                        <OLText font="Proxima_Nova_Bold" size={16} style={{
-                            marginBottom: px(16),
-                            textAlign: 'center',
-                        }}>
-                            {Lang.print('info.translations.phraseapp')}:
-                        </OLText>
+	renderCreditCard = () => (
+		<Card style={{ paddingVertical: px(16) }}>
+			<CardItem>
+				<Body>
+					<TouchableOpacity
+						onPress={this.openPhraseApp}
+						style={{
+							alignItems: 'center',
+							width: '100%',
+						}}>
+						<OLText
+							font="Proxima_Nova_Bold"
+							size={16}
+							style={{
+								marginBottom: px(16),
+								textAlign: 'center',
+							}}>
+							{Lang.print('info.translations.phraseapp')}:
+						</OLText>
 
-                        <Image
-                            source={PHRASEAPP_IMAGE}
-                        />
-                    </TouchableOpacity>
+						<Image source={PHRASEAPP_IMAGE} />
+					</TouchableOpacity>
 
-                    <View
-                        style={{
-                            height: 1,
-                            width: '100%',
-                            backgroundColor: 'black',
-                            opacity: .15,
-                            marginVertical: 25,
-                        }}
-                    />
+					<View
+						style={{
+							height: 1,
+							width: '100%',
+							backgroundColor: 'black',
+							opacity: 0.15,
+							marginVertical: 25,
+						}}
+					/>
 
-                    <OLText
-                        font="Proxima_Nova_Bold"
-                        size={18}
-                    >
-                        {Lang.print('info.translations.credit')}:
-                    </OLText>
+					<OLText font="Proxima_Nova_Bold" size={18}>
+						{Lang.print('info.translations.credit')}:
+					</OLText>
 
-                    {this.translationCredits.map(this.renderTranslationCredit)}
-                </Body>
-            </CardItem>
-        </Card>
-    )
+					{this.translationCredits.map(this.renderTranslationCredit)}
+				</Body>
+			</CardItem>
+		</Card>
+	);
 
-    secretTap = () => {
-        this.setState(
-            { secretTaps: this.state.secretTaps + 1 },
-            () => {
-                if (this.state.secretTaps > 5) {
-                    this.setState({ secretTaps: 0 });
+	secretTap = () => {
+		this.setState({ secretTaps: this.state.secretTaps + 1 }, () => {
+			if (this.state.secretTaps > 5) {
+				this.setState({ secretTaps: 0 });
 
-                    this.versionAlert();
-                }
-            },
-        );
-    }
+				this.versionAlert();
+			}
+		});
+	};
 
-    render() {
-        return (
-            <Container>
-                <ScrollView
-                    style={{
-                        padding: 10,
-                    }}
-                >
-                    <View
-                        style={{
-                            flexDirection: (
-                                this.props.landscape
-                                ? 'row'
-                                : 'column'
-                            ),
-                        }}
-                    >
-                        {this.renderGeneralCard()}
-                        {this.renderActionCard()}
-                    </View>
+	render() {
+		return (
+			<Container>
+				<ScrollView
+					style={{
+						padding: 10,
+					}}>
+					<View
+						style={{
+							flexDirection: this.props.landscape ? 'row' : 'column',
+						}}>
+						{this.renderGeneralCard()}
+						{this.renderActionCard()}
+					</View>
 
-                    <View>
-                        {this.renderCreditCard()}
-                    </View>
+					<View>{this.renderCreditCard()}</View>
 
-                    <View style={{ height: 25 }} />
-                </ScrollView>
-            </Container>
-        );
-    }
+					<View style={{ height: 25 }} />
+				</ScrollView>
+			</Container>
+		);
+	}
 }
 
 const mapStateToProps = (state: AppState): StateProps => ({
-    landscape: state.general.rotation === 'landscape',
+	landscape: state.general.rotation === 'landscape',
 });
 
 export const OLInfo = connect(mapStateToProps, null)(Component);

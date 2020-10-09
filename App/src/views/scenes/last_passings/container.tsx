@@ -12,46 +12,39 @@ import { Passing } from 'lib/graphql/fragments/types/Passing';
 import { Routes, RouterProps } from 'lib/nav/routes';
 import { useQuery } from '@apollo/react-hooks';
 
-interface OwnProps extends RouterProps<{ id, title }> {}
+type OwnProps = RouterProps<{ id; title }>;
 
 interface StateProps {
-    landscape: boolean;
+	landscape: boolean;
 }
 
 type Props = StateProps & OwnProps;
 
 const DataWrapper: React.FC<Props> = (props) => {
-    const competitionId: number = props.route.params.id;
+	const competitionId: number = props.route.params.id;
 
-    const { data, loading, error, refetch } =
-        useQuery<GetLastPassings, GetLastPassingsVariables>(
-            GET_LAST_PASSINGS,
-            { variables: { competitionId } },
-        );
+	const { data, loading, error, refetch } = useQuery<GetLastPassings, GetLastPassingsVariables>(GET_LAST_PASSINGS, {
+		variables: { competitionId },
+	});
 
-    if (error) {
-        return (
-            <OLError
-                error={error}
-                refetch={refetch}
-            />
-        );
-    }
+	if (error) {
+		return <OLError error={error} refetch={refetch} />;
+	}
 
-    const passings: Passing[] = _.get(data, 'lastPassings.getLastPassings', null);
+	const passings: Passing[] = _.get(data, 'lastPassings.getLastPassings', null);
 
-    return (
-        <Component
-            loading={loading}
-            passings={passings}
-            refresh={() => void refetch({ competitionId })}
-            landscape={props.landscape}
-        />
-    );
+	return (
+		<Component
+			loading={loading}
+			passings={passings}
+			refresh={() => void refetch({ competitionId })}
+			landscape={props.landscape}
+		/>
+	);
 };
 
 const mapStateToProps = (state: AppState, props: Props): StateProps => ({
-    landscape: state.general.rotation === 'landscape',
+	landscape: state.general.rotation === 'landscape',
 });
 
 export const OLPassings = connect(mapStateToProps, null)(DataWrapper);

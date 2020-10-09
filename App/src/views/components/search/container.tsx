@@ -8,33 +8,29 @@ import { AllCompetitions } from 'lib/graphql/queries/types/AllCompetitions';
 import { ALL_COMPETITIONS } from 'lib/graphql/queries/competitions';
 
 interface StateProps {
-    searching: boolean;
+	searching: boolean;
 }
 
 interface DispatchProps {
-    setSearchTerm: (term: string) => void;
-    setSearching: (value: boolean) => void;
+	setSearchTerm: (term: string) => void;
+	setSearching: (value: boolean) => void;
 }
 
 type Props = StateProps & DispatchProps;
 
 const DataWrapper: React.FC<Props> = (props) => {
-    return (
-        <Component
-            searching={props.searching}
-            setSearching={props.setSearching}
-            setSearchTerm={props.setSearchTerm}
-        />
-    );
+	return (
+		<Component searching={props.searching} setSearching={props.setSearching} setSearchTerm={props.setSearchTerm} />
+	);
 };
 
 const mapStateToProps = (state: AppState): StateProps => ({
-    searching: state.home.searching,
+	searching: state.home.searching,
 });
 
 const mapDispatchToProps = {
-    setSearchTerm: Actions.setSearchTerm,
-    setSearching: Actions.setSearching,
+	setSearchTerm: Actions.setSearchTerm,
+	setSearching: Actions.setSearching,
 };
 
 export const OLSearch = connect(mapStateToProps, mapDispatchToProps)(DataWrapper);

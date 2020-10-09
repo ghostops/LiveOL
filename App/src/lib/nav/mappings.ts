@@ -6,9 +6,9 @@ import { Routes } from './routes';
 import { OLResults } from 'views/scenes/results/container';
 
 export const Mappings = {
-    [Routes.home]: OLHome,
-    [Routes.competition]: OLCompetition,
-    [Routes.passings]: OLPassings,
-    [Routes.info]: OLInfo,
-    [Routes.results]: OLResults,
+	[Routes.home]: OLHome,
+	[Routes.competition]: OLCompetition,
+	[Routes.passings]: OLPassings,
+	[Routes.info]: OLInfo,
+	[Routes.results]: OLResults,
 };

@@ -4,13 +4,17 @@ import { fontPx } from 'util/const';
 import { OLText } from '../../text';
 
 interface Props {
-    name: string;
+	name: string;
 }
 
 export const OLResultName: React.FC<Props> = ({ name }) => (
-    <OLText numberOfLines={1} size={16} font="Proxima_Nova" style={{
-        textAlign: 'left',
-    }}>
-        {name}
-    </OLText>
+	<OLText
+		numberOfLines={1}
+		size={16}
+		font="Proxima_Nova"
+		style={{
+			textAlign: 'left',
+		}}>
+		{name}
+	</OLText>
 );

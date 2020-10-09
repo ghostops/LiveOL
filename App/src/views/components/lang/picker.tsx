@@ -6,48 +6,37 @@ import { Lang } from 'lib/lang';
 import RNRestart from 'react-native-restart';
 
 interface State {
-    active: string;
+	active: string;
 }
 
 export class LanguagePicker extends React.PureComponent<any, State> {
-    state = { active: Lang.active };
+	state = { active: Lang.active };
 
-    render() {
-        return (
-            <ScrollView
-                style={{
-                    width: '100%',
-                    padding: UNIT / 2,
-                }}
-                horizontal
-            >
-                {
-                    Lang.availible.map((lang) => (
-                        <TouchableOpacity
-                            onPress={async () => {
-                                await Lang.set(lang);
-                                this.setState({ active: lang }, () => RNRestart.Restart());
-                            }}
-                            style={{
-                                marginRight: UNIT,
-                                borderColor: (
-                                    lang === this.state.active
-                                    ? COLORS.MAIN
-                                    : 'transparent'
-                                ),
-                                borderBottomWidth: 2,
-                                justifyContent: 'center',
-                            }}
-                            key={lang}
-                        >
-                            <OLFlag
-                                code={lang}
-                                size={32}
-                            />
-                        </TouchableOpacity>
-                    ))
-                }
-            </ScrollView>
-        );
-    }
+	render() {
+		return (
+			<ScrollView
+				style={{
+					width: '100%',
+					padding: UNIT / 2,
+				}}
+				horizontal>
+				{Lang.availible.map((lang) => (
+					<TouchableOpacity
+						onPress={async () => {
+							await Lang.set(lang);
+							this.setState({ active: lang }, () => RNRestart.Restart());
+						}}
+						style={{
+							marginRight: UNIT,
+							borderColor: lang === this.state.active ? COLORS.MAIN : 'transparent',
+							borderBottomWidth: 2,
+							justifyContent: 'center',
+						}}
+						key={lang}>
+						<OLFlag code={lang} size={32} />
+					</TouchableOpacity>
+				))}
+			</ScrollView>
+		);
+	}
 }

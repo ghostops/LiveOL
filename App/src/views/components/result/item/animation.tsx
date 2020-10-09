@@ -4,76 +4,70 @@ import { Animated } from 'react-native';
 import { Result } from 'lib/graphql/fragments/types/Result';
 
 interface Props {
-    result: Result;
+	result: Result;
 }
 
-const hasChanged = (prev: Result, now: Result) => (
-    (
-        prev.place !==
+const hasChanged = (prev: Result, now: Result) =>
+	(
+		prev.place !==
         now.place
-    ) ||
-    (
-        prev.result !==
-        now.result
-    ) ||
-    (
-        prev.status !==
-        now.status
-    ) || (
-        prev.splits.map((s) => s.time).join() !==
+	) ||
+	prev.result !== now.result ||
+	prev.status !== now.status ||
+		prev.splits.map((s) => s.time).join() !==
         now.splits.map((s) => s.time).join()
-    )
+	)
 );
 
 export const OLResultAnimation: React.FC<Props> = (props) => {
-    const [animation, setAnimation] = React.useState(new Animated.Value(0));
-    const [result, setResult] = React.useState(props.result);
+	const [animation, setAnimation] = React.useState(new Animated.Value(0));
+	const [result, setResult] = React.useState(props.result);
 
-    React.useEffect(() => {
-        if (hasChanged(props.result, result)) {
-            startAnimation();
-        }
+	React.useEffect(() => {
+		if (hasChanged(props.result, result)) {
+			startAnimation();
+		}
 
-        setResult(props.result);
-    });
+		setResult(props.result);
+	});
 
-    const startAnimation = () => {
-        Animated.timing(
-            animation,
-            {
-                toValue: 1,
-                duration: 500,
-                useNativeDriver: false,
-            },
-        ).start(() => {
-            setTimeout(
-                () => stopAnimation(),
-                5000,
-            );
-        });
-    };
+	const startAnimation = () => {
+		Animated.timing(
+			animation,
+			{
+				toValue: 1,
+			duration: 500,
+			useNativeDriver: false,
+			},
+		).start(() => {
+			setTimeout(
+				() => stopAnimation(),
+				5000,
+			);
+		});
+	};
 
-    const stopAnimation = () => {
-        Animated.timing(
-            animation,
-            {
-                toValue: 0,
-                duration: 500,
-                useNativeDriver: false,
-            },
-        ).start();
-    };
+	const stopAnimation = () => {
+		Animated.timing(
+			animation,
+			{
+			toValue: 0,
+				duration: 500,
+				useNativeDriver: false,
+			},
+		).start();
+	};
 
-    const backgroundColor = animation.interpolate({
-        inputRange: [0, 1],
-        outputRange: ['rgba(0,0,0,0)', 'rgba(255,0,0,.25)'],
-    });
+	const backgroundColor = animation.interpolate({
+		inputRange: [0, 1],
+		outputRange: ['rgba(0,0,0,0)', 'rgba(255,0,0,.25)'],
+	});
 
-    return (
-        <Animated.View
-            style={{ backgroundColor }}
-        >
-            {props.children}
-        </Animated.View>
-    );
+	return (
+		<Animated.View
+			style={{ backgroundColor }}
+		>
+			{props.children}
+		</Animated.View>
+	);
 };

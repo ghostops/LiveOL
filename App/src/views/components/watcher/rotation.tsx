@@ -4,36 +4,33 @@ import { setRotation } from 'store/stores/general';
 import { Dimensions } from 'react-native';
 
 interface DispatchProps {
-    setRotation: (rotation: string) => void;
+	setRotation: (rotation: string) => void;
 }
 
 const screen = Dimensions.get('screen');
 
 const Component: React.FC<DispatchProps> = ({ children, setRotation }) => {
-    const [dimensions, setDimensions] = React.useState({ screen });
+	const [dimensions, setDimensions] = React.useState({ screen });
 
-    const onChange = ({ screen }) => {
-        setRotation(screen.height >= screen.width ? 'portrait' : 'landscape');
-        setDimensions({ screen });
-    };
+	const onChange = ({ screen }) => {
+		setRotation(screen.height >= screen.width ? 'portrait' : 'landscape');
+		setDimensions({ screen });
+	};
 
-    React.useEffect(
-        () => {
-            setRotation(screen.height >= screen.width ? 'portrait' : 'landscape');
-            Dimensions.addEventListener('change', onChange);
+	React.useEffect(() => {
+		setRotation(screen.height >= screen.width ? 'portrait' : 'landscape');
+		Dimensions.addEventListener('change', onChange);
 
-            return () => {
-                Dimensions.removeEventListener('change', onChange);
-            };
-        },
-        [],
-    );
+		return () => {
+			Dimensions.removeEventListener('change', onChange);
+		};
+	}, []);
 
-    return <>{children}</>;
+	return <>{children}</>;
 };
 
 const mapDispatchToProps = {
-    setRotation,
+	setRotation,
 };
 
 export const OLRotationWatcher = connect(null, mapDispatchToProps)(Component);

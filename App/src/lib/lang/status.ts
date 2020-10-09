@@ -14,5 +14,5 @@ import { Lang } from './index';
 */
 
 export const statusI18n = (status: number, len = 'short') => {
-    return Lang.print(`status.${len}`)[status];
+	return Lang.print(`status.${len}`)[status];
 };

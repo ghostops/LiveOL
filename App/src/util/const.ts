@@ -5,9 +5,9 @@ import Constants from 'expo-constants';
 const window = Dimensions.get('window');
 
 export const DeviceOrientationAprox = (): 'landscape' | 'portrait' => {
-    const window = Dimensions.get('window');
-    const min = Math.min(window.width, window.height);
-    return min === window.width ? 'portrait' : 'landscape';
+	const window = Dimensions.get('window');
+	const min = Math.min(window.width, window.height);
+	return min === window.width ? 'portrait' : 'landscape';
 };
 
 export const PACKAGE = require('../../package.json');
@@ -16,9 +16,9 @@ export const VERSION = PACKAGE.version;
 export const DEVICE_NAME = Constants.deviceName;
 
 export const COLORS = {
-    MAIN: '#e86a1e',
-    LIGHT: '#ff7f32',
-    DARK: '#b25115',
+	MAIN: '#e86a1e',
+	LIGHT: '#ff7f32',
+	DARK: '#b25115',
 };
 
 export const HIT_SLOP = { top: 10, left: 10, right: 10, bottom: 10 };

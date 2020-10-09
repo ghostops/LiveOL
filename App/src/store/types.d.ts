@@ -1,21 +1,21 @@
 interface AppState {
-    home: HomeReducer;
-    general: GeneralReducer;
+	home: HomeReducer;
+	general: GeneralReducer;
 }
 
 interface GeneralReducer {
-    rotation: 'landscape' | 'portrait';
-    expoPushToken: string;
+	rotation: 'landscape' | 'portrait';
+	expoPushToken: string;
 }
 
 interface HomeReducer {
-    searchTerm: string;
-    searching: boolean;
+	searchTerm: string;
+	searching: boolean;
 }
 
 type GetState = () => AppState;
 
 interface DispatchAction<T> {
-    type: string;
-    value?: T;
+	type: string;
+	value?: T;
 }

@@ -13,6 +13,7 @@ module.exports = {
 	parser: '@typescript-eslint/parser',
 	parserOptions: {
 		project: './tsconfig.json',
+		tsconfigRootDir: __dirname,
 	},
 	plugins: ['react', 'react-hooks', '@typescript-eslint', 'prettier'],
 	rules: {
@@ -21,10 +22,13 @@ module.exports = {
 		'linebreak-style': ['error', 'unix'],
 		quotes: ['error', 'single'],
 		semi: ['error', 'always'],
+		'@typescript-eslint/no-unused-vars': 'error',
+		'react/prop-types': 0,
 	},
 	settings: {
 		react: {
 			version: 'detect',
 		},
 	},
+	ignorePatterns: ['.eslintrc.js'],
 };

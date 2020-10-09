@@ -20,132 +20,100 @@ import { OLResultLiveRunning } from '../item/liveRunning';
 import { isLiveRunning } from 'util/isLive';
 
 interface OwnProps {
-    result: Result;
+	result: Result;
 }
 
 type Props = OwnProps;
 
 export const LANDSCAPE_WIDTH = {
-    place: px(60),
-    name: px(160),
-    start: px(100),
-    time: px(60),
-    splits: px(90),
+	place: px(60),
+	name: px(160),
+	start: px(100),
+	time: px(60),
+	splits: px(90),
 };
 
 export const getExtraSize = (splits: number): number => {
-    const { width } = Dimensions.get('window');
+	const { width } = Dimensions.get('window');
 
-    const noSplits = [
-        LANDSCAPE_WIDTH.place,
-        LANDSCAPE_WIDTH.name,
-        LANDSCAPE_WIDTH.start,
-        LANDSCAPE_WIDTH.time,
-    ].reduce((a, b) => a + b, 0);
+	const noSplits = [LANDSCAPE_WIDTH.place, LANDSCAPE_WIDTH.name, LANDSCAPE_WIDTH.start, LANDSCAPE_WIDTH.time].reduce(
+		(a, b) => a + b,
+		0,
+	);
 
-    const withSplits = noSplits + (LANDSCAPE_WIDTH.splits * splits);
+	const withSplits = noSplits + LANDSCAPE_WIDTH.splits * splits;
 
-    let extraSize = 0;
+	let extraSize = 0;
 
-    if (withSplits < width) {
-        extraSize = width - withSplits;
-    }
+	if (withSplits < width) {
+		extraSize = width - withSplits;
+	}
 
-    return extraSize - px(20);
+	return extraSize - px(20);
 };
 
 export class OLTableRow extends React.PureComponent<Props> {
-    private moreInfo = () => {
-        showToast(this.props.result.name, this.props.result.club);
-    }
+	private moreInfo = () => {
+		showToast(this.props.result.name, this.props.result.club);
+	};
 
-    renderTime = () => {
-        const { result } = this.props;
+	renderTime = () => {
+		const { result } = this.props;
 
-        if (!result.result.length) {
-            if (isLiveRunning(result)) {
-                return (
-                    <OLResultLiveRunning
-                        date={result.liveRunningStart}
-                    />
-                );
-            }
-        }
+		if (!result.result.length) {
+			if (isLiveRunning(result)) {
+				return <OLResultLiveRunning date={result.liveRunningStart} />;
+			}
+		}
 
-        return (
-            <>
-                <OLResultTime
-                    status={result.status}
-                    time={result.result}
-                />
+		return (
+			<>
+				<OLResultTime status={result.status} time={result.result} />
 
-                    <View style={{ height: px(4) }} />
+				<View style={{ height: px(4) }} />
 
-                <OLResultTimeplus
-                    status={result.status}
-                    timeplus={result.timeplus}
-                />
-            </>
-        );
-    }
+				<OLResultTimeplus status={result.status} timeplus={result.timeplus} />
+			</>
+		);
+	};
 
-    render() {
-        const { result } = this.props;
+	render() {
+		const { result } = this.props;
 
-        const extraSize = getExtraSize(this.props.result.splits.length);
+		const extraSize = getExtraSize(this.props.result.splits.length);
 
-        return (
-            <OLResultAnimation
-                result={result}
-            >
-                <OLResultListItem>
-                    <OLResultColumn
-                        align="center"
-                        style={{ width: LANDSCAPE_WIDTH.place }}
-                    >
-                        <OLResultBadge place={result.place} />
-                    </OLResultColumn>
+		return (
+			<OLResultAnimation result={result}>
+				<OLResultListItem>
+					<OLResultColumn align="center" style={{ width: LANDSCAPE_WIDTH.place }}>
+						<OLResultBadge place={result.place} />
+					</OLResultColumn>
 
-                    <OLResultColumn style={{ width: LANDSCAPE_WIDTH.name + extraSize }}>
-                        <TouchableOpacity
-                            style={{ flex: 1 }}
-                            onPress={this.moreInfo}
-                        >
-                            <OLResultName name={result.name} />
+					<OLResultColumn style={{ width: LANDSCAPE_WIDTH.name + extraSize }}>
+						<TouchableOpacity style={{ flex: 1 }} onPress={this.moreInfo}>
+							<OLResultName name={result.name} />
 
-                            <OLResultClub club={result.club} />
-                        </TouchableOpacity>
-                    </OLResultColumn>
+							<OLResultClub club={result.club} />
+						</TouchableOpacity>
+					</OLResultColumn>
 
-                    <OLResultColumn style={{ width: LANDSCAPE_WIDTH.start }}>
-                        <OLStartTime time={result.start} />
-                    </OLResultColumn>
+					<OLResultColumn style={{ width: LANDSCAPE_WIDTH.start }}>
+						<OLStartTime time={result.start} />
+					</OLResultColumn>
 
-                    {
-                        result.splits.map((split, index) => {
-                            return (
-                                <OLResultColumn
-                                    style={{ width: LANDSCAPE_WIDTH.splits }}
-                                    key={split.id}
-                                    align="flex-start"
-                                >
-                                    <OLSplits
-                                        split={split}
-                                        best={split.place === 1}
-                                    />
-                                </OLResultColumn>
-                            );
-                        })
-                    }
+					{result.splits.map((split, index) => {
+						return (
+							<OLResultColumn style={{ width: LANDSCAPE_WIDTH.splits }} key={split.id} align="flex-start">
+								<OLSplits split={split} best={split.place === 1} />
+							</OLResultColumn>
+						);
+					})}
 
-                    <OLResultColumn
-                        align="flex-end"
-                        style={{ width: LANDSCAPE_WIDTH.time }}
-                    >
-                        {this.renderTime()}
-                    </OLResultColumn>
-                </OLResultListItem>
-            </OLResultAnimation>
-        );
-    }
+					<OLResultColumn align="flex-end" style={{ width: LANDSCAPE_WIDTH.time }}>
+						{this.renderTime()}
+					</OLResultColumn>
+				</OLResultListItem>
+			</OLResultAnimation>
+		);
+	}
 }
