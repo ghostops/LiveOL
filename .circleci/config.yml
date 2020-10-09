@@ -89,6 +89,9 @@ jobs:
             ssh ${SSH_USER}@${SSH_DOMAIN} -p ${SSH_PORT} "cd ${PROJECT_ROOT} && sudo docker-compose -f docker-compose.live.yml up -d"
 
 workflows:
+  linting:
+    jobs:
+      - lint-app
   deploy:
     jobs:
       - deploy-server:
