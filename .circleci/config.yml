@@ -1,92 +1,103 @@
 version: 2.1
 
 jobs:
-    deploy-website:
-        docker:
-            -
-                image: "237763290421.dkr.ecr.eu-north-1.amazonaws.com/deploy:latest"
-                aws_auth:
-                    aws_access_key_id: $AWS_ACCESS_KEY_ID
-                    aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
-        steps:
-            - add_ssh_keys:
-                fingerprints:
-                    - "f2:70:44:77:77:7d:43:96:aa:37:30:cc:28:b0:6b:a6"
+  lint-app:
+    docker:
+      - image: "circleci/node:dubnium"
 
-            - checkout
+    working_directory: ./App
 
-            - run:
-                name: Disable known hosts for the ssh domain
-                command: |
-                    echo "Host ${SSH_DOMAIN}
-                    StrictHostKeyChecking no
-                    UserKnownHostsFile /dev/null" > ~/.ssh/config
+    steps:
+      - checkout
 
-            - run:
-                name: Upload website
-                command: |
-                    scp -P ${SSH_PORT} -r ./Website/* ${SSH_USER}@${SSH_DOMAIN}:${WEBROOT}
-    deploy-server:
-        docker:
-            -
-                image: "237763290421.dkr.ecr.eu-north-1.amazonaws.com/deploy:latest"
-                aws_auth:
-                    aws_access_key_id: $AWS_ACCESS_KEY_ID
-                    aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
-        steps:
-            - add_ssh_keys:
-                fingerprints:
-                    - "f2:70:44:77:77:7d:43:96:aa:37:30:cc:28:b0:6b:a6"
+      - run:
+          name: Lint app
+          command: yarn lint
 
-            - checkout
+  deploy-website:
+    docker:
+      - image: "237763290421.dkr.ecr.eu-north-1.amazonaws.com/deploy:latest"
+        aws_auth:
+          aws_access_key_id: $AWS_ACCESS_KEY_ID
+          aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "f2:70:44:77:77:7d:43:96:aa:37:30:cc:28:b0:6b:a6"
 
-            - setup_remote_docker
+      - checkout
 
-            - run:
-                name: Disable known hosts for the ssh domain
-                command: |
-                    echo "Host ${SSH_DOMAIN}
-                    StrictHostKeyChecking no
-                    UserKnownHostsFile /dev/null" > ~/.ssh/config
+      - run:
+          name: Disable known hosts for the ssh domain
+          command: |
+            echo "Host ${SSH_DOMAIN}
+            StrictHostKeyChecking no
+            UserKnownHostsFile /dev/null" > ~/.ssh/config
 
-            - run:
-                name: Set up Docker
-                command: eval $(aws ecr get-login --no-include-email --region=eu-north-1)
+      - run:
+          name: Upload website
+          command: |
+            scp -P ${SSH_PORT} -r ./Website/* ${SSH_USER}@${SSH_DOMAIN}:${WEBROOT}
+  deploy-server:
+    docker:
+      - image: "237763290421.dkr.ecr.eu-north-1.amazonaws.com/deploy:latest"
+        aws_auth:
+          aws_access_key_id: $AWS_ACCESS_KEY_ID
+          aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "f2:70:44:77:77:7d:43:96:aa:37:30:cc:28:b0:6b:a6"
 
-            - run:
-                name: Build server container
-                command: cd ./Server && yarn docker:latest
+      - checkout
 
-            - run:
-                name: Authenticate ECR
-                command: |
-                    ssh ${SSH_USER}@${SSH_DOMAIN} -p ${SSH_PORT} "./ecr.sh"
+      - setup_remote_docker
 
-            - run:
-                name: Pull changes on server
-                command: |
-                    ssh ${SSH_USER}@${SSH_DOMAIN} -p ${SSH_PORT} "cd ${PROJECT_ROOT} && git stash && git pull"
+      - run:
+          name: Disable known hosts for the ssh domain
+          command: |
+            echo "Host ${SSH_DOMAIN}
+            StrictHostKeyChecking no
+            UserKnownHostsFile /dev/null" > ~/.ssh/config
 
-            - run:
-                name: Pull latest Docker container
-                command: |
-                    ssh ${SSH_USER}@${SSH_DOMAIN} -p ${SSH_PORT} "cd ${PROJECT_ROOT} && sudo docker-compose -f docker-compose.live.yml pull"
+      - run:
+          name: Set up Docker
+          command: eval $(aws ecr get-login --no-include-email --region=eu-north-1)
 
-            - run:
-                name: Rebuild the Docker containers and restart server
-                command: |
-                    ssh ${SSH_USER}@${SSH_DOMAIN} -p ${SSH_PORT} "cd ${PROJECT_ROOT} && sudo docker-compose -f docker-compose.live.yml up -d"
+      - run:
+          name: Build server container
+          command: cd ./Server && yarn docker:latest
+
+      - run:
+          name: Authenticate ECR
+          command: |
+            ssh ${SSH_USER}@${SSH_DOMAIN} -p ${SSH_PORT} "./ecr.sh"
+
+      - run:
+          name: Pull changes on server
+          command: |
+            ssh ${SSH_USER}@${SSH_DOMAIN} -p ${SSH_PORT} "cd ${PROJECT_ROOT} && git stash && git pull"
+
+      - run:
+          name: Pull latest Docker container
+          command: |
+            ssh ${SSH_USER}@${SSH_DOMAIN} -p ${SSH_PORT} "cd ${PROJECT_ROOT} && sudo docker-compose -f docker-compose.live.yml pull"
+
+      - run:
+          name: Rebuild the Docker containers and restart server
+          command: |
+            ssh ${SSH_USER}@${SSH_DOMAIN} -p ${SSH_PORT} "cd ${PROJECT_ROOT} && sudo docker-compose -f docker-compose.live.yml up -d"
 
 workflows:
-    deploy:
-        jobs:
-            - deploy-server:
-                filters:
-                    branches:
-                        only:
-                            - master
-            - deploy-website:
-                filters:
-                    branches:
-                        only:
-                            - master
+  deploy:
+    jobs:
+      - deploy-server:
+          filters:
+            branches:
+              only:
+                - master
+      - deploy-website:
+          filters:
+            branches:
+              only:
+                - master
