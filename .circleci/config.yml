@@ -9,6 +9,10 @@ jobs:
       - checkout
 
       - run:
+          name: Install yarn
+          command: cd ./App && yarn install
+
+      - run:
           name: Lint app
           command: cd ./App && yarn lint
 
