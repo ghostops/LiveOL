@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { View } from 'native-base';
-import { FlexAlignType } from 'react-native';
+import { FlexAlignType, View } from 'react-native';
 import { Col, ColProps } from 'react-native-easy-grid';
 
 interface Props extends ColProps {

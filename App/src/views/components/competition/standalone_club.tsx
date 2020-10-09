@@ -3,13 +3,12 @@ import _ from 'lodash';
 import { clubLogoUrl } from 'util/clubUrl';
 import { GET_CLUB_BY_NAME } from 'lib/graphql/queries/clubs';
 import { GetClubByName, GetClubByNameVariables } from 'lib/graphql/queries/types/GetClubByName';
-import { Image, Linking, ViewStyle } from 'react-native';
+import { Image, Linking, ViewStyle, View } from 'react-native';
 import { OLError } from 'views/components/error';
 import { OLText } from '../text';
 import { px } from 'util/const';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useQuery } from '@apollo/react-hooks';
-import { View } from 'native-base';
 
 interface Props {
 	clubName: string;

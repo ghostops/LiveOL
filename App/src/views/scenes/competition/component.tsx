@@ -2,14 +2,14 @@ import * as React from 'react';
 import { Class } from 'lib/graphql/fragments/types/Class';
 import { Competition } from 'lib/graphql/fragments/types/Competition';
 import { EventorCompetitionFragment } from 'lib/graphql/fragments/types/EventorCompetitionFragment';
-import { px } from 'util/const';
+import { FlatList, View } from 'react-native';
 import { Lang } from 'lib/lang';
-import { ListItem, View } from 'native-base';
 import { OLCompetitionHeader } from 'views/components/competition/header';
+import { OLListItem } from 'views/components/list/item';
 import { OLLoading } from 'views/components/loading';
 import { OLSafeAreaView } from 'views/components/safeArea';
 import { OLText } from 'views/components/text';
-import { FlatList } from 'react-native';
+import { px } from 'util/const';
 
 interface Props {
 	loading: boolean;
@@ -24,7 +24,7 @@ export const OLCompetition: React.FC<Props> = (props) => {
 		const { name }: Class = item;
 
 		return (
-			<ListItem
+			<OLListItem
 				key={name}
 				style={{
 					marginLeft: 0,
@@ -35,7 +35,7 @@ export const OLCompetition: React.FC<Props> = (props) => {
 				<OLText font="Proxima_Nova" size={18}>
 					{name}
 				</OLText>
-			</ListItem>
+			</OLListItem>
 		);
 	};
 

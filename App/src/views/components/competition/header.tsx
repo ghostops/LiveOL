@@ -8,9 +8,8 @@ import { OLButton } from 'views/components/button';
 import { OLCompetitionClub } from 'views/components/competition/club';
 import { OLCompetitionIOSHeader } from 'views/components/competition/iosHeader';
 import { OLText } from 'views/components/text';
-import { Platform } from 'react-native';
+import { Platform, View } from 'react-native';
 import { px } from 'util/const';
-import { View } from 'native-base';
 
 interface Props {
 	competition: Competition & EventorCompetitionFragment;

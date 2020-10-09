@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Badge } from 'native-base';
+import { View } from 'react-native';
 import { COLORS } from 'util/const';
 import { OLText } from '../../../components/text';
 
@@ -16,7 +16,7 @@ export const OLResultBadge: React.FC<Props> = ({ place }) => (
 		}}
 	>
 		{Boolean(place.length > 0 && place !== '-') && (
-			<Badge
+			<View
 				style={{
 					backgroundColor: COLORS.MAIN,
 					justifyContent: 'center',
@@ -29,7 +29,7 @@ export const OLResultBadge: React.FC<Props> = ({ place }) => (
 				<OLText size={12} font="Proxima_Nova" style={{ color: 'white' }}>
 					{place}
 				</OLText>
-			</Badge>
+			</View>
 		)}
 	</View>
 );

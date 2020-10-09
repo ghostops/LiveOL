@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Grid } from 'react-native-easy-grid';
-import { View } from 'native-base';
+import { View } from 'react-native';
 import { px } from 'util/const';
 
 export const OLResultListItem: React.FC = ({ children }) => {

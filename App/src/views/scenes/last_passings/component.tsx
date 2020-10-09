@@ -23,59 +23,50 @@ export const OLPassings: React.FC<Props> = (props) => {
 
 	return (
 		<OLSafeAreaView>
-			<ScrollView
-				refreshControl={
-					<RefreshControl
-						onRefresh={props.refresh}
-						refreshing={props.loading}
-						colors={[COLORS.MAIN]}
-						tintColor={COLORS.MAIN}
-					/>
-				}
+			<View
+				style={{
+					padding: px(20),
+					flex: 1,
+				}}
 			>
-				<View
-					style={{
-						padding: px(20),
-					}}
-				>
-					{!props.passings.length && (
+				{!props.passings.length && (
+					<OLText
+						font="Proxima_Nova_Bold"
+						size={16}
+						style={{
+							textAlign: 'center',
+						}}
+					>
+						{Lang.print('competitions.passings.empty')}
+					</OLText>
+				)}
+				{Boolean(props.passings.length) && (
+					<>
 						<OLText
 							font="Proxima_Nova_Bold"
-							size={16}
+							size={20}
 							style={{
-								textAlign: 'center',
+								textAlign: 'left',
+								marginVertical: 10,
+								color: 'black',
 							}}
 						>
-							{Lang.print('competitions.passings.empty')}
+							{Lang.print('competitions.passings.title')}
 						</OLText>
-					)}
-					{Boolean(props.passings.length) && (
-						<>
-							<OLText
-								font="Proxima_Nova_Bold"
-								size={20}
-								style={{
-									textAlign: 'left',
-									marginVertical: 10,
-									color: 'black',
-								}}
-							>
-								{Lang.print('competitions.passings.title')}
-							</OLText>
 
-							<View
-								style={{
-									flexDirection: props.landscape ? 'row' : 'column',
-								}}
-							>
-								{props.passings.map((passing, index) => (
-									<OLLastPassingResult key={index} passing={passing} landscape={props.landscape} />
-								))}
-							</View>
-						</>
-					)}
-				</View>
-			</ScrollView>
+						<View
+							style={{
+								flexDirection: props.landscape ? 'row' : 'column',
+								flex: 1,
+							}}
+						>
+							{props.passings.map((passing, index) => (
+								<OLLastPassingResult key={index} passing={passing} landscape={props.landscape} />
+							))}
+						</View>
+					</>
+				)}
+			</View>
 
 			<OLRefetcher refetch={props.refresh} interval={15000} />
 		</OLSafeAreaView>

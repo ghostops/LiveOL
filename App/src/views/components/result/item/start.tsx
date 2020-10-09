@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View } from 'native-base';
+import { View } from 'react-native';
 import { OLText } from '../../text';
 
 interface Props {

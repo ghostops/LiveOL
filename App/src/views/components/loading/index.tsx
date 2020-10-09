@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { View, Spinner } from 'native-base';
 import { COLORS } from 'util/const';
+import { ActivityIndicator, View } from 'react-native';
 
 export const OLLoading: React.FC = () => (
 	<View
@@ -10,6 +10,6 @@ export const OLLoading: React.FC = () => (
 			alignItems: 'center',
 		}}
 	>
-		<Spinner color={COLORS.MAIN} />
+		<ActivityIndicator size="large" color={COLORS.MAIN} />
 	</View>
 );

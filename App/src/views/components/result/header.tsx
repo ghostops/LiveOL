@@ -12,8 +12,7 @@ import { PORTRAIT_SIZE } from 'views/components/result/list/item';
 import { px } from 'util/const';
 import { Split } from 'lib/graphql/fragments/types/Split';
 import { useQuery } from '@apollo/react-hooks';
-import { View } from 'native-base';
-import { ViewStyle, FlexAlignType } from 'react-native';
+import { ViewStyle, FlexAlignType, View } from 'react-native';
 
 interface OwnProps {
 	competitionId: number;

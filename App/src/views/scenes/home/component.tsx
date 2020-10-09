@@ -8,7 +8,7 @@ import { OLSearch } from 'views/components/search/container';
 import { OLText } from 'views/components/text';
 import { px } from 'util/const';
 import { TodaysCompetitions } from 'views/components/home/today';
-import { View, Button } from 'native-base';
+import { View, TouchableOpacity } from 'react-native';
 
 interface Props {
 	competitions: Competition[];
@@ -17,8 +17,7 @@ interface Props {
 	openSearch: () => void;
 	searching: boolean;
 	loading: boolean;
-
-	loadMore: () => void;
+	loadMore: () => Promise<any>;
 }
 
 export class OLHome extends React.PureComponent<Props> {
@@ -62,11 +61,11 @@ export class OLHome extends React.PureComponent<Props> {
 						flexDirection: 'row',
 					}}
 				>
-					<Button transparent onPress={this.props.openSearch}>
+					<TouchableOpacity onPress={this.props.openSearch}>
 						<OLText font="Proxima_Nova" size={16}>
 							{Lang.print('home.search')}
 						</OLText>
-					</Button>
+					</TouchableOpacity>
 				</View>
 			</View>
 		);

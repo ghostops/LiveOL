@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
-import { View } from 'native-base';
+import { View } from 'react-native';
 
 export class OLSafeAreaView extends React.PureComponent {
 	render() {

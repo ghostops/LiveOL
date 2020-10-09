@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { ActivityIndicator, View } from 'react-native';
 import { COLORS, px } from 'util/const';
 import { FlatList } from 'react-native-gesture-handler';
 import { Lang } from 'lib/lang';
@@ -7,11 +8,9 @@ import { OLSafeAreaView } from 'views/components/safeArea';
 import { OLText } from 'views/components/text';
 import { Result } from 'lib/graphql/fragments/types/Result';
 import { ResultHeader } from 'views/components/result/header';
-import { View, Spinner } from 'native-base';
 
 interface Props {
 	results: Result[];
-
 	competitionId: number;
 	className: string;
 }
@@ -24,7 +23,7 @@ export const OLResultsList: React.FC<Props> = (props) => {
 	};
 
 	if (!props.results) {
-		return <Spinner color={COLORS.MAIN} />;
+		return <ActivityIndicator size="large" color={COLORS.MAIN} />;
 	}
 
 	return (

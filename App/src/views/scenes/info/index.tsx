@@ -2,11 +2,11 @@ import * as React from 'react';
 import { Alert, TouchableOpacity, View, Image, Linking, ScrollView } from 'react-native';
 import { client } from 'lib/graphql/client';
 import { connect } from 'react-redux';
-import { Container, Card, CardItem, Body } from 'native-base';
 import { GET_SERVER_VERSION } from 'lib/graphql/queries/server';
 import { Lang } from 'lib/lang';
 import { NavigationProp } from '@react-navigation/native';
 import { OLButton } from 'views/components/button';
+import { OLCard } from 'views/components/card';
 import { OLFlag } from 'views/components/lang/flag';
 import { OLText } from 'views/components/text';
 import { ServerVersion } from 'lib/graphql/queries/types/ServerVersion';
@@ -92,60 +92,52 @@ class Component extends React.PureComponent<Props, State> {
 	};
 
 	renderGeneralCard = () => (
-		<Card style={{ paddingVertical: px(16), flex: 1 }}>
-			<CardItem>
-				<Body>
-					{((Lang.print('info.body') as unknown) as string[]).map((text: string) => (
-						<OLText
-							font="Proxima_Nova"
-							size={16}
-							key={text}
-							style={{
-								marginBottom: px(16),
-							}}
-						>
-							{text}
-						</OLText>
-					))}
-				</Body>
-			</CardItem>
-		</Card>
+		<OLCard style={{ marginVertical: px(8) }}>
+			{((Lang.print('info.body') as unknown) as string[]).map((text: string) => (
+				<OLText
+					font="Proxima_Nova"
+					size={16}
+					key={text}
+					style={{
+						marginBottom: px(16),
+					}}
+				>
+					{text}
+				</OLText>
+			))}
+		</OLCard>
 	);
 
 	renderActionCard = () => (
-		<Card style={{ paddingVertical: px(16), flex: 1 }}>
-			<CardItem>
-				<Body>
-					<TouchableOpacity style={{ width: '100%' }} onPress={this.secretTap} activeOpacity={1}>
-						<OLText
-							font="Proxima_Nova_Bold"
-							size={16}
-							style={{
-								marginBottom: px(16),
-							}}
-						>
-							{Lang.print('info.version')}: {VERSION}
-						</OLText>
-					</TouchableOpacity>
+		<OLCard style={{ marginVertical: px(8) }}>
+			<TouchableOpacity style={{ width: '100%' }} onPress={this.secretTap} activeOpacity={1}>
+				<OLText
+					font="Proxima_Nova_Bold"
+					size={16}
+					style={{
+						marginBottom: px(16),
+					}}
+				>
+					{Lang.print('info.version')}: {VERSION}
+				</OLText>
+			</TouchableOpacity>
 
-					{this.BUTTONS.map((button, index) => {
-						return (
-							<OLButton
-								full
-								key={`${button.text}/${index}`}
-								onPress={() => button.onPress && button.onPress()}
-								onLongPress={() => button.onLongPress && button.onLongPress()}
-								style={{
-									marginBottom: index !== this.BUTTONS.length - 1 ? px(16) : 0,
-								}}
-							>
-								{button.text}
-							</OLButton>
-						);
-					})}
-				</Body>
-			</CardItem>
-		</Card>
+			{this.BUTTONS.map((button, index) => {
+				return (
+					<OLButton
+						full
+						key={`${button.text}/${index}`}
+						onPress={() => button.onPress && button.onPress()}
+						onLongPress={() => button.onLongPress && button.onLongPress()}
+						style={{
+							marginBottom: index !== this.BUTTONS.length - 1 ? px(16) : 0,
+						}}
+					>
+						{button.text}
+					</OLButton>
+				);
+			})}
+		</OLCard>
 	);
 
 	translationCredits: { code: string; name: string }[] = [
@@ -178,48 +170,44 @@ class Component extends React.PureComponent<Props, State> {
 	);
 
 	renderCreditCard = () => (
-		<Card style={{ paddingVertical: px(16) }}>
-			<CardItem>
-				<Body>
-					<TouchableOpacity
-						onPress={this.openPhraseApp}
-						style={{
-							alignItems: 'center',
-							width: '100%',
-						}}
-					>
-						<OLText
-							font="Proxima_Nova_Bold"
-							size={16}
-							style={{
-								marginBottom: px(16),
-								textAlign: 'center',
-							}}
-						>
-							{Lang.print('info.translations.phraseapp')}:
-						</OLText>
+		<OLCard style={{ marginVertical: px(8) }}>
+			<TouchableOpacity
+				onPress={this.openPhraseApp}
+				style={{
+					alignItems: 'center',
+					width: '100%',
+				}}
+			>
+				<OLText
+					font="Proxima_Nova_Bold"
+					size={16}
+					style={{
+						marginBottom: px(16),
+						textAlign: 'center',
+					}}
+				>
+					{Lang.print('info.translations.phraseapp')}:
+				</OLText>
 
-						<Image source={PHRASEAPP_IMAGE} />
-					</TouchableOpacity>
+				<Image source={PHRASEAPP_IMAGE} />
+			</TouchableOpacity>
 
-					<View
-						style={{
-							height: 1,
-							width: '100%',
-							backgroundColor: 'black',
-							opacity: 0.15,
-							marginVertical: 25,
-						}}
-					/>
+			<View
+				style={{
+					height: 1,
+					width: '100%',
+					backgroundColor: 'black',
+					opacity: 0.15,
+					marginVertical: 25,
+				}}
+			/>
 
-					<OLText font="Proxima_Nova_Bold" size={18}>
-						{Lang.print('info.translations.credit')}:
-					</OLText>
+			<OLText font="Proxima_Nova_Bold" size={18}>
+				{Lang.print('info.translations.credit')}:
+			</OLText>
 
-					{this.translationCredits.map(this.renderTranslationCredit)}
-				</Body>
-			</CardItem>
-		</Card>
+			{this.translationCredits.map(this.renderTranslationCredit)}
+		</OLCard>
 	);
 
 	secretTap = () => {
@@ -234,26 +222,24 @@ class Component extends React.PureComponent<Props, State> {
 
 	render() {
 		return (
-			<Container>
-				<ScrollView
+			<ScrollView
+				style={{
+					padding: 10,
+				}}
+			>
+				<View
 					style={{
-						padding: 10,
+						flexDirection: this.props.landscape ? 'row' : 'column',
 					}}
 				>
-					<View
-						style={{
-							flexDirection: this.props.landscape ? 'row' : 'column',
-						}}
-					>
-						{this.renderGeneralCard()}
-						{this.renderActionCard()}
-					</View>
+					{this.renderGeneralCard()}
+					{this.renderActionCard()}
+				</View>
 
-					<View>{this.renderCreditCard()}</View>
+				<View>{this.renderCreditCard()}</View>
 
-					<View style={{ height: 25 }} />
-				</ScrollView>
-			</Container>
+				<View style={{ height: px(25) }} />
+			</ScrollView>
 		);
 	}
 }

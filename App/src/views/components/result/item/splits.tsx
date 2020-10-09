@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Split } from 'lib/graphql/fragments/types/Split';
-import { View } from 'native-base';
+import { View } from 'react-native';
 import { OLText } from 'views/components/text';
 
 interface Props {

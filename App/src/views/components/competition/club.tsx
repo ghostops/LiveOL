@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { View } from 'native-base';
 import { OLText } from '../text';
-import { Image, ViewStyle } from 'react-native';
+import { Image, ViewStyle, View } from 'react-native';
 import { px } from 'util/const';
 
 interface Props {

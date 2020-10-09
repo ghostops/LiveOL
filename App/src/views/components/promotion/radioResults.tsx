@@ -4,8 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Lang } from 'lib/lang';
 import { OLText } from '../text';
 import { promotion } from './handler';
-import { TouchableOpacity, LayoutAnimation } from 'react-native';
-import { View } from 'native-base';
+import { TouchableOpacity, LayoutAnimation, View } from 'react-native';
 
 interface State {
 	show: boolean;
