@@ -48,7 +48,8 @@ export class OLResultLiveRunning extends React.PureComponent<Props, State> {
 				style={{
 					flex: 1,
 					justifyContent: 'center',
-				}}>
+				}}
+			>
 				<OLText size={18} font="PTMono-Regular">
 					{this.state.value}
 				</OLText>

@@ -40,14 +40,16 @@ export const Pagination: React.FC<Props> = ({
 				width: '100%',
 				paddingVertical: UNIT,
 				paddingHorizontal: UNIT,
-			}}>
+			}}
+		>
 			<OLText
 				font="Proxima_Nova"
 				size={16}
 				style={{
 					width: '100%',
 					textAlign: 'center',
-				}}>
+				}}
+			>
 				{Lang.print('home.page')} {page}
 			</OLText>
 
@@ -55,7 +57,8 @@ export const Pagination: React.FC<Props> = ({
 				style={{
 					width: '100%',
 					flexDirection: 'row',
-				}}>
+				}}
+			>
 				<Button style={BUTTON_STYLE(page === 1)} disabled={page === 1} onPress={paginateBegining}>
 					<Ionicons name="md-rewind" size={32} color="white" />
 				</Button>
@@ -67,14 +70,16 @@ export const Pagination: React.FC<Props> = ({
 				<Button
 					style={BUTTON_STYLE(lastPageCompetitions.length < size)}
 					disabled={lastPageCompetitions.length < size}
-					onPress={paginateForward}>
+					onPress={paginateForward}
+				>
 					<Ionicons name="md-arrow-dropright" size={32} color="white" />
 				</Button>
 
 				<Button
 					style={BUTTON_STYLE(lastPageCompetitions.length < size)}
 					disabled={lastPageCompetitions.length < size}
-					onPress={paginateEnd}>
+					onPress={paginateEnd}
+				>
 					<Ionicons name="md-fastforward" size={32} color="white" />
 				</Button>
 			</View>

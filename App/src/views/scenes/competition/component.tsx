@@ -30,7 +30,8 @@ export const OLCompetition: React.FC<Props> = (props) => {
 					marginLeft: 0,
 					paddingHorizontal: px(15),
 				}}
-				onPress={props.goToClass(name)}>
+				onPress={props.goToClass(name)}
+			>
 				<OLText font="Proxima_Nova" size={18}>
 					{name}
 				</OLText>
@@ -54,7 +55,8 @@ export const OLCompetition: React.FC<Props> = (props) => {
 						style={{
 							textAlign: 'center',
 							paddingTop: px(45),
-						}}>
+						}}
+					>
 						{Lang.print('competitions.noClasses')}
 					</OLText>
 				}

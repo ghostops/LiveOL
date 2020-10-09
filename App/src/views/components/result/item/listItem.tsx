@@ -13,7 +13,8 @@ export const OLResultListItem: React.FC = ({ children }) => {
 				borderBottomWidth: 1,
 				paddingVertical: px(10),
 				paddingRight: px(20),
-			}}>
+			}}
+		>
 			<Grid>{children}</Grid>
 		</View>
 	);

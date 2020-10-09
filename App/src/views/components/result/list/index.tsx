@@ -40,13 +40,15 @@ export const OLResultsList: React.FC<Props> = (props) => {
 					<View
 						style={{
 							paddingVertical: px(50),
-						}}>
+						}}
+					>
 						<OLText
 							font="Proxima_Nova_Bold"
 							size={18}
 							style={{
 								textAlign: 'center',
-							}}>
+							}}
+						>
 							{Lang.print('classes.empty')}
 						</OLText>
 					</View>

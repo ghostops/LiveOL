@@ -23,7 +23,8 @@ export const TodaysCompetitions: React.FC<Props> = ({ competitions, renderListIt
 				style={{
 					textAlign: 'center',
 					color: 'white',
-				}}>
+				}}
+			>
 				{Lang.print('home.today')}
 			</OLText>
 
@@ -33,7 +34,8 @@ export const TodaysCompetitions: React.FC<Props> = ({ competitions, renderListIt
 				style={{
 					textAlign: 'center',
 					color: 'white',
-				}}>
+				}}
+			>
 				{dateToReadable(new Date(competitions[0].date).toISOString())}
 			</OLText>
 
@@ -42,7 +44,8 @@ export const TodaysCompetitions: React.FC<Props> = ({ competitions, renderListIt
 					style={{
 						marginTop: UNIT,
 						width: '100%',
-					}}>
+					}}
+				>
 					<CardItem>
 						<Body style={{ width: '100%' }}>
 							<List style={{ width: '100%' }}>
@@ -63,7 +66,8 @@ export const TodaysCompetitions: React.FC<Props> = ({ competitions, renderListIt
 				style={{
 					color: 'white',
 					textAlign: 'center',
-				}}>
+				}}
+			>
 				{Lang.print('home.nothingToday')}
 			</OLText>
 		</React.Fragment>
@@ -74,7 +78,8 @@ export const TodaysCompetitions: React.FC<Props> = ({ competitions, renderListIt
 			style={{
 				padding: UNIT,
 				backgroundColor: COLORS.MAIN,
-			}}>
+			}}
+		>
 			{nothingToday ? innerNothing() : innerCompetitions()}
 		</View>
 	);

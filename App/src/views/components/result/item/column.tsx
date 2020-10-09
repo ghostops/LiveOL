@@ -16,13 +16,15 @@ export const OLResultColumn: React.FC<Props> = (props) => {
 				{
 					height: '100%',
 				},
-			]}>
+			]}
+		>
 			<View
 				style={{
 					flex: 1,
 					alignItems: props.align || 'flex-start',
 					justifyContent: 'flex-start',
-				}}>
+				}}
+			>
 				{props.children}
 			</View>
 		</Col>

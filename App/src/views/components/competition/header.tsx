@@ -30,14 +30,16 @@ export const OLCompetitionHeader: React.FC<Props> = (props) => (
 					backgroundColor: '#ff3838',
 					padding: px(10),
 					top: Platform.OS === 'ios' ? -px(35) : -px(30),
-				}}>
+				}}
+			>
 				<OLText
 					font="Proxima_Nova_Bold"
 					size={18}
 					style={{
 						textAlign: 'center',
 						color: 'white',
-					}}>
+					}}
+				>
 					{Lang.print('competitions.canceled')}
 				</OLText>
 			</View>
@@ -46,17 +48,20 @@ export const OLCompetitionHeader: React.FC<Props> = (props) => (
 		<View
 			style={{
 				paddingHorizontal: px(20),
-			}}>
+			}}
+		>
 			<View
 				style={{
 					flexDirection: 'row',
-				}}>
+				}}
+			>
 				{props.competition.eventor && (
 					<View
 						style={{
 							alignItems: 'center',
 							justifyContent: 'center',
-						}}>
+						}}
+					>
 						{props.competition.eventor && (
 							<OLCompetitionClub
 								name={props.competition.club}
@@ -72,7 +77,8 @@ export const OLCompetitionHeader: React.FC<Props> = (props) => (
 						paddingTop: px(15),
 						alignItems: 'flex-end',
 						flex: 1,
-					}}>
+					}}
+				>
 					<OLText size={16} font="Proxima_Nova" style={{ marginBottom: px(15) }}>
 						{Lang.print('competitions.date')}: {dateToReadable(props.competition.date)}
 					</OLText>
@@ -103,14 +109,16 @@ export const OLCompetitionHeader: React.FC<Props> = (props) => (
 						padding: px(20),
 						borderRadius: 4,
 						marginTop: px(5),
-					}}>
+					}}
+				>
 					<OLText
 						size={26}
 						font="Rift_Bold"
 						style={{
 							color: 'white',
 							paddingBottom: px(10),
-						}}>
+						}}
+					>
 						{Lang.print('competitions.info')}
 					</OLText>
 
@@ -127,7 +135,8 @@ export const OLCompetitionHeader: React.FC<Props> = (props) => (
 				marginBottom: px(15),
 				marginTop: px(25),
 				flexDirection: 'row',
-			}}>
+			}}
+		>
 			<View style={{ flex: 1 }}>
 				<OLText
 					font="Proxima_Nova_Bold"
@@ -135,7 +144,8 @@ export const OLCompetitionHeader: React.FC<Props> = (props) => (
 					style={{
 						textAlign: 'left',
 						color: 'black',
-					}}>
+					}}
+				>
 					{Lang.print('competitions.classes')}
 				</OLText>
 			</View>

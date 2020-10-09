@@ -13,7 +13,8 @@ export class OLSafeAreaView extends React.PureComponent {
 								paddingLeft: insets.left,
 								paddingRight: insets.right,
 								flex: 1,
-							}}>
+							}}
+						>
 							{this.props.children}
 						</View>
 					);

@@ -12,7 +12,8 @@ export const OLResultClub: React.FC<Props> = ({ club }) => (
 		font="Proxima_Nova"
 		style={{
 			color: 'grey',
-		}}>
+		}}
+	>
 		{club}
 	</OLText>
 );

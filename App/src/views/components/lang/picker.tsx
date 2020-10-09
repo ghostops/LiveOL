@@ -19,7 +19,8 @@ export class LanguagePicker extends React.PureComponent<any, State> {
 					width: '100%',
 					padding: UNIT / 2,
 				}}
-				horizontal>
+				horizontal
+			>
 				{Lang.availible.map((lang) => (
 					<TouchableOpacity
 						onPress={async () => {
@@ -32,7 +33,8 @@ export class LanguagePicker extends React.PureComponent<any, State> {
 							borderBottomWidth: 2,
 							justifyContent: 'center',
 						}}
-						key={lang}>
+						key={lang}
+					>
 						<OLFlag code={lang} size={32} />
 					</TouchableOpacity>
 				))}

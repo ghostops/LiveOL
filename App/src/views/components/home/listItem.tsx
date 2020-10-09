@@ -21,7 +21,8 @@ export const HomeListItem: React.FC<Props> = ({ competition, index, total, onCom
 				width: '100%',
 				borderBottomWidth: index === total - 1 ? 0 : 1,
 			}}
-			onPress={() => onCompetitionPress && onCompetitionPress(competition)}>
+			onPress={() => onCompetitionPress && onCompetitionPress(competition)}
+		>
 			<OLText size={16} font="Proxima_Nova">
 				{competition.name}
 			</OLText>

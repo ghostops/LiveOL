@@ -80,7 +80,8 @@ export class OLSearch extends React.PureComponent<Props, State> {
 					top: 0,
 					left: 0,
 					right: 0,
-				}}>
+				}}
+			>
 				<Header
 					searchBar
 					rounded
@@ -88,14 +89,16 @@ export class OLSearch extends React.PureComponent<Props, State> {
 						paddingTop: 0,
 						height: SEARCH_SIZE,
 						backgroundColor: '#fafafa',
-					}}>
+					}}
+				>
 					<TouchableOpacity
 						style={{
 							height: '100%',
 							justifyContent: 'center',
 							paddingHorizontal: UNIT / 2,
 						}}
-						onPress={this.hideSearch}>
+						onPress={this.hideSearch}
+					>
 						<Icon name="close" />
 					</TouchableOpacity>
 

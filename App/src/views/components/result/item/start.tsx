@@ -10,7 +10,8 @@ export const OLStartTime: React.FC<Props> = ({ time }) => (
 	<View
 		style={{
 			flex: 1,
-		}}>
+		}}
+	>
 		<OLText font="Proxima_Nova" size={16}>
 			{time}
 		</OLText>

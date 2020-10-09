@@ -13,7 +13,8 @@ export const OLResultBadge: React.FC<Props> = ({ place }) => (
 			alignItems: 'center',
 			justifyContent: 'center',
 			flex: 1,
-		}}>
+		}}
+	>
 		{Boolean(place.length > 0 && place !== '-') && (
 			<Badge
 				style={{
@@ -23,7 +24,8 @@ export const OLResultBadge: React.FC<Props> = ({ place }) => (
 					width: 25,
 					height: 25,
 					borderRadius: 50,
-				}}>
+				}}
+			>
 				<OLText size={12} font="Proxima_Nova" style={{ color: 'white' }}>
 					{place}
 				</OLText>

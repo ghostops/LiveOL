@@ -42,13 +42,15 @@ export class RadioResultsPromotion extends React.PureComponent<any, State> {
 					width: '100%',
 					backgroundColor: COLORS.LIGHT,
 					padding: 15,
-				}}>
+				}}
+			>
 				<OLText
 					font="Proxima_Nova_Bold"
 					size={18}
 					style={{
 						color: 'white',
-					}}>
+					}}
+				>
 					{Lang.print('promotions.didYouKnow')}
 				</OLText>
 
@@ -58,7 +60,8 @@ export class RadioResultsPromotion extends React.PureComponent<any, State> {
 					style={{
 						color: 'white',
 						marginTop: 5,
-					}}>
+					}}
+				>
 					{Lang.print('promotions.radioResults')}
 				</OLText>
 
@@ -68,7 +71,8 @@ export class RadioResultsPromotion extends React.PureComponent<any, State> {
 						position: 'absolute',
 						top: 5,
 						right: 10,
-					}}>
+					}}
+				>
 					<Ionicons name="md-close" size={32} color="white" />
 				</TouchableOpacity>
 			</View>

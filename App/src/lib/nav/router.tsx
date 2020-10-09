@@ -29,7 +29,8 @@ const Component: React.FC<StateProps> = ({ landscape }) => {
 					primary: 'white',
 				},
 				dark: false,
-			}}>
+			}}
+		>
 			<StatusBar translucent />
 
 			<Stack.Navigator
@@ -44,7 +45,8 @@ const Component: React.FC<StateProps> = ({ landscape }) => {
 						alignItems: 'center',
 					},
 					headerStatusBarHeight: px(20) + (hasNotch && !landscape ? xtraSpace : 0),
-				}}>
+				}}
+			>
 				<Stack.Screen
 					name={Routes.home}
 					component={Mappings[Routes.home]}

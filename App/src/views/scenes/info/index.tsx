@@ -102,7 +102,8 @@ class Component extends React.PureComponent<Props, State> {
 							key={text}
 							style={{
 								marginBottom: px(16),
-							}}>
+							}}
+						>
 							{text}
 						</OLText>
 					))}
@@ -121,7 +122,8 @@ class Component extends React.PureComponent<Props, State> {
 							size={16}
 							style={{
 								marginBottom: px(16),
-							}}>
+							}}
+						>
 							{Lang.print('info.version')}: {VERSION}
 						</OLText>
 					</TouchableOpacity>
@@ -135,7 +137,8 @@ class Component extends React.PureComponent<Props, State> {
 								onLongPress={() => button.onLongPress && button.onLongPress()}
 								style={{
 									marginBottom: index !== this.BUTTONS.length - 1 ? px(16) : 0,
-								}}>
+								}}
+							>
 								{button.text}
 							</OLButton>
 						);
@@ -158,7 +161,8 @@ class Component extends React.PureComponent<Props, State> {
 			style={{
 				flexDirection: 'row',
 				alignItems: 'center',
-			}}>
+			}}
+		>
 			<OLFlag code={code} size={32} />
 
 			<OLText
@@ -166,7 +170,8 @@ class Component extends React.PureComponent<Props, State> {
 				size={16}
 				style={{
 					marginLeft: px(5),
-				}}>
+				}}
+			>
 				{name}
 			</OLText>
 		</View>
@@ -181,14 +186,16 @@ class Component extends React.PureComponent<Props, State> {
 						style={{
 							alignItems: 'center',
 							width: '100%',
-						}}>
+						}}
+					>
 						<OLText
 							font="Proxima_Nova_Bold"
 							size={16}
 							style={{
 								marginBottom: px(16),
 								textAlign: 'center',
-							}}>
+							}}
+						>
 							{Lang.print('info.translations.phraseapp')}:
 						</OLText>
 
@@ -231,11 +238,13 @@ class Component extends React.PureComponent<Props, State> {
 				<ScrollView
 					style={{
 						padding: 10,
-					}}>
+					}}
+				>
 					<View
 						style={{
 							flexDirection: this.props.landscape ? 'row' : 'column',
-						}}>
+						}}
+					>
 						{this.renderGeneralCard()}
 						{this.renderActionCard()}
 					</View>

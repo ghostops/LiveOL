@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { COLORS, px, fontPx } from 'util/const';
+import { COLORS, px } from 'util/const';
 import { Lang } from 'lib/lang';
 import { OLLastPassingResult } from 'views/components/latest_passings/listItem';
 import { OLLoading } from 'views/components/loading';
@@ -7,8 +7,7 @@ import { OLRefetcher } from 'views/components/refetcher';
 import { OLSafeAreaView } from 'views/components/safeArea';
 import { OLText } from 'views/components/text';
 import { Passing } from 'lib/graphql/fragments/types/Passing';
-import { ScrollView, RefreshControl } from 'react-native';
-import { View, Title } from 'native-base';
+import { ScrollView, RefreshControl, View } from 'react-native';
 
 interface Props {
 	passings: Passing[];
@@ -32,37 +31,43 @@ export const OLPassings: React.FC<Props> = (props) => {
 						colors={[COLORS.MAIN]}
 						tintColor={COLORS.MAIN}
 					/>
-				}>
+				}
+			>
 				<View
 					style={{
 						padding: px(20),
-					}}>
+					}}
+				>
 					{!props.passings.length && (
 						<OLText
 							font="Proxima_Nova_Bold"
 							size={16}
 							style={{
 								textAlign: 'center',
-							}}>
+							}}
+						>
 							{Lang.print('competitions.passings.empty')}
 						</OLText>
 					)}
 					{Boolean(props.passings.length) && (
 						<>
-							<Title
+							<OLText
+								font="Proxima_Nova_Bold"
+								size={20}
 								style={{
 									textAlign: 'left',
-									fontSize: fontPx(20),
 									marginVertical: 10,
 									color: 'black',
-								}}>
+								}}
+							>
 								{Lang.print('competitions.passings.title')}
-							</Title>
+							</OLText>
 
 							<View
 								style={{
 									flexDirection: props.landscape ? 'row' : 'column',
-								}}>
+								}}
+							>
 								{props.passings.map((passing, index) => (
 									<OLLastPassingResult key={index} passing={passing} landscape={props.landscape} />
 								))}

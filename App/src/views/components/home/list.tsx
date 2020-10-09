@@ -65,7 +65,8 @@ export const HomeList: React.FC<Props> = ({ competitions, onCompetitionPress, li
 						style={{
 							marginLeft: 0,
 							paddingHorizontal: px(16),
-						}}>
+						}}
+					>
 						<OLText size={16} font="Proxima_Nova_Bold">
 							{dateStr} {isToday && `(${Lang.print('home.today')})`}
 						</OLText>
@@ -104,13 +105,15 @@ export const HomeList: React.FC<Props> = ({ competitions, onCompetitionPress, li
 						style={{
 							width: '100%',
 							paddingVertical: px(16 * 4),
-						}}>
+						}}
+					>
 						<OLText
 							font="Proxima_Nova"
 							size={16}
 							style={{
 								textAlign: 'center',
-							}}>
+							}}
+						>
 							{Lang.print('home.nothingSearch')}
 						</OLText>
 					</View>

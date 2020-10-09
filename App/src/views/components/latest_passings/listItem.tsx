@@ -23,7 +23,8 @@ export const OLLastPassingResult: React.FC<Props> = ({ passing, landscape }) => 
 				<Body
 					style={{
 						flexDirection: 'row',
-					}}>
+					}}
+				>
 					{!landscape && (
 						<View>
 							<OLText font="Proxima_Nova" size={16} style={TEXT_STYLE}>
@@ -41,7 +42,8 @@ export const OLLastPassingResult: React.FC<Props> = ({ passing, landscape }) => 
 						style={{
 							flex: 1,
 							paddingLeft: landscape ? px(8) : px(16),
-						}}>
+						}}
+					>
 						<OLText font="Proxima_Nova" size={16} style={TEXT_STYLE}>
 							{passing.class}
 						</OLText>

@@ -8,7 +8,8 @@ export const OLLoading: React.FC = () => (
 			flex: 1,
 			justifyContent: 'center',
 			alignItems: 'center',
-		}}>
+		}}
+	>
 		<Spinner color={COLORS.MAIN} />
 	</View>
 );

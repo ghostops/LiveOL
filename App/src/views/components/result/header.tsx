@@ -102,7 +102,8 @@ const Component: React.FC<OwnProps> = ({ table, className, competitionId, maxRow
 					style={{
 						color: '#444444',
 					}}
-					numberOfLines={1}>
+					numberOfLines={1}
+				>
 					{text}
 				</OLText>
 			</OLResultColumn>
@@ -118,7 +119,8 @@ const Component: React.FC<OwnProps> = ({ table, className, competitionId, maxRow
 				backgroundColor: '#e3e3e3',
 				borderBottomColor: '#cccccc',
 				borderBottomWidth: 1,
-			}}>
+			}}
+		>
 			{!loading && !error && <Grid>{labels(table, maxRowSize || 0, splits).map(renderCol)}</Grid>}
 		</View>
 	);

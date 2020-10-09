@@ -102,7 +102,8 @@ export class OLRefetcherCircle extends React.PureComponent<Props, State> {
 					position: 'absolute',
 					bottom: px(0),
 					right: px(0),
-				}}>
+				}}
+			>
 				<AnimatedCircularProgress
 					ref={(ref) => (this.circularProgress = ref)}
 					size={px(50)}

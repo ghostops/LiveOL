@@ -49,7 +49,8 @@ export class OLHome extends React.PureComponent<Props> {
 				style={{
 					flexDirection: 'row',
 					height: px(50),
-				}}>
+				}}
+			>
 				<LanguagePicker />
 
 				<View
@@ -59,7 +60,8 @@ export class OLHome extends React.PureComponent<Props> {
 						alignItems: 'center',
 						paddingRight: px(10),
 						flexDirection: 'row',
-					}}>
+					}}
+				>
 					<Button transparent onPress={this.props.openSearch}>
 						<OLText font="Proxima_Nova" size={16}>
 							{Lang.print('home.search')}
@@ -76,7 +78,8 @@ export class OLHome extends React.PureComponent<Props> {
 				style={{
 					flex: 1,
 					width: '100%',
-				}}>
+				}}
+			>
 				<View style={{ flex: 1 }}>
 					{this.renderHeader()}
 

@@ -17,7 +17,8 @@ export const OLCompetitionClub: React.FC<Props> = ({ name, style, logoUrl, size 
 			<View
 				style={{
 					alignItems: 'center',
-				}}>
+				}}
+			>
 				<Image
 					source={{ uri: `${logoUrl}?type=${size}` }}
 					style={{

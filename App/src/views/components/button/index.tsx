@@ -22,14 +22,16 @@ export const OLButton: React.FC<Props> = (props) => {
 					paddingHorizontal: 10,
 				},
 				props.style,
-			]}>
+			]}
+		>
 			{props.beforeText}
 			<OLText
 				font="Rift_Bold"
 				size={props.small ? 14 : 16}
 				style={{
 					color: 'white',
-				}}>
+				}}
+			>
 				{props.children}
 			</OLText>
 			{props.afterText}
