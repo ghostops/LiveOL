@@ -11,7 +11,7 @@ export const DeviceOrientationAprox = (): 'landscape' | 'portrait' => {
 };
 
 export const PACKAGE = require('../../package.json');
-export const VERSION = PACKAGE.version;
+export const VERSION: string = PACKAGE.version;
 
 export const DEVICE_NAME = Constants.deviceName;
 

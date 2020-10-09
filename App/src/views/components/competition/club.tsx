@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { View } from 'native-base';
 import { OLText } from '../text';
-import { Image, Linking, ViewStyle } from 'react-native';
+import { Image, ViewStyle } from 'react-native';
 import { px } from 'util/const';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 interface Props {
 	name: string;

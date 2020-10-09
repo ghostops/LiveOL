@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { View } from 'native-base';
-import { COLORS, UNIT } from 'util/const';
-import { Lang } from 'lib/lang';
-import { TouchableOpacity, LayoutAnimation } from 'react-native';
-import { promotion } from './handler';
+import { COLORS } from 'util/const';
 import { Ionicons } from '@expo/vector-icons';
+import { Lang } from 'lib/lang';
 import { OLText } from '../text';
+import { promotion } from './handler';
+import { TouchableOpacity, LayoutAnimation } from 'react-native';
+import { View } from 'native-base';
 
 interface State {
 	show: boolean;
@@ -18,7 +18,7 @@ export class RadioResultsPromotion extends React.PureComponent<any, State> {
 		show: false,
 	};
 
-	async componentWillMount() {
+	async componentDidMount() {
 		const show = await promo.canShow();
 		this.setState({ show });
 	}
@@ -29,7 +29,7 @@ export class RadioResultsPromotion extends React.PureComponent<any, State> {
 
 	close = () => {
 		this.setState({ show: false });
-		promo.close();
+		void promo.close();
 	};
 
 	render() {

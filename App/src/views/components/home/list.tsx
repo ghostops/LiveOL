@@ -1,23 +1,20 @@
 import * as React from 'react';
-import { px, fontPx } from 'util/const';
-import _ from 'lodash';
-import * as NB from 'native-base';
-import { Lang } from 'lib/lang';
+import { Competition } from 'lib/graphql/fragments/types/Competition';
+import { FlatList } from 'react-native';
 import { HomeListItem } from './listItem';
 import { isDateToday, dateToReadable } from 'util/date';
-import { FlatList } from 'react-native';
-import { OLSafeAreaView } from '../safeArea';
-import { Competition } from 'lib/graphql/fragments/types/Competition';
+import { Lang } from 'lib/lang';
+import { List, ListItem, View } from 'native-base';
 import { OLLoading } from '../loading';
+import { OLSafeAreaView } from '../safeArea';
 import { OLText } from '../text';
-
-const { List, ListItem, Text, View } = NB;
+import { px } from 'util/const';
 
 interface Props {
 	competitions: Competition[];
 	onCompetitionPress: (comp: Competition) => void;
 	listHeader: React.ReactElement;
-	loadMore: () => void;
+	loadMore: () => Promise<any>;
 	loading: boolean;
 }
 
@@ -25,7 +22,7 @@ export const groupVisibleCompetitions = (visibleCompetitions: Competition[]): Re
 	const uniqEs6 = (arrArg) =>
 		arrArg.filter((elem, pos, arr) => {
 			return arr.indexOf(elem) === pos;
-		});
+		}) as string[];
 
 	const keys = uniqEs6(visibleCompetitions.map((comp) => comp.date));
 	const map = {};

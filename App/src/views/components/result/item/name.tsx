@@ -1,6 +1,4 @@
 import * as React from 'react';
-import { View, Text } from 'native-base';
-import { fontPx } from 'util/const';
 import { OLText } from '../../text';
 
 interface Props {

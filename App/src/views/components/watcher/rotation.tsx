@@ -10,6 +10,7 @@ interface DispatchProps {
 const screen = Dimensions.get('screen');
 
 const Component: React.FC<DispatchProps> = ({ children, setRotation }) => {
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [dimensions, setDimensions] = React.useState({ screen });
 
 	const onChange = ({ screen }) => {

@@ -1,10 +1,11 @@
+/* eslint-disable react/display-name */
 import * as React from 'react';
 import { COLORS, px } from 'util/const';
 import { connect } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Lang } from 'lib/lang';
 import { Mappings } from './mappings';
-import { NavigationContainer, TypedNavigator, ParamListBase } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { Right, Left } from 'views/scenes/home/header';
 import { Routes } from './routes';
 import { StatusBar } from 'react-native';
@@ -50,6 +51,7 @@ const Component: React.FC<StateProps> = ({ landscape }) => {
 					options={(props) => ({
 						title: Lang.print('home.title'),
 						headerLeft: () => <Left />,
+						// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 						headerRight: () => <Right onPress={() => props.navigation.navigate(Routes.info)} />,
 					})}
 				/>
@@ -65,7 +67,7 @@ const Component: React.FC<StateProps> = ({ landscape }) => {
 				<Stack.Screen
 					name={Routes.info}
 					component={Mappings[Routes.info]}
-					options={(props) => ({
+					options={() => ({
 						title: Lang.print('info.title'),
 					})}
 				/>
@@ -82,7 +84,7 @@ const Component: React.FC<StateProps> = ({ landscape }) => {
 					name={Routes.results}
 					component={Mappings[Routes.results]}
 					options={(props) => ({
-						title: `${Lang.print('classes.resultsFor')}: ${props.route.params['className']}`,
+						title: `${Lang.print('classes.resultsFor')}: ${props.route.params['className'] as string}`,
 					})}
 					initialParams={{
 						id: 16011,

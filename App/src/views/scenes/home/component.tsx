@@ -5,12 +5,10 @@ import { HomeListItem } from 'views/components/home/listItem';
 import { Lang } from 'lib/lang';
 import { LanguagePicker } from 'views/components/lang/picker';
 import { OLSearch } from 'views/components/search/container';
-import { px, COLORS } from 'util/const';
-import { TodaysCompetitions } from 'views/components/home/today';
-import * as NB from 'native-base';
 import { OLText } from 'views/components/text';
-
-const { Spinner, Text, View, Button } = NB;
+import { px } from 'util/const';
+import { TodaysCompetitions } from 'views/components/home/today';
+import { View, Button } from 'native-base';
 
 interface Props {
 	competitions: Competition[];

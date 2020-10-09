@@ -1,16 +1,15 @@
 import * as React from 'react';
+import _ from 'lodash';
+import { clubLogoUrl } from 'util/clubUrl';
 import { GET_CLUB_BY_NAME } from 'lib/graphql/queries/clubs';
 import { GetClubByName, GetClubByNameVariables } from 'lib/graphql/queries/types/GetClubByName';
+import { Image, Linking, ViewStyle } from 'react-native';
 import { OLError } from 'views/components/error';
+import { OLText } from '../text';
+import { px } from 'util/const';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useQuery } from '@apollo/react-hooks';
 import { View } from 'native-base';
-import { Lang } from 'lib/lang';
-import { OLText } from '../text';
-import { Image, Linking, ViewStyle } from 'react-native';
-import { px } from 'util/const';
-import { clubLogoUrl } from 'util/clubUrl';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import * as _ from 'lodash';
 
 interface Props {
 	clubName: string;
@@ -19,10 +18,8 @@ interface Props {
 }
 
 export const OLCompetitionClub: React.FC<Props> = ({ clubName, style, logoUrl }) => {
-	const { data, loading, error } =
-        useQuery<GetClubByName, GetClubByNameVariables>(
-        	GET_CLUB_BY_NAME,
-        	{ variables: { name: clubName } },
+	const { data, loading, error } = useQuery<GetClubByName, GetClubByNameVariables>(GET_CLUB_BY_NAME, {
+		variables: { name: clubName },
 	});
 
 	if (error) return <OLError error={error} />;
@@ -35,12 +32,11 @@ export const OLCompetitionClub: React.FC<Props> = ({ clubName, style, logoUrl })
 		<View style={style}>
 			<TouchableOpacity
 				onPress={goToWebsite}
-				activeOpacity={club.website ? .55 : 1}
+				activeOpacity={club.website ? 0.55 : 1}
 				style={{
 					flexDirection: 'row',
 					alignItems: 'center',
-				}}
-			>
+				}}>
 				<Image
 					source={{ uri: loading ? logoUrl : clubLogoUrl(club, 2) }}
 					style={{
@@ -50,10 +46,7 @@ export const OLCompetitionClub: React.FC<Props> = ({ clubName, style, logoUrl })
 					}}
 				/>
 
-				<OLText
-					size={16}
-					font="Proxima_Nova"
-				>
+				<OLText size={16} font="Proxima_Nova">
 					{club.name}
 				</OLText>
 			</TouchableOpacity>

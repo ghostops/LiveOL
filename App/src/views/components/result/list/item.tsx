@@ -1,7 +1,5 @@
 import * as React from 'react';
-import { COLORS, px } from 'util/const';
-import { connect } from 'react-redux';
-import { ListItem, View, Text, Badge } from 'native-base';
+import { px } from 'util/const';
 import { OLResultAnimation } from 'views/components/result/item/animation';
 import { OLResultBadge } from 'views/components/result/item/badge';
 import { OLResultClub } from 'views/components/result/item/club';
@@ -9,11 +7,10 @@ import { OLResultColumn } from 'views/components/result/item/column';
 import { OLResultName } from 'views/components/result/item/name';
 import { OLResultTime } from 'views/components/result/item/time';
 import { OLResultTimeplus } from 'views/components/result/item/timeplus';
-import { OLSplits } from 'views/components/result/item/splits';
 import { OLStartTime } from 'views/components/result/item/start';
 import { Result } from 'lib/graphql/fragments/types/Result';
 import { showToast } from 'lib/toasts/competitiorInfo';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { OLResultListItem } from '../item/listItem';
 import { OLResultLiveRunning } from '../item/liveRunning';
 import { isLiveRunning, startIsAfterNow } from 'util/isLive';
@@ -60,7 +57,7 @@ export class OLResultItem extends React.PureComponent<Props> {
 		const { result } = this.props;
 
 		const moreInfo = () => {
-			showToast(result.name, result.club);
+			void showToast(result.name, result.club);
 		};
 
 		return (

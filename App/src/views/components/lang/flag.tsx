@@ -19,12 +19,12 @@ const FLAGS = {
 };
 
 export const OLFlag: React.FC<Props> = ({ code, size }) =>
-	FLAGS[remapCode[code]] ?
+	FLAGS[remapCode[code]] ? (
 		<Image
 			source={FLAGS[remapCode[code]]}
 			style={{
-				height: size * .65,
+				height: size * 0.65,
 				width: size,
 			}}
-		/> : null
-);
+		/>
+	) : null;

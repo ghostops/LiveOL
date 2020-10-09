@@ -4,17 +4,16 @@ import { connect } from 'react-redux';
 import { GET_SPLIT_CONTROLS } from 'lib/graphql/queries/results';
 import { GetSplitControls, GetSplitControlsVariables } from 'lib/graphql/queries/types/GetSplitControls';
 import { Grid } from 'react-native-easy-grid';
+import { LANDSCAPE_WIDTH, getExtraSize } from 'views/components/result/table/row';
 import { Lang } from 'lib/lang';
 import { OLResultColumn } from './item/column';
-import { randomColor } from 'util/random';
-import { Split } from 'lib/graphql/fragments/types/Split';
-import { Text, View } from 'native-base';
-import { UNIT, px, COLORS } from 'util/const';
-import { useQuery } from '@apollo/react-hooks';
-import { ViewStyle, FlexAlignType } from 'react-native';
-import { LANDSCAPE_WIDTH, getExtraSize } from 'views/components/result/table/row';
-import { PORTRAIT_SIZE } from 'views/components/result/list/item';
 import { OLText } from '../text';
+import { PORTRAIT_SIZE } from 'views/components/result/list/item';
+import { px } from 'util/const';
+import { Split } from 'lib/graphql/fragments/types/Split';
+import { useQuery } from '@apollo/react-hooks';
+import { View } from 'native-base';
+import { ViewStyle, FlexAlignType } from 'react-native';
 
 interface OwnProps {
 	competitionId: number;
@@ -44,11 +43,7 @@ const labels = (table: boolean, maxSize: number, splits?: Split[]): Label[] => {
 			size: PORTRAIT_SIZE.name,
 			text: Lang.print('classes.header.name'),
 			style: {
-				width: (
-					table
-						? LANDSCAPE_WIDTH.name + getExtraSize(splits.length)
-						: 'auto'
-				),
+				width: table ? LANDSCAPE_WIDTH.name + getExtraSize(splits.length) : 'auto',
 			},
 		},
 		time: {
@@ -68,22 +63,21 @@ const labels = (table: boolean, maxSize: number, splits?: Split[]): Label[] => {
 		},
 	};
 
-	const inPortrait: Label[] = [
-		all.place,
-		all.name,
-		all.time,
-	];
+	const inPortrait: Label[] = [all.place, all.name, all.time];
 
 	const inLandscape: Label[] = [
 		all.place,
 		all.name,
 		all.start,
-		...splits.map((s) => ({
-			text: s.name,
-			style: {
+		...splits.map(
+			(s) =>
+				({
+					text: s.name,
+					style: {
 						width: LANDSCAPE_WIDTH.splits,
-			},
-		} as Label)),
+					},
+				} as Label),
+		),
 		all.time,
 	];
 
@@ -91,32 +85,24 @@ const labels = (table: boolean, maxSize: number, splits?: Split[]): Label[] => {
 };
 
 const Component: React.FC<OwnProps> = ({ table, className, competitionId, maxRowSize }) => {
-	const { data, loading, error } =
-        useQuery<GetSplitControls, GetSplitControlsVariables>(
-        	GET_SPLIT_CONTROLS,
-        	{ variables: { competitionId, className } },
+	const { data, loading, error } = useQuery<GetSplitControls, GetSplitControlsVariables>(GET_SPLIT_CONTROLS, {
+		variables: { competitionId, className },
 	});
 
 	const splits: Split[] = _.get(data, 'results.getSplitControls', []);
 
-	const renderCol = ({ text, size, align, style }, index) => {
+	const renderCol = ({ text, size, align, style }: Label, index: number) => {
 		const key = `${text}:${index}`;
 
 		return (
-			<OLResultColumn
-				size={size}
-				key={key}
-				align={align || 'flex-start'}
-				style={style}
-			>
+			<OLResultColumn size={size} key={key} align={align || 'flex-start'} style={style}>
 				<OLText
 					font="Rift_Bold"
 					size={18}
 					style={{
 						color: '#444444',
 					}}
-					numberOfLines={1}
-				>
+					numberOfLines={1}>
 					{text}
 				</OLText>
 			</OLResultColumn>
@@ -132,18 +118,10 @@ const Component: React.FC<OwnProps> = ({ table, className, competitionId, maxRow
 				backgroundColor: '#e3e3e3',
 				borderBottomColor: '#cccccc',
 				borderBottomWidth: 1,
-			}}
-		>
-			{
-				(!loading && !error) &&
-                <Grid>
-                	{labels(table, maxRowSize || 0, splits).map(renderCol)}
-                </Grid>
-			}
+			}}>
+			{!loading && !error && <Grid>{labels(table, maxRowSize || 0, splits).map(renderCol)}</Grid>}
 		</View>
 	);
 };
-
-const mapStateToProps = (state: AppState) => ({});
 
 export const ResultHeader = (connect(null, null)(Component) as unknown) as React.ComponentClass<OwnProps>;

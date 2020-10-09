@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { View } from 'native-base';
 import { Animated } from 'react-native';
 import { Result } from 'lib/graphql/fragments/types/Result';
 
@@ -8,19 +7,13 @@ interface Props {
 }
 
 const hasChanged = (prev: Result, now: Result) =>
-	(
-		prev.place !==
-        now.place
-	) ||
+	prev.place !== now.place ||
 	prev.result !== now.result ||
 	prev.status !== now.status ||
-		prev.splits.map((s) => s.time).join() !==
-        now.splits.map((s) => s.time).join()
-	)
-);
+	prev.splits.map((s) => s.time).join() !== now.splits.map((s) => s.time).join();
 
 export const OLResultAnimation: React.FC<Props> = (props) => {
-	const [animation, setAnimation] = React.useState(new Animated.Value(0));
+	const [animation] = React.useState(new Animated.Value(0));
 	const [result, setResult] = React.useState(props.result);
 
 	React.useEffect(() => {
@@ -32,30 +25,21 @@ export const OLResultAnimation: React.FC<Props> = (props) => {
 	});
 
 	const startAnimation = () => {
-		Animated.timing(
-			animation,
-			{
-				toValue: 1,
+		Animated.timing(animation, {
+			toValue: 1,
 			duration: 500,
 			useNativeDriver: false,
-			},
-		).start(() => {
-			setTimeout(
-				() => stopAnimation(),
-				5000,
-			);
+		}).start(() => {
+			setTimeout(() => stopAnimation(), 5000);
 		});
 	};
 
 	const stopAnimation = () => {
-		Animated.timing(
-			animation,
-			{
+		Animated.timing(animation, {
 			toValue: 0,
-				duration: 500,
-				useNativeDriver: false,
-			},
-		).start();
+			duration: 500,
+			useNativeDriver: false,
+		}).start();
 	};
 
 	const backgroundColor = animation.interpolate({
@@ -63,11 +47,5 @@ export const OLResultAnimation: React.FC<Props> = (props) => {
 		outputRange: ['rgba(0,0,0,0)', 'rgba(255,0,0,.25)'],
 	});
 
-	return (
-		<Animated.View
-			style={{ backgroundColor }}
-		>
-			{props.children}
-		</Animated.View>
-	);
+	return <Animated.View style={{ backgroundColor }}>{props.children}</Animated.View>;
 };

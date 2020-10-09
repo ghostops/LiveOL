@@ -1,10 +1,8 @@
 import * as React from 'react';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { client } from 'lib/graphql/client';
-import { COLORS } from 'util/const';
 import { Lang } from 'lib/lang';
 import { Image, View } from 'react-native';
-import { OLPush } from 'views/components/notifications/push';
 import { OLRotationWatcher } from 'views/components/watcher/rotation';
 import { Provider } from 'react-redux';
 import { Root } from 'native-base';
@@ -20,15 +18,15 @@ interface State {
 
 window['clog'] = (...props) => console.warn(JSON.stringify(props));
 
-SplashScreen.preventAutoHideAsync();
+void SplashScreen.preventAutoHideAsync();
 
-export default class AppRoot extends React.Component<{}, State> {
+export default class AppRoot extends React.Component<any, State> {
 	state = {
 		ready: false,
 	};
 
 	componentDidMount() {
-		this.onLaunch();
+		void this.onLaunch();
 	}
 
 	onLaunch = async () => {
@@ -45,7 +43,7 @@ export default class AppRoot extends React.Component<{}, State> {
 		});
 
 		setTimeout(() => {
-			this.setState({ ready: true }, () => SplashScreen.hideAsync());
+			this.setState({ ready: true }, () => void SplashScreen.hideAsync());
 		}, 3000);
 	};
 

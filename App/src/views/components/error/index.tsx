@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { View, Text } from 'native-base';
 import { ApolloError } from 'apollo-boost';
 import { OLText } from '../text';
 import { ScrollView, RefreshControl } from 'react-native';
@@ -16,7 +15,7 @@ export const OLError: React.FC<Props> = ({ error, refetch }) => {
 	return (
 		<ScrollView
 			scrollEnabled={!!refetch}
-			refreshControl={(
+			refreshControl={
 				<RefreshControl
 					onRefresh={async () => {
 						try {
@@ -30,29 +29,19 @@ export const OLError: React.FC<Props> = ({ error, refetch }) => {
 					colors={[COLORS.MAIN]}
 					tintColor={COLORS.MAIN}
 				/>
-			)}
+			}
 			contentContainerStyle={{
 				flex: 1,
 				justifyContent: 'center',
 				alignItems: 'center',
 				padding: px(20),
-			}}
-		>
-			<OLText
-				font="Proxima_Nova"
-				size={16}
-				style={{ textAlign: 'center' }}
-			>
+			}}>
+			<OLText font="Proxima_Nova" size={16} style={{ textAlign: 'center' }}>
 				{error.message}
 			</OLText>
 
-			{
-				!!refetch &&
-                <OLText
-                	font="Proxima_Nova"
-                	size={12}
-                	style={{ paddingTop: px(10) }}
-                >
+			{!!refetch && (
+				<OLText font="Proxima_Nova" size={12} style={{ paddingTop: px(10) }}>
 					Pull down to try again
 				</OLText>
 			)}

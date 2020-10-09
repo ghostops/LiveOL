@@ -54,9 +54,9 @@ export class OLRefetcherCircle extends React.PureComponent<Props, State> {
 
 	startAnimation = () => {
 		if (this.circularProgress) {
-			this.animate();
+			void this.animate();
 
-			this.interval = setInterval(this.animate, this.props.interval + 500);
+			this.interval = setInterval(() => void this.animate(), this.props.interval + 500);
 		}
 	};
 

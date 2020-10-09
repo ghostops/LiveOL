@@ -1,17 +1,14 @@
 import * as React from 'react';
-import { Cache } from 'lib/cache';
 import { COLORS, px, fontPx } from 'util/const';
 import { Lang } from 'lib/lang';
 import { OLLastPassingResult } from 'views/components/latest_passings/listItem';
 import { OLLoading } from 'views/components/loading';
 import { OLRefetcher } from 'views/components/refetcher';
 import { OLSafeAreaView } from 'views/components/safeArea';
-import { Passing } from 'lib/graphql/fragments/types/Passing';
-import { ScrollView, RefreshControl, TextStyle } from 'react-native';
-import * as NB from 'native-base';
 import { OLText } from 'views/components/text';
-
-const { View, Spinner, Text, Body, CardItem, Card, Title } = NB;
+import { Passing } from 'lib/graphql/fragments/types/Passing';
+import { ScrollView, RefreshControl } from 'react-native';
+import { View, Title } from 'native-base';
 
 interface Props {
 	passings: Passing[];

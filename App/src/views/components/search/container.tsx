@@ -1,11 +1,7 @@
 import * as React from 'react';
 import * as Actions from 'views/scenes/home/store';
-import { Competition } from 'lib/graphql/fragments/types/Competition';
 import { OLSearch as Component } from './component';
 import { connect } from 'react-redux';
-import { useQuery } from '@apollo/react-hooks';
-import { AllCompetitions } from 'lib/graphql/queries/types/AllCompetitions';
-import { ALL_COMPETITIONS } from 'lib/graphql/queries/competitions';
 
 interface StateProps {
 	searching: boolean;

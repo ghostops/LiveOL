@@ -1,13 +1,11 @@
 import * as React from 'react';
 import { dateToReadable } from 'util/date';
 import { UNIT, COLORS } from 'util/const';
-import * as NB from 'native-base';
+import { List, View, CardItem, Card, Body } from 'native-base';
 import { Lang } from 'lib/lang';
 import { OLSafeAreaView } from '../safeArea';
 import { Competition } from 'lib/graphql/fragments/types/Competition';
 import { OLText } from '../text';
-
-const { List, Text, View, CardItem, Card, Body } = NB;
 
 interface Props {
 	competitions: Competition[];

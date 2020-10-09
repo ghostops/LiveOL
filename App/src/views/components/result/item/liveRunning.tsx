@@ -1,7 +1,5 @@
 import * as React from 'react';
-import { diffDateNow, padTime } from 'util/date';
-import { fontPx } from 'util/const';
-import { statusI18n } from 'lib/lang/status';
+import { diffDateNow } from 'util/date';
 import { View } from 'native-base';
 import { OLText } from 'views/components/text';
 

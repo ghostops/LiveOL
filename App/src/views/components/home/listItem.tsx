@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { fontPx, px } from 'util/const';
+import { px } from 'util/const';
 import { ListItem } from 'native-base';
 import { Competition } from 'lib/graphql/fragments/types/Competition';
 import { OLText } from '../text';

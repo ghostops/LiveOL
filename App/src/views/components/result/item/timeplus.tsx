@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { statusI18n } from 'lib/lang/status';
-import { View, Text } from 'native-base';
 import { OLText } from '../../text';
 
 interface Props {

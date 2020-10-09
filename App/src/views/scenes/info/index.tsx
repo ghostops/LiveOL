@@ -1,19 +1,17 @@
 import * as React from 'react';
+import { Alert, TouchableOpacity, View, Image, Linking, ScrollView } from 'react-native';
 import { client } from 'lib/graphql/client';
 import { connect } from 'react-redux';
+import { Container, Card, CardItem, Body } from 'native-base';
 import { GET_SERVER_VERSION } from 'lib/graphql/queries/server';
 import { Lang } from 'lib/lang';
 import { NavigationProp } from '@react-navigation/native';
 import { OLButton } from 'views/components/button';
 import { OLFlag } from 'views/components/lang/flag';
 import { OLText } from 'views/components/text';
-import { Platform, AsyncStorage, Alert, TouchableOpacity, View, Image, Linking, ScrollView } from 'react-native';
 import { ServerVersion } from 'lib/graphql/queries/types/ServerVersion';
 import { VERSION, px } from 'util/const';
-import * as NB from 'native-base';
 import * as Updates from 'expo-updates';
-
-const { Container, Card, CardItem, Text, Body } = NB;
 
 interface OwnProps {
 	navigation: NavigationProp<any, any>;
@@ -41,7 +39,7 @@ class Component extends React.PureComponent<Props, State> {
 
 		if (!__DEV__) {
 			const update = (await Updates.checkForUpdateAsync()) as any;
-			canUpdate = !!update.isAvailable;
+			canUpdate = update && update.isAvailable;
 		}
 
 		if (canUpdate) {
@@ -97,7 +95,7 @@ class Component extends React.PureComponent<Props, State> {
 		<Card style={{ paddingVertical: px(16), flex: 1 }}>
 			<CardItem>
 				<Body>
-					{(Lang.print('info.body') as any).map((text: string) => (
+					{((Lang.print('info.body') as unknown) as string[]).map((text: string) => (
 						<OLText
 							font="Proxima_Nova"
 							size={16}
@@ -132,7 +130,7 @@ class Component extends React.PureComponent<Props, State> {
 						return (
 							<OLButton
 								full
-								key={button.text + index}
+								key={`${button.text}/${index}`}
 								onPress={() => button.onPress && button.onPress()}
 								onLongPress={() => button.onLongPress && button.onLongPress()}
 								style={{
@@ -147,14 +145,14 @@ class Component extends React.PureComponent<Props, State> {
 		</Card>
 	);
 
-	translationCredits = [
+	translationCredits: { code: string; name: string }[] = [
 		{
 			code: 'no',
 			name: 'Pål Kittilsen',
 		},
 	];
 
-	renderTranslationCredit = ({ code, name }: { code; name }, index) => (
+	renderTranslationCredit = ({ code, name }: { code: string; name: string }, index: number) => (
 		<View
 			key={`${code}:${index}`}
 			style={{
@@ -222,7 +220,7 @@ class Component extends React.PureComponent<Props, State> {
 			if (this.state.secretTaps > 5) {
 				this.setState({ secretTaps: 0 });
 
-				this.versionAlert();
+				void this.versionAlert();
 			}
 		});
 	};

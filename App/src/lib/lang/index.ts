@@ -2,7 +2,7 @@ import { AsyncStorage } from 'react-native';
 import * as Localization from 'expo-localization';
 import * as _ from 'lodash';
 
-const LOCALES = {
+const LOCALES: any = {
 	en: require('../../../assets/locales/en.json'),
 	sv: require('../../../assets/locales/sv.json'),
 	no: require('../../../assets/locales/no.json'),
@@ -39,7 +39,7 @@ class Language {
 	};
 
 	public print = (key: string): string => {
-		return _.get(LOCALES, `${this.active}.${key}`, _.get(LOCALES[this.fallback], key, key));
+		return _.get<string>(LOCALES, `${this.active}.${key}`, _.get(LOCALES[this.fallback], key, key));
 	};
 }
 

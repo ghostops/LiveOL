@@ -1,18 +1,13 @@
 import * as React from 'react';
-import _ from 'lodash';
-import { Col, Grid } from 'react-native-easy-grid';
+import { COLORS, px } from 'util/const';
 import { FlatList } from 'react-native-gesture-handler';
 import { Lang } from 'lib/lang';
-import { OLResultColumn } from 'views/components/result/item/column';
 import { OLResultItem } from 'views/components/result/list/item';
 import { OLSafeAreaView } from 'views/components/safeArea';
-import { Result } from 'lib/graphql/fragments/types/Result';
-import { ResultBox } from 'views/components/result/result';
-import { ResultHeader } from 'views/components/result/header';
-import { ScrollView, RefreshControl } from 'react-native';
-import { UNIT, COLORS, px } from 'util/const';
-import { View, Spinner } from 'native-base';
 import { OLText } from 'views/components/text';
+import { Result } from 'lib/graphql/fragments/types/Result';
+import { ResultHeader } from 'views/components/result/header';
+import { View, Spinner } from 'native-base';
 
 interface Props {
 	results: Result[];
@@ -40,7 +35,7 @@ export const OLResultsList: React.FC<Props> = (props) => {
 				ListFooterComponent={<View style={{ height: 45 }} />}
 				data={props.results}
 				renderItem={renderResult}
-				keyExtractor={(item: Result, index: number) => item.name}
+				keyExtractor={(item: Result) => item.name}
 				ListEmptyComponent={
 					<View
 						style={{

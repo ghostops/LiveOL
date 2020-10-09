@@ -1,13 +1,11 @@
 import * as React from 'react';
+import _ from 'lodash';
 import { Animated, TouchableOpacity, Keyboard } from 'react-native';
-import { connect } from 'react-redux';
 import { hasNotch, xtraSpace } from 'util/hasNotch';
-import { UNIT } from 'util/const';
-import * as NB from 'native-base';
-import * as _ from 'lodash';
+import { Header, Item, Button, Icon, Input } from 'native-base';
 import { Lang } from 'lib/lang';
-import { Competition } from 'lib/graphql/fragments/types/Competition';
 import { OLText } from '../text';
+import { UNIT } from 'util/const';
 
 const SEARCH_SIZE = UNIT * 3.25;
 
@@ -22,7 +20,7 @@ interface State {
 	searchTerm: string;
 }
 
-const { Header, Item, Button, Icon, Input, Text } = NB;
+type InputRef = { wrappedInstance: { focus(); blur() } };
 
 export class OLSearch extends React.PureComponent<Props, State> {
 	state: State = {
@@ -30,7 +28,7 @@ export class OLSearch extends React.PureComponent<Props, State> {
 		searchTerm: '',
 	};
 
-	searchInput: { wrappedInstance: { focus(); blur() } };
+	searchInput: InputRef;
 
 	componentDidUpdate(prevProps: Props) {
 		if (prevProps.searching !== this.props.searching && this.props.searching) {
@@ -104,7 +102,7 @@ export class OLSearch extends React.PureComponent<Props, State> {
 					<Item>
 						<Icon name="search" />
 						<Input
-							ref={(ref) => (this.searchInput = ref as any)}
+							ref={(ref) => (this.searchInput = (ref as unknown) as InputRef)}
 							placeholder={Lang.print('home.search')}
 							onChangeText={(searchTerm) => this.setState({ searchTerm })}
 							onSubmitEditing={this.search}

@@ -24,7 +24,7 @@ export const diffDateNow = (datestring: string): string | null => {
 	}
 
 	const duration: any = moment.duration(difference);
-	const formated = duration.format('mm:ss', { trim: false });
+	const formated = duration.format('mm:ss', { trim: false }) as string;
 
 	return formated;
 };

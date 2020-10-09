@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { fontPx } from 'util/const';
 import { Split } from 'lib/graphql/fragments/types/Split';
-import { View, Text } from 'native-base';
+import { View } from 'native-base';
 import { OLText } from 'views/components/text';
 
 interface Props {

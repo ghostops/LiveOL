@@ -35,7 +35,7 @@ class Component extends React.PureComponent<StateProps> {
 		}
 
 		if (Platform.OS === 'android') {
-			Notifications.createChannelAndroidAsync('default', {
+			void Notifications.createChannelAndroidAsync('default', {
 				name: 'default',
 				sound: true,
 				priority: 'max',
@@ -49,7 +49,7 @@ class Component extends React.PureComponent<StateProps> {
 	};
 
 	componentDidMount() {
-		this.registerForPushNotificationsAsync();
+		void this.registerForPushNotificationsAsync();
 
 		this.notificationSubscription = Notifications.addListener(this.handleNotification);
 	}

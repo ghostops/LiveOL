@@ -1,6 +1,5 @@
 import * as React from 'react';
 import _ from 'lodash';
-import { Lang } from 'lib/lang';
 import { LayoutAnimation } from 'react-native';
 import { OLRefetcher } from 'views/components/refetcher';
 import { OLResultsList } from 'views/components/result/list';

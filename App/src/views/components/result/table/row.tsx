@@ -1,23 +1,20 @@
 import * as React from 'react';
-import { COLORS, px, WINDOW_WIDTH } from 'util/const';
-import { connect } from 'react-redux';
-import { Grid } from 'react-native-easy-grid';
-import { ListItem, View, Text, Badge } from 'native-base';
+import { isLiveRunning } from 'util/isLive';
 import { OLResultAnimation } from 'views/components/result/item/animation';
 import { OLResultBadge } from 'views/components/result/item/badge';
 import { OLResultClub } from 'views/components/result/item/club';
 import { OLResultColumn } from 'views/components/result/item/column';
+import { OLResultListItem } from '../item/listItem';
+import { OLResultLiveRunning } from '../item/liveRunning';
 import { OLResultName } from 'views/components/result/item/name';
 import { OLResultTime } from 'views/components/result/item/time';
 import { OLResultTimeplus } from 'views/components/result/item/timeplus';
 import { OLSplits } from 'views/components/result/item/splits';
 import { OLStartTime } from 'views/components/result/item/start';
+import { px } from 'util/const';
 import { Result } from 'lib/graphql/fragments/types/Result';
 import { showToast } from 'lib/toasts/competitiorInfo';
-import { TouchableOpacity, Dimensions } from 'react-native';
-import { OLResultListItem } from '../item/listItem';
-import { OLResultLiveRunning } from '../item/liveRunning';
-import { isLiveRunning } from 'util/isLive';
+import { TouchableOpacity, Dimensions, View } from 'react-native';
 
 interface OwnProps {
 	result: Result;
@@ -54,7 +51,7 @@ export const getExtraSize = (splits: number): number => {
 
 export class OLTableRow extends React.PureComponent<Props> {
 	private moreInfo = () => {
-		showToast(this.props.result.name, this.props.result.club);
+		void showToast(this.props.result.name, this.props.result.club);
 	};
 
 	renderTime = () => {
@@ -101,7 +98,7 @@ export class OLTableRow extends React.PureComponent<Props> {
 						<OLStartTime time={result.start} />
 					</OLResultColumn>
 
-					{result.splits.map((split, index) => {
+					{result.splits.map((split) => {
 						return (
 							<OLResultColumn style={{ width: LANDSCAPE_WIDTH.splits }} key={split.id} align="flex-start">
 								<OLSplits split={split} best={split.place === 1} />

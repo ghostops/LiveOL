@@ -4,7 +4,6 @@ import { Competition } from 'lib/graphql/fragments/types/Competition';
 import { COMPETITIONS } from 'lib/graphql/queries/competitions';
 import { Competitions, CompetitionsVariables } from 'lib/graphql/queries/types/Competitions';
 import { connect } from 'react-redux';
-import { Lang } from 'lib/lang';
 import { NavigationProp } from '@react-navigation/native';
 import { OLError } from 'views/components/error';
 import { OLHome as Component } from './component';

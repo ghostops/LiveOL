@@ -3,13 +3,10 @@ import _ from 'lodash';
 import { connect } from 'react-redux';
 import { GET_LAST_PASSINGS } from 'lib/graphql/queries/passings';
 import { GetLastPassingsVariables, GetLastPassings } from 'lib/graphql/queries/types/GetLastPassings';
-import { Lang } from 'lib/lang';
-import { NavigationProp, RouteProp } from '@react-navigation/native';
-import { NavigationRoute } from 'react-navigation';
 import { OLError } from 'views/components/error';
 import { OLPassings as Component } from './component';
 import { Passing } from 'lib/graphql/fragments/types/Passing';
-import { Routes, RouterProps } from 'lib/nav/routes';
+import { RouterProps } from 'lib/nav/routes';
 import { useQuery } from '@apollo/react-hooks';
 
 type OwnProps = RouterProps<{ id; title }>;
@@ -43,7 +40,7 @@ const DataWrapper: React.FC<Props> = (props) => {
 	);
 };
 
-const mapStateToProps = (state: AppState, props: Props): StateProps => ({
+const mapStateToProps = (state: AppState): StateProps => ({
 	landscape: state.general.rotation === 'landscape',
 });
 

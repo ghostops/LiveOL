@@ -1,5 +1,3 @@
-import { Competition } from 'lib/graphql/fragments/types/Competition';
-
 const SET_SEARCH_TERM = 'HOME:SET_SEARCH_TERM';
 const SET_SEARCHING = 'HOME:SET_SEARCHING';
 
@@ -12,14 +10,14 @@ export function homeReducer(state: HomeReducer = initialState, action: DispatchA
 	switch (action.type) {
 		case SET_SEARCH_TERM:
 			return {
-			...state,
+				...state,
 				searchTerm: action.value,
-		};
+			};
 		case SET_SEARCHING:
-		return {
+			return {
 				...state,
 				searching: action.value,
-		};
+			};
 	}
 
 	return state;

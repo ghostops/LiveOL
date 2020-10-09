@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Button, NativeBase } from 'native-base';
-import { COLORS, fontPx } from 'util/const';
+import { COLORS } from 'util/const';
 import { OLText } from '../text';
 
 interface Props extends NativeBase.Button {

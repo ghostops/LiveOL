@@ -10,15 +10,15 @@ const initialState: GeneralReducer = {
 
 export function generalReducer(state: GeneralReducer = initialState, action: DispatchAction<any>): GeneralReducer {
 	switch (action.type) {
-	case SET_ROTATION:
-		return {
+		case SET_ROTATION:
+			return {
 				...state,
-			rotation: action.value,
-		};
+				rotation: action.value,
+			};
 		case SET_EXPO_PUSH_TOKEN:
-		return {
+			return {
 				...state,
-			rotation: action.value,
+				rotation: action.value,
 			};
 	}
 
@@ -43,6 +43,6 @@ export const setExpoPushToken = (token: string) => (dispatch) => {
 	});
 };
 
-export const handleNotification = (notification: Notification) => (dispatch) => {
+export const handleNotification = (notification: Notification) => () => {
 	console.log(notification);
 };

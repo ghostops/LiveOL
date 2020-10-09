@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { View, Text, Spinner } from 'native-base';
-import { ApolloError } from 'apollo-boost';
+import { View, Spinner } from 'native-base';
 import { COLORS } from 'util/const';
 
 export const OLLoading: React.FC = () => (
