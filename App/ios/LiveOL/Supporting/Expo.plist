@@ -8,6 +8,8 @@
 	<true/>
 	<key>EXUpdatesLaunchWaitMs</key>
 	<integer>5000</integer>
+	<key>EXUpdatesReleaseChannel</key>
+	<string>default</string>
 	<key>EXUpdatesSDKVersion</key>
 	<string>38.0.0</string>
 	<key>EXUpdatesURL</key>
