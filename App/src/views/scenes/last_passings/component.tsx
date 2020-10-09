@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { COLORS, px } from 'util/const';
 import { Lang } from 'lib/lang';
 import { OLLastPassingResult } from 'views/components/latest_passings/listItem';
 import { OLLoading } from 'views/components/loading';
@@ -7,7 +6,8 @@ import { OLRefetcher } from 'views/components/refetcher';
 import { OLSafeAreaView } from 'views/components/safeArea';
 import { OLText } from 'views/components/text';
 import { Passing } from 'lib/graphql/fragments/types/Passing';
-import { ScrollView, RefreshControl, View } from 'react-native';
+import { px } from 'util/const';
+import { View } from 'react-native';
 
 interface Props {
 	passings: Passing[];
