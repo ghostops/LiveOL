@@ -4,11 +4,11 @@ import { FlatList, View } from 'react-native';
 import { HomeListItem } from './listItem';
 import { isDateToday, dateToReadable } from 'util/date';
 import { Lang } from 'lib/lang';
+import { OLListItem } from '../list/item';
 import { OLLoading } from '../loading';
 import { OLSafeAreaView } from '../safeArea';
 import { OLText } from '../text';
-import { COLORS, px } from 'util/const';
-import { OLListItem } from '../list/item';
+import { px } from 'util/const';
 
 interface Props {
 	competitions: Competition[];
