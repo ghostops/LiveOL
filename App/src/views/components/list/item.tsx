@@ -3,16 +3,18 @@ import { TouchableOpacity, ViewStyle } from 'react-native';
 import { COLORS, px } from 'util/const';
 
 interface Props {
+	itemDivider?: boolean;
 	style?: ViewStyle;
-	onPress: () => any;
+	onPress?: () => any;
 }
 
-export const OLListItem: React.FC<Props> = ({ children, style, onPress }) => {
+export const OLListItem: React.FC<Props> = ({ children, style, onPress, itemDivider }) => {
 	return (
 		<TouchableOpacity
 			onPress={onPress}
+			activeOpacity={itemDivider ? 1 : 0.75}
 			style={{
-				backgroundColor: 'white',
+				backgroundColor: itemDivider ? COLORS.BORDER : 'white',
 				padding: px(10),
 				borderBottomColor: COLORS.BORDER,
 				borderBottomWidth: 1,

@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { dateToReadable } from 'util/date';
-import { UNIT, COLORS } from 'util/const';
-import { List, View, CardItem, Card, Body } from 'native-base';
-import { Lang } from 'lib/lang';
-import { OLSafeAreaView } from '../safeArea';
 import { Competition } from 'lib/graphql/fragments/types/Competition';
+import { dateToReadable } from 'util/date';
+import { Lang } from 'lib/lang';
+import { OLCard } from '../card';
+import { OLSafeAreaView } from '../safeArea';
 import { OLText } from '../text';
+import { UNIT, COLORS } from 'util/const';
+import { View } from 'react-native';
 
 interface Props {
 	competitions: Competition[];
@@ -40,20 +41,14 @@ export const TodaysCompetitions: React.FC<Props> = ({ competitions, renderListIt
 			</OLText>
 
 			<OLSafeAreaView>
-				<Card
+				<OLCard
 					style={{
 						marginTop: UNIT,
 						width: '100%',
 					}}
 				>
-					<CardItem>
-						<Body style={{ width: '100%' }}>
-							<List style={{ width: '100%' }}>
-								{competitions.map((comp, index) => renderListItem(comp, index, competitions.length))}
-							</List>
-						</Body>
-					</CardItem>
-				</Card>
+					{competitions.map((comp, index) => renderListItem(comp, index, competitions.length))}
+				</OLCard>
 			</OLSafeAreaView>
 		</React.Fragment>
 	);

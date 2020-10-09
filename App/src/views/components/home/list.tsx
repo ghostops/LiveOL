@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { Competition } from 'lib/graphql/fragments/types/Competition';
-import { FlatList } from 'react-native';
+import { FlatList, View } from 'react-native';
 import { HomeListItem } from './listItem';
 import { isDateToday, dateToReadable } from 'util/date';
 import { Lang } from 'lib/lang';
-import { List, ListItem, View } from 'native-base';
 import { OLLoading } from '../loading';
 import { OLSafeAreaView } from '../safeArea';
 import { OLText } from '../text';
-import { px } from 'util/const';
+import { COLORS, px } from 'util/const';
+import { OLListItem } from '../list/item';
 
 interface Props {
 	competitions: Competition[];
@@ -60,7 +60,7 @@ export const HomeList: React.FC<Props> = ({ competitions, onCompetitionPress, li
 		return (
 			<OLSafeAreaView key={date}>
 				<View>
-					<ListItem
+					<OLListItem
 						itemDivider
 						style={{
 							marginLeft: 0,
@@ -70,13 +70,13 @@ export const HomeList: React.FC<Props> = ({ competitions, onCompetitionPress, li
 						<OLText size={16} font="Proxima_Nova_Bold">
 							{dateStr} {isToday && `(${Lang.print('home.today')})`}
 						</OLText>
-					</ListItem>
+					</OLListItem>
 
-					<List>
+					<View style={{ backgroundColor: 'white' }}>
 						{competitions[date].map((comp, index) =>
 							renderListItem(comp, index, competitions[date].length),
 						)}
-					</List>
+					</View>
 				</View>
 			</OLSafeAreaView>
 		);
