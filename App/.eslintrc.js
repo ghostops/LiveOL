@@ -23,6 +23,7 @@ module.exports = {
 		quotes: ['error', 'single'],
 		semi: ['error', 'always'],
 		'@typescript-eslint/no-unused-vars': 'error',
+		'@typescript-eslint/no-unsafe-assignment': 0,
 		'react/prop-types': 0,
 	},
 	settings: {
