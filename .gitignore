@@ -30,3 +30,5 @@ App/ios/fastlane/report.xml
 google-key.json
 App/android/fastlane/report.xml
 App/ios/LiveOL.xcworkspace/xcuserdata/*
+
+package-lock.json

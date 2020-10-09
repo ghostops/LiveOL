@@ -1,7 +1,7 @@
 module.exports = {
 	env: {
 		es2021: true,
-		node: true
+		node: true,
 	},
 	extends: [
 		'eslint:recommended',
@@ -10,33 +10,21 @@ module.exports = {
 		'plugin:@typescript-eslint/recommended',
 		'plugin:@typescript-eslint/recommended-requiring-type-checking',
 	],
-	'parser': '@typescript-eslint/parser',
-	'parserOptions': {
+	parser: '@typescript-eslint/parser',
+	parserOptions: {
 		project: './tsconfig.json',
 	},
-	'plugins': [
-		'react',
-		'react-hooks',
-		'@typescript-eslint',
-		'prettier'
-	],
-	'rules': {
+	plugins: ['react', 'react-hooks', '@typescript-eslint', 'prettier'],
+	rules: {
 		'prettier/prettier': 'error',
-		'indent': [
-			'error',
-			'tab'
-		],
-		'linebreak-style': [
-			'error',
-			'unix'
-		],
-		'quotes': [
-			'error',
-			'single'
-		],
-		'semi': [
-			'error',
-			'always'
-		]
-	}
+		indent: ['error', 'tab'],
+		'linebreak-style': ['error', 'unix'],
+		quotes: ['error', 'single'],
+		semi: ['error', 'always'],
+	},
+	settings: {
+		react: {
+			version: 'detect',
+		},
+	},
 };
