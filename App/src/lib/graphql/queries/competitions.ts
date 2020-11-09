@@ -2,9 +2,9 @@ import { gql } from 'apollo-boost';
 import { CompetitionFragment, ClassFragment, EventorCompetitionFragment } from '../fragments/competition';
 
 export const COMPETITIONS = gql`
-	query Competitions($page: Int, $search: String) {
+	query Competitions($page: Int, $search: String, $date: String) {
 		competitions {
-			getCompetitions(page: $page, search: $search) {
+			getCompetitions(page: $page, search: $search, date: $date) {
 				page
 				lastPage
 				search

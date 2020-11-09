@@ -46,4 +46,5 @@ export interface Competitions {
 export interface CompetitionsVariables {
   page?: number | null;
   search?: string | null;
+  date?: string | null;
 }

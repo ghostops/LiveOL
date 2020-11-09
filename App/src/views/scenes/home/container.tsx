@@ -11,6 +11,7 @@ import { Platform } from 'react-native';
 import { Routes } from 'lib/nav/routes';
 import { useQuery } from '@apollo/react-hooks';
 import * as Actions from './store';
+import moment from 'moment';
 
 interface OwnProps {
 	navigation: NavigationProp<any, any>;
@@ -32,6 +33,7 @@ const DataWrapper: React.FC<Props> = (props) => {
 	const { data, loading, error, fetchMore, refetch } = useQuery<Competitions, CompetitionsVariables>(COMPETITIONS, {
 		variables: {
 			search: props.searchTerm,
+			date: moment().format('YYYY-MM-DD'),
 		},
 	});
 
