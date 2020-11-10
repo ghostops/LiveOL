@@ -2,8 +2,8 @@ import * as _ from 'lodash';
 import * as moment from 'moment';
 
 export const isDateToday = (date: string, todaysDate: string): boolean => {
-	const input = moment.utc(date);
-	const today = todaysDate ? moment.utc(todaysDate) : moment.utc();
+	const input = moment(date);
+	const today = todaysDate ? moment(todaysDate) : moment.utc();
 
 	return today.isSame(input, 'date');
 };
