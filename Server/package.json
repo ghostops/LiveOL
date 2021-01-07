@@ -17,7 +17,7 @@
 		"@slack/webhook": "^5.0.3",
 		"@types/node-cron": "^2.0.3",
 		"apollo-server": "^2.14.2",
-		"axios": "^0.19.2",
+		"axios": "^0.21.1",
 		"babel-cli": "^6.26.0",
 		"babel-plugin-module-resolver": "^4.0.0",
 		"cheerio": "^1.0.0-rc.3",
