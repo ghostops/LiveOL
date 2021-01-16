@@ -1,13 +1,14 @@
 import * as React from 'react';
-import { OLRefetcherCircle } from './circle';
+import { OLRefetcherBar } from './bar';
 
 interface Props {
 	refetch: () => Promise<void>;
 	interval: number;
+	bar?: boolean;
 }
 
 export class OLRefetcher extends React.PureComponent<Props> {
 	render() {
-		return <OLRefetcherCircle interval={this.props.interval} promise={this.props.refetch} />;
+		return <OLRefetcherBar interval={this.props.interval} promise={this.props.refetch} />;
 	}
 }

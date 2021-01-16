@@ -23,6 +23,8 @@ export const OLPassings: React.FC<Props> = (props) => {
 
 	return (
 		<OLSafeAreaView>
+			<OLRefetcher refetch={props.refresh} interval={15000} />
+
 			<View
 				style={{
 					padding: px(20),
@@ -67,8 +69,6 @@ export const OLPassings: React.FC<Props> = (props) => {
 					</>
 				)}
 			</View>
-
-			<OLRefetcher refetch={props.refresh} interval={15000} />
 		</OLSafeAreaView>
 	);
 };

@@ -61,6 +61,8 @@ export class OLResults extends React.PureComponent<Props, State> {
 
 		return (
 			<>
+				<OLRefetcher interval={15000} refetch={refetch} />
+
 				{
 					// LANDSCAPE
 					this.state.showTable && (
@@ -74,8 +76,6 @@ export class OLResults extends React.PureComponent<Props, State> {
 						<OLResultsList results={results} competitionId={competitionId} className={className} />
 					)
 				}
-
-				<OLRefetcher interval={15000} refetch={refetch} />
 			</>
 		);
 	}

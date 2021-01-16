@@ -42,7 +42,9 @@ const DataWrapper: React.FC<Props> = ({ route, landscape }) => {
 	return (
 		<Component
 			results={results}
-			refetch={() => void refetch({ className, competitionId })}
+			refetch={async () => {
+				await refetch({ className, competitionId });
+			}}
 			landscape={landscape}
 			className={className}
 			competitionId={competitionId}
