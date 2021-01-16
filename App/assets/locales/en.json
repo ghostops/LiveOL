@@ -11,7 +11,7 @@
       "time": "Time"
     },
     "resultsFor": "Results for",
-    "timerHint": "How often it auto updates"
+    "timerHint": "Time until next refresh"
   },
   "competitions": {
     "canceled": "The competition has been canceled",

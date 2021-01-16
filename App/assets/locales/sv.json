@@ -11,7 +11,7 @@
       "time": "Tid"
     },
     "resultsFor": "Resultat för",
-    "timerHint": "Hur ofta listan auto uppdateras"
+    "timerHint": "Tid till nästa uppdatering"
   },
   "competitions": {
     "canceled": "Tävlingen har blivit inställd",
