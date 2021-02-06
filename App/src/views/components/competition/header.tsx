@@ -16,6 +16,15 @@ interface Props {
 	goToLastPassings: () => void;
 }
 
+const parseHtml = (text: string): string => {
+	let parsed: string = text;
+
+	// Parse line breaks
+	parsed = text.replace(/<br>/gm, '\n');
+
+	return parsed;
+};
+
 export const OLCompetitionHeader: React.FC<Props> = (props) => (
 	<View>
 		{Platform.OS === 'ios' && <OLCompetitionIOSHeader name={props.competition.name} />}
@@ -122,7 +131,7 @@ export const OLCompetitionHeader: React.FC<Props> = (props) => (
 					</OLText>
 
 					<OLText size={14} font="Proxima_Nova" style={{ color: 'white' }} selectable>
-						{props.competition.info}
+						{parseHtml(props.competition.info)}
 					</OLText>
 				</View>
 			)}

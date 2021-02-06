@@ -55,17 +55,9 @@ export const timeplusToReadable = (time: number): string => {
 	return `+${padTime(realMinutes)}:${padTime(seconds)}`;
 };
 
-export const weekNumberToMoment = (weekNumber: number, year: number): moment.Moment => {
-	const day = 1 + (weekNumber - 1) * 7;
-	const date = new Date(year, 0, day);
-	return moment.utc(date);
-};
-
-export const getMomentsFromWeek = (weekNumber: number, year: number): [moment.Moment, moment.Moment] => {
-	const start = weekNumberToMoment(weekNumber, year);
-
-	// Add 6 days to get the last day of the week
-	const end = moment.utc(start).add(6, 'days');
+export const getMonthFromDate = (date: moment.Moment): [moment.Moment, moment.Moment] => {
+	const start = date.clone().startOf('month');
+	const end = date.clone().endOf('month');
 
 	return [start, end];
 };

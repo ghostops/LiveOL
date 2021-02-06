@@ -2,352 +2,344 @@ import * as cheerio from 'cheerio';
 import * as _ from 'lodash';
 import { invertKeyValues } from '../helpers/invert';
 import * as moment from 'moment-timezone';
-import {
-    EventorCompetitionType,
-    EventorCompetitionDistance,
-    EventorEventItem,
-    EventorListItem,
-} from './types';
+import { EventorCompetitionType, EventorCompetitionDistance, EventorEventItem, EventorListItem } from './types';
+import { writeFileSync } from 'fs';
 
 const parseClubLogo = (base: string, path: string): string | null => {
-    if (!base || !path) return null;
+	if (!base || !path) return null;
 
-    let clubLogoUrl: string = path;
-    clubLogoUrl = clubLogoUrl.split('?')[0];
-    clubLogoUrl = `${base}${clubLogoUrl}`;
+	let clubLogoUrl: string = path;
+	clubLogoUrl = clubLogoUrl.split('?')[0];
+	clubLogoUrl = `${base}${clubLogoUrl}`;
 
-    return clubLogoUrl;
+	return clubLogoUrl;
 };
 
 const parseCompetitionType = (input: string): EventorCompetitionType => {
-    if (!input) {
-        return null;
-    }
+	if (!input) {
+		return null;
+	}
 
-    switch (input.toLowerCase()) {
-        case 'p':
-        case 'precisionsorientering':
-            return 'precision';
-        case 's':
-        case 'skidorientering':
-            return 'ski';
-        case 'm':
-        case 'mountainbikeorientering':
-            return 'mountainbike';
-        case 't':
-        case 'trailorienteering':
-                return 'trail';
-        case 'l':
-        case 'orienteringslöpning':
-        default:
-            return 'foot';
-    };
+	switch (input.toLowerCase()) {
+		case 'p':
+		case 'precisionsorientering':
+			return 'precision';
+		case 's':
+		case 'skidorientering':
+			return 'ski';
+		case 'm':
+		case 'mountainbikeorientering':
+			return 'mountainbike';
+		case 't':
+		case 'trailorienteering':
+			return 'trail';
+		case 'l':
+		case 'orienteringslöpning':
+		case 'FootO':
+		default:
+			return 'foot';
+	}
 };
 
 const parseCompetitionDistance = (input: string): EventorCompetitionDistance => {
-    if (!input) {
-        return null;
-    }
+	if (!input) {
+		return null;
+	}
 
-    switch (input.toLowerCase()) {
-        case 'u':
-        case 'ultralång':
-            return 'ultralong';
-        case 'l':
-        case 'lång':
-            return 'long';
-        case 's':
-        case 'sprint':
-            return 'sprint';
-        case 'm':
-        case 'medel':
-        default:
-            return 'middle';
-    };
+	switch (input.toLowerCase()) {
+		case 'u':
+		case 'ultralång':
+			return 'ultralong';
+		case 'l':
+		case 'lång':
+			return 'long';
+		case 's':
+		case 'sprint':
+			return 'sprint';
+		case 'm':
+		case 'medel':
+		default:
+			return 'middle';
+	}
 };
 
 export class ListResponseParser {
-    constructor(private body: string, private base: string) {}
+	constructor(private body: string, private base: string) {}
 
-    private currentWeek: string;
-    private currentDay: string;
+	private currentWeek: string;
+	private currentDay: string;
 
-    private startDate: moment.Moment;
-    private endDate: moment.Moment;
+	private startDate: moment.Moment;
+	private endDate: moment.Moment;
 
-    public parse = (): EventorListItem[] => {
-        const $ = cheerio.load(this.body);
+	public parse = (): EventorListItem[] => {
+		const $ = cheerio.load(this.body);
 
-        this.setStartAndEndDates($('#main > div.noAutofocus > p').text());
+		this.setStartAndEndDates($('#main > div.noAutofocus > p').text());
 
-        const entries = $('#eventCalendar tbody tr').toArray();
+		const entries = $('#eventCalendar tbody tr').toArray();
 
-        return entries.map(this.parseRow).filter((row) => !!row);
-    }
+		return entries.map(this.parseRow).filter((row) => !!row);
+	};
 
-    private setStartAndEndDates = (text: string): void => {
-        const splitWords = [
-            'mellan',
-            'och',
-        ];
+	private setStartAndEndDates = (text: string): void => {
+		try {
+			const [startDateStr, endDateStr] = text.match(/(\d+)(\/|\-)(\d+)(\/|\-)(\d+)/gm);
 
-        try {
-            const parsed = text.trim().split(splitWords[0]);
-            const split = parsed[1].split(splitWords[1]);
+			let startDate = startDateStr;
+			let endDate = endDateStr;
 
-            this.startDate = moment.utc(split[0].trim());
-            this.endDate = moment.utc(split[1].replace('.', '').trim());
-        } catch (err) {
-            console.error('No start or end date could be extracted', err);
-            this.startDate = moment.utc();
-            this.endDate = moment.utc();
-        }
-    }
+			if (startDate.includes('/') || endDate.includes('/')) {
+				const [startD, startM, startY] = startDate.split('/');
+				const [endD, endM, endY] = endDate.split('/');
 
-    private parseDate = (input: string): moment.Moment | null => {
-        if (!input || !this.startDate || !this.endDate) return null;
+				startDate = `${startY}-${startM}-${startD}`;
+				endDate = `${endY}-${endM}-${endD}`;
+			}
 
-        const [day, month] = input.split(' ')[1].split('/');
+			this.startDate = moment.utc(startDate);
+			this.endDate = moment.utc(endDate);
+		} catch (err) {
+			console.info('No start or end date could be extracted');
+			this.startDate = moment.utc();
+			this.endDate = moment.utc();
+		}
+	};
 
-        let year = this.startDate.year();
+	private parseDate = (input: string): moment.Moment | null => {
+		if (!input || !this.startDate || !this.endDate) return null;
 
-        // If we have an end date for the range, and the year on that date
-        // does not match the start, and the month is 1 we can assume
-        // it will be January in the end-date
-        if (
-            this.startDate.year() !== this.endDate.year() &&
-            month === '1'
-        ) {
-            year = this.endDate.year();
-        }
+		const [day, month] = input.split(' ')[1].split('/');
 
-        return moment.utc(`${year}-${month}-${day}`, 'YYYY-MM-DD');
-    };
+		let year = this.startDate.year();
 
-    private parseRow = (row: CheerioElement): EventorListItem => {
-        try {
-            let indexModifier = 0;
+		// If we have an end date for the range, and the year on that date
+		// does not match the start, and the month is 1 we can assume
+		// it will be January in the end-date
+		if (this.startDate.year() !== this.endDate.year() && month === '1') {
+			year = this.endDate.year();
+		}
 
-            const isWeek = (
-                row.attribs.class &&
-                row.attribs.class.includes('firstRowOfWeek')
-            );
+		return moment.utc(`${year}-${month}-${day}`, 'YYYY-MM-DD');
+	};
 
-            const isDay = (
-                row.attribs.class &&
-                row.attribs.class.includes('firstRowOfDate')
-            );
+	private parseRow = (row: CheerioElement): EventorListItem => {
+		try {
+			let indexModifier = 0;
 
-            if (isWeek) {
-                indexModifier = 2;
+			const isWeek = row.attribs.class && row.attribs.class.includes('firstRowOfWeek');
 
-                this.currentWeek = _.get(row, `children.0.children.0.data`);
-                this.currentDay = _.get(row, `children.1.children.0.data`);
-            }
+			const isDay = row.attribs.class && row.attribs.class.includes('firstRowOfDate');
 
-            if (isDay) {
-                indexModifier = 1;
+			if (isWeek) {
+				indexModifier = 2;
 
-                this.currentDay = _.get(row, `children.0.children.0.data`);
-            }
+				this.currentWeek = _.get(row, `children.0.children.0.data`);
+				this.currentDay = _.get(row, `children.1.children.0.data`);
+			}
 
-            const date = this.parseDate(this.currentDay).format();
+			if (isDay) {
+				indexModifier = 1;
 
-            const canceled = !!(row.attribs.class && row.attribs.class.includes('canceled'));
+				this.currentDay = _.get(row, `children.0.children.0.data`);
+			}
 
-            const name = _.get(row, `children[${0 + indexModifier}].children.0.children.0.data`);
+			const date = this.parseDate(this.currentDay).format();
 
-            let id = _.get(row, `children[${0 + indexModifier}].children.0.attribs.href`);
+			const canceled = !!(row.attribs.class && row.attribs.class.includes('canceled'));
 
-            if (id) {
-                id = _.last(id.split('/'));
-            }
+			const name = _.get(row, `children[${0 + indexModifier}].children.0.children.0.data`);
 
-            const club = _.get(row, `children[${1 + indexModifier}].children.0.children.1.data`);
+			let id = _.get(row, `children[${0 + indexModifier}].children.0.attribs.href`);
 
-            let clubLogoUrl = parseClubLogo(
-                this.base,
-                _.get(row, `children[${1 + indexModifier}].children.0.children.0.attribs.src`)
-            );
+			if (id) {
+				id = _.last(id.split('/'));
+			}
 
-            const district = _.get(row, `children[${2 + indexModifier}].children.0.data`);
+			const club = _.get(row, `children[${1 + indexModifier}].children.0.children.1.data`);
 
-            const competitionType = parseCompetitionType(
-                _.get(
-                    row,
-                    `children[${3 + indexModifier}].children.0.children.0.data`,
-                    'foot' as EventorCompetitionType,
-                )
-            );
+			let clubLogoUrl = parseClubLogo(
+				this.base,
+				_.get(row, `children[${1 + indexModifier}].children.0.children.0.attribs.src`),
+			);
 
-            const competitionDistance = parseCompetitionDistance(
-                _.get(row, `children[${6 + indexModifier}].children.0.children.0.data`)
-            );
+			const district = _.get(row, `children[${2 + indexModifier}].children.0.data`);
 
-            let liveloxLink = _.get(row, `children[${9 + indexModifier}].children.0.children.0.attribs.href`);
-            if (liveloxLink) {
-                liveloxLink = `${this.base}${liveloxLink}`;
-            }
+			const competitionType = parseCompetitionType(
+				_.get(
+					row,
+					`children[${3 + indexModifier}].children.0.children.0.data`,
+					'foot' as EventorCompetitionType,
+				),
+			);
 
-            let resultsLink = _.get(row, `children[${9 + indexModifier}].children.1.children.0.attribs.href`);
-            if (resultsLink) {
-                resultsLink = `${this.base}${resultsLink}`;
-            }
+			const competitionDistance = parseCompetitionDistance(
+				_.get(row, `children[${6 + indexModifier}].children.0.children.0.data`),
+			);
 
-            // If no id is found just return null
-            if (!id) {
-                return null;
-            }
+			let liveloxLink = _.get(row, `children[${9 + indexModifier}].children.0.children.0.attribs.href`);
+			if (liveloxLink) {
+				liveloxLink = `${this.base}${liveloxLink}`;
+			}
 
-            return {
-                id,
-                date,
-                name,
-                club,
-                clubLogoUrl,
-                district,
-                competitionType,
-                competitionDistance,
-                liveloxLink,
-                resultsLink,
-                canceled,
-            };
-        } catch (error) {
-            console.error('Failed to parse eventor row', error);
-            return null;
-        }
-    }
+			let resultsLink = _.get(row, `children[${9 + indexModifier}].children.1.children.0.attribs.href`);
+			if (resultsLink) {
+				resultsLink = `${this.base}${resultsLink}`;
+			}
+
+			// If no id is found just return null
+			if (!id) {
+				return null;
+			}
+
+			return {
+				id,
+				date,
+				name,
+				club,
+				clubLogoUrl,
+				district,
+				competitionType,
+				competitionDistance,
+				liveloxLink,
+				resultsLink,
+				canceled,
+			};
+		} catch (error) {
+			console.error('Failed to parse eventor row', error);
+			return null;
+		}
+	};
 }
 
 export class EventResponseParser {
-    constructor(private body: string, private base: string) {}
+	constructor(private body: string, private base: string) {}
 
-    public parse = (): EventorEventItem => {
-        const $ = cheerio.load(this.body);
+	public parse = (): EventorEventItem => {
+		const $ = cheerio.load(this.body, { decodeEntities: false });
 
-        const infoMap = invertKeyValues({
-            name: 'Tävling',
-            date: 'Datum',
-            club: 'Arrangörsorganisation',
-            clubLogoUrl: 'Arrangörsorganisation',
-            district: 'Distrikt',
-            competitionDistance: 'Tävlingsdistans',
-            competitionType: 'Gren',
-            status: 'Status',
-        });
+		const bodyLanguage = determineLanguage($('#main > div > h2').text());
 
-        const mappedInfoData: Partial<EventorEventItem> = {};
+		const infoMap = invertKeyValues({
+			name: eventorMetadataInformationI18n[bodyLanguage].name,
+			date: eventorMetadataInformationI18n[bodyLanguage].date,
+			club: eventorMetadataInformationI18n[bodyLanguage].club,
+			clubLogoUrl: eventorMetadataInformationI18n[bodyLanguage].clubLogoUrl,
+			district: eventorMetadataInformationI18n[bodyLanguage].district,
+			competitionDistance: eventorMetadataInformationI18n[bodyLanguage].competitionDistance,
+			competitionType: eventorMetadataInformationI18n[bodyLanguage].competitionType,
+			status: eventorMetadataInformationI18n[bodyLanguage].status,
+		});
 
-        // This array contains all the table data to the left on the event page
-        const infoTable = $('.eventInfo tbody tr').toArray();
+		const mappedInfoData: Partial<EventorEventItem> = {};
 
-        infoTable.forEach((element) => {
-            const title = _.get(element, 'children.1.children.0.data');
-            const value = _.get(element, 'children.3.children.0.data', '').trim();
+		// This array contains all the table data to the left on the event page
+		const infoTable = $('.eventInfo tbody tr').toArray();
 
-            if (infoMap[title]) {
-                // Hacky special case for club data
-                if (
-                    infoMap[title].includes('club') ||
-                    infoMap[title].includes('clubLogoUrl')
-                ) {
-                    const imageUrl = _.get(element, 'children.3.children.0.children.0.attribs.src');
-                    const club = _.get(element, 'children.3.children.0.children.1.data');
+		infoTable.forEach((element) => {
+			const title = _.get(element, 'children.1.children.0.data');
+			const value = _.get(element, 'children.3.children.0.data', '').trim();
 
-                    mappedInfoData.club = club;
-                    mappedInfoData.clubLogoUrl = imageUrl;
+			if (infoMap[title]) {
+				// Hacky special case for club data
+				if (infoMap[title].includes('club') || infoMap[title].includes('clubLogoUrl')) {
+					const imageUrl = _.get(element, 'children.3.children.0.children.0.attribs.src');
+					const club = _.get(element, 'children.3.children.0.children.1.data');
 
-                    return;
-                }
+					mappedInfoData.club = club;
+					mappedInfoData.clubLogoUrl = imageUrl;
 
-                mappedInfoData[infoMap[title]] = value;
-            }
-        });
+					return;
+				}
 
-        const info = $('#main > div > p.info').text().trim();
+				mappedInfoData[infoMap[title]] = value;
+			}
+		});
 
-        const links = $('.documents .documentName').toArray().map((element) => {
-            const href = (
-                element.attribs.href.startsWith('/')
-                ? `${this.base}${element.attribs.href}`
-                : element.attribs.href
-            );
+		const info = $('#main > div > p.info').html().trim();
 
-            const text = _.get(element, 'children.0.data', 'Unnamed Link');
+		const links = $('.documents .documentName')
+			.toArray()
+			.map((element) => {
+				const href = element.attribs.href.startsWith('/')
+					? `${this.base}${element.attribs.href}`
+					: element.attribs.href;
 
-            return { href, text };
-        });
+				const text = _.get(element, 'children.0.data', 'Unnamed Link');
 
-        let signups: string | number = $('.entryBox span.count').text();
+				return { href, text };
+			});
 
-        if (signups && signups.length) {
-            signups = Number(signups.replace('(', '').replace(')', ''));
-        } else {
-            signups = 0;
-        }
+		let signups: string | number = $('.entryBox span.count').text();
 
-        const date = moment.utc(this.parseEventorDate(mappedInfoData.date as unknown as string)).format();
+		if (signups && signups.length) {
+			signups = Number(signups.replace('(', '').replace(')', ''));
+		} else {
+			signups = 0;
+		}
 
-        // Hacky way of selecting the id
-        let id = $('#main > div > p.toolbar16 > a.hoverableImageAndText16x16.calendar16x16').attr('href');
+		// Hacky way of selecting the id
+		let id = $('#main > div > p.toolbar16 > a.hoverableImageAndText16x16.calendar16x16').attr('href');
 
-        if (id) {
-            id = _.last(id.split('/'));
-        }
+		if (id) {
+			id = _.last(id.split('/'));
+		}
 
-        return {
-            id,
-            date,
-            links,
-            info,
-            signups: signups as number,
-            name: mappedInfoData.name,
-            club: mappedInfoData.club,
-            district: mappedInfoData.district,
-            competitionDistance: parseCompetitionDistance(mappedInfoData.competitionDistance),
-            competitionType: parseCompetitionType(mappedInfoData.competitionType),
-            canceled: (mappedInfoData as any).status === 'inställd',
-            clubLogoUrl: parseClubLogo(this.base, mappedInfoData.clubLogoUrl),
-        };
-    }
-
-    private parseEventorDate = (input: string): string => {
-        const [
-            _dayname,
-            date,
-            monthname,
-            year,
-            _text,
-            time,
-        ] = input.split(' ');
-
-        const monthsInSwedish = [
-            'januari',
-            'februari',
-            'mars',
-            'april',
-            'maj',
-            'juni',
-            'juli',
-            'augusti',
-            'september',
-            'oktober',
-            'november',
-            'december',
-        ];
-
-        const [hours, minutes] = (time || '00:00').split(':');
-
-        const toMoment = moment(
-            new Date(
-                Number(year),
-                monthsInSwedish.indexOf(monthname) + 1,
-                Number(date),
-                Number(hours),
-                Number(minutes),
-            ),
-        ).tz('Europe/Stockholm').format();
-
-        return toMoment;
-    }
+		return {
+			id,
+			links,
+			info,
+			signups: signups as number,
+			name: mappedInfoData.name,
+			club: mappedInfoData.club,
+			district: mappedInfoData.district,
+			competitionDistance: parseCompetitionDistance(mappedInfoData.competitionDistance),
+			competitionType: parseCompetitionType(mappedInfoData.competitionType),
+			canceled: (mappedInfoData as any).status === 'inställd',
+			clubLogoUrl: parseClubLogo(this.base, mappedInfoData.clubLogoUrl),
+		};
+	};
 }
+
+type EventorI18n = 'en' | 'se';
+
+type EventorMetadataInformationKeys =
+	| 'name'
+	| 'date'
+	| 'club'
+	| 'clubLogoUrl'
+	| 'district'
+	| 'competitionDistance'
+	| 'competitionType'
+	| 'status';
+
+const determineLanguage = (title: string): EventorI18n => {
+	if (title.toLowerCase().includes('tävlingsinformation')) {
+		return 'se';
+	}
+
+	return 'en';
+};
+
+const eventorMetadataInformationI18n: Record<EventorI18n, Record<EventorMetadataInformationKeys, string>> = {
+	se: {
+		name: 'Tävling',
+		date: 'Datum',
+		club: 'Arrangörsorganisation',
+		clubLogoUrl: 'Arrangörsorganisation',
+		district: 'Distrikt',
+		competitionDistance: 'Tävlingsdistans',
+		competitionType: 'Gren',
+		status: 'Status',
+	},
+	en: {
+		name: 'Event',
+		date: 'Date',
+		club: 'Organiser',
+		clubLogoUrl: 'Organiser',
+		district: 'State',
+		competitionDistance: 'Race distance',
+		competitionType: 'Discipline',
+		status: 'Status',
+	},
+};

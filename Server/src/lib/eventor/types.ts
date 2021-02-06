@@ -6,37 +6,37 @@ export type EventorCompetitionDistance = 'ultralong' | 'long' | 'middle' | 'spri
 export type EventorCompetitionType = 'foot' | 'ski' | 'mountainbike' | 'trail' | 'precision';
 
 interface EventorEventBase {
-    id: string;
-    date: string;
-    name: string;
-    club: string;
-    clubLogoUrl: string;
-    district: string;
-    competitionDistance: EventorCompetitionDistance;
-    competitionType: EventorCompetitionType;
-    canceled: boolean;
+	id: string;
+	date?: string;
+	name: string;
+	club: string;
+	clubLogoUrl: string;
+	district: string;
+	competitionDistance: EventorCompetitionDistance;
+	competitionType: EventorCompetitionType;
+	canceled: boolean;
 }
 
 export interface EventorEventItem extends EventorEventBase {
-    info?: string;
-    links: {
-        href: string;
-        text: string;
-    }[];
-    signups: number;
+	info?: string;
+	links: {
+		href: string;
+		text: string;
+	}[];
+	signups: number;
 }
 
 export interface EventorListItem extends EventorEventBase {
-    liveloxLink: string;
-    resultsLink: string;
+	liveloxLink: string;
+	resultsLink: string;
 }
 
 export interface EventorClub {
-    id: number;
-    name: string;
-    country: string;
-    address: string;
-    website: string;
-    email: string;
-    clubLogoUrl: string;
+	id: number;
+	name: string;
+	country: string;
+	address: string;
+	website: string;
+	email: string;
+	clubLogoUrl: string;
 }

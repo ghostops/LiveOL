@@ -1,48 +1,49 @@
 import { Cacher } from 'lib/redis';
-import { EventorApi } from './eventor/api';
-import { EventorExtractor } from './eventor/exctractor';
-import { EventorScraper } from './eventor/scraper';
 import { getEnv } from './helpers/env';
 import { LiveresultatAPIClient } from 'lib/liveresultat';
+import { EventorCombiner, CombinedEventorApi } from './eventor/combiner';
 
-interface APIResponse {
-    Liveresultat: LiveresultatAPIClient;
-    Eventor: {
-        api: EventorApi;
-        extractor: EventorExtractor;
-    };
+export interface APIResponse {
+	Liveresultat: LiveresultatAPIClient;
+	Eventor: CombinedEventorApi;
 }
 
 const URLS = {
-    liveresultat: 'https://liveresultat.orientering.se',
-    eventorSweden: 'https://eventor.orientering.se',
+	liveresultat: 'https://liveresultat.orientering.se',
+	eventorSweden: 'https://eventor.orientering.se',
+	eventorAustralia: 'https://eventor.orienteering.asn.au',
 };
 
-export const createApiSingletons = (): APIResponse => {
-    const cache = new Cacher({
-        host: (
-            getEnv('env') === 'live'
-            ? 'redis'
-            : 'localhost'
-        ),
-        port: 6379,
-    });
+class ApiSingletons {
+	private singletons: APIResponse;
 
-    const scraper = new EventorScraper(URLS.eventorSweden, cache);
-    const eventorExctactor = new EventorExtractor(scraper);
+	public createApiSingletons = (): APIResponse => {
+		if (this.singletons) return this.singletons;
 
-    const eventorApi = new EventorApi(URLS.eventorSweden, process.env.EVENTOR_API_KEY, cache);
+		const cache = new Cacher({
+			host: getEnv('env') === 'live' ? 'redis' : 'localhost',
+			port: 6379,
+		});
 
-    const liveresultatApi = new LiveresultatAPIClient(
-        URLS.liveresultat,
-        cache,
-    );
+		const eventorCombiner = new EventorCombiner({
+			cache,
+			endpoints: [
+				{ url: URLS.eventorSweden, apiKey: process.env.EVENTOR_API_KEY_SE },
+				{ url: URLS.eventorAustralia, apiKey: process.env.EVENTOR_API_KEY_AU },
+			],
+		});
 
-    return {
-        Liveresultat: liveresultatApi,
-        Eventor: {
-            api: eventorApi,
-            extractor: eventorExctactor,
-        },
-    };
-};
+		const combinedEventorApi = eventorCombiner.getCombinedApi();
+
+		const liveresultatApi = new LiveresultatAPIClient(URLS.liveresultat, cache);
+
+		this.singletons = {
+			Liveresultat: liveresultatApi,
+			Eventor: combinedEventorApi,
+		};
+
+		return this.singletons;
+	};
+}
+
+export const apiSingletons = new ApiSingletons();
