@@ -94,7 +94,6 @@ export class LiveresultatAPIClient {
 					data = JSON.parse(data);
 				} catch {
 					console.error('json still could not be parsed!');
-					fs.writeFileSync('./swag.txt', data);
 				}
 			}
 

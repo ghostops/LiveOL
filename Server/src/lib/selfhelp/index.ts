@@ -6,6 +6,12 @@ import { getEnv } from 'lib/helpers/env';
 
 const DEV = getEnv('env') !== 'live';
 
+interface HealthCheck {
+	name: string;
+	query: string;
+	meta?: any;
+}
+
 export class OLSelfHelper {
 	private webhook: IncomingWebhook;
 
@@ -28,7 +34,7 @@ export class OLSelfHelper {
 	};
 
 	private healthcheck = async () => {
-		const checks = [
+		const checks: HealthCheck[] = [
 			{
 				name: 'GetCompetitions',
 				query: this.getCompetitions,
@@ -36,6 +42,9 @@ export class OLSelfHelper {
 			{
 				name: 'GetSingleCompetition',
 				query: this.getCompetition,
+				meta: {
+					competitionId: 18595,
+				},
 			},
 		];
 
