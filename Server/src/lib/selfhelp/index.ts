@@ -7,71 +7,83 @@ import { getEnv } from 'lib/helpers/env';
 const DEV = getEnv('env') !== 'live';
 
 export class OLSelfHelper {
-    private webhook: IncomingWebhook;
+	private webhook: IncomingWebhook;
 
-    constructor() {
-        if (!process.env.SLACK_WEBHOOK) {
-            console.warn('No SLACK_WEBHOOK defined, error reporting not started!');
-            return;
-        }
+	constructor() {
+		if (!process.env.SLACK_WEBHOOK) {
+			console.warn('No SLACK_WEBHOOK defined - remote error reporting not started!');
+		} else {
+			this.webhook = new IncomingWebhook(process.env.SLACK_WEBHOOK, {
+				icon_emoji: ':interrobang:',
+			});
+		}
 
-        this.webhook = new IncomingWebhook(process.env.SLACK_WEBHOOK, {
-            icon_emoji: ':interrobang:',
-        });
+		this.start();
+	}
 
-        this.start();
-    }
+	private start = () => {
+		const schedule = DEV ? '* * * * *' : '*/15 * * * *';
+		cron.schedule(schedule, this.healthcheck);
+		setTimeout(this.healthcheck, DEV ? 1000 : 5000);
+	};
 
-    private start = () => {
-        const schedule = DEV ? '* * * * *' : '*/15 * * * *';
-        cron.schedule(schedule, this.healthcheck);
-        setTimeout(this.healthcheck, DEV ? 1000 : 5000);
-    }
+	private healthcheck = async () => {
+		const checks = [
+			{
+				name: 'GetCompetitions',
+				query: this.getCompetitions,
+			},
+			{
+				name: 'GetSingleCompetition',
+				query: this.getCompetition,
+			},
+		];
 
-    private healthcheck = async () => {
-        const checks = [
-            this.getCompetitions,
-        ];
+		const errors = [];
 
-        const errors = [];
+		for (const check of checks) {
+			try {
+				console.info(`Test: running ${check.name}`);
+				await request('http://localhost:4000', check.query);
+				console.info(`Test: success ${check.name}`);
+			} catch (err) {
+				errors.push({ name: check.name, error: err });
+			}
+		}
 
-        for (const query of checks) {
-            try {
-                await request('http://localhost:4000', query);
-            } catch (err) {
-                errors.push(err);
-            }
-        }
+		if (errors.length) {
+			this.alert(errors);
+		}
+	};
 
-        if (errors.length) {
-            this.alert(errors);
-        }
-    }
+	private alert = async (errors: any[]) => {
+		if (!this.webhook) {
+			console.error(errors);
+		}
 
-    private alert = async (errors: any[]) => {
-        await this.webhook.send({
-            blocks: [
-                {
-                    type: 'section',
-                    text: {
-                        type: 'mrkdwn',
-                        text: `${errors.length} LiveOL error(s):`,
-                    }
-                },
-                ...errors.map((err) => {
-                    return {
-                        type: 'section',
-                        text: {
-                            type: 'mrkdwn',
-                            text: '```' + String(err) + '```',
-                        },
-                    };
-                }),
-            ]
-        });
-    }
+		await this.webhook.send({
+			blocks: [
+				{
+					type: 'section',
+					text: {
+						type: 'mrkdwn',
+						text: `${errors.length} LiveOL error(s):`,
+					},
+				},
+				...errors.map((err) => {
+					return {
+						type: 'section',
+						text: {
+							type: 'mrkdwn',
+							text: '```' + String(err) + '```',
+						},
+					};
+				}),
+			],
+		});
+	};
 
-    private getCompetitions = `{
+	private getCompetitions = `query getCompetitionsHealthcheck {
         competitions {
             getCompetitions {
                 today {
@@ -83,4 +95,24 @@ export class OLSelfHelper {
             }
         }
     }`;
+
+	private getCompetition = `query getCompetitionHealthcheck {
+        competitions {
+          getCompetition(competitionId: 18595) {
+            name
+            id
+            organizer
+            eventor
+            clubLogoUrl
+            info
+            clubLogoSizes
+            canceled
+            distance
+            district
+            signups
+            date
+            club
+          }
+        }
+      }`;
 }
