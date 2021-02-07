@@ -84,12 +84,20 @@ export class OLSelfHelper {
 						type: 'section',
 						text: {
 							type: 'mrkdwn',
-							text: '```' + String(err) + '```',
+							text: '```' + this.forceStringify(err) + '```',
 						},
 					};
 				}),
 			],
 		});
+	};
+
+	private forceStringify = (error: any): string => {
+		try {
+			return JSON.stringify(error);
+		} catch {
+			return String(error);
+		}
 	};
 
 	private getCompetitions = `query getCompetitionsHealthcheck {
