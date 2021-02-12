@@ -256,7 +256,7 @@ export class EventResponseParser {
 			}
 		});
 
-		const info = $('#main > div > p.info').html().trim();
+		const info = $('#main > div > p.info').html();
 
 		const links = $('.documents .documentName')
 			.toArray()
