@@ -10,20 +10,12 @@ import { OLCompetitionIOSHeader } from 'views/components/competition/iosHeader';
 import { OLText } from 'views/components/text';
 import { Platform, View } from 'react-native';
 import { px } from 'util/const';
+import { CompetitionInfoBox } from './info';
 
 interface Props {
 	competition: Competition & EventorCompetitionFragment;
 	goToLastPassings: () => void;
 }
-
-const parseHtml = (text: string): string => {
-	let parsed: string = text;
-
-	// Parse line breaks
-	parsed = text.replace(/<br>/gm, '\n');
-
-	return parsed;
-};
 
 export const OLCompetitionHeader: React.FC<Props> = (props) => (
 	<View>
@@ -111,29 +103,7 @@ export const OLCompetitionHeader: React.FC<Props> = (props) => (
 			</View>
 
 			{props.competition.eventor && !!props.competition.info && (
-				<View
-					style={{
-						backgroundColor: '#3867d6',
-						padding: px(20),
-						borderRadius: 4,
-						marginTop: px(5),
-					}}
-				>
-					<OLText
-						size={26}
-						font="Rift_Bold"
-						style={{
-							color: 'white',
-							paddingBottom: px(10),
-						}}
-					>
-						{Lang.print('competitions.info')}
-					</OLText>
-
-					<OLText size={14} font="Proxima_Nova" style={{ color: 'white' }} selectable>
-						{parseHtml(props.competition.info)}
-					</OLText>
-				</View>
+				<CompetitionInfoBox infoHtml={props.competition.info} />
 			)}
 		</View>
 
