@@ -44,7 +44,7 @@ const parseHtml = (text: string): string => {
 	parsed = parsed.replace(/<\/a>/gm, '\n');
 
 	// Parse a-tag openers
-	parsed = parsed.replace(/\<a(.*?)\>/gm, '');
+	parsed = parsed.replace(/<a(.*?)>/gm, '');
 
 	return parsed;
 };
