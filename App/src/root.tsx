@@ -40,8 +40,6 @@ export default class AppRoot extends React.Component<any, State> {
 			'PTMono-Regular': require('../assets/fonts/PTMono-Regular.ttf'),
 		});
 
-		await new Promise((resolve) => setTimeout(resolve, 3000000));
-
 		this.setState({ ready: true });
 	};
 
