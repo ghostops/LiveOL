@@ -1,7 +1,7 @@
 import { Cache } from 'lib/cache';
 import { Lang } from 'lib/lang';
 import { store } from 'store/configure';
-import { Toast } from 'native-base';
+import Toast from 'react-native-toast-message';
 import ms from 'ms';
 
 export const showToast = async () => {
@@ -13,11 +13,10 @@ export const showToast = async () => {
 
 	if (value !== 'seen' && state.general.rotation !== 'landscape') {
 		Toast.show({
-			text: Lang.print('promotions.rotate'),
-			duration: 3000,
+			text1: Lang.print('promotions.rotate'),
+			visibilityTime: 3000,
 			position: 'bottom',
-			type: 'warning',
-			textStyle: { color: 'black' },
+			type: 'info',
 		});
 
 		await cache.set('seen');

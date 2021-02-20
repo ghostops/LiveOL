@@ -1,16 +1,16 @@
 import * as React from 'react';
+import { ActivityIndicator, Image, View } from 'react-native';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { client } from 'lib/graphql/client';
 import { Lang } from 'lib/lang';
-import { ActivityIndicator, Image, View } from 'react-native';
 import { OLRotationWatcher } from 'views/components/watcher/rotation';
 import { Provider } from 'react-redux';
-import { Root } from 'native-base';
+import { px } from 'util/const';
 import { store } from 'store/configure';
 import * as Font from 'expo-font';
 import * as Updates from 'expo-updates';
 import Router from 'lib/nav/router';
-import { px } from 'util/const';
+import Toast from 'react-native-toast-message';
 
 interface State {
 	ready: boolean;
@@ -83,17 +83,20 @@ export default class AppRoot extends React.Component<any, State> {
 
 		return (
 			<ApolloProvider client={client}>
-				<Root>
-					<View style={{ flex: 1 }}>
-						<Provider store={store.store}>
-							<OLRotationWatcher>
-								<Router />
-							</OLRotationWatcher>
+				<View style={{ flex: 1 }}>
+					<Provider store={store.store}>
+						<OLRotationWatcher>
+							<Router />
+						</OLRotationWatcher>
 
-							{/* <OLPush /> */}
-						</Provider>
-					</View>
-				</Root>
+						{/* <OLPush /> */}
+					</Provider>
+				</View>
+				<Toast
+					ref={(ref) => {
+						Toast.setRef(ref);
+					}}
+				/>
 			</ApolloProvider>
 		);
 	}
