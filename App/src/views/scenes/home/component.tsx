@@ -18,6 +18,7 @@ interface Props {
 	searching: boolean;
 	loading: boolean;
 	loadMore: () => Promise<any>;
+	refetch: () => Promise<void>;
 }
 
 export class OLHome extends React.PureComponent<Props> {
@@ -88,6 +89,7 @@ export class OLHome extends React.PureComponent<Props> {
 						onCompetitionPress={this.props.onCompetitionPress}
 						listHeader={this.renderTodaysCompetitions()}
 						loadMore={this.props.loadMore}
+						refetch={this.props.refetch}
 					/>
 				</View>
 

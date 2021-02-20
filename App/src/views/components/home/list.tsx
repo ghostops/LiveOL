@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Competition } from 'lib/graphql/fragments/types/Competition';
-import { FlatList, View } from 'react-native';
+import { FlatList, RefreshControl, View } from 'react-native';
 import { HomeListItem } from './listItem';
 import { isDateToday, dateToReadable } from 'util/date';
 import { Lang } from 'lib/lang';
@@ -15,6 +15,7 @@ interface Props {
 	onCompetitionPress: (comp: Competition) => void;
 	listHeader: React.ReactElement;
 	loadMore: () => Promise<any>;
+	refetch: () => Promise<void>;
 	loading: boolean;
 }
 
@@ -38,7 +39,14 @@ export const groupVisibleCompetitions = (visibleCompetitions: Competition[]): Re
 	return map;
 };
 
-export const HomeList: React.FC<Props> = ({ competitions, onCompetitionPress, listHeader, loadMore, loading }) => {
+export const HomeList: React.FC<Props> = ({
+	competitions,
+	onCompetitionPress,
+	listHeader,
+	loadMore,
+	loading,
+	refetch,
+}) => {
 	const [moreLoading, setMoreLoading] = React.useState(false);
 
 	const visibleCompetitions = groupVisibleCompetitions(competitions);
@@ -88,6 +96,7 @@ export const HomeList: React.FC<Props> = ({ competitions, onCompetitionPress, li
 
 	return (
 		<FlatList
+			refreshControl={<RefreshControl refreshing={loading} onRefresh={refetch} />}
 			ListHeaderComponent={listHeader}
 			data={Object.keys(visibleCompetitions)}
 			renderItem={({ item }) => renderListSection(item, visibleCompetitions)}

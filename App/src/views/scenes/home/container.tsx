@@ -90,6 +90,9 @@ const DataWrapper: React.FC<Props> = (props) => {
 			openSearch={() => props.setSearching(true)}
 			searching={props.searching}
 			todaysCompetitions={today}
+			refetch={async () => {
+				await refetch();
+			}}
 			onCompetitionPress={(competition) => {
 				props.navigation.navigate(Routes.competition, {
 					id: competition.id,

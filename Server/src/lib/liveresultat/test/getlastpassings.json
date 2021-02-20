@@ -1,26 +1,30 @@
 {
 	"status": "OK",
-	"passings": [{
-		"passtime": "13:44:12",
-		"runnerName": "Rabia Sehirli",
-		"class": "Women",
-		"control": 1000,
-		"controlName": "",
-		"time": "126:47"
-	}, {
-		"passtime": "13:26:18",
-		"runnerName": "Erik Rost",
-		"class": "Men",
-		"control": 1000,
-		"controlName": "",
-		"time": "35:36"
-	}, {
-		"passtime": "13:25:15",
-		"runnerName": "Eylul Selen Yildirim",
-		"class": "Women",
-		"control": 1000,
-		"controlName": "",
-		"time": "ej start"
-	}],
+	"passings": [
+		{
+			"passtime": "13:44:12",
+			"runnerName": "Rabia Sehirli",
+			"class": "Women",
+			"control": 1000,
+			"controlName": "",
+			"time": "126:47"
+		},
+		{
+			"passtime": "13:26:18",
+			"runnerName": "Erik Rost",
+			"class": "Men",
+			"control": 1000,
+			"controlName": "",
+			"time": "35:36"
+		},
+		{
+			"passtime": "13:25:15",
+			"runnerName": "Eylul Selen Yildirim",
+			"class": "Women",
+			"control": 1000,
+			"controlName": "",
+			"time": "ej start"
+		}
+	],
 	"hash": "8dd9ebc950498b77d89fa115d0747df9"
 }
