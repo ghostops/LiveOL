@@ -1,11 +1,11 @@
 import * as React from 'react';
 import _ from 'lodash';
-import { Animated, TouchableOpacity, Keyboard } from 'react-native';
+import { Animated, TouchableOpacity, Keyboard, TextInput, View } from 'react-native';
 import { hasNotch, xtraSpace } from 'util/hasNotch';
-import { Header, Item, Button, Icon, Input } from 'native-base';
 import { Lang } from 'lib/lang';
 import { OLText } from '../text';
-import { UNIT } from 'util/const';
+import { fontPx, px, UNIT } from 'util/const';
+import { Ionicons } from '@expo/vector-icons';
 
 const SEARCH_SIZE = UNIT * 3.25;
 
@@ -20,15 +20,11 @@ interface State {
 	searchTerm: string;
 }
 
-type InputRef = { wrappedInstance: { focus(); blur() } };
-
 export class OLSearch extends React.PureComponent<Props, State> {
 	state: State = {
 		searchAnimation: new Animated.Value(0),
 		searchTerm: '',
 	};
-
-	searchInput: InputRef;
 
 	componentDidUpdate(prevProps: Props) {
 		if (prevProps.searching !== this.props.searching && this.props.searching) {
@@ -43,8 +39,6 @@ export class OLSearch extends React.PureComponent<Props, State> {
 	};
 
 	showSearch = () => {
-		this.searchInput.wrappedInstance.focus();
-
 		Animated.spring(this.state.searchAnimation, {
 			toValue: 1,
 			useNativeDriver: true,
@@ -53,7 +47,6 @@ export class OLSearch extends React.PureComponent<Props, State> {
 
 	hideSearch = () => {
 		Keyboard.dismiss();
-		this.searchInput.wrappedInstance.blur();
 
 		_.defer(() => {
 			this.props.setSearching(false);
@@ -82,42 +75,58 @@ export class OLSearch extends React.PureComponent<Props, State> {
 					right: 0,
 				}}
 			>
-				<Header
-					searchBar
-					rounded
+				<View
 					style={{
 						paddingTop: 0,
 						height: SEARCH_SIZE,
 						backgroundColor: '#fafafa',
+						flexDirection: 'row',
+						width: '100%',
+						alignItems: 'center',
 					}}
 				>
 					<TouchableOpacity
 						style={{
 							height: '100%',
 							justifyContent: 'center',
-							paddingHorizontal: UNIT / 2,
+							paddingHorizontal: px(8),
 						}}
 						onPress={this.hideSearch}
 					>
-						<Icon name="close" />
+						<Ionicons name="close" size={fontPx(20)} />
 					</TouchableOpacity>
 
-					<Item>
-						<Icon name="search" />
-						<Input
-							ref={(ref) => (this.searchInput = (ref as unknown) as InputRef)}
+					<View
+						style={{
+							flexDirection: 'row',
+							flex: 1,
+							alignItems: 'center',
+							backgroundColor: '#d9d9d9',
+							borderRadius: 8,
+						}}
+					>
+						<Ionicons name="search" size={fontPx(18)} style={{ marginLeft: px(4) }} />
+						<TextInput
 							placeholder={Lang.print('home.search')}
 							onChangeText={(searchTerm) => this.setState({ searchTerm })}
 							onSubmitEditing={this.search}
+							style={{
+								padding: 6,
+								flex: 1,
+							}}
+							focusable
 						/>
-					</Item>
+					</View>
 
-					<Button transparent onPress={this.search}>
-						<OLText font="Proxima_Nova" size={16}>
+					<TouchableOpacity
+						onPress={this.search}
+						style={{ flex: 0.25, justifyContent: 'center', alignItems: 'center' }}
+					>
+						<OLText font="Proxima_Nova" size={16} style={{ color: 'black' }}>
 							{Lang.print('home.search')}
 						</OLText>
-					</Button>
-				</Header>
+					</TouchableOpacity>
+				</View>
 			</Animated.View>
 		);
 	}

@@ -9,7 +9,6 @@ import { OLText } from 'views/components/text';
 import { px } from 'util/const';
 import { TodaysCompetitions } from 'views/components/home/today';
 import { View, TouchableOpacity } from 'react-native';
-import { OLButton } from 'views/components/button';
 
 interface Props {
 	competitions: Competition[];
