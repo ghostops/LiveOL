@@ -21,6 +21,8 @@ export S3_ROOT="s3://liveol/deploy"
 
 export DOCKER_COMPOSE="docker-compose -f docker-compose.live.yml"
 
+export CLEAN_SCRIPT_NAME="clean.sh"
+
 # Make home dir
 mkdir -p $SCRIPT_HOME
 mkdir -p $SCRIPT_HOME/.ssh
@@ -46,8 +48,16 @@ apt update
 apt-cache policy docker-ce
 apt -y install docker-ce
 
-# cronjob deleting all cache at 2am every night
-(crontab -l 2>/dev/null; echo "0 2 * * * sudo docker system prune -a -f") | crontab -
+# cronjob deleting all cache at 2am every monday
+cat << EOF > $SCRIPT_HOME/$CLEAN_SCRIPT_NAME
+pushd $SERVER_ROOT
+  $DOCKER_COMPOSE down
+  docker system prune -a -f
+  $DOCKER_COMPOSE up -d
+popd
+EOF
+chmod +x $SCRIPT_HOME/$CLEAN_SCRIPT_NAME
+(crontab -l 2>/dev/null; echo "0 2 * * 1 $SCRIPT_HOME/$CLEAN_SCRIPT_NAME") | crontab -
 
 ## Docker-Compose
 curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
