@@ -2,23 +2,21 @@ import * as React from 'react';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { client } from 'lib/graphql/client';
 import { Lang } from 'lib/lang';
-import { Image, View } from 'react-native';
+import { ActivityIndicator, Image, View } from 'react-native';
 import { OLRotationWatcher } from 'views/components/watcher/rotation';
 import { Provider } from 'react-redux';
 import { Root } from 'native-base';
 import { store } from 'store/configure';
 import * as Font from 'expo-font';
-import * as SplashScreen from 'expo-splash-screen';
 import * as Updates from 'expo-updates';
 import Router from 'lib/nav/router';
+import { px } from 'util/const';
 
 interface State {
 	ready: boolean;
 }
 
 window['clog'] = (...props) => console.warn(JSON.stringify(props));
-
-void SplashScreen.preventAutoHideAsync();
 
 export default class AppRoot extends React.Component<any, State> {
 	state = {
@@ -42,9 +40,9 @@ export default class AppRoot extends React.Component<any, State> {
 			'PTMono-Regular': require('../assets/fonts/PTMono-Regular.ttf'),
 		});
 
-		setTimeout(() => {
-			this.setState({ ready: true }, () => void SplashScreen.hideAsync());
-		}, 3000);
+		await new Promise((resolve) => setTimeout(resolve, 3000000));
+
+		this.setState({ ready: true });
 	};
 
 	checkForUpdates = async () => {
@@ -61,19 +59,27 @@ export default class AppRoot extends React.Component<any, State> {
 	render() {
 		if (!this.state.ready) {
 			return (
-				<Image
-					source={require('../assets/images/splash.png')}
+				<View
 					style={{
-						position: 'absolute',
-						top: 0,
-						left: 0,
-						bottom: 0,
-						right: 0,
-						height: '100%',
-						width: '100%',
+						flex: 1,
+						justifyContent: 'flex-end',
 					}}
-					resizeMode="cover"
-				/>
+				>
+					<Image
+						source={require('../assets/images/splash.png')}
+						style={{
+							position: 'absolute',
+							top: 0,
+							left: 0,
+							bottom: 0,
+							right: 0,
+							height: '100%',
+							width: '100%',
+						}}
+						resizeMode="cover"
+					/>
+					<ActivityIndicator color="white" style={{ marginBottom: px(65) }} size="large" />
+				</View>
 			);
 		}
 
