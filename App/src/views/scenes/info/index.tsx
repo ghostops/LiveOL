@@ -125,7 +125,6 @@ class Component extends React.PureComponent<Props, State> {
 			{this.BUTTONS.map((button, index) => {
 				return (
 					<OLButton
-						full
 						key={`${button.text}/${index}`}
 						onPress={() => button.onPress && button.onPress()}
 						onLongPress={() => button.onLongPress && button.onLongPress()}

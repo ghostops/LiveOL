@@ -1,9 +1,15 @@
 import * as React from 'react';
-import { Button, NativeBase } from 'native-base';
+import { ViewStyle } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { COLORS } from 'util/const';
 import { OLText } from '../text';
 
-interface Props extends NativeBase.Button {
+interface Props {
+	onPress?: () => void;
+	onLongPress?: () => void;
+	small?: boolean;
+	disabled?: boolean;
+	style?: ViewStyle;
 	beforeText?: React.ReactNode;
 	afterText?: React.ReactNode;
 	children: string;
@@ -11,8 +17,10 @@ interface Props extends NativeBase.Button {
 
 export const OLButton: React.FC<Props> = (props) => {
 	return (
-		<Button
-			{...props}
+		<TouchableOpacity
+			onPress={props.onPress}
+			disabled={props.disabled}
+			onLongPress={props.onLongPress}
 			style={[
 				{
 					justifyContent: 'center',
@@ -20,6 +28,8 @@ export const OLButton: React.FC<Props> = (props) => {
 					opacity: props.disabled ? 0.35 : 1,
 					borderRadius: 4,
 					paddingHorizontal: 10,
+					paddingVertical: props.small ? 6 : 12,
+					alignItems: 'center',
 				},
 				props.style,
 			]}
@@ -35,6 +45,6 @@ export const OLButton: React.FC<Props> = (props) => {
 				{props.children}
 			</OLText>
 			{props.afterText}
-		</Button>
+		</TouchableOpacity>
 	);
 };
