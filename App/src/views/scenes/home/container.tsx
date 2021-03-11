@@ -29,16 +29,18 @@ interface DispatchProps {
 
 type Props = StateProps & OwnProps & DispatchProps;
 
+const getToday = () => moment().format('YYYY-MM-DD');
+
 const DataWrapper: React.FC<Props> = (props) => {
 	const { data, loading, error, fetchMore, refetch } = useQuery<Competitions, CompetitionsVariables>(COMPETITIONS, {
 		variables: {
 			search: props.searchTerm,
-			date: moment().format('YYYY-MM-DD'),
+			date: getToday(),
 		},
 	});
 
 	if (error) {
-		return <OLError error={error} refetch={refetch} />;
+		return <OLError error={error} refetch={() => refetch({ date: getToday() })} />;
 	}
 
 	const competitions: Competition[] = _.get(data, 'competitions.getCompetitions.competitions', []);
@@ -90,9 +92,7 @@ const DataWrapper: React.FC<Props> = (props) => {
 			openSearch={() => props.setSearching(true)}
 			searching={props.searching}
 			todaysCompetitions={today}
-			refetch={async () => {
-				await refetch();
-			}}
+			refetch={() => void refetch({ date: getToday() })}
 			onCompetitionPress={(competition) => {
 				props.navigation.navigate(Routes.competition, {
 					id: competition.id,
