@@ -96,7 +96,7 @@ export const HomeList: React.FC<Props> = ({
 
 	return (
 		<FlatList
-			refreshControl={<RefreshControl refreshing={loading} onRefresh={refetch} />}
+			refreshControl={<RefreshControl refreshing={loading} onRefresh={refetch} tintColor="black" />}
 			ListHeaderComponent={listHeader}
 			data={Object.keys(visibleCompetitions)}
 			renderItem={({ item }) => renderListSection(item, visibleCompetitions)}
