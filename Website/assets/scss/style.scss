@@ -29,53 +29,48 @@
 
 // Vendor
 
-@import 'vendor/animate';
-@import 'vendor/bootstrap';
-@import 'vendor/magnific-popup';
-@import 'vendor/nice-select';
-@import 'vendor/owl.carousel';
-@import 'vendor/responsive';
-@import 'vendor/slick';
-@import 'vendor/slicknav';
-@import 'vendor/themify-icons';
-
+@import "vendor/animate";
+@import "vendor/bootstrap";
+@import "vendor/magnific-popup";
+@import "vendor/nice-select";
+@import "vendor/owl.carousel";
+@import "vendor/responsive";
+@import "vendor/slick";
+@import "vendor/slicknav";
 
 // Defult
-@import 'variables';
-@import 'mixins';
-@import 'overlay';
-@import 'common';
-@import 'color';
+@import "variables";
+@import "mixins";
+@import "overlay";
+@import "common";
+@import "color";
 
 // Deful Element Page
-@import 'blog_page';
-@import 'contact';
-@import 'bradcam';
-@import 'extend';
-@import 'elements';
-
+@import "blog_page";
+@import "contact";
+@import "bradcam";
+@import "extend";
+@import "elements";
 
 // Homepage1
-@import 'headerMenu';
-@import 'h1-hero';
-@import 'best_features';
-@import 'services_section';
-@import 'applic-apps';
-@import 'best-priceing';
-@import 'our-customer';
-@import 'available-app';
+@import "headerMenu";
+@import "h1-hero";
+@import "best_features";
+@import "services_section";
+@import "applic-apps";
+@import "best-priceing";
+@import "our-customer";
+@import "available-app";
 
-
-@import 'testimonial';
-@import 'footer';
+@import "testimonial";
+@import "footer";
 
 // inner Page
-@import 'services';
-
+@import "services";
 
 // LiveOL Custom
 
 .owl-carousel .owl-stage {
-	display: flex;
-	align-items: center;
+  display: flex;
+  align-items: center;
 }
