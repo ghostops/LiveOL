@@ -35,7 +35,7 @@ export class LanguagePicker extends React.PureComponent<any, State> {
 						}}
 						key={lang}
 					>
-						<OLFlag code={lang} size={32} />
+						<OLFlag code={lang} size={32} style={{ borderColor: 'black', borderWidth: 1 }} />
 					</TouchableOpacity>
 				))}
 			</ScrollView>
