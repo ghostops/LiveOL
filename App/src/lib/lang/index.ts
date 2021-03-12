@@ -15,7 +15,7 @@ class Language {
 	public fallback: AvailableLanguage = 'en';
 	public phoneLocale: string;
 
-	public availible: AvailableLanguage[] = ['en', 'sv', 'no', 'sr'];
+	public available: AvailableLanguage[] = ['en', 'sv', 'no', 'sr'];
 
 	public init = async (): Promise<void> => {
 		this.phoneLocale = Localization.locale.substr(0, 2);
@@ -25,7 +25,7 @@ class Language {
 		if (cached) {
 			this.active = cached as AvailableLanguage;
 		} else {
-			if ((this.availible as string[]).indexOf(this.phoneLocale) > -1) {
+			if ((this.available as string[]).indexOf(this.phoneLocale) > -1) {
 				this.active = this.phoneLocale as AvailableLanguage;
 			} else {
 				this.active = this.fallback;
