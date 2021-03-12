@@ -21,7 +21,7 @@ export class LanguagePicker extends React.PureComponent<any, State> {
 				}}
 				horizontal
 			>
-				{Lang.availible.map((lang) => (
+				{Lang.available.map((lang) => (
 					<TouchableOpacity
 						onPress={async () => {
 							await Lang.set(lang);
