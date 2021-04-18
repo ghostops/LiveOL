@@ -77,31 +77,28 @@ export class LiveresultatAPIClient {
 			return this.testRequest(key);
 		}
 
-		try {
-			let data = await this.cache.get(key);
+		let data = await this.cache.get(key);
 
-			if (!data) {
-				const res = await request;
-				data = res.data;
+		if (!data) {
+			const res = await request;
+			data = this.parseApiData(res.data);
 
-				await this.cache.set(key, data, { ttlMs: ms(ttlString) });
-			}
-
-			// Anti-tab measure
-			if (typeof data === 'string') {
-				try {
-					data = data.replace('\t', '');
-					data = JSON.parse(data);
-				} catch {
-					console.error('json still could not be parsed!');
-				}
-			}
-
-			return data;
-		} catch (err) {
-			console.error(err);
-			return null;
+			await this.cache.set(key, data, { ttlMs: ms(ttlString) });
 		}
+
+		return data;
+	};
+
+	private parseApiData = (data: any) => {
+		let parsedData = data;
+
+		// Anti-tab measure
+		if (typeof parsedData === 'string') {
+			parsedData = parsedData.replace('\t', '');
+			parsedData = JSON.parse(parsedData);
+		}
+
+		return parsedData;
 	};
 
 	private testRequest = (key: string): any => {

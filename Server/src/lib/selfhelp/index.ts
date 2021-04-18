@@ -24,7 +24,7 @@ export class OLSelfHelper {
 			});
 		}
 
-		this.start();
+		// this.start();
 	}
 
 	private start = () => {
