@@ -144,6 +144,10 @@ class Component extends React.PureComponent<Props, State> {
 			code: 'no',
 			name: 'Pål Kittilsen',
 		},
+		{
+			code: 'sr',
+			name: 'Nikola Spaskovic',
+		},
 	];
 
 	renderTranslationCredit = ({ code, name }: { code: string; name: string }, index: number) => (
@@ -152,9 +156,10 @@ class Component extends React.PureComponent<Props, State> {
 			style={{
 				flexDirection: 'row',
 				alignItems: 'center',
+				marginTop: px(8),
 			}}
 		>
-			<OLFlag code={code} size={32} />
+			<OLFlag code={code} size={32} style={{ borderColor: 'black', borderWidth: 1 }} />
 
 			<OLText
 				font="Proxima_Nova"
