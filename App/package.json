@@ -35,7 +35,7 @@
 		"expo-status-bar": "^1.0.0",
 		"expo-updates": "~0.2.8",
 		"graphql": "^14.6.0",
-		"lodash": "^4.17.19",
+		"lodash": "^4.17.21",
 		"moment": "^2.25.3",
 		"moment-duration-format": "^2.3.2",
 		"ms": "^2.1.2",
