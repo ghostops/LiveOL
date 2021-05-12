@@ -15,44 +15,27 @@ jobs:
       - run:
           name: Lint app
           command: cd ./App && yarn lint
-
-  deploy-website:
-    docker:
-      - image: "237763290421.dkr.ecr.eu-north-1.amazonaws.com/deploy:latest"
-        aws_auth:
-          aws_access_key_id: $AWS_ACCESS_KEY_ID
-          aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
-    steps:
-      - add_ssh_keys:
-          fingerprints:
-            - "f2:70:44:77:77:7d:43:96:aa:37:30:cc:28:b0:6b:a6"
-
-      - checkout
-
-      - run:
-          name: Disable known hosts for the ssh domain
-          command: |
-            echo "Host ${SSH_DOMAIN}
-            StrictHostKeyChecking no
-            UserKnownHostsFile /dev/null" > ~/.ssh/config
-
-      - run:
-          name: Upload website
-          command: |
-            scp -P ${SSH_PORT} -r ./Website/* ${SSH_USER}@${SSH_DOMAIN}:${WEBROOT}
   deploy-server:
     docker:
-      - image: cimg/base:2021.04
+      - image: circleci/node:lts-buster
     steps:
       - add_ssh_keys:
           fingerprints:
             - "f2:70:44:77:77:7d:43:96:aa:37:30:cc:28:b0:6b:a6"
+
+      - run:
+          name: Install CapRover
+          command: npm install -g caprover
 
       - checkout
 
       - run:
           name: Deploy with CapRover
-          command: docker run caprover/cli-caprover:v2.1.1 caprover deploy --caproverUrl $CAPROVER_URL --caproverPassword $CAPROVER_PASSWORD --caproverApp $CAPROVER_APP
+          command: caprover deploy \
+            --caproverUrl $CAPROVER_URL \
+            --caproverPassword $CAPROVER_PASSWORD \
+            --caproverApp $CAPROVER_APP \
+            --branch $CAPROVER_BRANCH
 
 workflows:
   linting:
@@ -61,11 +44,6 @@ workflows:
   deploy:
     jobs:
       - deploy-server:
-          filters:
-            branches:
-              only:
-                - master
-      - deploy-website:
           filters:
             branches:
               only:
