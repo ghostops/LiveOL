@@ -21,8 +21,9 @@ class ApiSingletons {
 		if (this.singletons) return this.singletons;
 
 		const cache = new Cacher({
-			host: getEnv('env') === 'live' ? 'redis' : 'localhost',
+			host: process.env.REDIS_HOST,
 			port: 6379,
+			password: process.env.REDIS_PASSWORD,
 		});
 
 		const eventorCombiner = new EventorCombiner({
