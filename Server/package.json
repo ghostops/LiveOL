@@ -7,8 +7,7 @@
 		"start": "docker-compose up -d && yarn dev",
 		"build": "yarn tsc && yarn babel build --out-dir build",
 		"dev": "nodemon -L -e ts -w ./src -x yarn dev:serve",
-		"dev:serve": "ts-node -r tsconfig-paths/register src/index.ts",
-		"docker:latest": "REPO=liveol ./deploy/deploy.sh"
+		"dev:serve": "ts-node -r tsconfig-paths/register src/index.ts"
 	},
 	"keywords": [],
 	"author": "",

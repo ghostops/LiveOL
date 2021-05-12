@@ -42,10 +42,7 @@ jobs:
             scp -P ${SSH_PORT} -r ./Website/* ${SSH_USER}@${SSH_DOMAIN}:${WEBROOT}
   deploy-server:
     docker:
-      - image: "237763290421.dkr.ecr.eu-north-1.amazonaws.com/deploy:latest"
-        aws_auth:
-          aws_access_key_id: $AWS_ACCESS_KEY_ID
-          aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
+      - image: cimg/base:2021.04
     steps:
       - add_ssh_keys:
           fingerprints:
@@ -53,42 +50,9 @@ jobs:
 
       - checkout
 
-      - setup_remote_docker
-
       - run:
-          name: Disable known hosts for the ssh domain
-          command: |
-            echo "Host ${SSH_DOMAIN}
-            StrictHostKeyChecking no
-            UserKnownHostsFile /dev/null" > ~/.ssh/config
-
-      - run:
-          name: Set up Docker
-          command: eval $(aws ecr get-login --no-include-email --region=eu-north-1)
-
-      - run:
-          name: Build server container
-          command: cd ./Server && yarn docker:latest
-
-      - run:
-          name: Authenticate ECR
-          command: |
-            ssh ${SSH_USER}@${SSH_DOMAIN} -p ${SSH_PORT} "./ecr.sh"
-
-      - run:
-          name: Pull changes on server
-          command: |
-            ssh ${SSH_USER}@${SSH_DOMAIN} -p ${SSH_PORT} "cd ${PROJECT_ROOT} && git stash && git pull"
-
-      - run:
-          name: Pull latest Docker container
-          command: |
-            ssh ${SSH_USER}@${SSH_DOMAIN} -p ${SSH_PORT} "cd ${PROJECT_ROOT} && sudo docker-compose -f docker-compose.live.yml pull"
-
-      - run:
-          name: Rebuild the Docker containers and restart server
-          command: |
-            ssh ${SSH_USER}@${SSH_DOMAIN} -p ${SSH_PORT} "cd ${PROJECT_ROOT} && sudo docker-compose -f docker-compose.live.yml up -d"
+          name: Deploy with CapRover
+          command: docker run caprover/cli-caprover:v2.1.1 caprover deploy --caproverUrl $CAPROVER_URL --caproverPassword $CAPROVER_PASSWORD --caproverApp $CAPROVER_APP
 
 workflows:
   linting:
