@@ -27,11 +27,12 @@ jobs:
 
       - run:
           name: Deploy with CapRover
-          command: npx caprover deploy \
-            --caproverUrl $CAPROVER_URL \
-            --caproverPassword $CAPROVER_PASSWORD \
-            --caproverApp $CAPROVER_APP \
-            --branch $CAPROVER_BRANCH
+          command: |
+            npx caprover deploy \
+              --caproverUrl $CAPROVER_URL \
+              --caproverPassword $CAPROVER_PASSWORD \
+              --caproverApp $CAPROVER_APP \
+              --branch $CAPROVER_BRANCH
 
 workflows:
   linting:
