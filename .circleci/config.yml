@@ -19,10 +19,6 @@ jobs:
     docker:
       - image: circleci/node:lts-buster
     steps:
-      - add_ssh_keys:
-          fingerprints:
-            - "f2:70:44:77:77:7d:43:96:aa:37:30:cc:28:b0:6b:a6"
-
       - checkout
 
       - run:
