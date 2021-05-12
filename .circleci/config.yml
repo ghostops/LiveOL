@@ -23,15 +23,11 @@ jobs:
           fingerprints:
             - "f2:70:44:77:77:7d:43:96:aa:37:30:cc:28:b0:6b:a6"
 
-      - run:
-          name: Install CapRover
-          command: npm install -g caprover
-
       - checkout
 
       - run:
           name: Deploy with CapRover
-          command: caprover deploy \
+          command: npx caprover deploy \
             --caproverUrl $CAPROVER_URL \
             --caproverPassword $CAPROVER_PASSWORD \
             --caproverApp $CAPROVER_APP \
