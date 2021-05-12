@@ -11,12 +11,13 @@ ENV EVENTOR_API_KEY_SE $EVENTOR_API_KEY_AU
 ENV SLACK_WEBHOOK $SLACK_WEBHOOK
 ENV ENV LIVE
 
-ADD package.json package.json
-ADD yarn.lock yarn.lock
+ADD ./Server/package.json ./
+ADD ./Server/yarn.lock ./
 RUN yarn install
 
-ADD tsconfig.json .babelrc ./
-ADD src src
+ADD ./Server/tsconfig.json ./
+ADD ./Server/.babelrc ./
+ADD ./Server/src ./src
 
 RUN yarn build
 
