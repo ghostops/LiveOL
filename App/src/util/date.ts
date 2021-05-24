@@ -15,6 +15,8 @@ export const dateToReadable = (date: string): string => {
 
 export const diffDateNow = (datestring: string): string | null => {
 	const date = moment(datestring).utcOffset(-120);
+	// To use this with the liveresults replayer (serverside) you need to set your clock locally
+	// to match the results returned by the replayer.
 	const now = moment();
 
 	const difference = now.diff(date);

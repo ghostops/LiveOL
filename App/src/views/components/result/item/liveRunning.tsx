@@ -7,53 +7,34 @@ interface Props {
 	date: string;
 }
 
-interface State {
-	value: string;
-}
+export const OLResultLiveRunning: React.FC<Props> = ({ date }) => {
+	const [value, setValue] = React.useState<string>();
 
-export class OLResultLiveRunning extends React.PureComponent<Props, State> {
-	state: State = { value: null };
+	React.useEffect(() => {
+		if (!date) return;
 
-	interval;
+		const interval = setInterval(() => {
+			const time = diffDateNow(date);
+			setValue(time);
+		}, 1000);
 
-	componentDidMount() {
-		this.startCounting();
+		return () => clearInterval(interval);
+	}, [date]);
+
+	if (!value) {
+		return null;
 	}
 
-	componentWillUnmount() {
-		this.stopCounting();
-	}
-
-	stopCounting = () => {
-		if (this.interval) {
-			clearInterval(this.interval);
-		}
-	};
-
-	startCounting = () => {
-		this.interval = setInterval(() => {
-			const value = diffDateNow(this.props.date);
-
-			this.setState({ value });
-		});
-	};
-
-	render() {
-		if (!this.state.value) {
-			return null;
-		}
-
-		return (
-			<View
-				style={{
-					flex: 1,
-					justifyContent: 'center',
-				}}
-			>
-				<OLText size={18} font="PTMono-Regular">
-					{this.state.value}
-				</OLText>
-			</View>
-		);
-	}
-}
+	return (
+		<View
+			style={{
+				flex: 1,
+				justifyContent: 'center',
+			}}
+		>
+			<OLText size={18} font="PTMono-Regular">
+				{value}
+			</OLText>
+		</View>
+	);
+};
