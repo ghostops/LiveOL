@@ -1,6 +1,0 @@
-module Pods_LiveOL {
-  umbrella header "Pods-LiveOL-umbrella.h"
-
-  export *
-  module * { export * }
-}
