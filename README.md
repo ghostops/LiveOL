@@ -29,8 +29,8 @@ non-critical aspects of the application.
 
 # Links
 
-* [Website](https://liveol.larsendahl.se/)
-* [License](https://creativecommons.org/licenses/by/3.0/)
+- [Website](https://liveol.larsendahl.se/)
+- [License](https://choosealicense.com/licenses/apache-2.0/)
 
 ### Translations powered by:
 

@@ -30,7 +30,7 @@ platform :android do
 
     gradle(
       task: 'assemble',
-      build_type: 'Release'
+      build_type: 'release'
     )
 
     upload_to_play_store(
@@ -40,29 +40,11 @@ platform :android do
     )
   end
 
-  desc "Deploy a beta version to App Center"
-  lane :beta do
-    increment_version_code(
-      gradle_file_path: "app/build.gradle"
-    )
-
-    gradle(
-      task: 'assemble',
-      build_type: 'Release'
-    )
-
-    appcenter_upload(
-      owner_type: 'user',
-      app_name: 'LiveOL',
-      notify_testers: true
-    )
-  end
-
   desc "Build a release APK and move it to the desktop"
   lane :apk do
     gradle(
       task: 'assemble',
-      build_type: 'Release'
+      build_type: 'release'
     )
 
     sh "mv ../app/build/outputs/apk/release/app-release.apk ~/Desktop"

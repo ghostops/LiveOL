@@ -151,7 +151,7 @@ android {
         applicationId 'se.liveol.rn'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 22
+        versionCode 28
         versionName vname
         multiDexEnabled true
     }

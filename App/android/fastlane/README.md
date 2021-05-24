@@ -21,11 +21,6 @@ or alternatively using `brew install fastlane`
 fastlane android deploy
 ```
 Deploy a new version to the Google Play
-### android beta
-```
-fastlane android beta
-```
-Deploy a beta version to App Center
 ### android apk
 ```
 fastlane android apk
