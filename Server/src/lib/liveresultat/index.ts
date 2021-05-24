@@ -46,14 +46,14 @@ export class LiveresultatAPIClient {
 	public getclassresults = async (id: number, _class: string): Promise<LiveresultatApi.getclassresults> =>
 		this.cachedRequest(
 			this.client.get(
-				`${this.root}/api.php?method=getclassresults&comp=${id}&class=${this.classNameString(_class)}`,
+				`${this.root}/api.php?method=getclassresults&comp=${id}&class=${encodeURIComponent(_class)}`,
 				{
 					headers: {
 						'Content-Type': 'application/json;charset=UTF-8',
 					},
 				},
 			),
-			`getclassresults:${id}:${this.classNameString(_class)}`,
+			`getclassresults:${id}:${encodeURIComponent(_class)}`,
 			'15 seconds',
 		);
 
@@ -63,10 +63,6 @@ export class LiveresultatAPIClient {
 			`getlastpassings:${id}`,
 			'15 seconds',
 		);
-
-	// Replace all occurances åäö with ao
-	private classNameString = (str: string): string =>
-		str.replace(/å|ä/g, 'a').replace(/Å|Ä/g, 'A').replace(/ö/g, 'o').replace(/Ö/g, 'O');
 
 	private cachedRequest = async (
 		request: Promise<AxiosResponse<any>>,
