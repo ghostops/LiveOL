@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "868B90C74770285449C60DBA82181479"
-               BuildableName = "libEXFileSystem.a"
+               BuildableName = "EXFileSystem"
                BlueprintName = "EXFileSystem"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>

@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "897EF6A99176326E24F51E2F2103828C"
-               BuildableName = "libUMReactNativeAdapter.a"
+               BuildableName = "UMReactNativeAdapter"
                BlueprintName = "UMReactNativeAdapter"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>

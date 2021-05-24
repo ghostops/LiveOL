@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "308C1256CE62198E57AA0A0EEF8F8CED"
-               BuildableName = "libEXSplashScreen.a"
+               BuildableName = "EXSplashScreen"
                BlueprintName = "EXSplashScreen"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>

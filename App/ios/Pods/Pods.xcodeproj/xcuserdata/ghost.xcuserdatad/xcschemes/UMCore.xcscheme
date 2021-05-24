@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "DBCB1B4965863DDD3B9DED9A0918A526"
-               BuildableName = "libUMCore.a"
+               BuildableName = "UMCore"
                BlueprintName = "UMCore"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
