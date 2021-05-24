@@ -26,6 +26,7 @@ App/android/.gradle
 App/ios/rn.ipa
 App/ios/rn.app.dSYM.zip
 App/ios/fastlane/report.xml
+App/ios/Pods
 
 google-key.json
 App/android/fastlane/report.xml
