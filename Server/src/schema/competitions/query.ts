@@ -45,8 +45,6 @@ export const CompetitionsQuery = new GraphQLObjectType({
 
 				let { competitions } = await Liveresultat.getcompetitions();
 
-				const lastPage = Math.ceil(competitions.length / PER_PAGE);
-
 				const today = competitions.filter((comp) => {
 					return isDateToday(comp.date, args.date);
 				});
@@ -56,6 +54,8 @@ export const CompetitionsQuery = new GraphQLObjectType({
 						comp.name.toLowerCase().includes(search.toLowerCase()),
 					);
 				}
+
+				const lastPage = Math.ceil(competitions.length / PER_PAGE);
 
 				competitions = _.drop(competitions, offset).slice(0, PER_PAGE);
 
