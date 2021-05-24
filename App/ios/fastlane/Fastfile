@@ -26,14 +26,7 @@ platform :ios do
   desc "Push a new release build to Testflight"
   lane :release do
     xcodeproj = "LiveOL.xcodeproj"
-    scheme = "LiveOLRelease"
-
-    match(type: "appstore")
-
-    update_project_team(
-      path: xcodeproj,
-      teamid: CredentialsManager::AppfileConfig.try_fetch_value(:team_id),
-    )
+    scheme = "LiveOL"
 
     increment_version_number_in_plist(
       version_number: getPackageVersion,
