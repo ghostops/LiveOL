@@ -5,7 +5,9 @@ import Toast from 'react-native-toast-message';
 import ms from 'ms';
 
 export const showToast = async () => {
-	const cache = new Cache('rotation_toast', ms('12 hours'));
+	if (__DEV__) return;
+
+	const cache = new Cache('rotation_toast', ms('5 days'));
 
 	const value = await cache.get();
 
