@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   lint-app:
     docker:
-      - image: "circleci/node:dubnium"
+      - image: "cimg/node:14.17.0"
 
     steps:
       - checkout
