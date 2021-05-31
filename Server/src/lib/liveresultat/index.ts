@@ -126,13 +126,13 @@ export class LiveresultatAPIClient {
 			return null;
 		}
 
-		// if (file === 'getclassresults') {
-		// 	if (!this.replayer) {
-		// 		this.replayer = new LiveresultatReplayer(`${__dirname}/test/getclassresults-replay`);
-		// 	}
+		if (file === 'getclassresults') {
+			if (!this.replayer) {
+				this.replayer = new LiveresultatReplayer(`${__dirname}/test/getclassresults-replay`);
+			}
 
-		// 	return this.replayer.getCurrentResults();
-		// }
+			return this.replayer.getCurrentResults();
+		}
 
 		console.info(`Read ${file}.json from DEV cache ${moment().format()}`);
 

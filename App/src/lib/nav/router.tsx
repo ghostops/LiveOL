@@ -10,6 +10,7 @@ import { Right, Left } from 'views/scenes/home/header';
 import { Routes } from './routes';
 import { StatusBar } from 'react-native';
 import { xtraSpace, hasNotch } from 'util/hasNotch';
+import { AudioControlls } from 'views/scenes/results/audio';
 
 interface StateProps {
 	landscape: boolean;
@@ -87,6 +88,7 @@ const Component: React.FC<StateProps> = ({ landscape }) => {
 					component={Mappings[Routes.results]}
 					options={(props) => ({
 						title: `${Lang.print('classes.resultsFor')}: ${props.route.params['className'] as string}`,
+						headerRight: () => <AudioControlls />,
 					})}
 					initialParams={{
 						id: 16011,

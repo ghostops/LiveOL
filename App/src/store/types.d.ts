@@ -5,7 +5,7 @@ interface AppState {
 
 interface GeneralReducer {
 	rotation: 'landscape' | 'portrait';
-	expoPushToken: string;
+	audioMuted: boolean;
 }
 
 interface HomeReducer {

@@ -88,8 +88,6 @@ export default class AppRoot extends React.Component<any, State> {
 						<OLRotationWatcher>
 							<Router />
 						</OLRotationWatcher>
-
-						{/* <OLPush /> */}
 					</Provider>
 				</View>
 				<Toast

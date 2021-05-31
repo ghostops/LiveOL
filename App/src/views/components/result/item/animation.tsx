@@ -1,28 +1,23 @@
 import * as React from 'react';
 import { Animated } from 'react-native';
 import { Result } from 'lib/graphql/fragments/types/Result';
+import { resultsChanged } from 'util/hasChanged';
 
 interface Props {
 	result: Result;
 }
-
-const hasChanged = (prev: Result, now: Result) =>
-	prev.place !== now.place ||
-	prev.result !== now.result ||
-	prev.status !== now.status ||
-	prev.splits.map((s) => s.time).join() !== now.splits.map((s) => s.time).join();
 
 export const OLResultAnimation: React.FC<Props> = (props) => {
 	const [animation] = React.useState(new Animated.Value(0));
 	const [result, setResult] = React.useState(props.result);
 
 	React.useEffect(() => {
-		if (hasChanged(props.result, result)) {
+		if (resultsChanged(props.result, result)) {
 			startAnimation();
 		}
 
 		setResult(props.result);
-	});
+	}, [props.result, result]);
 
 	const startAnimation = () => {
 		Animated.timing(animation, {

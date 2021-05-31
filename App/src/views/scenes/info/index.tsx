@@ -80,6 +80,7 @@ class Component extends React.PureComponent<Props, State> {
 	];
 
 	openPhraseApp = () => Linking.openURL('https://phraseapp.com');
+	openZapSplat = () => Linking.openURL('https://www.zapsplat.com/');
 
 	versionAlert = async () => {
 		const { data } = await client.query<ServerVersion>({
@@ -175,6 +176,16 @@ class Component extends React.PureComponent<Props, State> {
 
 	renderCreditCard = () => (
 		<OLCard style={{ marginVertical: px(8) }}>
+			<TouchableOpacity onPress={this.openZapSplat} style={{ marginBottom: 24 }}>
+				<OLText
+					font="Proxima_Nova"
+					size={14}
+					style={{ textAlign: 'center', textDecorationStyle: 'solid', textDecorationLine: 'underline' }}
+				>
+					Additional sound effects from zapsplat.com
+				</OLText>
+			</TouchableOpacity>
+
 			<TouchableOpacity
 				onPress={this.openPhraseApp}
 				style={{

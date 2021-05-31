@@ -10,6 +10,8 @@ import { Result } from 'lib/graphql/fragments/types/Result';
 import { RouterProps } from 'lib/nav/routes';
 import { showToast } from 'lib/toasts/rotate';
 import { useQuery } from '@apollo/react-hooks';
+import { useHasChanged } from './hooks/useHasChanged';
+import { usePlayAudio } from './hooks/usePlayAudio';
 
 type OwnProps = RouterProps<{ id: number; className: string }>;
 
@@ -27,9 +29,19 @@ const DataWrapper: React.FC<Props> = ({ route, landscape }) => {
 		void showToast();
 	}, []);
 
+	const playAudio = usePlayAudio();
+
 	const { data, loading, error, refetch } = useQuery<GetResults, GetResultsVariables>(GET_RESULTS, {
 		variables: { competitionId, className },
 	});
+
+	const hasAnyChanged = useHasChanged(data?.results?.getResults);
+
+	React.useEffect(() => {
+		if (!hasAnyChanged) return;
+
+		void playAudio();
+	}, [hasAnyChanged]);
 
 	if (error) {
 		return <OLError error={error} refetch={refetch} />;

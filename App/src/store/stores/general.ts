@@ -1,11 +1,9 @@
-import { Notification } from 'expo/build/Notifications/Notifications.types';
-
 export const SET_ROTATION = 'GENERAL:SET_ROTATION';
-export const SET_EXPO_PUSH_TOKEN = 'GENERAL:SET_EXPO_PUSH_TOKEN';
+export const SET_MUTE = 'GENERAL:SET_MUTE';
 
 const initialState: GeneralReducer = {
 	rotation: null,
-	expoPushToken: null,
+	audioMuted: false,
 };
 
 export function generalReducer(state: GeneralReducer = initialState, action: DispatchAction<any>): GeneralReducer {
@@ -15,10 +13,10 @@ export function generalReducer(state: GeneralReducer = initialState, action: Dis
 				...state,
 				rotation: action.value,
 			};
-		case SET_EXPO_PUSH_TOKEN:
+		case SET_MUTE:
 			return {
 				...state,
-				rotation: action.value,
+				audioMuted: action.value,
 			};
 	}
 
@@ -36,13 +34,11 @@ export const setRotation = (rotation: string) => (dispatch, getState: GetState) 
 	});
 };
 
-export const setExpoPushToken = (token: string) => (dispatch) => {
-	dispatch({
-		type: SET_EXPO_PUSH_TOKEN,
-		value: token,
-	});
-};
+export const toggleMute = () => (dispatch, getState: GetState) => {
+	const muteValue = getState().general.audioMuted;
 
-export const handleNotification = (notification: Notification) => () => {
-	console.log(notification);
+	dispatch({
+		type: SET_MUTE,
+		value: !muteValue,
+	});
 };
