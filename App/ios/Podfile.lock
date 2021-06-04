@@ -33,6 +33,8 @@ PODS:
   - EXSplashScreen (0.10.2):
     - React-Core
     - UMCore
+  - EXStoreReview (4.0.2):
+    - UMCore
   - EXStructuredHeaders (1.0.1):
     - UMCore
   - EXUpdates (0.5.5):
@@ -346,6 +348,8 @@ PODS:
     - React-Core (= 0.63.4)
     - React-cxxreact (= 0.63.4)
     - React-jsi (= 0.63.4)
+  - RNCAsyncStorage (1.15.5):
+    - React-Core
   - RNCMaskedView (0.1.10):
     - React
   - RNGestureHandler (1.10.3):
@@ -422,6 +426,7 @@ DEPENDENCIES:
   - EXLocalization (from `../node_modules/expo-localization/ios`)
   - EXPermissions (from `../node_modules/expo-permissions/ios`)
   - EXSplashScreen (from `../node_modules/expo-splash-screen/ios`)
+  - EXStoreReview (from `../node_modules/expo-store-review/ios`)
   - EXStructuredHeaders (from `../node_modules/expo-structured-headers/ios`)
   - EXUpdates (from `../node_modules/expo-updates/ios`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
@@ -471,6 +476,7 @@ DEPENDENCIES:
   - React-RCTText (from `../node_modules/react-native/Libraries/Text`)
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
@@ -531,6 +537,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-permissions/ios"
   EXSplashScreen:
     :path: "../node_modules/expo-splash-screen/ios"
+  EXStoreReview:
+    :path: "../node_modules/expo-store-review/ios"
   EXStructuredHeaders:
     :path: "../node_modules/expo-structured-headers/ios"
   EXUpdates:
@@ -587,6 +595,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/Libraries/Vibration"
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  RNCAsyncStorage:
+    :path: "../node_modules/@react-native-async-storage/async-storage"
   RNCMaskedView:
     :path: "../node_modules/@react-native-community/masked-view"
   RNGestureHandler:
@@ -641,6 +651,7 @@ SPEC CHECKSUMS:
   EXLocalization: f139efe4a06be1041815879959346e3d437a6e93
   EXPermissions: 8f8c1c05580c4e02d4ee2c8dd74bfe173ff6a723
   EXSplashScreen: a9baaf4fa866003884c90ba049f18760d6a8ce39
+  EXStoreReview: b1f68ed0369b0f1c443214ac8d6881ef3b64de9a
   EXStructuredHeaders: be834496a4d9fd0069cd12ec1cc57b31c6d3b256
   EXUpdates: efe0e8c514dcff06a8fd0b63be6019a6365fb9c7
   FBLazyVector: 3bb422f41b18121b71783a905c10e58606f7dc3e
@@ -678,6 +689,7 @@ SPEC CHECKSUMS:
   React-RCTText: 5c51df3f08cb9dedc6e790161195d12bac06101c
   React-RCTVibration: ae4f914cfe8de7d4de95ae1ea6cc8f6315d73d9d
   ReactCommon: 73d79c7039f473b76db6ff7c6b159c478acbbb3b
+  RNCAsyncStorage: 56a3355a10b5d660c48c6e37325ac85ebfd09885
   RNCMaskedView: 5a8ec07677aa885546a0d98da336457e2bea557f
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNReanimated: 70f662b5232dd5d19ccff581e919a54ea73df51c

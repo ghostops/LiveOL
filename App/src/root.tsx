@@ -11,6 +11,7 @@ import * as Font from 'expo-font';
 import * as Updates from 'expo-updates';
 import Router from 'lib/nav/router';
 import Toast from 'react-native-toast-message';
+import { promptStoreReview } from 'util/storeReview';
 
 interface State {
 	ready: boolean;
@@ -41,6 +42,10 @@ export default class AppRoot extends React.Component<any, State> {
 		});
 
 		this.setState({ ready: true });
+
+		setTimeout(() => {
+			!__DEV__ && void promptStoreReview();
+		}, 3000);
 	};
 
 	checkForUpdates = async () => {

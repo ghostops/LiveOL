@@ -19,31 +19,39 @@ interface Props {
 	loading: boolean;
 	loadMore: () => Promise<any>;
 	refetch: () => Promise<void>;
+	landscape?: boolean;
 }
 
-export class OLHome extends React.PureComponent<Props> {
-	renderTodaysCompetitions = () => {
-		if (this.props.searching) {
+export const OLHome: React.FC<Props> = ({
+	onCompetitionPress,
+	openSearch,
+	searching,
+	todaysCompetitions,
+	landscape,
+	...passthroughProps
+}) => {
+	const renderTodaysCompetitions = React.useCallback(() => {
+		if (searching) {
 			return null;
 		}
 
 		return (
 			<TodaysCompetitions
-				competitions={this.props.todaysCompetitions}
+				competitions={todaysCompetitions}
 				renderListItem={(competition, index, total) => (
 					<HomeListItem
 						competition={competition}
 						index={index}
 						key={competition.id}
-						onCompetitionPress={this.props.onCompetitionPress}
+						onCompetitionPress={onCompetitionPress}
 						total={total}
 					/>
 				)}
 			/>
 		);
-	};
+	}, [searching, todaysCompetitions, onCompetitionPress]);
 
-	renderHeader = () => {
+	const renderHeader = React.useCallback(() => {
 		return (
 			<View
 				style={{
@@ -62,7 +70,7 @@ export class OLHome extends React.PureComponent<Props> {
 						flexDirection: 'row',
 					}}
 				>
-					<TouchableOpacity onPress={this.props.openSearch}>
+					<TouchableOpacity onPress={openSearch} style={{ paddingHorizontal: px(landscape ? 25 : 0) }}>
 						<OLText font="Proxima_Nova" size={16}>
 							{Lang.print('home.search')}
 						</OLText>
@@ -70,31 +78,26 @@ export class OLHome extends React.PureComponent<Props> {
 				</View>
 			</View>
 		);
-	};
+	}, [openSearch]);
 
-	render() {
-		return (
-			<View
-				style={{
-					flex: 1,
-					width: '100%',
-				}}
-			>
-				<View style={{ flex: 1 }}>
-					{this.renderHeader()}
+	return (
+		<View
+			style={{
+				flex: 1,
+				width: '100%',
+			}}
+		>
+			<View style={{ flex: 1 }}>
+				{renderHeader()}
 
-					<HomeList
-						loading={this.props.loading}
-						competitions={this.props.competitions}
-						onCompetitionPress={this.props.onCompetitionPress}
-						listHeader={this.renderTodaysCompetitions()}
-						loadMore={this.props.loadMore}
-						refetch={this.props.refetch}
-					/>
-				</View>
-
-				<OLSearch />
+				<HomeList
+					onCompetitionPress={onCompetitionPress}
+					listHeader={renderTodaysCompetitions()}
+					{...passthroughProps}
+				/>
 			</View>
-		);
-	}
-}
+
+			<OLSearch />
+		</View>
+	);
+};

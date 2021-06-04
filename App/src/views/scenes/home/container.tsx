@@ -1,17 +1,17 @@
 import * as React from 'react';
-import _ from 'lodash';
-import { Competition } from 'lib/graphql/fragments/types/Competition';
-import { COMPETITIONS } from 'lib/graphql/queries/competitions';
-import { Competitions, CompetitionsVariables } from 'lib/graphql/queries/types/Competitions';
-import { connect } from 'react-redux';
-import { NavigationProp } from '@react-navigation/native';
-import { OLError } from 'views/components/error';
-import { OLHome as Component } from './component';
-import { Platform } from 'react-native';
-import { Routes } from 'lib/nav/routes';
-import { useQuery } from '@apollo/react-hooks';
-import * as Actions from './store';
 import moment from 'moment';
+import * as Actions from './store';
+import { useQuery } from '@apollo/react-hooks';
+import { Routes } from 'lib/nav/routes';
+import { Platform } from 'react-native';
+import { OLHome as Component } from './component';
+import { OLError } from 'views/components/error';
+import { NavigationProp } from '@react-navigation/native';
+import { connect } from 'react-redux';
+import { Competitions, CompetitionsVariables } from 'lib/graphql/queries/types/Competitions';
+import { COMPETITIONS } from 'lib/graphql/queries/competitions';
+import { Competition } from 'lib/graphql/fragments/types/Competition';
+import _ from 'lodash';
 
 interface OwnProps {
 	navigation: NavigationProp<any, any>;
@@ -20,6 +20,7 @@ interface OwnProps {
 interface StateProps {
 	searchTerm: string;
 	searching: boolean;
+	landscape: boolean;
 }
 
 interface DispatchProps {
@@ -99,6 +100,7 @@ const DataWrapper: React.FC<Props> = (props) => {
 					title: Platform.OS === 'android' ? competition.name : '',
 				});
 			}}
+			landscape={props.landscape}
 		/>
 	);
 };
@@ -106,6 +108,7 @@ const DataWrapper: React.FC<Props> = (props) => {
 const mapStateToProps = (state: AppState): StateProps => ({
 	searchTerm: state.home.searchTerm,
 	searching: state.home.searching,
+	landscape: state.general.rotation === 'landscape',
 });
 
 const mapDispatchToProps = {
