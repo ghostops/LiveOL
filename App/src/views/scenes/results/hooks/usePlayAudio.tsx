@@ -1,6 +1,7 @@
 import React from 'react';
 import { Audio } from 'expo-av';
 import { useSelector } from 'react-redux';
+import { Platform } from 'react-native';
 
 const Tracks = [
 	require('../../../../../assets/sound/alert1.mp3'),
@@ -21,7 +22,7 @@ export const usePlayAudio = (track = 3) => {
 	}, [sound]);
 
 	return React.useCallback(async () => {
-		if (muted) return;
+		if (muted || Platform.OS === 'android') return;
 
 		const { sound } = await Audio.Sound.createAsync(Tracks[track]);
 
