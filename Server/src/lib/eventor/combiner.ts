@@ -42,12 +42,17 @@ export class EventorCombiner {
 				return clubs.reduce((root, clubs) => [...root, ...clubs], []);
 			},
 			getEventorData: async (liveresultatComp) => {
-				const promises = [];
-				for (const api of apis) {
-					promises.push(api.extractor.getEventorData(liveresultatComp));
+				try {
+					const promises = [];
+					for (const api of apis) {
+						promises.push(api.extractor.getEventorData(liveresultatComp));
+					}
+					const events = await Promise.all<EventorEventItem | null>(promises);
+					return events.find((event) => !!event) || null;
+				} catch (error) {
+					console.error(error);
+					return null;
 				}
-				const events = await Promise.all<EventorEventItem | null>(promises);
-				return events.find((event) => !!event) || null;
 			},
 		};
 	};
