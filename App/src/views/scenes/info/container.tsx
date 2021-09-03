@@ -1,19 +1,14 @@
 import React from 'react';
-import { Alert, Linking } from 'react-native';
-import { connect } from 'react-redux';
-import { OLInfo as Component } from './component';
 import * as Updates from 'expo-updates';
-import { Lang } from 'lib/lang';
-import { client } from 'lib/graphql/client';
-import { ServerVersion } from 'lib/graphql/queries/types/ServerVersion';
-import { GET_SERVER_VERSION } from 'lib/graphql/queries/server';
 import { VERSION } from 'util/const';
-
-interface StateProps {
-	landscape: boolean;
-}
-
-type Props = StateProps;
+import { useRecoilValue } from 'recoil';
+import { ServerVersion } from 'lib/graphql/queries/types/ServerVersion';
+import { OLInfo as Component } from './component';
+import { Lang } from 'lib/lang';
+import { isLandscapeSelector } from 'store/isLandscapeSelector';
+import { GET_SERVER_VERSION } from 'lib/graphql/queries/server';
+import { client } from 'lib/graphql/client';
+import { Alert, Linking } from 'react-native';
 
 const translationCredits: { code: string; name: string }[] = [
 	{
@@ -26,7 +21,9 @@ const translationCredits: { code: string; name: string }[] = [
 	},
 ];
 
-export const Container: React.FC<Props> = ({ landscape }) => {
+export const OLInfo: React.FC = () => {
+	const isLandscape = useRecoilValue(isLandscapeSelector);
+
 	const [secretTaps, setSecretTaps] = React.useState(0);
 	const contact = () => Linking.openURL('https://liveol.larsendahl.se/contact.html');
 	const openPhraseApp = () => Linking.openURL('https://phraseapp.com');
@@ -80,7 +77,7 @@ export const Container: React.FC<Props> = ({ landscape }) => {
 	return (
 		<Component
 			contact={contact}
-			landscape={landscape}
+			landscape={isLandscape}
 			update={update}
 			translationCredits={translationCredits}
 			openPhraseApp={openPhraseApp}
@@ -89,9 +86,3 @@ export const Container: React.FC<Props> = ({ landscape }) => {
 		/>
 	);
 };
-
-const mapStateToProps = (state: AppState): StateProps => ({
-	landscape: state.general.rotation === 'landscape',
-});
-
-export const OLInfo = connect(mapStateToProps)(Container);

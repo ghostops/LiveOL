@@ -1,15 +1,13 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
-import { setRotation } from 'store/stores/general';
 import { Dimensions } from 'react-native';
-
-interface DispatchProps {
-	setRotation: (rotation: string) => void;
-}
+import { useSetRecoilState } from 'recoil';
+import { deviceRotationAtom } from 'store/deviceRotationAtom';
 
 const screen = Dimensions.get('screen');
 
-const Component: React.FC<DispatchProps> = ({ children, setRotation }) => {
+export const OLRotationWatcher: React.FC = ({ children }) => {
+	const setRotation = useSetRecoilState(deviceRotationAtom);
+
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [dimensions, setDimensions] = React.useState({ screen });
 
@@ -29,9 +27,3 @@ const Component: React.FC<DispatchProps> = ({ children, setRotation }) => {
 
 	return <>{children}</>;
 };
-
-const mapDispatchToProps = {
-	setRotation,
-};
-
-export const OLRotationWatcher = connect(null, mapDispatchToProps)(Component);

@@ -1,18 +1,17 @@
 import * as React from 'react';
-import _ from 'lodash';
-import { connect } from 'react-redux';
-import { GET_SPLIT_CONTROLS } from 'lib/graphql/queries/results';
-import { GetSplitControls, GetSplitControlsVariables } from 'lib/graphql/queries/types/GetSplitControls';
-import { Grid } from 'react-native-easy-grid';
-import { LANDSCAPE_WIDTH, getExtraSize } from 'views/components/result/table/row';
-import { Lang } from 'lib/lang';
-import { OLResultColumn } from './item/column';
-import { OLText } from '../text';
-import { PORTRAIT_SIZE } from 'views/components/result/list/item';
-import { px } from 'util/const';
-import { Split } from 'lib/graphql/fragments/types/Split';
-import { useQuery } from '@apollo/react-hooks';
 import { ViewStyle, FlexAlignType, View } from 'react-native';
+import { useQuery } from '@apollo/react-hooks';
+import { Split } from 'lib/graphql/fragments/types/Split';
+import { px } from 'util/const';
+import { PORTRAIT_SIZE } from 'views/components/result/list/item';
+import { OLText } from '../text';
+import { OLResultColumn } from './item/column';
+import { Lang } from 'lib/lang';
+import { LANDSCAPE_WIDTH, getExtraSize } from 'views/components/result/table/row';
+import { Grid } from 'react-native-easy-grid';
+import { GetSplitControls, GetSplitControlsVariables } from 'lib/graphql/queries/types/GetSplitControls';
+import { GET_SPLIT_CONTROLS } from 'lib/graphql/queries/results';
+import _ from 'lodash';
 
 interface OwnProps {
 	competitionId: number;
@@ -83,7 +82,7 @@ const labels = (table: boolean, maxSize: number, splits?: Split[]): Label[] => {
 	return table ? inLandscape : inPortrait;
 };
 
-const Component: React.FC<OwnProps> = ({ table, className, competitionId, maxRowSize }) => {
+export const ResultHeader: React.FC<OwnProps> = ({ table, className, competitionId, maxRowSize }) => {
 	const { data, loading, error } = useQuery<GetSplitControls, GetSplitControlsVariables>(GET_SPLIT_CONTROLS, {
 		variables: { competitionId, className },
 	});
@@ -124,5 +123,3 @@ const Component: React.FC<OwnProps> = ({ table, className, competitionId, maxRow
 		</View>
 	);
 };
-
-export const ResultHeader = (connect(null, null)(Component) as unknown) as React.ComponentClass<OwnProps>;

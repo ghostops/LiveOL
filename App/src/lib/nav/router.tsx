@@ -1,7 +1,6 @@
 /* eslint-disable react/display-name */
 import * as React from 'react';
 import { COLORS, px } from 'util/const';
-import { connect } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Lang } from 'lib/lang';
 import { Mappings } from './mappings';
@@ -11,14 +10,14 @@ import { Routes } from './routes';
 import { StatusBar } from 'react-native';
 import { xtraSpace, hasNotch } from 'util/hasNotch';
 import { AudioControlls } from 'views/scenes/results/audio';
-
-interface StateProps {
-	landscape: boolean;
-}
+import { useRecoilValue } from 'recoil';
+import { isLandscapeSelector } from 'store/isLandscapeSelector';
 
 const Stack = createStackNavigator();
 
-const Component: React.FC<StateProps> = ({ landscape }) => {
+const Component: React.FC = () => {
+	const isLandscape = useRecoilValue(isLandscapeSelector);
+
 	return (
 		<NavigationContainer
 			theme={{
@@ -28,6 +27,7 @@ const Component: React.FC<StateProps> = ({ landscape }) => {
 					border: 'transparent',
 					card: COLORS.MAIN,
 					primary: 'white',
+					notification: 'white',
 				},
 				dark: false,
 			}}
@@ -45,7 +45,7 @@ const Component: React.FC<StateProps> = ({ landscape }) => {
 						width: '65%',
 						alignItems: 'center',
 					},
-					headerStatusBarHeight: px(20) + (hasNotch && !landscape ? xtraSpace : 0),
+					headerStatusBarHeight: px(20) + (hasNotch && !isLandscape ? xtraSpace : 0),
 				}}
 			>
 				<Stack.Screen
@@ -100,8 +100,4 @@ const Component: React.FC<StateProps> = ({ landscape }) => {
 	);
 };
 
-const mapStateToProps = (state: AppState): StateProps => ({
-	landscape: state.general.rotation === 'landscape',
-});
-
-export default connect(mapStateToProps, null)(Component);
+export default Component;

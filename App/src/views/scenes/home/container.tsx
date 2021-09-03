@@ -1,13 +1,15 @@
 import * as React from 'react';
 import moment from 'moment';
-import * as Actions from './store';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { useQuery } from '@apollo/react-hooks';
+import { searchTermAtom } from 'store/searchTermAtom';
 import { Routes } from 'lib/nav/routes';
 import { Platform } from 'react-native';
 import { OLHome as Component } from './component';
 import { OLError } from 'views/components/error';
 import { NavigationProp } from '@react-navigation/native';
-import { connect } from 'react-redux';
+import { isSearchingAtom } from 'store/isSearchingAtom';
+import { isLandscapeSelector } from 'store/isLandscapeSelector';
 import { Competitions, CompetitionsVariables } from 'lib/graphql/queries/types/Competitions';
 import { COMPETITIONS } from 'lib/graphql/queries/competitions';
 import { Competition } from 'lib/graphql/fragments/types/Competition';
@@ -17,25 +19,18 @@ interface OwnProps {
 	navigation: NavigationProp<any, any>;
 }
 
-interface StateProps {
-	searchTerm: string;
-	searching: boolean;
-	landscape: boolean;
-}
-
-interface DispatchProps {
-	setSearching: (value: boolean) => void;
-	getCompetition: (id: number) => void;
-}
-
-type Props = StateProps & OwnProps & DispatchProps;
+type Props = OwnProps;
 
 const getToday = () => moment().format('YYYY-MM-DD');
 
-const DataWrapper: React.FC<Props> = (props) => {
+export const OLHome: React.FC<Props> = (props) => {
+	const isLandscape = useRecoilValue(isLandscapeSelector);
+	const [isSearching, setIsSearching] = useRecoilState(isSearchingAtom);
+	const searchTerm = useRecoilValue(searchTermAtom);
+
 	const { data, loading, error, fetchMore, refetch } = useQuery<Competitions, CompetitionsVariables>(COMPETITIONS, {
 		variables: {
-			search: props.searchTerm,
+			search: searchTerm || null,
 			date: getToday(),
 		},
 	});
@@ -90,8 +85,8 @@ const DataWrapper: React.FC<Props> = (props) => {
 			competitions={competitions}
 			loading={loading}
 			loadMore={loadMore}
-			openSearch={() => props.setSearching(true)}
-			searching={props.searching}
+			openSearch={() => setIsSearching(true)}
+			searching={isSearching}
 			todaysCompetitions={today}
 			refetch={() => void refetch({ date: getToday() })}
 			onCompetitionPress={(competition) => {
@@ -100,19 +95,7 @@ const DataWrapper: React.FC<Props> = (props) => {
 					title: Platform.OS === 'android' ? competition.name : '',
 				});
 			}}
-			landscape={props.landscape}
+			landscape={isLandscape}
 		/>
 	);
 };
-
-const mapStateToProps = (state: AppState): StateProps => ({
-	searchTerm: state.home.searchTerm,
-	searching: state.home.searching,
-	landscape: state.general.rotation === 'landscape',
-});
-
-const mapDispatchToProps = {
-	setSearching: Actions.setSearching,
-};
-
-export const OLHome = connect(mapStateToProps, mapDispatchToProps)(DataWrapper);

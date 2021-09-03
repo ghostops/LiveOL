@@ -2,13 +2,12 @@ import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { Platform, TouchableOpacity } from 'react-native';
 import { HIT_SLOP, px } from 'util/const';
-import { useDispatch, useSelector } from 'react-redux';
-import { toggleMute } from 'store/stores/general';
+import { useRecoilState } from 'recoil';
+import { isMutedAtom } from 'store/isMutedAtom';
 
 export const AudioControlls: React.FC = () => {
-	const muted = useSelector<AppState, boolean>((state) => state.general.audioMuted);
-	const dispatch = useDispatch();
-	const onPress = () => dispatch(toggleMute());
+	const [muted, setMuted] = useRecoilState(isMutedAtom);
+	const onPress = () => setMuted(!muted);
 
 	if (Platform.OS === 'android') return null;
 

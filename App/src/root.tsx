@@ -1,17 +1,17 @@
 import * as React from 'react';
-import { ActivityIndicator, Image, View } from 'react-native';
-import { ApolloProvider } from '@apollo/react-hooks';
-import { client } from 'lib/graphql/client';
-import { Lang } from 'lib/lang';
-import { OLRotationWatcher } from 'views/components/watcher/rotation';
-import { Provider } from 'react-redux';
-import { px } from 'util/const';
-import { store } from 'store/configure';
-import * as Font from 'expo-font';
-import * as Updates from 'expo-updates';
-import Router from 'lib/nav/router';
 import Toast from 'react-native-toast-message';
+import Router from 'lib/nav/router';
+import RecoilNexus from 'recoil-nexus';
+import * as Updates from 'expo-updates';
+import * as Font from 'expo-font';
+import { RecoilRoot } from 'recoil';
+import { px } from 'util/const';
 import { promptStoreReview } from 'util/storeReview';
+import { OLRotationWatcher } from 'views/components/watcher/rotation';
+import { Lang } from 'lib/lang';
+import { client } from 'lib/graphql/client';
+import { ApolloProvider } from '@apollo/react-hooks';
+import { ActivityIndicator, Image, View } from 'react-native';
 
 interface State {
 	ready: boolean;
@@ -87,20 +87,21 @@ export default class AppRoot extends React.Component<any, State> {
 		}
 
 		return (
-			<ApolloProvider client={client}>
-				<View style={{ flex: 1 }}>
-					<Provider store={store.store}>
+			<RecoilRoot>
+				<RecoilNexus />
+				<ApolloProvider client={client}>
+					<View style={{ flex: 1 }}>
 						<OLRotationWatcher>
 							<Router />
 						</OLRotationWatcher>
-					</Provider>
-				</View>
-				<Toast
-					ref={(ref) => {
-						Toast.setRef(ref);
-					}}
-				/>
-			</ApolloProvider>
+					</View>
+					<Toast
+						ref={(ref) => {
+							Toast.setRef(ref);
+						}}
+					/>
+				</ApolloProvider>
+			</RecoilRoot>
 		);
 	}
 }

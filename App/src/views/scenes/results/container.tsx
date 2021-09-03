@@ -1,27 +1,26 @@
 import * as React from 'react';
-import _ from 'lodash';
-import { connect } from 'react-redux';
-import { GET_RESULTS } from 'lib/graphql/queries/results';
-import { GetResults, GetResultsVariables } from 'lib/graphql/queries/types/GetResults';
-import { OLError } from 'views/components/error';
-import { OLLoading } from 'views/components/loading';
-import { OLResults as Component } from './component';
-import { Result } from 'lib/graphql/fragments/types/Result';
-import { RouterProps } from 'lib/nav/routes';
-import { showToast } from 'lib/toasts/rotate';
+import { useRecoilValue } from 'recoil';
 import { useQuery } from '@apollo/react-hooks';
-import { useHasChanged } from './hooks/useHasChanged';
 import { usePlayAudio } from './hooks/usePlayAudio';
+import { useHasChanged } from './hooks/useHasChanged';
+import { showToast } from 'lib/toasts/rotate';
+import { RouterProps } from 'lib/nav/routes';
+import { Result } from 'lib/graphql/fragments/types/Result';
+import { OLResults as Component } from './component';
+import { OLLoading } from 'views/components/loading';
+import { OLError } from 'views/components/error';
+import { isLandscapeSelector } from 'store/isLandscapeSelector';
+import { GetResults, GetResultsVariables } from 'lib/graphql/queries/types/GetResults';
+import { GET_RESULTS } from 'lib/graphql/queries/results';
+import _ from 'lodash';
 
 type OwnProps = RouterProps<{ id: number; className: string }>;
 
-interface StateProps {
-	landscape: boolean;
-}
+type Props = OwnProps;
 
-type Props = OwnProps & StateProps;
+export const OLResults: React.FC<Props> = ({ route }) => {
+	const isLandscape = useRecoilValue(isLandscapeSelector);
 
-const DataWrapper: React.FC<Props> = ({ route, landscape }) => {
 	const className: string = route.params.className;
 	const competitionId: number = route.params.id;
 
@@ -57,15 +56,9 @@ const DataWrapper: React.FC<Props> = ({ route, landscape }) => {
 			refetch={async () => {
 				await refetch({ className, competitionId });
 			}}
-			landscape={landscape}
+			landscape={isLandscape}
 			className={className}
 			competitionId={competitionId}
 		/>
 	);
 };
-
-const mapStateToProps = (state: AppState): StateProps => ({
-	landscape: state.general.rotation === 'landscape',
-});
-
-export const OLResults = connect(mapStateToProps, null)(DataWrapper);

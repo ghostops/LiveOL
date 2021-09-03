@@ -1,32 +1,12 @@
 import * as React from 'react';
-import * as Actions from 'views/scenes/home/store';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { isSearchingAtom } from 'store/isSearchingAtom';
+import { searchTermAtom } from 'store/searchTermAtom';
 import { OLSearch as Component } from './component';
-import { connect } from 'react-redux';
 
-interface StateProps {
-	searching: boolean;
-}
+export const OLSearch: React.FC = () => {
+	const [isSearching, setIsSearching] = useRecoilState(isSearchingAtom);
+	const setSearchTerm = useSetRecoilState(searchTermAtom);
 
-interface DispatchProps {
-	setSearchTerm: (term: string) => void;
-	setSearching: (value: boolean) => void;
-}
-
-type Props = StateProps & DispatchProps;
-
-const DataWrapper: React.FC<Props> = (props) => {
-	return (
-		<Component searching={props.searching} setSearching={props.setSearching} setSearchTerm={props.setSearchTerm} />
-	);
+	return <Component searching={isSearching} setSearching={setIsSearching} setSearchTerm={setSearchTerm} />;
 };
-
-const mapStateToProps = (state: AppState): StateProps => ({
-	searching: state.home.searching,
-});
-
-const mapDispatchToProps = {
-	setSearchTerm: Actions.setSearchTerm,
-	setSearching: Actions.setSearching,
-};
-
-export const OLSearch = connect(mapStateToProps, mapDispatchToProps)(DataWrapper);

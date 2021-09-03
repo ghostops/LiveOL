@@ -1,23 +1,22 @@
 import * as React from 'react';
-import _ from 'lodash';
-import { connect } from 'react-redux';
-import { GET_LAST_PASSINGS } from 'lib/graphql/queries/passings';
-import { GetLastPassingsVariables, GetLastPassings } from 'lib/graphql/queries/types/GetLastPassings';
-import { OLError } from 'views/components/error';
-import { OLPassings as Component } from './component';
-import { Passing } from 'lib/graphql/fragments/types/Passing';
-import { RouterProps } from 'lib/nav/routes';
+import { useRecoilValue } from 'recoil';
 import { useQuery } from '@apollo/react-hooks';
+import { RouterProps } from 'lib/nav/routes';
+import { Passing } from 'lib/graphql/fragments/types/Passing';
+import { OLPassings as Component } from './component';
+import { OLError } from 'views/components/error';
+import { isLandscapeSelector } from 'store/isLandscapeSelector';
+import { GetLastPassingsVariables, GetLastPassings } from 'lib/graphql/queries/types/GetLastPassings';
+import { GET_LAST_PASSINGS } from 'lib/graphql/queries/passings';
+import _ from 'lodash';
 
 type OwnProps = RouterProps<{ id; title }>;
 
-interface StateProps {
-	landscape: boolean;
-}
+type Props = OwnProps;
 
-type Props = StateProps & OwnProps;
+export const OLPassings: React.FC<Props> = (props) => {
+	const isLandscape = useRecoilValue(isLandscapeSelector);
 
-const DataWrapper: React.FC<Props> = (props) => {
 	const competitionId: number = props.route.params.id;
 
 	const { data, loading, error, refetch } = useQuery<GetLastPassings, GetLastPassingsVariables>(GET_LAST_PASSINGS, {
@@ -35,13 +34,7 @@ const DataWrapper: React.FC<Props> = (props) => {
 			loading={loading}
 			passings={passings}
 			refresh={() => void refetch({ competitionId })}
-			landscape={props.landscape}
+			landscape={isLandscape}
 		/>
 	);
 };
-
-const mapStateToProps = (state: AppState): StateProps => ({
-	landscape: state.general.rotation === 'landscape',
-});
-
-export const OLPassings = connect(mapStateToProps, null)(DataWrapper);

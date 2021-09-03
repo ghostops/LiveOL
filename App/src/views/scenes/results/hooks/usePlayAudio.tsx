@@ -1,7 +1,8 @@
 import React from 'react';
 import { Audio } from 'expo-av';
-import { useSelector } from 'react-redux';
 import { Platform } from 'react-native';
+import { isMutedAtom } from 'store/isMutedAtom';
+import { useRecoilValue } from 'recoil';
 
 const Tracks = [
 	require('../../../../../assets/sound/alert1.mp3'),
@@ -12,7 +13,7 @@ const Tracks = [
 
 export const usePlayAudio = (track = 3) => {
 	const [sound, setSound] = React.useState<Audio.Sound>();
-	const muted = useSelector<AppState, boolean>((state) => state.general.audioMuted);
+	const muted = useRecoilValue(isMutedAtom);
 
 	React.useEffect(() => {
 		return () => {

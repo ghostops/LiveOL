@@ -58,10 +58,8 @@
 		"react-native-toast-message": "^1.4.7",
 		"react-native-unimodules": "~0.13.3",
 		"react-native-web": "~0.13.12",
-		"react-redux": "^7.1.3",
-		"redux": "^4.0.4",
-		"redux-persist": "^6.0.0",
-		"redux-thunk": "^2.3.0"
+		"recoil": "^0.4.1",
+		"recoil-nexus": "^0.3.2"
 	},
 	"devDependencies": {
 		"@babel/core": "~7.9.0",
@@ -71,8 +69,6 @@
 		"@types/react": "~16.9.35",
 		"@types/react-native": "~0.63.2",
 		"@types/react-navigation": "^3.0.1",
-		"@types/react-redux": "^7.1.5",
-		"@types/redux": "^3.6.0",
 		"@typescript-eslint/eslint-plugin": "^4.4.0",
 		"@typescript-eslint/parser": "^4.4.0",
 		"apollo": "^2.25.0",
@@ -92,7 +88,6 @@
 		"prettier": "^2.1.2",
 		"react-test-renderer": "~16.11.0",
 		"rimraf": "^3.0.2",
-		"sftp-sync-deploy": "^0.7.1",
 		"typescript": "~4.0.0"
 	},
 	"private": true
