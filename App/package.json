@@ -1,6 +1,6 @@
 {
 	"name": "@liveol/app",
-	"version": "2.6.1",
+	"version": "2.6.2",
 	"scripts": {
 		"start": "react-native start",
 		"android": "react-native run-android",
