@@ -5,8 +5,8 @@ import { Lang } from 'lib/lang';
 import { OLCard } from '../card';
 import { OLSafeAreaView } from '../safeArea';
 import { OLText } from '../text';
-import { UNIT, COLORS } from 'util/const';
 import { View } from 'react-native';
+import { useTheme } from 'hooks/useTheme';
 
 interface Props {
 	competitions: Competition[];
@@ -14,6 +14,8 @@ interface Props {
 }
 
 export const TodaysCompetitions: React.FC<Props> = ({ competitions, renderListItem }) => {
+	const { px, colors } = useTheme();
+
 	const nothingToday = !competitions || competitions.length === 0;
 
 	const innerCompetitions = () => (
@@ -43,7 +45,7 @@ export const TodaysCompetitions: React.FC<Props> = ({ competitions, renderListIt
 			<OLSafeAreaView>
 				<OLCard
 					style={{
-						marginTop: UNIT,
+						marginTop: px(16),
 						width: '100%',
 					}}
 				>
@@ -71,8 +73,8 @@ export const TodaysCompetitions: React.FC<Props> = ({ competitions, renderListIt
 	return (
 		<View
 			style={{
-				padding: UNIT,
-				backgroundColor: COLORS.MAIN,
+				padding: px(16),
+				backgroundColor: colors.MAIN,
 			}}
 		>
 			{nothingToday ? innerNothing() : innerCompetitions()}

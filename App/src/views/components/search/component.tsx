@@ -4,10 +4,8 @@ import { Animated, TouchableOpacity, Keyboard, TextInput, View } from 'react-nat
 import { hasNotch, xtraSpace } from 'util/hasNotch';
 import { Lang } from 'lib/lang';
 import { OLText } from '../text';
-import { fontPx, px, UNIT } from 'util/const';
+import { fontPx, px } from 'util/const';
 import { Ionicons } from '@expo/vector-icons';
-
-const SEARCH_SIZE = UNIT * 3.25;
 
 interface Props {
 	searching: boolean;
@@ -60,6 +58,8 @@ export class OLSearch extends React.PureComponent<Props, State> {
 	};
 
 	render() {
+		const SEARCH_SIZE = px(60);
+
 		const translateY = this.state.searchAnimation.interpolate({
 			inputRange: [0, 1],
 			outputRange: [-(SEARCH_SIZE + (hasNotch ? xtraSpace : 0)), 0],
