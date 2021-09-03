@@ -3629,6 +3629,13 @@
   dependencies:
     deep-assign "^3.0.0"
 
+"@react-native-community/async-storage@^1.12.1":
+  version "1.12.1"
+  resolved "https://registry.yarnpkg.com/@react-native-community/async-storage/-/async-storage-1.12.1.tgz#25f821b4f6b13abe005ad67e47c6f1cee9f27b24"
+  integrity sha512-70WGaH3PKYASi4BThuEEKMkyAgE9k7VytBqmgPRx3MzJx9/MkspwqJGmn3QLCgHLIFUgF1pit2mWICbRJ3T3lg==
+  dependencies:
+    deep-assign "^3.0.0"
+
 "@react-native-community/cli-debugger-ui@^4.9.0":
   version "4.9.0"
   resolved "https://registry.yarnpkg.com/@react-native-community/cli-debugger-ui/-/cli-debugger-ui-4.9.0.tgz#4177764ba69243c97aa26829d59d9501acb2bd71"
@@ -10763,6 +10770,11 @@ react-native-reanimated@~2.1.0:
     fbjs "^3.0.0"
     mockdate "^3.0.2"
     string-hash-64 "^1.0.3"
+
+react-native-recoil-persist@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/react-native-recoil-persist/-/react-native-recoil-persist-0.0.4.tgz#a1c341790a4fd20c4dac4962330724b8750257be"
+  integrity sha512-EsMRe9r5frdK+E9WP+bk8cYPUXorlmn4xlo2CBRppgMah6jTHtVBCaa7spW8HQCAvaI/pVk/BvDznJH6i5wLzg==
 
 react-native-restart@^0.0.17:
   version "0.0.17"

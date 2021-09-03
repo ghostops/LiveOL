@@ -12,6 +12,7 @@ import { Lang } from 'lib/lang';
 import { client } from 'lib/graphql/client';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { ActivityIndicator, Image, View } from 'react-native';
+import ReactNativeRecoilPersist, { ReactNativeRecoilPersistGate } from 'react-native-recoil-persist';
 
 interface State {
 	ready: boolean;
@@ -89,18 +90,20 @@ export default class AppRoot extends React.Component<any, State> {
 		return (
 			<RecoilRoot>
 				<RecoilNexus />
-				<ApolloProvider client={client}>
-					<View style={{ flex: 1 }}>
-						<OLRotationWatcher>
-							<Router />
-						</OLRotationWatcher>
-					</View>
-					<Toast
-						ref={(ref) => {
-							Toast.setRef(ref);
-						}}
-					/>
-				</ApolloProvider>
+				<ReactNativeRecoilPersistGate store={ReactNativeRecoilPersist}>
+					<ApolloProvider client={client}>
+						<View style={{ flex: 1 }}>
+							<OLRotationWatcher>
+								<Router />
+							</OLRotationWatcher>
+						</View>
+						<Toast
+							ref={(ref) => {
+								Toast.setRef(ref);
+							}}
+						/>
+					</ApolloProvider>
+				</ReactNativeRecoilPersistGate>
 			</RecoilRoot>
 		);
 	}
