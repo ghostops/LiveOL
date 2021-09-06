@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { TextStyle, Text } from 'react-native';
+import { useRecoilValue } from 'recoil';
+import { textSizeMultiplierAtom } from 'store/textSizeMultiplier';
 import { fontPx } from 'util/const';
 
 interface Props {
@@ -11,12 +13,14 @@ interface Props {
 }
 
 export const OLText: React.FC<Props> = (props) => {
+	const textSizeMultiplier = useRecoilValue(textSizeMultiplierAtom);
+
 	return (
 		<Text
 			{...props}
 			style={{
 				color: '#141823',
-				fontSize: fontPx(props.size),
+				fontSize: fontPx(props.size * textSizeMultiplier),
 				fontFamily: props.font,
 				...props.style,
 			}}

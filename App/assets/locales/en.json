@@ -55,6 +55,12 @@
       "LiveOL integrates many Orienteering related services, like liveresultat.orientering.se and Eventor Sweden.",
       "Our vision is to be the best orienteering platform for mobile devices."
     ],
+    "changeTextSize": {
+      "decrease": "Decrease size",
+      "increase": "Increase size",
+      "text": "Change the size of the text by using the buttons down below.",
+      "title": "Change text size"
+    },
     "contact": "Contact me",
     "purgeCache": "Clear cached results",
     "purged": "saved events were removed",

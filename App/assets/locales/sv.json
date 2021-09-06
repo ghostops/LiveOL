@@ -49,6 +49,12 @@
   },
   "info": {
     "appStore": "Öppna App Store",
+    "changeTextSize": {
+      "decrease": "Sänk storlek",
+      "increase": "Öka storlek",
+      "text": "Ändra textens storlek genom att använda knapparna nedan.",
+      "title": "Ändra textstorlek"
+    },
     "contact": "Kontakta mig",
     "purgeCache": "Ta bort cache",
     "purged": "sparade tävlingar togs bort",

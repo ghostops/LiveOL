@@ -16,6 +16,8 @@ type Props = {
 	openPhraseApp: () => void;
 	translationCredits: { code: string; name: string }[];
 	secretTap: () => void;
+	increaseFontSize: () => void;
+	deceaseFontSize: () => void;
 };
 
 const PHRASEAPP_IMAGE = require('../../../../assets/images/phraseapp.png');
@@ -28,6 +30,8 @@ export const OLInfo: React.FC<Props> = ({
 	openPhraseApp,
 	translationCredits,
 	secretTap,
+	increaseFontSize,
+	deceaseFontSize,
 }) => {
 	const buttons = React.useMemo(
 		() => [
@@ -115,6 +119,29 @@ export const OLInfo: React.FC<Props> = ({
 							</OLButton>
 						);
 					})}
+				</OLCard>
+			</View>
+
+			<View>
+				<OLCard>
+					<OLText
+						font="Proxima_Nova_Bold"
+						size={16}
+						style={{
+							marginBottom: px(8),
+						}}
+					>
+						{Lang.print('info.changeTextSize.title')}
+					</OLText>
+
+					<OLText font="Proxima_Nova" size={14}>
+						{Lang.print('info.changeTextSize.text')}
+					</OLText>
+
+					<View style={{ flexDirection: 'row', justifyContent: 'space-evenly', paddingTop: px(16) }}>
+						<OLButton onPress={deceaseFontSize}>{Lang.print('info.changeTextSize.decrease')}</OLButton>
+						<OLButton onPress={increaseFontSize}>{Lang.print('info.changeTextSize.increase')}</OLButton>
+					</View>
 				</OLCard>
 			</View>
 
