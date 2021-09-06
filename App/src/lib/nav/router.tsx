@@ -8,15 +8,13 @@ import { NavigationContainer } from '@react-navigation/native';
 import { Right, Left } from 'views/scenes/home/header';
 import { Routes } from './routes';
 import { StatusBar } from 'react-native';
-import { xtraSpace, hasNotch } from 'util/hasNotch';
 import { AudioControlls } from 'views/scenes/results/audio';
-import { useRecoilValue } from 'recoil';
-import { isLandscapeSelector } from 'store/isLandscapeSelector';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const Stack = createStackNavigator();
 
 const Component: React.FC = () => {
-	const isLandscape = useRecoilValue(isLandscapeSelector);
+	const { top } = useSafeAreaInsets();
 
 	return (
 		<NavigationContainer
@@ -45,7 +43,9 @@ const Component: React.FC = () => {
 						width: '65%',
 						alignItems: 'center',
 					},
-					headerStatusBarHeight: px(20) + (hasNotch && !isLandscape ? xtraSpace : 0),
+					headerStyle: {
+						height: top + px(50),
+					},
 				}}
 			>
 				<Stack.Screen

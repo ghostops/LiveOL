@@ -1,25 +1,18 @@
 import * as React from 'react';
-import { SafeAreaConsumer } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { View } from 'react-native';
 
-export class OLSafeAreaView extends React.PureComponent {
-	render() {
-		return (
-			<SafeAreaConsumer>
-				{(insets) => {
-					return (
-						<View
-							style={{
-								paddingLeft: insets.left,
-								paddingRight: insets.right,
-								flex: 1,
-							}}
-						>
-							{this.props.children}
-						</View>
-					);
-				}}
-			</SafeAreaConsumer>
-		);
-	}
-}
+export const OLSafeAreaView: React.FC = ({ children }) => {
+	const safeArea = useSafeAreaInsets();
+	return (
+		<View
+			style={{
+				paddingLeft: safeArea.left,
+				paddingRight: safeArea.right,
+				flex: 1,
+			}}
+		>
+			{children}
+		</View>
+	);
+};

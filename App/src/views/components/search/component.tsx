@@ -1,7 +1,6 @@
 import * as React from 'react';
 import _ from 'lodash';
 import { Animated, TouchableOpacity, Keyboard, TextInput, View } from 'react-native';
-import { hasNotch, xtraSpace } from 'util/hasNotch';
 import { Lang } from 'lib/lang';
 import { OLText } from '../text';
 import { fontPx, px } from 'util/const';
@@ -62,7 +61,7 @@ export class OLSearch extends React.PureComponent<Props, State> {
 
 		const translateY = this.state.searchAnimation.interpolate({
 			inputRange: [0, 1],
-			outputRange: [-(SEARCH_SIZE + (hasNotch ? xtraSpace : 0)), 0],
+			outputRange: [-SEARCH_SIZE, 0],
 		});
 
 		return (
