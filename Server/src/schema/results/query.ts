@@ -23,7 +23,7 @@ export const ResultsQuery = new GraphQLObjectType({
 					type: GraphQLString,
 				},
 			},
-			type: GraphQLList(OLResult),
+			type: new GraphQLList(OLResult),
 			resolve: async (x, args, { Liveresultat }: GQLContext): Promise<IOLResult[]> => {
 				if (!args.competitionId || !args.className) {
 					throw new Error('No competition id and/or class name present');
@@ -45,7 +45,7 @@ export const ResultsQuery = new GraphQLObjectType({
 					type: GraphQLString,
 				},
 			},
-			type: GraphQLList(OLSplitControl),
+			type: new GraphQLList(OLSplitControl),
 			resolve: async (_, args, { Liveresultat }: GQLContext): Promise<IOLSplitControl[]> => {
 				if (!args.competitionId || !args.className) {
 					throw new Error('No competition id and/or class name present');
@@ -54,6 +54,28 @@ export const ResultsQuery = new GraphQLObjectType({
 				const res = await Liveresultat.getclassresults(args.competitionId, args.className);
 
 				return res.splitcontrols.map(marshallSplitControl);
+			},
+		},
+		getClubResults: {
+			args: {
+				competitionId: {
+					type: GraphQLInt,
+				},
+				clubName: {
+					type: GraphQLString,
+				},
+			},
+			type: new GraphQLList(OLResult),
+			resolve: async (_, args, { Liveresultat }: GQLContext): Promise<IOLResult[]> => {
+				if (!args.competitionId || !args.clubName) {
+					throw new Error('No competition id and/or club name present');
+				}
+
+				const res = await Liveresultat.getclubresults(args.competitionId, args.clubName);
+
+				const sorted = sortOptimal(res.results);
+
+				return sorted.map((result) => marshallResult(args.competitionId, result.class, [])(result));
 			},
 		},
 	}),

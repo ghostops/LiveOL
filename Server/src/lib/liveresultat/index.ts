@@ -26,21 +26,21 @@ export class LiveresultatAPIClient {
 		this.cachedRequest(
 			this.client.get(`${this.root}/api.php?method=getcompetitions`),
 			'getcompetitions',
-			'30 minutes',
+			'1 minute',
 		);
 
 	public getcompetition = async (id: number): Promise<LiveresultatApi.competition> =>
 		this.cachedRequest(
 			this.client.get(`${this.root}/api.php?method=getcompetitioninfo&comp=${id}`),
 			`getcompetition:${id}`,
-			'5 minutes',
+			'1 minute',
 		);
 
 	public getclasses = async (id: number): Promise<LiveresultatApi.getclasses> =>
 		this.cachedRequest(
 			this.client.get(`${this.root}/api.php?method=getclasses&comp=${id}`),
 			`getclasses:${id}`,
-			'5 minutes',
+			'1 minute',
 		);
 
 	public getclassresults = async (id: number, _class: string): Promise<LiveresultatApi.getclassresults> =>
@@ -63,6 +63,14 @@ export class LiveresultatAPIClient {
 			`getlastpassings:${id}`,
 			'15 seconds',
 		);
+
+	public getclubresults = async (id: string, club: string): Promise<LiveresultatApi.getclubresults> => {
+		return this.cachedRequest(
+			this.client.get(`${this.root}/api.php?method=getclubresults&comp=${id}&club=${club}`),
+			`getclubresults:${id}:${encodeURIComponent(club)}`,
+			'15 seconds',
+		);
+	};
 
 	private cachedRequest = async (
 		request: Promise<AxiosResponse<any>>,
