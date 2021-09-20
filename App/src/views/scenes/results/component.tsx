@@ -10,6 +10,7 @@ interface Props {
 	refetch: () => Promise<void>;
 	results: Result[];
 	landscape: boolean;
+	focus: boolean;
 
 	competitionId: number;
 	className: string;
@@ -31,6 +32,8 @@ export class OLResults extends React.PureComponent<Props, State> {
 	};
 
 	showComponent = (c: 'table' | 'list') => {
+		if (!this.props.focus) return;
+
 		const a = c === 'table' ? 'showList' : 'showTable';
 		const b = c === 'table' ? 'showTable' : 'showList';
 
@@ -61,19 +64,29 @@ export class OLResults extends React.PureComponent<Props, State> {
 
 		return (
 			<>
-				<OLRefetcher interval={15000} refetch={refetch} />
+				{this.props.focus && <OLRefetcher interval={15000} refetch={refetch} />}
 
 				{
 					// LANDSCAPE
 					this.state.showTable && (
-						<OLResultsTable results={results} competitionId={competitionId} className={className} />
+						<OLResultsTable
+							results={results}
+							competitionId={competitionId}
+							className={className}
+							disabled={!this.props.focus}
+						/>
 					)
 				}
 
 				{
 					// PORTRAIT
 					this.state.showList && (
-						<OLResultsList results={results} competitionId={competitionId} className={className} />
+						<OLResultsList
+							results={results}
+							competitionId={competitionId}
+							className={className}
+							disabled={!this.props.focus}
+						/>
 					)
 				}
 			</>

@@ -30,17 +30,30 @@ export const ClubsQuery = new GraphQLObjectType({
 					type: GraphQLString,
 				},
 			},
-			type: OLClub,
-			resolve: async (_, args, { Eventor }: GQLContext): Promise<IOLClub> => {
+			type: new GraphQLList(OLClub),
+			resolve: async (_, args, { Eventor }: GQLContext): Promise<IOLClub[]> => {
 				if (!args.clubName) {
 					throw new Error('No club name present');
 				}
 
 				const clubs = await Eventor.getClubs();
 
-				const club = clubs.find((c) => c.name.toLowerCase() === args.clubName.toLowerCase());
+				const clubIds = [];
+				const filtered = clubs.filter((c) => {
+					const existsInArg = c.name.toLowerCase().includes(args.clubName.toLowerCase());
 
-				return marshallClub(club);
+					if (existsInArg) {
+						if (clubIds.includes(c.id)) {
+							return false;
+						}
+
+						clubIds.push(c.id);
+					}
+
+					return existsInArg;
+				});
+
+				return filtered.map(marshallClub);
 			},
 		},
 		getAllClubs: {

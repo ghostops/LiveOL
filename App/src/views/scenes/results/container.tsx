@@ -13,12 +13,14 @@ import { isLandscapeSelector } from 'store/isLandscapeSelector';
 import { GetResults, GetResultsVariables } from 'lib/graphql/queries/types/GetResults';
 import { GET_RESULTS } from 'lib/graphql/queries/results';
 import _ from 'lodash';
+import { useIsFocused } from '@react-navigation/native';
 
 type OwnProps = RouterProps<{ id: number; className: string }>;
 
 type Props = OwnProps;
 
 export const OLResults: React.FC<Props> = ({ route }) => {
+	const focus = useIsFocused();
 	const isLandscape = useRecoilValue(isLandscapeSelector);
 
 	const className: string = route.params.className;
@@ -59,6 +61,7 @@ export const OLResults: React.FC<Props> = ({ route }) => {
 			landscape={isLandscape}
 			className={className}
 			competitionId={competitionId}
+			focus={focus}
 		/>
 	);
 };

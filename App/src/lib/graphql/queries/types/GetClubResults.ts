@@ -4,10 +4,10 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL fragment: Result
+// GraphQL query operation: GetClubResults
 // ====================================================
 
-export interface Result_splits {
+export interface GetClubResults_results_getClubResults_splits {
   __typename: "OLSplit";
   id: string | null;
   name: string | null;
@@ -17,7 +17,7 @@ export interface Result_splits {
   timeplus: string | null;
 }
 
-export interface Result {
+export interface GetClubResults_results_getClubResults {
   __typename: "OLResult";
   id: string | null;
   hasSplits: boolean | null;
@@ -31,5 +31,19 @@ export interface Result {
   timeplus: string | null;
   progress: number | null;
   liveRunningStart: string | null;
-  splits: (Result_splits | null)[] | null;
+  splits: (GetClubResults_results_getClubResults_splits | null)[] | null;
+}
+
+export interface GetClubResults_results {
+  __typename: "ResultsQuery";
+  getClubResults: (GetClubResults_results_getClubResults | null)[] | null;
+}
+
+export interface GetClubResults {
+  results: GetClubResults_results | null;
+}
+
+export interface GetClubResultsVariables {
+  competitionId: number;
+  clubName: string;
 }

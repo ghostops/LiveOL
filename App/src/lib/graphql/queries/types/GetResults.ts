@@ -25,6 +25,7 @@ export interface GetResults_results_getResults {
   place: string | null;
   name: string | null;
   club: string | null;
+  class: string | null;
   result: string | null;
   status: number | null;
   timeplus: string | null;

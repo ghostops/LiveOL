@@ -13,13 +13,22 @@ interface Props {
 	results: Result[];
 	competitionId: number;
 	className: string;
+	disabled?: boolean;
+	club?: boolean;
 }
 
 export const OLResultsList: React.FC<Props> = (props) => {
 	const renderResult = ({ item }) => {
 		const result: Result = item;
 
-		return <OLResultItem key={result.start + result.name} result={result} />;
+		return (
+			<OLResultItem
+				key={result.start + result.name}
+				result={result}
+				disabled={props.disabled}
+				club={props.club}
+			/>
+		);
 	};
 
 	if (!props.results) {

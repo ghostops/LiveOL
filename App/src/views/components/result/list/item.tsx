@@ -9,14 +9,16 @@ import { OLResultTime } from 'views/components/result/item/time';
 import { OLResultTimeplus } from 'views/components/result/item/timeplus';
 import { OLStartTime } from 'views/components/result/item/start';
 import { Result } from 'lib/graphql/fragments/types/Result';
-import { showToast } from 'lib/toasts/competitiorInfo';
-import { TouchableOpacity, View } from 'react-native';
+import { View } from 'react-native';
 import { OLResultListItem } from '../item/listItem';
 import { OLResultLiveRunning } from '../item/liveRunning';
 import { isLiveRunning, startIsAfterNow } from 'util/isLive';
+import { OLClassName } from '../item/className';
 
 interface OwnProps {
 	result: Result;
+	disabled?: boolean;
+	club?: boolean;
 }
 
 type Props = OwnProps;
@@ -30,7 +32,11 @@ export const PORTRAIT_SIZE = {
 
 export class OLResultItem extends React.PureComponent<Props> {
 	renderTime = () => {
-		const { result } = this.props;
+		const { result, disabled } = this.props;
+
+		if (disabled) {
+			return null;
+		}
 
 		if (!result.result.length) {
 			if (isLiveRunning(result)) {
@@ -54,11 +60,7 @@ export class OLResultItem extends React.PureComponent<Props> {
 	};
 
 	render() {
-		const { result } = this.props;
-
-		const moreInfo = () => {
-			void showToast(result.name, result.club);
-		};
+		const { result, club } = this.props;
 
 		return (
 			<OLResultAnimation result={result}>
@@ -68,11 +70,10 @@ export class OLResultItem extends React.PureComponent<Props> {
 					</OLResultColumn>
 
 					<OLResultColumn size={PORTRAIT_SIZE.name}>
-						<TouchableOpacity style={{ flex: 1 }} onPress={moreInfo}>
-							<OLResultName name={result.name} />
+						<OLResultName name={result.name} />
 
-							<OLResultClub club={result.club} />
-						</TouchableOpacity>
+						{!club && <OLResultClub club={result.club} />}
+						{club && <OLClassName className={result.class} />}
 					</OLResultColumn>
 
 					<OLResultColumn align="flex-end" size={PORTRAIT_SIZE.time}>

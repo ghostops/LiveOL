@@ -67,11 +67,7 @@ export const OLRefetcherBar: React.FunctionComponent<Props> = ({ interval, promi
 					transform: [{ scale: animatedHint }],
 				}}
 			>
-				<OLText
-					font="Proxima_Nova"
-					size={14}
-					style={{ textShadowColor: 'white', textShadowOffset: { height: 0, width: 0 }, textShadowRadius: 3 }}
-				>
+				<OLText font="Proxima_Nova" size={14} style={{ backgroundColor: 'white' }}>
 					{Lang.print('classes.timerHint')}
 				</OLText>
 			</Animated.View>

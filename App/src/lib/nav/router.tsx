@@ -95,6 +95,14 @@ const Component: React.FC = () => {
 						className: 'M20-1',
 					}}
 				/>
+
+				<Stack.Screen
+					name={Routes.club}
+					component={Mappings[Routes.club]}
+					options={(props) => ({
+						title: props.route.params['title'],
+					})}
+				/>
 			</Stack.Navigator>
 		</NavigationContainer>
 	);

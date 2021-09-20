@@ -34,8 +34,8 @@ export declare namespace LiveresultatApi {
 	export interface result {
 		place: string;
 		name: string;
-		club: string;
-		class: string;
+		club?: string;
+		class?: string;
 		result: string;
 		status: number;
 		timeplus: string;

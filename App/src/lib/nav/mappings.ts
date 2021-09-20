@@ -4,6 +4,7 @@ import { OLInfo } from '../../views/scenes/info/container';
 import { OLPassings } from '../../views/scenes/last_passings/container';
 import { Routes } from './routes';
 import { OLResults } from 'views/scenes/results/container';
+import { OLClubResults } from 'views/scenes/club/container';
 
 export const Mappings = {
 	[Routes.home]: OLHome,
@@ -11,4 +12,5 @@ export const Mappings = {
 	[Routes.passings]: OLPassings,
 	[Routes.info]: OLInfo,
 	[Routes.results]: OLResults,
+	[Routes.club]: OLClubResults,
 };

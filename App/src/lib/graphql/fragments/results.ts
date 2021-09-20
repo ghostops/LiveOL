@@ -27,6 +27,7 @@ export const ResultFragment = gql`
 		place
 		name
 		club
+		class
 		result
 		status
 		timeplus

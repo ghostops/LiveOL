@@ -36,7 +36,7 @@ export class EventorCombiner {
 			getClubs: async () => {
 				const promises = [];
 				for (const api of apis) {
-					promises.push(api.api.getClubs);
+					promises.push(api.api.getClubs());
 				}
 				const clubs = await Promise.all(promises);
 				return clubs.reduce((root, clubs) => [...root, ...clubs], []);

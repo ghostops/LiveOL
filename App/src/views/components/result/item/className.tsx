@@ -6,21 +6,17 @@ import { TouchableOpacity } from 'react-native';
 import { OLText } from '../../text';
 
 interface Props {
-	club: string;
+	className: string;
 }
 
-export const OLResultClub: React.FC<Props> = ({ club }) => {
+export const OLClassName: React.FC<Props> = ({ className }) => {
 	const { navigate } = useNavigation();
 	const { params } = useRoute();
 
-	const id = (params as any).id;
+	const id = (params as any).competitionId;
 
 	return (
-		<TouchableOpacity
-			onPress={() => navigate(Routes.club, { clubName: club, competitionId: id, title: club })}
-			hitSlop={{ bottom: 15, left: 15, right: 15, top: 15 }}
-			style={{ flexDirection: 'row', alignItems: 'center' }}
-		>
+		<TouchableOpacity onPress={() => navigate(Routes.results, { className, competitionId: id })}>
 			<OLText
 				numberOfLines={1}
 				size={16}
@@ -29,7 +25,7 @@ export const OLResultClub: React.FC<Props> = ({ club }) => {
 					color: 'grey',
 				}}
 			>
-				{club}
+				{className}
 			</OLText>
 		</TouchableOpacity>
 	);

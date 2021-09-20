@@ -13,11 +13,11 @@ import { OLSplits } from 'views/components/result/item/splits';
 import { OLStartTime } from 'views/components/result/item/start';
 import { px } from 'util/const';
 import { Result } from 'lib/graphql/fragments/types/Result';
-import { showToast } from 'lib/toasts/competitiorInfo';
 import { TouchableOpacity, Dimensions, View } from 'react-native';
 
 interface OwnProps {
 	result: Result;
+	disabled?: boolean;
 }
 
 type Props = OwnProps;
@@ -55,7 +55,11 @@ export class OLTableRow extends React.PureComponent<Props> {
 	};
 
 	renderTime = () => {
-		const { result } = this.props;
+		const { result, disabled } = this.props;
+
+		if (disabled) {
+			return null;
+		}
 
 		if (!result.result.length) {
 			if (isLiveRunning(result)) {

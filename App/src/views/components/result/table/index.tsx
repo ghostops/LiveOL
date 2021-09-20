@@ -13,13 +13,14 @@ interface Props {
 	results: Result[];
 	competitionId: number;
 	className: string;
+	disabled?: boolean;
 }
 
 export const OLResultsTable: React.FC<Props> = (props) => {
 	const renderResult = ({ item }) => {
 		const result: Result = item;
 
-		return <OLTableRow key={result.start + result.name} result={result} />;
+		return <OLTableRow key={result.start + result.name} result={result} disabled={props.disabled} />;
 	};
 
 	if (!props.results) {

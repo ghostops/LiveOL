@@ -24,3 +24,15 @@ export const GET_SPLIT_CONTROLS = gql`
 
 	${SplitControlFragment}
 `;
+
+export const GET_CLUB_RESULTS = gql`
+	query GetClubResults($competitionId: Int!, $clubName: String!) {
+		results {
+			getClubResults(competitionId: $competitionId, clubName: $clubName) {
+				...Result
+			}
+		}
+	}
+
+	${ResultFragment}
+`;

@@ -6,6 +6,7 @@ export const Routes = {
 	passings: 'competition.passings',
 	info: 'info',
 	results: 'results',
+	club: 'club',
 };
 
 interface RouteProps<T> {
