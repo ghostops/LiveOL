@@ -17,24 +17,26 @@ export const LanguagePicker: React.FC = () => {
 			}}
 			horizontal
 		>
-			{Lang.available.map((lang) => (
-				<TouchableOpacity
-					onPress={async () => {
-						await Lang.set(lang);
-						setActiveLanguage(lang);
-						RNRestart.Restart();
-					}}
-					style={{
-						marginRight: px(16),
-						borderColor: lang === activeLanguage ? colors.MAIN : 'transparent',
-						borderBottomWidth: 2,
-						justifyContent: 'center',
-					}}
-					key={lang}
-				>
-					<OLFlag code={lang} size={32} style={{ borderColor: 'black', borderWidth: 1 }} />
-				</TouchableOpacity>
-			))}
+			{Lang.available.map((lang) => {
+				return (
+					<TouchableOpacity
+						onPress={async () => {
+							await Lang.set(lang);
+							setActiveLanguage(lang);
+							RNRestart.Restart();
+						}}
+						style={{
+							marginRight: px(16),
+							borderColor: lang === activeLanguage ? colors.MAIN : 'transparent',
+							borderBottomWidth: 2,
+							justifyContent: 'center',
+						}}
+						key={lang}
+					>
+						<OLFlag code={lang} size={32} style={{ borderColor: 'black', borderWidth: 1 }} />
+					</TouchableOpacity>
+				);
+			})}
 		</ScrollView>
 	);
 };

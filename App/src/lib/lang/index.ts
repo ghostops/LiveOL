@@ -7,7 +7,10 @@ const LOCALES: any = {
 	sv: require('../../../assets/locales/sv.json'),
 	no: require('../../../assets/locales/no.json'),
 	sr: require('../../../assets/locales/sr.json'),
+	it: require('../../../assets/locales/it.json'),
 };
+
+type AvailableLanguage = 'en' | 'sv' | 'no' | 'sr' | 'it';
 
 class Language {
 	private key = 'OL:LANG';
@@ -15,7 +18,7 @@ class Language {
 	public fallback: AvailableLanguage = 'en';
 	public phoneLocale: string;
 
-	public available: AvailableLanguage[] = ['en', 'sv', 'no', 'sr'];
+	public available: AvailableLanguage[] = ['en', 'sv', 'no', 'sr', 'it'];
 
 	public init = async (): Promise<void> => {
 		this.phoneLocale = Localization.locale.substr(0, 2);

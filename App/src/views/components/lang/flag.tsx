@@ -12,6 +12,7 @@ const remapCode = {
 	sv: 'se',
 	no: 'no',
 	sr: 'rs',
+	it: 'it',
 };
 
 const FLAGS = {
@@ -19,6 +20,7 @@ const FLAGS = {
 	no: require('../../../../assets/images/flags/no.png'),
 	gb: require('../../../../assets/images/flags/gb.png'),
 	rs: require('../../../../assets/images/flags/rs.png'),
+	it: require('../../../../assets/images/flags/it.png'),
 };
 
 export const OLFlag: React.FC<Props> = ({ code, size, style }) => {

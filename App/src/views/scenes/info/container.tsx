@@ -20,6 +20,10 @@ const translationCredits: { code: string; name: string }[] = [
 		code: 'sr',
 		name: 'Nikola Spaskovic',
 	},
+	{
+		code: 'it',
+		name: 'Paolo Gallerani',
+	},
 ];
 
 export const OLInfo: React.FC = () => {

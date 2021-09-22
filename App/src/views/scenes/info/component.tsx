@@ -20,7 +20,7 @@ type Props = {
 	deceaseFontSize: () => void;
 };
 
-const PHRASEAPP_IMAGE = require('../../../../assets/images/phraseapp.png');
+const PHRASE_IMAGE = require('../../../../assets/images/phrase.png');
 
 export const OLInfo: React.FC<Props> = ({
 	landscape,
@@ -179,7 +179,7 @@ export const OLInfo: React.FC<Props> = ({
 							{Lang.print('info.translations.phraseapp')}:
 						</OLText>
 
-						<Image source={PHRASEAPP_IMAGE} />
+						<Image source={PHRASE_IMAGE} style={{ width: 180, height: 60 }} resizeMode="contain" />
 					</TouchableOpacity>
 
 					<View
