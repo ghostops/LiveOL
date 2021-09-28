@@ -35,5 +35,5 @@ non-critical aspects of the application.
 ### Translations powered by:
 
 <a href="https://phraseapp.com/">
-    <img src="/App/assets/images/phrase.png" width="140" height="28">
+    <img src="/App/assets/images/phrase.png" width="140" height="40">
 </a>
