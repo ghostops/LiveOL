@@ -1,0 +1,127 @@
+{
+  "back": "Zurück",
+  "classes": {
+    "autoUpdate": "Live-Aktualisierte Ergebnisse aktivieren",
+    "autoUpdateEnabled": "Live-Aktualisierte-Ergebnisse aktiviert",
+    "empty": "Keine Läufer in dieser Kategorie",
+    "header": {
+      "name": "Name",
+      "place": "#",
+      "start": "Start",
+      "time": "Zeit"
+    },
+    "resultsFor": "Ergebnisse für",
+    "timerHint": "Zeit bis zur nächsten Aktualisierung"
+  },
+  "competitions": {
+    "canceled": "Der Wettkampf wurde abgesagt",
+    "classes": "Kategorien",
+    "date": "Datum",
+    "distance": "Entfernung",
+    "info": "Info",
+    "lastPassings": "Letzte Durchgänge",
+    "noClasses": "Ohne Kategorien",
+    "organizedBy": "Organisiert von",
+    "passings": {
+      "class": "Kategorie",
+      "empty": "Nichts neues",
+      "info": "Für Aktualisierung wischen",
+      "name": "Name",
+      "passTime": "Passierzeit",
+      "title": "Letzte Durchgänge"
+    },
+    "signups": "Angemeldet"
+  },
+  "currentLanguage": "Deutsch",
+  "distances": {
+    "long": "Lang",
+    "middle": "Mittel",
+    "sprint": "Sprint",
+    "ultralong": "Ultra Lang"
+  },
+  "home": {
+    "goToday": "Wischen zu den heutigen Ereignissen",
+    "nothingSearch": "Kein Wettkampf gefunden",
+    "nothingToday": "Kein Wettkampf heute",
+    "page": "Seite",
+    "search": "Suche",
+    "title": "LiveOL",
+    "today": "Heute"
+  },
+  "info": {
+    "appStore": "App Store öffnen",
+    "body": [
+      "LiveOL ist eine App, die Orientierungslauf-Ergebnisse live anzeigt.",
+      "Sie erhalten die neuesten Ergebnisse auf Ihrem Telefon oder Tablet mit einer praktischen Benutzeroberfläche in mehreren Sprachen.",
+      "LiveOL integriert viele auf Orientierungslauf bezogene Dienste, wie Liveresultat.orientering.se und Eventor Schweden.",
+      "Unsere Vision ist es, die beste Orientierungslauf-Plattform für mobile Geräte zu sein."
+    ],
+    "changeTextSize": {
+      "decrease": "Größe verkleinern",
+      "increase": "Größe vergrößern",
+      "text": "Ändern Sie die Größe des Textes, indem Sie die Schaltflächen unten verwenden.",
+      "title": "Textgröße ändern"
+    },
+    "contact": "Kontaktiere mich",
+    "purgeCache": "Zwischengespeicherte Ergebnisse löschen",
+    "purged": "gespeicherte Ereignisse wurden entfernt",
+    "rate": "Bewerte die App",
+    "title": "Information",
+    "translations": {
+      "credit": "App übersetzt von",
+      "phraseapp": "Übersetzungen von"
+    },
+    "update": {
+      "check": "Auf Updates prüfen",
+      "hasUpdate": {
+        "cancel": "Abbrechen",
+        "cta": "Jetzt aktualisieren",
+        "text": "Eine neuere Version wurde gefunden",
+        "title": "Update gefunden"
+      },
+      "noUpdate": {
+        "text": "Keine neuere Version gefunden",
+        "title": "Kein Update"
+      }
+    },
+    "version": "Aktuelle Version"
+  },
+  "promotions": {
+    "didYouKnow": "Schon gewusst?",
+    "rotate": "Drehen Sie Ihr Telefon, um Funkkontrollposten zu sehen."
+  },
+  "status": {
+    "long": [
+      "In Ordnung",
+      "Nicht gestartet",
+      "Nicht beendet",
+      "Schlecht gestempelter Posten",
+      "Disqualifiziert",
+      "Zeitlimit überschritten",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "Aufgegeben",
+      "Einer anderen Kategorie zugewiesen",
+      "Im Ziel"
+    ],
+    "short": [
+      "OK",
+      "DNS",
+      "DNF",
+      "MP",
+      "DSQ",
+      "OT",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "WO",
+      "MU",
+      "FIN"
+    ]
+  }
+}

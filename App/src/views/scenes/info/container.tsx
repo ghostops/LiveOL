@@ -24,6 +24,14 @@ const translationCredits: { code: string; name: string }[] = [
 		code: 'it',
 		name: 'Paolo Gallerani',
 	},
+	{
+		code: 'cs',
+		name: 'Petr Havliček',
+	},
+	{
+		code: 'de',
+		name: 'Petr Havliček',
+	},
 ];
 
 export const OLInfo: React.FC = () => {

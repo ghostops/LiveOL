@@ -32,6 +32,7 @@
     },
     "signups": "Signed up"
   },
+  "currentLanguage": "English",
   "distances": {
     "long": "Long",
     "middle": "Middle",
