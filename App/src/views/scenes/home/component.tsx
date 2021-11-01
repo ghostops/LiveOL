@@ -97,11 +97,7 @@ export const OLHome: React.FC<Props> = ({
 							{renderTodaysCompetitions()}
 							<TouchableOpacity
 								activeOpacity={0.9}
-								onPress={() =>
-									Linking.openURL(
-										'https://docs.google.com/forms/d/e/1FAIpQLScykJ7YTlDrLIYg3uT0k546IQSPk9-9bfiMiu4UR8jG0wDSYw/viewform?usp=sf_link',
-									)
-								}
+								onPress={() => Linking.openURL('https://iv7kt21zn0a.typeform.com/to/SmnGk8Z9')}
 							>
 								<Image
 									source={require('../../../../assets/images/translate-promo.jpg')}
