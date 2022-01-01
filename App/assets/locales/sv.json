@@ -80,6 +80,9 @@
     },
     "version": "Nuvarande version"
   },
+  "language": {
+    "pick": "Välj språk"
+  },
   "promotions": {
     "didYouKnow": "Visste du att?",
     "rotate": "Rotera din telefon för att se radiokontroller"

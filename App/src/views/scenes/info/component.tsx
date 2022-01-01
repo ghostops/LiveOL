@@ -7,6 +7,7 @@ import { OLCard } from 'views/components/card';
 import { OLFlag } from 'views/components/lang/flag';
 import { OLText } from 'views/components/text';
 import { VERSION, px } from 'util/const';
+import { LanguagePicker } from 'views/components/lang/picker';
 
 type Props = {
 	landscape: boolean;
@@ -197,6 +198,10 @@ export const OLInfo: React.FC<Props> = ({
 					</OLText>
 
 					{translationCredits.map(renderTranslationCredit)}
+
+					<View style={{ height: 16 }} />
+
+					<LanguagePicker button />
 				</OLCard>
 			</View>
 

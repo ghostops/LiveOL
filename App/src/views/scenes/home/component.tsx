@@ -8,7 +8,7 @@ import { OLSearch } from 'views/components/search/container';
 import { OLText } from 'views/components/text';
 import { px } from 'util/const';
 import { TodaysCompetitions } from 'views/components/home/today';
-import { View, TouchableOpacity, Image, Linking } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 
 interface Props {
 	competitions: Competition[];
@@ -92,21 +92,7 @@ export const OLHome: React.FC<Props> = ({
 
 				<HomeList
 					onCompetitionPress={onCompetitionPress}
-					listHeader={
-						<>
-							{renderTodaysCompetitions()}
-							<TouchableOpacity
-								activeOpacity={0.9}
-								onPress={() => Linking.openURL('https://iv7kt21zn0a.typeform.com/to/SmnGk8Z9')}
-							>
-								<Image
-									source={require('../../../../assets/images/translate-promo.jpg')}
-									style={{ width: '100%', height: 220 }}
-									resizeMode="cover"
-								/>
-							</TouchableOpacity>
-						</>
-					}
+					listHeader={renderTodaysCompetitions()}
 					{...passthroughProps}
 				/>
 			</View>

@@ -8,8 +8,13 @@ import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { OLText } from '../text';
 import { FlatList } from 'react-native-gesture-handler';
+import { OLButton } from '../button';
 
-export const LanguagePicker: React.FC = () => {
+type Props = {
+	button?: boolean;
+};
+
+export const LanguagePicker: React.FC<Props> = ({ button = false }) => {
 	const { colors, px } = useTheme();
 	const [activeLanguage, setActiveLanguage] = React.useState<string>(Lang.active);
 	const [active, setActive] = React.useState(false);
@@ -19,26 +24,30 @@ export const LanguagePicker: React.FC = () => {
 
 	return (
 		<>
-			<View
-				style={{
-					flex: 1,
-					justifyContent: 'center',
-					paddingLeft: 10,
-				}}
-			>
-				<TouchableOpacity
-					onPress={() => setActive(true)}
-					style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-start' }}
-					hitSlop={{ bottom: 20, left: 20, right: 40, top: 20 }}
+			{!button ? (
+				<View
+					style={{
+						flex: 1,
+						justifyContent: 'center',
+						paddingLeft: 10,
+					}}
 				>
-					<Ionicons name="earth-outline" size={24} color="black" />
-					<OLFlag
-						code={activeLanguage}
-						size={24}
-						style={{ borderColor: 'black', borderWidth: 1, marginLeft: 6 }}
-					/>
-				</TouchableOpacity>
-			</View>
+					<TouchableOpacity
+						onPress={() => setActive(true)}
+						style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-start' }}
+						hitSlop={{ bottom: 20, left: 20, right: 40, top: 20 }}
+					>
+						<Ionicons name="earth-outline" size={24} color="black" />
+						<OLFlag
+							code={activeLanguage}
+							size={24}
+							style={{ borderColor: 'black', borderWidth: 1, marginLeft: 6 }}
+						/>
+					</TouchableOpacity>
+				</View>
+			) : (
+				<OLButton onPress={() => setActive(true)}>{Lang.print('language.pick')}</OLButton>
+			)}
 
 			<Modal visible={active} animationType="slide">
 				<View style={safeInsets}>
