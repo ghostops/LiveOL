@@ -68,6 +68,7 @@ export class OLSelfHelper {
 	private alert = async (errors: any[]) => {
 		if (!this.webhook) {
 			console.error(errors);
+			return;
 		}
 
 		await this.webhook.send({

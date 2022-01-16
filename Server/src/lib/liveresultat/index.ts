@@ -1,11 +1,11 @@
 import { Cacher } from 'lib/redis';
 import { getEnv } from 'lib/helpers/env';
 import { LiveresultatApi } from './types';
+import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import { LiveresultatReplayer } from './replay';
 import * as fs from 'fs';
 import * as moment from 'moment';
 import * as ms from 'ms';
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
-import { LiveresultatReplayer } from './replay';
 
 const DEV = getEnv('test') === 'true';
 
@@ -96,10 +96,15 @@ export class LiveresultatAPIClient {
 	private parseApiData = (data: any) => {
 		let parsedData = data;
 
-		// Anti-tab measure
+		// Broken JSON fixes
 		if (typeof parsedData === 'string') {
 			parsedData = parsedData.replace('\t', '');
-			parsedData = JSON.parse(parsedData);
+
+			try {
+				parsedData = JSON.parse(parsedData);
+			} catch (error) {
+				throw error;
+			}
 		}
 
 		return parsedData;
