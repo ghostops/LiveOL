@@ -41,7 +41,7 @@
 		"expo-updates": "~0.5.4",
 		"graphql": "^14.6.0",
 		"lodash": "^4.17.21",
-		"moment": "^2.25.3",
+		"moment": "^2.29.4",
 		"moment-duration-format": "^2.3.2",
 		"ms": "^2.1.2",
 		"react": "16.13.1",
