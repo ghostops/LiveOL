@@ -27,7 +27,7 @@
 		"ioredis": "^4.16.0",
 		"lodash": "^4.17.21",
 		"moment": "^2.25.3",
-		"moment-timezone": "^0.5.28",
+		"moment-timezone": "^0.5.35",
 		"ms": "^2.1.2",
 		"node-cron": "^2.0.3",
 		"nodemon": "^2.0.2",
