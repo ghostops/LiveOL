@@ -15,6 +15,7 @@ const remapCode = {
 	it: 'it',
 	cs: 'cz',
 	de: 'de',
+	es: 'es',
 };
 
 const FLAGS = {
@@ -25,6 +26,7 @@ const FLAGS = {
 	it: require('../../../../assets/images/flags/it.png'),
 	cz: require('../../../../assets/images/flags/cz.png'),
 	de: require('../../../../assets/images/flags/de.png'),
+	es: require('../../../../assets/images/flags/es.png'),
 };
 
 export const OLFlag: React.FC<Props> = ({ code, size, style }) => {
