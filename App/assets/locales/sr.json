@@ -50,6 +50,12 @@
   },
   "info": {
     "appStore": "Otvori App Store",
+    "changeTextSize": {
+      "decrease": "Smanji tekst",
+      "increase": "Povećaj tekst",
+      "text": "Promenite veličinu teksta pomoću dole prikazanih dugmadi.",
+      "title": "Promeni veličinu teksta"
+    },
     "contact": "Kontaktiraj me",
     "purgeCache": "Obriši keš ",
     "purged": "Sačuvani događaji su uklonjeni",
@@ -73,6 +79,9 @@
       }
     },
     "version": "Trenutna verzija"
+  },
+  "language": {
+    "pick": "Izbor jezika"
   },
   "promotions": {
     "didYouKnow": "Da li si znao?",
