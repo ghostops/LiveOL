@@ -9,7 +9,6 @@ npm-debug.*
 .DS_Store
 Website/.ci/cred.json
 app/build
-.phraseapp.yml
 .secret
 server/build
 yarn-error.log
@@ -33,4 +32,3 @@ App/android/fastlane/report.xml
 App/ios/LiveOL.xcworkspace/xcuserdata/*
 
 package-lock.json
-/App/.phrase.yml
