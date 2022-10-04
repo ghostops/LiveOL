@@ -1,2 +1,130 @@
 {
+  "back": "Atras",
+  "classes": {
+    "autoUpdate": "Activa actualizaciones en vivo",
+    "autoUpdateEnabled": "Actualización de resultados en vivo activada",
+    "empty": "Sin competidores en esta categoría",
+    "header": {
+      "name": "Nombre",
+      "place": "#",
+      "start": "Salida",
+      "time": "Tiempo"
+    },
+    "resultsFor": "Resultados para",
+    "timerHint": "Tiempo hasta la siguiente actualización"
+  },
+  "competitions": {
+    "canceled": "La competición ha sido cancelada",
+    "classes": "Categorías",
+    "date": "Fecha",
+    "distance": "Distancia",
+    "info": "Info",
+    "lastPassings": "Últimos pasos",
+    "noClasses": "Sin categorías",
+    "organizedBy": "Organizado por",
+    "passings": {
+      "class": "Categoría",
+      "empty": "Sin últimos pasos",
+      "info": "Arrastra para refrescar",
+      "name": "Nombre",
+      "passTime": "Tiempo de paso",
+      "title": "Últimos pasos"
+    },
+    "signups": "Registrado"
+  },
+  "currentLanguage": "Inglés",
+  "distances": {
+    "long": "Larga",
+    "middle": "Medio",
+    "sprint": "Sprint",
+    "ultralong": "Ultra largo"
+  },
+  "home": {
+    "goToday": "Haz scroll a los eventos de hoy",
+    "nothingSearch": "No se encontraron competiciones",
+    "nothingToday": "No hay competiciones hoy",
+    "page": "Página",
+    "search": "Buscar",
+    "title": "LiveOL",
+    "today": "Hoy"
+  },
+  "info": {
+    "appStore": "Abrir en la App Store",
+    "body": [
+      "LiveOL es una app para ver resultados de orientación en directo.",
+      "Puedes ver los últimos resultados en tu teléfono o tableta con una interfaz adaptada y múltiples idiomas.",
+      "LiveOL se integra con varios servicios de resultados de orientación como liveresultat.orientering.se y Eventor Sweden.",
+      "Nuestro objetivo es ser la mejor plataforma de orientación para móviles."
+    ],
+    "changeTextSize": {
+      "decrease": "Reducir tamaño",
+      "increase": "Aumentar tamaño",
+      "text": "Cambia el tamaño del texto usando los botones de abajo.",
+      "title": "Cambiar el tamaño del texto"
+    },
+    "contact": "Contáctame",
+    "purgeCache": "Limpiar resultados en caché",
+    "purged": "los eventos guardados fueron eliminados",
+    "rate": "Valora la app",
+    "title": "Información",
+    "translations": {
+      "credit": "App traducida por",
+      "phraseapp": "Traducciones desarrolladas por"
+    },
+    "update": {
+      "check": "Comprobar actualizaciones",
+      "hasUpdate": {
+        "cancel": "Cancelar",
+        "cta": "Actualiza ahora",
+        "text": "Una nueva versión ha sido encontrada",
+        "title": "Actualización encontrada"
+      },
+      "noUpdate": {
+        "text": "No se encontraron nuevas versiones",
+        "title": "Sin actualizaciones"
+      }
+    },
+    "version": "Versión actual"
+  },
+  "language": {
+    "pick": "Elige un idioma"
+  },
+  "promotions": {
+    "didYouKnow": "¿Sabias?",
+    "rotate": "Rota el teléfono para ver los controles de radio"
+  },
+  "status": {
+    "long": [
+      "OK",
+      "No sale",
+      "No termina",
+      "Error en tarj.",
+      "Descalificado",
+      "Mayor al tiempo max.",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "Anticipado",
+      "Cambio cat.",
+      "Terminado"
+    ],
+    "short": [
+      "OK",
+      "DNS",
+      "DNF",
+      "MP",
+      "DSQ",
+      "OT",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "WO",
+      "MU",
+      "FIN"
+    ]
+  }
 }
