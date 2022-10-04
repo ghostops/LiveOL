@@ -1,7 +1,25 @@
 import * as _ from 'lodash';
 import * as moment from 'moment';
 
+const validateDate = (dateString: string): boolean => {
+	const [year] = dateString?.split('-');
+
+	if (!year) {
+		return false;
+	}
+
+	if (year.startsWith('-')) {
+		return false;
+	}
+
+	return true;
+}
+
 export const isDateToday = (date: string, todaysDate: string): boolean => {
+	if (!validateDate(date)) {
+		return false;
+	}
+
 	const input = moment(date);
 	const today = todaysDate ? moment(todaysDate) : moment.utc();
 

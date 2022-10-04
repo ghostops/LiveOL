@@ -59,12 +59,12 @@ export class EventorExtractor {
 			weightBy.push('date');
 		}
 
-		if (item.name.toLowerCase() === comp.name.toLowerCase()) {
+		if (item?.name?.toLowerCase() === comp?.name?.toLowerCase()) {
 			weight += 1;
 			weightBy.push('name');
 		}
 
-		if (!!comp.organizer && item.club.toLowerCase() === comp.organizer.toLowerCase()) {
+		if (!!comp.organizer && item?.club?.toLowerCase() === comp.organizer.toLowerCase()) {
 			weight += 1;
 			weightBy.push('club');
 		}
