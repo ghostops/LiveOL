@@ -19,6 +19,7 @@ type Props = {
 	secretTap: () => void;
 	increaseFontSize: () => void;
 	deceaseFontSize: () => void;
+	textSizeMultiplier: number;
 };
 
 const PHRASE_IMAGE = require('../../../../assets/images/phrase.png');
@@ -33,6 +34,7 @@ export const OLInfo: React.FC<Props> = ({
 	secretTap,
 	increaseFontSize,
 	deceaseFontSize,
+	textSizeMultiplier,
 }) => {
 	const buttons = React.useMemo(
 		() => [
@@ -132,7 +134,7 @@ export const OLInfo: React.FC<Props> = ({
 							marginBottom: px(8),
 						}}
 					>
-						{Lang.print('info.changeTextSize.title')}
+						{Lang.print('info.changeTextSize.title')} ({textSizeMultiplier.toFixed(1)})
 					</OLText>
 
 					<OLText font="Proxima_Nova" size={14}>

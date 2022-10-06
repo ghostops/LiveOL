@@ -113,6 +113,7 @@ export const OLInfo: React.FC = () => {
 			secretTap={secretTap}
 			deceaseFontSize={decreaseTextSize}
 			increaseFontSize={increaseTextSize}
+			textSizeMultiplier={textSizeMultiplier}
 		/>
 	);
 };
