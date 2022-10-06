@@ -14,6 +14,7 @@ import { OLStartTime } from 'views/components/result/item/start';
 import { px } from 'util/const';
 import { Result } from 'lib/graphql/fragments/types/Result';
 import { TouchableOpacity, Dimensions, View } from 'react-native';
+import Toast from 'react-native-toast-message';
 
 interface OwnProps {
 	result: Result;
@@ -51,7 +52,11 @@ export const getExtraSize = (splits: number): number => {
 
 export class OLTableRow extends React.PureComponent<Props> {
 	private moreInfo = () => {
-		void showToast(this.props.result.name, this.props.result.club);
+		void Toast.show({
+			type: 'info',
+			text1: this.props.result.name,
+			text2: this.props.result.club,
+		});
 	};
 
 	renderTime = () => {

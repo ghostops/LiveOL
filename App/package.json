@@ -4,12 +4,10 @@
 	"scripts": {
 		"start": "react-native start",
 		"android": "react-native run-android",
-		"ios": "react-native run-ios",
+		"ios": "react-native run-ios --simulator=\"iPhone 14 Pro\"",
 		"test": "node ./node_modules/jest/bin/jest.js --watchAll",
 		"lint": "yarn eslint ./src",
 		"release": "expo publish --target bare && git push",
-		"lang:pull": "phrase pull",
-		"lang:push": "phrase push",
 		"schema": "yarn schema:download && yarn schema:tots && yarn schema:cleanup",
 		"schema:download": "yarn run apollo schema:download --endpoint=http://localhost:4000 graphql-schema.json",
 		"schema:tots": "yarn run apollo codegen:generate --localSchemaFile=graphql-schema.json --target=typescript --includes=src/**/*.ts --tagName=gql --addTypename --globalTypesFile=src/lib/graphql/types/graphql-global-types.ts types",
