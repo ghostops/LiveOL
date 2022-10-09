@@ -9,6 +9,7 @@ import { OLText } from 'views/components/text';
 import { px } from 'util/const';
 import { TodaysCompetitions } from 'views/components/home/today';
 import { View, TouchableOpacity } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   competitions: Competition[];
@@ -30,6 +31,8 @@ export const OLHome: React.FC<Props> = ({
   landscape,
   ...passthroughProps
 }) => {
+  const { t } = useTranslation();
+
   const renderTodaysCompetitions = React.useCallback(() => {
     if (searching) {
       return null;
@@ -72,13 +75,13 @@ export const OLHome: React.FC<Props> = ({
             onPress={openSearch}
             style={{ paddingHorizontal: px(landscape ? 25 : 0) }}>
             <OLText font="Proxima Nova Regular" size={16}>
-              {Lang.print('home.search')}
+              {t('home.search')}
             </OLText>
           </TouchableOpacity>
         </View>
       </View>
     );
-  }, [openSearch]);
+  }, [landscape, openSearch, t]);
 
   return (
     <View

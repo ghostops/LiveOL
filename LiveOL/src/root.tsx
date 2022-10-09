@@ -8,6 +8,7 @@ import { client } from 'lib/graphql/client';
 import { ApolloProvider } from '@apollo/client';
 import { ActivityIndicator, Image, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import './lib/i18n';
 
 export default () => {
   const [ready, setReady] = useState(false);
