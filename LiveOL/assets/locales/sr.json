@@ -1,0 +1,90 @@
+{
+  "back": "Nazad",
+  "classes": {
+    "autoUpdate": "Uključi ažuriranje rezultata uživo",
+    "autoUpdateEnabled": "Ažuriranje rezultata uživo omogućeno",
+    "empty": "Nema takmičara u ovoj kategoriji",
+    "header": {
+      "name": "Ime",
+      "place": "#",
+      "start": "Start",
+      "time": "Vreme"
+    },
+    "resultsFor": "Rezultati za",
+    "timerHint": "Vreme do sledećeg osvežavanja"
+  },
+  "competitions": {
+    "canceled": "Takmičenje je otkazano",
+    "classes": "Kategorija",
+    "date": "Datum",
+    "distance": "Dužina",
+    "info": "Info",
+    "lastPassings": "Poslednje promene",
+    "noClasses": "Nema kategorije",
+    "organizedBy": "U organizaciji",
+    "passings": {
+      "class": "Kategorija",
+      "empty": "Nema novih promena",
+      "info": "Osveži",
+      "name": "Ime",
+      "passTime": "Prolazno vreme",
+      "title": "Najnovije promene"
+    },
+    "signups": "Upisao"
+  },
+  "currentLanguage": "Srpski",
+  "distances": {
+    "long": "Duga",
+    "middle": "Srednja",
+    "sprint": "Sprint",
+    "ultralong": "Ultra Duga"
+  },
+  "home": {
+    "goToday": "Pomeri na današnje događaje",
+    "nothingSearch": "Nije pronađeno takmičenje",
+    "nothingToday": "Danas nema takmičenja",
+    "page": "Strana",
+    "search": "Pretraži",
+    "title": "LiveOL",
+    "today": "Danas"
+  },
+  "info": {
+    "appStore": "Otvori App Store",
+    "changeTextSize": {
+      "decrease": "Smanji tekst",
+      "increase": "Povećaj tekst",
+      "text": "Promenite veličinu teksta pomoću dole prikazanih dugmadi.",
+      "title": "Promeni veličinu teksta"
+    },
+    "contact": "Kontaktiraj me",
+    "purgeCache": "Obriši keš ",
+    "purged": "Sačuvani događaji su uklonjeni",
+    "rate": "Ocenite aplikaciju",
+    "title": "Informacije",
+    "translations": {
+      "credit": "Aplikaciju preveo",
+      "phraseapp": "Prevode pokreće"
+    },
+    "update": {
+      "check": "Proveri ažuriranja",
+      "hasUpdate": {
+        "cancel": "Otkaži",
+        "cta": "Ažuriranje sada",
+        "text": "Pronađena je novija verzija",
+        "title": "Ažuriranje je pronađeno"
+      },
+      "noUpdate": {
+        "text": "Nije pronađena novija verzija",
+        "title": "Nema ažuriranja"
+      }
+    },
+    "version": "Trenutna verzija"
+  },
+  "language": {
+    "pick": "Izbor jezika"
+  },
+  "promotions": {
+    "didYouKnow": "Da li si znao?",
+    "rotate": "Okreni telefon da bi video radio kontrole"
+  }
+}

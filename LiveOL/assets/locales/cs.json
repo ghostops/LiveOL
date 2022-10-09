@@ -1,0 +1,127 @@
+{
+  "back": "Zpět",
+  "classes": {
+    "autoUpdate": "Zapnutí průběžně aktualizovaných výsledků",
+    "autoUpdateEnabled": "Průběžná aktualizace výsledků povolena",
+    "empty": "Bez závodníků v této kategorii",
+    "header": {
+      "name": "Jméno",
+      "place": "#",
+      "start": "Start",
+      "time": "Čas"
+    },
+    "resultsFor": "Výsledky pro",
+    "timerHint": "Čas do příštího obnovení"
+  },
+  "competitions": {
+    "canceled": "Závody byly zrušeny",
+    "classes": "Kategorie",
+    "date": "Datum",
+    "distance": "Vzdálenost",
+    "info": "Info",
+    "lastPassings": "Poslední průběhy",
+    "noClasses": "Žádné kategorie",
+    "organizedBy": "Organizuje",
+    "passings": {
+      "class": "Katergorie",
+      "empty": "Žádné nedávné průběhy",
+      "info": "Tažením obrazovky dolů obnovte",
+      "name": "Jméno",
+      "passTime": "Čas průběhu",
+      "title": "Poslední průběhy"
+    },
+    "signups": "Přihlášen"
+  },
+  "currentLanguage": "Česky",
+  "distances": {
+    "long": "Klasika",
+    "middle": "Střední",
+    "sprint": "Sprint",
+    "ultralong": "Dlouhá"
+  },
+  "home": {
+    "goToday": "Přesunout k dnešním událostem",
+    "nothingSearch": "Žádné závody nenalezeny",
+    "nothingToday": "Dnes se nekonají žádné závody",
+    "page": "Strana",
+    "search": "Hledat",
+    "title": "LiveOL",
+    "today": "Dnes"
+  },
+  "info": {
+    "appStore": "Otevři obchod aplikací",
+    "body": [
+      "LiveOL je aplikace, která naživo zobrazuje výsledky orientačního běhu.",
+      "Nejčerstvější výsledky získáte na svém telefonu nebo tabletu s praktickým rozhraním ve více jazycích.",
+      "LiveOL integruje mnoho služeb souvisejících s orientačním závodem, jako například Liveresultat.orientering.se a Eventor Sweden.",
+      "Naší vizí je být nejlepší platformou orientačního běhu pro mobilní zařízení."
+    ],
+    "changeTextSize": {
+      "decrease": "Snižte velikost",
+      "increase": "Zvětšit velikost",
+      "text": "Změň velikost písma pomocí tlačítek níže",
+      "title": "Změň velikost písma"
+    },
+    "contact": "Kontaktuj mě",
+    "purgeCache": "Vymazat výsledky uložené v mezipaměti",
+    "purged": "uložené události byly odstraněny",
+    "rate": "Ohodnoť aplikaci",
+    "title": "Informace",
+    "translations": {
+      "credit": "Aplikaci přeložil",
+      "phraseapp": "Překlady provedl"
+    },
+    "update": {
+      "check": "Zkontrolovat aktualizace",
+      "hasUpdate": {
+        "cancel": "Zrušit",
+        "cta": "Aktualizovat nyní",
+        "text": "Byla nalezena nová verze.",
+        "title": "Nalezena aktualizace"
+      },
+      "noUpdate": {
+        "text": "Novější verze nenalezena",
+        "title": "Žádná aktualizace"
+      }
+    },
+    "version": "Současná verze"
+  },
+  "promotions": {
+    "didYouKnow": "Věděl jsi?",
+    "rotate": "Otoč svým telefonem k zobrazení radiokontrol"
+  },
+  "status": {
+    "long": [
+      "V pořádku",
+      "Nestartoval",
+      "Nedokončil",
+      "Špatně oražená kontrola",
+      "Diskvalifikován",
+      "Přesáhl časový limit",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "Vzdal",
+      "Přeřazen do jiné kategorie",
+      "Dokončil"
+    ],
+    "short": [
+      "OK",
+      "DNS",
+      "DNF",
+      "MP",
+      "DSQ",
+      "OT",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "WO",
+      "MU",
+      "FIN"
+    ]
+  }
+}
