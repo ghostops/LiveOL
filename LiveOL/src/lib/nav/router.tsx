@@ -18,16 +18,17 @@ import { OLInfo } from 'views/scenes/info/container';
 import { useTranslation } from 'react-i18next';
 import { BackButton } from './backButton';
 import { OLCompetition } from 'views/scenes/competition/container';
+import { OLPassings } from 'views/scenes/last_passings/container';
 
 export type RootStack = {
   Home: undefined;
   Info: undefined;
   Competition: {
-    id: number;
+    competitionId: number;
     title: string;
   };
   Passings: {
-    id: number;
+    competitionId: number;
     title: string;
   };
   Results: {
@@ -62,6 +63,7 @@ const Component: React.FC = () => {
           headerTitleStyle: {
             color: '#fff',
           },
+          headerShadowVisible: false,
         }}>
         <Stack.Screen
           name="Home"
@@ -85,18 +87,20 @@ const Component: React.FC = () => {
           })}
         />
 
+        <Stack.Screen
+          name="Passings"
+          component={OLPassings}
+          options={props => ({
+            title: props.route.params.title,
+          })}
+        />
+
         {/*
         *}
 
 
 
-        <Stack.Screen
-          name={Routes.passings}
-          component={Mappings[Routes.passings]}
-          options={props => ({
-            title: props.route.params.title,
-          })}
-        />
+
 
         <Stack.Screen
           name={Routes.results}

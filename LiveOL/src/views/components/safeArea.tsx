@@ -3,7 +3,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { View } from 'react-native';
 
 type Props = {
-  children: React.ReactElement;
+  children: React.ReactElement | React.ReactElement[];
 };
 
 export const OLSafeAreaView: React.FC<Props> = ({ children }) => {

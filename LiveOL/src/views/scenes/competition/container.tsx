@@ -17,8 +17,8 @@ import { RootStack } from 'lib/nav/router';
 export const OLCompetition: React.FC = () => {
   const { navigate } = useOLNavigation();
   const {
-    params: { competitionId, id },
-  } = useRoute<RouteProp<RootStack, 'Club'>>();
+    params: { competitionId },
+  } = useRoute<RouteProp<RootStack, 'Competition'>>();
 
   const { data, loading, error, refetch } = useQuery<
     GetCompetition,
@@ -49,14 +49,18 @@ export const OLCompetition: React.FC = () => {
       classes={classes}
       goToLastPassings={() => {
         navigate('Passings', {
-          id,
+          competitionId,
           title: competition.name || '',
         });
       }}
-      goToClass={(className: string) => () => {
+      goToClass={(className: string | null) => () => {
+        if (!className) {
+          return;
+        }
+
         navigate('Results', {
           className,
-          id,
+          id: competitionId,
         });
       }}
     />

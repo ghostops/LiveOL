@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Lang } from 'lib/lang';
 import { OLLastPassingResult } from 'views/components/latest_passings/listItem';
 import { OLLoading } from 'views/components/loading';
 import { OLRefetcher } from 'views/components/refetcher';
@@ -8,6 +7,7 @@ import { OLText } from 'views/components/text';
 import { Passing } from 'lib/graphql/fragments/types/Passing';
 import { px } from 'util/const';
 import { View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   passings: Passing[];
@@ -17,6 +17,7 @@ interface Props {
 }
 
 export const OLPassings: React.FC<Props> = props => {
+  const { t } = useTranslation();
   if (props.loading && Boolean(!props.passings || !props.passings.length)) {
     return <OLLoading />;
   }
@@ -37,7 +38,7 @@ export const OLPassings: React.FC<Props> = props => {
             style={{
               textAlign: 'center',
             }}>
-            {Lang.print('competitions.passings.empty')}
+            {t('competitions.passings.empty')}
           </OLText>
         )}
         {Boolean(props.passings.length) && (
@@ -50,7 +51,7 @@ export const OLPassings: React.FC<Props> = props => {
                 marginVertical: 10,
                 color: 'black',
               }}>
-              {Lang.print('competitions.passings.title')}
+              {t('competitions.passings.title')}
             </OLText>
 
             <View

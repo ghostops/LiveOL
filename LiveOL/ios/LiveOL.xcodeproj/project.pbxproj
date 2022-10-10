@@ -22,7 +22,6 @@
 		9D6372A9B05A404DB0596BF6 /* Proxima-Nova.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9ED2BED144E144E7B758055D /* Proxima-Nova.ttf */; };
 		C128F6E5DF9C49BDA6032EB1 /* SpaceMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 07E8A27369014E54B84BD0E0 /* SpaceMono-Regular.ttf */; };
 		DFE650C7ED784D2789D76B35 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 78726E00CB724469ACEEBEE5 /* Roboto-Bold.ttf */; };
-		E63BE86A28F4030300C5CDCC /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E63BE86928F402EE00C5CDCC /* Ionicons.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,7 +59,7 @@
 		9ED2BED144E144E7B758055D /* Proxima-Nova.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Proxima-Nova.ttf"; path = "../assets/fonts/Proxima-Nova.ttf"; sourceTree = "<group>"; };
 		BB9155D337284E6EBBA7AF7B /* Proxima-Nova-Bold-regular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Proxima-Nova-Bold-regular.otf"; path = "../assets/fonts/Proxima-Nova-Bold-regular.otf"; sourceTree = "<group>"; };
 		C05D936C12E7461FB7D51002 /* Rift-Bold-Italic-regular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rift-Bold-Italic-regular.otf"; path = "../assets/fonts/Rift-Bold-Italic-regular.otf"; sourceTree = "<group>"; };
-		E63BE86928F402EE00C5CDCC /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
+		E6357A9528F41A5000DE51F1 /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -104,7 +103,7 @@
 		13B07FAE1A68108700A75B9A /* LiveOL */ = {
 			isa = PBXGroup;
 			children = (
-				E63BE86828F4027E00C5CDCC /* Fonts */,
+				E6357A9428F41A1E00DE51F1 /* Fonts */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -183,10 +182,10 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		E63BE86828F4027E00C5CDCC /* Fonts */ = {
+		E6357A9428F41A1E00DE51F1 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				E63BE86928F402EE00C5CDCC /* Ionicons.ttf */,
+				E6357A9528F41A5000DE51F1 /* Ionicons.ttf */,
 			);
 			name = Fonts;
 			sourceTree = "<group>";
@@ -285,7 +284,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E63BE86A28F4030300C5CDCC /* Ionicons.ttf in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				66CD3996644C476C8734B814 /* Proxima-Nova-Bold-regular.otf in Resources */,

@@ -3,24 +3,26 @@ import { Class } from 'lib/graphql/fragments/types/Class';
 import { Competition } from 'lib/graphql/fragments/types/Competition';
 import { EventorCompetitionFragment } from 'lib/graphql/fragments/types/EventorCompetitionFragment';
 import { FlatList, View } from 'react-native';
-import { Lang } from 'lib/lang';
 import { OLCompetitionHeader } from 'views/components/competition/header';
 import { OLListItem } from 'views/components/list/item';
 import { OLLoading } from 'views/components/loading';
 import { OLSafeAreaView } from 'views/components/safeArea';
 import { OLText } from 'views/components/text';
 import { px } from 'util/const';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   loading: boolean;
   competition: Competition & EventorCompetitionFragment;
   classes: Class[] | null;
   goToLastPassings: () => void;
-  goToClass: (name: string) => () => void;
+  goToClass: (name: string | null) => () => void;
 }
 
 export const OLCompetition: React.FC<Props> = props => {
-  const renderClass = ({ item }) => {
+  const { t } = useTranslation();
+
+  const renderClass = ({ item }: any) => {
     const { name }: Class = item;
 
     return (
@@ -55,7 +57,7 @@ export const OLCompetition: React.FC<Props> = props => {
               textAlign: 'center',
               paddingTop: px(45),
             }}>
-            {Lang.print('competitions.noClasses')}
+            {t('competitions.noClasses')}
           </OLText>
         }
         ListHeaderComponent={
@@ -64,7 +66,7 @@ export const OLCompetition: React.FC<Props> = props => {
             goToLastPassings={props.goToLastPassings}
           />
         }
-        keyExtractor={(item: Class) => item.id}
+        keyExtractor={(item: Class, index) => item.id || index.toString()}
         ListFooterComponent={<View style={{ height: px(45) }} />}
       />
     </OLSafeAreaView>

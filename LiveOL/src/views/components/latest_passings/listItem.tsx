@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { Lang } from 'lib/lang';
 import { OLText } from '../text';
 import { Passing } from 'lib/graphql/fragments/types/Passing';
 import { px, fontPx } from 'util/const';
 import { TextStyle, View } from 'react-native';
 import { OLCard } from '../card';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   passing: Passing;
@@ -20,6 +20,7 @@ export const OLLastPassingResult: React.FC<Props> = ({
   passing,
   landscape,
 }) => {
+  const { t } = useTranslation();
   return (
     <OLCard
       key={passing.time + passing.runnerName}
@@ -35,13 +36,13 @@ export const OLLastPassingResult: React.FC<Props> = ({
         {!landscape && (
           <View>
             <OLText font="Proxima Nova Regular" size={16} style={TEXT_STYLE}>
-              {Lang.print('competitions.passings.class')}:
+              {t('competitions.passings.class')}:
             </OLText>
             <OLText font="Proxima Nova Regular" size={16} style={TEXT_STYLE}>
-              {Lang.print('competitions.passings.name')}:
+              {t('competitions.passings.name')}:
             </OLText>
             <OLText font="Proxima Nova Regular" size={16} style={TEXT_STYLE}>
-              {Lang.print('competitions.passings.passTime')}:
+              {t('competitions.passings.passTime')}:
             </OLText>
           </View>
         )}

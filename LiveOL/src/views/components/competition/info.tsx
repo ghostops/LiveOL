@@ -1,14 +1,15 @@
 import * as React from 'react';
-import { Lang } from 'lib/lang';
 import { View } from 'react-native';
 import { px } from 'util/const';
 import { OLText } from '../text';
 import Hyperlink from 'react-native-hyperlink';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   infoHtml: string;
 }
 export const CompetitionInfoBox: React.FC<Props> = ({ infoHtml }) => {
+  const { t } = useTranslation();
   return (
     <View
       style={{
@@ -24,7 +25,7 @@ export const CompetitionInfoBox: React.FC<Props> = ({ infoHtml }) => {
           color: 'white',
           paddingBottom: px(10),
         }}>
-        {Lang.print('competitions.info')}
+        {t('competitions.info')}
       </OLText>
 
       <InfoHtml html={infoHtml} />

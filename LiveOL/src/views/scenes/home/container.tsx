@@ -107,7 +107,7 @@ export const OLHome: React.FC = () => {
       }}
       onCompetitionPress={competition => {
         navigate('Competition', {
-          id: competition.id || -1,
+          competitionId: competition.id || -1,
           title: Platform.OS === 'android' ? competition.name || '' : '',
         });
       }}
