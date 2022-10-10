@@ -1,27 +1,28 @@
-import * as React from 'react';
+import React from 'react';
 import { Competition } from 'lib/graphql/fragments/types/Competition';
 import { dateToReadable } from 'util/date';
-import { Lang } from 'lib/lang';
 import { OLCard } from '../card';
 import { OLSafeAreaView } from '../safeArea';
 import { OLText } from '../text';
 import { View } from 'react-native';
 import { useTheme } from 'hooks/useTheme';
+import { useTranslation } from 'react-i18next';
 
-interface Props {
+type Props = {
   competitions: Competition[];
   renderListItem: (
     comp: Competition,
     index?: number,
     total?: number,
-  ) => React.ReactChild;
-}
+  ) => React.ReactElement;
+};
 
 export const TodaysCompetitions: React.FC<Props> = ({
   competitions,
   renderListItem,
 }) => {
   const { px, colors } = useTheme();
+  const { t } = useTranslation();
 
   const nothingToday = !competitions || competitions.length === 0;
 
@@ -34,7 +35,7 @@ export const TodaysCompetitions: React.FC<Props> = ({
           textAlign: 'center',
           color: 'white',
         }}>
-        {Lang.print('home.today')}
+        {t('home.today')}
       </OLText>
 
       <OLText
@@ -44,7 +45,8 @@ export const TodaysCompetitions: React.FC<Props> = ({
           textAlign: 'center',
           color: 'white',
         }}>
-        {dateToReadable(new Date(competitions[0].date).toISOString())}
+        {competitions[0].date &&
+          dateToReadable(new Date(competitions[0].date).toISOString())}
       </OLText>
 
       <OLSafeAreaView>
@@ -70,7 +72,7 @@ export const TodaysCompetitions: React.FC<Props> = ({
           color: 'white',
           textAlign: 'center',
         }}>
-        {Lang.print('home.nothingToday')}
+        {t('home.nothingToday')}
       </OLText>
     </React.Fragment>
   );

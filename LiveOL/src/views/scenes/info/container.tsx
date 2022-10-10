@@ -125,7 +125,7 @@ export const OLInfo: React.FC = () => {
       openPhraseApp={openPhraseApp}
       openZapSplat={openZapSplat}
       secretTap={secretTap}
-      deceaseFontSize={decreaseTextSize}
+      decreaseFontSize={decreaseTextSize}
       increaseFontSize={increaseTextSize}
       textSizeMultiplier={textSizeMultiplier}
     />

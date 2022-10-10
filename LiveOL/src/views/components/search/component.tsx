@@ -76,6 +76,7 @@ export const OLSearch: React.FC<Props> = ({ setSearching, setSearchTerm }) => {
             placeholder={t('home.search')}
             onChangeText={setSearchText}
             onSubmitEditing={search}
+            autoFocus
             style={{
               padding: 6,
               flex: 1,

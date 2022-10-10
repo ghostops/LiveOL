@@ -1,12 +1,12 @@
 import React from 'react';
 import { TouchableOpacity, View, Image, ScrollView } from 'react-native';
-import { Lang } from 'lib/lang';
 import { OLButton } from 'views/components/button';
 import { OLCard } from 'views/components/card';
 import { OLFlag } from 'views/components/lang/flag';
 import { OLText } from 'views/components/text';
 import { VERSION, px } from 'util/const';
 import { LanguagePicker } from 'views/components/lang/picker';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   landscape: boolean;
@@ -17,7 +17,7 @@ type Props = {
   translationCredits: { code: string; name: string }[];
   secretTap: () => void;
   increaseFontSize: () => void;
-  deceaseFontSize: () => void;
+  decreaseFontSize: () => void;
   textSizeMultiplier: number;
 };
 
@@ -32,21 +32,23 @@ export const OLInfo: React.FC<Props> = ({
   translationCredits,
   secretTap,
   increaseFontSize,
-  deceaseFontSize,
+  decreaseFontSize,
   textSizeMultiplier,
 }) => {
+  const { t } = useTranslation();
+
   const buttons = React.useMemo(
     () => [
       {
-        text: Lang.print('info.update.check'),
+        text: t('info.update.check'),
         onPress: update,
       },
       {
-        text: Lang.print('info.contact'),
+        text: t('info.contact'),
         onPress: contact,
       },
     ],
-    [contact, update],
+    [contact, t, update],
   );
 
   const renderTranslationCredit = (
@@ -85,7 +87,7 @@ export const OLInfo: React.FC<Props> = ({
       }}>
       <View>
         <OLCard style={{ marginVertical: px(8) }}>
-          {(Lang.print('info.body') as unknown as string[]).map(
+          {(t('info.body', { returnObjects: true }) as unknown as string[]).map(
             (text: string) => (
               <OLText
                 font="Proxima Nova Regular"
@@ -111,7 +113,7 @@ export const OLInfo: React.FC<Props> = ({
               style={{
                 marginBottom: px(16),
               }}>
-              {Lang.print('info.version')}: {VERSION}
+              {t('info.version')}: {VERSION}
             </OLText>
           </TouchableOpacity>
 
@@ -138,12 +140,11 @@ export const OLInfo: React.FC<Props> = ({
             style={{
               marginBottom: px(8),
             }}>
-            {Lang.print('info.changeTextSize.title')} (
-            {textSizeMultiplier.toFixed(1)})
+            {t('info.changeTextSize.title')} ({textSizeMultiplier.toFixed(1)})
           </OLText>
 
           <OLText font="Proxima Nova Regular" size={14}>
-            {Lang.print('info.changeTextSize.text')}
+            {t('info.changeTextSize.text')}
           </OLText>
 
           <View
@@ -152,11 +153,11 @@ export const OLInfo: React.FC<Props> = ({
               justifyContent: 'space-evenly',
               paddingTop: px(16),
             }}>
-            <OLButton onPress={deceaseFontSize}>
-              {Lang.print('info.changeTextSize.decrease')}
+            <OLButton onPress={decreaseFontSize}>
+              {t('info.changeTextSize.decrease')}
             </OLButton>
             <OLButton onPress={increaseFontSize}>
-              {Lang.print('info.changeTextSize.increase')}
+              {t('info.changeTextSize.increase')}
             </OLButton>
           </View>
         </OLCard>
@@ -190,7 +191,7 @@ export const OLInfo: React.FC<Props> = ({
                 marginBottom: px(16),
                 textAlign: 'center',
               }}>
-              {Lang.print('info.translations.phraseapp')}:
+              {t('info.translations.phraseapp')}:
             </OLText>
 
             <Image
@@ -211,7 +212,7 @@ export const OLInfo: React.FC<Props> = ({
           />
 
           <OLText font="Proxima-Nova-Bold regular" size={18}>
-            {Lang.print('info.translations.credit')}:
+            {t('info.translations.credit')}:
           </OLText>
 
           {translationCredits.map(renderTranslationCredit)}

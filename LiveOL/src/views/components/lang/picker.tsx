@@ -38,7 +38,7 @@ export const LanguagePicker: React.FC<Props> = ({ button = false }) => {
               alignSelf: 'flex-start',
             }}
             hitSlop={{ bottom: 20, left: 20, right: 40, top: 20 }}>
-            {/* <Ionicons name="earth-outline" size={24} color="black" /> */}
+            <OLIcon name="earth-outline" size={24} color="black" />
             <OLFlag
               code={i18n.resolvedLanguage}
               size={24}

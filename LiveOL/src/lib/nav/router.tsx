@@ -1,4 +1,4 @@
-// import { COLORS, px } from 'util/const';
+import { COLORS } from 'util/const';
 // import { createStackNavigator } from '@react-navigation/stack';
 // import { Lang } from 'lib/lang';
 // import { Mappings } from './mappings';
@@ -14,6 +14,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'react-native';
 import { OLHome } from 'views/scenes/home/container';
 import { HomeHeader } from 'views/scenes/home/header';
+import { OLInfo } from 'views/scenes/info/container';
+import { useTranslation } from 'react-i18next';
+import { BackButton } from './backButton';
+import { OLCompetition } from 'views/scenes/competition/container';
 
 export type RootStack = {
   Home: undefined;
@@ -42,6 +46,8 @@ export type RootStack = {
 const Stack = createNativeStackNavigator<RootStack>();
 
 const Component: React.FC = () => {
+  const { t } = useTranslation();
+
   return (
     <NavigationContainer>
       <StatusBar translucent />
@@ -49,38 +55,40 @@ const Component: React.FC = () => {
       <Stack.Navigator
         initialRouteName="Home"
         screenOptions={{
-          // headerBackTitle: Lang.print('back'),
-          // headerTitleContainerStyle: {
-          //   width: '65%',
-          //   alignItems: 'center',
-          // },
+          headerLeft: () => <BackButton />,
           headerStyle: {
-            // height: top + px(50),
+            backgroundColor: COLORS.MAIN,
+          },
+          headerTitleStyle: {
+            color: '#fff',
           },
         }}>
         <Stack.Screen
           name="Home"
           component={OLHome}
-          options={() => ({
+          options={{
             header: () => <HomeHeader />,
-          })}
+          }}
         />
 
-        {/* <Stack.Screen
-          name={Routes.competition}
-          component={Mappings[Routes.competition]}
+        <Stack.Screen
+          name="Info"
+          component={OLInfo}
+          options={{ title: t('info.title') }}
+        />
+
+        <Stack.Screen
+          name="Competition"
+          component={OLCompetition}
           options={props => ({
             title: props.route.params.title,
           })}
         />
 
-        <Stack.Screen
-          name={Routes.info}
-          component={Mappings[Routes.info]}
-          options={() => ({
-            title: Lang.print('info.title'),
-          })}
-        />
+        {/*
+        *}
+
+
 
         <Stack.Screen
           name={Routes.passings}
