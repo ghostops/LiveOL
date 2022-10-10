@@ -54,6 +54,10 @@ export const OLHome: React.FC<Props> = ({
   }, [searching, todaysCompetitions, onCompetitionPress]);
 
   const renderHeader = React.useCallback(() => {
+    if (searching) {
+      return <OLSearch />;
+    }
+
     return (
       <View
         style={{
@@ -80,7 +84,7 @@ export const OLHome: React.FC<Props> = ({
         </View>
       </View>
     );
-  }, [landscape, openSearch, t]);
+  }, [landscape, openSearch, searching, t]);
 
   return (
     <View
@@ -97,8 +101,6 @@ export const OLHome: React.FC<Props> = ({
           {...passthroughProps}
         />
       </View>
-
-      <OLSearch />
     </View>
   );
 };

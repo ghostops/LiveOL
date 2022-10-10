@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import _ from 'lodash';
 import {
   Animated,
@@ -13,33 +13,15 @@ import { OLIcon } from '../icon';
 import { useTranslation } from 'react-i18next';
 
 type Props = {
-  searching: boolean;
   setSearchTerm: (term: string | null) => void;
   setSearching: (value: boolean) => void;
 };
 
 const SEARCH_SIZE = px(60);
 
-export const OLSearch: React.FC<Props> = ({
-  setSearching,
-  searching,
-  setSearchTerm,
-}) => {
+export const OLSearch: React.FC<Props> = ({ setSearching, setSearchTerm }) => {
   const { t } = useTranslation();
   const [searchText, setSearchText] = useState('');
-  const [isSearching, setIsSearching] = useState(false);
-  const searchAnimation = useRef(new Animated.Value(0)).current;
-
-  useEffect(() => {
-    if (searching && !isSearching) {
-      Animated.spring(searchAnimation, {
-        toValue: 1,
-        useNativeDriver: true,
-      }).start();
-    }
-
-    setIsSearching(isSearching);
-  }, [isSearching, searchAnimation, searching]);
 
   const search = useCallback(() => {
     setTimeout(() => {
@@ -54,27 +36,10 @@ export const OLSearch: React.FC<Props> = ({
       setSearching(false);
       setSearchTerm(null);
     });
-
-    Animated.spring(searchAnimation, {
-      toValue: 0,
-      useNativeDriver: true,
-    }).start();
-  }, [searchAnimation, setSearchTerm, setSearching]);
-
-  const translateY = searchAnimation.interpolate({
-    inputRange: [0, 1],
-    outputRange: [-SEARCH_SIZE, 0],
-  });
+  }, [setSearchTerm, setSearching]);
 
   return (
-    <Animated.View
-      style={{
-        transform: [{ translateY }],
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-      }}>
+    <Animated.View>
       <View
         style={{
           paddingTop: 0,
