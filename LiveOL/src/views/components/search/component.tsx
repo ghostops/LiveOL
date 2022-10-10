@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import _ from 'lodash';
 import {
   Animated,
@@ -7,137 +7,133 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import { Lang } from 'lib/lang';
 import { OLText } from '../text';
-import { px } from 'util/const';
+import { fontPx, px } from 'util/const';
+import { OLIcon } from '../icon';
+import { useTranslation } from 'react-i18next';
 
-interface Props {
+type Props = {
   searching: boolean;
   setSearchTerm: (term: string | null) => void;
   setSearching: (value: boolean) => void;
-}
+};
 
-interface State {
-  searchAnimation: Animated.Value;
-  searchTerm: string;
-}
+const SEARCH_SIZE = px(60);
 
-export class OLSearch extends React.PureComponent<Props, State> {
-  state: State = {
-    searchAnimation: new Animated.Value(0),
-    searchTerm: '',
-  };
+export const OLSearch: React.FC<Props> = ({
+  setSearching,
+  searching,
+  setSearchTerm,
+}) => {
+  const { t } = useTranslation();
+  const [searchText, setSearchText] = useState('');
+  const [isSearching, setIsSearching] = useState(false);
+  const searchAnimation = useRef(new Animated.Value(0)).current;
 
-  componentDidUpdate(prevProps: Props) {
-    if (prevProps.searching !== this.props.searching && this.props.searching) {
-      this.showSearch();
+  useEffect(() => {
+    if (searching && !isSearching) {
+      Animated.spring(searchAnimation, {
+        toValue: 1,
+        useNativeDriver: true,
+      }).start();
     }
-  }
 
-  search = () => {
+    setIsSearching(isSearching);
+  }, [isSearching, searchAnimation, searching]);
+
+  const search = useCallback(() => {
     setTimeout(() => {
-      this.props.setSearchTerm(this.state.searchTerm);
+      setSearchTerm(searchText);
     }, 0);
-  };
+  }, [setSearchTerm, searchText]);
 
-  showSearch = () => {
-    Animated.spring(this.state.searchAnimation, {
-      toValue: 1,
-      useNativeDriver: true,
-    }).start();
-  };
-
-  hideSearch = () => {
+  const hideSearch = useCallback(() => {
     Keyboard.dismiss();
 
     _.defer(() => {
-      this.props.setSearching(false);
-      this.props.setSearchTerm(null);
+      setSearching(false);
+      setSearchTerm(null);
     });
 
-    Animated.spring(this.state.searchAnimation, {
+    Animated.spring(searchAnimation, {
       toValue: 0,
       useNativeDriver: true,
     }).start();
-  };
+  }, [searchAnimation, setSearchTerm, setSearching]);
 
-  render() {
-    const SEARCH_SIZE = px(60);
+  const translateY = searchAnimation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [-SEARCH_SIZE, 0],
+  });
 
-    const translateY = this.state.searchAnimation.interpolate({
-      inputRange: [0, 1],
-      outputRange: [-SEARCH_SIZE, 0],
-    });
-
-    return (
-      <Animated.View
+  return (
+    <Animated.View
+      style={{
+        transform: [{ translateY }],
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+      }}>
+      <View
         style={{
-          transform: [{ translateY }],
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
+          paddingTop: 0,
+          height: SEARCH_SIZE,
+          backgroundColor: '#fafafa',
+          flexDirection: 'row',
+          width: '100%',
+          alignItems: 'center',
         }}>
+        <TouchableOpacity
+          style={{
+            height: '100%',
+            justifyContent: 'center',
+            paddingHorizontal: px(8),
+          }}
+          onPress={hideSearch}>
+          <OLIcon name="close" size={fontPx(20)} />
+        </TouchableOpacity>
+
         <View
           style={{
-            paddingTop: 0,
-            height: SEARCH_SIZE,
-            backgroundColor: '#fafafa',
             flexDirection: 'row',
-            width: '100%',
+            flex: 1,
+            alignItems: 'center',
+            backgroundColor: '#d9d9d9',
+            borderRadius: 8,
+          }}>
+          <OLIcon
+            name="search"
+            size={fontPx(18)}
+            style={{ marginLeft: px(4) }}
+          />
+          <TextInput
+            placeholder={t('home.search')}
+            onChangeText={setSearchText}
+            onSubmitEditing={search}
+            style={{
+              padding: 6,
+              flex: 1,
+            }}
+            focusable
+          />
+        </View>
+
+        <TouchableOpacity
+          onPress={search}
+          style={{
+            flex: 0.25,
+            justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <TouchableOpacity
-            style={{
-              height: '100%',
-              justifyContent: 'center',
-              paddingHorizontal: px(8),
-            }}
-            onPress={this.hideSearch}>
-            {/* <Ionicons name="close" size={fontPx(20)} /> */}
-          </TouchableOpacity>
-
-          <View
-            style={{
-              flexDirection: 'row',
-              flex: 1,
-              alignItems: 'center',
-              backgroundColor: '#d9d9d9',
-              borderRadius: 8,
-            }}>
-            {/* <Ionicons
-              name="search"
-              size={fontPx(18)}
-              style={{ marginLeft: px(4) }}
-            /> */}
-            <TextInput
-              placeholder={Lang.print('home.search')}
-              onChangeText={searchTerm => this.setState({ searchTerm })}
-              onSubmitEditing={this.search}
-              style={{
-                padding: 6,
-                flex: 1,
-              }}
-              focusable
-            />
-          </View>
-
-          <TouchableOpacity
-            onPress={this.search}
-            style={{
-              flex: 0.25,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <OLText
-              font="Proxima Nova Regular"
-              size={16}
-              style={{ color: 'black' }}>
-              {Lang.print('home.search')}
-            </OLText>
-          </TouchableOpacity>
-        </View>
-      </Animated.View>
-    );
-  }
-}
+          <OLText
+            font="Proxima Nova Regular"
+            size={16}
+            style={{ color: 'black' }}>
+            {t('home.search')}
+          </OLText>
+        </TouchableOpacity>
+      </View>
+    </Animated.View>
+  );
+};

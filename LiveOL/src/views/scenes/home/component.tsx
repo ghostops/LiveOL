@@ -1,8 +1,7 @@
-import * as React from 'react';
+import React from 'react';
 import { Competition } from 'lib/graphql/fragments/types/Competition';
 import { HomeList } from 'views/components/home/list';
 import { HomeListItem } from 'views/components/home/listItem';
-import { Lang } from 'lib/lang';
 import { LanguagePicker } from 'views/components/lang/picker';
 import { OLSearch } from 'views/components/search/container';
 import { OLText } from 'views/components/text';

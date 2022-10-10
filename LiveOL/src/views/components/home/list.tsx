@@ -3,17 +3,17 @@ import { Competition } from 'lib/graphql/fragments/types/Competition';
 import { FlatList, RefreshControl, View } from 'react-native';
 import { HomeListItem } from './listItem';
 import { isDateToday, dateToReadable } from 'util/date';
-import { Lang } from 'lib/lang';
 import { OLListItem } from '../list/item';
 import { OLLoading } from '../loading';
 import { OLSafeAreaView } from '../safeArea';
 import { OLText } from '../text';
 import { px } from 'util/const';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   competitions: Competition[];
   onCompetitionPress: (comp: Competition) => void;
-  listHeader: React.ReactElement;
+  listHeader: JSX.Element | null;
   loadMore: () => Promise<any>;
   refetch: () => Promise<void>;
   loading: boolean;
@@ -22,20 +22,22 @@ interface Props {
 export const groupVisibleCompetitions = (
   visibleCompetitions: Competition[],
 ): Record<string, Competition[]> => {
-  const uniqEs6 = arrArg =>
+  const uniqEs6 = (arrArg: any[]) =>
     arrArg.filter((elem, pos, arr) => {
       return arr.indexOf(elem) === pos;
     }) as string[];
 
   const keys = uniqEs6(visibleCompetitions.map(comp => comp.date));
-  const map = {};
+  const map: any = {};
 
   for (const key of keys) {
     map[key] = [];
   }
 
   for (const comp of visibleCompetitions) {
-    map[comp.date].push(comp);
+    if (comp.date) {
+      map[comp.date].push(comp);
+    }
   }
 
   return map;
@@ -49,6 +51,7 @@ export const HomeList: React.FC<Props> = ({
   loading,
   refetch,
 }) => {
+  const { t } = useTranslation();
   const [moreLoading, setMoreLoading] = React.useState(false);
 
   const visibleCompetitions = groupVisibleCompetitions(competitions);
@@ -69,7 +72,7 @@ export const HomeList: React.FC<Props> = ({
 
   const renderListSection = (
     date: string,
-    competitions: Record<string, Competition[]>,
+    comps: Record<string, Competition[]>,
   ) => {
     const isToday = isDateToday(date);
     const dateStr = dateToReadable(date);
@@ -84,13 +87,13 @@ export const HomeList: React.FC<Props> = ({
               paddingHorizontal: px(16),
             }}>
             <OLText size={16} font="Proxima-Nova-Bold regular">
-              {dateStr} {isToday && `(${Lang.print('home.today')})`}
+              {dateStr} {isToday && `(${t('home.today')})`}
             </OLText>
           </OLListItem>
 
           <View style={{ backgroundColor: 'white' }}>
-            {competitions[date].map((comp, index) =>
-              renderListItem(comp, index, competitions[date].length),
+            {comps[date].map((comp, index) =>
+              renderListItem(comp, index, comps[date].length),
             )}
           </View>
         </View>
@@ -121,7 +124,7 @@ export const HomeList: React.FC<Props> = ({
         setMoreLoading(false);
       }}
       onEndReachedThreshold={0.1}
-      ListFooterComponent={moreLoading && <OLLoading />}
+      ListFooterComponent={moreLoading ? <OLLoading /> : null}
       ListEmptyComponent={
         !loading && (
           <View
@@ -135,7 +138,7 @@ export const HomeList: React.FC<Props> = ({
               style={{
                 textAlign: 'center',
               }}>
-              {Lang.print('home.nothingSearch')}
+              {t('home.nothingSearch')}
             </OLText>
           </View>
         )

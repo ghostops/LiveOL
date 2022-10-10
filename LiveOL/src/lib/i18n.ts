@@ -17,8 +17,6 @@ const resources = Object.keys(locales).reduce((root, locale) => {
   return Object.assign(root, { [locale]: { translation: locales[locale] } });
 }, {});
 
-console.log(Object.keys(resources));
-
 i18n
   .use(initReactI18next)
   .use(languageDetectorPlugin)

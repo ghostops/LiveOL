@@ -26,8 +26,6 @@ export const languageDetectorPlugin: LanguageDetectorAsyncModule = {
     try {
       const selectedLang = await AsyncStorage.getItem(languageKey);
 
-      console.log(deviceLang, selectedLang);
-
       if (selectedLang) {
         return callback(selectedLang);
       } else {
