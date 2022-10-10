@@ -20,6 +20,7 @@ import { BackButton } from './backButton';
 import { OLCompetition } from 'views/scenes/competition/container';
 import { OLPassings } from 'views/scenes/last_passings/container';
 import { OLResults } from 'views/scenes/results/container';
+import { OLClubResults } from 'views/scenes/club/container';
 
 export type RootStack = {
   Home: undefined;
@@ -37,7 +38,6 @@ export type RootStack = {
     competitionId: number;
   };
   Club: {
-    id: number;
     clubName: string;
     competitionId: number;
     title: string;
@@ -54,7 +54,7 @@ const Component: React.FC = () => {
       <StatusBar translucent />
 
       <Stack.Navigator
-        initialRouteName="Results"
+        initialRouteName="Home"
         screenOptions={{
           headerLeft: () => <BackButton />,
           headerStyle: {
@@ -110,17 +110,13 @@ const Component: React.FC = () => {
           }}
         />
 
-        {/*
-        *}
-
-
         <Stack.Screen
-          name={Routes.club}
-          component={Mappings[Routes.club]}
+          name="Club"
+          component={OLClubResults}
           options={props => ({
             title: props.route.params.title,
           })}
-        /> */}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
