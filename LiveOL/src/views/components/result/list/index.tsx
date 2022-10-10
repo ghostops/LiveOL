@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { ActivityIndicator, View } from 'react-native';
+import { ActivityIndicator, FlatList, View } from 'react-native';
 import { COLORS, px } from 'util/const';
-import { FlatList } from 'react-native-gesture-handler';
 import { Lang } from 'lib/lang';
 import { OLResultItem } from 'views/components/result/list/item';
 import { OLSafeAreaView } from 'views/components/safeArea';
@@ -18,7 +17,7 @@ interface Props {
 }
 
 export const OLResultsList: React.FC<Props> = props => {
-  const renderResult = ({ item }) => {
+  const renderResult = ({ item }: any) => {
     const result: Result = item;
 
     return (

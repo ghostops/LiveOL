@@ -1,5 +1,5 @@
+import { useStatusI18n } from 'hooks/useStatusI18n';
 import * as React from 'react';
-import { statusI18n } from 'lib/lang/status';
 import { OLText } from '../../text';
 
 interface Props {
@@ -8,6 +8,8 @@ interface Props {
 }
 
 export const OLResultTimeplus: React.FC<Props> = ({ timeplus, status }) => {
+  const statusText = useStatusI18n(status, 'long');
+
   if (status < 0 || status === 10 || status === 9) {
     return null;
   }
@@ -19,7 +21,7 @@ export const OLResultTimeplus: React.FC<Props> = ({ timeplus, status }) => {
         textAlign: 'right',
       }}
       size={status === 0 ? 14 : 12}>
-      {status === 0 ? timeplus : `(${statusI18n(status, 'long')})`}
+      {status === 0 ? timeplus : `(${statusText})`}
     </OLText>
   );
 };

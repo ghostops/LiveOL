@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { ActivityIndicator, ScrollView, View } from 'react-native';
+import { ActivityIndicator, FlatList, ScrollView, View } from 'react-native';
 import { COLORS, px } from 'util/const';
-import { FlatList } from 'react-native-gesture-handler';
 import { Lang } from 'lib/lang';
 import { OLSafeAreaView } from 'views/components/safeArea';
 import { OLTableRow } from 'views/components/result/table/row';
@@ -17,7 +16,7 @@ interface Props {
 }
 
 export const OLResultsTable: React.FC<Props> = props => {
-  const renderResult = ({ item }) => {
+  const renderResult = ({ item }: any) => {
     const result: Result = item;
 
     return (

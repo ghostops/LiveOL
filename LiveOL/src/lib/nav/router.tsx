@@ -6,7 +6,7 @@ import { COLORS } from 'util/const';
 // import { Right, Left } from 'views/scenes/home/header';
 // import { Routes } from './routes';
 // import { StatusBar } from 'react-native';
-// import { AudioControlls } from 'views/scenes/results/audio';
+import { AudioControlls } from 'views/scenes/results/audio';
 
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
@@ -19,6 +19,7 @@ import { useTranslation } from 'react-i18next';
 import { BackButton } from './backButton';
 import { OLCompetition } from 'views/scenes/competition/container';
 import { OLPassings } from 'views/scenes/last_passings/container';
+import { OLResults } from 'views/scenes/results/container';
 
 export type RootStack = {
   Home: undefined;
@@ -32,9 +33,8 @@ export type RootStack = {
     title: string;
   };
   Results: {
-    id?: number;
     className: string;
-    competitionId?: number;
+    competitionId: number;
   };
   Club: {
     id: number;
@@ -54,7 +54,7 @@ const Component: React.FC = () => {
       <StatusBar translucent />
 
       <Stack.Navigator
-        initialRouteName="Home"
+        initialRouteName="Results"
         screenOptions={{
           headerLeft: () => <BackButton />,
           headerStyle: {
@@ -95,27 +95,24 @@ const Component: React.FC = () => {
           })}
         />
 
-        {/*
-        *}
-
-
-
-
-
         <Stack.Screen
-          name={Routes.results}
-          component={Mappings[Routes.results]}
+          name="Results"
+          component={OLResults}
           options={props => ({
-            title: `${Lang.print('classes.resultsFor')}: ${
+            title: `${t('classes.resultsFor')}: ${
               props.route.params.className as string
             }`,
             headerRight: () => <AudioControlls />,
           })}
           initialParams={{
-            id: 16011,
+            competitionId: 16011,
             className: 'M20-1',
           }}
         />
+
+        {/*
+        *}
+
 
         <Stack.Screen
           name={Routes.club}

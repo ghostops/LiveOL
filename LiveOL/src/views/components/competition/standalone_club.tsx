@@ -6,12 +6,17 @@ import {
   GetClubByName,
   GetClubByNameVariables,
 } from 'lib/graphql/queries/types/GetClubByName';
-import { Image, Linking, ViewStyle, View } from 'react-native';
+import {
+  Image,
+  Linking,
+  ViewStyle,
+  View,
+  TouchableOpacity,
+} from 'react-native';
 import { OLError } from 'views/components/error';
 import { OLText } from '../text';
 import { px } from 'util/const';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/client';
 
 interface Props {
   clubName: string;
@@ -31,7 +36,9 @@ export const OLCompetitionClub: React.FC<Props> = ({
     variables: { name: clubName },
   });
 
-  if (error) return <OLError error={error} />;
+  if (error) {
+    return <OLError error={error} />;
+  }
 
   const club = _.get(data, 'clubs.getClubByName', {});
 

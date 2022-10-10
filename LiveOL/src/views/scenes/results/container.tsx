@@ -2,8 +2,6 @@ import * as React from 'react';
 import { useQuery } from '@apollo/client';
 import { usePlayAudio } from './hooks/usePlayAudio';
 import { useHasChanged } from './hooks/useHasChanged';
-import { showToast } from 'lib/toasts/rotate';
-import { RouterProps } from 'lib/nav/routes';
 import { Result } from 'lib/graphql/fragments/types/Result';
 import { OLResults as Component } from './component';
 import { OLLoading } from 'views/components/loading';
@@ -14,23 +12,17 @@ import {
 } from 'lib/graphql/queries/types/GetResults';
 import { GET_RESULTS } from 'lib/graphql/queries/results';
 import _ from 'lodash';
-import { useIsFocused } from '@react-navigation/native';
+import { RouteProp, useIsFocused, useRoute } from '@react-navigation/native';
 import { useDeviceRotationStore } from 'store/deviceRotation';
+import { RootStack } from 'lib/nav/router';
 
-type OwnProps = RouterProps<{ id: number; className: string }>;
-
-type Props = OwnProps;
-
-export const OLResults: React.FC<Props> = ({ route }) => {
+export const OLResults: React.FC = () => {
   const focus = useIsFocused();
   const { isLandscape } = useDeviceRotationStore();
 
-  const className: string = route.params.className;
-  const competitionId: number = route.params.id;
-
-  React.useEffect(() => {
-    void showToast();
-  }, []);
+  const {
+    params: { className, competitionId },
+  } = useRoute<RouteProp<RootStack, 'Results'>>();
 
   const playAudio = usePlayAudio();
 
@@ -48,8 +40,8 @@ export const OLResults: React.FC<Props> = ({ route }) => {
       return;
     }
 
-    void playAudio();
-  }, [hasAnyChanged]);
+    playAudio();
+  }, [hasAnyChanged, playAudio]);
 
   if (error) {
     return <OLError error={error} refetch={refetch} />;

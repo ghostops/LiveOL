@@ -1,5 +1,5 @@
-import React from 'react';
-import { Audio } from 'expo-av';
+import { useCallback, useEffect } from 'react';
+import TrackPlayer from 'react-native-track-player';
 import { Platform } from 'react-native';
 import { useAudioStore } from 'store/audio';
 
@@ -11,27 +11,18 @@ const Tracks = [
 ];
 
 export const usePlayAudio = (track = 3) => {
-  const [sound, setSound] = React.useState<Audio.Sound>();
   const { isMuted } = useAudioStore();
 
-  React.useEffect(() => {
-    return () => {
-      if (!sound) {
-        return;
-      }
-      sound.unloadAsync();
-    };
-  }, [sound]);
+  useEffect(() => {
+    TrackPlayer.setupPlayer();
+  }, []);
 
-  return React.useCallback(async () => {
+  return useCallback(async () => {
     if (isMuted || Platform.OS === 'android') {
       return;
     }
 
-    const { sound } = await Audio.Sound.createAsync(Tracks[track]);
-
-    setSound(sound);
-
-    await sound.playAsync();
-  }, [sound, muted]);
+    await TrackPlayer.add({ url: Tracks[track] });
+    await TrackPlayer.play();
+  }, [isMuted, track]);
 };

@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { statusI18n } from 'lib/lang/status';
 import { OLText } from '../../text';
+import { useStatusI18n } from 'hooks/useStatusI18n';
 
 interface Props {
   time: string;
@@ -8,9 +8,10 @@ interface Props {
 }
 
 export const OLResultTime: React.FC<Props> = ({ time, status }) => {
+  const statusText = useStatusI18n(status);
   return (
     <OLText font="Proxima Nova Regular" size={20}>
-      {status === 0 ? time : statusI18n(status)}
+      {status === 0 ? time : statusText}
     </OLText>
   );
 };

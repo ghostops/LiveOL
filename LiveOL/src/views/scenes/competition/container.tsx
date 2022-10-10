@@ -60,7 +60,7 @@ export const OLCompetition: React.FC = () => {
 
         navigate('Results', {
           className,
-          id: competitionId,
+          competitionId,
         });
       }}
     />
