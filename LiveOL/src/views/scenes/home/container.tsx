@@ -1,19 +1,14 @@
-import * as React from 'react';
+import React from 'react';
 import moment from 'moment';
-import { useQuery } from '@apollo/client';
-import { Platform } from 'react-native';
-import { OLHome as Component } from './component';
-import { OLError } from 'views/components/error';
-import { useDeviceRotationStore } from 'store/deviceRotation';
-import {
-  Competitions,
-  CompetitionsVariables,
-} from 'lib/graphql/queries/types/Competitions';
-import { COMPETITIONS } from 'lib/graphql/queries/competitions';
-import { Competition } from 'lib/graphql/fragments/types/Competition';
 import _ from 'lodash';
 import { useSearchStore } from 'store/search';
 import { useOLNavigation } from 'hooks/useNavigation';
+import { useDeviceRotationStore } from 'store/deviceRotation';
+import { useGetCompetitionsQuery } from 'lib/graphql/generated/gql';
+import { Platform } from 'react-native';
+import { OLHome as Component } from './component';
+import { OLError } from 'views/components/error';
+import { OlCompetition } from 'lib/graphql/generated/types';
 
 const getToday = () => moment().format('YYYY-MM-DD');
 
@@ -22,14 +17,8 @@ export const OLHome: React.FC = () => {
   const { isSearching, searchTerm, setIsSearching } = useSearchStore();
   const { navigate } = useOLNavigation();
 
-  const { data, loading, error, fetchMore, refetch } = useQuery<
-    Competitions,
-    CompetitionsVariables
-  >(COMPETITIONS, {
-    variables: {
-      search: searchTerm || null,
-      date: getToday(),
-    },
+  const { data, loading, error, fetchMore, refetch } = useGetCompetitionsQuery({
+    variables: { search: searchTerm || null, date: getToday() },
   });
 
   if (error) {
@@ -38,25 +27,19 @@ export const OLHome: React.FC = () => {
     );
   }
 
-  const competitions: Competition[] = _.get(
-    data,
-    'competitions.getCompetitions.competitions',
-    [],
-  );
-
-  const today: Competition[] = _.get(
-    data,
-    'competitions.getCompetitions.today',
-    [],
-  );
+  const competitions =
+    (data?.competitions?.getCompetitions?.competitions as OlCompetition[]) ||
+    [];
+  const today =
+    (data?.competitions?.getCompetitions?.today as OlCompetition[]) || [];
 
   const loadMore = async () => {
     if (loading) {
       return;
     }
 
-    const page = (data?.competitions?.getCompetitions?.page || 0) + 1;
-    const lastPage = data?.competitions?.getCompetitions?.lastPage || 0;
+    const page = (data.competitions.getCompetitions.page || 0) + 1;
+    const lastPage = data.competitions.getCompetitions.lastPage || 0;
 
     if (page >= lastPage) {
       return;
@@ -66,30 +49,30 @@ export const OLHome: React.FC = () => {
       variables: {
         page,
       },
-      updateQuery: (prev: Competitions, { fetchMoreResult }) => {
+      updateQuery: (prev, { fetchMoreResult }) => {
         if (!fetchMoreResult) {
           return prev;
         }
 
         const comps = _.uniqBy(
           [
-            ...(prev?.competitions?.getCompetitions?.competitions || []),
-            ...(fetchMoreResult?.competitions?.getCompetitions?.competitions ||
+            ...(prev?.competitions.getCompetitions?.competitions || []),
+            ...(fetchMoreResult?.competitions.getCompetitions?.competitions ||
               []),
           ],
           'id',
         );
 
         return Object.assign({}, prev, {
-          ...fetchMoreResult.competitions,
+          ...fetchMoreResult,
           competitions: {
-            ...fetchMoreResult.competitions,
+            ...fetchMoreResult?.competitions,
             getCompetitions: {
               ...fetchMoreResult?.competitions?.getCompetitions,
               competitions: comps,
             },
           },
-        } as Competitions);
+        });
       },
     });
   };

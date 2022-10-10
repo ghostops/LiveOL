@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Competition } from 'lib/graphql/fragments/types/Competition';
 import { FlatList, RefreshControl, View } from 'react-native';
 import { HomeListItem } from './listItem';
 import { isDateToday, dateToReadable } from 'util/date';
@@ -9,10 +8,11 @@ import { OLSafeAreaView } from '../safeArea';
 import { OLText } from '../text';
 import { px } from 'util/const';
 import { useTranslation } from 'react-i18next';
+import { OlCompetition } from 'lib/graphql/generated/types';
 
 interface Props {
-  competitions: Competition[];
-  onCompetitionPress: (comp: Competition) => void;
+  competitions: OlCompetition[];
+  onCompetitionPress: (comp: OlCompetition) => void;
   listHeader: JSX.Element | null;
   loadMore: () => Promise<any>;
   refetch: () => Promise<void>;
@@ -20,8 +20,8 @@ interface Props {
 }
 
 export const groupVisibleCompetitions = (
-  visibleCompetitions: Competition[],
-): Record<string, Competition[]> => {
+  visibleCompetitions: OlCompetition[],
+): Record<string, OlCompetition[]> => {
   const uniqEs6 = (arrArg: any[]) =>
     arrArg.filter((elem, pos, arr) => {
       return arr.indexOf(elem) === pos;
@@ -57,7 +57,7 @@ export const HomeList: React.FC<Props> = ({
   const visibleCompetitions = groupVisibleCompetitions(competitions);
 
   const renderListItem = (
-    competition: Competition,
+    competition: OlCompetition,
     index: number,
     total: number,
   ) => (
@@ -72,7 +72,7 @@ export const HomeList: React.FC<Props> = ({
 
   const renderListSection = (
     date: string,
-    comps: Record<string, Competition[]>,
+    comps: Record<string, OlCompetition[]>,
   ) => {
     const isToday = isDateToday(date);
     const dateStr = dateToReadable(date);

@@ -8,10 +8,7 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "schema": "yarn schema:download && yarn schema:tots && yarn schema:cleanup",
-		"schema:download": "yarn run apollo schema:download --endpoint=http://localhost:4000 graphql-schema.json",
-		"schema:tots": "yarn run apollo codegen:generate --localSchemaFile=graphql-schema.json --target=typescript --includes=src/**/*.ts --tagName=gql --addTypename --globalTypesFile=src/lib/graphql/types/graphql-global-types.ts types",
-		"schema:cleanup": "yarn rimraf graphql-schema.json types"
+    "schema": "graphql-codegen --config code-gen.yml"
   },
   "dependencies": {
     "@apollo/client": "^3.7.0",
@@ -41,6 +38,11 @@
   "devDependencies": {
     "@babel/core": "^7.12.9",
     "@babel/runtime": "^7.12.5",
+    "@graphql-codegen/cli": "^2.13.5",
+    "@graphql-codegen/import-types-preset": "^2.2.3",
+    "@graphql-codegen/typescript": "^2.7.3",
+    "@graphql-codegen/typescript-operations": "^2.5.3",
+    "@graphql-codegen/typescript-react-apollo": "^3.3.3",
     "@react-native-community/eslint-config": "^2.0.0",
     "@tsconfig/react-native": "^2.0.2",
     "@types/jest": "^26.0.23",

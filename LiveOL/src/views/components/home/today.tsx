@@ -1,5 +1,4 @@
 import React from 'react';
-import { Competition } from 'lib/graphql/fragments/types/Competition';
 import { dateToReadable } from 'util/date';
 import { OLCard } from '../card';
 import { OLSafeAreaView } from '../safeArea';
@@ -7,11 +6,12 @@ import { OLText } from '../text';
 import { View } from 'react-native';
 import { useTheme } from 'hooks/useTheme';
 import { useTranslation } from 'react-i18next';
+import { OlCompetition } from 'lib/graphql/generated/types';
 
 type Props = {
-  competitions: Competition[];
+  competitions: OlCompetition[];
   renderListItem: (
-    comp: Competition,
+    comp: OlCompetition,
     index?: number,
     total?: number,
   ) => React.ReactElement;

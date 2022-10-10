@@ -1,0 +1,24 @@
+fragment Competition on OLCompetition {
+  id
+  name
+  organizer
+  date
+  eventor
+}
+
+fragment EventorCompetitionFragment on OLCompetition {
+  info
+  club
+  clubLogoUrl
+  clubLogoSizes
+  canceled
+  distance
+  district
+  signups
+}
+
+fragment Class on OLClass {
+  id
+  competition
+  name
+}

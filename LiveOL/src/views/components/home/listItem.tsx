@@ -1,14 +1,14 @@
-import * as React from 'react';
+import React from 'react';
 import { px } from 'util/const';
-import { Competition } from 'lib/graphql/fragments/types/Competition';
 import { OLText } from '../text';
 import { OLListItem } from '../list/item';
+import { OlCompetition } from 'lib/graphql/generated/types';
 
 interface Props {
-  competition: Competition;
+  competition: OlCompetition;
   index?: number;
   total?: number;
-  onCompetitionPress?: (comp: Competition) => void;
+  onCompetitionPress?: (comp: OlCompetition) => void;
 }
 
 export const HomeListItem: React.FC<Props> = ({

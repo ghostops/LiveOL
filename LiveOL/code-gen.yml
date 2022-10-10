@@ -1,0 +1,36 @@
+schema: http://localhost:4000
+generates:
+  ./src/lib/graphql/generated/types.ts:
+    documents:
+      - ./src/**/*.graphql
+    plugins:
+      - typescript
+      - typescript-operations
+    config:
+      avoidOptionals:
+        field: true
+        inputValue: true
+        object: false
+        defaultValue: true
+      skipTypename: true
+      maybeValue: T
+    hooks:
+      afterOneFileWrite:
+        - prettier --write
+        - eslint --fix
+  ./src/lib/graphql/generated/gql.tsx:
+    preset: import-types
+    presetConfig:
+      typesPath: ./types
+    documents:
+      - ./src/**/*.graphql
+    config:
+      avoidOptionals: true
+      skipTypename: true
+      maybeValue: T
+    hooks:
+      afterOneFileWrite:
+        - prettier --write
+        - eslint --fix
+    plugins:
+      - typescript-react-apollo

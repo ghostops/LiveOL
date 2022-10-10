@@ -1,5 +1,4 @@
 import React from 'react';
-import { Competition } from 'lib/graphql/fragments/types/Competition';
 import { HomeList } from 'views/components/home/list';
 import { HomeListItem } from 'views/components/home/listItem';
 import { LanguagePicker } from 'views/components/lang/picker';
@@ -9,11 +8,12 @@ import { px } from 'util/const';
 import { TodaysCompetitions } from 'views/components/home/today';
 import { View, TouchableOpacity } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { OlCompetition } from 'lib/graphql/generated/types';
 
 interface Props {
-  competitions: Competition[];
-  todaysCompetitions: Competition[];
-  onCompetitionPress: (competition: Competition) => void;
+  competitions: OlCompetition[];
+  todaysCompetitions: OlCompetition[];
+  onCompetitionPress: (competition: OlCompetition) => void;
   openSearch: () => void;
   searching: boolean;
   loading: boolean;
