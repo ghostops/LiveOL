@@ -7,7 +7,11 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "schema": "yarn schema:download && yarn schema:tots && yarn schema:cleanup",
+		"schema:download": "yarn run apollo schema:download --endpoint=http://localhost:4000 graphql-schema.json",
+		"schema:tots": "yarn run apollo codegen:generate --localSchemaFile=graphql-schema.json --target=typescript --includes=src/**/*.ts --tagName=gql --addTypename --globalTypesFile=src/lib/graphql/types/graphql-global-types.ts types",
+		"schema:cleanup": "yarn rimraf graphql-schema.json types"
   },
   "dependencies": {
     "@apollo/client": "^3.7.0",
