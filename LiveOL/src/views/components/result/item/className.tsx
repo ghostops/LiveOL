@@ -1,25 +1,22 @@
-/* eslint-disable @typescript-eslint/unbound-method */
-import * as React from 'react';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import { Routes } from 'lib/nav/routes';
+import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { OLText } from '../../text';
+import { useOLNavigation } from 'hooks/useNavigation';
+import { useRoute } from '@react-navigation/native';
 
 interface Props {
   className: string;
 }
 
 export const OLClassName: React.FC<Props> = ({ className }) => {
-  const { navigate } = useNavigation();
+  const { navigate } = useOLNavigation();
   const { params } = useRoute();
 
   const id = (params as any).competitionId;
 
   return (
     <TouchableOpacity
-      onPress={() =>
-        navigate(Routes.results, { className, competitionId: id })
-      }>
+      onPress={() => navigate('Results', { className, competitionId: id })}>
       <OLText
         numberOfLines={1}
         size={16}

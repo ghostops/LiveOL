@@ -1,16 +1,15 @@
-/* eslint-disable @typescript-eslint/unbound-method */
-import * as React from 'react';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import { Routes } from 'lib/nav/routes';
+import React from 'react';
+import { useRoute } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native';
 import { OLText } from '../../text';
+import { useOLNavigation } from 'hooks/useNavigation';
 
 interface Props {
   club: string;
 }
 
 export const OLResultClub: React.FC<Props> = ({ club }) => {
-  const { navigate } = useNavigation();
+  const { navigate } = useOLNavigation();
   const { params } = useRoute();
 
   const id = (params as any).id;
@@ -18,7 +17,7 @@ export const OLResultClub: React.FC<Props> = ({ club }) => {
   return (
     <TouchableOpacity
       onPress={() =>
-        navigate(Routes.club, {
+        navigate('Club', {
           clubName: club,
           competitionId: id,
           title: club,

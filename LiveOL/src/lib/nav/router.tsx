@@ -7,15 +7,39 @@
 // import { Routes } from './routes';
 // import { StatusBar } from 'react-native';
 // import { AudioControlls } from 'views/scenes/results/audio';
-// import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Routes } from 'lib/nav/routes';
 import { StatusBar } from 'react-native';
 import { OLHome } from 'views/scenes/home/container';
+import { HomeHeader } from 'views/scenes/home/header';
 
-const Stack = createNativeStackNavigator();
+export type RootStack = {
+  Home: undefined;
+  Info: undefined;
+  Competition: {
+    id: number;
+    title: string;
+  };
+  Passings: {
+    id: number;
+    title: string;
+  };
+  Results: {
+    id?: number;
+    className: string;
+    competitionId?: number;
+  };
+  Club: {
+    id: number;
+    clubName: string;
+    competitionId: number;
+    title: string;
+  };
+};
+
+const Stack = createNativeStackNavigator<RootStack>();
 
 const Component: React.FC = () => {
   return (
@@ -23,7 +47,7 @@ const Component: React.FC = () => {
       <StatusBar translucent />
 
       <Stack.Navigator
-        initialRouteName={Routes.home}
+        initialRouteName="Home"
         screenOptions={{
           // headerBackTitle: Lang.print('back'),
           // headerTitleContainerStyle: {
@@ -35,15 +59,11 @@ const Component: React.FC = () => {
           },
         }}>
         <Stack.Screen
-          name={Routes.home}
+          name="Home"
           component={OLHome}
-          // options={props => ({
-          //   title: Lang.print('home.title'),
-          //   headerLeft: () => <Left />,
-          //   headerRight: () => (
-          //     <Right onPress={() => props.navigation.navigate(Routes.info)} />
-          //   ),
-          // })}
+          options={() => ({
+            header: () => <HomeHeader />,
+          })}
         />
 
         {/* <Stack.Screen

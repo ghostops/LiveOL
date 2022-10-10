@@ -1,7 +1,6 @@
 import * as React from 'react';
 import moment from 'moment';
 import { useQuery } from '@apollo/client';
-import { Routes } from 'lib/nav/routes';
 import { Platform } from 'react-native';
 import { OLHome as Component } from './component';
 import { OLError } from 'views/components/error';
@@ -14,14 +13,14 @@ import { COMPETITIONS } from 'lib/graphql/queries/competitions';
 import { Competition } from 'lib/graphql/fragments/types/Competition';
 import _ from 'lodash';
 import { useSearchStore } from 'store/search';
-import { useNavigation } from '@react-navigation/native';
+import { useOLNavigation } from 'hooks/useNavigation';
 
 const getToday = () => moment().format('YYYY-MM-DD');
 
 export const OLHome: React.FC = () => {
   const { isLandscape } = useDeviceRotationStore();
   const { isSearching, searchTerm, setIsSearching } = useSearchStore();
-  const { navigate } = useNavigation();
+  const { navigate } = useOLNavigation();
 
   const { data, loading, error, fetchMore, refetch } = useQuery<
     Competitions,
@@ -107,9 +106,9 @@ export const OLHome: React.FC = () => {
         await refetch({ date: getToday() });
       }}
       onCompetitionPress={competition => {
-        (navigate as any)(Routes.competition, {
-          id: competition.id,
-          title: Platform.OS === 'android' ? competition.name : '',
+        navigate('Competition', {
+          id: competition.id || -1,
+          title: Platform.OS === 'android' ? competition.name || '' : '',
         });
       }}
       landscape={isLandscape}
