@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { ViewStyle } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity, ViewStyle } from 'react-native';
 import { COLORS } from 'util/const';
 import { OLText } from '../text';
 

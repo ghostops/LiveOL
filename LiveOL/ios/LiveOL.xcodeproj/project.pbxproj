@@ -12,16 +12,17 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		16B97AB14BDE4F56B4C96348 /* PTMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3B0AF339C72E436CA441E0DC /* PTMono-Regular.ttf */; };
+		1A59BFA7ECC54639AEE356C7 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 95BD596D5F314AC58491B1EB /* Roboto-Regular.ttf */; };
+		26D482908E6C4F278763A5A2 /* Rift-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5A336329ED534FC6959977F7 /* Rift-Bold.otf */; };
+		66CD3996644C476C8734B814 /* Proxima-Nova-Bold-regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = BB9155D337284E6EBBA7AF7B /* Proxima-Nova-Bold-regular.otf */; };
 		7699B88040F8A987B510C191 /* libPods-LiveOL-LiveOLTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-LiveOL-LiveOLTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		66CD3996644C476C8734B814 /* Proxima-Nova-Bold-regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = BB9155D337284E6EBBA7AF7B /* Proxima-Nova-Bold-regular.otf */; };
 		9D277DD68A714208B0EDC51C /* Rift-Bold-Italic-regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = C05D936C12E7461FB7D51002 /* Rift-Bold-Italic-regular.otf */; };
-		26D482908E6C4F278763A5A2 /* Rift-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5A336329ED534FC6959977F7 /* Rift-Bold.otf */; };
-		16B97AB14BDE4F56B4C96348 /* PTMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3B0AF339C72E436CA441E0DC /* PTMono-Regular.ttf */; };
 		9D6372A9B05A404DB0596BF6 /* Proxima-Nova.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9ED2BED144E144E7B758055D /* Proxima-Nova.ttf */; };
-		DFE650C7ED784D2789D76B35 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 78726E00CB724469ACEEBEE5 /* Roboto-Bold.ttf */; };
-		1A59BFA7ECC54639AEE356C7 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 95BD596D5F314AC58491B1EB /* Roboto-Regular.ttf */; };
 		C128F6E5DF9C49BDA6032EB1 /* SpaceMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 07E8A27369014E54B84BD0E0 /* SpaceMono-Regular.ttf */; };
+		DFE650C7ED784D2789D76B35 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 78726E00CB724469ACEEBEE5 /* Roboto-Bold.ttf */; };
+		E63BE86A28F4030300C5CDCC /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E63BE86928F402EE00C5CDCC /* Ionicons.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +39,7 @@
 		00E356EE1AD99517003FC87E /* LiveOLTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LiveOLTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* LiveOLTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LiveOLTests.m; sourceTree = "<group>"; };
+		07E8A27369014E54B84BD0E0 /* SpaceMono-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SpaceMono-Regular.ttf"; path = "../assets/fonts/SpaceMono-Regular.ttf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* LiveOL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LiveOL.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = LiveOL/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = LiveOL/AppDelegate.mm; sourceTree = "<group>"; };
@@ -45,21 +47,21 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = LiveOL/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = LiveOL/main.m; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-LiveOL-LiveOLTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LiveOL-LiveOLTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3B0AF339C72E436CA441E0DC /* PTMono-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "PTMono-Regular.ttf"; path = "../assets/fonts/PTMono-Regular.ttf"; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-LiveOL.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiveOL.debug.xcconfig"; path = "Target Support Files/Pods-LiveOL/Pods-LiveOL.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-LiveOL.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiveOL.release.xcconfig"; path = "Target Support Files/Pods-LiveOL/Pods-LiveOL.release.xcconfig"; sourceTree = "<group>"; };
+		5A336329ED534FC6959977F7 /* Rift-Bold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rift-Bold.otf"; path = "../assets/fonts/Rift-Bold.otf"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-LiveOL-LiveOLTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiveOL-LiveOLTests.debug.xcconfig"; path = "Target Support Files/Pods-LiveOL-LiveOLTests/Pods-LiveOL-LiveOLTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-LiveOL.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LiveOL.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		78726E00CB724469ACEEBEE5 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Bold.ttf"; path = "../assets/fonts/Roboto-Bold.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = LiveOL/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-LiveOL-LiveOLTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiveOL-LiveOLTests.release.xcconfig"; path = "Target Support Files/Pods-LiveOL-LiveOLTests/Pods-LiveOL-LiveOLTests.release.xcconfig"; sourceTree = "<group>"; };
+		95BD596D5F314AC58491B1EB /* Roboto-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Regular.ttf"; path = "../assets/fonts/Roboto-Regular.ttf"; sourceTree = "<group>"; };
+		9ED2BED144E144E7B758055D /* Proxima-Nova.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Proxima-Nova.ttf"; path = "../assets/fonts/Proxima-Nova.ttf"; sourceTree = "<group>"; };
+		BB9155D337284E6EBBA7AF7B /* Proxima-Nova-Bold-regular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Proxima-Nova-Bold-regular.otf"; path = "../assets/fonts/Proxima-Nova-Bold-regular.otf"; sourceTree = "<group>"; };
+		C05D936C12E7461FB7D51002 /* Rift-Bold-Italic-regular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rift-Bold-Italic-regular.otf"; path = "../assets/fonts/Rift-Bold-Italic-regular.otf"; sourceTree = "<group>"; };
+		E63BE86928F402EE00C5CDCC /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		BB9155D337284E6EBBA7AF7B /* Proxima-Nova-Bold-regular.otf */ = {isa = PBXFileReference; name = "Proxima-Nova-Bold-regular.otf"; path = "../assets/fonts/Proxima-Nova-Bold-regular.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		C05D936C12E7461FB7D51002 /* Rift-Bold-Italic-regular.otf */ = {isa = PBXFileReference; name = "Rift-Bold-Italic-regular.otf"; path = "../assets/fonts/Rift-Bold-Italic-regular.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		5A336329ED534FC6959977F7 /* Rift-Bold.otf */ = {isa = PBXFileReference; name = "Rift-Bold.otf"; path = "../assets/fonts/Rift-Bold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		3B0AF339C72E436CA441E0DC /* PTMono-Regular.ttf */ = {isa = PBXFileReference; name = "PTMono-Regular.ttf"; path = "../assets/fonts/PTMono-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		9ED2BED144E144E7B758055D /* Proxima-Nova.ttf */ = {isa = PBXFileReference; name = "Proxima-Nova.ttf"; path = "../assets/fonts/Proxima-Nova.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		78726E00CB724469ACEEBEE5 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; name = "Roboto-Bold.ttf"; path = "../assets/fonts/Roboto-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		95BD596D5F314AC58491B1EB /* Roboto-Regular.ttf */ = {isa = PBXFileReference; name = "Roboto-Regular.ttf"; path = "../assets/fonts/Roboto-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		07E8A27369014E54B84BD0E0 /* SpaceMono-Regular.ttf */ = {isa = PBXFileReference; name = "SpaceMono-Regular.ttf"; path = "../assets/fonts/SpaceMono-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +104,7 @@
 		13B07FAE1A68108700A75B9A /* LiveOL */ = {
 			isa = PBXGroup;
 			children = (
+				E63BE86828F4027E00C5CDCC /* Fonts */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -120,6 +123,21 @@
 				19F6CBCC0A4E27FBF8BF4A61 /* libPods-LiveOL-LiveOLTests.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		643CACE9286F4F81BC004EC1 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				BB9155D337284E6EBBA7AF7B /* Proxima-Nova-Bold-regular.otf */,
+				C05D936C12E7461FB7D51002 /* Rift-Bold-Italic-regular.otf */,
+				5A336329ED534FC6959977F7 /* Rift-Bold.otf */,
+				3B0AF339C72E436CA441E0DC /* PTMono-Regular.ttf */,
+				9ED2BED144E144E7B758055D /* Proxima-Nova.ttf */,
+				78726E00CB724469ACEEBEE5 /* Roboto-Bold.ttf */,
+				95BD596D5F314AC58491B1EB /* Roboto-Regular.ttf */,
+				07E8A27369014E54B84BD0E0 /* SpaceMono-Regular.ttf */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -165,21 +183,13 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		643CACE9286F4F81BC004EC1 /* Resources */ = {
-			isa = "PBXGroup";
+		E63BE86828F4027E00C5CDCC /* Fonts */ = {
+			isa = PBXGroup;
 			children = (
-				BB9155D337284E6EBBA7AF7B /* Proxima-Nova-Bold-regular.otf */,
-				C05D936C12E7461FB7D51002 /* Rift-Bold-Italic-regular.otf */,
-				5A336329ED534FC6959977F7 /* Rift-Bold.otf */,
-				3B0AF339C72E436CA441E0DC /* PTMono-Regular.ttf */,
-				9ED2BED144E144E7B758055D /* Proxima-Nova.ttf */,
-				78726E00CB724469ACEEBEE5 /* Roboto-Bold.ttf */,
-				95BD596D5F314AC58491B1EB /* Roboto-Regular.ttf */,
-				07E8A27369014E54B84BD0E0 /* SpaceMono-Regular.ttf */,
+				E63BE86928F402EE00C5CDCC /* Ionicons.ttf */,
 			);
-			name = Resources;
+			name = Fonts;
 			sourceTree = "<group>";
-			path = "";
 		};
 /* End PBXGroup section */
 
@@ -275,6 +285,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E63BE86A28F4030300C5CDCC /* Ionicons.ttf in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				66CD3996644C476C8734B814 /* Proxima-Nova-Bold-regular.otf in Resources */,

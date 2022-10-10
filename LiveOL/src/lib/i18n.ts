@@ -1,5 +1,6 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
+import { languageDetectorPlugin } from './detectI18n';
 
 const locales: Record<string, any> = {
   en: require('../../assets/locales/en.json'),
@@ -16,12 +17,18 @@ const resources = Object.keys(locales).reduce((root, locale) => {
   return Object.assign(root, { [locale]: { translation: locales[locale] } });
 }, {});
 
-i18n.use(initReactI18next).init({
-  resources,
-  lng: 'en',
-  interpolation: {
-    escapeValue: false,
-  },
-});
+console.log(Object.keys(resources));
+
+i18n
+  .use(initReactI18next)
+  .use(languageDetectorPlugin)
+  .init({
+    resources,
+    compatibilityJSON: 'v3',
+    fallbackLng: 'en',
+    interpolation: {
+      escapeValue: false,
+    },
+  });
 
 export default i18n;
