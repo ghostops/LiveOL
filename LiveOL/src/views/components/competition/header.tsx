@@ -24,7 +24,7 @@ export const OLCompetitionHeader: React.FC<Props> = props => {
       {Platform.OS === 'ios' && (
         <OLCompetitionIOSHeader name={props.competition.name} />
       )}
-      {Platform.OS === 'android' && <View style={{ height: px(30) }} />}
+      {Platform.OS === 'android' && <View style={{ height: px(10) }} />}
 
       {props.competition.eventor && props.competition.canceled && (
         <View
@@ -34,14 +34,16 @@ export const OLCompetitionHeader: React.FC<Props> = props => {
             backgroundColor: '#ff3838',
             padding: px(10),
             top: Platform.OS === 'ios' ? -px(35) : -px(30),
-          }}>
+          }}
+        >
           <OLText
             font="Proxima-Nova-Bold regular"
             size={18}
             style={{
               textAlign: 'center',
               color: 'white',
-            }}>
+            }}
+          >
             {t('competitions.canceled')}
           </OLText>
         </View>
@@ -50,17 +52,21 @@ export const OLCompetitionHeader: React.FC<Props> = props => {
       <View
         style={{
           paddingHorizontal: px(20),
-        }}>
+        }}
+      >
         <View
           style={{
-            flexDirection: 'row',
-          }}>
+            flex: 1,
+            paddingTop: px(10),
+          }}
+        >
           {props.competition.eventor && (
             <View
               style={{
                 alignItems: 'center',
-                justifyContent: 'center',
-              }}>
+                paddingBottom: px(25),
+              }}
+            >
               {props.competition.eventor && (
                 <OLCompetitionClub
                   name={props.competition.club}
@@ -71,45 +77,42 @@ export const OLCompetitionHeader: React.FC<Props> = props => {
             </View>
           )}
 
-          <View
-            style={{
-              paddingTop: px(15),
-              alignItems: 'flex-end',
-              flex: 1,
-            }}>
-            <OLText
-              size={16}
-              font="Proxima Nova Regular"
-              style={{ marginBottom: px(15) }}>
-              {t('competitions.date')}: {dateToReadable(props.competition.date)}
-            </OLText>
+          <OLText
+            size={16}
+            font="Proxima Nova Regular"
+            style={{ marginBottom: px(15) }}
+          >
+            {t('competitions.date')}: {dateToReadable(props.competition.date)}
+          </OLText>
 
-            <OLText
-              size={16}
-              font="Proxima Nova Regular"
-              style={{ marginBottom: px(15) }}>
-              {t('competitions.organizedBy')}: {props.competition.organizer}
-            </OLText>
+          <OLText
+            size={16}
+            font="Proxima Nova Regular"
+            style={{ marginBottom: px(15) }}
+          >
+            {t('competitions.organizedBy')}: {props.competition.organizer}
+          </OLText>
 
-            {props.competition.eventor && (
-              <>
-                <OLText
-                  size={16}
-                  font="Proxima Nova Regular"
-                  style={{ marginBottom: px(15) }}>
-                  {t('competitions.distance')}:{' '}
-                  {t(`distances.${props.competition.distance}`)}
-                </OLText>
+          {props.competition.eventor && (
+            <>
+              <OLText
+                size={16}
+                font="Proxima Nova Regular"
+                style={{ marginBottom: px(15) }}
+              >
+                {t('competitions.distance')}:{' '}
+                {t(`distances.${props.competition.distance}`)}
+              </OLText>
 
-                <OLText
-                  font="Proxima Nova Regular"
-                  style={{ marginBottom: px(15) }}
-                  size={16}>
-                  {t('competitions.signups')}: {props.competition.signups}
-                </OLText>
-              </>
-            )}
-          </View>
+              <OLText
+                font="Proxima Nova Regular"
+                style={{ marginBottom: px(15) }}
+                size={16}
+              >
+                {t('competitions.signups')}: {props.competition.signups}
+              </OLText>
+            </>
+          )}
         </View>
 
         {props.competition.eventor && !!props.competition.info && (
@@ -123,7 +126,8 @@ export const OLCompetitionHeader: React.FC<Props> = props => {
           marginBottom: px(15),
           marginTop: px(25),
           flexDirection: 'row',
-        }}>
+        }}
+      >
         <View style={{ flex: 1 }}>
           <OLText
             font="Proxima-Nova-Bold regular"
@@ -131,7 +135,8 @@ export const OLCompetitionHeader: React.FC<Props> = props => {
             style={{
               textAlign: 'left',
               color: 'black',
-            }}>
+            }}
+          >
             {t('competitions.classes')}
           </OLText>
         </View>
