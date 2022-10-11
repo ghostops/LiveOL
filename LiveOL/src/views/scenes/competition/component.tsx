@@ -1,7 +1,4 @@
-import * as React from 'react';
-import { Class } from 'lib/graphql/fragments/types/Class';
-import { Competition } from 'lib/graphql/fragments/types/Competition';
-import { EventorCompetitionFragment } from 'lib/graphql/fragments/types/EventorCompetitionFragment';
+import React from 'react';
 import { FlatList, View } from 'react-native';
 import { OLCompetitionHeader } from 'views/components/competition/header';
 import { OLListItem } from 'views/components/list/item';
@@ -10,11 +7,12 @@ import { OLSafeAreaView } from 'views/components/safeArea';
 import { OLText } from 'views/components/text';
 import { px } from 'util/const';
 import { useTranslation } from 'react-i18next';
+import { OlClass, OlCompetition } from 'lib/graphql/generated/types';
 
 interface Props {
   loading: boolean;
-  competition: Competition & EventorCompetitionFragment;
-  classes: Class[] | null;
+  competition: OlCompetition;
+  classes: OlClass[] | null;
   goToLastPassings: () => void;
   goToClass: (name: string | null) => () => void;
 }
@@ -23,7 +21,7 @@ export const OLCompetition: React.FC<Props> = props => {
   const { t } = useTranslation();
 
   const renderClass = ({ item }: any) => {
-    const { name }: Class = item;
+    const { name }: OlClass = item;
 
     return (
       <OLListItem
@@ -66,7 +64,7 @@ export const OLCompetition: React.FC<Props> = props => {
             goToLastPassings={props.goToLastPassings}
           />
         }
-        keyExtractor={(item: Class, index) => item.id || index.toString()}
+        keyExtractor={(item: OlClass, index) => item.id || index.toString()}
         ListFooterComponent={<View style={{ height: px(45) }} />}
       />
     </OLSafeAreaView>

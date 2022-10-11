@@ -1,8 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
-import { Competition } from 'lib/graphql/fragments/types/Competition';
 import { dateToReadable } from 'util/date';
-import { EventorCompetitionFragment } from 'lib/graphql/fragments/types/EventorCompetitionFragment';
 import { OLButton } from 'views/components/button';
 import { OLCompetitionClub } from 'views/components/competition/club';
 import { OLCompetitionIOSHeader } from 'views/components/competition/iosHeader';
@@ -11,9 +9,10 @@ import { Platform, View } from 'react-native';
 import { px } from 'util/const';
 import { CompetitionInfoBox } from './info';
 import { useTranslation } from 'react-i18next';
+import { OlCompetition } from 'lib/graphql/generated/types';
 
 interface Props {
-  competition: Competition & EventorCompetitionFragment;
+  competition: OlCompetition;
   goToLastPassings: () => void;
 }
 
