@@ -8,7 +8,6 @@ import { client } from 'lib/graphql/client';
 import { ApolloProvider } from '@apollo/client';
 import { ActivityIndicator, Image, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import RNBootSplash from 'react-native-bootsplash';
 import './lib/i18n';
 
 export default () => {
@@ -20,7 +19,6 @@ export default () => {
     }, 3000);
 
     setReady(true);
-    RNBootSplash.hide({ fade: true });
   }, []);
 
   if (!ready) {

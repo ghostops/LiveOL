@@ -9,6 +9,7 @@ import { Platform } from 'react-native';
 import { OLHome as Component } from './component';
 import { OLError } from 'views/components/error';
 import { OlCompetition } from 'lib/graphql/generated/types';
+import RNBootSplash from 'react-native-bootsplash';
 
 const getToday = () => moment().format('YYYY-MM-DD');
 
@@ -19,6 +20,12 @@ export const OLHome: React.FC = () => {
 
   const { data, loading, error, fetchMore, refetch } = useGetCompetitionsQuery({
     variables: { search: searchTerm || null, date: getToday() },
+    onCompleted: () => {
+      RNBootSplash.hide({ fade: true });
+    },
+    onError: () => {
+      RNBootSplash.hide({ fade: true });
+    },
   });
 
   if (error) {
