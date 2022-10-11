@@ -1,13 +1,11 @@
 import React from 'react';
 import { VERSION } from 'util/const';
-import { ServerVersion } from 'lib/graphql/queries/types/ServerVersion';
 import { OLInfo as Component } from './component';
 import { Lang } from 'lib/lang';
-import { GET_SERVER_VERSION } from 'lib/graphql/queries/server';
-import { client } from 'lib/graphql/client';
 import { Alert, Linking } from 'react-native';
 import { useDeviceRotationStore } from 'store/deviceRotation';
 import { useTextStore } from 'store/text';
+import { useGetServerVersionQuery } from 'lib/graphql/generated/gql';
 
 const translationCredits: { code: string; name: string }[] = [
   {
@@ -38,6 +36,8 @@ const translationCredits: { code: string; name: string }[] = [
 
 export const OLInfo: React.FC = () => {
   const { isLandscape } = useDeviceRotationStore();
+
+  const { data } = useGetServerVersionQuery();
 
   const { setTextSizeMultiplier, textSizeMultiplier } = useTextStore();
 
@@ -102,17 +102,11 @@ export const OLInfo: React.FC = () => {
     if (secretTaps > 5) {
       setSecretTaps(0);
 
-      const { data } = await client.query<ServerVersion>({
-        query: GET_SERVER_VERSION,
-      });
-
-      // tslint:disable: prefer-template
       Alert.alert(
         'VERSION',
         `Package Version: ${VERSION}\n` +
           `Server Version: ${data?.server?.version}\n`,
       );
-      // tslint:enable: prefer-template
     }
   };
 

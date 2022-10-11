@@ -1,7 +1,6 @@
 import React from 'react';
+import _ from 'lodash';
 import { ViewStyle, FlexAlignType, View } from 'react-native';
-import { useQuery } from '@apollo/client';
-import { Split } from 'lib/graphql/fragments/types/Split';
 import { px } from 'util/const';
 import { PORTRAIT_SIZE } from 'views/components/result/list/item';
 import { OLText } from '../text';
@@ -11,13 +10,9 @@ import {
   getExtraSize,
 } from 'views/components/result/table/row';
 import { Grid } from 'react-native-easy-grid';
-import {
-  GetSplitControls,
-  GetSplitControlsVariables,
-} from 'lib/graphql/queries/types/GetSplitControls';
-import { GET_SPLIT_CONTROLS } from 'lib/graphql/queries/results';
-import _ from 'lodash';
 import { TFunction, useTranslation } from 'react-i18next';
+import { OlSplit } from 'lib/graphql/generated/types';
+import { useGetSplitControlsQuery } from 'lib/graphql/generated/gql';
 
 interface OwnProps {
   competitionId: number;
@@ -35,7 +30,7 @@ interface Label {
 
 const labels =
   (t: TFunction) =>
-  (table: boolean, maxSize: number, splits?: Split[]): Label[] => {
+  (table: boolean, maxSize: number, splits?: OlSplit[]): Label[] => {
     const all: Record<string, Label> = {
       place: {
         size: PORTRAIT_SIZE.place,
@@ -100,14 +95,11 @@ export const ResultHeader: React.FC<OwnProps> = ({
 }) => {
   const { t } = useTranslation();
 
-  const { data, loading, error } = useQuery<
-    GetSplitControls,
-    GetSplitControlsVariables
-  >(GET_SPLIT_CONTROLS, {
+  const { data, loading, error } = useGetSplitControlsQuery({
     variables: { competitionId, className },
   });
 
-  const splits: Split[] = _.get(data, 'results.getSplitControls', []);
+  const splits: OlSplit[] = _.get(data, 'results.getSplitControls', []);
 
   const renderCol = ({ text, size, align, style }: Label, index: number) => {
     const key = `${text}:${index}`;

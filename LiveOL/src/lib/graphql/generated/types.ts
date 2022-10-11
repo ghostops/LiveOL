@@ -430,6 +430,6 @@ export type GetClubResultsQuery = {
   };
 };
 
-export type ServerVersionQueryVariables = Exact<{ [key: string]: never }>;
+export type GetServerVersionQueryVariables = Exact<{ [key: string]: never }>;
 
-export type ServerVersionQuery = { server: { version: string } };
+export type GetServerVersionQuery = { server: { version: string } };

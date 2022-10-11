@@ -535,8 +535,8 @@ export type GetClubResultsQueryResult = Apollo.QueryResult<
   Types.GetClubResultsQuery,
   Types.GetClubResultsQueryVariables
 >;
-export const ServerVersionDocument = gql`
-  query ServerVersion {
+export const GetServerVersionDocument = gql`
+  query GetServerVersion {
     server {
       version
     }
@@ -544,51 +544,51 @@ export const ServerVersionDocument = gql`
 `;
 
 /**
- * __useServerVersionQuery__
+ * __useGetServerVersionQuery__
  *
- * To run a query within a React component, call `useServerVersionQuery` and pass it any options that fit your needs.
- * When your component renders, `useServerVersionQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetServerVersionQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetServerVersionQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useServerVersionQuery({
+ * const { data, loading, error } = useGetServerVersionQuery({
  *   variables: {
  *   },
  * });
  */
-export function useServerVersionQuery(
+export function useGetServerVersionQuery(
   baseOptions?: Apollo.QueryHookOptions<
-    Types.ServerVersionQuery,
-    Types.ServerVersionQueryVariables
+    Types.GetServerVersionQuery,
+    Types.GetServerVersionQueryVariables
   >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<
-    Types.ServerVersionQuery,
-    Types.ServerVersionQueryVariables
-  >(ServerVersionDocument, options);
+    Types.GetServerVersionQuery,
+    Types.GetServerVersionQueryVariables
+  >(GetServerVersionDocument, options);
 }
-export function useServerVersionLazyQuery(
+export function useGetServerVersionLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
-    Types.ServerVersionQuery,
-    Types.ServerVersionQueryVariables
+    Types.GetServerVersionQuery,
+    Types.GetServerVersionQueryVariables
   >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<
-    Types.ServerVersionQuery,
-    Types.ServerVersionQueryVariables
-  >(ServerVersionDocument, options);
+    Types.GetServerVersionQuery,
+    Types.GetServerVersionQueryVariables
+  >(GetServerVersionDocument, options);
 }
-export type ServerVersionQueryHookResult = ReturnType<
-  typeof useServerVersionQuery
+export type GetServerVersionQueryHookResult = ReturnType<
+  typeof useGetServerVersionQuery
 >;
-export type ServerVersionLazyQueryHookResult = ReturnType<
-  typeof useServerVersionLazyQuery
+export type GetServerVersionLazyQueryHookResult = ReturnType<
+  typeof useGetServerVersionLazyQuery
 >;
-export type ServerVersionQueryResult = Apollo.QueryResult<
-  Types.ServerVersionQuery,
-  Types.ServerVersionQueryVariables
+export type GetServerVersionQueryResult = Apollo.QueryResult<
+  Types.GetServerVersionQuery,
+  Types.GetServerVersionQueryVariables
 >;
