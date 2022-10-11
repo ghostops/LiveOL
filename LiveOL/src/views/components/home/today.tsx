@@ -66,7 +66,7 @@ export const TodaysCompetitions: React.FC<Props> = ({
   const innerNothing = () => (
     <React.Fragment>
       <OLText
-        font="Rift-Bold-Italic regular"
+        font="Rift Bold"
         size={18}
         style={{
           color: 'white',

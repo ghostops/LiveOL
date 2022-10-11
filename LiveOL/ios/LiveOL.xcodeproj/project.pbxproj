@@ -18,7 +18,6 @@
 		66CD3996644C476C8734B814 /* Proxima-Nova-Bold-regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = BB9155D337284E6EBBA7AF7B /* Proxima-Nova-Bold-regular.otf */; };
 		7699B88040F8A987B510C191 /* libPods-LiveOL-LiveOLTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-LiveOL-LiveOLTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		9D277DD68A714208B0EDC51C /* Rift-Bold-Italic-regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = C05D936C12E7461FB7D51002 /* Rift-Bold-Italic-regular.otf */; };
 		9D6372A9B05A404DB0596BF6 /* Proxima-Nova.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9ED2BED144E144E7B758055D /* Proxima-Nova.ttf */; };
 		C128F6E5DF9C49BDA6032EB1 /* SpaceMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 07E8A27369014E54B84BD0E0 /* SpaceMono-Regular.ttf */; };
 		DFE650C7ED784D2789D76B35 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 78726E00CB724469ACEEBEE5 /* Roboto-Bold.ttf */; };
@@ -58,7 +57,6 @@
 		95BD596D5F314AC58491B1EB /* Roboto-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Regular.ttf"; path = "../assets/fonts/Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		9ED2BED144E144E7B758055D /* Proxima-Nova.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Proxima-Nova.ttf"; path = "../assets/fonts/Proxima-Nova.ttf"; sourceTree = "<group>"; };
 		BB9155D337284E6EBBA7AF7B /* Proxima-Nova-Bold-regular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Proxima-Nova-Bold-regular.otf"; path = "../assets/fonts/Proxima-Nova-Bold-regular.otf"; sourceTree = "<group>"; };
-		C05D936C12E7461FB7D51002 /* Rift-Bold-Italic-regular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rift-Bold-Italic-regular.otf"; path = "../assets/fonts/Rift-Bold-Italic-regular.otf"; sourceTree = "<group>"; };
 		E6357A9528F41A5000DE51F1 /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -128,7 +126,6 @@
 			isa = PBXGroup;
 			children = (
 				BB9155D337284E6EBBA7AF7B /* Proxima-Nova-Bold-regular.otf */,
-				C05D936C12E7461FB7D51002 /* Rift-Bold-Italic-regular.otf */,
 				5A336329ED534FC6959977F7 /* Rift-Bold.otf */,
 				3B0AF339C72E436CA441E0DC /* PTMono-Regular.ttf */,
 				9ED2BED144E144E7B758055D /* Proxima-Nova.ttf */,
@@ -287,7 +284,6 @@
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				66CD3996644C476C8734B814 /* Proxima-Nova-Bold-regular.otf in Resources */,
-				9D277DD68A714208B0EDC51C /* Rift-Bold-Italic-regular.otf in Resources */,
 				26D482908E6C4F278763A5A2 /* Rift-Bold.otf in Resources */,
 				16B97AB14BDE4F56B4C96348 /* PTMono-Regular.ttf in Resources */,
 				9D6372A9B05A404DB0596BF6 /* Proxima-Nova.ttf in Resources */,

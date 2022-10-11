@@ -31,7 +31,7 @@ export const OLCompetitionClub: React.FC<Props> = ({
           }}
         />
 
-        <OLText size={18} font="Rift-Bold-Italic regular">
+        <OLText size={18} font="Rift Bold">
           {name}
         </OLText>
       </View>

@@ -9,7 +9,6 @@ interface Props {
     | 'Proxima-Nova-Bold regular'
     | 'Proxima Nova Regular'
     | 'Rift Bold'
-    | 'Rift-Bold-Italic regular'
     | 'PT Mono';
   style?: TextStyle;
   numberOfLines?: number;
