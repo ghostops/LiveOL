@@ -1,4 +1,4 @@
-package com.liveol;
+package se.liveol.rn;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

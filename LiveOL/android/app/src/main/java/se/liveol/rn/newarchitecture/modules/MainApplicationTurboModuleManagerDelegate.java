@@ -1,4 +1,4 @@
-package com.liveol.newarchitecture.modules;
+package se.liveol.rn.newarchitecture.modules;
 
 import com.facebook.jni.HybridData;
 import com.facebook.react.ReactPackage;

@@ -1,4 +1,4 @@
-package com.liveol.newarchitecture;
+package se.liveol.rn.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -19,9 +19,9 @@ import com.facebook.react.fabric.CoreComponentsRegistry;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.fabric.ReactNativeConfig;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.liveol.BuildConfig;
-import com.liveol.newarchitecture.components.MainComponentsRegistry;
-import com.liveol.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import se.liveol.rn.BuildConfig;
+import se.liveol.rn.newarchitecture.components.MainComponentsRegistry;
+import se.liveol.rn.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 
