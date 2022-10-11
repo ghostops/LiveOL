@@ -14,7 +14,7 @@ export const usePlayAudio = (track = 3) => {
   const { isMuted } = useAudioStore();
 
   useEffect(() => {
-    TrackPlayer.setupPlayer();
+    TrackPlayer.setupPlayer().catch(() => {});
   }, []);
 
   return useCallback(async () => {

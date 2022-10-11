@@ -1,14 +1,14 @@
-import * as React from 'react';
+import React from 'react';
 import _ from 'lodash';
 import { LayoutAnimation } from 'react-native';
 import { OLRefetcher } from 'views/components/refetcher';
 import { OLResultsList } from 'views/components/result/list';
 import { OLResultsTable } from 'views/components/result/table';
-import { Result } from 'lib/graphql/fragments/types/Result';
+import { OlResult } from 'lib/graphql/generated/types';
 
 interface Props {
   refetch: () => Promise<void>;
-  results: Result[];
+  results: OlResult[];
   landscape: boolean;
   focus: boolean;
 

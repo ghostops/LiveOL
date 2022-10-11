@@ -5,11 +5,11 @@ import { Lang } from 'lib/lang';
 import { OLSafeAreaView } from 'views/components/safeArea';
 import { OLTableRow } from 'views/components/result/table/row';
 import { OLText } from 'views/components/text';
-import { Result } from 'lib/graphql/fragments/types/Result';
 import { ResultHeader } from 'views/components/result/header';
+import { OlResult } from 'lib/graphql/generated/types';
 
 interface Props {
-  results: Result[];
+  results: OlResult[];
   competitionId: number;
   className: string;
   disabled?: boolean;
@@ -17,7 +17,7 @@ interface Props {
 
 export const OLResultsTable: React.FC<Props> = props => {
   const renderResult = ({ item }: any) => {
-    const result: Result = item;
+    const result: OlResult = item;
 
     return (
       <OLTableRow
@@ -48,7 +48,7 @@ export const OLResultsTable: React.FC<Props> = props => {
           ListFooterComponent={<View style={{ height: 45 }} />}
           data={props.results}
           renderItem={renderResult}
-          keyExtractor={(item: Result) => item.name}
+          keyExtractor={(item: OlResult) => item.name}
           ListEmptyComponent={
             <View
               style={{

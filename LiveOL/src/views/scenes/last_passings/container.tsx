@@ -1,17 +1,12 @@
-import * as React from 'react';
-import { useQuery } from '@apollo/client';
+import React from 'react';
+import _ from 'lodash';
 import { Passing } from 'lib/graphql/fragments/types/Passing';
 import { OLPassings as Component } from './component';
 import { OLError } from 'views/components/error';
-import {
-  GetLastPassingsVariables,
-  GetLastPassings,
-} from 'lib/graphql/queries/types/GetLastPassings';
-import { GET_LAST_PASSINGS } from 'lib/graphql/queries/passings';
-import _ from 'lodash';
 import { useDeviceRotationStore } from 'store/deviceRotation';
 import { RootStack } from 'lib/nav/router';
 import { RouteProp, useRoute } from '@react-navigation/native';
+import { useGetLastPassingsQuery } from 'lib/graphql/generated/gql';
 
 export const OLPassings: React.FC = () => {
   const { isLandscape } = useDeviceRotationStore();
@@ -20,10 +15,7 @@ export const OLPassings: React.FC = () => {
     params: { competitionId },
   } = useRoute<RouteProp<RootStack, 'Passings'>>();
 
-  const { data, loading, error, refetch } = useQuery<
-    GetLastPassings,
-    GetLastPassingsVariables
-  >(GET_LAST_PASSINGS, {
+  const { data, loading, error, refetch } = useGetLastPassingsQuery({
     variables: { competitionId },
   });
 

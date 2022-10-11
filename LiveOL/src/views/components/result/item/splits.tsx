@@ -1,10 +1,10 @@
-import * as React from 'react';
-import { Split } from 'lib/graphql/fragments/types/Split';
+import React from 'react';
 import { View } from 'react-native';
 import { OLText } from 'views/components/text';
+import { OlSplit } from 'lib/graphql/generated/types';
 
 interface Props {
-  split: Split;
+  split: OlSplit;
   best?: boolean;
 }
 

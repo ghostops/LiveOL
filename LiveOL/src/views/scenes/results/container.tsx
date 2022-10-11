@@ -1,20 +1,15 @@
-import * as React from 'react';
-import { useQuery } from '@apollo/client';
+import React from 'react';
+import _ from 'lodash';
 import { usePlayAudio } from './hooks/usePlayAudio';
 import { useHasChanged } from './hooks/useHasChanged';
-import { Result } from 'lib/graphql/fragments/types/Result';
 import { OLResults as Component } from './component';
 import { OLLoading } from 'views/components/loading';
 import { OLError } from 'views/components/error';
-import {
-  GetResults,
-  GetResultsVariables,
-} from 'lib/graphql/queries/types/GetResults';
-import { GET_RESULTS } from 'lib/graphql/queries/results';
-import _ from 'lodash';
 import { RouteProp, useIsFocused, useRoute } from '@react-navigation/native';
 import { useDeviceRotationStore } from 'store/deviceRotation';
 import { RootStack } from 'lib/nav/router';
+import { useGetResultsQuery } from 'lib/graphql/generated/gql';
+import { OlResult } from 'lib/graphql/generated/types';
 
 export const OLResults: React.FC = () => {
   const focus = useIsFocused();
@@ -26,14 +21,13 @@ export const OLResults: React.FC = () => {
 
   const playAudio = usePlayAudio();
 
-  const { data, loading, error, refetch } = useQuery<
-    GetResults,
-    GetResultsVariables
-  >(GET_RESULTS, {
+  const { data, loading, error, refetch } = useGetResultsQuery({
     variables: { competitionId, className },
   });
 
-  const hasAnyChanged = useHasChanged(data?.results?.getResults);
+  const results: OlResult[] = _.get(data, 'results.getResults', null);
+
+  const hasAnyChanged = useHasChanged(results);
 
   React.useEffect(() => {
     if (!hasAnyChanged) {
@@ -50,8 +44,6 @@ export const OLResults: React.FC = () => {
   if (loading) {
     return <OLLoading />;
   }
-
-  const results: Result[] = _.get(data, 'results.getResults', null);
 
   return (
     <Component
