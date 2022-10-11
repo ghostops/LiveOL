@@ -36,9 +36,20 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
+	<string></string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Proxima-Nova-Bold-regular.otf</string>
+		<string>Rift-Bold.otf</string>
+		<string>PTMono-Regular.ttf</string>
+		<string>Proxima-Nova.ttf</string>
+		<string>Roboto-Bold.ttf</string>
+		<string>Roboto-Regular.ttf</string>
+		<string>SpaceMono-Regular.ttf</string>
+		<string>Ionicons.ttf</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
+	<string>BootSplash.storyboard</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
@@ -51,16 +62,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>UIAppFonts</key>
-	<array>
-		<string>Proxima-Nova-Bold-regular.otf</string>
-		<string>Rift-Bold.otf</string>
-		<string>PTMono-Regular.ttf</string>
-		<string>Proxima-Nova.ttf</string>
-		<string>Roboto-Bold.ttf</string>
-		<string>Roboto-Regular.ttf</string>
-		<string>SpaceMono-Regular.ttf</string>
-		<string>Ionicons.ttf</string>
-	</array>
 </dict>
 </plist>

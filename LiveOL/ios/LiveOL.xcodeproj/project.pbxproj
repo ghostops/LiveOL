@@ -21,6 +21,7 @@
 		9D6372A9B05A404DB0596BF6 /* Proxima-Nova.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9ED2BED144E144E7B758055D /* Proxima-Nova.ttf */; };
 		C128F6E5DF9C49BDA6032EB1 /* SpaceMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 07E8A27369014E54B84BD0E0 /* SpaceMono-Regular.ttf */; };
 		DFE650C7ED784D2789D76B35 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 78726E00CB724469ACEEBEE5 /* Roboto-Bold.ttf */; };
+		E6F3E8C928F5A34E0031DEFD /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6F3E8C828F5A34E0031DEFD /* BootSplash.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,7 @@
 		9ED2BED144E144E7B758055D /* Proxima-Nova.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Proxima-Nova.ttf"; path = "../assets/fonts/Proxima-Nova.ttf"; sourceTree = "<group>"; };
 		BB9155D337284E6EBBA7AF7B /* Proxima-Nova-Bold-regular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Proxima-Nova-Bold-regular.otf"; path = "../assets/fonts/Proxima-Nova-Bold-regular.otf"; sourceTree = "<group>"; };
 		E6357A9528F41A5000DE51F1 /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
+		E6F3E8C828F5A34E0031DEFD /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = LiveOL/BootSplash.storyboard; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -101,6 +103,7 @@
 		13B07FAE1A68108700A75B9A /* LiveOL */ = {
 			isa = PBXGroup;
 			children = (
+				E6F3E8C828F5A34E0031DEFD /* BootSplash.storyboard */,
 				E6357A9428F41A1E00DE51F1 /* Fonts */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
@@ -286,6 +289,7 @@
 				66CD3996644C476C8734B814 /* Proxima-Nova-Bold-regular.otf in Resources */,
 				26D482908E6C4F278763A5A2 /* Rift-Bold.otf in Resources */,
 				16B97AB14BDE4F56B4C96348 /* PTMono-Regular.ttf in Resources */,
+				E6F3E8C928F5A34E0031DEFD /* BootSplash.storyboard in Resources */,
 				9D6372A9B05A404DB0596BF6 /* Proxima-Nova.ttf in Resources */,
 				DFE650C7ED784D2789D76B35 /* Roboto-Bold.ttf in Resources */,
 				1A59BFA7ECC54639AEE356C7 /* Roboto-Regular.ttf in Resources */,
