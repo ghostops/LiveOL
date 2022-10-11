@@ -1,26 +1,18 @@
-import { COLORS } from 'util/const';
-// import { createStackNavigator } from '@react-navigation/stack';
-// import { Lang } from 'lib/lang';
-// import { Mappings } from './mappings';
-// import { NavigationContainer } from '@react-navigation/native';
-// import { Right, Left } from 'views/scenes/home/header';
-// import { Routes } from './routes';
-// import { StatusBar } from 'react-native';
-import { AudioControlls } from 'views/scenes/results/audio';
-
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { StatusBar } from 'react-native';
-import { OLHome } from 'views/scenes/home/container';
-import { HomeHeader } from 'views/scenes/home/header';
-import { OLInfo } from 'views/scenes/info/container';
 import { useTranslation } from 'react-i18next';
-import { BackButton } from './backButton';
-import { OLCompetition } from 'views/scenes/competition/container';
-import { OLPassings } from 'views/scenes/last_passings/container';
+import { StatusBar } from 'react-native';
 import { OLResults } from 'views/scenes/results/container';
+import { OLPassings } from 'views/scenes/last_passings/container';
+import { OLInfo } from 'views/scenes/info/container';
+import { OLHome } from 'views/scenes/home/container';
+import { OLCompetition } from 'views/scenes/competition/container';
 import { OLClubResults } from 'views/scenes/club/container';
+import { NavigationContainer } from '@react-navigation/native';
+import { HomeHeader } from 'views/scenes/home/header';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { COLORS } from 'util/const';
+import { BackButton } from './backButton';
+import { AudioControlls } from 'views/scenes/results/audio';
 
 export type RootStack = {
   Home: undefined;

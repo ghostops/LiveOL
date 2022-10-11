@@ -1,11 +1,11 @@
 import React from 'react';
 import { VERSION } from 'util/const';
 import { OLInfo as Component } from './component';
-import { Lang } from 'lib/lang';
 import { Alert, Linking } from 'react-native';
 import { useDeviceRotationStore } from 'store/deviceRotation';
 import { useTextStore } from 'store/text';
 import { useGetServerVersionQuery } from 'lib/graphql/generated/gql';
+import { useTranslation } from 'react-i18next';
 
 const translationCredits: { code: string; name: string }[] = [
   {
@@ -35,6 +35,7 @@ const translationCredits: { code: string; name: string }[] = [
 ];
 
 export const OLInfo: React.FC = () => {
+  const { t } = useTranslation();
   const { isLandscape } = useDeviceRotationStore();
 
   const { data } = useGetServerVersionQuery();
@@ -70,8 +71,8 @@ export const OLInfo: React.FC = () => {
 
     if (canUpdate) {
       Alert.alert(
-        Lang.print('info.update.hasUpdate.title'),
-        Lang.print('info.update.hasUpdate.text'),
+        t('info.update.hasUpdate.title'),
+        t('info.update.hasUpdate.text'),
         [
           {
             onPress: async () => {
@@ -80,18 +81,18 @@ export const OLInfo: React.FC = () => {
               //   await Updates.reloadAsync();
               // }
             },
-            text: Lang.print('info.update.hasUpdate.cta'),
+            text: t('info.update.hasUpdate.cta'),
           },
           {
-            text: Lang.print('info.update.hasUpdate.cancel'),
+            text: t('info.update.hasUpdate.cancel'),
             style: 'cancel',
           },
         ],
       );
     } else {
       Alert.alert(
-        Lang.print('info.update.noUpdate.title'),
-        Lang.print('info.update.noUpdate.text'),
+        t('info.update.noUpdate.title'),
+        t('info.update.noUpdate.text'),
       );
     }
   };

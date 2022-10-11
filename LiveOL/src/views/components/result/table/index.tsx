@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { ActivityIndicator, FlatList, ScrollView, View } from 'react-native';
 import { COLORS, px } from 'util/const';
-import { Lang } from 'lib/lang';
 import { OLSafeAreaView } from 'views/components/safeArea';
 import { OLTableRow } from 'views/components/result/table/row';
 import { OLText } from 'views/components/text';
 import { ResultHeader } from 'views/components/result/header';
 import { OlResult } from 'lib/graphql/generated/types';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   results: OlResult[];
@@ -16,6 +16,8 @@ interface Props {
 }
 
 export const OLResultsTable: React.FC<Props> = props => {
+  const { t } = useTranslation();
+
   const renderResult = ({ item }: any) => {
     const result: OlResult = item;
 
@@ -60,7 +62,7 @@ export const OLResultsTable: React.FC<Props> = props => {
                 style={{
                   textAlign: 'center',
                 }}>
-                {Lang.print('classes.empty')}
+                {t('classes.empty')}
               </OLText>
             </View>
           }

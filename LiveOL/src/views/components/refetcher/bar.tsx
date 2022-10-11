@@ -1,8 +1,8 @@
-import * as React from 'react';
+import React from 'react';
 import { TouchableOpacity, Easing, Animated } from 'react-native';
 import { COLORS, px } from 'util/const';
-import { Lang } from 'lib/lang';
 import { OLText } from '../text';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   interval: number;
@@ -13,6 +13,7 @@ export const OLRefetcherBar: React.FunctionComponent<Props> = ({
   interval,
   promise,
 }) => {
+  const { t } = useTranslation();
   const [isAnimating, setIsAnimating] = React.useState(false);
   const [animatedWidth] = React.useState(new Animated.Value(0));
   const [animatedHint] = React.useState(new Animated.Value(0));
@@ -34,15 +35,18 @@ export const OLRefetcherBar: React.FunctionComponent<Props> = ({
       }).start();
     };
 
-    void refresh();
+    refresh();
 
-    const timer = setInterval(() => void refresh(), interval);
+    const timer = setInterval(() => refresh(), interval);
 
     return () => clearInterval(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getHint = async () => {
-    if (isAnimating) return;
+    if (isAnimating) {
+      return;
+    }
     setIsAnimating(true);
     const duration = 500;
     Animated.timing(animatedHint, {
@@ -50,7 +54,7 @@ export const OLRefetcherBar: React.FunctionComponent<Props> = ({
       duration,
       useNativeDriver: false,
     }).start();
-    await new Promise(r => setTimeout(r, 2000));
+    await new Promise((r: any) => setTimeout(r, 2000));
     Animated.timing(animatedHint, {
       toValue: 0,
       duration,
@@ -70,8 +74,7 @@ export const OLRefetcherBar: React.FunctionComponent<Props> = ({
 
   return (
     <TouchableOpacity onPress={getHint} activeOpacity={1}>
-      <Animated.View
-        style={{ height, width, backgroundColor: COLORS.DARK }}></Animated.View>
+      <Animated.View style={{ height, width, backgroundColor: COLORS.DARK }} />
 
       <Animated.View
         style={{
@@ -88,7 +91,7 @@ export const OLRefetcherBar: React.FunctionComponent<Props> = ({
           font="Proxima Nova Regular"
           size={14}
           style={{ backgroundColor: 'white' }}>
-          {Lang.print('classes.timerHint')}
+          {t('classes.timerHint')}
         </OLText>
       </Animated.View>
     </TouchableOpacity>
