@@ -33,12 +33,12 @@ platform :android do
       build_type: 'release'
     )
 
-    # upload_to_play_store(
-    #   track: 'production',
-    #   release_status: 'draft',
-    #   version_name: getPackageVersion,
-    #   apk: './app/build/outputs/apk/release/app-release.apk'
-    # )
+    upload_to_play_store(
+      track: 'production',
+      release_status: 'draft',
+      version_name: getPackageVersion,
+      apk: './app/build/outputs/apk/release/app-release.apk'
+    )
   end
 
   desc "Build a release APK and move it to the desktop"
