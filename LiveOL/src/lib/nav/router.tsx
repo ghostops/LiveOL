@@ -56,6 +56,7 @@ const Component: React.FC = () => {
             color: '#fff',
           },
           headerShadowVisible: false,
+          headerTitleAlign: 'center',
         }}>
         <Stack.Screen
           name="Home"

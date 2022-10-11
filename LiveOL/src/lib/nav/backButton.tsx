@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTheme } from 'hooks/useTheme';
 import { useTranslation } from 'react-i18next';
-import { TouchableOpacity } from 'react-native';
+import { Platform, TouchableOpacity } from 'react-native';
 import { OLIcon } from 'views/components/icon';
 import { OLText } from 'views/components/text';
 import { useOLNavigation } from 'hooks/useNavigation';
@@ -24,12 +24,15 @@ export const BackButton: React.FC = () => {
 
   return (
     <TouchableOpacity
-      style={{ flexDirection: 'row', alignItems: 'center' }}
+      style={{
+        flexDirection: 'row',
+        alignItems: 'center',
+      }}
       onPress={() => goBack()}>
       <OLIcon
         name="chevron-back"
         color="#fff"
-        style={{ fontSize: 20, paddingRight: fontPx(4) }}
+        style={{ fontSize: fontPx(20), top: Platform.OS === 'android' ? 1 : 0 }}
       />
       <OLText font="Proxima Nova Regular" size={18} style={{ color: '#fff' }}>
         {t('back')}
