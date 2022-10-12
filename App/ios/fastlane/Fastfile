@@ -13,6 +13,9 @@
 # Uncomment the line if you want fastlane to automatically update itself
 # update_fastlane
 require 'json'
+require 'dotenv'
+
+Dotenv.load('../.env')
 
 default_platform(:ios)
 
@@ -25,6 +28,10 @@ end
 platform :ios do
   desc "Push a new release build to Testflight"
   lane :release do
+    puts '----------'
+    puts "Email: " + ENV["IOS_EMAIL"]
+    puts '----------'
+
     xcodeproj = "LiveOL.xcodeproj"
     scheme = "LiveOL"
 
@@ -43,6 +50,9 @@ platform :ios do
       scheme: scheme
     )
 
-    upload_to_testflight(skip_waiting_for_build_processing: true)
+    upload_to_testflight(
+      skip_waiting_for_build_processing: true,
+      username: ENV["IOS_EMAIL"]
+    )
   end
 end
