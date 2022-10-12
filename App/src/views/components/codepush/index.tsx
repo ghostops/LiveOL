@@ -14,5 +14,6 @@ class OLCodePushContainer extends React.Component<Props> {
 export const OLCodePush = codePush({
   checkFrequency: __DEV__
     ? codePush.CheckFrequency.MANUAL
-    : codePush.CheckFrequency.ON_APP_START,
+    : codePush.CheckFrequency.ON_APP_RESUME,
+  installMode: codePush.InstallMode.ON_NEXT_RESTART,
 } as CodePushOptions)(OLCodePushContainer);
