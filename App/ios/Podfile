@@ -1,6 +1,13 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
+require 'dotenv'
+Dotenv.load('../.env')
+
+puts "---------"
+puts "iOS Team: " + ENV["IOS_TEAM_ID"]
+puts "---------"
+
 platform :ios, '12.4'
 install! 'cocoapods', :deterministic_uuids => false
 
@@ -39,5 +46,15 @@ target 'LiveOL' do
       :mac_catalyst_enabled => false
     )
     __apply_Xcode_12_5_M1_post_install_workaround(installer)
+
+    # start fix: https://github.com/facebook/react-native/issues/34673
+    installer.generated_projects.each do |project|
+      project.targets.each do |target|
+          target.build_configurations.each do |config|
+              config.build_settings["DEVELOPMENT_TEAM"] = ENV["IOS_TEAM_ID"]
+          end
+      end
+    end
+    # end fix
   end
 end

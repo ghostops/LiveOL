@@ -281,6 +281,7 @@ PLATFORMS
 
 DEPENDENCIES
   cocoapods (~> 1.11, >= 1.11.2)
+  dotenv (~> 2.8)
   fastlane
   fastlane-plugin-appcenter
   fastlane-plugin-increment_version_code

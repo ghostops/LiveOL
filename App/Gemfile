@@ -10,3 +10,5 @@ gem 'fastlane'
 gem 'fastlane-plugin-versioning'
 gem 'fastlane-plugin-increment_version_code'
 gem 'fastlane-plugin-appcenter'
+
+gem 'dotenv', '~> 2.8'
