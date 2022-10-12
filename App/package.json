@@ -12,7 +12,10 @@
     "splashscreen": "react-native generate-bootsplash assets/images/icon.png --background-color=e86a1e --logo-width=220",
     "release:ios": "appcenter codepush release-react --mandatory -a LiveOL/iOS-Production -d Production --plist-file ios/LiveOL/Info.plist --target-binary-version $npm_package_version",
     "release:android": "appcenter codepush release-react --mandatory -a LiveOL/Android-Production -d Production --target-binary-version $npm_package_version",
-    "release": "yarn release:ios && yarn release:android"
+    "release": "yarn release:ios && yarn release:android",
+    "archive:ios": "cd ios; bundle exec fastlane release; cd ../",
+    "archive:android": "cd android; bundle exec fastlane deploy; cd ../",
+    "archive": "yarn archive:ios && yarn archive:android"
   },
   "dependencies": {
     "@apollo/client": "^3.7.0",
