@@ -1,6 +1,6 @@
 {
   "name": "@liveol/app",
-  "version": "2.8.1",
+  "version": "2.8.2",
   "binaryVersion": "2.8.x",
   "private": true,
   "scripts": {
