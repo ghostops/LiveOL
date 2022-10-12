@@ -12,6 +12,7 @@
 
 # Uncomment the line if you want fastlane to automatically update itself
 # update_fastlane
+require 'dotenv'
 
 default_platform(:android)
 
@@ -21,7 +22,20 @@ def getPackageVersion()
   return data["version"]
 end
 
+def getGradleProperties()
+  return {
+    "android.injected.signing.store.file" => Dir.pwd + "/../../LiveOL.jks",
+    "android.injected.signing.store.password" => ENV["ANDROID_STORE_PASSWORD"],
+    "android.injected.signing.key.alias" => ENV["ANDROID_KEY_ALIAS"],
+    "android.injected.signing.key.password" => ENV["ANDROID_KEY_PASSWORD"],
+  }
+end
+
 platform :android do
+  before_all do
+    Dotenv.load('../../.env.local')
+  end
+
   desc "Deploy a new version to the Google Play"
   lane :deploy do
     increment_version_code(
@@ -30,7 +44,8 @@ platform :android do
 
     gradle(
       task: 'assemble',
-      build_type: 'release'
+      build_type: 'release',
+      properties: getGradleProperties,
     )
 
     upload_to_play_store(
@@ -43,9 +58,11 @@ platform :android do
 
   desc "Build a release APK and move it to the desktop"
   lane :apk do
+    puts getGradleProperties
     gradle(
       task: 'assemble',
-      build_type: 'release'
+      build_type: 'release',
+      properties: getGradleProperties,
     )
 
     sh "mv ../app/build/outputs/apk/release/app-release.apk ~/Desktop"

@@ -132,28 +132,6 @@ def reactNativeArchitectures() {
     return value ? value.split(",") : ["armeabi-v7a", "x86", "x86_64", "arm64-v8a"]
 }
 
-/**
- * Load ENV
- */
-
-def getEnv(keyName) {
-    def found = null
-
-    file('../../.env.local').readLines().each() {
-        if (!it.isEmpty() && !it.startsWith("#")) {
-            def pos = it.indexOf("=")
-            def key = it.substring(0, pos)
-            def value = it.substring(pos + 1)
-
-            if (key == keyName) {
-                found = value
-            }
-        }
-    }
-
-    return found
-}
-
 def getNpmVersion() {
     def inputFile = new File("../package.json")
     def packageJson = new JsonSlurper().parseText(inputFile.text)
@@ -162,16 +140,18 @@ def getNpmVersion() {
 
 def vname = getNpmVersion()
 
-def env_storePassword = getEnv("ANDROID_STORE_PASSWORD")
-def env_keyAlias = getEnv("ANDROID_KEY_ALIAS")
-def env_keyPassword = getEnv("ANDROID_KEY_PASSWORD")
-
 android {
     ndkVersion rootProject.ext.ndkVersion
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     defaultConfig {
+        project.env.each { k, v ->
+            def escaped = v.replaceAll("%","\\\\u0025")
+            buildConfigField "String", k, "\"$v\""
+            resValue "string", k, "\"$escaped\""
+        }
+
         applicationId "se.liveol.rn"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
@@ -254,12 +234,6 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
-        release {
-            storeFile file('../../LiveOL.jks')
-            storePassword env_storePassword
-            keyAlias env_keyAlias
-            keyPassword env_keyPassword
-        }
     }
     buildTypes {
         debug {
@@ -268,7 +242,7 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.release
+            signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
