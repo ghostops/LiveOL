@@ -132,6 +132,22 @@ def reactNativeArchitectures() {
     return value ? value.split(",") : ["armeabi-v7a", "x86", "x86_64", "arm64-v8a"]
 }
 
+/**
+ * Load ENV
+ */
+
+file('../../.env.local').readLines().each() {
+    if (!it.isEmpty() && !it.startsWith("#")) {
+        def pos = it.indexOf("=")
+        def key = it.substring(0, pos)
+        def value = it.substring(pos + 1)
+
+        if (System.getenv(key) == null) {
+            environment key, value
+        }
+    }
+}
+
 def getNpmVersion() {
     def inputFile = new File("../package.json")
     def packageJson = new JsonSlurper().parseText(inputFile.text)
@@ -230,9 +246,9 @@ android {
         }
         release {
             storeFile file('../../LiveOL.jks')
-            storePassword project.env.get("ANDROID_STORE_PASSWORD")
-            keyAlias project.env.get("ANDROID_KEY_ALIAS")
-            keyPassword project.env.get("ANDROID_KEY_PASSWORD")
+            storePassword System.getenv("ANDROID_STORE_PASSWORD")
+            keyAlias System.getenv("ANDROID_KEY_ALIAS")
+            keyPassword System.getenv("ANDROID_KEY_PASSWORD")
         }
     }
     buildTypes {
