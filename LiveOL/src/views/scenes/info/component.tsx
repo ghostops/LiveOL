@@ -11,7 +11,6 @@ import { useTranslation } from 'react-i18next';
 type Props = {
   landscape: boolean;
   contact: () => void;
-  update: () => void;
   openZapSplat: () => void;
   openPhraseApp: () => void;
   translationCredits: { code: string; name: string }[];
@@ -26,7 +25,6 @@ const PHRASE_IMAGE = require('../../../../assets/images/phrase.png');
 export const OLInfo: React.FC<Props> = ({
   landscape,
   contact,
-  update,
   openZapSplat,
   openPhraseApp,
   translationCredits,
@@ -40,15 +38,11 @@ export const OLInfo: React.FC<Props> = ({
   const buttons = React.useMemo(
     () => [
       {
-        text: t('info.update.check'),
-        onPress: update,
-      },
-      {
         text: t('info.contact'),
         onPress: contact,
       },
     ],
-    [contact, t, update],
+    [contact, t],
   );
 
   const renderTranslationCredit = (
@@ -61,7 +55,8 @@ export const OLInfo: React.FC<Props> = ({
         flexDirection: 'row',
         alignItems: 'center',
         marginTop: px(8),
-      }}>
+      }}
+    >
       <OLFlag
         code={code}
         size={32}
@@ -73,7 +68,8 @@ export const OLInfo: React.FC<Props> = ({
         size={16}
         style={{
           marginLeft: px(5),
-        }}>
+        }}
+      >
         {name}
       </OLText>
     </View>
@@ -84,7 +80,8 @@ export const OLInfo: React.FC<Props> = ({
       style={{
         paddingVertical: px(10),
         paddingHorizontal: px(landscape ? 40 : 10),
-      }}>
+      }}
+    >
       <View>
         <OLCard style={{ marginVertical: px(8) }}>
           {(t('info.body', { returnObjects: true }) as unknown as string[]).map(
@@ -95,7 +92,8 @@ export const OLInfo: React.FC<Props> = ({
                 key={text}
                 style={{
                   marginBottom: px(16),
-                }}>
+                }}
+              >
                 {text}
               </OLText>
             ),
@@ -106,13 +104,15 @@ export const OLInfo: React.FC<Props> = ({
           <TouchableOpacity
             style={{ width: '100%' }}
             onPress={secretTap}
-            activeOpacity={1}>
+            activeOpacity={1}
+          >
             <OLText
               font="Proxima-Nova-Bold regular"
               size={16}
               style={{
                 marginBottom: px(16),
-              }}>
+              }}
+            >
               {t('info.version')}: {VERSION}
             </OLText>
           </TouchableOpacity>
@@ -124,7 +124,8 @@ export const OLInfo: React.FC<Props> = ({
                 onPress={() => button.onPress && button.onPress()}
                 style={{
                   marginBottom: index !== buttons.length - 1 ? px(16) : 0,
-                }}>
+                }}
+              >
                 {button.text}
               </OLButton>
             );
@@ -139,7 +140,8 @@ export const OLInfo: React.FC<Props> = ({
             size={16}
             style={{
               marginBottom: px(8),
-            }}>
+            }}
+          >
             {t('info.changeTextSize.title')} ({textSizeMultiplier.toFixed(1)})
           </OLText>
 
@@ -152,7 +154,8 @@ export const OLInfo: React.FC<Props> = ({
               flexDirection: 'row',
               justifyContent: 'space-evenly',
               paddingTop: px(16),
-            }}>
+            }}
+          >
             <OLButton onPress={decreaseFontSize}>
               {t('info.changeTextSize.decrease')}
             </OLButton>
@@ -173,7 +176,8 @@ export const OLInfo: React.FC<Props> = ({
                 textAlign: 'center',
                 textDecorationStyle: 'solid',
                 textDecorationLine: 'underline',
-              }}>
+              }}
+            >
               Additional sound effects from zapsplat.com
             </OLText>
           </TouchableOpacity>
@@ -183,14 +187,16 @@ export const OLInfo: React.FC<Props> = ({
             style={{
               alignItems: 'center',
               width: '100%',
-            }}>
+            }}
+          >
             <OLText
               font="Proxima-Nova-Bold regular"
               size={16}
               style={{
                 marginBottom: px(16),
                 textAlign: 'center',
-              }}>
+              }}
+            >
               {t('info.translations.phraseapp')}:
             </OLText>
 

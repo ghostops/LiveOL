@@ -5,7 +5,6 @@ import { Alert, Linking } from 'react-native';
 import { useDeviceRotationStore } from 'store/deviceRotation';
 import { useTextStore } from 'store/text';
 import { useGetServerVersionQuery } from 'lib/graphql/generated/gql';
-import { useTranslation } from 'react-i18next';
 
 const translationCredits: { code: string; name: string }[] = [
   {
@@ -18,7 +17,7 @@ const translationCredits: { code: string; name: string }[] = [
   },
   {
     code: 'it',
-    name: 'Paolo Gallerani',
+    name: 'Paolo Gallerani',
   },
   {
     code: 'cs',
@@ -35,7 +34,6 @@ const translationCredits: { code: string; name: string }[] = [
 ];
 
 export const OLInfo: React.FC = () => {
-  const { t } = useTranslation();
   const { isLandscape } = useDeviceRotationStore();
 
   const { data } = useGetServerVersionQuery();
@@ -61,42 +59,6 @@ export const OLInfo: React.FC = () => {
     setTextSizeMultiplier(textSizeMultiplier - 0.1);
   };
 
-  const update = async () => {
-    let canUpdate = false;
-
-    // if (!__DEV__) {
-    //   const hasUpdate = (await Updates.checkForUpdateAsync()) as any;
-    //   canUpdate = hasUpdate && hasUpdate.isAvailable;
-    // }
-
-    if (canUpdate) {
-      Alert.alert(
-        t('info.update.hasUpdate.title'),
-        t('info.update.hasUpdate.text'),
-        [
-          {
-            onPress: async () => {
-              // if (!__DEV__) {
-              //   await Updates.fetchUpdateAsync();
-              //   await Updates.reloadAsync();
-              // }
-            },
-            text: t('info.update.hasUpdate.cta'),
-          },
-          {
-            text: t('info.update.hasUpdate.cancel'),
-            style: 'cancel',
-          },
-        ],
-      );
-    } else {
-      Alert.alert(
-        t('info.update.noUpdate.title'),
-        t('info.update.noUpdate.text'),
-      );
-    }
-  };
-
   const secretTap = async () => {
     setSecretTaps(secretTaps + 1);
 
@@ -115,7 +77,6 @@ export const OLInfo: React.FC = () => {
     <Component
       contact={contact}
       landscape={isLandscape}
-      update={update}
       translationCredits={translationCredits}
       openPhraseApp={openPhraseApp}
       openZapSplat={openZapSplat}
