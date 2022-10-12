@@ -9,7 +9,10 @@
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "schema": "graphql-codegen --config code-gen.yml",
-    "splashscreen": "react-native generate-bootsplash assets/images/icon.png --background-color=e86a1e --logo-width=220"
+    "splashscreen": "react-native generate-bootsplash assets/images/icon.png --background-color=e86a1e --logo-width=220",
+    "release:ios": "appcenter codepush release-react --mandatory -a LiveOL/iOS-Production -d Production --plist-file ios/LiveOL/Info.plist --target-binary-version 2.x.x",
+    "release:android": "appcenter codepush release-react --mandatory -a LiveOL/Android-Production -d Production --target-binary-version 2.x.x",
+    "release": "yarn release:ios && yarn release:android"
   },
   "dependencies": {
     "@apollo/client": "^3.7.0",
@@ -56,6 +59,7 @@
     "@types/react-test-renderer": "^18.0.0",
     "@typescript-eslint/eslint-plugin": "^5.37.0",
     "@typescript-eslint/parser": "^5.37.0",
+    "appcenter-cli": "^2.11.0",
     "babel-jest": "^26.6.3",
     "eslint": "^7.32.0",
     "jest": "^26.6.3",
