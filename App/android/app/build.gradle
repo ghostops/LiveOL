@@ -136,16 +136,22 @@ def reactNativeArchitectures() {
  * Load ENV
  */
 
-file('../../.env.local').readLines().each() {
-    if (!it.isEmpty() && !it.startsWith("#")) {
-        def pos = it.indexOf("=")
-        def key = it.substring(0, pos)
-        def value = it.substring(pos + 1)
+def getEnv(keyName) {
+    def found = null
 
-        if (System.getenv(key) == null) {
-            environment key, value
+    file('../../.env.local').readLines().each() {
+        if (!it.isEmpty() && !it.startsWith("#")) {
+            def pos = it.indexOf("=")
+            def key = it.substring(0, pos)
+            def value = it.substring(pos + 1)
+
+            if (key == keyName) {
+                found = value
+            }
         }
     }
+
+    return found
 }
 
 def getNpmVersion() {
@@ -155,6 +161,10 @@ def getNpmVersion() {
 }
 
 def vname = getNpmVersion()
+
+def env_storePassword = getEnv("ANDROID_STORE_PASSWORD")
+def env_keyAlias = getEnv("ANDROID_KEY_ALIAS")
+def env_keyPassword = getEnv("ANDROID_KEY_PASSWORD")
 
 android {
     ndkVersion rootProject.ext.ndkVersion
@@ -246,9 +256,9 @@ android {
         }
         release {
             storeFile file('../../LiveOL.jks')
-            storePassword System.getenv("ANDROID_STORE_PASSWORD")
-            keyAlias System.getenv("ANDROID_KEY_ALIAS")
-            keyPassword System.getenv("ANDROID_KEY_PASSWORD")
+            storePassword env_storePassword
+            keyAlias env_keyAlias
+            keyPassword env_keyPassword
         }
     }
     buildTypes {
