@@ -176,6 +176,9 @@ android {
                 }
             }
         }
+
+        // Fix for: https://github.com/microsoft/react-native-code-push/issues/1961
+        resValue 'string', "CODE_PUSH_APK_BUILD_TIME", String.format("\"%d\"", System.currentTimeMillis())
     }
 
     if (isNewArchitectureEnabled()) {
