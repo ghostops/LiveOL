@@ -10,8 +10,8 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "schema": "graphql-codegen --config code-gen.yml",
     "splashscreen": "react-native generate-bootsplash assets/images/icon.png --background-color=e86a1e --logo-width=220",
-    "release:ios": "appcenter codepush release-react --mandatory -a LiveOL/iOS-Production -d Production --plist-file ios/LiveOL/Info.plist --target-binary-version 2.x.x",
-    "release:android": "appcenter codepush release-react --mandatory -a LiveOL/Android-Production -d Production --target-binary-version 2.x.x",
+    "release:ios": "appcenter codepush release-react --mandatory -a LiveOL/iOS-Production -d Production --plist-file ios/LiveOL/Info.plist --target-binary-version $npm_package_version",
+    "release:android": "appcenter codepush release-react --mandatory -a LiveOL/Android-Production -d Production --target-binary-version $npm_package_version",
     "release": "yarn release:ios && yarn release:android"
   },
   "dependencies": {
