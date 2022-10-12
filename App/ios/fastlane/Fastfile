@@ -15,8 +15,6 @@
 require 'json'
 require 'dotenv'
 
-Dotenv.load('../.env')
-
 default_platform(:ios)
 
 def getPackageVersion()
@@ -26,12 +24,16 @@ def getPackageVersion()
 end
 
 platform :ios do
-  desc "Push a new release build to Testflight"
-  lane :release do
+  before_all do
+    Dotenv.load('../../.env')
+
     puts '----------'
     puts "Email: " + ENV["IOS_EMAIL"]
     puts '----------'
+  end
 
+  desc "Push a new release build to Testflight"
+  lane :release do
     xcodeproj = "LiveOL.xcodeproj"
     scheme = "LiveOL"
 
