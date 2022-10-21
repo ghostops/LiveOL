@@ -47,7 +47,7 @@
 		"react-native-easy-grid": "^0.2.2",
 		"react-native-gesture-handler": "~1.10.2",
 		"react-native-hyperlink": "^0.0.19",
-		"react-native-reanimated": "~2.1.0",
+		"react-native-reanimated": "~2.10.0",
 		"react-native-recoil-persist": "^0.0.5",
 		"react-native-restart": "^0.0.17",
 		"react-native-safe-area-context": "3.2.0",
