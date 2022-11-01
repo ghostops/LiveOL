@@ -42,8 +42,8 @@ export const OLInfo: React.FC = () => {
 
   const [secretTaps, setSecretTaps] = React.useState(0);
   const contact = () =>
-    Linking.openURL('https://liveol.larsendahl.se/contact.html');
-  const openPhraseApp = () => Linking.openURL('https://phraseapp.com');
+    Linking.openURL('https://liveol.larsendahl.se/#contact');
+  const openPhraseApp = () => Linking.openURL('https://phrase.com/');
   const openZapSplat = () => Linking.openURL('https://www.zapsplat.com/');
 
   const increaseTextSize = () => {
