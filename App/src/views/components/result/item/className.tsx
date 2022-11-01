@@ -1,32 +1,35 @@
-/* eslint-disable @typescript-eslint/unbound-method */
-import * as React from 'react';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import { Routes } from 'lib/nav/routes';
+import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { OLText } from '../../text';
+import { useOLNavigation } from 'hooks/useNavigation';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import { RootStack } from 'lib/nav/router';
 
 interface Props {
-	className: string;
+  className: string;
 }
 
 export const OLClassName: React.FC<Props> = ({ className }) => {
-	const { navigate } = useNavigation();
-	const { params } = useRoute();
+  const { navigate } = useOLNavigation();
 
-	const id = (params as any).competitionId;
+  const {
+    params: { competitionId },
+  } = useRoute<RouteProp<RootStack, 'Results'>>();
 
-	return (
-		<TouchableOpacity onPress={() => navigate(Routes.results, { className, competitionId: id })}>
-			<OLText
-				numberOfLines={1}
-				size={16}
-				font="Proxima_Nova"
-				style={{
-					color: 'grey',
-				}}
-			>
-				{className}
-			</OLText>
-		</TouchableOpacity>
-	);
+  return (
+    <TouchableOpacity
+      onPress={() => navigate('Results', { className, competitionId })}
+    >
+      <OLText
+        numberOfLines={1}
+        size={16}
+        font="Proxima Nova Regular"
+        style={{
+          color: 'grey',
+        }}
+      >
+        {className}
+      </OLText>
+    </TouchableOpacity>
+  );
 };

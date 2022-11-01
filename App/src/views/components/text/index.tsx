@@ -1,31 +1,41 @@
 import * as React from 'react';
 import { TextStyle, Text } from 'react-native';
-import { useRecoilValue } from 'recoil';
-import { textSizeMultiplierAtom } from 'store/textSizeMultiplier';
+import { useTextStore } from 'store/text';
 import { fontPx } from 'util/const';
 
 interface Props {
-	size: number;
-	font: 'Proxima_Nova_Bold' | 'Proxima_Nova' | 'Rift_Bold' | 'Rift_Bold_Italic' | 'PTMono-Regular';
-	style?: TextStyle;
-	numberOfLines?: number;
-	selectable?: boolean;
+  size: number;
+  font:
+    | 'Proxima-Nova-Bold regular'
+    | 'Proxima Nova Regular'
+    | 'Rift Bold'
+    | 'PT Mono';
+  style?: TextStyle;
+  numberOfLines?: number;
+  selectable?: boolean;
+  children?:
+    | string
+    | number
+    | string[]
+    | number[]
+    | React.ReactNode
+    | React.ReactNode[];
 }
 
-export const OLText: React.FC<Props> = (props) => {
-	const textSizeMultiplier = useRecoilValue(textSizeMultiplierAtom);
+export const OLText: React.FC<Props> = props => {
+  const { textSizeMultiplier } = useTextStore();
 
-	return (
-		<Text
-			{...props}
-			style={{
-				color: '#141823',
-				fontSize: fontPx(props.size * textSizeMultiplier),
-				fontFamily: props.font,
-				...props.style,
-			}}
-		>
-			{props.children}
-		</Text>
-	);
+  return (
+    <Text
+      {...props}
+      style={{
+        color: '#141823',
+        fontSize: fontPx(props.size * textSizeMultiplier),
+        fontFamily: props.font,
+        ...props.style,
+      }}
+    >
+      {props.children}
+    </Text>
+  );
 };

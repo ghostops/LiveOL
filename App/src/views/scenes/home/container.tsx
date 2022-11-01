@@ -1,101 +1,107 @@
-import * as React from 'react';
+import React from 'react';
 import moment from 'moment';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { useQuery } from '@apollo/react-hooks';
-import { searchTermAtom } from 'store/searchTermAtom';
-import { Routes } from 'lib/nav/routes';
+import _ from 'lodash';
+import { useSearchStore } from 'store/search';
+import { useOLNavigation } from 'hooks/useNavigation';
+import { useDeviceRotationStore } from 'store/deviceRotation';
+import { useGetCompetitionsQuery } from 'lib/graphql/generated/gql';
 import { Platform } from 'react-native';
 import { OLHome as Component } from './component';
 import { OLError } from 'views/components/error';
-import { NavigationProp } from '@react-navigation/native';
-import { isSearchingAtom } from 'store/isSearchingAtom';
-import { isLandscapeSelector } from 'store/isLandscapeSelector';
-import { Competitions, CompetitionsVariables } from 'lib/graphql/queries/types/Competitions';
-import { COMPETITIONS } from 'lib/graphql/queries/competitions';
-import { Competition } from 'lib/graphql/fragments/types/Competition';
-import _ from 'lodash';
-
-interface OwnProps {
-	navigation: NavigationProp<any, any>;
-}
-
-type Props = OwnProps;
+import { OlCompetition } from 'lib/graphql/generated/types';
+import RNBootSplash from 'react-native-bootsplash';
 
 const getToday = () => moment().format('YYYY-MM-DD');
 
-export const OLHome: React.FC<Props> = (props) => {
-	const isLandscape = useRecoilValue(isLandscapeSelector);
-	const [isSearching, setIsSearching] = useRecoilState(isSearchingAtom);
-	const searchTerm = useRecoilValue(searchTermAtom);
+export const OLHome: React.FC = () => {
+  const { isLandscape } = useDeviceRotationStore();
+  const { isSearching, searchTerm, setIsSearching } = useSearchStore();
+  const { navigate } = useOLNavigation();
 
-	const { data, loading, error, fetchMore, refetch } = useQuery<Competitions, CompetitionsVariables>(COMPETITIONS, {
-		variables: {
-			search: searchTerm || null,
-			date: getToday(),
-		},
-	});
+  const { data, loading, error, fetchMore, refetch } = useGetCompetitionsQuery({
+    variables: { search: searchTerm || null, date: getToday() },
+    onCompleted: () => {
+      RNBootSplash.hide({ fade: true });
+    },
+    onError: () => {
+      RNBootSplash.hide({ fade: true });
+    },
+  });
 
-	if (error) {
-		return <OLError error={error} refetch={() => refetch({ date: getToday() })} />;
-	}
+  if (error) {
+    return (
+      <OLError error={error} refetch={() => refetch({ date: getToday() })} />
+    );
+  }
 
-	const competitions: Competition[] = _.get(data, 'competitions.getCompetitions.competitions', []);
+  const competitions =
+    (data?.competitions?.getCompetitions?.competitions as OlCompetition[]) ||
+    [];
+  const today =
+    (data?.competitions?.getCompetitions?.today as OlCompetition[]) || [];
 
-	const today: Competition[] = _.get(data, 'competitions.getCompetitions.today', []);
+  const loadMore = async () => {
+    if (loading) {
+      return;
+    }
 
-	const loadMore = async () => {
-		if (loading) return;
+    const page = (data.competitions.getCompetitions.page || 0) + 1;
+    const lastPage = data.competitions.getCompetitions.lastPage || 0;
 
-		const page = data.competitions.getCompetitions.page + 1;
-		const lastPage = data.competitions.getCompetitions.lastPage;
+    if (page >= lastPage) {
+      return;
+    }
 
-		if (page >= lastPage) return;
+    await fetchMore({
+      variables: {
+        page,
+      },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        if (!fetchMoreResult) {
+          return prev;
+        }
 
-		await fetchMore({
-			variables: {
-				page,
-			},
-			updateQuery: (prev: Competitions, { fetchMoreResult }) => {
-				if (!fetchMoreResult) return prev;
+        const comps = _.uniqBy(
+          [
+            ...(prev?.competitions.getCompetitions?.competitions || []),
+            ...(fetchMoreResult?.competitions.getCompetitions?.competitions ||
+              []),
+          ],
+          'id',
+        );
 
-				const competitions = _.uniqBy(
-					[
-						...prev.competitions.getCompetitions.competitions,
-						...fetchMoreResult.competitions.getCompetitions.competitions,
-					],
-					'id',
-				);
+        return Object.assign({}, prev, {
+          ...fetchMoreResult,
+          competitions: {
+            ...fetchMoreResult?.competitions,
+            getCompetitions: {
+              ...fetchMoreResult?.competitions?.getCompetitions,
+              competitions: comps,
+            },
+          },
+        });
+      },
+    });
+  };
 
-				return Object.assign({}, prev, {
-					...fetchMoreResult.competitions,
-					competitions: {
-						...fetchMoreResult.competitions,
-						getCompetitions: {
-							...fetchMoreResult.competitions.getCompetitions,
-							competitions,
-						},
-					},
-				} as Competitions);
-			},
-		});
-	};
-
-	return (
-		<Component
-			competitions={competitions}
-			loading={loading}
-			loadMore={loadMore}
-			openSearch={() => setIsSearching(true)}
-			searching={isSearching}
-			todaysCompetitions={today}
-			refetch={() => void refetch({ date: getToday() })}
-			onCompetitionPress={(competition) => {
-				props.navigation.navigate(Routes.competition, {
-					id: competition.id,
-					title: Platform.OS === 'android' ? competition.name : '',
-				});
-			}}
-			landscape={isLandscape}
-		/>
-	);
+  return (
+    <Component
+      competitions={competitions}
+      loading={loading}
+      loadMore={loadMore}
+      openSearch={() => setIsSearching(true)}
+      searching={isSearching}
+      todaysCompetitions={today}
+      refetch={async () => {
+        await refetch({ date: getToday() });
+      }}
+      onCompetitionPress={competition => {
+        navigate('Competition', {
+          competitionId: competition.id || -1,
+          title: Platform.OS === 'android' ? competition.name || '' : '',
+        });
+      }}
+      landscape={isLandscape}
+    />
+  );
 };

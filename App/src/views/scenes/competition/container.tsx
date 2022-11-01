@@ -1,49 +1,60 @@
-import * as React from 'react';
-import { useQuery } from '@apollo/react-hooks';
-import { Routes, RouterProps } from 'lib/nav/routes';
+import React from 'react';
+import _ from 'lodash';
 import { OLError } from 'views/components/error';
 import { OLCompetition as Component } from './component';
-import { GetCompetition, GetCompetitionVariables } from 'lib/graphql/queries/types/GetCompetition';
-import { GET_COMPETITION } from 'lib/graphql/queries/competitions';
-import { Competition } from 'lib/graphql/fragments/types/Competition';
-import { Class } from 'lib/graphql/fragments/types/Class';
-import _ from 'lodash';
+import { useOLNavigation } from 'hooks/useNavigation';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import { RootStack } from 'lib/nav/router';
+import { useGetCompetitionQuery } from 'lib/graphql/generated/gql';
+import { OlClass, OlCompetition } from 'lib/graphql/generated/types';
 
-type OwnProps = RouterProps<{ id; title }>;
+export const OLCompetition: React.FC = () => {
+  const { navigate } = useOLNavigation();
+  const {
+    params: { competitionId },
+  } = useRoute<RouteProp<RootStack, 'Competition'>>();
 
-type Props = OwnProps;
+  const { data, loading, error, refetch } = useGetCompetitionQuery({
+    variables: { competitionId },
+  });
 
-export const OLCompetition: React.FC<Props> = (props) => {
-	const competitionId: number = props.route.params.id;
+  if (error) {
+    return <OLError error={error} refetch={refetch} />;
+  }
 
-	const { data, loading, error, refetch } = useQuery<GetCompetition, GetCompetitionVariables>(GET_COMPETITION, {
-		variables: { competitionId },
-	});
+  const competition: OlCompetition = _.get(
+    data,
+    'competitions.getCompetition',
+    null,
+  );
 
-	if (error) {
-		return <OLError error={error} refetch={refetch} />;
-	}
+  const classes: OlClass[] = _.get(
+    data,
+    'competitions.getCompetitionClasses',
+    null,
+  );
 
-	const competition: Competition = _.get(data, 'competitions.getCompetition', null);
-	const classes: Class[] = _.get(data, 'competitions.getCompetitionClasses', null);
+  return (
+    <Component
+      loading={loading}
+      competition={competition}
+      classes={classes}
+      goToLastPassings={() => {
+        navigate('Passings', {
+          competitionId,
+          title: competition.name || '',
+        });
+      }}
+      goToClass={(className: string | null) => () => {
+        if (!className) {
+          return;
+        }
 
-	return (
-		<Component
-			loading={loading}
-			competition={competition as any}
-			classes={classes}
-			goToLastPassings={() => {
-				props.navigation.navigate(Routes.passings, {
-					id: props.route.params.id,
-					title: competition.name,
-				});
-			}}
-			goToClass={(className: string) => () => {
-				props.navigation.navigate(Routes.results, {
-					className,
-					id: props.route.params.id,
-				});
-			}}
-		/>
-	);
+        navigate('Results', {
+          className,
+          competitionId,
+        });
+      }}
+    />
+  );
 };

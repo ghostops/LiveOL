@@ -1,14 +1,14 @@
+// prettier-ignore
 {
+  "extends": "@tsconfig/react-native/tsconfig.json",
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
-    "jsx": "react-native",
-    "lib": ["dom", "esnext"],
+    "skipLibCheck": true,
     "moduleResolution": "node",
     "noEmit": true,
-    "skipLibCheck": true,
     "resolveJsonModule": true,
     "baseUrl": "./src",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "strictNullChecks": false
   },
   "include": ["src"],
   "exclude": ["src/types/graphql-global-types.ts", "node_modules"]

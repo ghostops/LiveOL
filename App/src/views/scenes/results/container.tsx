@@ -1,67 +1,60 @@
-import * as React from 'react';
-import { useRecoilValue } from 'recoil';
-import { useQuery } from '@apollo/react-hooks';
+import React from 'react';
+import _ from 'lodash';
 import { usePlayAudio } from './hooks/usePlayAudio';
 import { useHasChanged } from './hooks/useHasChanged';
-import { showToast } from 'lib/toasts/rotate';
-import { RouterProps } from 'lib/nav/routes';
-import { Result } from 'lib/graphql/fragments/types/Result';
 import { OLResults as Component } from './component';
 import { OLLoading } from 'views/components/loading';
 import { OLError } from 'views/components/error';
-import { isLandscapeSelector } from 'store/isLandscapeSelector';
-import { GetResults, GetResultsVariables } from 'lib/graphql/queries/types/GetResults';
-import { GET_RESULTS } from 'lib/graphql/queries/results';
-import _ from 'lodash';
-import { useIsFocused } from '@react-navigation/native';
+import { RouteProp, useIsFocused, useRoute } from '@react-navigation/native';
+import { useDeviceRotationStore } from 'store/deviceRotation';
+import { RootStack } from 'lib/nav/router';
+import { useGetResultsQuery } from 'lib/graphql/generated/gql';
+import { OlResult } from 'lib/graphql/generated/types';
 
-type OwnProps = RouterProps<{ id: number; className: string }>;
+export const OLResults: React.FC = () => {
+  const focus = useIsFocused();
+  const { isLandscape } = useDeviceRotationStore();
 
-type Props = OwnProps;
+  const {
+    params: { className, competitionId },
+  } = useRoute<RouteProp<RootStack, 'Results'>>();
 
-export const OLResults: React.FC<Props> = ({ route }) => {
-	const focus = useIsFocused();
-	const isLandscape = useRecoilValue(isLandscapeSelector);
+  const playAudio = usePlayAudio();
 
-	const className: string = route.params.className;
-	const competitionId: number = route.params.id;
+  const { data, loading, error, refetch } = useGetResultsQuery({
+    variables: { competitionId, className },
+  });
 
-	React.useEffect(() => {
-		void showToast();
-	}, []);
+  const results: OlResult[] = _.get(data, 'results.getResults', null);
 
-	const playAudio = usePlayAudio();
+  const hasAnyChanged = useHasChanged(results);
 
-	const { data, loading, error, refetch } = useQuery<GetResults, GetResultsVariables>(GET_RESULTS, {
-		variables: { competitionId, className },
-	});
+  React.useEffect(() => {
+    if (!hasAnyChanged) {
+      return;
+    }
 
-	const hasAnyChanged = useHasChanged(data?.results?.getResults);
+    playAudio();
+  }, [hasAnyChanged, playAudio]);
 
-	React.useEffect(() => {
-		if (!hasAnyChanged) return;
+  if (error) {
+    return <OLError error={error} refetch={refetch} />;
+  }
 
-		void playAudio();
-	}, [hasAnyChanged]);
+  if (loading) {
+    return <OLLoading />;
+  }
 
-	if (error) {
-		return <OLError error={error} refetch={refetch} />;
-	}
-
-	if (loading) return <OLLoading />;
-
-	const results: Result[] = _.get(data, 'results.getResults', null);
-
-	return (
-		<Component
-			results={results}
-			refetch={async () => {
-				await refetch({ className, competitionId });
-			}}
-			landscape={isLandscape}
-			className={className}
-			competitionId={competitionId}
-			focus={focus}
-		/>
-	);
+  return (
+    <Component
+      results={results}
+      refetch={async () => {
+        await refetch({ className, competitionId });
+      }}
+      landscape={isLandscape}
+      className={className}
+      competitionId={competitionId}
+      focus={focus}
+    />
+  );
 };

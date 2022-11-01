@@ -1,40 +1,38 @@
-import * as React from 'react';
-import { useRecoilValue } from 'recoil';
-import { useQuery } from '@apollo/react-hooks';
-import { RouterProps } from 'lib/nav/routes';
+import React from 'react';
+import _ from 'lodash';
 import { Passing } from 'lib/graphql/fragments/types/Passing';
 import { OLPassings as Component } from './component';
 import { OLError } from 'views/components/error';
-import { isLandscapeSelector } from 'store/isLandscapeSelector';
-import { GetLastPassingsVariables, GetLastPassings } from 'lib/graphql/queries/types/GetLastPassings';
-import { GET_LAST_PASSINGS } from 'lib/graphql/queries/passings';
-import _ from 'lodash';
+import { useDeviceRotationStore } from 'store/deviceRotation';
+import { RootStack } from 'lib/nav/router';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import { useGetLastPassingsQuery } from 'lib/graphql/generated/gql';
 
-type OwnProps = RouterProps<{ id; title }>;
+export const OLPassings: React.FC = () => {
+  const { isLandscape } = useDeviceRotationStore();
 
-type Props = OwnProps;
+  const {
+    params: { competitionId },
+  } = useRoute<RouteProp<RootStack, 'Passings'>>();
 
-export const OLPassings: React.FC<Props> = (props) => {
-	const isLandscape = useRecoilValue(isLandscapeSelector);
+  const { data, loading, error, refetch } = useGetLastPassingsQuery({
+    variables: { competitionId },
+  });
 
-	const competitionId: number = props.route.params.id;
+  if (error) {
+    return <OLError error={error} refetch={refetch} />;
+  }
 
-	const { data, loading, error, refetch } = useQuery<GetLastPassings, GetLastPassingsVariables>(GET_LAST_PASSINGS, {
-		variables: { competitionId },
-	});
+  const passings: Passing[] = _.get(data, 'lastPassings.getLastPassings', null);
 
-	if (error) {
-		return <OLError error={error} refetch={refetch} />;
-	}
-
-	const passings: Passing[] = _.get(data, 'lastPassings.getLastPassings', null);
-
-	return (
-		<Component
-			loading={loading}
-			passings={passings}
-			refresh={() => void refetch({ competitionId })}
-			landscape={isLandscape}
-		/>
-	);
+  return (
+    <Component
+      loading={loading}
+      passings={passings}
+      refresh={async () => {
+        await refetch({ competitionId });
+      }}
+      landscape={isLandscape}
+    />
+  );
 };

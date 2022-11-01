@@ -1,8 +1,4 @@
 app_identifier("se.liveol.rn") # The bundle identifier of your app
-apple_id(ENV['LIVEOL_FASTLANE_EMAIL']) # Your Apple email address
-
-itc_team_id(ENV['LIVEOL_FASTLANE_ITC_TEAM_ID']) # App Store Connect Team ID
-team_id(ENV['LIVEOL_FASTLANE_TEAM_ID']) # Developer Portal Team ID
 
 # For more information about the Appfile, see:
 #     https://docs.fastlane.tools/advanced/#appfile

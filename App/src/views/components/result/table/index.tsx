@@ -1,68 +1,75 @@
 import * as React from 'react';
-import { ActivityIndicator, ScrollView, View } from 'react-native';
+import { ActivityIndicator, FlatList, ScrollView, View } from 'react-native';
 import { COLORS, px } from 'util/const';
-import { FlatList } from 'react-native-gesture-handler';
-import { Lang } from 'lib/lang';
 import { OLSafeAreaView } from 'views/components/safeArea';
 import { OLTableRow } from 'views/components/result/table/row';
 import { OLText } from 'views/components/text';
-import { Result } from 'lib/graphql/fragments/types/Result';
 import { ResultHeader } from 'views/components/result/header';
+import { OlResult } from 'lib/graphql/generated/types';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
-	results: Result[];
-	competitionId: number;
-	className: string;
-	disabled?: boolean;
+  results: OlResult[];
+  competitionId: number;
+  className: string;
+  disabled?: boolean;
 }
 
-export const OLResultsTable: React.FC<Props> = (props) => {
-	const renderResult = ({ item }) => {
-		const result: Result = item;
+export const OLResultsTable: React.FC<Props> = props => {
+  const { t } = useTranslation();
 
-		return <OLTableRow key={result.start + result.name} result={result} disabled={props.disabled} />;
-	};
+  const renderResult = ({ item }: any) => {
+    const result: OlResult = item;
 
-	if (!props.results) {
-		return <ActivityIndicator size="large" color={COLORS.MAIN} />;
-	}
+    return (
+      <OLTableRow
+        key={result.start + result.name}
+        result={result}
+        disabled={props.disabled}
+      />
+    );
+  };
 
-	return (
-		<OLSafeAreaView>
-			<ScrollView horizontal>
-				<FlatList
-					nestedScrollEnabled
-					ListHeaderComponent={
-						<ResultHeader
-							className={props.className}
-							competitionId={props.competitionId}
-							maxRowSize={px(200)}
-							table
-						/>
-					}
-					ListFooterComponent={<View style={{ height: 45 }} />}
-					data={props.results}
-					renderItem={renderResult}
-					keyExtractor={(item: Result) => item.name}
-					ListEmptyComponent={
-						<View
-							style={{
-								paddingVertical: px(50),
-							}}
-						>
-							<OLText
-								font="Proxima_Nova_Bold"
-								size={18}
-								style={{
-									textAlign: 'center',
-								}}
-							>
-								{Lang.print('classes.empty')}
-							</OLText>
-						</View>
-					}
-				/>
-			</ScrollView>
-		</OLSafeAreaView>
-	);
+  if (!props.results) {
+    return <ActivityIndicator size="large" color={COLORS.MAIN} />;
+  }
+
+  return (
+    <OLSafeAreaView>
+      <ScrollView horizontal>
+        <FlatList
+          nestedScrollEnabled
+          ListHeaderComponent={
+            <ResultHeader
+              className={props.className}
+              competitionId={props.competitionId}
+              maxRowSize={px(200)}
+              table
+            />
+          }
+          ListFooterComponent={<View style={{ height: 45 }} />}
+          data={props.results}
+          renderItem={renderResult}
+          keyExtractor={(item: OlResult) => item.name}
+          ListEmptyComponent={
+            <View
+              style={{
+                paddingVertical: px(50),
+              }}
+            >
+              <OLText
+                font="Proxima-Nova-Bold regular"
+                size={18}
+                style={{
+                  textAlign: 'center',
+                }}
+              >
+                {t('classes.empty')}
+              </OLText>
+            </View>
+          }
+        />
+      </ScrollView>
+    </OLSafeAreaView>
+  );
 };

@@ -4,37 +4,39 @@ import { View } from 'react-native';
 import { OLText } from 'views/components/text';
 
 interface Props {
-	date: string;
+  date: string;
 }
 
 export const OLResultLiveRunning: React.FC<Props> = ({ date }) => {
-	const [value, setValue] = React.useState<string>();
+  const [value, setValue] = React.useState<string>();
 
-	React.useEffect(() => {
-		if (!date) return;
+  React.useEffect(() => {
+    if (!date) {
+      return;
+    }
 
-		const interval = setInterval(() => {
-			const time = diffDateNow(date);
-			setValue(time);
-		}, 1000);
+    const interval = setInterval(() => {
+      const time = diffDateNow(date);
+      setValue(time);
+    }, 1000);
 
-		return () => clearInterval(interval);
-	}, [date]);
+    return () => clearInterval(interval);
+  }, [date]);
 
-	if (!value) {
-		return null;
-	}
+  if (!value) {
+    return null;
+  }
 
-	return (
-		<View
-			style={{
-				flex: 1,
-				justifyContent: 'center',
-			}}
-		>
-			<OLText size={18} font="PTMono-Regular">
-				{value}
-			</OLText>
-		</View>
-	);
+  return (
+    <View
+      style={{
+        flex: 1,
+        justifyContent: 'center',
+      }}
+    >
+      <OLText size={18} font="PT Mono">
+        {value}
+      </OLText>
+    </View>
+  );
 };

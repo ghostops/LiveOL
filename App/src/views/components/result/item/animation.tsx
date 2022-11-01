@@ -1,46 +1,49 @@
-import * as React from 'react';
+import React from 'react';
 import { Animated } from 'react-native';
-import { Result } from 'lib/graphql/fragments/types/Result';
 import { resultsChanged } from 'util/hasChanged';
+import { OlResult } from 'lib/graphql/generated/types';
 
 interface Props {
-	result: Result;
+  result: OlResult;
+  children: React.ReactNode;
 }
 
-export const OLResultAnimation: React.FC<Props> = (props) => {
-	const [animation] = React.useState(new Animated.Value(0));
-	const [result, setResult] = React.useState(props.result);
+export const OLResultAnimation: React.FC<Props> = props => {
+  const [animation] = React.useState(new Animated.Value(0));
+  const [result, setResult] = React.useState(props.result);
 
-	React.useEffect(() => {
-		if (resultsChanged(props.result, result)) {
-			startAnimation();
-		}
+  React.useEffect(() => {
+    const startAnimation = () => {
+      Animated.timing(animation, {
+        toValue: 1,
+        duration: 500,
+        useNativeDriver: false,
+      }).start(() => {
+        setTimeout(() => stopAnimation(), 5000);
+      });
+    };
 
-		setResult(props.result);
-	}, [props.result, result]);
+    const stopAnimation = () => {
+      Animated.timing(animation, {
+        toValue: 0,
+        duration: 500,
+        useNativeDriver: false,
+      }).start();
+    };
 
-	const startAnimation = () => {
-		Animated.timing(animation, {
-			toValue: 1,
-			duration: 500,
-			useNativeDriver: false,
-		}).start(() => {
-			setTimeout(() => stopAnimation(), 5000);
-		});
-	};
+    if (resultsChanged(props.result, result)) {
+      startAnimation();
+    }
 
-	const stopAnimation = () => {
-		Animated.timing(animation, {
-			toValue: 0,
-			duration: 500,
-			useNativeDriver: false,
-		}).start();
-	};
+    setResult(props.result);
+  }, [animation, props.result, result]);
 
-	const backgroundColor = animation.interpolate({
-		inputRange: [0, 1],
-		outputRange: ['rgba(0,0,0,0)', 'rgba(255,0,0,.25)'],
-	});
+  const backgroundColor = animation.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['rgba(0,0,0,0)', 'rgba(255,0,0,.25)'],
+  });
 
-	return <Animated.View style={{ backgroundColor }}>{props.children}</Animated.View>;
+  return (
+    <Animated.View style={{ backgroundColor }}>{props.children}</Animated.View>
+  );
 };

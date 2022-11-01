@@ -1,29 +1,33 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { Dimensions } from 'react-native';
-import { useSetRecoilState } from 'recoil';
-import { deviceRotationAtom } from 'store/deviceRotationAtom';
+import { useDeviceRotationStore } from 'store/deviceRotation';
 
 const screen = Dimensions.get('screen');
 
-export const OLRotationWatcher: React.FC = ({ children }) => {
-	const setRotation = useSetRecoilState(deviceRotationAtom);
+type Props = {
+  children: React.ReactNode;
+};
 
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const [dimensions, setDimensions] = React.useState({ screen });
+export const OLRotationWatcher: React.FC<Props> = ({ children }) => {
+  const { setRotation } = useDeviceRotationStore();
 
-	const onChange = ({ screen }) => {
-		setRotation(screen.height >= screen.width ? 'portrait' : 'landscape');
-		setDimensions({ screen });
-	};
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [dimensions, setDimensions] = useState({ screen });
 
-	React.useEffect(() => {
-		setRotation(screen.height >= screen.width ? 'portrait' : 'landscape');
-		Dimensions.addEventListener('change', onChange);
+  React.useEffect(() => {
+    const onChange = ({ screen: innerScreen }: any) => {
+      setRotation(
+        innerScreen.height >= innerScreen.width ? 'portrait' : 'landscape',
+      );
 
-		return () => {
-			Dimensions.removeEventListener('change', onChange);
-		};
-	}, []);
+      setDimensions({ screen });
+    };
 
-	return <>{children}</>;
+    setRotation(screen.height >= screen.width ? 'portrait' : 'landscape');
+    const subscription = Dimensions.addEventListener('change', onChange);
+
+    return () => subscription.remove();
+  }, [setRotation]);
+
+  return <>{children}</>;
 };

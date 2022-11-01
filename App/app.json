@@ -1,11 +1,4 @@
 {
-  "expo": {
-    "name": "LiveOL",
-    "slug": "LiveOL",
-    "privacy": "public",
-    "platforms": [
-      "ios",
-      "android"
-    ]
-  }
+  "name": "LiveOL",
+  "displayName": "LiveOL"
 }

@@ -1,34 +1,28 @@
-import React from 'react';
-import { Audio } from 'expo-av';
+import { useCallback, useEffect } from 'react';
+import TrackPlayer from 'react-native-track-player';
 import { Platform } from 'react-native';
-import { isMutedAtom } from 'store/isMutedAtom';
-import { useRecoilValue } from 'recoil';
+import { useAudioStore } from 'store/audio';
 
 const Tracks = [
-	require('../../../../../assets/sound/alert1.mp3'),
-	require('../../../../../assets/sound/alert2.mp3'),
-	require('../../../../../assets/sound/alert3.mp3'),
-	require('../../../../../assets/sound/alert4.mp3'),
+  require('../../../../../assets/sound/alert1.mp3'),
+  require('../../../../../assets/sound/alert2.mp3'),
+  require('../../../../../assets/sound/alert3.mp3'),
+  require('../../../../../assets/sound/alert4.mp3'),
 ];
 
 export const usePlayAudio = (track = 3) => {
-	const [sound, setSound] = React.useState<Audio.Sound>();
-	const muted = useRecoilValue(isMutedAtom);
+  const { isMuted } = useAudioStore();
 
-	React.useEffect(() => {
-		return () => {
-			if (!sound) return;
-			void sound.unloadAsync();
-		};
-	}, [sound]);
+  useEffect(() => {
+    TrackPlayer.setupPlayer().catch(() => {});
+  }, []);
 
-	return React.useCallback(async () => {
-		if (muted || Platform.OS === 'android') return;
+  return useCallback(async () => {
+    if (isMuted || Platform.OS === 'android') {
+      return;
+    }
 
-		const { sound } = await Audio.Sound.createAsync(Tracks[track]);
-
-		setSound(sound);
-
-		await sound.playAsync();
-	}, [sound, muted]);
+    await TrackPlayer.add({ url: Tracks[track] });
+    await TrackPlayer.play();
+  }, [isMuted, track]);
 };

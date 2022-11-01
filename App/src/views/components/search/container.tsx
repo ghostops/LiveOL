@@ -1,12 +1,11 @@
 import * as React from 'react';
-import { useRecoilState, useSetRecoilState } from 'recoil';
-import { isSearchingAtom } from 'store/isSearchingAtom';
-import { searchTermAtom } from 'store/searchTermAtom';
+import { useSearchStore } from 'store/search';
 import { OLSearch as Component } from './component';
 
 export const OLSearch: React.FC = () => {
-	const [isSearching, setIsSearching] = useRecoilState(isSearchingAtom);
-	const setSearchTerm = useSetRecoilState(searchTermAtom);
+  const { setIsSearching, setSearchTerm } = useSearchStore();
 
-	return <Component searching={isSearching} setSearching={setIsSearching} setSearchTerm={setSearchTerm} />;
+  return (
+    <Component setSearching={setIsSearching} setSearchTerm={setSearchTerm} />
+  );
 };

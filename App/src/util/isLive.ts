@@ -1,8 +1,13 @@
 import { diffDateNow } from 'util/date';
-import { Result } from 'lib/graphql/fragments/types/Result';
+import { OlResult } from 'lib/graphql/generated/types';
 
-export const startIsAfterNow = (result: Result): boolean => !!diffDateNow(result.liveRunningStart);
+export const startIsAfterNow = (result: OlResult): boolean =>
+  !!diffDateNow(result.liveRunningStart);
 
-export const isLiveRunning = (result: Result): boolean => {
-	return result.progress < 100 && startIsAfterNow(result) && result.start !== '00:00:00';
+export const isLiveRunning = (result: OlResult): boolean => {
+  return (
+    result.progress < 100 &&
+    startIsAfterNow(result) &&
+    result.start !== '00:00:00'
+  );
 };
