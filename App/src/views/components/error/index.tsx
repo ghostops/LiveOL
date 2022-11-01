@@ -35,11 +35,13 @@ export const OLError: React.FC<Props> = ({ error, refetch }) => {
         justifyContent: 'center',
         alignItems: 'center',
         padding: px(20),
-      }}>
+      }}
+    >
       <OLText
         font="Proxima Nova Regular"
         size={16}
-        style={{ textAlign: 'center' }}>
+        style={{ textAlign: 'center' }}
+      >
         {error.message}
       </OLText>
 
@@ -47,7 +49,8 @@ export const OLError: React.FC<Props> = ({ error, refetch }) => {
         <OLText
           font="Proxima Nova Regular"
           size={12}
-          style={{ paddingTop: px(10) }}>
+          style={{ paddingTop: px(10) }}
+        >
           Pull down to try again
         </OLText>
       )}

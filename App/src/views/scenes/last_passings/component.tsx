@@ -30,14 +30,16 @@ export const OLPassings: React.FC<Props> = props => {
         style={{
           padding: px(20),
           flex: 1,
-        }}>
+        }}
+      >
         {!props.passings.length && (
           <OLText
             font="Proxima-Nova-Bold regular"
             size={16}
             style={{
               textAlign: 'center',
-            }}>
+            }}
+          >
             {t('competitions.passings.empty')}
           </OLText>
         )}
@@ -50,7 +52,8 @@ export const OLPassings: React.FC<Props> = props => {
                 textAlign: 'left',
                 marginVertical: 10,
                 color: 'black',
-              }}>
+              }}
+            >
               {t('competitions.passings.title')}
             </OLText>
 
@@ -58,7 +61,8 @@ export const OLPassings: React.FC<Props> = props => {
               style={{
                 flexDirection: props.landscape ? 'row' : 'column',
                 flex: 1,
-              }}>
+              }}
+            >
               {props.passings.map((passing, index) => (
                 <OLLastPassingResult
                   key={index}

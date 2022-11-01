@@ -33,7 +33,8 @@ export const OLText: React.FC<Props> = props => {
         fontSize: fontPx(props.size * textSizeMultiplier),
         fontFamily: props.font,
         ...props.style,
-      }}>
+      }}
+    >
       {props.children}
     </Text>
   );

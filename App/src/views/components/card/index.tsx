@@ -25,7 +25,8 @@ export const OLCard: React.FC<Props> = ({ children, style }) => {
         elevation: 5,
         borderRadius: 4,
         ...style,
-      }}>
+      }}
+    >
       {children}
     </View>
   );

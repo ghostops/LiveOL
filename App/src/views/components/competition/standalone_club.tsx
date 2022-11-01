@@ -52,7 +52,8 @@ export const OLCompetitionClub: React.FC<Props> = ({
         style={{
           flexDirection: 'row',
           alignItems: 'center',
-        }}>
+        }}
+      >
         <Image
           source={{ uri: loading ? logoUrl : clubLogoUrl(club, 2) }}
           style={{

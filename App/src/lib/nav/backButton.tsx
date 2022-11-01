@@ -28,7 +28,8 @@ export const BackButton: React.FC = () => {
         flexDirection: 'row',
         alignItems: 'center',
       }}
-      onPress={() => goBack()}>
+      onPress={() => goBack()}
+    >
       <OLIcon
         name="chevron-back"
         color="#fff"

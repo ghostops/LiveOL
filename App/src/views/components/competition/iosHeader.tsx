@@ -28,7 +28,8 @@ export const OLCompetitionIOSHeader: React.FC<Props> = ({ name }) => (
           zIndex: 1,
           elevation: 1,
           paddingVertical: px(15),
-        }}>
+        }}
+      >
         <OLText
           size={42}
           font="Rift Bold"
@@ -36,7 +37,8 @@ export const OLCompetitionIOSHeader: React.FC<Props> = ({ name }) => (
             paddingHorizontal: px(15),
             textAlign: 'center',
             color: 'white',
-          }}>
+          }}
+        >
           {name}
         </OLText>
       </View>
@@ -50,7 +52,8 @@ export const OLCompetitionIOSHeader: React.FC<Props> = ({ name }) => (
           width: '100%',
           zIndex: 0,
           elevation: 0,
-        }}>
+        }}
+      >
         <Path
           fill={COLORS.MAIN}
           fill-opacity="1"

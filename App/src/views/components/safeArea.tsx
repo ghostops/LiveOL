@@ -14,7 +14,8 @@ export const OLSafeAreaView: React.FC<Props> = ({ children }) => {
         paddingLeft: safeArea.left,
         paddingRight: safeArea.right,
         flex: 1,
-      }}>
+      }}
+    >
       {children}
     </View>
   );

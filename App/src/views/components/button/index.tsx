@@ -31,14 +31,16 @@ export const OLButton: React.FC<Props> = props => {
           alignItems: 'center',
         },
         props.style,
-      ]}>
+      ]}
+    >
       {props.beforeText}
       <OLText
         font="Rift Bold"
         size={props.small ? 14 : 16}
         style={{
           color: 'white',
-        }}>
+        }}
+      >
         {props.children}
       </OLText>
       {props.afterText}

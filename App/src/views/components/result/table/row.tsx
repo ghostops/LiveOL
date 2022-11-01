@@ -95,7 +95,8 @@ export class OLTableRow extends React.PureComponent<Props> {
         <OLResultListItem>
           <OLResultColumn
             align="center"
-            style={{ width: LANDSCAPE_WIDTH.place }}>
+            style={{ width: LANDSCAPE_WIDTH.place }}
+          >
             <OLResultBadge place={result.place} />
           </OLResultColumn>
 
@@ -116,7 +117,8 @@ export class OLTableRow extends React.PureComponent<Props> {
               <OLResultColumn
                 style={{ width: LANDSCAPE_WIDTH.splits }}
                 key={split.id}
-                align="flex-start">
+                align="flex-start"
+              >
                 <OLSplits split={split} best={split.place === 1} />
               </OLResultColumn>
             );
@@ -124,7 +126,8 @@ export class OLTableRow extends React.PureComponent<Props> {
 
           <OLResultColumn
             align="flex-end"
-            style={{ width: LANDSCAPE_WIDTH.time }}>
+            style={{ width: LANDSCAPE_WIDTH.time }}
+          >
             {this.renderTime()}
           </OLResultColumn>
         </OLResultListItem>

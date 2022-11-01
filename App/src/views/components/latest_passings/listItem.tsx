@@ -28,11 +28,13 @@ export const OLLastPassingResult: React.FC<Props> = ({
         marginBottom: landscape ? 0 : px(15),
         marginRight: landscape ? px(15) : 0,
         flex: landscape ? 1 : 0,
-      }}>
+      }}
+    >
       <View
         style={{
           flexDirection: 'row',
-        }}>
+        }}
+      >
         {!landscape && (
           <View>
             <OLText font="Proxima Nova Regular" size={16} style={TEXT_STYLE}>
@@ -50,7 +52,8 @@ export const OLLastPassingResult: React.FC<Props> = ({
           style={{
             flex: 1,
             paddingLeft: landscape ? px(8) : px(16),
-          }}>
+          }}
+        >
           <OLText font="Proxima Nova Regular" size={16} style={TEXT_STYLE}>
             {passing.class}
           </OLText>
@@ -58,7 +61,8 @@ export const OLLastPassingResult: React.FC<Props> = ({
             font="Proxima Nova Regular"
             size={16}
             style={TEXT_STYLE}
-            numberOfLines={1}>
+            numberOfLines={1}
+          >
             {passing.runnerName}
           </OLText>
           <OLText font="Proxima Nova Regular" size={16} style={TEXT_STYLE}>

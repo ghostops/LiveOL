@@ -18,14 +18,16 @@ export const OLClassName: React.FC<Props> = ({ className }) => {
 
   return (
     <TouchableOpacity
-      onPress={() => navigate('Results', { className, competitionId })}>
+      onPress={() => navigate('Results', { className, competitionId })}
+    >
       <OLText
         numberOfLines={1}
         size={16}
         font="Proxima Nova Regular"
         style={{
           color: 'grey',
-        }}>
+        }}
+      >
         {className}
       </OLText>
     </TouchableOpacity>

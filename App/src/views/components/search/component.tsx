@@ -48,14 +48,16 @@ export const OLSearch: React.FC<Props> = ({ setSearching, setSearchTerm }) => {
           flexDirection: 'row',
           width: '100%',
           alignItems: 'center',
-        }}>
+        }}
+      >
         <TouchableOpacity
           style={{
             height: '100%',
             justifyContent: 'center',
             paddingHorizontal: px(8),
           }}
-          onPress={hideSearch}>
+          onPress={hideSearch}
+        >
           <OLIcon name="close" size={fontPx(20)} />
         </TouchableOpacity>
 
@@ -66,7 +68,8 @@ export const OLSearch: React.FC<Props> = ({ setSearching, setSearchTerm }) => {
             alignItems: 'center',
             backgroundColor: '#d9d9d9',
             borderRadius: 8,
-          }}>
+          }}
+        >
           <OLIcon
             name="search"
             size={fontPx(18)}
@@ -91,11 +94,13 @@ export const OLSearch: React.FC<Props> = ({ setSearching, setSearchTerm }) => {
             flex: 0.25,
             justifyContent: 'center',
             alignItems: 'center',
-          }}>
+          }}
+        >
           <OLText
             font="Proxima Nova Regular"
             size={16}
-            style={{ color: 'black' }}>
+            style={{ color: 'black' }}
+          >
             {t('home.search')}
           </OLText>
         </TouchableOpacity>

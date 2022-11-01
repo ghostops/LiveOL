@@ -85,7 +85,8 @@ export const HomeList: React.FC<Props> = ({
             style={{
               marginLeft: 0,
               paddingHorizontal: px(16),
-            }}>
+            }}
+          >
             <OLText size={16} font="Proxima-Nova-Bold regular">
               {dateStr} {isToday && `(${t('home.today')})`}
             </OLText>
@@ -131,13 +132,15 @@ export const HomeList: React.FC<Props> = ({
             style={{
               width: '100%',
               paddingVertical: px(16 * 4),
-            }}>
+            }}
+          >
             <OLText
               font="Proxima Nova Regular"
               size={16}
               style={{
                 textAlign: 'center',
-              }}>
+              }}
+            >
               {t('home.nothingSearch')}
             </OLText>
           </View>

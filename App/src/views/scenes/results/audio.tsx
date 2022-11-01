@@ -16,7 +16,8 @@ export const AudioControlls: React.FC = () => {
     <TouchableOpacity
       onPress={onPress}
       style={{ marginRight: px(12) }}
-      hitSlop={HIT_SLOP}>
+      hitSlop={HIT_SLOP}
+    >
       <OLIcon
         name={isMuted ? 'ios-volume-mute' : 'ios-volume-high'}
         size={24}

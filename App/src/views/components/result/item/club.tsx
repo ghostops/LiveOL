@@ -26,14 +26,16 @@ export const OLResultClub: React.FC<Props> = ({ club }) => {
         })
       }
       hitSlop={{ bottom: 15, left: 15, right: 15, top: 15 }}
-      style={{ flexDirection: 'row', alignItems: 'center' }}>
+      style={{ flexDirection: 'row', alignItems: 'center' }}
+    >
       <OLText
         numberOfLines={1}
         size={16}
         font="Proxima Nova Regular"
         style={{
           color: 'grey',
-        }}>
+        }}
+      >
         {club}
       </OLText>
     </TouchableOpacity>

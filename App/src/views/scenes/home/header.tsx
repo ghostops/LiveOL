@@ -22,14 +22,16 @@ export const HomeHeader: React.FC = () => {
         height: top + px(50),
         backgroundColor: COLORS.MAIN,
         justifyContent: 'flex-end',
-      }}>
+      }}
+    >
       <View
         style={{
           flexDirection: 'row',
           justifyContent: 'space-between',
           alignItems: 'center',
           paddingBottom: px(8),
-        }}>
+        }}
+      >
         <View>
           <Image
             source={LOGO}
@@ -46,7 +48,8 @@ export const HomeHeader: React.FC = () => {
           <OLText
             font="Proxima-Nova-Bold regular"
             size={18}
-            style={{ color: '#fff' }}>
+            style={{ color: '#fff' }}
+          >
             {t('home.title')}
           </OLText>
         </View>
@@ -55,7 +58,8 @@ export const HomeHeader: React.FC = () => {
           <TouchableOpacity
             onPress={() => navigate('Info')}
             style={{ marginRight: px(16) }}
-            hitSlop={hitSlop}>
+            hitSlop={hitSlop}
+          >
             <OLIcon name="md-information-circle" size={24} color="white" />
           </TouchableOpacity>
         </View>

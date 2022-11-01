@@ -29,7 +29,8 @@ export const LanguagePicker: React.FC<Props> = ({ button = false }) => {
             flex: 1,
             justifyContent: 'center',
             paddingLeft: 10,
-          }}>
+          }}
+        >
           <TouchableOpacity
             onPress={() => setActive(true)}
             style={{
@@ -37,7 +38,8 @@ export const LanguagePicker: React.FC<Props> = ({ button = false }) => {
               alignItems: 'center',
               alignSelf: 'flex-start',
             }}
-            hitSlop={{ bottom: 20, left: 20, right: 40, top: 20 }}>
+            hitSlop={{ bottom: 20, left: 20, right: 40, top: 20 }}
+          >
             <OLIcon name="earth-outline" size={24} color="black" />
             <OLFlag
               code={i18n.resolvedLanguage}
@@ -57,7 +59,8 @@ export const LanguagePicker: React.FC<Props> = ({ button = false }) => {
           <TouchableOpacity
             onPress={() => setActive(false)}
             hitSlop={{ bottom: 20, left: 20, right: 20, top: 20 }}
-            style={{ marginLeft: 16 }}>
+            style={{ marginLeft: 16 }}
+          >
             <OLIcon name="md-close" size={32} color="black" />
           </TouchableOpacity>
 
@@ -81,7 +84,8 @@ export const LanguagePicker: React.FC<Props> = ({ button = false }) => {
                         ? colors.MAIN
                         : 'transparent',
                   }}
-                  key={lang}>
+                  key={lang}
+                >
                   <OLFlag
                     code={lang}
                     size={32}
@@ -100,7 +104,8 @@ export const LanguagePicker: React.FC<Props> = ({ button = false }) => {
                     size={16}
                     style={{
                       color: lang === i18n.resolvedLanguage ? 'white' : 'black',
-                    }}>
+                    }}
+                  >
                     {getCurrentLanguage(lang)}
                   </OLText>
                 </TouchableOpacity>

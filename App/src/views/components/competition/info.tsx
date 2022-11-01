@@ -17,14 +17,16 @@ export const CompetitionInfoBox: React.FC<Props> = ({ infoHtml }) => {
         padding: px(20),
         borderRadius: 4,
         marginTop: px(5),
-      }}>
+      }}
+    >
       <OLText
         size={26}
         font="Rift Bold"
         style={{
           color: 'white',
           paddingBottom: px(10),
-        }}>
+        }}
+      >
         {t('competitions.info')}
       </OLText>
 
@@ -57,7 +59,8 @@ const InfoHtml: React.FC<{ html: string }> = ({ html }) => {
       linkStyle={{
         textDecorationStyle: 'solid',
         textDecorationLine: 'underline',
-      }}>
+      }}
+    >
       <OLText font="Proxima Nova Regular" size={14} style={{ color: 'white' }}>
         {parsedText}
       </OLText>

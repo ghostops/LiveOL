@@ -11,7 +11,9 @@ export const OLResultLiveRunning: React.FC<Props> = ({ date }) => {
   const [value, setValue] = React.useState<string>();
 
   React.useEffect(() => {
-    if (!date) return;
+    if (!date) {
+      return;
+    }
 
     const interval = setInterval(() => {
       const time = diffDateNow(date);
@@ -30,7 +32,8 @@ export const OLResultLiveRunning: React.FC<Props> = ({ date }) => {
       style={{
         flex: 1,
         justifyContent: 'center',
-      }}>
+      }}
+    >
       <OLText size={18} font="PT Mono">
         {value}
       </OLText>

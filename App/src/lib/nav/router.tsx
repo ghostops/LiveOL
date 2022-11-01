@@ -57,7 +57,8 @@ const Component: React.FC = () => {
           },
           headerShadowVisible: false,
           headerTitleAlign: 'center',
-        }}>
+        }}
+      >
         <Stack.Screen
           name="Home"
           component={OLHome}

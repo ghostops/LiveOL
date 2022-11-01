@@ -12,7 +12,8 @@ export const OLResultName: React.FC<Props> = ({ name }) => (
     font="Proxima Nova Regular"
     style={{
       textAlign: 'left',
-    }}>
+    }}
+  >
     {name}
   </OLText>
 );

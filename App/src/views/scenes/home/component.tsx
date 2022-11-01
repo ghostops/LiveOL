@@ -63,7 +63,8 @@ export const OLHome: React.FC<Props> = ({
         style={{
           flexDirection: 'row',
           height: px(50),
-        }}>
+        }}
+      >
         <LanguagePicker />
 
         <View
@@ -73,10 +74,12 @@ export const OLHome: React.FC<Props> = ({
             alignItems: 'center',
             paddingRight: px(10),
             flexDirection: 'row',
-          }}>
+          }}
+        >
           <TouchableOpacity
             onPress={openSearch}
-            style={{ paddingHorizontal: px(landscape ? 25 : 0) }}>
+            style={{ paddingHorizontal: px(landscape ? 25 : 0) }}
+          >
             <OLText font="Proxima Nova Regular" size={16}>
               {t('home.search')}
             </OLText>
@@ -91,7 +94,8 @@ export const OLHome: React.FC<Props> = ({
       style={{
         flex: 1,
         width: '100%',
-      }}>
+      }}
+    >
       <View style={{ flex: 1 }}>
         {renderHeader()}
 

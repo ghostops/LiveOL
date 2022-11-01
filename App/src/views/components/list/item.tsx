@@ -26,7 +26,8 @@ export const OLListItem: React.FC<Props> = ({
         borderBottomWidth: 1,
         justifyContent: 'center',
         ...style,
-      }}>
+      }}
+    >
       {children}
     </TouchableOpacity>
   );

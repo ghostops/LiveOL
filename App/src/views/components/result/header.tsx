@@ -109,14 +109,16 @@ export const ResultHeader: React.FC<OwnProps> = ({
         size={size}
         key={key}
         align={align || 'flex-start'}
-        style={style}>
+        style={style}
+      >
         <OLText
           font="Rift Bold"
           size={18}
           style={{
             color: '#444444',
           }}
-          numberOfLines={1}>
+          numberOfLines={1}
+        >
           {text}
         </OLText>
       </OLResultColumn>
@@ -132,7 +134,8 @@ export const ResultHeader: React.FC<OwnProps> = ({
         backgroundColor: '#e3e3e3',
         borderBottomColor: '#cccccc',
         borderBottomWidth: 1,
-      }}>
+      }}
+    >
       {!loading && !error && (
         <Grid>{labels(t)(table, maxRowSize || 0, splits).map(renderCol)}</Grid>
       )}
