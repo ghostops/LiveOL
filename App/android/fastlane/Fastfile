@@ -25,9 +25,9 @@ end
 def getGradleProperties()
   return {
     "android.injected.signing.store.file" => Dir.pwd + "/../../LiveOL.jks",
-    "android.injected.signing.store.password" => ENV["LIVEOL_STORE_PASSWORD"],
-    "android.injected.signing.key.alias" => ENV["LIVEOL_KEY_ALIAS"],
-    "android.injected.signing.key.password" => ENV["LIVEOL_KEY_PASSWORD"],
+    "android.injected.signing.store.password" => ENV["ANDROID_STORE_PASSWORD"],
+    "android.injected.signing.key.alias" => ENV["ANDROID_KEY_ALIAS"],
+    "android.injected.signing.key.password" => ENV["ANDROID_KEY_PASSWORD"],
   }
 end
 

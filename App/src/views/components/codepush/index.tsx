@@ -1,5 +1,5 @@
 import React from 'react';
-import codePush, { CodePushOptions } from 'react-native-code-push';
+import codePush from 'react-native-code-push';
 
 type Props = {
   children: any;
@@ -11,9 +11,12 @@ class OLCodePushContainer extends React.Component<Props> {
   }
 }
 
-export const OLCodePush = codePush({
-  checkFrequency: __DEV__
-    ? codePush.CheckFrequency.MANUAL
-    : codePush.CheckFrequency.ON_APP_RESUME,
-  installMode: codePush.InstallMode.ON_NEXT_RESTART,
-} as CodePushOptions)(OLCodePushContainer);
+const OLCodePushWrapper = codePush(OLCodePushContainer);
+
+export const OLCodePush: React.FC<Props> = ({ children }) => {
+  if (__DEV__) {
+    return children;
+  }
+
+  return <OLCodePushWrapper>{children}</OLCodePushWrapper>;
+};
