@@ -13,6 +13,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { COLORS } from 'util/const';
 import { BackButton } from './backButton';
 import { AudioControlls } from 'views/scenes/results/audio';
+import { OLPromo } from 'views/scenes/promo/component';
 
 export type RootStack = {
   Home: undefined;
@@ -34,6 +35,7 @@ export type RootStack = {
     competitionId: number;
     title: string;
   };
+  Promo: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStack>();
@@ -110,6 +112,14 @@ const Component: React.FC = () => {
           options={props => ({
             title: props.route.params.title,
           })}
+        />
+
+        <Stack.Screen
+          name="Promo"
+          component={OLPromo}
+          options={{
+            title: 'LiveOL+',
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>

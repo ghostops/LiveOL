@@ -4,11 +4,13 @@ import { HomeListItem } from 'views/components/home/listItem';
 import { LanguagePicker } from 'views/components/lang/picker';
 import { OLSearch } from 'views/components/search/container';
 import { OLText } from 'views/components/text';
-import { px } from 'util/const';
 import { TodaysCompetitions } from 'views/components/home/today';
 import { View, TouchableOpacity } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { OlCompetition } from 'lib/graphql/generated/types';
+import { useOLNavigation } from 'hooks/useNavigation';
+import { OLButton } from 'views/components/button';
+import { useTheme } from 'hooks/useTheme';
 
 interface Props {
   competitions: OlCompetition[];
@@ -30,7 +32,9 @@ export const OLHome: React.FC<Props> = ({
   landscape,
   ...passthroughProps
 }) => {
+  const { px } = useTheme();
   const { t } = useTranslation();
+  const { navigate } = useOLNavigation();
 
   const renderTodaysCompetitions = React.useCallback(() => {
     if (searching) {
@@ -38,20 +42,45 @@ export const OLHome: React.FC<Props> = ({
     }
 
     return (
-      <TodaysCompetitions
-        competitions={todaysCompetitions}
-        renderListItem={(competition, index, total) => (
-          <HomeListItem
-            competition={competition}
-            index={index}
-            key={competition.id}
-            onCompetitionPress={onCompetitionPress}
-            total={total}
-          />
-        )}
-      />
+      <>
+        <View style={{ backgroundColor: 'white', padding: px(16) }}>
+          <OLText
+            font="Rift Bold"
+            size={22}
+            style={{ textAlign: 'center', marginBottom: px(8) }}
+          >
+            LiveOL+
+          </OLText>
+
+          <OLText
+            font="Proxima Nova Regular"
+            size={16}
+            style={{ textAlign: 'center', marginBottom: px(16) }}
+          >
+            Get the most out of LiveOL and support its continued development.
+            Check out LiveOL+ today:
+          </OLText>
+
+          <OLButton small onPress={() => navigate('Promo')}>
+            Check it out
+          </OLButton>
+        </View>
+
+        <TodaysCompetitions
+          competitions={todaysCompetitions}
+          renderListItem={(competition, index, total) => (
+            <HomeListItem
+              competition={competition}
+              index={index}
+              key={competition.id}
+              onCompetitionPress={onCompetitionPress}
+              total={total}
+            />
+          )}
+        />
+      </>
     );
-  }, [searching, todaysCompetitions, onCompetitionPress]);
+  }, [searching, px, todaysCompetitions, navigate, onCompetitionPress]);
 
   const renderHeader = React.useCallback(() => {
     if (searching) {
@@ -87,7 +116,7 @@ export const OLHome: React.FC<Props> = ({
         </View>
       </View>
     );
-  }, [landscape, openSearch, searching, t]);
+  }, [landscape, openSearch, px, searching, t]);
 
   return (
     <View
