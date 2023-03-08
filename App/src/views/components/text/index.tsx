@@ -1,18 +1,17 @@
 import * as React from 'react';
-import { TextStyle, Text } from 'react-native';
+import { TextStyle, Text, Platform } from 'react-native';
 import { useTextStore } from 'store/text';
 import { fontPx } from 'util/const';
 
 interface Props {
   size: number;
-  font:
-    | 'Proxima-Nova-Bold regular'
-    | 'Proxima Nova Regular'
-    | 'Rift Bold'
-    | 'PT Mono';
+  bold?: boolean;
+  italics?: boolean;
   style?: TextStyle;
   numberOfLines?: number;
   selectable?: boolean;
+  uppercase?: boolean;
+  mono?: boolean;
   children?:
     | string
     | number
@@ -21,6 +20,8 @@ interface Props {
     | React.ReactNode
     | React.ReactNode[];
 }
+
+const monoFont = Platform.OS === 'ios' ? 'Courier' : 'monospace';
 
 export const OLText: React.FC<Props> = props => {
   const { textSizeMultiplier } = useTextStore();
@@ -31,7 +32,10 @@ export const OLText: React.FC<Props> = props => {
       style={{
         color: '#141823',
         fontSize: fontPx(props.size * textSizeMultiplier),
-        fontFamily: props.font,
+        fontWeight: props.bold ? 'bold' : 'normal',
+        fontStyle: props.italics ? 'italic' : 'normal',
+        textTransform: props.uppercase ? 'uppercase' : 'none',
+        fontFamily: props.mono ? monoFont : undefined,
         ...props.style,
       }}
     >

@@ -35,7 +35,7 @@ export const OLButton: React.FC<Props> = props => {
     >
       {props.beforeText}
       <OLText
-        font="Rift Bold"
+        bold
         size={props.small ? 14 : 16}
         style={{
           color: 'white',

@@ -34,7 +34,7 @@ export const OLResultLiveRunning: React.FC<Props> = ({ date }) => {
         justifyContent: 'center',
       }}
     >
-      <OLText size={18} font="PT Mono">
+      <OLText size={18} mono>
         {value}
       </OLText>
     </View>

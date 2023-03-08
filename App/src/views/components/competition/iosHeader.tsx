@@ -31,8 +31,10 @@ export const OLCompetitionIOSHeader: React.FC<Props> = ({ name }) => (
         }}
       >
         <OLText
-          size={42}
-          font="Rift Bold"
+          size={36}
+          bold
+          italics
+          uppercase
           style={{
             paddingHorizontal: px(15),
             textAlign: 'center',

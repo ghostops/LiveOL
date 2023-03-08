@@ -4,13 +4,13 @@ import { OLLoading } from 'views/components/loading';
 import { OLRefetcher } from 'views/components/refetcher';
 import { OLSafeAreaView } from 'views/components/safeArea';
 import { OLText } from 'views/components/text';
-import { Passing } from 'lib/graphql/fragments/types/Passing';
 import { px } from 'util/const';
 import { View } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { PassingFragment } from 'lib/graphql/generated/types';
 
 interface Props {
-  passings: Passing[];
+  passings: PassingFragment[];
   refresh: () => Promise<void>;
   landscape: boolean;
   loading: boolean;
@@ -34,7 +34,6 @@ export const OLPassings: React.FC<Props> = props => {
       >
         {!props.passings.length && (
           <OLText
-            font="Proxima-Nova-Bold regular"
             size={16}
             style={{
               textAlign: 'center',
@@ -46,7 +45,6 @@ export const OLPassings: React.FC<Props> = props => {
         {Boolean(props.passings.length) && (
           <>
             <OLText
-              font="Proxima-Nova-Bold regular"
               size={20}
               style={{
                 textAlign: 'left',

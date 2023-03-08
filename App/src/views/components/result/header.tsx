@@ -112,7 +112,6 @@ export const ResultHeader: React.FC<OwnProps> = ({
         style={style}
       >
         <OLText
-          font="Rift Bold"
           size={18}
           style={{
             color: '#444444',

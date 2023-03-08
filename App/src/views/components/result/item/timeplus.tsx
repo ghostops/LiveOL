@@ -16,7 +16,6 @@ export const OLResultTimeplus: React.FC<Props> = ({ timeplus, status }) => {
 
   return (
     <OLText
-      font="Proxima Nova Regular"
       style={{
         textAlign: 'right',
       }}

@@ -20,8 +20,8 @@ export const CompetitionInfoBox: React.FC<Props> = ({ infoHtml }) => {
       }}
     >
       <OLText
-        size={26}
-        font="Rift Bold"
+        size={22}
+        bold
         style={{
           color: 'white',
           paddingBottom: px(10),
@@ -61,7 +61,7 @@ const InfoHtml: React.FC<{ html: string }> = ({ html }) => {
         textDecorationLine: 'underline',
       }}
     >
-      <OLText font="Proxima Nova Regular" size={14} style={{ color: 'white' }}>
+      <OLText size={14} style={{ color: 'white' }}>
         {parsedText}
       </OLText>
     </Hyperlink>

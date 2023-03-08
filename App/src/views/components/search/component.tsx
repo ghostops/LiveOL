@@ -96,11 +96,7 @@ export const OLSearch: React.FC<Props> = ({ setSearching, setSearchTerm }) => {
             alignItems: 'center',
           }}
         >
-          <OLText
-            font="Proxima Nova Regular"
-            size={16}
-            style={{ color: 'black' }}
-          >
+          <OLText size={16} style={{ color: 'black' }}>
             {t('home.search')}
           </OLText>
         </TouchableOpacity>

@@ -45,11 +45,7 @@ export const HomeHeader: React.FC = () => {
         </View>
 
         <View>
-          <OLText
-            font="Proxima-Nova-Bold regular"
-            size={18}
-            style={{ color: '#fff' }}
-          >
+          <OLText size={18} style={{ color: '#fff' }}>
             {t('home.title')}
           </OLText>
         </View>

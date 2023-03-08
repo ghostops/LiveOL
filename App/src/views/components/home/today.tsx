@@ -29,7 +29,8 @@ export const TodaysCompetitions: React.FC<Props> = ({
   const innerCompetitions = () => (
     <React.Fragment>
       <OLText
-        font="Rift Bold"
+        bold
+        uppercase
         size={18}
         style={{
           textAlign: 'center',
@@ -40,7 +41,6 @@ export const TodaysCompetitions: React.FC<Props> = ({
       </OLText>
 
       <OLText
-        font="Proxima-Nova-Bold regular"
         size={16}
         style={{
           textAlign: 'center',
@@ -69,7 +69,8 @@ export const TodaysCompetitions: React.FC<Props> = ({
   const innerNothing = () => (
     <React.Fragment>
       <OLText
-        font="Rift Bold"
+        bold
+        uppercase
         size={18}
         style={{
           color: 'white',

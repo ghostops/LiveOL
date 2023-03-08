@@ -1,33 +1,4 @@
 {
   "migIndex": 1,
-  "data": [
-    {
-      "path": "assets/fonts/PTMono-Regular.ttf",
-      "sha1": "1adb532307480d5db08163e76460e68c4739426b"
-    },
-    {
-      "path": "assets/fonts/Proxima-Nova-Bold-regular.otf",
-      "sha1": "637535060868ae996db3063d1c63ccc827ddd698"
-    },
-    {
-      "path": "assets/fonts/Proxima-Nova.ttf",
-      "sha1": "dcb392ad15d2b01f2524cb10c77d67dc78c54181"
-    },
-    {
-      "path": "assets/fonts/Rift-Bold.otf",
-      "sha1": "2164ae872a0a2437db78c956e8218aba9770645e"
-    },
-    {
-      "path": "assets/fonts/Roboto-Bold.ttf",
-      "sha1": "0ce37ced9c5fcac9bdc452a432c1258870ba4677"
-    },
-    {
-      "path": "assets/fonts/Roboto-Regular.ttf",
-      "sha1": "dd1b1db13ff1f72138c134c62f38fef83749f36a"
-    },
-    {
-      "path": "assets/fonts/SpaceMono-Regular.ttf",
-      "sha1": "fae3a5a43b50e0408fd61e14383d94a023d332b0"
-    }
-  ]
+  "data": []
 }

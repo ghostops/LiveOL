@@ -37,7 +37,8 @@ const OLHomePromo: React.FC = () => {
         onPress={() => navigate('Promo')}
       >
         <OLText
-          font="Rift Bold"
+          bold
+          uppercase
           size={16}
           style={{ color: 'white', textAlign: 'center' }}
         >
@@ -59,18 +60,15 @@ const OLHomePromo: React.FC = () => {
       }}
     >
       <OLText
-        font="Rift Bold"
+        bold
+        italics
         size={22}
         style={{ textAlign: 'center', marginBottom: px(8) }}
       >
         LiveOL+
       </OLText>
 
-      <OLText
-        font="Proxima Nova Regular"
-        size={16}
-        style={{ textAlign: 'center', marginBottom: px(16) }}
-      >
+      <OLText size={16} style={{ textAlign: 'center', marginBottom: px(16) }}>
         Get the most out of LiveOL and support its continued development. Check
         out LiveOL+ today:
       </OLText>
@@ -85,11 +83,7 @@ const OLHomePromo: React.FC = () => {
           setDisplayPromo(false);
         }}
       >
-        <OLText
-          font="Proxima Nova Regular"
-          size={14}
-          style={{ textAlign: 'center' }}
-        >
+        <OLText size={14} style={{ textAlign: 'center' }}>
           Close
         </OLText>
       </TouchableOpacity>
@@ -160,9 +154,7 @@ export const OLHome: React.FC<Props> = ({
             onPress={openSearch}
             style={{ paddingHorizontal: px(landscape ? 25 : 0) }}
           >
-            <OLText font="Proxima Nova Regular" size={16}>
-              {t('home.search')}
-            </OLText>
+            <OLText size={16}>{t('home.search')}</OLText>
           </TouchableOpacity>
         </View>
       </View>

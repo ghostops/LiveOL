@@ -37,7 +37,6 @@ export const OLCompetitionHeader: React.FC<Props> = props => {
           }}
         >
           <OLText
-            font="Proxima-Nova-Bold regular"
             size={18}
             style={{
               textAlign: 'center',
@@ -77,38 +76,22 @@ export const OLCompetitionHeader: React.FC<Props> = props => {
             </View>
           )}
 
-          <OLText
-            size={16}
-            font="Proxima Nova Regular"
-            style={{ marginBottom: px(15) }}
-          >
+          <OLText size={16} style={{ marginBottom: px(15) }}>
             {t('competitions.date')}: {dateToReadable(props.competition.date)}
           </OLText>
 
-          <OLText
-            size={16}
-            font="Proxima Nova Regular"
-            style={{ marginBottom: px(15) }}
-          >
+          <OLText size={16} style={{ marginBottom: px(15) }}>
             {t('competitions.organizedBy')}: {props.competition.organizer}
           </OLText>
 
           {props.competition.eventor && (
             <>
-              <OLText
-                size={16}
-                font="Proxima Nova Regular"
-                style={{ marginBottom: px(15) }}
-              >
+              <OLText size={16} style={{ marginBottom: px(15) }}>
                 {t('competitions.distance')}:{' '}
                 {t(`distances.${props.competition.distance}`)}
               </OLText>
 
-              <OLText
-                font="Proxima Nova Regular"
-                style={{ marginBottom: px(15) }}
-                size={16}
-              >
+              <OLText style={{ marginBottom: px(15) }} size={16}>
                 {t('competitions.signups')}: {props.competition.signups}
               </OLText>
             </>
@@ -130,7 +113,6 @@ export const OLCompetitionHeader: React.FC<Props> = props => {
       >
         <View style={{ flex: 1 }}>
           <OLText
-            font="Proxima-Nova-Bold regular"
             size={20}
             style={{
               textAlign: 'left',

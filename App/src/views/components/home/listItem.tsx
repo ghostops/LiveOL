@@ -29,9 +29,7 @@ export const HomeListItem: React.FC<Props> = ({
       }}
       onPress={() => onCompetitionPress && onCompetitionPress(competition)}
     >
-      <OLText size={16} font="Proxima Nova Regular">
-        {competition.name}
-      </OLText>
+      <OLText size={16}>{competition.name}</OLText>
     </OLListItem>
   );
 };

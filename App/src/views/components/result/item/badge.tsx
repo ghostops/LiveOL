@@ -26,11 +26,7 @@ export const OLResultBadge: React.FC<Props> = ({ place }) => (
           borderRadius: 50,
         }}
       >
-        <OLText
-          size={12}
-          font="Proxima Nova Regular"
-          style={{ color: 'white' }}
-        >
+        <OLText size={12} style={{ color: 'white' }}>
           {place}
         </OLText>
       </View>

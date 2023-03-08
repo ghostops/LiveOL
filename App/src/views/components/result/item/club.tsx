@@ -31,7 +31,6 @@ export const OLResultClub: React.FC<Props> = ({ club }) => {
       <OLText
         numberOfLines={1}
         size={16}
-        font="Proxima Nova Regular"
         style={{
           color: 'grey',
         }}

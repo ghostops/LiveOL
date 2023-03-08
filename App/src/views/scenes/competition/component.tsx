@@ -32,9 +32,7 @@ export const OLCompetition: React.FC<Props> = props => {
         }}
         onPress={props.goToClass(name)}
       >
-        <OLText font="Proxima Nova Regular" size={18}>
-          {name}
-        </OLText>
+        <OLText size={18}>{name}</OLText>
       </OLListItem>
     );
   };
@@ -50,7 +48,6 @@ export const OLCompetition: React.FC<Props> = props => {
         renderItem={renderClass}
         ListEmptyComponent={
           <OLText
-            font="Proxima Nova Regular"
             size={16}
             style={{
               textAlign: 'center',

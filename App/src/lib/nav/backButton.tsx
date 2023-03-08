@@ -35,7 +35,7 @@ export const BackButton: React.FC = () => {
         color="#fff"
         style={{ fontSize: fontPx(20), top: Platform.OS === 'android' ? 1 : 0 }}
       />
-      <OLText font="Proxima Nova Regular" size={18} style={{ color: '#fff' }}>
+      <OLText size={18} style={{ color: '#fff' }}>
         {t('back')}
       </OLText>
     </TouchableOpacity>

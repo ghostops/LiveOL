@@ -58,7 +58,6 @@ export const OLResultsTable: React.FC<Props> = props => {
               }}
             >
               <OLText
-                font="Proxima-Nova-Bold regular"
                 size={18}
                 style={{
                   textAlign: 'center',

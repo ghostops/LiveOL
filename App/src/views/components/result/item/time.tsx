@@ -9,9 +9,5 @@ interface Props {
 
 export const OLResultTime: React.FC<Props> = ({ time, status }) => {
   const statusText = useStatusI18n(status);
-  return (
-    <OLText font="Proxima Nova Regular" size={20}>
-      {status === 0 ? time : statusText}
-    </OLText>
-  );
+  return <OLText size={20}>{status === 0 ? time : statusText}</OLText>;
 };

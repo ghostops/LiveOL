@@ -43,13 +43,6 @@
 	<string/>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Proxima-Nova-Bold-regular.otf</string>
-		<string>Rift-Bold.otf</string>
-		<string>PTMono-Regular.ttf</string>
-		<string>Proxima-Nova.ttf</string>
-		<string>Roboto-Bold.ttf</string>
-		<string>Roboto-Regular.ttf</string>
-		<string>SpaceMono-Regular.ttf</string>
 		<string>Ionicons.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>

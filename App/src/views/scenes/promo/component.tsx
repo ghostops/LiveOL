@@ -34,11 +34,7 @@ const OLPromoItem: React.FC<{ text: string; img: any }> = ({ text, img }) => {
 
   return (
     <View style={{ alignItems: 'center' }}>
-      <OLText
-        font="Proxima Nova Regular"
-        size={20}
-        style={{ textAlign: 'center', marginBottom: px(16) }}
-      >
+      <OLText size={20} style={{ textAlign: 'center', marginBottom: px(16) }}>
         {text}
       </OLText>
 
@@ -64,7 +60,8 @@ export const OLPromo: React.FC = () => {
       contentContainerStyle={{ paddingBottom: px(64) }}
     >
       <OLText
-        font="Rift Bold"
+        italics
+        bold
         size={32}
         style={{ textAlign: 'center', margin: px(16) }}
       >
@@ -84,11 +81,7 @@ export const OLPromo: React.FC = () => {
       />
 
       <View style={{ paddingHorizontal: px(16), marginTop: px(8) }}>
-        <OLText
-          font="Proxima Nova Regular"
-          size={16}
-          style={{ textAlign: 'center', marginBottom: px(32) }}
-        >
+        <OLText size={16} style={{ textAlign: 'center', marginBottom: px(32) }}>
           But most importantly of all, you will be supporting the continued
           maintenance of LiveOL and make sure the app stays alive.
         </OLText>

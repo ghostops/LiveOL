@@ -87,7 +87,7 @@ export const HomeList: React.FC<Props> = ({
               paddingHorizontal: px(16),
             }}
           >
-            <OLText size={16} font="Proxima-Nova-Bold regular">
+            <OLText size={16}>
               {dateStr} {isToday && `(${t('home.today')})`}
             </OLText>
           </OLListItem>
@@ -135,7 +135,6 @@ export const HomeList: React.FC<Props> = ({
             }}
           >
             <OLText
-              font="Proxima Nova Regular"
               size={16}
               style={{
                 textAlign: 'center',

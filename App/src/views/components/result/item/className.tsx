@@ -23,7 +23,6 @@ export const OLClassName: React.FC<Props> = ({ className }) => {
       <OLText
         numberOfLines={1}
         size={16}
-        font="Proxima Nova Regular"
         style={{
           color: 'grey',
         }}

@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { OLText } from '../text';
-import { Passing } from 'lib/graphql/fragments/types/Passing';
 import { px, fontPx } from 'util/const';
 import { TextStyle, View } from 'react-native';
 import { OLCard } from '../card';
 import { useTranslation } from 'react-i18next';
+import { PassingFragment } from 'lib/graphql/generated/types';
 
 interface Props {
-  passing: Passing;
+  passing: PassingFragment;
   landscape?: boolean;
 }
 
@@ -37,13 +37,13 @@ export const OLLastPassingResult: React.FC<Props> = ({
       >
         {!landscape && (
           <View>
-            <OLText font="Proxima Nova Regular" size={16} style={TEXT_STYLE}>
+            <OLText size={16} style={TEXT_STYLE}>
               {t('competitions.passings.class')}:
             </OLText>
-            <OLText font="Proxima Nova Regular" size={16} style={TEXT_STYLE}>
+            <OLText size={16} style={TEXT_STYLE}>
               {t('competitions.passings.name')}:
             </OLText>
-            <OLText font="Proxima Nova Regular" size={16} style={TEXT_STYLE}>
+            <OLText size={16} style={TEXT_STYLE}>
               {t('competitions.passings.passTime')}:
             </OLText>
           </View>
@@ -54,18 +54,13 @@ export const OLLastPassingResult: React.FC<Props> = ({
             paddingLeft: landscape ? px(8) : px(16),
           }}
         >
-          <OLText font="Proxima Nova Regular" size={16} style={TEXT_STYLE}>
+          <OLText size={16} style={TEXT_STYLE}>
             {passing.class}
           </OLText>
-          <OLText
-            font="Proxima Nova Regular"
-            size={16}
-            style={TEXT_STYLE}
-            numberOfLines={1}
-          >
+          <OLText size={16} style={TEXT_STYLE} numberOfLines={1}>
             {passing.runnerName}
           </OLText>
-          <OLText font="Proxima Nova Regular" size={16} style={TEXT_STYLE}>
+          <OLText size={16} style={TEXT_STYLE}>
             {passing.passtime}
           </OLText>
         </View>

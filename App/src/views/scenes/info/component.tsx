@@ -64,7 +64,6 @@ export const OLInfo: React.FC<Props> = ({
       />
 
       <OLText
-        font="Proxima Nova Regular"
         size={16}
         style={{
           marginLeft: px(5),
@@ -87,7 +86,6 @@ export const OLInfo: React.FC<Props> = ({
           {(t('info.body', { returnObjects: true }) as unknown as string[]).map(
             (text: string) => (
               <OLText
-                font="Proxima Nova Regular"
                 size={16}
                 key={text}
                 style={{
@@ -107,7 +105,7 @@ export const OLInfo: React.FC<Props> = ({
             activeOpacity={1}
           >
             <OLText
-              font="Proxima-Nova-Bold regular"
+              bold
               size={16}
               style={{
                 marginBottom: px(16),
@@ -136,7 +134,7 @@ export const OLInfo: React.FC<Props> = ({
       <View>
         <OLCard>
           <OLText
-            font="Proxima-Nova-Bold regular"
+            bold
             size={16}
             style={{
               marginBottom: px(8),
@@ -145,9 +143,7 @@ export const OLInfo: React.FC<Props> = ({
             {t('info.changeTextSize.title')} ({textSizeMultiplier.toFixed(1)})
           </OLText>
 
-          <OLText font="Proxima Nova Regular" size={14}>
-            {t('info.changeTextSize.text')}
-          </OLText>
+          <OLText size={14}>{t('info.changeTextSize.text')}</OLText>
 
           <View
             style={{
@@ -170,7 +166,6 @@ export const OLInfo: React.FC<Props> = ({
         <OLCard style={{ marginVertical: px(8) }}>
           <TouchableOpacity onPress={openZapSplat} style={{ marginBottom: 24 }}>
             <OLText
-              font="Proxima Nova Regular"
               size={14}
               style={{
                 textAlign: 'center',
@@ -190,7 +185,7 @@ export const OLInfo: React.FC<Props> = ({
             }}
           >
             <OLText
-              font="Proxima-Nova-Bold regular"
+              bold
               size={16}
               style={{
                 marginBottom: px(16),
@@ -217,7 +212,7 @@ export const OLInfo: React.FC<Props> = ({
             }}
           />
 
-          <OLText font="Proxima-Nova-Bold regular" size={18}>
+          <OLText bold size={18}>
             {t('info.translations.credit')}:
           </OLText>
 
