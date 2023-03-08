@@ -1,12 +1,12 @@
 import React from 'react';
 import _ from 'lodash';
-import { Result } from 'lib/graphql/fragments/types/Result';
 import { OLClubResults as Component } from './component';
 import { OLLoading } from 'views/components/loading';
 import { OLError } from 'views/components/error';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { RootStack } from 'lib/nav/router';
 import { useGetClubResultsQuery } from 'lib/graphql/generated/gql';
+import { OlResult } from 'lib/graphql/generated/types';
 
 export const OLClubResults: React.FC = () => {
   const {
@@ -25,7 +25,7 @@ export const OLClubResults: React.FC = () => {
     return <OLLoading />;
   }
 
-  const results: Result[] = _.get(data, 'results.getClubResults', null);
+  const results: OlResult[] = _.get(data, 'results.getClubResults', null);
 
   return (
     <Component

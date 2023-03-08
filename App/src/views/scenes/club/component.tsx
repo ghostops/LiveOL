@@ -1,11 +1,11 @@
-import * as React from 'react';
+import React from 'react';
+import { OlResult } from 'lib/graphql/generated/types';
 import { OLRefetcher } from 'views/components/refetcher';
 import { OLResultsList } from 'views/components/result/list';
-import { Result } from 'lib/graphql/fragments/types/Result';
 
 interface Props {
   refetch: () => Promise<void>;
-  results: Result[];
+  results: OlResult[];
   competitionId: number;
   clubName: string;
 }

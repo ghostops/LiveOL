@@ -7,7 +7,7 @@ interface Props {
   style?: ImageStyle;
 }
 
-const remapCode = {
+const remapCode: Record<string, string> = {
   en: 'gb',
   sv: 'se',
   no: 'no',
@@ -18,7 +18,7 @@ const remapCode = {
   es: 'es',
 };
 
-const FLAGS = {
+const FLAGS: Record<string, any> = {
   se: require('../../../../assets/images/flags/se.png'),
   no: require('../../../../assets/images/flags/no.png'),
   gb: require('../../../../assets/images/flags/gb.png'),

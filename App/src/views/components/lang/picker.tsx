@@ -96,11 +96,7 @@ export const LanguagePicker: React.FC<Props> = ({ button = false }) => {
                     }}
                   />
                   <OLText
-                    font={
-                      lang === i18n.resolvedLanguage
-                        ? 'Proxima-Nova-Bold regular'
-                        : 'Proxima Nova Regular'
-                    }
+                    bold={lang === i18n.resolvedLanguage}
                     size={16}
                     style={{
                       color: lang === i18n.resolvedLanguage ? 'white' : 'black',

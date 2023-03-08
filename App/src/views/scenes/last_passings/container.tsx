@@ -1,12 +1,12 @@
 import React from 'react';
 import _ from 'lodash';
-import { Passing } from 'lib/graphql/fragments/types/Passing';
 import { OLPassings as Component } from './component';
 import { OLError } from 'views/components/error';
 import { useDeviceRotationStore } from 'store/deviceRotation';
 import { RootStack } from 'lib/nav/router';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { useGetLastPassingsQuery } from 'lib/graphql/generated/gql';
+import { OlPassing } from 'lib/graphql/generated/types';
 
 export const OLPassings: React.FC = () => {
   const { isLandscape } = useDeviceRotationStore();
@@ -23,7 +23,11 @@ export const OLPassings: React.FC = () => {
     return <OLError error={error} refetch={refetch} />;
   }
 
-  const passings: Passing[] = _.get(data, 'lastPassings.getLastPassings', null);
+  const passings: OlPassing[] = _.get(
+    data,
+    'lastPassings.getLastPassings',
+    null,
+  );
 
   return (
     <Component

@@ -23,7 +23,7 @@ export const OLSplits: React.FC<Props> = ({ split, best }) => {
       }}
     >
       <OLText
-        font={best ? 'Proxima-Nova-Bold regular' : 'Proxima Nova Regular'}
+        bold={best}
         size={16}
         style={{
           color: best ? BEST_COLOR : 'black',
@@ -31,7 +31,7 @@ export const OLSplits: React.FC<Props> = ({ split, best }) => {
       >
         {split.time}{' '}
         <OLText
-          font={best ? 'Proxima-Nova-Bold regular' : 'Proxima Nova Regular'}
+          bold={best}
           size={14}
           style={{
             color: best ? BEST_COLOR : 'gray',
@@ -42,7 +42,7 @@ export const OLSplits: React.FC<Props> = ({ split, best }) => {
       </OLText>
 
       <OLText
-        font={best ? 'Proxima-Nova-Bold regular' : 'Proxima Nova Regular'}
+        bold={best}
         size={14}
         style={{
           color: best ? BEST_COLOR : 'gray',
