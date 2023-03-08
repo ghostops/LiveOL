@@ -11,6 +11,7 @@ import { OlCompetition } from 'lib/graphql/generated/types';
 import { useOLNavigation } from 'hooks/useNavigation';
 import { OLButton } from 'views/components/button';
 import { useTheme } from 'hooks/useTheme';
+import { usePromoStore } from 'store/promo';
 
 interface Props {
   competitions: OlCompetition[];
@@ -24,6 +25,78 @@ interface Props {
   landscape?: boolean;
 }
 
+const OLHomePromo: React.FC = () => {
+  const { px, colors } = useTheme();
+  const { navigate } = useOLNavigation();
+  const { displayPromo, setDisplayPromo } = usePromoStore();
+
+  if (!displayPromo) {
+    return (
+      <TouchableOpacity
+        style={{ backgroundColor: colors.DARK, paddingVertical: px(8) }}
+        onPress={() => navigate('Promo')}
+      >
+        <OLText
+          font="Rift Bold"
+          size={16}
+          style={{ color: 'white', textAlign: 'center' }}
+        >
+          LiveOL+
+        </OLText>
+      </TouchableOpacity>
+    );
+  }
+
+  return (
+    <View
+      style={{
+        backgroundColor: 'white',
+        padding: px(16),
+        borderWidth: 4,
+        borderColor: colors.MAIN,
+        borderRadius: 8,
+        margin: px(8),
+      }}
+    >
+      <OLText
+        font="Rift Bold"
+        size={22}
+        style={{ textAlign: 'center', marginBottom: px(8) }}
+      >
+        LiveOL+
+      </OLText>
+
+      <OLText
+        font="Proxima Nova Regular"
+        size={16}
+        style={{ textAlign: 'center', marginBottom: px(16) }}
+      >
+        Get the most out of LiveOL and support its continued development. Check
+        out LiveOL+ today:
+      </OLText>
+
+      <OLButton small onPress={() => navigate('Promo')}>
+        Check it out
+      </OLButton>
+
+      <TouchableOpacity
+        style={{ marginTop: px(16) }}
+        onPress={() => {
+          setDisplayPromo(false);
+        }}
+      >
+        <OLText
+          font="Proxima Nova Regular"
+          size={14}
+          style={{ textAlign: 'center' }}
+        >
+          Close
+        </OLText>
+      </TouchableOpacity>
+    </View>
+  );
+};
+
 export const OLHome: React.FC<Props> = ({
   onCompetitionPress,
   openSearch,
@@ -34,7 +107,6 @@ export const OLHome: React.FC<Props> = ({
 }) => {
   const { px } = useTheme();
   const { t } = useTranslation();
-  const { navigate } = useOLNavigation();
 
   const renderTodaysCompetitions = React.useCallback(() => {
     if (searching) {
@@ -43,28 +115,7 @@ export const OLHome: React.FC<Props> = ({
 
     return (
       <>
-        <View style={{ backgroundColor: 'white', padding: px(16) }}>
-          <OLText
-            font="Rift Bold"
-            size={22}
-            style={{ textAlign: 'center', marginBottom: px(8) }}
-          >
-            LiveOL+
-          </OLText>
-
-          <OLText
-            font="Proxima Nova Regular"
-            size={16}
-            style={{ textAlign: 'center', marginBottom: px(16) }}
-          >
-            Get the most out of LiveOL and support its continued development.
-            Check out LiveOL+ today:
-          </OLText>
-
-          <OLButton small onPress={() => navigate('Promo')}>
-            Check it out
-          </OLButton>
-        </View>
+        <OLHomePromo />
 
         <TodaysCompetitions
           competitions={todaysCompetitions}
@@ -80,7 +131,7 @@ export const OLHome: React.FC<Props> = ({
         />
       </>
     );
-  }, [searching, px, todaysCompetitions, navigate, onCompetitionPress]);
+  }, [searching, todaysCompetitions, onCompetitionPress]);
 
   const renderHeader = React.useCallback(() => {
     if (searching) {
