@@ -1,5 +1,6 @@
 {
   "back": "Back",
+  "close": "Close",
   "classes": {
     "autoUpdate": "Turn on live updating results",
     "autoUpdateEnabled": "Live updating results enabled",
@@ -129,7 +130,11 @@
   },
   "plus": {
     "promo": {
-      "get": "Get LiveOL+"
+      "get": "Get LiveOL+",
+      "box": {
+        "text": "Get the most out of LiveOL and support its continued development. Check out LiveOL+ today:",
+        "cta": "Check it out"
+      }
     },
     "buy": {
       "title": "Do more with LiveOL+",
