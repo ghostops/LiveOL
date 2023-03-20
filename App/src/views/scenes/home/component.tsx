@@ -34,7 +34,7 @@ const OLHomePromo: React.FC = () => {
     return (
       <TouchableOpacity
         style={{ backgroundColor: colors.DARK, paddingVertical: px(8) }}
-        onPress={() => navigate('Promo')}
+        onPress={() => navigate('Plus')}
       >
         <OLText
           bold
@@ -73,7 +73,7 @@ const OLHomePromo: React.FC = () => {
         out LiveOL+ today:
       </OLText>
 
-      <OLButton small onPress={() => navigate('Promo')}>
+      <OLButton small onPress={() => navigate('Plus')}>
         Check it out
       </OLButton>
 
