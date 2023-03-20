@@ -18,6 +18,8 @@ type Props = {
   increaseFontSize: () => void;
   decreaseFontSize: () => void;
   textSizeMultiplier: number;
+  onGetLiveOlPlus: () => void;
+  showGetLiveOlPlus?: boolean;
 };
 
 const PHRASE_IMAGE = require('../../../../assets/images/phrase.png');
@@ -32,6 +34,8 @@ export const OLInfo: React.FC<Props> = ({
   increaseFontSize,
   decreaseFontSize,
   textSizeMultiplier,
+  onGetLiveOlPlus,
+  showGetLiveOlPlus,
 }) => {
   const { t } = useTranslation();
 
@@ -81,6 +85,23 @@ export const OLInfo: React.FC<Props> = ({
         paddingHorizontal: px(landscape ? 40 : 10),
       }}
     >
+      {showGetLiveOlPlus && (
+        <View>
+          <OLCard style={{ marginVertical: px(8) }}>
+            <OLText
+              size={16}
+              style={{
+                marginBottom: px(16),
+                textAlign: 'center',
+              }}
+            >
+              {t('plus.buy.text')}
+            </OLText>
+            <OLButton onPress={onGetLiveOlPlus}>{t('plus.promo.get')}</OLButton>
+          </OLCard>
+        </View>
+      )}
+
       <View>
         <OLCard style={{ marginVertical: px(8) }}>
           {(t('info.body', { returnObjects: true }) as unknown as string[]).map(

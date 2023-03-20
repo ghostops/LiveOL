@@ -12,6 +12,7 @@ import { useOLNavigation } from 'hooks/useNavigation';
 import { OLButton } from 'views/components/button';
 import { useTheme } from 'hooks/useTheme';
 import { usePromoStore } from 'store/promo';
+import { useIap } from 'lib/iap';
 
 interface Props {
   competitions: OlCompetition[];
@@ -29,6 +30,11 @@ const OLHomePromo: React.FC = () => {
   const { px, colors } = useTheme();
   const { navigate } = useOLNavigation();
   const { displayPromo, setDisplayPromo } = usePromoStore();
+  const { plusActive } = useIap();
+
+  if (plusActive) {
+    return null;
+  }
 
   if (!displayPromo) {
     return (
@@ -36,12 +42,7 @@ const OLHomePromo: React.FC = () => {
         style={{ backgroundColor: colors.DARK, paddingVertical: px(8) }}
         onPress={() => navigate('Plus')}
       >
-        <OLText
-          bold
-          uppercase
-          size={16}
-          style={{ color: 'white', textAlign: 'center' }}
-        >
+        <OLText bold size={16} style={{ color: 'white', textAlign: 'center' }}>
           LiveOL+
         </OLText>
       </TouchableOpacity>
