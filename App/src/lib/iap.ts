@@ -1,11 +1,16 @@
-import { useCallback, useEffect } from 'react';
-import { Platform } from 'react-native';
+import { useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Alert, Platform } from 'react-native';
 import Purchases from 'react-native-purchases';
 import { usePlusStore } from 'store/plus';
 
 const LIVE_OL_PLUS_PRODUCT_ID = 'liveol_plus_onetime';
 
 export const useIap = () => {
+  const { t } = useTranslation();
+
+  const [loading, setLoading] = useState(false);
+
   const {
     initialized,
     setInitialized,
@@ -38,20 +43,26 @@ export const useIap = () => {
         return;
       }
 
-      if (Platform.OS === 'ios') {
-        Purchases.configure({
-          apiKey: 'appl_OtUwntmQhFBGPJdHfftulaOLABs',
-        });
+      try {
+        setLoading(true);
+
+        if (Platform.OS === 'ios') {
+          Purchases.configure({
+            apiKey: 'appl_OtUwntmQhFBGPJdHfftulaOLABs',
+          });
+        }
+
+        if (Platform.OS === 'android') {
+          // await Purchases.configure({ apiKey: <public_google_api_key> });
+        }
+
+        await loadProducts();
+        await loadPurchase();
+
+        setInitialized();
+      } finally {
+        setLoading(false);
       }
-
-      if (Platform.OS === 'android') {
-        // await Purchases.configure({ apiKey: <public_google_api_key> });
-      }
-
-      await loadProducts();
-      await loadPurchase();
-
-      setInitialized();
     };
 
     init();
@@ -63,6 +74,8 @@ export const useIap = () => {
     }
 
     try {
+      setLoading(true);
+
       await Purchases.purchaseProduct(LIVE_OL_PLUS_PRODUCT_ID);
       await loadPurchase();
     } catch (e: any) {
@@ -71,19 +84,31 @@ export const useIap = () => {
       }
 
       console.warn(e);
+    } finally {
+      setLoading(false);
     }
   };
 
   const restoreLiveOLPlus = async () => {
     try {
+      setLoading(true);
+
       await Purchases.restorePurchases();
       await loadPurchase();
+
+      if (plusActive) {
+        Alert.alert(t('plus.buy.restoreSuccess'));
+      } else {
+        Alert.alert(t('plus.buy.restoreError'));
+      }
     } catch (e: any) {
       if (e.userCancelled) {
         return;
       }
 
       console.warn(e);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -92,5 +117,6 @@ export const useIap = () => {
     restore: restoreLiveOLPlus,
     displayPrice: liveOlPlusProduct?.priceString,
     plusActive,
+    loading,
   };
 };

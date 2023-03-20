@@ -126,5 +126,14 @@
       "MU",
       "FIN"
     ]
+  },
+  "plus": {
+    "buy": {
+      "title": "Do more with LiveOL+",
+      "text": "Support the project and get access to special features.",
+      "restore": "Restore purchases",
+      "restoreSuccess": "You have restored LiveOL+",
+      "restoreError": "You cannot restore LiveOL+. Please reach out if you have previously purchased."
+    }
   }
 }
