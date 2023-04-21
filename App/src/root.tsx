@@ -8,6 +8,7 @@ import { OLRotationWatcher } from 'views/components/watcher/rotation';
 import { OLCodePush } from 'views/components/codepush';
 import { client } from 'lib/graphql/client';
 import { ApolloProvider } from '@apollo/client';
+import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import './lib/i18n';
 
 export default () => {
@@ -20,14 +21,16 @@ export default () => {
   return (
     <OLCodePush>
       <SafeAreaProvider>
-        <ApolloProvider client={client}>
-          <View style={{ flex: 1 }}>
-            <OLRotationWatcher>
-              <Router />
-            </OLRotationWatcher>
-          </View>
-          <Toast />
-        </ApolloProvider>
+        <ActionSheetProvider>
+          <ApolloProvider client={client}>
+            <View style={{ flex: 1 }}>
+              <OLRotationWatcher>
+                <Router />
+              </OLRotationWatcher>
+            </View>
+            <Toast />
+          </ApolloProvider>
+        </ActionSheetProvider>
       </SafeAreaProvider>
     </OLCodePush>
   );

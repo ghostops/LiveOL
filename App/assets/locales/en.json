@@ -33,6 +33,13 @@
     },
     "signups": "Signed up"
   },
+  "result": {
+    "mute": "Mute audio",
+    "unmute": "Unmute audio",
+    "followClass": "Follow class",
+    "followRunner": "Follow runner",
+    "followClub": "Follow club"
+  },
   "currentLanguage": "English",
   "distances": {
     "long": "Long",

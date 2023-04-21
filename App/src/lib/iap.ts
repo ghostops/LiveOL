@@ -22,7 +22,8 @@ export const useIap = () => {
 
   const loadPurchase = useCallback(async () => {
     const info = await Purchases.getCustomerInfo();
-    setPlusActive(!!info?.entitlements?.active?.plus?.latestPurchaseDate);
+    const isActive = !!info?.entitlements?.active?.plus?.latestPurchaseDate;
+    setPlusActive(isActive);
   }, [setPlusActive]);
 
   useEffect(() => {

@@ -15,6 +15,7 @@ import { OLResultAnimation } from 'views/components/result/item/animation';
 import { OlResult } from 'lib/graphql/generated/types';
 import { isLiveRunning } from 'util/isLive';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { OLFollowMenu } from '../follow';
 
 interface OwnProps {
   result: OlResult;
@@ -80,46 +81,51 @@ export const OLTableRow: React.FC<Props> = ({ result, disabled }) => {
   const extraSize = getExtraSize(result.splits.length);
 
   return (
-    <OLResultAnimation
-      result={result}
-      style={{
-        paddingLeft: left,
-        paddingRight: right,
-      }}
-    >
-      <OLResultListItem>
-        <OLResultColumn align="center" style={{ width: LANDSCAPE_WIDTH.place }}>
-          <OLResultBadge place={result.place} />
-        </OLResultColumn>
+    <OLFollowMenu>
+      <OLResultAnimation
+        result={result}
+        style={{
+          paddingLeft: left,
+          paddingRight: right,
+        }}
+      >
+        <OLResultListItem>
+          <OLResultColumn
+            align="center"
+            style={{ width: LANDSCAPE_WIDTH.place }}
+          >
+            <OLResultBadge place={result.place} />
+          </OLResultColumn>
 
-        <OLResultColumn style={{ width: LANDSCAPE_WIDTH.name + extraSize }}>
-          <OLResultName name={result.name} />
-          <OLResultClub club={result.club} />
-        </OLResultColumn>
+          <OLResultColumn style={{ width: LANDSCAPE_WIDTH.name + extraSize }}>
+            <OLResultName name={result.name} />
+            <OLResultClub club={result.club} />
+          </OLResultColumn>
 
-        <OLResultColumn style={{ width: LANDSCAPE_WIDTH.start }}>
-          <OLStartTime time={result.start} />
-        </OLResultColumn>
+          <OLResultColumn style={{ width: LANDSCAPE_WIDTH.start }}>
+            <OLStartTime time={result.start} />
+          </OLResultColumn>
 
-        {result.splits.map(split => {
-          return (
-            <OLResultColumn
-              style={{ width: LANDSCAPE_WIDTH.splits }}
-              key={split.id}
-              align="flex-start"
-            >
-              <OLSplits split={split} best={split.place === 1} />
-            </OLResultColumn>
-          );
-        })}
+          {result.splits.map(split => {
+            return (
+              <OLResultColumn
+                style={{ width: LANDSCAPE_WIDTH.splits }}
+                key={split.id}
+                align="flex-start"
+              >
+                <OLSplits split={split} best={split.place === 1} />
+              </OLResultColumn>
+            );
+          })}
 
-        <OLResultColumn
-          align="flex-end"
-          style={{ width: LANDSCAPE_WIDTH.time }}
-        >
-          <OLRowTime result={result} disabled={disabled} />
-        </OLResultColumn>
-      </OLResultListItem>
-    </OLResultAnimation>
+          <OLResultColumn
+            align="flex-end"
+            style={{ width: LANDSCAPE_WIDTH.time }}
+          >
+            <OLRowTime result={result} disabled={disabled} />
+          </OLResultColumn>
+        </OLResultListItem>
+      </OLResultAnimation>
+    </OLFollowMenu>
   );
 };

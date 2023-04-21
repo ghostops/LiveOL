@@ -12,8 +12,9 @@ import { HomeHeader } from 'views/scenes/home/header';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { COLORS } from 'util/const';
 import { BackButton } from './backButton';
-import { AudioControlls } from 'views/scenes/results/audio';
+import { ResultMenuIcon } from 'views/scenes/results/menuIcon';
 import { OLPlus } from 'views/scenes/plus/container';
+import { ClubMenuIcon } from 'views/scenes/club/menuIcon';
 
 export type RootStack = {
   Home: undefined;
@@ -98,7 +99,7 @@ const Component: React.FC = () => {
             title: `${t('classes.resultsFor')}: ${
               props.route.params.className as string
             }`,
-            headerRight: () => <AudioControlls />,
+            headerRight: () => <ResultMenuIcon />,
           })}
           initialParams={{
             competitionId: 16011,
@@ -111,6 +112,7 @@ const Component: React.FC = () => {
           component={OLClubResults}
           options={props => ({
             title: props.route.params.title,
+            headerRight: () => <ClubMenuIcon />,
           })}
         />
 
