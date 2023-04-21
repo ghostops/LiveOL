@@ -13,6 +13,7 @@ import { Grid } from 'react-native-easy-grid';
 import { TFunction, useTranslation } from 'react-i18next';
 import { OlSplit } from 'lib/graphql/generated/types';
 import { useGetSplitControlsQuery } from 'lib/graphql/generated/gql';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 interface OwnProps {
   competitionId: number;
@@ -94,6 +95,7 @@ export const ResultHeader: React.FC<OwnProps> = ({
   maxRowSize,
 }) => {
   const { t } = useTranslation();
+  const { left, right } = useSafeAreaInsets();
 
   const { data, loading, error } = useGetSplitControlsQuery({
     variables: { competitionId, className },
@@ -129,10 +131,11 @@ export const ResultHeader: React.FC<OwnProps> = ({
       style={{
         flexDirection: 'row',
         paddingVertical: px(20),
-        paddingRight: px(20),
+        paddingRight: px(20) + right,
         backgroundColor: '#e3e3e3',
         borderBottomColor: '#cccccc',
         borderBottomWidth: 1,
+        paddingLeft: left,
       }}
     >
       {!loading && !error && (

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { ActivityIndicator, FlatList, ScrollView, View } from 'react-native';
 import { COLORS, px } from 'util/const';
-import { OLSafeAreaView } from 'views/components/safeArea';
 import { OLTableRow } from 'views/components/result/table/row';
 import { OLText } from 'views/components/text';
 import { ResultHeader } from 'views/components/result/header';
@@ -35,40 +34,38 @@ export const OLResultsTable: React.FC<Props> = props => {
   }
 
   return (
-    <OLSafeAreaView>
-      <ScrollView horizontal>
-        <FlatList
-          nestedScrollEnabled
-          ListHeaderComponent={
-            <ResultHeader
-              className={props.className}
-              competitionId={props.competitionId}
-              maxRowSize={px(200)}
-              table
-            />
-          }
-          ListFooterComponent={<View style={{ height: 45 }} />}
-          data={props.results}
-          renderItem={renderResult}
-          keyExtractor={(item: OlResult) => item.name}
-          ListEmptyComponent={
-            <View
+    <ScrollView horizontal>
+      <FlatList
+        nestedScrollEnabled
+        ListHeaderComponent={
+          <ResultHeader
+            className={props.className}
+            competitionId={props.competitionId}
+            maxRowSize={px(200)}
+            table
+          />
+        }
+        ListFooterComponent={<View style={{ height: 45 }} />}
+        data={props.results}
+        renderItem={renderResult}
+        keyExtractor={(item: OlResult) => item.name}
+        ListEmptyComponent={
+          <View
+            style={{
+              paddingVertical: px(50),
+            }}
+          >
+            <OLText
+              size={18}
               style={{
-                paddingVertical: px(50),
+                textAlign: 'center',
               }}
             >
-              <OLText
-                size={18}
-                style={{
-                  textAlign: 'center',
-                }}
-              >
-                {t('classes.empty')}
-              </OLText>
-            </View>
-          }
-        />
-      </ScrollView>
-    </OLSafeAreaView>
+              {t('classes.empty')}
+            </OLText>
+          </View>
+        }
+      />
+    </ScrollView>
   );
 };

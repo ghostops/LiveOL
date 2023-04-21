@@ -1,11 +1,12 @@
 import React from 'react';
-import { Animated } from 'react-native';
+import { Animated, ViewStyle } from 'react-native';
 import { resultsChanged } from 'util/hasChanged';
 import { OlResult } from 'lib/graphql/generated/types';
 
 interface Props {
   result: OlResult;
   children: React.ReactNode;
+  style?: ViewStyle;
 }
 
 export const OLResultAnimation: React.FC<Props> = props => {
@@ -44,6 +45,8 @@ export const OLResultAnimation: React.FC<Props> = props => {
   });
 
   return (
-    <Animated.View style={{ backgroundColor }}>{props.children}</Animated.View>
+    <Animated.View style={{ backgroundColor, ...props.style }}>
+      {props.children}
+    </Animated.View>
   );
 };
