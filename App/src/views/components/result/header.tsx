@@ -1,7 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
-import { ViewStyle, FlexAlignType, View } from 'react-native';
-import { px } from 'util/const';
+import { ViewStyle, FlexAlignType, View, TouchableOpacity } from 'react-native';
+import { HIT_SLOP, px } from 'util/const';
 import { PORTRAIT_SIZE } from 'views/components/result/list/item';
 import { OLText } from '../text';
 import { OLResultColumn } from './item/column';
@@ -14,6 +14,7 @@ import { TFunction, useTranslation } from 'react-i18next';
 import { OlSplit } from 'lib/graphql/generated/types';
 import { useGetSplitControlsQuery } from 'lib/graphql/generated/gql';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useSortingStore } from 'store/sorting';
 
 interface OwnProps {
   competitionId: number;
@@ -23,6 +24,7 @@ interface OwnProps {
 }
 
 interface Label {
+  key: string;
   text: string;
   size?: number;
   style?: ViewStyle;
@@ -34,6 +36,7 @@ const labels =
   (table: boolean, maxSize: number, splits?: OlSplit[]): Label[] => {
     const all: Record<string, Label> = {
       place: {
+        key: 'place',
         size: PORTRAIT_SIZE.place,
         text: t('classes.header.place'),
         style: {
@@ -42,6 +45,7 @@ const labels =
         align: 'center',
       },
       name: {
+        key: 'name',
         size: PORTRAIT_SIZE.name,
         text: t('classes.header.name'),
         style: {
@@ -51,6 +55,7 @@ const labels =
         },
       },
       time: {
+        key: 'time',
         size: PORTRAIT_SIZE.time,
         text: t('classes.header.time'),
         align: 'flex-end',
@@ -59,6 +64,7 @@ const labels =
         },
       },
       start: {
+        key: 'start',
         size: PORTRAIT_SIZE.start,
         text: t('classes.header.start'),
         style: {
@@ -76,6 +82,7 @@ const labels =
       ...splits.map(
         s =>
           ({
+            key: `split-${s.id}`,
             text: s.name,
             style: {
               width: LANDSCAPE_WIDTH.splits,
@@ -97,31 +104,45 @@ export const ResultHeader: React.FC<OwnProps> = ({
   const { t } = useTranslation();
   const { left, right } = useSafeAreaInsets();
 
+  const { setSortingDirection, setSortingKey, sortingDirection } =
+    useSortingStore();
+
   const { data, loading, error } = useGetSplitControlsQuery({
     variables: { competitionId, className },
   });
 
   const splits: OlSplit[] = _.get(data, 'results.getSplitControls', []);
 
-  const renderCol = ({ text, size, align, style }: Label, index: number) => {
-    const key = `${text}:${index}`;
+  const renderCol = (
+    { text, size, align, style, key }: Label,
+    index: number,
+  ) => {
+    const indexKey = `${text}:${index}`;
 
     return (
       <OLResultColumn
         size={size}
-        key={key}
+        key={indexKey}
         align={align || 'flex-start'}
         style={style}
       >
-        <OLText
-          size={18}
-          style={{
-            color: '#444444',
+        <TouchableOpacity
+          onPress={() => {
+            setSortingKey(key);
+            setSortingDirection(sortingDirection === 'asc' ? 'desc' : 'asc');
           }}
-          numberOfLines={1}
+          hitSlop={HIT_SLOP}
         >
-          {text}
-        </OLText>
+          <OLText
+            size={18}
+            style={{
+              color: '#444444',
+            }}
+            numberOfLines={1}
+          >
+            {text}
+          </OLText>
+        </TouchableOpacity>
       </OLResultColumn>
     );
   };

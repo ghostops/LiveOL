@@ -21,6 +21,7 @@ const parseToNumber = (maybeNumber: any, fallback: number): number => {
 
 export const sortOptimal = (
     original: LiveresultatApi.result[],
+    sorting: string,
 ): LiveresultatApi.result[] => {
     let copy: ResultCopy[] = [...original];
 
@@ -35,8 +36,10 @@ export const sortOptimal = (
         };
     });
 
+    const [sortingKey, sortingDirection] = sorting.split(':');
+
     copy = copy.sort(
-        firstBy('place')
+        firstBy(sortingKey, sortingDirection as SortOrder)
         .thenBy('start')
         .thenBy('status')
     );

@@ -10,10 +10,14 @@ import { useDeviceRotationStore } from 'store/deviceRotation';
 import { RootStack } from 'lib/nav/router';
 import { useGetResultsQuery } from 'lib/graphql/generated/gql';
 import { OlResult } from 'lib/graphql/generated/types';
+import { useSortingStore } from 'store/sorting';
 
 export const OLResults: React.FC = () => {
   const focus = useIsFocused();
   const { isLandscape } = useDeviceRotationStore();
+  const { sortingKey, sortingDirection } = useSortingStore();
+
+  const sorting = `${sortingKey}:${sortingDirection}`;
 
   const {
     params: { className, competitionId },
@@ -21,8 +25,10 @@ export const OLResults: React.FC = () => {
 
   const playAudio = usePlayAudio();
 
+  console.log({ sorting });
+
   const { data, loading, error, refetch } = useGetResultsQuery({
-    variables: { competitionId, className },
+    variables: { competitionId, className, sorting },
   });
 
   const results: OlResult[] = _.get(data, 'results.getResults', null);

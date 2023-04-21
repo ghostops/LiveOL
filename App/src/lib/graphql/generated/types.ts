@@ -171,6 +171,7 @@ export type ResultsQueryGetClubResultsArgs = {
 export type ResultsQueryGetResultsArgs = {
   className?: InputMaybe<Scalars['String']>;
   competitionId?: InputMaybe<Scalars['Int']>;
+  sorting?: InputMaybe<Scalars['String']>;
 };
 
 export type ResultsQueryGetSplitControlsArgs = {
@@ -358,6 +359,7 @@ export type GetLastPassingsQuery = {
 export type GetResultsQueryVariables = Exact<{
   competitionId: Scalars['Int'];
   className: Scalars['String'];
+  sorting?: InputMaybe<Scalars['String']>;
 }>;
 
 export type GetResultsQuery = {

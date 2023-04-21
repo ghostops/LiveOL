@@ -352,9 +352,17 @@ export type GetLastPassingsQueryResult = Apollo.QueryResult<
   Types.GetLastPassingsQueryVariables
 >;
 export const GetResultsDocument = gql`
-  query GetResults($competitionId: Int!, $className: String!) {
+  query GetResults(
+    $competitionId: Int!
+    $className: String!
+    $sorting: String
+  ) {
     results {
-      getResults(competitionId: $competitionId, className: $className) {
+      getResults(
+        competitionId: $competitionId
+        className: $className
+        sorting: $sorting
+      ) {
         ...Result
       }
     }
@@ -376,6 +384,7 @@ export const GetResultsDocument = gql`
  *   variables: {
  *      competitionId: // value for 'competitionId'
  *      className: // value for 'className'
+ *      sorting: // value for 'sorting'
  *   },
  * });
  */
