@@ -1,7 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import { ViewStyle, FlexAlignType, View, TouchableOpacity } from 'react-native';
-import { HIT_SLOP, px } from 'util/const';
+import { HIT_SLOP } from 'util/const';
 import { PORTRAIT_SIZE } from 'views/components/result/list/item';
 import { OLText } from '../text';
 import { OLResultColumn } from './item/column';
@@ -15,6 +15,10 @@ import { OlSplit } from 'lib/graphql/generated/types';
 import { useGetSplitControlsQuery } from 'lib/graphql/generated/gql';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useSortingStore } from 'store/sorting';
+import { OLIcon } from '../icon';
+import { useTheme } from 'hooks/useTheme';
+import { useOLNavigation } from 'hooks/useNavigation';
+import { useIap } from 'lib/iap';
 
 interface OwnProps {
   competitionId: number;
@@ -55,7 +59,8 @@ const labels =
         },
       },
       time: {
-        key: 'time',
+        // column is "result" - but "timeplus" gives more accurate UX
+        key: 'timeplus',
         size: PORTRAIT_SIZE.time,
         text: t('classes.header.time'),
         align: 'flex-end',
@@ -103,8 +108,11 @@ export const ResultHeader: React.FC<OwnProps> = ({
 }) => {
   const { t } = useTranslation();
   const { left, right } = useSafeAreaInsets();
+  const { fontPx, px } = useTheme();
+  const { plusActive } = useIap();
+  const { navigate } = useOLNavigation();
 
-  const { setSortingDirection, setSortingKey, sortingDirection } =
+  const { setSortingDirection, setSortingKey, sortingDirection, sortingKey } =
     useSortingStore();
 
   const { data, loading, error } = useGetSplitControlsQuery({
@@ -128,13 +136,35 @@ export const ResultHeader: React.FC<OwnProps> = ({
       >
         <TouchableOpacity
           onPress={() => {
+            if (!plusActive) {
+              navigate('Plus');
+              setSortingKey('place');
+              setSortingDirection('asc');
+              return;
+            }
+
             setSortingKey(key);
             setSortingDirection(sortingDirection === 'asc' ? 'desc' : 'asc');
           }}
           hitSlop={HIT_SLOP}
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}
         >
+          {key === sortingKey &&
+            !(sortingKey === 'place' && sortingDirection === 'asc') && (
+              <OLIcon
+                size={fontPx(14)}
+                name={
+                  sortingDirection === 'asc' ? 'chevron-up' : 'chevron-down'
+                }
+                style={{ marginRight: px(2) }}
+              />
+            )}
           <OLText
-            size={18}
+            size={16}
+            bold
             style={{
               color: '#444444',
             }}

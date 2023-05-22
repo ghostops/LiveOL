@@ -19,6 +19,20 @@ const parseToNumber = (maybeNumber: any, fallback: number): number => {
     return asNumber;
 };
 
+const sortSplit = (sortingKey: string) => (a: ResultCopy, b: ResultCopy) => {
+    const key = sortingKey.replace('split-', '');
+    
+    if (!a.splits[key]) {
+        return 1;
+    }
+
+    if (!b.splits[key]) {
+        return 0;
+    }
+
+    return a.splits[key] - b.splits[key];
+};
+
 export const sortOptimal = (
     original: LiveresultatApi.result[],
     sorting: string,
@@ -36,12 +50,16 @@ export const sortOptimal = (
         };
     });
 
-    const [sortingKey, sortingDirection] = sorting.split(':');
+    let [sortingKey, sortingDirection] = sorting.split(':');
+
+    const sortSplitFunction = sortSplit(sortingKey);
+
+    const sortingFunction: any = sortingKey.includes('split-') ? sortSplitFunction : sortingKey;
 
     copy = copy.sort(
-        firstBy(sortingKey, sortingDirection as SortOrder)
-        .thenBy('start')
-        .thenBy('status')
+        firstBy(sortingFunction, sortingDirection as SortOrder)
+        .thenBy('start', {ignoreCase: true})
+        .thenBy('status', {ignoreCase: true})
     );
 
     const sorted: LiveresultatApi.result[] = [];
