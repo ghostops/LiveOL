@@ -6,12 +6,19 @@ import { useActionSheet } from '@expo/react-native-action-sheet';
 import { useTranslation } from 'react-i18next';
 import { useIap } from 'lib/iap';
 import { useOLNavigation } from 'hooks/useNavigation';
+import { useFollowingStore } from 'store/following';
+import { RootStack } from 'lib/nav/router';
+import { RouteProp, useRoute } from '@react-navigation/native';
 
 export const ClubMenuIcon: React.FC = () => {
   const { showActionSheetWithOptions } = useActionSheet();
   const { t } = useTranslation();
   const { plusActive } = useIap();
   const { navigate } = useOLNavigation();
+  const followClub = useFollowingStore(state => state.followClub);
+  const {
+    params: { clubName, competitionId },
+  } = useRoute<RouteProp<RootStack, 'Club'>>();
 
   const onPress = () => {
     const options = [t('result.followClub'), t('info.update.hasUpdate.cancel')];
@@ -29,7 +36,7 @@ export const ClubMenuIcon: React.FC = () => {
               break;
             }
 
-            // ToDo: Add follow action here
+            followClub(`${competitionId}:${clubName}`);
             navigate('Follow');
 
             break;

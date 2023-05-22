@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { OlCompetition } from 'lib/graphql/generated/types';
 import { useTheme } from 'hooks/useTheme';
 import { OLHomePromo } from './promo';
-import { FollowWidget } from 'views/components/follow/FollowWidget';
+import { FollowWidget } from 'views/components/follow/followWidget';
 
 interface Props {
   competitions: OlCompetition[];

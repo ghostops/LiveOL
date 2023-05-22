@@ -7,6 +7,9 @@ import { useActionSheet } from '@expo/react-native-action-sheet';
 import { useTranslation } from 'react-i18next';
 import { useIap } from 'lib/iap';
 import { useOLNavigation } from 'hooks/useNavigation';
+import { useFollowingStore } from 'store/following';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import { RootStack } from 'lib/nav/router';
 
 export const ResultMenuIcon: React.FC = () => {
   const { showActionSheetWithOptions } = useActionSheet();
@@ -14,6 +17,10 @@ export const ResultMenuIcon: React.FC = () => {
   const { isMuted, setMuted } = useAudioStore();
   const { plusActive } = useIap();
   const { navigate } = useOLNavigation();
+  const followClass = useFollowingStore(state => state.followClass);
+  const {
+    params: { className, competitionId },
+  } = useRoute<RouteProp<RootStack, 'Results'>>();
 
   const onPress = () => {
     const options = [
@@ -39,7 +46,7 @@ export const ResultMenuIcon: React.FC = () => {
               break;
             }
 
-            // ToDo: Add follow action here
+            followClass(`${competitionId}:${className}`);
             navigate('Follow');
 
             break;

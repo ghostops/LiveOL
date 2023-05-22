@@ -7,6 +7,7 @@ import { useOLNavigation } from 'hooks/useNavigation';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { RootStack } from 'lib/nav/router';
 import { OlResult } from 'lib/graphql/generated/types';
+import { useFollowingStore } from 'store/following';
 
 type Props = {
   result: OlResult;
@@ -21,6 +22,7 @@ export const OLRunnerContextMenu: React.FC<Props> = ({ children, result }) => {
   const {
     params: { competitionId },
   } = useRoute<RouteProp<RootStack, 'Results'>>();
+  const followRunner = useFollowingStore(state => state.followRunner);
 
   const onPress = () => {
     const options = [
@@ -42,8 +44,7 @@ export const OLRunnerContextMenu: React.FC<Props> = ({ children, result }) => {
               break;
             }
 
-            // ToDo: Add follow action here
-
+            followRunner(result.id);
             navigate('Follow');
             break;
           case 1:
