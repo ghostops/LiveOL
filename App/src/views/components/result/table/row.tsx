@@ -15,7 +15,7 @@ import { OLResultAnimation } from 'views/components/result/item/animation';
 import { OlResult } from 'lib/graphql/generated/types';
 import { isLiveRunning } from 'util/isLive';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { OLFollowMenu } from '../follow';
+import { OLRunnerContextMenu } from '../contextMenu';
 
 interface OwnProps {
   result: OlResult;
@@ -81,7 +81,7 @@ export const OLTableRow: React.FC<Props> = ({ result, disabled }) => {
   const extraSize = getExtraSize(result.splits.length);
 
   return (
-    <OLFollowMenu>
+    <OLRunnerContextMenu result={result}>
       <OLResultAnimation
         result={result}
         style={{
@@ -126,6 +126,6 @@ export const OLTableRow: React.FC<Props> = ({ result, disabled }) => {
           </OLResultColumn>
         </OLResultListItem>
       </OLResultAnimation>
-    </OLFollowMenu>
+    </OLRunnerContextMenu>
   );
 };

@@ -88,7 +88,10 @@ export const OLRefetcherBar: React.FunctionComponent<Props> = ({
           transform: [{ scale: animatedHint }],
         }}
       >
-        <OLText size={14} style={{ backgroundColor: 'white' }}>
+        <OLText
+          size={14}
+          style={{ backgroundColor: 'rgba(255, 255, 255, .5)' }}
+        >
           {t('classes.timerHint')}
         </OLText>
       </Animated.View>

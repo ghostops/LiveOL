@@ -14,7 +14,7 @@ import { OLResultLiveRunning } from '../item/liveRunning';
 import { isLiveRunning, startIsAfterNow } from 'util/isLive';
 import { OLClassName } from '../item/className';
 import { OlResult } from 'lib/graphql/generated/types';
-import { OLFollowMenu } from '../follow';
+import { OLRunnerContextMenu } from '../contextMenu';
 
 interface OwnProps {
   result: OlResult;
@@ -59,7 +59,7 @@ const OLItemTime: React.FC<Props> = ({ result, disabled }) => {
 
 export const OLResultItem: React.FC<Props> = ({ result, club, disabled }) => {
   return (
-    <OLFollowMenu>
+    <OLRunnerContextMenu result={result}>
       <OLResultAnimation result={result}>
         <OLResultListItem>
           <OLResultColumn size={PORTRAIT_SIZE.place} align="center">
@@ -78,6 +78,6 @@ export const OLResultItem: React.FC<Props> = ({ result, club, disabled }) => {
           </OLResultColumn>
         </OLResultListItem>
       </OLResultAnimation>
-    </OLFollowMenu>
+    </OLRunnerContextMenu>
   );
 };
