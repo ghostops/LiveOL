@@ -42,6 +42,9 @@ export const OLRunnerContextMenu: React.FC<Props> = ({ children, result }) => {
               break;
             }
 
+            // ToDo: Add follow action here
+
+            navigate('Follow');
             break;
           case 1:
             navigate('Club', {

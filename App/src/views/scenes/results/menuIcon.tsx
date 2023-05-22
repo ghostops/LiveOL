@@ -39,6 +39,9 @@ export const ResultMenuIcon: React.FC = () => {
               break;
             }
 
+            // ToDo: Add follow action here
+            navigate('Follow');
+
             break;
         }
       },

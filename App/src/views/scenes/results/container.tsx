@@ -25,8 +25,6 @@ export const OLResults: React.FC = () => {
 
   const playAudio = usePlayAudio();
 
-  console.log({ sorting });
-
   const { data, loading, error, refetch } = useGetResultsQuery({
     variables: { competitionId, className, sorting },
   });

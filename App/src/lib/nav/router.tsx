@@ -15,6 +15,7 @@ import { BackButton } from './backButton';
 import { ResultMenuIcon } from 'views/scenes/results/menuIcon';
 import { OLPlus } from 'views/scenes/plus/container';
 import { ClubMenuIcon } from 'views/scenes/club/menuIcon';
+import { OLFollow } from 'views/scenes/follow/container';
 
 export type RootStack = {
   Home: undefined;
@@ -37,6 +38,7 @@ export type RootStack = {
     title: string;
   };
   Plus: undefined;
+  Follow: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStack>();
@@ -121,6 +123,14 @@ const Component: React.FC = () => {
           component={OLPlus}
           options={{
             title: 'LiveOL+',
+          }}
+        />
+
+        <Stack.Screen
+          name="Follow"
+          component={OLFollow}
+          options={{
+            title: t('follow.title'),
           }}
         />
       </Stack.Navigator>

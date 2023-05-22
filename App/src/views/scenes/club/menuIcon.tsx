@@ -29,6 +29,9 @@ export const ClubMenuIcon: React.FC = () => {
               break;
             }
 
+            // ToDo: Add follow action here
+            navigate('Follow');
+
             break;
         }
       },
