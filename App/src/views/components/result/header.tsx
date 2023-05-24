@@ -181,7 +181,7 @@ export const ResultHeader: React.FC<OwnProps> = ({
     <View
       style={{
         flexDirection: 'row',
-        paddingVertical: px(20),
+        paddingVertical: px(6),
         paddingRight: px(20) + right,
         backgroundColor: '#e3e3e3',
         borderBottomColor: '#cccccc',

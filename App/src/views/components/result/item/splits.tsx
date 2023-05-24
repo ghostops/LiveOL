@@ -17,11 +17,7 @@ export const OLSplits: React.FC<Props> = ({ split, best }) => {
   }
 
   return (
-    <View
-      style={{
-        flex: 1,
-      }}
-    >
+    <View>
       <OLText
         bold={best}
         size={16}

@@ -17,7 +17,7 @@ export const ResultMenuIcon: React.FC = () => {
   const { isMuted, setMuted } = useAudioStore();
   const { plusActive } = useIap();
   const { navigate } = useOLNavigation();
-  const followClass = useFollowingStore(state => state.followClass);
+  const followClass = useFollowingStore(state => state.follow);
   const {
     params: { className, competitionId },
   } = useRoute<RouteProp<RootStack, 'Results'>>();
@@ -46,7 +46,11 @@ export const ResultMenuIcon: React.FC = () => {
               break;
             }
 
-            followClass(`${competitionId}:${className}`);
+            followClass({
+              id: `${competitionId}:${className}`,
+              name: className,
+              type: 'class',
+            });
             navigate('Follow');
 
             break;

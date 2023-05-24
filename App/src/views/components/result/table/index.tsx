@@ -6,16 +6,21 @@ import { OLText } from 'views/components/text';
 import { ResultHeader } from 'views/components/result/header';
 import { OlResult } from 'lib/graphql/generated/types';
 import { useTranslation } from 'react-i18next';
+import { useScrollToRunner } from 'hooks/useScrollToRunner';
+import { useOlListItemHeight } from '../item/listItem';
 
 interface Props {
   results: OlResult[];
   competitionId: number;
   className: string;
   disabled?: boolean;
+  followedRunnerId?: string;
 }
 
 export const OLResultsTable: React.FC<Props> = props => {
   const { t } = useTranslation();
+  const flatListRef = useScrollToRunner(props);
+  const listItemHeight = useOlListItemHeight();
 
   const renderResult = ({ item }: any) => {
     const result: OlResult = item;
@@ -25,6 +30,7 @@ export const OLResultsTable: React.FC<Props> = props => {
         key={result.start + result.name}
         result={result}
         disabled={props.disabled}
+        followed={props.followedRunnerId === result.id}
       />
     );
   };
@@ -36,7 +42,14 @@ export const OLResultsTable: React.FC<Props> = props => {
   return (
     <ScrollView horizontal>
       <FlatList
+        ref={flatListRef}
         nestedScrollEnabled
+        getItemLayout={(_data, index) => ({
+          index,
+          length: listItemHeight,
+          offset: index * listItemHeight,
+        })}
+        stickyHeaderIndices={[0]}
         ListHeaderComponent={
           <ResultHeader
             className={props.className}

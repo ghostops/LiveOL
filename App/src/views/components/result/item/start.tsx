@@ -7,11 +7,7 @@ interface Props {
 }
 
 export const OLStartTime: React.FC<Props> = ({ time }) => (
-  <View
-    style={{
-      flex: 1,
-    }}
-  >
+  <View>
     <OLText size={16}>{time}</OLText>
   </View>
 );

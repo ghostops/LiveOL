@@ -15,7 +15,7 @@ export const ClubMenuIcon: React.FC = () => {
   const { t } = useTranslation();
   const { plusActive } = useIap();
   const { navigate } = useOLNavigation();
-  const followClub = useFollowingStore(state => state.followClub);
+  const followClub = useFollowingStore(state => state.follow);
   const {
     params: { clubName, competitionId },
   } = useRoute<RouteProp<RootStack, 'Club'>>();
@@ -36,7 +36,11 @@ export const ClubMenuIcon: React.FC = () => {
               break;
             }
 
-            followClub(`${competitionId}:${clubName}`);
+            followClub({
+              id: `${competitionId}:${clubName}`,
+              name: clubName,
+              type: 'club',
+            });
             navigate('Follow');
 
             break;

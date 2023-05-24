@@ -1,32 +1,47 @@
 import React from 'react';
-import { View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { OLText } from '../text';
 import { useTranslation } from 'react-i18next';
 import { useIap } from 'lib/iap';
 import { useFollowingStore } from 'store/following';
+import { useTheme } from 'hooks/useTheme';
+import { useOLNavigation } from 'hooks/useNavigation';
+import { FollowItem } from './followItem';
 
 export const FollowWidget: React.FC = () => {
+  const { px, colors } = useTheme();
   const { t } = useTranslation();
+  const { navigate } = useOLNavigation();
   const { plusActive } = useIap();
-  const { followingClasses, followingRunners, followingClubs } =
-    useFollowingStore();
+  const { following } = useFollowingStore();
 
-  if (!plusActive) {
+  if (!plusActive || !following.length) {
     return null;
   }
 
   return (
-    <View style={{ backgroundColor: 'red' }}>
-      <OLText size={16}>{t('follow.title')}</OLText>
-      {followingClasses.map(id => (
-        <OLText size={12}>{id}</OLText>
-      ))}
-      {followingRunners.map(id => (
-        <OLText size={12}>{id}</OLText>
-      ))}
-      {followingClubs.map(id => (
-        <OLText size={12}>{id}</OLText>
-      ))}
-    </View>
+    <TouchableOpacity
+      onPress={() => navigate('Follow')}
+      activeOpacity={1}
+      style={{
+        paddingTop: px(16),
+        backgroundColor: colors.MAIN,
+      }}
+    >
+      <OLText
+        size={16}
+        style={{ textAlign: 'center', paddingBottom: px(16), color: 'white' }}
+        bold
+        uppercase
+      >
+        {t('follow.title')}
+      </OLText>
+
+      <View style={{ backgroundColor: 'white' }}>
+        {following.map(follow => (
+          <FollowItem key={follow.id} item={follow} />
+        ))}
+      </View>
+    </TouchableOpacity>
   );
 };

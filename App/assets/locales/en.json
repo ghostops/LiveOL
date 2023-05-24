@@ -159,6 +159,11 @@
     }
   },
   "follow": {
-    "title": "Following"
+    "title": "Following",
+    "unfollow": {
+      "title": "Do you want to stop following?",
+      "cta": "Unfollow",
+      "hint": "Long-press to unfollow"
+    }
   }
 }

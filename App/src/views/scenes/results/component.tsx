@@ -5,15 +5,17 @@ import { OLRefetcher } from 'views/components/refetcher';
 import { OLResultsList } from 'views/components/result/list';
 import { OLResultsTable } from 'views/components/result/table';
 import { OlResult } from 'lib/graphql/generated/types';
+import { OLLoading } from 'views/components/loading';
 
 interface Props {
   refetch: () => Promise<void>;
   results: OlResult[];
   landscape: boolean;
   focus: boolean;
-
   competitionId: number;
   className: string;
+  followedRunnerId?: string;
+  loading?: boolean;
 }
 
 interface State {
@@ -76,6 +78,7 @@ export class OLResults extends React.PureComponent<Props, State> {
               competitionId={competitionId}
               className={className}
               disabled={!this.props.focus}
+              followedRunnerId={this.props.followedRunnerId}
             />
           )
         }
@@ -88,9 +91,12 @@ export class OLResults extends React.PureComponent<Props, State> {
               competitionId={competitionId}
               className={className}
               disabled={!this.props.focus}
+              followedRunnerId={this.props.followedRunnerId}
             />
           )
         }
+
+        {this.props.loading && <OLLoading badge />}
       </>
     );
   }

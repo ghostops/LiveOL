@@ -20,6 +20,7 @@ import { OLRunnerContextMenu } from '../contextMenu';
 interface OwnProps {
   result: OlResult;
   disabled?: boolean;
+  followed?: boolean;
 }
 
 type Props = OwnProps;
@@ -75,7 +76,7 @@ const OLRowTime: React.FC<Props> = ({ result, disabled }) => {
   );
 };
 
-export const OLTableRow: React.FC<Props> = ({ result, disabled }) => {
+export const OLTableRow: React.FC<Props> = ({ result, disabled, followed }) => {
   const { left, right } = useSafeAreaInsets();
 
   const extraSize = getExtraSize(result.splits.length);
@@ -88,6 +89,7 @@ export const OLTableRow: React.FC<Props> = ({ result, disabled }) => {
           paddingLeft: left,
           paddingRight: right,
         }}
+        followed={followed}
       >
         <OLResultListItem>
           <OLResultColumn

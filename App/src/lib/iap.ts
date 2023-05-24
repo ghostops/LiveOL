@@ -54,7 +54,9 @@ export const useIap = () => {
         }
 
         if (Platform.OS === 'android') {
-          // await Purchases.configure({ apiKey: <public_google_api_key> });
+          Purchases.configure({
+            apiKey: 'goog_OsqyCxWJutnnvzoYlgjzKhnpYOS',
+          });
         }
 
         await loadProducts();

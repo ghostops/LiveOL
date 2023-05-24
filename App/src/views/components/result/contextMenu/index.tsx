@@ -22,7 +22,7 @@ export const OLRunnerContextMenu: React.FC<Props> = ({ children, result }) => {
   const {
     params: { competitionId },
   } = useRoute<RouteProp<RootStack, 'Results'>>();
-  const followRunner = useFollowingStore(state => state.followRunner);
+  const followRunner = useFollowingStore(state => state.follow);
 
   const onPress = () => {
     const options = [
@@ -44,7 +44,11 @@ export const OLRunnerContextMenu: React.FC<Props> = ({ children, result }) => {
               break;
             }
 
-            followRunner(result.id);
+            followRunner({
+              id: result.id,
+              name: result.name,
+              type: 'runner',
+            });
             navigate('Follow');
             break;
           case 1:

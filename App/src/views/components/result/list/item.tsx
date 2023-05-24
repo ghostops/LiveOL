@@ -16,13 +16,12 @@ import { OLClassName } from '../item/className';
 import { OlResult } from 'lib/graphql/generated/types';
 import { OLRunnerContextMenu } from '../contextMenu';
 
-interface OwnProps {
+type Props = {
   result: OlResult;
   disabled?: boolean;
   club?: boolean;
-}
-
-type Props = OwnProps;
+  followed?: boolean;
+};
 
 export const PORTRAIT_SIZE = {
   place: 15,
@@ -31,7 +30,10 @@ export const PORTRAIT_SIZE = {
   time: 35,
 };
 
-const OLItemTime: React.FC<Props> = ({ result, disabled }) => {
+const OLItemTime: React.FC<Pick<Props, 'result' | 'disabled'>> = ({
+  result,
+  disabled,
+}) => {
   if (disabled) {
     return null;
   }
@@ -57,10 +59,15 @@ const OLItemTime: React.FC<Props> = ({ result, disabled }) => {
   );
 };
 
-export const OLResultItem: React.FC<Props> = ({ result, club, disabled }) => {
+export const OLResultItem: React.FC<Props> = ({
+  result,
+  club,
+  disabled,
+  followed,
+}) => {
   return (
     <OLRunnerContextMenu result={result}>
-      <OLResultAnimation result={result}>
+      <OLResultAnimation result={result} followed={followed}>
         <OLResultListItem>
           <OLResultColumn size={PORTRAIT_SIZE.place} align="center">
             <OLResultBadge place={result.place} />

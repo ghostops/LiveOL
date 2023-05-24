@@ -31,6 +31,7 @@ export type RootStack = {
   Results: {
     className: string;
     competitionId: number;
+    runnerId?: string;
   };
   Club: {
     clubName: string;

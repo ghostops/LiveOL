@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { ActivityIndicator, FlatList, View } from 'react-native';
 import { COLORS, px } from 'util/const';
 import { OLResultItem } from 'views/components/result/list/item';
-import { OLSafeAreaView } from 'views/components/safeArea';
 import { OLText } from 'views/components/text';
 import { ResultHeader } from 'views/components/result/header';
 import { OlResult } from 'lib/graphql/generated/types';
 import { useTranslation } from 'react-i18next';
+import { useScrollToRunner } from 'hooks/useScrollToRunner';
+import { useOlListItemHeight } from '../item/listItem';
 
 interface Props {
   results: OlResult[];
@@ -14,59 +15,70 @@ interface Props {
   className: string;
   disabled?: boolean;
   club?: boolean;
+  followedRunnerId?: string;
 }
 
 export const OLResultsList: React.FC<Props> = props => {
   const { t } = useTranslation();
+  const flatListRef = useScrollToRunner(props);
+  const listItemHeight = useOlListItemHeight();
 
-  const renderResult = ({ item }: any) => {
-    const result: OlResult = item;
+  const renderItem = useCallback(
+    ({ item }: any) => {
+      const result: OlResult = item;
 
-    return (
-      <OLResultItem
-        key={result.start + result.name}
-        result={result}
-        disabled={props.disabled}
-        club={props.club}
-      />
-    );
-  };
+      return (
+        <OLResultItem
+          key={result.start + result.name}
+          result={result}
+          disabled={props.disabled}
+          club={props.club}
+          followed={props.followedRunnerId === result.id}
+        />
+      );
+    },
+    [props.club, props.disabled, props.followedRunnerId],
+  );
 
   if (!props.results) {
     return <ActivityIndicator size="large" color={COLORS.MAIN} />;
   }
 
   return (
-    <OLSafeAreaView>
-      <FlatList
-        nestedScrollEnabled
-        ListHeaderComponent={
-          <ResultHeader
-            className={props.className}
-            competitionId={props.competitionId}
-          />
-        }
-        ListFooterComponent={<View style={{ height: 45 }} />}
-        data={props.results}
-        renderItem={renderResult}
-        keyExtractor={(item: OlResult) => item.name}
-        ListEmptyComponent={
-          <View
+    <FlatList
+      ref={flatListRef}
+      getItemLayout={(_data, index) => ({
+        index,
+        length: listItemHeight,
+        offset: index * listItemHeight,
+      })}
+      stickyHeaderIndices={[0]}
+      ListHeaderComponent={
+        <ResultHeader
+          className={props.className}
+          competitionId={props.competitionId}
+        />
+      }
+      ListFooterComponent={<View style={{ height: 45 }} />}
+      data={props.results}
+      renderItem={renderItem}
+      keyExtractor={(item: OlResult) => item.id}
+      ListEmptyComponent={
+        <View
+          style={{
+            paddingVertical: px(50),
+          }}
+        >
+          <OLText
+            size={18}
             style={{
-              paddingVertical: px(50),
+              textAlign: 'center',
             }}
           >
-            <OLText
-              size={18}
-              style={{
-                textAlign: 'center',
-              }}
-            >
-              {t('classes.empty')}
-            </OLText>
-          </View>
-        }
-      />
-    </OLSafeAreaView>
+            {t('classes.empty')}
+          </OLText>
+        </View>
+      }
+    />
   );
 };
