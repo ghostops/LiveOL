@@ -144,7 +144,7 @@ export const ResultHeader: React.FC<OwnProps> = ({
             }
 
             if (!plusActive) {
-              navigate('Plus');
+              navigate('Plus', { feature: 'sorting' });
               setSortingKey('place');
               setSortingDirection('asc');
               return;

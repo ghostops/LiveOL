@@ -23,7 +23,7 @@ export const useIap = () => {
   const loadPurchase = useCallback(async () => {
     const info = await Purchases.getCustomerInfo();
     const isActive = !!info?.entitlements?.active?.plus?.latestPurchaseDate;
-    setPlusActive(true);
+    setPlusActive(isActive);
   }, [setPlusActive]);
 
   useEffect(() => {
@@ -114,6 +114,8 @@ export const useIap = () => {
       setLoading(false);
     }
   };
+
+  console.log(liveOlPlusProduct);
 
   return {
     buy: buyLiveOLPlus,

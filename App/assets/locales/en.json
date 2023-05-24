@@ -152,10 +152,23 @@
       "restoreError": "You cannot restore LiveOL+. Please reach out if you have previously purchased.",
       "feature": {
         "follow": {
-          "title": "Follow competitors",
-          "text": "Get updates of selected competitiors fast"
+          "title": "Follow runners",
+          "text": "Get access to selected runner results quickly."
+        },
+        "clubs": {
+          "title": "Follow clubs",
+          "text": "Quickly access the results of any club in a competition."
+        },
+        "classes": {
+          "title": "Follow classes",
+          "text": "Follow classes that you are the most interested in."
+        },
+        "sorting": {
+          "title": "Sorting the results",
+          "text": "Sort the results based on the result columns."
         }
-      }
+      },
+      "yearly": "per year"
     }
   },
   "follow": {

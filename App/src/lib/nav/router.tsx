@@ -16,6 +16,7 @@ import { ResultMenuIcon } from 'views/scenes/results/menuIcon';
 import { OLPlus } from 'views/scenes/plus/container';
 import { ClubMenuIcon } from 'views/scenes/club/menuIcon';
 import { OLFollow } from 'views/scenes/follow/container';
+import { OLPlusFeatureKey } from 'views/scenes/plus/component';
 
 export type RootStack = {
   Home: undefined;
@@ -38,7 +39,9 @@ export type RootStack = {
     competitionId: number;
     title: string;
   };
-  Plus: undefined;
+  Plus?: {
+    feature?: OLPlusFeatureKey;
+  };
   Follow: undefined;
 };
 

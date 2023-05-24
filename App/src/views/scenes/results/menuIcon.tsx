@@ -42,7 +42,7 @@ export const ResultMenuIcon: React.FC = () => {
             break;
           case 1:
             if (!plusActive) {
-              navigate('Plus');
+              navigate('Plus', { feature: 'followClass' });
               break;
             }
 

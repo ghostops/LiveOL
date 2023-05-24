@@ -32,7 +32,7 @@ export const ClubMenuIcon: React.FC = () => {
         switch (selectedIndex) {
           case 0:
             if (!plusActive) {
-              navigate('Plus');
+              navigate('Plus', { feature: 'followClub' });
               break;
             }
 
