@@ -23,7 +23,9 @@ export const OLHomePromo: React.FC = () => {
     return (
       <TouchableOpacity
         style={{ backgroundColor: colors.DARK, paddingVertical: px(8) }}
-        onPress={() => navigate('Plus')}
+        onPress={() => {
+          navigate('Plus');
+        }}
       >
         <OLText bold size={16} style={{ color: 'white', textAlign: 'center' }}>
           LiveOL+

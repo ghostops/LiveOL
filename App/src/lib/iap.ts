@@ -4,7 +4,7 @@ import { Alert, Platform } from 'react-native';
 import Purchases from 'react-native-purchases';
 import { usePlusStore } from 'store/plus';
 
-const LIVE_OL_PLUS_PRODUCT_ID = 'liveol_plus_onetime';
+const LIVE_OL_PLUS_PRODUCT_ID = 'liveol_plus';
 
 export const useIap = () => {
   const { t } = useTranslation();
@@ -23,7 +23,7 @@ export const useIap = () => {
   const loadPurchase = useCallback(async () => {
     const info = await Purchases.getCustomerInfo();
     const isActive = !!info?.entitlements?.active?.plus?.latestPurchaseDate;
-    setPlusActive(true);
+    setPlusActive(isActive);
   }, [setPlusActive]);
 
   useEffect(() => {
