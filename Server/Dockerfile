@@ -1,4 +1,4 @@
-FROM node:10
+FROM node:16-alpine
 
 WORKDIR /app
 
@@ -15,16 +15,15 @@ ENV REDIS_HOST $REDIS_HOST
 ENV REDIS_PASSWORD $REDIS_PASSWORD
 ENV ENV LIVE
 
-ADD ./Server/package.json ./
-ADD ./Server/yarn.lock ./
-RUN yarn install
+# Build folders
+ADD ./src ./src
 
-ADD ./Server/tsconfig.json ./
-ADD ./Server/.babelrc ./
-ADD ./Server/src ./src
+# Build files
+ADD ./package.json ./
+ADD ./yarn.lock ./
+ADD ./tsconfig.json ./
 
+RUN yarn
 RUN yarn build
 
-EXPOSE 4000
-
-CMD node ./build
+CMD ["node", "./build"]
