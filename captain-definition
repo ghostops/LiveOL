@@ -1,4 +1,8 @@
  {
   "schemaVersion": 2,
+<<<<<<< HEAD
   "dockerfilePath": "./Server/Dockerfile.production"
+=======
+  "dockerfilePath": "./Dockerfile.server"
+>>>>>>> parent of 82c991ef (dockerize the server)
  }
