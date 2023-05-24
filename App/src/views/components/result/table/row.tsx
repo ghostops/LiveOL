@@ -16,11 +16,13 @@ import { OlResult } from 'lib/graphql/generated/types';
 import { isLiveRunning } from 'util/isLive';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { OLRunnerContextMenu } from '../contextMenu';
+import { OLClassName } from '../item/className';
 
 interface OwnProps {
   result: OlResult;
   disabled?: boolean;
   followed?: boolean;
+  club?: boolean;
 }
 
 type Props = OwnProps;
@@ -76,7 +78,12 @@ const OLRowTime: React.FC<Props> = ({ result, disabled }) => {
   );
 };
 
-export const OLTableRow: React.FC<Props> = ({ result, disabled, followed }) => {
+export const OLTableRow: React.FC<Props> = ({
+  result,
+  disabled,
+  followed,
+  club,
+}) => {
   const { left, right } = useSafeAreaInsets();
 
   const extraSize = getExtraSize(result.splits.length);
@@ -89,9 +96,10 @@ export const OLTableRow: React.FC<Props> = ({ result, disabled, followed }) => {
           paddingLeft: left,
           paddingRight: right,
         }}
-        followed={followed}
       >
-        <OLResultListItem>
+        <OLResultListItem
+          style={{ backgroundColor: followed ? '#edded1' : 'transparent' }}
+        >
           <OLResultColumn
             align="center"
             style={{ width: LANDSCAPE_WIDTH.place }}
@@ -101,7 +109,8 @@ export const OLTableRow: React.FC<Props> = ({ result, disabled, followed }) => {
 
           <OLResultColumn style={{ width: LANDSCAPE_WIDTH.name + extraSize }}>
             <OLResultName name={result.name} />
-            <OLResultClub club={result.club} />
+            {!club && <OLResultClub club={result.club} />}
+            {club && <OLClassName className={result.class} />}
           </OLResultColumn>
 
           <OLResultColumn style={{ width: LANDSCAPE_WIDTH.start }}>

@@ -57,7 +57,7 @@ export const OLResults: React.FC = () => {
       refetch={async () => {
         await refetch({ className, competitionId });
       }}
-      landscape={isLandscape}
+      isLandscape={isLandscape}
       className={className}
       competitionId={competitionId}
       focus={focus}

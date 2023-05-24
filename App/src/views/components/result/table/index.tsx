@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { ActivityIndicator, FlatList, ScrollView, View } from 'react-native';
-import { COLORS, px } from 'util/const';
+import { FlatList, ScrollView, View } from 'react-native';
+import { px } from 'util/const';
 import { OLTableRow } from 'views/components/result/table/row';
 import { OLText } from 'views/components/text';
 import { ResultHeader } from 'views/components/result/header';
@@ -15,6 +15,7 @@ interface Props {
   className: string;
   disabled?: boolean;
   followedRunnerId?: string;
+  club?: boolean;
 }
 
 export const OLResultsTable: React.FC<Props> = props => {
@@ -22,21 +23,25 @@ export const OLResultsTable: React.FC<Props> = props => {
   const flatListRef = useScrollToRunner(props);
   const listItemHeight = useOlListItemHeight();
 
-  const renderResult = ({ item }: any) => {
-    const result: OlResult = item;
+  const renderResult = React.useCallback(
+    ({ item }: any) => {
+      const result: OlResult = item;
 
-    return (
-      <OLTableRow
-        key={result.start + result.name}
-        result={result}
-        disabled={props.disabled}
-        followed={props.followedRunnerId === result.id}
-      />
-    );
-  };
+      return (
+        <OLTableRow
+          key={result.start + result.name}
+          result={result}
+          disabled={props.disabled}
+          followed={props.followedRunnerId === result.id}
+          club={props.club}
+        />
+      );
+    },
+    [props.club, props.disabled, props.followedRunnerId],
+  );
 
   if (!props.results) {
-    return <ActivityIndicator size="large" color={COLORS.MAIN} />;
+    return null;
   }
 
   return (

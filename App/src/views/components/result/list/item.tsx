@@ -67,8 +67,10 @@ export const OLResultItem: React.FC<Props> = ({
 }) => {
   return (
     <OLRunnerContextMenu result={result}>
-      <OLResultAnimation result={result} followed={followed}>
-        <OLResultListItem>
+      <OLResultAnimation result={result}>
+        <OLResultListItem
+          style={{ backgroundColor: followed ? '#edded1' : 'transparent' }}
+        >
           <OLResultColumn size={PORTRAIT_SIZE.place} align="center">
             <OLResultBadge place={result.place} />
           </OLResultColumn>

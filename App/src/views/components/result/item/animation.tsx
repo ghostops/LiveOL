@@ -7,7 +7,6 @@ interface Props {
   result: OlResult;
   children: React.ReactNode;
   style?: ViewStyle;
-  followed?: boolean;
 }
 
 export const OLResultAnimation: React.FC<Props> = props => {
@@ -39,12 +38,6 @@ export const OLResultAnimation: React.FC<Props> = props => {
 
     setResult(props.result);
   }, [animation, props.result, result, startAnimation]);
-
-  useEffect(() => {
-    if (props.followed) {
-      startAnimation();
-    }
-  }, [props.followed, startAnimation]);
 
   const backgroundColor = animation.interpolate({
     inputRange: [0, 1],

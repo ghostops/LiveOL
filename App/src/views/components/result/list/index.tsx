@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
-import { ActivityIndicator, FlatList, View } from 'react-native';
-import { COLORS, px } from 'util/const';
+import { FlatList, View } from 'react-native';
+import { px } from 'util/const';
 import { OLResultItem } from 'views/components/result/list/item';
 import { OLText } from 'views/components/text';
 import { ResultHeader } from 'views/components/result/header';
@@ -8,6 +8,7 @@ import { OlResult } from 'lib/graphql/generated/types';
 import { useTranslation } from 'react-i18next';
 import { useScrollToRunner } from 'hooks/useScrollToRunner';
 import { useOlListItemHeight } from '../item/listItem';
+import { OLSafeAreaView } from 'views/components/safeArea';
 
 interface Props {
   results: OlResult[];
@@ -41,44 +42,47 @@ export const OLResultsList: React.FC<Props> = props => {
   );
 
   if (!props.results) {
-    return <ActivityIndicator size="large" color={COLORS.MAIN} />;
+    return null;
   }
 
   return (
-    <FlatList
-      ref={flatListRef}
-      getItemLayout={(_data, index) => ({
-        index,
-        length: listItemHeight,
-        offset: index * listItemHeight,
-      })}
-      stickyHeaderIndices={[0]}
-      ListHeaderComponent={
-        <ResultHeader
-          className={props.className}
-          competitionId={props.competitionId}
-        />
-      }
-      ListFooterComponent={<View style={{ height: 45 }} />}
-      data={props.results}
-      renderItem={renderItem}
-      keyExtractor={(item: OlResult) => item.id}
-      ListEmptyComponent={
-        <View
-          style={{
-            paddingVertical: px(50),
-          }}
-        >
-          <OLText
-            size={18}
+    <OLSafeAreaView>
+      <FlatList
+        ref={flatListRef}
+        getItemLayout={(_data, index) => ({
+          index,
+          length: listItemHeight,
+          offset: index * listItemHeight,
+        })}
+        stickyHeaderIndices={[0]}
+        ListHeaderComponent={
+          <ResultHeader
+            className={props.className}
+            competitionId={props.competitionId}
+            sorting={!props.club}
+          />
+        }
+        ListFooterComponent={<View style={{ height: 45 }} />}
+        data={props.results}
+        renderItem={renderItem}
+        keyExtractor={(item: OlResult) => item.id}
+        ListEmptyComponent={
+          <View
             style={{
-              textAlign: 'center',
+              paddingVertical: px(50),
             }}
           >
-            {t('classes.empty')}
-          </OLText>
-        </View>
-      }
-    />
+            <OLText
+              size={18}
+              style={{
+                textAlign: 'center',
+              }}
+            >
+              {t('classes.empty')}
+            </OLText>
+          </View>
+        }
+      />
+    </OLSafeAreaView>
   );
 };

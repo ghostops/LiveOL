@@ -25,6 +25,7 @@ interface OwnProps {
   className: string;
   table?: boolean;
   maxRowSize?: number;
+  sorting?: boolean;
 }
 
 interface Label {
@@ -105,6 +106,7 @@ export const ResultHeader: React.FC<OwnProps> = ({
   className,
   competitionId,
   maxRowSize,
+  sorting = true,
 }) => {
   const { t } = useTranslation();
   const { left, right } = useSafeAreaInsets();
@@ -135,7 +137,12 @@ export const ResultHeader: React.FC<OwnProps> = ({
         style={style}
       >
         <TouchableOpacity
+          activeOpacity={sorting ? 0.7 : 1}
           onPress={() => {
+            if (!sorting) {
+              return;
+            }
+
             if (!plusActive) {
               navigate('Plus');
               setSortingKey('place');
