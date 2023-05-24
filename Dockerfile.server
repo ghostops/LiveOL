@@ -2,10 +2,6 @@ FROM node:10
 
 WORKDIR /app
 
-<<<<<<< HEAD:Server/Dockerfile
-# Build folders
-ADD ./src ./src
-=======
 ARG EVENTOR_API_KEY_SE
 ARG EVENTOR_API_KEY_AU
 ARG SLACK_WEBHOOK
@@ -22,7 +18,6 @@ ENV ENV LIVE
 ADD ./Server/package.json ./
 ADD ./Server/yarn.lock ./
 RUN yarn install
->>>>>>> parent of 82c991ef (dockerize the server):Dockerfile.server
 
 ADD ./Server/tsconfig.json ./
 ADD ./Server/.babelrc ./
