@@ -16,12 +16,12 @@ ENV REDIS_PASSWORD $REDIS_PASSWORD
 ENV ENV LIVE
 
 # Build folders
-ADD ./Server/src ./src
+ADD ./src ./src
 
 # Build files
-ADD ./Server/package.json ./
-ADD ./Server/yarn.lock ./
-ADD ./Server/tsconfig.json ./
+ADD ./package.json ./
+ADD ./yarn.lock ./
+ADD ./tsconfig.json ./
 
 RUN yarn
 RUN yarn build
