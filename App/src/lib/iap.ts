@@ -92,7 +92,10 @@ export const useIap = () => {
       if (plusActive) {
         Alert.alert(t('plus.buy.restoreSuccess'));
       } else {
-        Alert.alert(t('plus.buy.restoreError'));
+        Alert.alert(
+          t('plus.buy.restoreError.title'),
+          t('plus.buy.restoreError.text'),
+        );
       }
     } catch (e: any) {
       if (e.userCancelled) {

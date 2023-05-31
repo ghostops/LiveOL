@@ -155,7 +155,10 @@
       "text": "Unlock exclusive benefits and power the project forward with a budget-friendly annual subscription, ensuring LiveOL thrives.",
       "restore": "Restore purchases",
       "restoreSuccess": "You have restored LiveOL+",
-      "restoreError": "You cannot restore LiveOL+. Please reach out if you have previously purchased.",
+      "restoreError": {
+        "title": "You cannot restore LiveOL+.",
+        "text": "Please reach out if you have previously purchased."
+      },
       "feature": {
         "follow": {
           "title": "Follow runners",
