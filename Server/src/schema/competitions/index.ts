@@ -29,6 +29,7 @@ export interface IOLCompetition {
     distance?: EventorCompetitionDistance;
     district?: string;
     signups?: number;
+    eventorUrl?: string,
 }
 
 export const marshallCompetition = (eventor?: EventorEventItem) => (liveres: LiveresultatApi.competition): IOLCompetition => {
@@ -39,6 +40,7 @@ export const marshallCompetition = (eventor?: EventorEventItem) => (liveres: Liv
         date: moment.utc(liveres.date).format(),
         clubLogoSizes: EVENTOR_CLUB_ICON_SIZES,
         eventorAvailable: false,
+        eventorUrl: undefined,
     };
 
     if (eventor) {
@@ -52,6 +54,7 @@ export const marshallCompetition = (eventor?: EventorEventItem) => (liveres: Liv
             distance: eventor.competitionDistance,
             district: eventor.district,
             signups: eventor.signups,
+            eventorUrl: eventor.url,
         };
     }
 
@@ -139,6 +142,10 @@ export const OLCompetition = new GraphQLObjectType({
         signups: {
             type: GraphQLInt,
             resolve: (comp: IOLCompetition) => comp.signups,
+        },
+        eventorUrl: {
+            type: GraphQLString,
+            resolve: (comp: IOLCompetition) => comp.eventorUrl,
         },
     }),
 });

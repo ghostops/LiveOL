@@ -15,6 +15,7 @@
     "timerHint": "Time until next refresh"
   },
   "competitions": {
+    "visitEventor": "See on Eventor",
     "canceled": "The competition has been canceled",
     "classes": "Classes",
     "date": "Date",
@@ -144,6 +145,11 @@
         "cta": "Check it out"
       }
     },
+    "status": {
+      "title": "LiveOL+",
+      "renew": "Thanks for supporting LiveOL, you subscription will renew by: {{ date }}",
+      "expire": "Thanks for having supported LiveOL, you subscription will expire by: {{ date }}"
+    },
     "buy": {
       "title": "Do more with LiveOL+",
       "text": "Unlock exclusive benefits and power the project forward with a budget-friendly annual subscription, ensuring LiveOL thrives.",
@@ -168,7 +174,9 @@
           "text": "Sort the results based on the result columns."
         }
       },
-      "yearly": "per year"
+      "yearly": "per year",
+      "error": "Something went wrong...",
+      "success": "LiveOL+ unlocked"
     }
   },
   "follow": {

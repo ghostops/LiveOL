@@ -25,8 +25,6 @@ interface EventorApiObject {
 }
 
 export class EventorCombiner {
-	private combinedApi;
-
 	constructor(private options: CombinerConstructorOptions) {}
 
 	public getCombinedApi = (): CombinedEventorApi => {

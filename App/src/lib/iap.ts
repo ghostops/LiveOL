@@ -4,8 +4,6 @@ import { Alert, Platform } from 'react-native';
 import Purchases from 'react-native-purchases';
 import { usePlusStore } from 'store/plus';
 
-const LIVE_OL_PLUS_PRODUCT_ID = 'liveol_plus';
-
 export const useIap = () => {
   const { t } = useTranslation();
 
@@ -14,26 +12,24 @@ export const useIap = () => {
   const {
     initialized,
     setInitialized,
-    setPlusActive,
-    plusActive,
     liveOlPlusProduct,
     setLiveOlPlusProduct,
+    setCustomerInfo,
+    customerInfo,
   } = usePlusStore();
+
+  const plusActive = customerInfo?.entitlements?.active?.plus !== undefined;
 
   const loadPurchase = useCallback(async () => {
     const info = await Purchases.getCustomerInfo();
-    const isActive = !!info?.entitlements?.active?.plus?.latestPurchaseDate;
-    setPlusActive(isActive);
-  }, [setPlusActive]);
+    setCustomerInfo(info);
+  }, [setCustomerInfo]);
 
   useEffect(() => {
     const loadProducts = async () => {
       try {
-        const products = await Purchases.getProducts([LIVE_OL_PLUS_PRODUCT_ID]);
-
-        const firstProduct = products[0];
-
-        setLiveOlPlusProduct(firstProduct);
+        const offerings = await Purchases.getOfferings();
+        setLiveOlPlusProduct(offerings.current);
       } catch (e) {
         console.warn(e);
       }
@@ -79,14 +75,8 @@ export const useIap = () => {
     try {
       setLoading(true);
 
-      await Purchases.purchaseProduct(LIVE_OL_PLUS_PRODUCT_ID);
+      await Purchases.purchasePackage(liveOlPlusProduct.availablePackages[0]);
       await loadPurchase();
-    } catch (e: any) {
-      if (e.userCancelled) {
-        return;
-      }
-
-      console.warn(e);
     } finally {
       setLoading(false);
     }
@@ -115,12 +105,13 @@ export const useIap = () => {
     }
   };
 
-  console.log(liveOlPlusProduct);
-
   return {
     buy: buyLiveOLPlus,
     restore: restoreLiveOLPlus,
-    displayPrice: liveOlPlusProduct?.priceString,
+    displayPrice: liveOlPlusProduct?.availablePackages[0].product.priceString,
+    plusWillRenew: customerInfo?.entitlements?.active?.plus?.willRenew,
+    plusExpirationDate:
+      customerInfo?.entitlements?.active?.plus?.expirationDate,
     plusActive,
     loading,
   };

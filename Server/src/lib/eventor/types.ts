@@ -24,6 +24,7 @@ export interface EventorEventItem extends EventorEventBase {
 		text: string;
 	}[];
 	signups: number;
+	url: string;
 }
 
 export interface EventorListItem extends EventorEventBase {

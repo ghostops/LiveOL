@@ -34,6 +34,7 @@ export const EventorCompetitionFragmentFragmentDoc = gql`
     distance
     district
     signups
+    eventorUrl
   }
 `;
 export const ClassFragmentDoc = gql`

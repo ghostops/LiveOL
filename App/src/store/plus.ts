@@ -1,21 +1,21 @@
-import { PurchasesStoreProduct } from 'react-native-purchases';
+import { CustomerInfo, PurchasesOffering } from 'react-native-purchases';
 import create from 'zustand';
 
 type PlusState = {
   initialized: boolean;
-  plusActive: boolean;
-  liveOlPlusProduct?: PurchasesStoreProduct;
-  setPlusActive: (value: boolean) => void;
+  customerInfo: CustomerInfo;
+  liveOlPlusProduct?: PurchasesOffering;
+  setCustomerInfo: (customerInfo: CustomerInfo) => void;
   setInitialized: () => void;
-  setLiveOlPlusProduct: (product: PurchasesStoreProduct) => void;
+  setLiveOlPlusProduct: (product: PurchasesOffering) => void;
 };
 
 export const usePlusStore = create<PlusState>()(set => ({
   initialized: false,
-  plusActive: false,
+  customerInfo: null,
   liveOlPlusProduct: undefined,
-  setPlusActive(value) {
-    set(() => ({ plusActive: value }));
+  setCustomerInfo(value) {
+    set(() => ({ customerInfo: value }));
   },
   setInitialized() {
     set(() => ({ initialized: true }));
