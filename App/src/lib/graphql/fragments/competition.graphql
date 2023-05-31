@@ -15,6 +15,7 @@ fragment EventorCompetitionFragment on OLCompetition {
   distance
   district
   signups
+  eventorUrl
 }
 
 fragment Class on OLClass {

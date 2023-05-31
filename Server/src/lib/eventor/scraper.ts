@@ -68,7 +68,7 @@ export class EventorScraper {
 			}
 		}
 
-		const parser = new EventResponseParser(data, this.baseUrl);
+		const parser = new EventResponseParser(data, this.baseUrl, url);
 		const parsed = parser.parse();
 
 		return parsed;

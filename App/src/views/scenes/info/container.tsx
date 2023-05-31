@@ -5,6 +5,9 @@ import { Alert, Linking } from 'react-native';
 import { useDeviceRotationStore } from 'store/deviceRotation';
 import { useTextStore } from 'store/text';
 import { useGetServerVersionQuery } from 'lib/graphql/generated/gql';
+import { useOLNavigation } from 'hooks/useNavigation';
+import { useIap } from 'lib/iap';
+import moment from 'moment';
 
 const translationCredits: { code: string; name: string }[] = [
   {
@@ -34,6 +37,10 @@ const translationCredits: { code: string; name: string }[] = [
 ];
 
 export const OLInfo: React.FC = () => {
+  const { plusActive, plusExpirationDate, plusWillRenew } = useIap();
+
+  const { navigate } = useOLNavigation();
+
   const { isLandscape } = useDeviceRotationStore();
 
   const { data } = useGetServerVersionQuery();
@@ -73,6 +80,10 @@ export const OLInfo: React.FC = () => {
     }
   };
 
+  const onGetLiveOlPlus = () => {
+    navigate('Plus');
+  };
+
   return (
     <Component
       contact={contact}
@@ -84,6 +95,13 @@ export const OLInfo: React.FC = () => {
       decreaseFontSize={decreaseTextSize}
       increaseFontSize={increaseTextSize}
       textSizeMultiplier={textSizeMultiplier}
+      onGetLiveOlPlus={onGetLiveOlPlus}
+      showGetLiveOlPlus={!plusActive}
+      plusExpirationDate={
+        plusExpirationDate &&
+        moment(plusExpirationDate).format(__DEV__ ? undefined : 'LL')
+      }
+      plusWillRenew={plusWillRenew}
     />
   );
 };

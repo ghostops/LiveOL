@@ -12,8 +12,11 @@ import { HomeHeader } from 'views/scenes/home/header';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { COLORS } from 'util/const';
 import { BackButton } from './backButton';
-import { AudioControlls } from 'views/scenes/results/audio';
-import { OLPromo } from 'views/scenes/promo/component';
+import { ResultMenuIcon } from 'views/scenes/results/menuIcon';
+import { OLPlus } from 'views/scenes/plus/container';
+import { ClubMenuIcon } from 'views/scenes/club/menuIcon';
+import { OLFollow } from 'views/scenes/follow/container';
+import { OLPlusFeatureKey } from 'views/scenes/plus/component';
 
 export type RootStack = {
   Home: undefined;
@@ -29,13 +32,17 @@ export type RootStack = {
   Results: {
     className: string;
     competitionId: number;
+    runnerId?: string;
   };
   Club: {
     clubName: string;
     competitionId: number;
     title: string;
   };
-  Promo: undefined;
+  Plus?: {
+    feature?: OLPlusFeatureKey;
+  };
+  Follow: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStack>();
@@ -98,7 +105,7 @@ const Component: React.FC = () => {
             title: `${t('classes.resultsFor')}: ${
               props.route.params.className as string
             }`,
-            headerRight: () => <AudioControlls />,
+            headerRight: () => <ResultMenuIcon />,
           })}
           initialParams={{
             competitionId: 16011,
@@ -111,14 +118,23 @@ const Component: React.FC = () => {
           component={OLClubResults}
           options={props => ({
             title: props.route.params.title,
+            headerRight: () => <ClubMenuIcon />,
           })}
         />
 
         <Stack.Screen
-          name="Promo"
-          component={OLPromo}
+          name="Plus"
+          component={OLPlus}
           options={{
             title: 'LiveOL+',
+          }}
+        />
+
+        <Stack.Screen
+          name="Follow"
+          component={OLFollow}
+          options={{
+            title: t('follow.title'),
           }}
         />
       </Stack.Navigator>

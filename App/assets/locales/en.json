@@ -1,5 +1,6 @@
 {
   "back": "Back",
+  "close": "Close",
   "classes": {
     "autoUpdate": "Turn on live updating results",
     "autoUpdateEnabled": "Live updating results enabled",
@@ -14,6 +15,7 @@
     "timerHint": "Time until next refresh"
   },
   "competitions": {
+    "visitEventor": "See on Eventor",
     "canceled": "The competition has been canceled",
     "classes": "Classes",
     "date": "Date",
@@ -31,6 +33,14 @@
       "title": "Latest passings"
     },
     "signups": "Signed up"
+  },
+  "result": {
+    "mute": "Mute audio",
+    "unmute": "Unmute audio",
+    "followClass": "Follow class",
+    "followRunner": "Follow runner",
+    "followClub": "Follow club",
+    "goToClub": "See club results"
   },
   "currentLanguage": "English",
   "distances": {
@@ -126,5 +136,58 @@
       "MU",
       "FIN"
     ]
+  },
+  "plus": {
+    "promo": {
+      "get": "Get LiveOL+",
+      "box": {
+        "text": "Get the most out of LiveOL and support its continued development. Check out LiveOL+ today:",
+        "cta": "Check it out"
+      }
+    },
+    "status": {
+      "title": "LiveOL+",
+      "renew": "Thanks for supporting LiveOL, you subscription will renew by: {{ date }}",
+      "expire": "Thanks for having supported LiveOL, you subscription will expire by: {{ date }}"
+    },
+    "buy": {
+      "title": "Do more with LiveOL+",
+      "text": "Unlock exclusive benefits and power the project forward with a budget-friendly annual subscription, ensuring LiveOL thrives.",
+      "restore": "Restore purchases",
+      "restoreSuccess": "You have restored LiveOL+",
+      "restoreError": {
+        "title": "You cannot restore LiveOL+.",
+        "text": "Please reach out if you have previously purchased."
+      },
+      "feature": {
+        "follow": {
+          "title": "Follow runners",
+          "text": "Get access to selected runner results quickly."
+        },
+        "clubs": {
+          "title": "Follow clubs",
+          "text": "Quickly access the results of any club in a competition."
+        },
+        "classes": {
+          "title": "Follow classes",
+          "text": "Follow classes that you are the most interested in."
+        },
+        "sorting": {
+          "title": "Sorting the results",
+          "text": "Sort the results based on the result columns."
+        }
+      },
+      "yearly": "per year",
+      "error": "Something went wrong...",
+      "success": "LiveOL+ unlocked"
+    }
+  },
+  "follow": {
+    "title": "Following",
+    "unfollow": {
+      "title": "Do you want to stop following?",
+      "cta": "Unfollow",
+      "hint": "Long-press to unfollow"
+    }
   }
 }

@@ -3,7 +3,6 @@ import * as _ from 'lodash';
 import { invertKeyValues } from '../helpers/invert';
 import * as moment from 'moment-timezone';
 import { EventorCompetitionType, EventorCompetitionDistance, EventorEventItem, EventorListItem } from './types';
-import { writeFileSync } from 'fs';
 
 const parseClubLogo = (base: string, path: string): string | null => {
 	if (!base || !path) return null;
@@ -213,7 +212,7 @@ export class ListResponseParser {
 }
 
 export class EventResponseParser {
-	constructor(private body: string, private base: string) {}
+	constructor(private body: string, private base: string, private eventUrl: string) {}
 
 	public parse = (): EventorEventItem => {
 		const $ = cheerio.load(this.body, { decodeEntities: false });
@@ -297,6 +296,7 @@ export class EventResponseParser {
 			competitionType: parseCompetitionType(mappedInfoData.competitionType),
 			canceled: (mappedInfoData as any).status === 'inställd',
 			clubLogoUrl: parseClubLogo(this.base, mappedInfoData.clubLogoUrl),
+			url: this.eventUrl,
 		};
 	};
 }

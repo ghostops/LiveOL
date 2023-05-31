@@ -1,6 +1,5 @@
 import React from 'react';
-import Toast from 'react-native-toast-message';
-import { TouchableOpacity, Dimensions, View } from 'react-native';
+import { Dimensions, View } from 'react-native';
 import { px } from 'util/const';
 import { OLStartTime } from 'views/components/result/item/start';
 import { OLSplits } from 'views/components/result/item/splits';
@@ -15,10 +14,15 @@ import { OLResultBadge } from 'views/components/result/item/badge';
 import { OLResultAnimation } from 'views/components/result/item/animation';
 import { OlResult } from 'lib/graphql/generated/types';
 import { isLiveRunning } from 'util/isLive';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { OLRunnerContextMenu } from '../contextMenu';
+import { OLClassName } from '../item/className';
 
 interface OwnProps {
   result: OlResult;
   disabled?: boolean;
+  followed?: boolean;
+  club?: boolean;
 }
 
 type Props = OwnProps;
@@ -52,47 +56,50 @@ export const getExtraSize = (splits: number): number => {
   return extraSize - px(20);
 };
 
-export class OLTableRow extends React.PureComponent<Props> {
-  private moreInfo = () => {
-    Toast.show({
-      type: 'info',
-      text1: this.props.result.name,
-      text2: this.props.result.club,
-    });
-  };
+const OLRowTime: React.FC<Props> = ({ result, disabled }) => {
+  if (disabled) {
+    return null;
+  }
 
-  renderTime = () => {
-    const { result, disabled } = this.props;
-
-    if (disabled) {
-      return null;
+  if (!result.result.length) {
+    if (isLiveRunning(result)) {
+      return <OLResultLiveRunning date={result.liveRunningStart} />;
     }
+  }
 
-    if (!result.result.length) {
-      if (isLiveRunning(result)) {
-        return <OLResultLiveRunning date={result.liveRunningStart} />;
-      }
-    }
+  return (
+    <>
+      <OLResultTime status={result.status} time={result.result} />
 
-    return (
-      <>
-        <OLResultTime status={result.status} time={result.result} />
+      <View style={{ height: px(4) }} />
 
-        <View style={{ height: px(4) }} />
+      <OLResultTimeplus status={result.status} timeplus={result.timeplus} />
+    </>
+  );
+};
 
-        <OLResultTimeplus status={result.status} timeplus={result.timeplus} />
-      </>
-    );
-  };
+export const OLTableRow: React.FC<Props> = ({
+  result,
+  disabled,
+  followed,
+  club,
+}) => {
+  const { left, right } = useSafeAreaInsets();
 
-  render() {
-    const { result } = this.props;
+  const extraSize = getExtraSize(result.splits.length);
 
-    const extraSize = getExtraSize(this.props.result.splits.length);
-
-    return (
-      <OLResultAnimation result={result}>
-        <OLResultListItem>
+  return (
+    <OLRunnerContextMenu result={result}>
+      <OLResultAnimation
+        result={result}
+        style={{
+          paddingLeft: left,
+          paddingRight: right,
+        }}
+      >
+        <OLResultListItem
+          style={{ backgroundColor: followed ? '#edded1' : 'transparent' }}
+        >
           <OLResultColumn
             align="center"
             style={{ width: LANDSCAPE_WIDTH.place }}
@@ -101,11 +108,9 @@ export class OLTableRow extends React.PureComponent<Props> {
           </OLResultColumn>
 
           <OLResultColumn style={{ width: LANDSCAPE_WIDTH.name + extraSize }}>
-            <TouchableOpacity style={{ flex: 1 }} onPress={this.moreInfo}>
-              <OLResultName name={result.name} />
-
-              <OLResultClub club={result.club} />
-            </TouchableOpacity>
+            <OLResultName name={result.name} />
+            {!club && <OLResultClub club={result.club} />}
+            {club && <OLClassName className={result.class} />}
           </OLResultColumn>
 
           <OLResultColumn style={{ width: LANDSCAPE_WIDTH.start }}>
@@ -128,10 +133,10 @@ export class OLTableRow extends React.PureComponent<Props> {
             align="flex-end"
             style={{ width: LANDSCAPE_WIDTH.time }}
           >
-            {this.renderTime()}
+            <OLRowTime result={result} disabled={disabled} />
           </OLResultColumn>
         </OLResultListItem>
       </OLResultAnimation>
-    );
-  }
-}
+    </OLRunnerContextMenu>
+  );
+};

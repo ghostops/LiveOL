@@ -5,7 +5,7 @@ import { OLButton } from 'views/components/button';
 import { OLCompetitionClub } from 'views/components/competition/club';
 import { OLCompetitionIOSHeader } from 'views/components/competition/iosHeader';
 import { OLText } from 'views/components/text';
-import { Platform, View } from 'react-native';
+import { Linking, Platform, View } from 'react-native';
 import { px } from 'util/const';
 import { CompetitionInfoBox } from './info';
 import { useTranslation } from 'react-i18next';
@@ -94,6 +94,14 @@ export const OLCompetitionHeader: React.FC<Props> = props => {
               <OLText style={{ marginBottom: px(15) }} size={16}>
                 {t('competitions.signups')}: {props.competition.signups}
               </OLText>
+
+              <OLButton
+                small
+                onPress={() => Linking.openURL(props.competition.eventorUrl)}
+                style={{ alignSelf: 'flex-start', marginBottom: px(15) }}
+              >
+                {t('competitions.visitEventor')}
+              </OLButton>
             </>
           )}
         </View>

@@ -14,14 +14,14 @@ import { OLResultLiveRunning } from '../item/liveRunning';
 import { isLiveRunning, startIsAfterNow } from 'util/isLive';
 import { OLClassName } from '../item/className';
 import { OlResult } from 'lib/graphql/generated/types';
+import { OLRunnerContextMenu } from '../contextMenu';
 
-interface OwnProps {
+type Props = {
   result: OlResult;
   disabled?: boolean;
   club?: boolean;
-}
-
-type Props = OwnProps;
+  followed?: boolean;
+};
 
 export const PORTRAIT_SIZE = {
   place: 15,
@@ -30,41 +30,47 @@ export const PORTRAIT_SIZE = {
   time: 35,
 };
 
-export class OLResultItem extends React.PureComponent<Props> {
-  renderTime = () => {
-    const { result, disabled } = this.props;
+const OLItemTime: React.FC<Pick<Props, 'result' | 'disabled'>> = ({
+  result,
+  disabled,
+}) => {
+  if (disabled) {
+    return null;
+  }
 
-    if (disabled) {
-      return null;
+  if (!result.result.length) {
+    if (isLiveRunning(result)) {
+      return <OLResultLiveRunning date={result.liveRunningStart} />;
     }
 
-    if (!result.result.length) {
-      if (isLiveRunning(result)) {
-        return <OLResultLiveRunning date={result.liveRunningStart} />;
-      }
-
-      if (!startIsAfterNow(result)) {
-        return <OLStartTime time={result.start} />;
-      }
+    if (!startIsAfterNow(result)) {
+      return <OLStartTime time={result.start} />;
     }
+  }
 
-    return (
-      <>
-        <OLResultTime status={result.status} time={result.result} />
+  return (
+    <>
+      <OLResultTime status={result.status} time={result.result} />
 
-        <View style={{ height: px(4) }} />
+      <View style={{ height: px(4) }} />
 
-        <OLResultTimeplus status={result.status} timeplus={result.timeplus} />
-      </>
-    );
-  };
+      <OLResultTimeplus status={result.status} timeplus={result.timeplus} />
+    </>
+  );
+};
 
-  render() {
-    const { result, club } = this.props;
-
-    return (
+export const OLResultItem: React.FC<Props> = ({
+  result,
+  club,
+  disabled,
+  followed,
+}) => {
+  return (
+    <OLRunnerContextMenu result={result}>
       <OLResultAnimation result={result}>
-        <OLResultListItem>
+        <OLResultListItem
+          style={{ backgroundColor: followed ? '#edded1' : 'transparent' }}
+        >
           <OLResultColumn size={PORTRAIT_SIZE.place} align="center">
             <OLResultBadge place={result.place} />
           </OLResultColumn>
@@ -77,10 +83,10 @@ export class OLResultItem extends React.PureComponent<Props> {
           </OLResultColumn>
 
           <OLResultColumn align="flex-end" size={PORTRAIT_SIZE.time}>
-            {this.renderTime()}
+            <OLItemTime result={result} disabled={disabled} />
           </OLResultColumn>
         </OLResultListItem>
       </OLResultAnimation>
-    );
-  }
-}
+    </OLRunnerContextMenu>
+  );
+};

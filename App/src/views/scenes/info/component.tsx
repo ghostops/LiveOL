@@ -18,6 +18,10 @@ type Props = {
   increaseFontSize: () => void;
   decreaseFontSize: () => void;
   textSizeMultiplier: number;
+  onGetLiveOlPlus: () => void;
+  showGetLiveOlPlus?: boolean;
+  plusWillRenew?: boolean;
+  plusExpirationDate?: string;
 };
 
 const PHRASE_IMAGE = require('../../../../assets/images/phrase.png');
@@ -32,6 +36,10 @@ export const OLInfo: React.FC<Props> = ({
   increaseFontSize,
   decreaseFontSize,
   textSizeMultiplier,
+  onGetLiveOlPlus,
+  showGetLiveOlPlus,
+  plusExpirationDate,
+  plusWillRenew,
 }) => {
   const { t } = useTranslation();
 
@@ -81,6 +89,50 @@ export const OLInfo: React.FC<Props> = ({
         paddingHorizontal: px(landscape ? 40 : 10),
       }}
     >
+      {showGetLiveOlPlus && (
+        <View>
+          <OLCard style={{ marginVertical: px(8) }}>
+            <OLText
+              size={16}
+              style={{
+                marginBottom: px(16),
+                textAlign: 'center',
+              }}
+            >
+              {t('plus.buy.text')}
+            </OLText>
+            <OLButton onPress={onGetLiveOlPlus}>{t('plus.promo.get')}</OLButton>
+          </OLCard>
+        </View>
+      )}
+
+      {!!plusExpirationDate && (
+        <View>
+          <OLCard style={{ marginVertical: px(8) }}>
+            <OLText
+              size={18}
+              bold
+              style={{
+                textAlign: 'center',
+                marginBottom: px(8),
+              }}
+            >
+              {t('plus.status.title')}
+            </OLText>
+            <OLText
+              size={14}
+              style={{
+                textAlign: 'center',
+              }}
+            >
+              {plusWillRenew
+                ? t('plus.status.renew', { date: plusExpirationDate })
+                : t('plus.status.expire', { date: plusExpirationDate })}
+            </OLText>
+          </OLCard>
+        </View>
+      )}
+
       <View>
         <OLCard style={{ marginVertical: px(8) }}>
           {(t('info.body', { returnObjects: true }) as unknown as string[]).map(

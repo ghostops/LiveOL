@@ -91,6 +91,7 @@ export type OlCompetition = {
   distance: Maybe<Scalars['String']>;
   district: Maybe<Scalars['String']>;
   eventor: Maybe<Scalars['Boolean']>;
+  eventorUrl: Maybe<Scalars['String']>;
   id: Maybe<Scalars['Int']>;
   info: Maybe<Scalars['String']>;
   name: Maybe<Scalars['String']>;
@@ -166,11 +167,13 @@ export type ResultsQuery = {
 export type ResultsQueryGetClubResultsArgs = {
   clubName?: InputMaybe<Scalars['String']>;
   competitionId?: InputMaybe<Scalars['Int']>;
+  sorting?: InputMaybe<Scalars['String']>;
 };
 
 export type ResultsQueryGetResultsArgs = {
   className?: InputMaybe<Scalars['String']>;
   competitionId?: InputMaybe<Scalars['Int']>;
+  sorting?: InputMaybe<Scalars['String']>;
 };
 
 export type ResultsQueryGetSplitControlsArgs = {
@@ -211,6 +214,7 @@ export type EventorCompetitionFragmentFragment = {
   distance: string;
   district: string;
   signups: number;
+  eventorUrl: string;
 };
 
 export type ClassFragment = { id: string; competition: number; name: string };
@@ -328,6 +332,7 @@ export type GetCompetitionQuery = {
       distance: string;
       district: string;
       signups: number;
+      eventorUrl: string;
     };
     getCompetitionClasses: Array<{
       id: string;
@@ -358,6 +363,7 @@ export type GetLastPassingsQuery = {
 export type GetResultsQueryVariables = Exact<{
   competitionId: Scalars['Int'];
   className: Scalars['String'];
+  sorting?: InputMaybe<Scalars['String']>;
 }>;
 
 export type GetResultsQuery = {

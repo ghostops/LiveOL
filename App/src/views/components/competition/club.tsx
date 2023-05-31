@@ -16,6 +16,10 @@ export const OLCompetitionClub: React.FC<Props> = ({
   logoUrl,
   size,
 }) => {
+  if (!logoUrl) {
+    return null;
+  }
+
   return (
     <View style={style}>
       <View
