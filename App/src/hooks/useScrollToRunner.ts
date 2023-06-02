@@ -18,11 +18,12 @@ export const useScrollToRunner = ({ followedRunnerId, results }: Options) => {
       const index = results.findIndex(result => result.id === followedRunnerId);
 
       setTimeout(() => {
-        if (!flatListRef.current) {
+        if (!flatListRef.current || index < 0) {
           return;
         }
 
         flatListRef.current.scrollToIndex({ index });
+        flatListRef.current.forceUpdate();
       }, 1000);
     }
   }, [followedRunnerId, results, hasScrolled]);

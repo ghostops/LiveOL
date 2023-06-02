@@ -5,7 +5,6 @@ import * as fs from 'fs';
 import { scrapeAllCompetitions } from './scrape';
 import { LiveresultatReplayer } from './replay';
 import { LiveresultatApi } from './types';
-import { IncomingWebhook } from '@slack/webhook';
 import { getEnv } from 'lib/helpers/env';
 import { Cacher } from 'lib/redis';
 

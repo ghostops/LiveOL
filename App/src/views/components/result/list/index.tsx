@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { FlatList, View } from 'react-native';
 import { px } from 'util/const';
 import { OLResultItem } from 'views/components/result/list/item';
@@ -24,22 +24,19 @@ export const OLResultsList: React.FC<Props> = props => {
   const flatListRef = useScrollToRunner(props);
   const listItemHeight = useOlListItemHeight();
 
-  const renderItem = useCallback(
-    ({ item }: any) => {
-      const result: OlResult = item;
+  const renderItem = ({ item }: any) => {
+    const result: OlResult = item;
 
-      return (
-        <OLResultItem
-          key={result.start + result.name}
-          result={result}
-          disabled={props.disabled}
-          club={props.club}
-          followed={props.followedRunnerId === result.id}
-        />
-      );
-    },
-    [props.club, props.disabled, props.followedRunnerId],
-  );
+    return (
+      <OLResultItem
+        key={result.start + result.name}
+        result={result}
+        disabled={props.disabled}
+        club={props.club}
+        followed={props.followedRunnerId === result.id}
+      />
+    );
+  };
 
   if (!props.results) {
     return null;

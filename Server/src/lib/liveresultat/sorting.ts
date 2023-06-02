@@ -33,6 +33,30 @@ const sortSplit = (sortingKey: string) => (a: ResultCopy, b: ResultCopy) => {
     return a.splits[key] - b.splits[key];
 };
 
+const sortResult = (a: ResultCopy, b: ResultCopy) => {
+    const [aMinString, aSecString] = a.result.split(':');
+    const [bMinString, bSecString] = b.result.split(':');
+
+    const bMin = Number(bMinString);
+    const bSec = Number(bSecString);
+
+    if (Number.isNaN(bMin) || Number.isNaN(bSec)) {
+        return -1;
+    }
+
+    const aMin = Number(aMinString);
+    const aSec = Number(aSecString);
+    
+    if (Number.isNaN(aMin) || Number.isNaN(aSec)) {
+        return 1;
+    }
+
+    const aComb = aMin * 60 + aSec;
+    const bComb = bMin * 60 + bSec;
+
+    return bComb > aComb ? -1 : 1;
+};
+
 export const sortOptimal = (
     original: LiveresultatApi.result[],
     sorting: string,
@@ -54,7 +78,15 @@ export const sortOptimal = (
 
     const sortSplitFunction = sortSplit(sortingKey);
 
-    const sortingFunction: any = sortingKey.includes('split-') ? sortSplitFunction : sortingKey;
+    let sortingFunction: any = sortingKey;
+
+    if (sortingKey.includes('split-')) {
+        sortingFunction = sortSplitFunction;
+    }
+
+    if (sortingKey === 'result') {
+        sortingFunction = sortResult;
+    }
 
     copy = copy.sort(
         firstBy(sortingFunction, sortingDirection as SortOrder)

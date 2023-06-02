@@ -23,22 +23,19 @@ export const OLResultsTable: React.FC<Props> = props => {
   const flatListRef = useScrollToRunner(props);
   const listItemHeight = useOlListItemHeight();
 
-  const renderResult = React.useCallback(
-    ({ item }: any) => {
-      const result: OlResult = item;
+  const renderResult = ({ item }: any) => {
+    const result: OlResult = item;
 
-      return (
-        <OLTableRow
-          key={result.start + result.name}
-          result={result}
-          disabled={props.disabled}
-          followed={props.followedRunnerId === result.id}
-          club={props.club}
-        />
-      );
-    },
-    [props.club, props.disabled, props.followedRunnerId],
-  );
+    return (
+      <OLTableRow
+        key={result.start + result.name}
+        result={result}
+        disabled={props.disabled}
+        followed={props.followedRunnerId === result.id}
+        club={props.club}
+      />
+    );
+  };
 
   if (!props.results) {
     return null;
@@ -66,7 +63,7 @@ export const OLResultsTable: React.FC<Props> = props => {
         ListFooterComponent={<View style={{ height: 45 }} />}
         data={props.results}
         renderItem={renderResult}
-        keyExtractor={(item: OlResult) => item.name}
+        keyExtractor={(item: OlResult) => item.id}
         ListEmptyComponent={
           <View
             style={{

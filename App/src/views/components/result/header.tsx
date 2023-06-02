@@ -60,8 +60,7 @@ const labels =
         },
       },
       time: {
-        // column is "result" - but "timeplus" gives more accurate UX
-        key: 'timeplus',
+        key: 'result',
         size: PORTRAIT_SIZE.time,
         text: t('classes.header.time'),
         align: 'flex-end',

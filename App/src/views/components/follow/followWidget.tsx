@@ -7,6 +7,7 @@ import { useFollowingStore } from 'store/following';
 import { useTheme } from 'hooks/useTheme';
 import { useOLNavigation } from 'hooks/useNavigation';
 import { OLFollowItem } from './followItem';
+import { OLSafeAreaView } from '../safeArea';
 
 export const FollowWidget: React.FC = () => {
   const { px, colors } = useTheme();
@@ -37,11 +38,13 @@ export const FollowWidget: React.FC = () => {
         {t('follow.title')}
       </OLText>
 
-      <View style={{ backgroundColor: 'white' }}>
-        {following.map(follow => (
-          <OLFollowItem key={follow.id} item={follow} />
-        ))}
-      </View>
+      <OLSafeAreaView>
+        <View style={{ backgroundColor: 'white' }}>
+          {following.map(follow => (
+            <OLFollowItem key={follow.id} item={follow} />
+          ))}
+        </View>
+      </OLSafeAreaView>
     </TouchableOpacity>
   );
 };
