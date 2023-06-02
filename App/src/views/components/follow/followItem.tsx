@@ -6,14 +6,21 @@ import { FollowingData, useFollowingStore } from 'store/following';
 import { OLListItem } from '../list/item';
 import { useTheme } from 'hooks/useTheme';
 import { useOLNavigation } from 'hooks/useNavigation';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import { RootStack } from 'lib/nav/router';
 
-export const FollowItem: React.FC<{ item: FollowingData }> = ({ item }) => {
+export const OLFollowItem: React.FC<{ item: FollowingData }> = ({ item }) => {
   const { px } = useTheme();
-  const { navigate } = useOLNavigation();
+  const { navigate, pop } = useOLNavigation();
+  const { name } = useRoute<RouteProp<RootStack>>();
   const { unFollow } = useFollowingStore();
   const { t } = useTranslation();
 
   const goToFollow = () => {
+    if (name === 'Follow') {
+      pop();
+    }
+
     if (item.type === 'runner') {
       const [competitionId, className] = item.id.split(':');
 

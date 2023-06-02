@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import Toast from 'react-native-toast-message';
 import Router from 'lib/nav/router';
 import { View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -28,7 +27,6 @@ export default () => {
                 <Router />
               </OLRotationWatcher>
             </View>
-            <Toast />
           </ApolloProvider>
         </ActionSheetProvider>
       </SafeAreaProvider>

@@ -134,7 +134,10 @@ const Component: React.FC = () => {
           name="Follow"
           component={OLFollow}
           options={{
+            headerLeft: () => <BackButton cross />,
             title: t('follow.title'),
+            presentation: 'modal',
+            animation: 'slide_from_bottom',
           }}
         />
       </Stack.Navigator>

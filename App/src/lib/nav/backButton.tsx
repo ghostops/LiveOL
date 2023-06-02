@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useTheme } from 'hooks/useTheme';
 import { useTranslation } from 'react-i18next';
 import { Platform, TouchableOpacity } from 'react-native';
@@ -6,19 +6,16 @@ import { OLIcon } from 'views/components/icon';
 import { OLText } from 'views/components/text';
 import { useOLNavigation } from 'hooks/useNavigation';
 
-export const BackButton: React.FC = () => {
-  const [showButton, setShowButton] = useState(false);
+type Props = {
+  cross?: boolean;
+};
+
+export const BackButton: React.FC<Props> = ({ cross }) => {
   const { t } = useTranslation();
   const { fontPx } = useTheme();
   const { goBack, canGoBack } = useOLNavigation();
 
-  useEffect(() => {
-    const show = canGoBack();
-    setShowButton(show);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  if (!showButton) {
+  if (!canGoBack()) {
     return null;
   }
 
@@ -31,13 +28,18 @@ export const BackButton: React.FC = () => {
       onPress={() => goBack()}
     >
       <OLIcon
-        name="chevron-back"
+        name={cross ? 'close-outline' : 'chevron-back'}
         color="#fff"
-        style={{ fontSize: fontPx(20), top: Platform.OS === 'android' ? 1 : 0 }}
+        style={{
+          fontSize: fontPx(cross ? 32 : 20),
+          top: Platform.OS === 'android' ? 1 : 0,
+        }}
       />
-      <OLText size={18} style={{ color: '#fff' }}>
-        {t('back')}
-      </OLText>
+      {!cross && (
+        <OLText size={18} style={{ color: '#fff' }}>
+          {t('back')}
+        </OLText>
+      )}
     </TouchableOpacity>
   );
 };

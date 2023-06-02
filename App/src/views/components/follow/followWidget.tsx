@@ -6,7 +6,7 @@ import { useIap } from 'lib/iap';
 import { useFollowingStore } from 'store/following';
 import { useTheme } from 'hooks/useTheme';
 import { useOLNavigation } from 'hooks/useNavigation';
-import { FollowItem } from './followItem';
+import { OLFollowItem } from './followItem';
 
 export const FollowWidget: React.FC = () => {
   const { px, colors } = useTheme();
@@ -39,7 +39,7 @@ export const FollowWidget: React.FC = () => {
 
       <View style={{ backgroundColor: 'white' }}>
         {following.map(follow => (
-          <FollowItem key={follow.id} item={follow} />
+          <OLFollowItem key={follow.id} item={follow} />
         ))}
       </View>
     </TouchableOpacity>

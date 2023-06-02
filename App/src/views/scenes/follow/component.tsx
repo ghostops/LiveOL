@@ -3,7 +3,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FlatList, View } from 'react-native';
 import { FollowingData } from 'store/following';
-import { FollowItem } from 'views/components/follow/followItem';
+import { OLFollowItem } from 'views/components/follow/followItem';
 import { OLText } from 'views/components/text';
 
 type Props = {
@@ -18,7 +18,7 @@ export const OLFollow: React.FC<Props> = ({ following }) => {
     <View style={{ flex: 1 }}>
       <FlatList
         data={following}
-        renderItem={({ item }) => <FollowItem item={item} />}
+        renderItem={({ item }) => <OLFollowItem item={item} />}
         keyExtractor={item => item.id}
         ListFooterComponent={
           <View style={{ marginTop: px(16) }}>
