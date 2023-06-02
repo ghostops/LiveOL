@@ -66,7 +66,7 @@ export const OLResultItem: React.FC<Props> = ({
   followed,
 }) => {
   return (
-    <OLRunnerContextMenu result={result}>
+    <OLRunnerContextMenu result={result} club={club}>
       <OLResultAnimation result={result}>
         <OLResultListItem
           style={{ backgroundColor: followed ? '#edded1' : 'transparent' }}

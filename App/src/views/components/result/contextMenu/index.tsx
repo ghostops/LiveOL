@@ -12,9 +12,14 @@ import { useFollowingStore } from 'store/following';
 type Props = {
   result: OlResult;
   children: React.ReactNode;
+  club?: boolean;
 };
 
-export const OLRunnerContextMenu: React.FC<Props> = ({ children, result }) => {
+export const OLRunnerContextMenu: React.FC<Props> = ({
+  children,
+  result,
+  club,
+}) => {
   const { showActionSheetWithOptions } = useActionSheet();
   const { t } = useTranslation();
   const { plusActive } = useIap();
@@ -27,7 +32,7 @@ export const OLRunnerContextMenu: React.FC<Props> = ({ children, result }) => {
   const onPress = () => {
     const options = [
       t('result.followRunner'),
-      t('result.goToClub'),
+      club ? t('result.goToClass') : t('result.goToClub'),
       t('info.update.hasUpdate.cancel'),
     ];
 
@@ -52,6 +57,14 @@ export const OLRunnerContextMenu: React.FC<Props> = ({ children, result }) => {
             navigate('Follow');
             break;
           case 1:
+            if (club) {
+              navigate('Results', {
+                competitionId,
+                className: result.class,
+              });
+              break;
+            }
+
             navigate('Club', {
               competitionId,
               clubName: result.club,

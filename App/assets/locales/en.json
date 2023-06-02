@@ -40,7 +40,8 @@
     "followClass": "Follow class",
     "followRunner": "Follow runner",
     "followClub": "Follow club",
-    "goToClub": "See club results"
+    "goToClub": "See club results",
+    "goToClass": "See class results"
   },
   "currentLanguage": "English",
   "distances": {
