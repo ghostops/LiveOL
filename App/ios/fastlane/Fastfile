@@ -1,4 +1,5 @@
 require 'json'
+require 'dotenv'
 
 default_platform(:ios)
 
@@ -9,10 +10,20 @@ def getPackageVersion()
 end
 
 platform :ios do
+  before_all do
+    Dotenv.load('../../.env.local')
+  end
+
   desc "Push a new release build to Testflight"
   lane :release do
     xcodeproj = "LiveOL.xcodeproj"
     scheme = "LiveOL"
+
+    api_key = app_store_connect_api_key(
+      key_id: ENV["IOS_KEY_ID"],
+      issuer_id: ENV["IOS_ISSUER_ID"],
+      key_filepath: Dir.pwd + "/../../" + ENV["IOS_KEY_FILENAME"],
+    )
 
     increment_version_number_in_plist(
       version_number: getPackageVersion,
@@ -30,7 +41,8 @@ platform :ios do
     )
 
     upload_to_testflight(
-      skip_waiting_for_build_processing: true
+      skip_waiting_for_build_processing: true,
+      api_key: api_key
     )
   end
 end

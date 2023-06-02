@@ -32,3 +32,4 @@ App/android/fastlane/report.xml
 App/ios/LiveOL.xcworkspace/xcuserdata/*
 
 package-lock.json
+*.p8
