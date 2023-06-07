@@ -155,7 +155,7 @@ GEM
       xcodeproj (>= 1.13.0, < 2.0.0)
       xcpretty (~> 0.3.0)
       xcpretty-travis-formatter (>= 0.0.3)
-    fastlane-plugin-appcenter (2.0.0)
+    fastlane-plugin-appcenter (2.1.0)
     fastlane-plugin-increment_version_code (0.4.3)
     fastlane-plugin-versioning (0.5.1)
     ffi (1.15.5)
