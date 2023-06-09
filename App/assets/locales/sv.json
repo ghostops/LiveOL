@@ -13,6 +13,7 @@
     "resultsFor": "Resultat för",
     "timerHint": "Tid till nästa uppdatering"
   },
+  "close": "Stäng",
   "competitions": {
     "canceled": "Tävlingen har blivit inställd",
     "classes": "Klasser",
@@ -30,7 +31,8 @@
       "passTime": "Passeringstid",
       "title": "Senaste passeringarna"
     },
-    "signups": "Anmälda"
+    "signups": "Anmälda",
+    "visitEventor": "Se på Eventor"
   },
   "currentLanguage": "Svenska",
   "distances": {
@@ -38,6 +40,14 @@
     "middle": "Medel",
     "sprint": "Sprint",
     "ultralong": "Ultralång"
+  },
+  "follow": {
+    "title": "Följer",
+    "unfollow": {
+      "cta": "Avfölj",
+      "hint": "Håll in för att avfölja",
+      "title": "Vill du sluta följa?"
+    }
   },
   "home": {
     "goToday": "Gå till dagens arrangemang",
@@ -50,6 +60,12 @@
   },
   "info": {
     "appStore": "Öppna App Store",
+    "body": [
+      "LiveOL är en app som visar orienteringsresultat live.",
+      "Du får de senaste resultaten på din telefon eller surfplatta med ett bekvämt gränssnitt på flera språk.",
+      "LiveOL integrerar många orienteringsrelaterade tjänster, som liveresultat.orientering.se och Eventor Sverige.",
+      "Vår vision är att vara den bästa orienteringsplattformen för mobila enheter."
+    ],
     "changeTextSize": {
       "decrease": "Sänk storlek",
       "increase": "Öka storlek",
@@ -83,9 +99,63 @@
   "language": {
     "pick": "Välj språk"
   },
+  "plus": {
+    "buy": {
+      "error": "Något gick fel...",
+      "feature": {
+        "classes": {
+          "text": "Följ klasser som du är mest intresserad av.",
+          "title": "Följ klasser"
+        },
+        "clubs": {
+          "text": "Få snabb tillgång till resultaten för olika klubbar i en tävling.",
+          "title": "Följ klubbar"
+        },
+        "follow": {
+          "text": "Få snabbt tillgång till löpares resultat.",
+          "title": "Följ löpare"
+        },
+        "sorting": {
+          "text": "Sortera resultaten baserat på resultatkolumnerna.",
+          "title": "Sortera resultaten"
+        }
+      },
+      "restore": "Återställ köp",
+      "restoreError": {
+        "text": "Vänligen ta kontakt om du tidigare har köpt.",
+        "title": "Du kan inte återställa LiveOL+."
+      },
+      "restoreSuccess": "Du har återställt LiveOL+",
+      "success": "LiveOL+ upplåst",
+      "text": "Lås upp exklusiva fördelar och stöd projektet med en budgetvänlig årsprenumeration, vilket säkerställer att LiveOL forsätter utvecklas.",
+      "title": "Gör mer med LiveOL+",
+      "yearly": "per år"
+    },
+    "promo": {
+      "box": {
+        "cta": "Kolla in det",
+        "text": "Få ut mest av LiveOL och stöd appens fortsatta utveckling. Kolla vad LiveOL+ erbjuder idag:"
+      },
+      "get": "Skaffa LiveOL+"
+    },
+    "status": {
+      "expire": "Tack för att du har stött LiveOL, din prenumeration upphör: {{ date }}",
+      "renew": "Tack för ditt stöd av LiveOL, din prenumeration kommer förnyas: {{ date }}",
+      "title": "LiveOL+"
+    }
+  },
   "promotions": {
     "didYouKnow": "Visste du att?",
     "rotate": "Rotera din telefon för att se radiokontroller"
+  },
+  "result": {
+    "followClass": "Följ klassen",
+    "followClub": "Följ klubben",
+    "followRunner": "Följ löpare",
+    "goToClass": "Se klassresultat",
+    "goToClub": "Se klubbresultat",
+    "mute": "Stäng av ljudet",
+    "unmute": "Slå på ljudet"
   },
   "status": {
     "long": [
