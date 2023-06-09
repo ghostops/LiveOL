@@ -37,3 +37,5 @@ non-critical aspects of the application.
 <a href="https://phraseapp.com/">
     <img src="/App/assets/images/phrase.png" width="140" height="40">
 </a>
+
+[![DigitalOcean Referral Badge](https://web-platforms.sfo2.cdn.digitaloceanspaces.com/WWW/Badge%201.svg)](https://www.digitalocean.com/?refcode=cf1db43c843a&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge)
