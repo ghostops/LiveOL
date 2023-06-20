@@ -21,7 +21,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>28</string>
+	<string>29</string>
 	<key>CodePushDeploymentKey</key>
 	<string>$(IOS_CODEPUSH_KEY)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
