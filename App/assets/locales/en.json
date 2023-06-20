@@ -120,6 +120,7 @@
           "title": "Sorting the results"
         }
       },
+      "privacy": "Privacy policy",
       "restore": "Restore purchases",
       "restoreError": {
         "text": "Please reach out if you have previously purchased.",
@@ -127,6 +128,7 @@
       },
       "restoreSuccess": "You have restored LiveOL+",
       "success": "LiveOL+ unlocked",
+      "terms": "Terms of use",
       "text": "Unlock exclusive benefits and power the project forward with a budget-friendly annual subscription, ensuring LiveOL thrives.",
       "title": "Do more with LiveOL+",
       "yearly": "per year"

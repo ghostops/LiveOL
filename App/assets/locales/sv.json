@@ -120,6 +120,7 @@
           "title": "Sortera resultaten"
         }
       },
+      "privacy": "Sekretesspolicy",
       "restore": "Återställ köp",
       "restoreError": {
         "text": "Vänligen ta kontakt om du tidigare har köpt.",
@@ -127,6 +128,7 @@
       },
       "restoreSuccess": "Du har återställt LiveOL+",
       "success": "LiveOL+ upplåst",
+      "terms": "Användarvillkor",
       "text": "Lås upp exklusiva fördelar och stöd projektet med en budgetvänlig årsprenumeration, vilket säkerställer att LiveOL forsätter utvecklas.",
       "title": "Gör mer med LiveOL+",
       "yearly": "per år"

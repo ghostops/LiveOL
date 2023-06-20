@@ -1,6 +1,12 @@
 import React from 'react';
 import { useTheme } from 'hooks/useTheme';
-import { ScrollView, TouchableOpacity, View } from 'react-native';
+import {
+  Linking,
+  Platform,
+  ScrollView,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { OLText } from 'views/components/text';
 import { OLButton } from 'views/components/button';
 import { useTranslation } from 'react-i18next';
@@ -81,8 +87,15 @@ export const OLPlus: React.FC<Props> = ({
         paddingBottom: bottom,
       }}
     >
-      <ScrollView style={{ flex: 1, paddingTop: px(16) }}>
-        <OLText bold size={28} style={{ textAlign: 'center', margin: px(16) }}>
+      <ScrollView
+        style={{ flex: 1 }}
+        contentContainerStyle={{ paddingBottom: px(64) }}
+      >
+        <OLText
+          bold
+          size={28}
+          style={{ textAlign: 'center', margin: px(16), marginTop: px(32) }}
+        >
           {t('plus.buy.title')}
         </OLText>
 
@@ -122,13 +135,49 @@ export const OLPlus: React.FC<Props> = ({
             text={t('plus.buy.feature.sorting.text')}
           />
         </View>
+
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            marginTop: px(16),
+          }}
+        >
+          {Platform.OS === 'ios' && (
+            <TouchableOpacity
+              onPress={() => {
+                Linking.openURL(
+                  'https://www.apple.com/legal/internet-services/itunes/dev/stdeula/',
+                );
+              }}
+              style={{ marginRight: px(8) }}
+            >
+              <OLText size={14}>{t('plus.buy.terms')}</OLText>
+            </TouchableOpacity>
+          )}
+          <TouchableOpacity
+            onPress={() => {
+              Linking.openURL('https://liveol.larsendahl.se/#privacy');
+            }}
+          >
+            <OLText size={14}>{t('plus.buy.privacy')}</OLText>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
 
       <View
         style={{
           paddingTop: px(16),
-          marginHorizontal: px(16),
+          paddingHorizontal: px(16),
           marginBottom: px(32),
+          backgroundColor: 'white',
+          width: '100%',
+          shadowColor: '#000',
+          shadowOpacity: 0.15,
+          shadowOffset: { height: -8, width: 0 },
+          shadowRadius: 4,
+          borderTopColor: 'rgba(0,0,0,.15)',
+          borderTopWidth: 1,
         }}
       >
         <OLButton onPress={onBuy} disabled={loading}>
