@@ -33,3 +33,5 @@ App/ios/LiveOL.xcworkspace/xcuserdata/*
 
 package-lock.json
 *.p8
+
+.phrase.yml
