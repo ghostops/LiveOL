@@ -5,7 +5,7 @@ import { useAudioStore } from 'store/audio';
 import { OLIcon } from 'views/components/icon';
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import { useTranslation } from 'react-i18next';
-import { useIap } from 'lib/iap';
+import { useIap } from 'hooks/useIap';
 import { useOLNavigation } from 'hooks/useNavigation';
 import { useFollowingStore } from 'store/following';
 import { RouteProp, useRoute } from '@react-navigation/native';

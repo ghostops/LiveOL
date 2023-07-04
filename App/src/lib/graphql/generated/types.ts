@@ -65,6 +65,10 @@ export type LastPassingsQueryGetLastPassingsArgs = {
   competitionId?: InputMaybe<Scalars['Int']>;
 };
 
+export type Mutation = {
+  server: Maybe<ServerMutation>;
+};
+
 export type OlClass = {
   competition: Maybe<Scalars['Int']>;
   id: Maybe<Scalars['String']>;
@@ -181,9 +185,23 @@ export type ResultsQueryGetSplitControlsArgs = {
   competitionId?: InputMaybe<Scalars['Int']>;
 };
 
+export type ServerMutation = {
+  redeemPlusCode: Maybe<Scalars['Boolean']>;
+};
+
+export type ServerMutationRedeemPlusCodeArgs = {
+  code: Scalars['String'];
+  deviceId: Scalars['String'];
+};
+
 export type ServerQuery = {
-  test: Maybe<Scalars['Boolean']>;
+  validatePlusCode: Maybe<Scalars['Boolean']>;
   version: Maybe<Scalars['String']>;
+};
+
+export type ServerQueryValidatePlusCodeArgs = {
+  code: Scalars['String'];
+  deviceId: Scalars['String'];
 };
 
 export type ClubFragment = {
@@ -262,6 +280,13 @@ export type ResultFragment = {
     timeplus: string;
   }>;
 };
+
+export type RedeemPlusCodeMutationVariables = Exact<{
+  code: Scalars['String'];
+  deviceId: Scalars['String'];
+}>;
+
+export type RedeemPlusCodeMutation = { server: { redeemPlusCode: boolean } };
 
 export type GetClubByNameQueryVariables = Exact<{
   name: Scalars['String'];
@@ -359,6 +384,13 @@ export type GetLastPassingsQuery = {
     }>;
   };
 };
+
+export type ValidatePlusCodeQueryVariables = Exact<{
+  code: Scalars['String'];
+  deviceId: Scalars['String'];
+}>;
+
+export type ValidatePlusCodeQuery = { server: { validatePlusCode: boolean } };
 
 export type GetResultsQueryVariables = Exact<{
   competitionId: Scalars['Int'];

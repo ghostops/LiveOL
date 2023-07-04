@@ -1,4 +1,4 @@
-import { useIap } from 'lib/iap';
+import { useIap } from 'hooks/useIap';
 import React from 'react';
 import { OLPlus as Component } from './component';
 import { RouteProp, useRoute } from '@react-navigation/native';

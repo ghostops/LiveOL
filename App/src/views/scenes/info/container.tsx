@@ -6,7 +6,7 @@ import { useDeviceRotationStore } from 'store/deviceRotation';
 import { useTextStore } from 'store/text';
 import { useGetServerVersionQuery } from 'lib/graphql/generated/gql';
 import { useOLNavigation } from 'hooks/useNavigation';
-import { useIap } from 'lib/iap';
+import { useIap } from 'hooks/useIap';
 import moment from 'moment';
 
 const translationCredits: { code: string; name: string }[] = [
@@ -75,7 +75,7 @@ export const OLInfo: React.FC = () => {
       Alert.alert(
         'VERSION',
         `Package Version: ${VERSION}\n` +
-          `Server Version: ${data?.server?.version}\n`,
+        `Server Version: ${data?.server?.version}\n`,
       );
     }
   };

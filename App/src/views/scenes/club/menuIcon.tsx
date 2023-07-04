@@ -4,7 +4,7 @@ import { HIT_SLOP, px } from 'util/const';
 import { OLIcon } from 'views/components/icon';
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import { useTranslation } from 'react-i18next';
-import { useIap } from 'lib/iap';
+import { useIap } from 'hooks/useIap';
 import { useOLNavigation } from 'hooks/useNavigation';
 import { useFollowingStore } from 'store/following';
 import { RootStack } from 'lib/nav/router';

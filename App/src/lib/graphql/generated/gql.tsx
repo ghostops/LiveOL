@@ -92,6 +92,57 @@ export const ResultFragmentDoc = gql`
   }
   ${SplitFragmentDoc}
 `;
+export const RedeemPlusCodeDocument = gql`
+  mutation RedeemPlusCode($code: String!, $deviceId: String!) {
+    server {
+      redeemPlusCode(code: $code, deviceId: $deviceId)
+    }
+  }
+`;
+export type RedeemPlusCodeMutationFn = Apollo.MutationFunction<
+  Types.RedeemPlusCodeMutation,
+  Types.RedeemPlusCodeMutationVariables
+>;
+
+/**
+ * __useRedeemPlusCodeMutation__
+ *
+ * To run a mutation, you first call `useRedeemPlusCodeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRedeemPlusCodeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [redeemPlusCodeMutation, { data, loading, error }] = useRedeemPlusCodeMutation({
+ *   variables: {
+ *      code: // value for 'code'
+ *      deviceId: // value for 'deviceId'
+ *   },
+ * });
+ */
+export function useRedeemPlusCodeMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    Types.RedeemPlusCodeMutation,
+    Types.RedeemPlusCodeMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    Types.RedeemPlusCodeMutation,
+    Types.RedeemPlusCodeMutationVariables
+  >(RedeemPlusCodeDocument, options);
+}
+export type RedeemPlusCodeMutationHookResult = ReturnType<
+  typeof useRedeemPlusCodeMutation
+>;
+export type RedeemPlusCodeMutationResult =
+  Apollo.MutationResult<Types.RedeemPlusCodeMutation>;
+export type RedeemPlusCodeMutationOptions = Apollo.BaseMutationOptions<
+  Types.RedeemPlusCodeMutation,
+  Types.RedeemPlusCodeMutationVariables
+>;
 export const GetClubByNameDocument = gql`
   query GetClubByName($name: String!) {
     clubs {
@@ -351,6 +402,65 @@ export type GetLastPassingsLazyQueryHookResult = ReturnType<
 export type GetLastPassingsQueryResult = Apollo.QueryResult<
   Types.GetLastPassingsQuery,
   Types.GetLastPassingsQueryVariables
+>;
+export const ValidatePlusCodeDocument = gql`
+  query ValidatePlusCode($code: String!, $deviceId: String!) {
+    server {
+      validatePlusCode(code: $code, deviceId: $deviceId)
+    }
+  }
+`;
+
+/**
+ * __useValidatePlusCodeQuery__
+ *
+ * To run a query within a React component, call `useValidatePlusCodeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useValidatePlusCodeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useValidatePlusCodeQuery({
+ *   variables: {
+ *      code: // value for 'code'
+ *      deviceId: // value for 'deviceId'
+ *   },
+ * });
+ */
+export function useValidatePlusCodeQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    Types.ValidatePlusCodeQuery,
+    Types.ValidatePlusCodeQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    Types.ValidatePlusCodeQuery,
+    Types.ValidatePlusCodeQueryVariables
+  >(ValidatePlusCodeDocument, options);
+}
+export function useValidatePlusCodeLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    Types.ValidatePlusCodeQuery,
+    Types.ValidatePlusCodeQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    Types.ValidatePlusCodeQuery,
+    Types.ValidatePlusCodeQueryVariables
+  >(ValidatePlusCodeDocument, options);
+}
+export type ValidatePlusCodeQueryHookResult = ReturnType<
+  typeof useValidatePlusCodeQuery
+>;
+export type ValidatePlusCodeLazyQueryHookResult = ReturnType<
+  typeof useValidatePlusCodeLazyQuery
+>;
+export type ValidatePlusCodeQueryResult = Apollo.QueryResult<
+  Types.ValidatePlusCodeQuery,
+  Types.ValidatePlusCodeQueryVariables
 >;
 export const GetResultsDocument = gql`
   query GetResults(

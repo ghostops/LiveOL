@@ -1,0 +1,5 @@
+query ValidatePlusCode($code: String!, $deviceId: String!) {
+  server {
+    validatePlusCode(code: $code, deviceId: $deviceId)
+  }
+}
