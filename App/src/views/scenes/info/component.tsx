@@ -22,6 +22,7 @@ type Props = {
   showGetLiveOlPlus?: boolean;
   plusWillRenew?: boolean;
   plusExpirationDate?: string;
+  redeemPlusCode: () => void;
 };
 
 const PHRASE_IMAGE = require('../../../../assets/images/phrase.png');
@@ -40,18 +41,20 @@ export const OLInfo: React.FC<Props> = ({
   showGetLiveOlPlus,
   plusExpirationDate,
   plusWillRenew,
+  redeemPlusCode,
 }) => {
   const { t } = useTranslation();
 
-  const buttons = React.useMemo(
-    () => [
-      {
-        text: t('info.contact'),
-        onPress: contact,
-      },
-    ],
-    [contact, t],
-  );
+  const buttons = [
+    {
+      text: t('info.contact'),
+      onPress: contact,
+    },
+    {
+      text: t('plus.code.redeem'),
+      onPress: redeemPlusCode,
+    },
+  ];
 
   const renderTranslationCredit = (
     { code, name }: { code: string; name: string },

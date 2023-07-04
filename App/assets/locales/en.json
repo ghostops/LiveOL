@@ -100,6 +100,11 @@
     "pick": "Pick language"
   },
   "plus": {
+    "code": {
+      "redeem": "Redeem code",
+      "invalid": "Invalid code",
+      "claimed": "Code already claimed"
+    },
     "buy": {
       "error": "Something went wrong...",
       "feature": {

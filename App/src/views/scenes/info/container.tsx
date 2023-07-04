@@ -8,6 +8,7 @@ import { useGetServerVersionQuery } from 'lib/graphql/generated/gql';
 import { useOLNavigation } from 'hooks/useNavigation';
 import { useIap } from 'hooks/useIap';
 import moment from 'moment';
+import { usePlusCodes } from 'hooks/usePlusCodes';
 
 const translationCredits: { code: string; name: string }[] = [
   {
@@ -38,6 +39,8 @@ const translationCredits: { code: string; name: string }[] = [
 
 export const OLInfo: React.FC = () => {
   const { plusActive, plusExpirationDate, plusWillRenew } = useIap();
+
+  const { redeem } = usePlusCodes();
 
   const { navigate } = useOLNavigation();
 
@@ -75,7 +78,7 @@ export const OLInfo: React.FC = () => {
       Alert.alert(
         'VERSION',
         `Package Version: ${VERSION}\n` +
-        `Server Version: ${data?.server?.version}\n`,
+          `Server Version: ${data?.server?.version}\n`,
       );
     }
   };
@@ -102,6 +105,7 @@ export const OLInfo: React.FC = () => {
         moment(plusExpirationDate).format(__DEV__ ? undefined : 'LL')
       }
       plusWillRenew={plusWillRenew}
+      redeemPlusCode={redeem}
     />
   );
 };
