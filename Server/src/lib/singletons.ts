@@ -1,11 +1,11 @@
 import { Cacher } from 'lib/redis';
-import { getEnv } from './helpers/env';
 import { LiveresultatAPIClient } from 'lib/liveresultat';
 import { EventorCombiner, CombinedEventorApi } from './eventor/combiner';
 
 export interface APIResponse {
 	Liveresultat: LiveresultatAPIClient;
 	Eventor: CombinedEventorApi;
+	Redis: Cacher;
 }
 
 const URLS = {
@@ -41,6 +41,7 @@ class ApiSingletons {
 		this.singletons = {
 			Liveresultat: liveresultatApi,
 			Eventor: combinedEventorApi,
+			Redis: cache,
 		};
 
 		return this.singletons;

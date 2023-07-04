@@ -1,15 +1,11 @@
-import { GraphQLObjectType, GraphQLString, GraphQLBoolean, GraphQLNonNull } from 'graphql';
+import { GraphQLBoolean, GraphQLNonNull, GraphQLObjectType, GraphQLString } from 'graphql';
 import { PlusCodeHandler } from 'lib/plusCodes/validator';
 import { GQLContext } from 'lib/server';
 
-export const ServerQuery = new GraphQLObjectType({
-	name: 'ServerQuery',
+export const ServerMutation = new GraphQLObjectType({
+	name: 'ServerMutation',
 	fields: () => ({
-		version: {
-			type: GraphQLString,
-			resolve: () => require('../../../package.json').version,
-		},
-		validatePlusCode: {
+		redeemPlusCode: {
 			args: {
 				code: {
 					type: GraphQLNonNull(GraphQLString),
@@ -21,6 +17,7 @@ export const ServerQuery = new GraphQLObjectType({
 			type: GraphQLBoolean,
 			resolve: async (_, args: { code: string; deviceId: string }, { Redis }: GQLContext) => {
 				const handler = new PlusCodeHandler(Redis);
+				await handler.redeemPlusCode(args.code, args.deviceId);
 				const hasPlus = await handler.validatePlusCode(args.code, args.deviceId);
 				return hasPlus;
 			},

@@ -4,6 +4,7 @@ import { LastPassingsQuery } from 'schema/lastPassings/query';
 import { ResultsQuery } from 'schema/results/query';
 import { ServerQuery } from 'schema/server/query';
 import { ClubsQuery } from 'schema/clubs/query';
+import { ServerMutation } from './server/mutations';
 
 const query = new GraphQLObjectType({
     name: 'Query',
@@ -16,6 +17,14 @@ const query = new GraphQLObjectType({
     }),
 })
 
+const mutation = new GraphQLObjectType({
+    name: 'Mutation',
+    fields: () => ({
+        server: { type: ServerMutation, resolve: () => true },
+    }),
+})
+
 export const schema = new GraphQLSchema({
     query,
+    mutation,
 });
