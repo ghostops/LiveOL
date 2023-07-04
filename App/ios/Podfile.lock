@@ -398,6 +398,8 @@ PODS:
     - React-Core
   - RNCAsyncStorage (1.17.10):
     - React-Core
+  - RNDeviceInfo (10.7.0):
+    - React-Core
   - RNPurchases (5.13.0):
     - PurchasesHybridCommon (= 4.14.0)
     - React-Core
@@ -481,6 +483,7 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - RNBootSplash (from `../node_modules/react-native-bootsplash`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
+  - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNPurchases (from `../node_modules/react-native-purchases`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
@@ -592,6 +595,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-bootsplash"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-async-storage/async-storage"
+  RNDeviceInfo:
+    :path: "../node_modules/react-native-device-info"
   RNPurchases:
     :path: "../node_modules/react-native-purchases"
   RNScreens:
@@ -661,6 +666,7 @@ SPEC CHECKSUMS:
   RevenueCat: 15a06dbce1021474e6dc9b31b1fce43fe55fcaf2
   RNBootSplash: 5f346163977573d6b2aeba1b25df9d2245c0d73c
   RNCAsyncStorage: 0c357f3156fcb16c8589ede67cc036330b6698ca
+  RNDeviceInfo: 25d818c85db769cc0e7083d39efaa01a6f450df3
   RNPurchases: 181b64433ab30e4f3a05b5dc86eaac4879bb49a8
   RNScreens: f3230dd008a7d0ce5c0a8bc78ff12cf2315bda24
   RNSVG: 1869ad9534459f24caaa0416a4764548c2aeedad
