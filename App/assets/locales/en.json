@@ -100,11 +100,6 @@
     "pick": "Pick language"
   },
   "plus": {
-    "code": {
-      "redeem": "Redeem code",
-      "invalid": "Invalid code",
-      "claimed": "Code already claimed"
-    },
     "buy": {
       "error": "Something went wrong...",
       "feature": {
@@ -137,6 +132,11 @@
       "text": "Unlock exclusive benefits and power the project forward with a budget-friendly annual subscription, ensuring LiveOL thrives.",
       "title": "Do more with LiveOL+",
       "yearly": "per year"
+    },
+    "code": {
+      "claimed": "Code already claimed",
+      "invalid": "Invalid code",
+      "redeem": "Redeem code"
     },
     "promo": {
       "box": {

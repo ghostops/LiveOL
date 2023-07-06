@@ -133,6 +133,11 @@
       "title": "Gör mer med LiveOL+",
       "yearly": "per år"
     },
+    "code": {
+      "claimed": "Koden har redan använts",
+      "invalid": "Ogiltig kod",
+      "redeem": "Lös in kod"
+    },
     "promo": {
       "box": {
         "cta": "Kolla in det",
