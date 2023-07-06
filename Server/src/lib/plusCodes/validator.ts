@@ -2,6 +2,8 @@ import { Cacher } from 'lib/redis';
 
 // If you manage to "exploit" this, enjoy your free LiveOL+ :)
 
+const PLUS_KEYS_KEY = 'plusKeys';
+
 export class PlusCodeHandler {
 	private availableCodes: string[];
 	private claimedCodes: { deviceId: string; code: string }[];
@@ -35,14 +37,27 @@ export class PlusCodeHandler {
 		await this.savePlusCodes();
 	};
 
-	private fetchPlusCodes = async () => {
-		const data = await this.cache.get('plusKeys');
+	public insertDummyPlusCodes = async () => {
+		await this.fetchPlusCodes();
 
-		this.availableCodes = data.availableCodes;
-		this.claimedCodes = data.claimedCodes;
+		if (this.availableCodes.length || this.claimedCodes.length) {
+			return;
+		}
+
+		this.availableCodes = ['test123'];
+		this.claimedCodes = [{ code: 'claimed123', deviceId: 'some-device' }];
+
+		await this.savePlusCodes();
+	};
+
+	private fetchPlusCodes = async () => {
+		const data = await this.cache.get(PLUS_KEYS_KEY);
+
+		this.availableCodes = data?.availableCodes || [];
+		this.claimedCodes = data?.claimedCodes || [];
 	};
 
 	private savePlusCodes = async () => {
-		await this.cache.set('plusKeys', { availableCodes: this.availableCodes, claimedCodes: this.claimedCodes });
+		await this.cache.set(PLUS_KEYS_KEY, { availableCodes: this.availableCodes, claimedCodes: this.claimedCodes });
 	};
 }

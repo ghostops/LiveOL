@@ -3,9 +3,12 @@ import { useTranslation } from 'react-i18next';
 import { Alert, Platform } from 'react-native';
 import Purchases from 'react-native-purchases';
 import { usePlusStore } from 'store/plus';
+import { usePlusCodes } from 'hooks/usePlusCodes';
 
 export const useIap = () => {
   const { t } = useTranslation();
+
+  const { loadCode } = usePlusCodes();
 
   const [loading, setLoading] = useState(false);
 
@@ -36,7 +39,7 @@ export const useIap = () => {
     };
 
     const init = async () => {
-      if (initialized) {
+      if (initialized || loading) {
         return;
       }
 
@@ -55,8 +58,14 @@ export const useIap = () => {
           });
         }
 
-        await loadProducts();
-        await loadPurchase();
+        const hasValidCode = await loadCode();
+
+        console.log({ hasValidCode });
+
+        if (!hasValidCode) {
+          await loadProducts();
+          await loadPurchase();
+        }
 
         setInitialized();
       } finally {
@@ -65,7 +74,14 @@ export const useIap = () => {
     };
 
     init();
-  }, [initialized, loadPurchase, setInitialized, setLiveOlPlusProduct]);
+  }, [
+    initialized,
+    loading,
+    loadPurchase,
+    setInitialized,
+    setLiveOlPlusProduct,
+    loadCode,
+  ]);
 
   const buyLiveOLPlus = async () => {
     if (!liveOlPlusProduct) {
