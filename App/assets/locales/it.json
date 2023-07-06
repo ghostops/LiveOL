@@ -6,13 +6,14 @@
     "empty": "Nessun concorrente in questa categoria",
     "header": {
       "name": "Nome",
-      "place": "N.",
+      "place": "Pos.",
       "start": "Partenza",
       "time": "Tempo"
     },
     "resultsFor": "Risultati per",
     "timerHint": "Tempo al prossimo aggiornamento"
   },
+  "close": "Chiudi",
   "competitions": {
     "canceled": "La gara è stata annullata",
     "classes": "Categorie",
@@ -26,10 +27,11 @@
       "empty": "Nessun passaggio",
       "info": "Trascina per aggiornare",
       "name": "Nome",
-      "passTime": "Tempo al passaggio",
+      "passTime": "Tempo passaggio",
       "title": "Ultimi passaggi"
     },
-    "signups": "Iscritti"
+    "signups": "Iscritti",
+    "visitEventor": "Vedi su Eventor"
   },
   "currentLanguage": "Italiano",
   "distances": {
@@ -37,6 +39,14 @@
     "middle": "Middle",
     "sprint": "Sprint",
     "ultralong": "Ultra Long"
+  },
+  "follow": {
+    "title": "Seguendo",
+    "unfollow": {
+      "cta": "Non seguire",
+      "hint": "Premi a lungo per smettere di seguire",
+      "title": "Vuoi smettere di seguire?"
+    }
   },
   "home": {
     "goToday": "Trascina per vedere gli eventi odierni",
@@ -48,6 +58,12 @@
   },
   "info": {
     "appStore": "Apri l'App Store",
+    "body": [
+      "LiveOL è un'app che visualizza i risultati di orienteering in tempo reale.",
+      "Ottieni gli ultimi risultati sul tuo telefono o tablet con una comoda interfaccia in più lingue.",
+      "LiveOL integra molti servizi relativi all'Orienteering, come liveresultat.orientering.se e Eventor Svezia.",
+      "La nostra visione è quella di essere la migliore piattaforma di orienteering per dispositivi mobili."
+    ],
     "changeTextSize": {
       "decrease": "Riduci dimensione",
       "increase": "Aumenta dimensione",
@@ -69,7 +85,7 @@
         "cancel": "Annulla",
         "cta": "Aggiorna adesso",
         "text": "Trovata una nuova versione",
-        "title": "Trovato aggiornamento"
+        "title": "Aggiornamento disponibile"
       },
       "noUpdate": {
         "text": "Non è stata trovata una versione più recente",
@@ -78,9 +94,68 @@
     },
     "version": "Versione attuale"
   },
+  "language": {
+    "pick": "Scegli la lingua"
+  },
+  "plus": {
+    "buy": {
+      "error": "Qualcosa è andato storto...",
+      "feature": {
+        "classes": {
+          "text": "Segui le categorie che ti interessano di più.",
+          "title": "Seguire categorie"
+        },
+        "clubs": {
+          "text": "Accedi rapidamente ai risultati di una società in una gara.",
+          "title": "Segui società"
+        },
+        "follow": {
+          "text": "Accedi rapidamente ai risultati dei concorrenti selezionati.",
+          "title": "Segui i concorrenti"
+        },
+        "sorting": {
+          "text": "Ordinare i risultati in base alle colonne dei risultati.",
+          "title": "Ordinamento dei risultati"
+        }
+      },
+      "privacy": "Informativa sulla privacy",
+      "restore": "Ripristinare gli acquisti",
+      "restoreError": {
+        "text": "Si prega di contattarci se hai già acquistato.",
+        "title": "Non puoi ripristinare LiveOL+."
+      },
+      "restoreSuccess": "Hai ripristinato LiveOL+",
+      "success": "LiveOL+ sbloccato",
+      "terms": "Condizioni d'uso",
+      "text": "Sblocca vantaggi esclusivi e porta avanti il progetto con un abbonamento annuale economico, assicurando che LiveOL prosperi.",
+      "title": "Fai di più con LiveOL+",
+      "yearly": "all'anno"
+    },
+    "promo": {
+      "box": {
+        "cta": "Dai un'occhiata",
+        "text": "Ottieni il massimo da LiveOL e sostieni il suo continuo sviluppo. Dai un'occhiata a LiveOL+ oggi:"
+      },
+      "get": "Ottieni LiveOL+"
+    },
+    "status": {
+      "expire": "Grazie per aver supportato LiveOL, il tuo abbonamento scadrà il: {{ date }}",
+      "renew": "Grazie per aver supportato LiveOL, l'abbonamento si rinnoverà il: {{ date }}",
+      "title": "LiveOL+"
+    }
+  },
   "promotions": {
     "didYouKnow": "Sapevate che ?",
     "rotate": "Ruotare il telefono per vedere i punti di controllo radio"
+  },
+  "result": {
+    "followClass": "Seguire categoria",
+    "followClub": "Seguire società",
+    "followRunner": "Segui concorrente",
+    "goToClass": "Vedi i risultati per categoria",
+    "goToClub": "Vedi i risultati delle società",
+    "mute": "Disattiva audio",
+    "unmute": "Riattivare l'audio"
   },
   "status": {
     "long": [

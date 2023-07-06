@@ -13,9 +13,10 @@
     "resultsFor": "Rezultati za",
     "timerHint": "Vreme do sledećeg osvežavanja"
   },
+  "close": "Zatvori",
   "competitions": {
     "canceled": "Takmičenje je otkazano",
-    "classes": "Kategorija",
+    "classes": "Kategorije",
     "date": "Datum",
     "distance": "Dužina",
     "info": "Info",
@@ -30,7 +31,8 @@
       "passTime": "Prolazno vreme",
       "title": "Najnovije promene"
     },
-    "signups": "Upisao"
+    "signups": "Upisao",
+    "visitEventor": "Pogledaj na Eventoru"
   },
   "currentLanguage": "Srpski",
   "distances": {
@@ -38,6 +40,14 @@
     "middle": "Srednja",
     "sprint": "Sprint",
     "ultralong": "Ultra Duga"
+  },
+  "follow": {
+    "title": "Prati",
+    "unfollow": {
+      "cta": "Prekini praćenje",
+      "hint": "Pritisni i zadrži da bi opozvao praćenje",
+      "title": "Da li želiš da prestaneš da pratiš?"
+    }
   },
   "home": {
     "goToday": "Pomeri na današnje događaje",
@@ -53,23 +63,23 @@
     "changeTextSize": {
       "decrease": "Smanji tekst",
       "increase": "Povećaj tekst",
-      "text": "Promenite veličinu teksta pomoću dole prikazanih dugmadi.",
+      "text": "Promeni veličinu teksta pomoću dole prikazanih dugmadi.",
       "title": "Promeni veličinu teksta"
     },
     "contact": "Kontaktiraj me",
     "purgeCache": "Obriši keš ",
-    "purged": "Sačuvani događaji su uklonjeni",
-    "rate": "Ocenite aplikaciju",
+    "purged": "sačuvani događaji su uklonjeni",
+    "rate": "Oceni aplikaciju",
     "title": "Informacije",
     "translations": {
       "credit": "Aplikaciju preveo",
-      "phraseapp": "Prevode pokreće"
+      "phraseapp": "Prevedeno uz pomoć"
     },
     "update": {
       "check": "Proveri ažuriranja",
       "hasUpdate": {
         "cancel": "Otkaži",
-        "cta": "Ažuriranje sada",
+        "cta": "Ažuriraj sada",
         "text": "Pronađena je novija verzija",
         "title": "Ažuriranje je pronađeno"
       },
@@ -83,8 +93,64 @@
   "language": {
     "pick": "Izbor jezika"
   },
+  "plus": {
+    "buy": {
+      "error": "Nešto nije u redu...",
+      "feature": {
+        "classes": {
+          "text": "Prati kategorije za koje si najviše zainteresovan.",
+          "title": "Prati kategorije"
+        },
+        "clubs": {
+          "text": "Brzo pristupi rezultatima bilo kog kluba na takmičenju.",
+          "title": "Prati klubove"
+        },
+        "follow": {
+          "text": "Brzo pristupi rezultatima izabranih trkača.",
+          "title": "Prati trkače"
+        },
+        "sorting": {
+          "text": "Sortiraj rezultate na osnovu kolona sa rezultatima.",
+          "title": "Sortiraj rezultate"
+        }
+      },
+      "privacy": "Pravila o privatnosti",
+      "restore": "Vrati kupovinu",
+      "restoreError": {
+        "text": "Obrati nam se ako si ranije kupio.",
+        "title": "Ne možeš da vratiš LiveOL+."
+      },
+      "restoreSuccess": "Vratili ste LiveOL+",
+      "success": "LiveOL+ je otključan",
+      "terms": "Uslovi korišćenja",
+      "text": "Otključaj ekskluzivne pogodnosti i unapredi projekat uz povoljnu godišnju pretplatu, osiguravajući da LiveOL napreduje.",
+      "title": "Uradi više sa LiveOL+",
+      "yearly": "godišnje"
+    },
+    "promo": {
+      "box": {
+        "cta": "Pogledaj",
+        "text": "Izvuci maksimum iz LiveOL i podrži njegov kontinuirani razvoj. Pogledaj LiveOL+ danas:"
+      },
+      "get": "Preuzmi LiveOL+"
+    },
+    "status": {
+      "expire": "Hvala što si podržao LiveOL, tvoja pretplata ističe do: {{ date }}",
+      "renew": "Hvala što podržavaš LiveOL, tvoja pretplata će se obnoviti do: {{ date }}",
+      "title": "LiveOL+"
+    }
+  },
   "promotions": {
     "didYouKnow": "Da li si znao?",
     "rotate": "Okreni telefon da bi video radio kontrole"
+  },
+  "result": {
+    "followClass": "Prati kategoriju",
+    "followClub": "Prati klub",
+    "followRunner": "Prati trkača",
+    "goToClass": "Pogledaj rezultate kategorije",
+    "goToClub": "Pogledaj rezultate kluba",
+    "mute": "Isključi zvuk",
+    "unmute": "Uključi zvuk"
   }
 }
