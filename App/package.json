@@ -1,7 +1,7 @@
 {
   "name": "@liveol/app",
-  "version": "2.10.1",
-  "binaryVersion": "2.10.x",
+  "version": "2.11.0",
+  "binaryVersion": "2.11.x",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
