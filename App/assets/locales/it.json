@@ -131,6 +131,11 @@
       "title": "Fai di più con LiveOL+",
       "yearly": "all'anno"
     },
+    "code": {
+      "claimed": "Codice già richiesto",
+      "invalid": "Codice non valido",
+      "redeem": "Riscatta codice"
+    },
     "promo": {
       "box": {
         "cta": "Dai un'occhiata",
@@ -152,8 +157,8 @@
     "followClass": "Seguire categoria",
     "followClub": "Seguire società",
     "followRunner": "Segui concorrente",
-    "goToClass": "Vedi i risultati per categoria",
-    "goToClub": "Vedi i risultati delle società",
+    "goToClass": "Vedi i risultati della categoria",
+    "goToClub": "Vedi i risultati della società",
     "mute": "Disattiva audio",
     "unmute": "Riattivare l'audio"
   },

@@ -39,6 +39,13 @@
     "sprint": "Sprint",
     "ultralong": "Ultra largo"
   },
+  "follow": {
+    "title": "Siguiendo",
+    "unfollow": {
+      "cta": "Dejar de seguir",
+      "title": "Quieres dejar de seguir?"
+    }
+  },
   "home": {
     "goToday": "Haz scroll a los eventos de hoy",
     "nothingSearch": "No se encontraron competiciones",
@@ -89,9 +96,22 @@
   "language": {
     "pick": "Elige un idioma"
   },
+  "plus": {
+    "promo": {
+      "get": "Obtén LiveOL+"
+    }
+  },
   "promotions": {
     "didYouKnow": "¿Sabias?",
     "rotate": "Rota el teléfono para ver los controles de radio"
+  },
+  "result": {
+    "followClass": "Seguir categoría",
+    "followClub": "Seguir club",
+    "goToClass": "Ver resultados de categoría",
+    "goToClub": "Ver resultados del club",
+    "mute": "Muta audio",
+    "unmute": "Desmutea el audio"
   },
   "status": {
     "long": [
