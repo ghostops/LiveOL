@@ -59,9 +59,9 @@ export const useIap = () => {
         }
 
         const hasValidCode = await loadCode();
+        await loadProducts();
 
         if (!hasValidCode) {
-          await loadProducts();
           await loadPurchase();
         }
 
@@ -100,10 +100,10 @@ export const useIap = () => {
     try {
       setLoading(true);
 
-      await Purchases.restorePurchases();
-      await loadPurchase();
+      const info = await Purchases.restorePurchases();
 
-      if (plusActive) {
+      if (info?.entitlements?.active?.plus !== undefined) {
+        await loadPurchase();
         Alert.alert(t('plus.buy.restoreSuccess'));
       } else {
         Alert.alert(
