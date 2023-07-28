@@ -38,54 +38,54 @@ interface Label {
 
 const labels =
   (t: TFunction) =>
-    (table: boolean, maxSize: number, splits?: OlSplit[]): Label[] => {
-      const all: Record<string, Label> = {
-        place: {
-          key: 'place',
-          size: PORTRAIT_SIZE.place,
-          text: t('classes.header.place'),
-          style: {
-            width: table ? LANDSCAPE_WIDTH.place : 'auto',
-          },
-          align: 'center',
+  (table: boolean, maxSize: number, splits?: OlSplit[]): Label[] => {
+    const all: Record<string, Label> = {
+      place: {
+        key: 'place',
+        size: PORTRAIT_SIZE.place,
+        text: t('classes.header.place'),
+        style: {
+          width: table ? LANDSCAPE_WIDTH.place : 'auto',
         },
-        name: {
-          key: 'name',
-          size: PORTRAIT_SIZE.name,
-          text: t('classes.header.name'),
-          style: {
-            width: table
-              ? LANDSCAPE_WIDTH.name + getExtraSize(splits.length)
-              : 'auto',
-          },
+        align: 'center',
+      },
+      name: {
+        key: 'name',
+        size: PORTRAIT_SIZE.name,
+        text: t('classes.header.name'),
+        style: {
+          width: table
+            ? LANDSCAPE_WIDTH.name + getExtraSize(splits.length)
+            : 'auto',
         },
-        time: {
-          key: 'result',
-          size: PORTRAIT_SIZE.time,
-          text: t('classes.header.time'),
-          align: 'flex-end',
-          style: {
-            width: table ? LANDSCAPE_WIDTH.time : 'auto',
-          },
+      },
+      time: {
+        key: 'result',
+        size: PORTRAIT_SIZE.time,
+        text: t('classes.header.time'),
+        align: 'flex-end',
+        style: {
+          width: table ? LANDSCAPE_WIDTH.time : 'auto',
         },
-        start: {
-          key: 'start',
-          size: PORTRAIT_SIZE.start,
-          text: t('classes.header.start'),
-          style: {
-            width: table ? LANDSCAPE_WIDTH.start : 'auto',
-          },
+      },
+      start: {
+        key: 'start',
+        size: PORTRAIT_SIZE.start,
+        text: t('classes.header.start'),
+        style: {
+          width: table ? LANDSCAPE_WIDTH.start : 'auto',
         },
-      };
+      },
+    };
 
-      const inPortrait: Label[] = [all.place, all.name, all.time];
+    const inPortrait: Label[] = [all.place, all.name, all.time];
 
-      const inLandscape: Label[] = [
-        all.place,
-        all.name,
-        all.start,
-        ...splits.map(
-          s =>
+    const inLandscape: Label[] = [
+      all.place,
+      all.name,
+      all.start,
+      ...splits.map(
+        s =>
           ({
             key: `split-${s.id}`,
             text: s.name,
@@ -93,12 +93,12 @@ const labels =
               width: LANDSCAPE_WIDTH.splits,
             },
           } as Label),
-        ),
-        all.time,
-      ];
+      ),
+      all.time,
+    ];
 
-      return table ? inLandscape : inPortrait;
-    };
+    return table ? inLandscape : inPortrait;
+  };
 
 export const ResultHeader: React.FC<OwnProps> = ({
   table,
