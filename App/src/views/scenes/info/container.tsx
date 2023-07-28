@@ -87,6 +87,9 @@ export const OLInfo: React.FC = () => {
     navigate('Plus');
   };
 
+  const onNewsletterPress = () =>
+    Linking.openURL('https://liveol.larsendahl.se/newsletter');
+
   return (
     <Component
       contact={contact}
@@ -106,6 +109,7 @@ export const OLInfo: React.FC = () => {
       }
       plusWillRenew={plusWillRenew}
       redeemPlusCode={redeem}
+      onNewsletterPress={onNewsletterPress}
     />
   );
 };

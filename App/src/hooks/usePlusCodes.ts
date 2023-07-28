@@ -71,6 +71,8 @@ export const usePlusCodes = () => {
 
       enableLiveOLPlus();
 
+      __DEV__ && console.log('Enabled LiveOL+ via code:', loadedCode);
+
       return true;
     } catch {
       return false;

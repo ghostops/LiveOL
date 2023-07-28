@@ -60,8 +60,6 @@ export const useIap = () => {
 
         const hasValidCode = await loadCode();
 
-        console.log({ hasValidCode });
-
         if (!hasValidCode) {
           await loadProducts();
           await loadPurchase();

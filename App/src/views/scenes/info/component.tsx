@@ -23,6 +23,7 @@ type Props = {
   plusWillRenew?: boolean;
   plusExpirationDate?: string;
   redeemPlusCode: () => void;
+  onNewsletterPress: () => void;
 };
 
 const PHRASE_IMAGE = require('../../../../assets/images/phrase.png');
@@ -42,6 +43,7 @@ export const OLInfo: React.FC<Props> = ({
   plusExpirationDate,
   plusWillRenew,
   redeemPlusCode,
+  onNewsletterPress,
 }) => {
   const { t } = useTranslation();
 
@@ -53,6 +55,10 @@ export const OLInfo: React.FC<Props> = ({
     {
       text: t('plus.code.redeem'),
       onPress: redeemPlusCode,
+    },
+    {
+      text: t('info.newsletter'),
+      onPress: onNewsletterPress,
     },
   ];
 
