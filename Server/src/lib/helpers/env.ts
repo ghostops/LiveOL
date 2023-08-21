@@ -1,3 +1,7 @@
-export const getEnv = (name: string): string =>
-    process.env[name.toUpperCase()] &&
-    process.env[name.toUpperCase()].toLowerCase();
+export const getEnv = (name: string, lowerCase = true): string => {
+	if (process.env[name.toUpperCase()] && lowerCase) {
+        return process.env[name.toUpperCase()].toLowerCase();
+    }
+
+    return process.env[name.toUpperCase()];
+};
