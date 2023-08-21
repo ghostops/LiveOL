@@ -101,16 +101,17 @@ export const marshallResult = (comp: number, _class: string, splitControlls: Liv
 ): IOLResult => {
 	const liveRunningDate = Helpers.getLiveRunningStart(res.start);
 
+	const start = Helpers.startToReadable(res.start);
+
 	return {
-		id: `${comp}:${_class}:${res.name.replace(/ /g, '_')}`,
+		id: `${comp}:${_class}:${res.name.replace(/ /g, '_')}:${start}`,
 		splits: !!splitControlls
 			? splitControlls.map((split) => {
 					return marshallSplits(split)(res);
 			  })
 			: [],
 		hasSplits: Boolean(!!splitControlls && splitControlls.length),
-		start: Helpers.startToReadable(res.start),
-
+		start,
 		place: res.place,
 		club: res?.club,
 		class: res?.class || _class,
