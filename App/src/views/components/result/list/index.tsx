@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FlatList, View } from 'react-native';
 import { px } from 'util/const';
 import { OLResultItem } from 'views/components/result/list/item';
@@ -23,6 +23,19 @@ export const OLResultsList: React.FC<Props> = props => {
   const { t } = useTranslation();
   const flatListRef = useScrollToRunner(props);
   const listItemHeight = useOlListItemHeight();
+
+  // Force update the list to prevent not rendering items
+  useEffect(() => {
+    if (!flatListRef) {
+      return;
+    }
+
+    const timeout = setTimeout(() => {
+      flatListRef?.current?.forceUpdate();
+    }, 2000);
+
+    return () => clearTimeout(timeout);
+  }, [flatListRef]);
 
   const renderItem = ({ item }: any) => {
     const result: OlResult = item;
