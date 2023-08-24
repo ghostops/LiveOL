@@ -3,6 +3,7 @@ import { LiveresultatApi } from 'lib/liveresultat/types';
 import { OLTime } from 'types';
 import * as Helpers from 'lib/helpers/time';
 import * as _ from 'lodash';
+import {createHash} from 'crypto';
 
 export interface IOLSplit {
 	id: string;
@@ -103,8 +104,16 @@ export const marshallResult = (comp: number, _class: string, splitControlls: Liv
 
 	const start = Helpers.startToReadable(res.start);
 
+	const compositeKey = `${comp}:${_class}:${res.name.replace(/ /g, '_')}:${res.club}`;
+	const id = createHash('md5').update(compositeKey).digest('hex');
+
+	// tmp debug log
+	if (comp === 26900) {
+		console.log(compositeKey, id, res.name);
+	}
+
 	return {
-		id: `${comp}:${_class}:${res.name.replace(/ /g, '_')}:${start}`,
+		id,
 		splits: !!splitControlls
 			? splitControlls.map((split) => {
 					return marshallSplits(split)(res);
