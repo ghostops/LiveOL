@@ -3,8 +3,8 @@ import { LiveresultatApi } from './types';
 import * as _ from 'lodash';
 
 interface ResultCopy extends LiveresultatApi.result {
-    place: any;
     start: any;
+    place: any;
 }
 
 const parseToNumber = (maybeNumber: any, fallback: number): number => {
@@ -88,18 +88,17 @@ export const sortOptimal = (
         sortingFunction = sortResult;
     }
 
-    copy = copy.sort(
+    const sorted = copy.sort(
         firstBy(sortingFunction, sortingDirection as SortOrder)
         .thenBy('start', {ignoreCase: true})
         .thenBy('status', {ignoreCase: true})
     );
 
-    const sorted: LiveresultatApi.result[] = [];
+    const parsed = sorted.map((res) => ({
+        ...res,
+        start: res.start?.toString(),
+        place: res.place?.toString(),
+    }))
 
-    original.forEach((result) => {
-        const inCopyIndex = copy.findIndex((_result) => _result.name === result.name);
-        sorted[inCopyIndex] = result;
-    });
-
-    return sorted;
+    return parsed;
 };

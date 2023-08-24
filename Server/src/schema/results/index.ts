@@ -104,13 +104,8 @@ export const marshallResult = (comp: number, _class: string, splitControlls: Liv
 
 	const start = Helpers.startToReadable(res.start);
 
-	const compositeKey = `${comp}:${_class}:${res.name.replace(/ /g, '_')}:${res.club}`;
+	const compositeKey = `${comp}:${_class}:${res.name.replace(/ /g, '_')}:${res.club.replace(/ /g, '_')}`;
 	const id = createHash('md5').update(compositeKey).digest('hex');
-
-	// tmp debug log
-	if (comp === 26900) {
-		console.log(compositeKey, id, res.name);
-	}
 
 	return {
 		id,
