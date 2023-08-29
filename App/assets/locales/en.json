@@ -137,7 +137,8 @@
     "code": {
       "claimed": "Code already claimed",
       "invalid": "Invalid code",
-      "redeem": "Redeem code"
+      "redeem": "Redeem code",
+      "enter": "Enter code here"
     },
     "promo": {
       "box": {

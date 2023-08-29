@@ -9,6 +9,7 @@ import { client } from 'lib/graphql/client';
 import { ApolloProvider } from '@apollo/client';
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import './lib/i18n';
+import { OLRedeemModal } from 'views/components/redeem_modal';
 
 export default () => {
   useEffect(() => {
@@ -25,6 +26,7 @@ export default () => {
             <View style={{ flex: 1 }}>
               <OLRotationWatcher>
                 <Router />
+                <OLRedeemModal />
               </OLRotationWatcher>
             </View>
           </ApolloProvider>

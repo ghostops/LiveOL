@@ -17,7 +17,7 @@ getUniqueId().then(id => {
 });
 
 export const usePlusCodes = () => {
-  const { setCustomerInfo } = usePlusStore();
+  const { setCustomerInfo, toggleRedeemModal } = usePlusStore();
   const { t } = useTranslation();
 
   const { refetch } = useValidatePlusCodeQuery({
@@ -29,33 +29,28 @@ export const usePlusCodes = () => {
 
   const [redeemPlusCode] = useRedeemPlusCodeMutation();
 
-  const redeem = async () => {
-    Alert.prompt(t('plus.code.redeem'), undefined, codeInput => {
-      if (!codeInput) {
-        return;
-      }
+  const redeem = async (code: string) => {
+    redeemPlusCode({
+      variables: { code, deviceId },
+      onCompleted: data => {
+        if (data.server.redeemPlusCode) {
+          Alert.alert(t('plus.buy.success'));
+          AsyncStorage.setItem(PLUS_CODE_KEY, code);
+          enableLiveOLPlus();
+          toggleRedeemModal();
+        }
+      },
+      onError: error => {
+        if (error.message === 'Invalid code') {
+          Alert.alert(t('plus.code.invalid'));
+          return;
+        }
 
-      redeemPlusCode({
-        variables: { code: codeInput, deviceId },
-        onCompleted: data => {
-          if (data.server.redeemPlusCode) {
-            Alert.alert(t('plus.buy.success'));
-            AsyncStorage.setItem(PLUS_CODE_KEY, codeInput);
-            enableLiveOLPlus();
-          }
-        },
-        onError: error => {
-          if (error.message === 'Invalid code') {
-            Alert.alert(t('plus.code.invalid'));
-            return;
-          }
-
-          if (error.message === 'Code claimed') {
-            Alert.alert(t('plus.code.claimed'));
-            return;
-          }
-        },
-      });
+        if (error.message === 'Code claimed') {
+          Alert.alert(t('plus.code.claimed'));
+          return;
+        }
+      },
     });
   };
 

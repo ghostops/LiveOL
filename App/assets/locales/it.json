@@ -53,7 +53,8 @@
     "nothingSearch": "Nessuna gara trovata",
     "nothingToday": "Non ci sono gare oggi",
     "page": "Pagina",
-    "search": "Ricerca",
+    "search": "Cerca",
+    "title": "LiveOL",
     "today": "Oggi"
   },
   "info": {
@@ -71,6 +72,7 @@
       "title": "Modifica dimensione del testo"
     },
     "contact": "Contattami",
+    "newsletter": "Iscriviti per ricevere notizie",
     "purgeCache": "Cancella la cache risultati",
     "purged": "gli eventi salvati sono stati rimossi",
     "rate": "Vota la app",
@@ -155,7 +157,7 @@
   },
   "result": {
     "followClass": "Seguire categoria",
-    "followClub": "Seguire società",
+    "followClub": "Segui società",
     "followRunner": "Segui concorrente",
     "goToClass": "Vedi i risultati della categoria",
     "goToClub": "Vedi i risultati della società",
