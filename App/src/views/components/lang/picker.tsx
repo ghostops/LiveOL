@@ -61,7 +61,7 @@ export const LanguagePicker: React.FC<Props> = ({ button = false }) => {
             hitSlop={{ bottom: 20, left: 20, right: 20, top: 20 }}
             style={{ marginLeft: 16 }}
           >
-            <OLIcon name="md-close" size={32} color="black" />
+            <OLIcon name="close" size={32} color="black" />
           </TouchableOpacity>
 
           <FlatList

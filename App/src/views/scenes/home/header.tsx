@@ -56,7 +56,7 @@ export const HomeHeader: React.FC = () => {
             style={{ marginRight: px(16) }}
             hitSlop={hitSlop}
           >
-            <OLIcon name="md-information-circle" size={24} color="white" />
+            <OLIcon name="information-circle" size={24} color="white" />
           </TouchableOpacity>
         </View>
       </View>
