@@ -53,6 +53,8 @@ export const OLRunnerContextMenu: React.FC<Props> = ({
               id: result.id,
               name: result.name,
               type: 'runner',
+              className: result.class,
+              competitionId,
             });
             navigate('Follow');
             break;

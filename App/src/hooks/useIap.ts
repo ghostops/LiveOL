@@ -83,7 +83,7 @@ export const useIap = () => {
 
   const buyLiveOLPlus = async () => {
     if (!liveOlPlusProduct) {
-      return;
+      return Promise.reject();
     }
 
     try {

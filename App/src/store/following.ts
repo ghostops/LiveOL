@@ -2,11 +2,21 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import create from 'zustand';
 import { persist } from 'zustand/middleware';
 
-export type FollowingData = {
+type FollowingRunnerData = {
+  type: 'runner';
   id: string;
   name: string;
-  type: 'club' | 'runner' | 'class';
+  className: string;
+  competitionId: number;
 };
+
+export type FollowingData =
+  | FollowingRunnerData
+  | {
+      id: string;
+      name: string;
+      type: 'club' | 'class';
+    };
 
 type FollowingState = {
   following: FollowingData[];

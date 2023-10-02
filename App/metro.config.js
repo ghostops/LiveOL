@@ -1,13 +1,15 @@
-/**
- * Metro configuration for React Native
- * https://github.com/facebook/react-native
- *
- * @format
- */
-const { getDefaultConfig } = require('metro-config');
-const { resolver: defaultResolver } = getDefaultConfig.getDefaultValues();
+const { getDefaultConfig, mergeConfig } = require('@react-native/metro-config');
 
-module.exports = {
+const defaultResolver = getDefaultConfig(__dirname).resolver;
+
+/**
+ * Metro configuration
+ * https://facebook.github.io/metro/docs/configuration
+ *
+ * @type {import('metro-config').MetroConfig}
+ */
+
+const config = {
   resolver: {
     ...defaultResolver,
     sourceExts: [...defaultResolver.sourceExts, 'cjs'],
@@ -24,3 +26,5 @@ module.exports = {
     }),
   },
 };
+
+module.exports = mergeConfig(getDefaultConfig(__dirname), config);

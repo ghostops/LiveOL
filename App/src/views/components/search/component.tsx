@@ -73,7 +73,7 @@ export const OLSearch: React.FC<Props> = ({ setSearching, setSearchTerm }) => {
           <OLIcon
             name="search"
             size={fontPx(18)}
-            style={{ marginLeft: px(4) }}
+            style={{ marginLeft: px(4), color: 'black' }}
           />
           <TextInput
             placeholder={t('home.search')}
@@ -83,6 +83,7 @@ export const OLSearch: React.FC<Props> = ({ setSearching, setSearchTerm }) => {
             style={{
               padding: 6,
               flex: 1,
+              color: 'black',
             }}
             focusable
           />

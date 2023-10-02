@@ -1,4 +1,3 @@
 <resources>
     <string name="app_name">LiveOL</string>
-    <string moduleConfig="true" name="CodePushDeploymentKey">@string/ANDROID_CODEPUSH_KEY</string>
 </resources>
