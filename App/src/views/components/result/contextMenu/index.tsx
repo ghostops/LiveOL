@@ -44,10 +44,10 @@ export const OLRunnerContextMenu: React.FC<Props> = ({
       (selectedIndex: number) => {
         switch (selectedIndex) {
           case 0:
-            // if (!plusActive) {
-            //   navigate('Plus', { feature: 'followRunner' });
-            //   break;
-            // }
+            if (!plusActive) {
+              navigate('Plus', { feature: 'followRunner' });
+              break;
+            }
 
             followRunner({
               id: result.id,

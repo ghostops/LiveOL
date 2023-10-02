@@ -1,3 +1,4 @@
+import React from 'react';
 import { IconProps } from 'react-native-vector-icons/Icon';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 

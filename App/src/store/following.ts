@@ -8,13 +8,15 @@ type FollowingRunnerData = {
   name: string;
   className: string;
   competitionId: number;
-}
-
-export type FollowingData = FollowingRunnerData | {
-  id: string;
-  name: string;
-  type: 'club' | 'class';
 };
+
+export type FollowingData =
+  | FollowingRunnerData
+  | {
+      id: string;
+      name: string;
+      type: 'club' | 'class';
+    };
 
 type FollowingState = {
   following: FollowingData[];

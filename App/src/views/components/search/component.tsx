@@ -83,7 +83,7 @@ export const OLSearch: React.FC<Props> = ({ setSearching, setSearchTerm }) => {
             style={{
               padding: 6,
               flex: 1,
-              color: 'black'
+              color: 'black',
             }}
             focusable
           />
