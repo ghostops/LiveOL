@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   lint-app:
     docker:
-      - image: cimg/node:16.16.0
+      - image: cimg/node:20.7.0
     steps:
       - checkout
       - run:
@@ -15,7 +15,7 @@ jobs:
 
   deploy-server:
     docker:
-      - image: cimg/node:16.16.0
+      - image: cimg/node:20.7.0
     steps:
       - checkout
       - run:
