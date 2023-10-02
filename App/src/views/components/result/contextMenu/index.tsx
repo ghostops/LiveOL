@@ -25,7 +25,7 @@ export const OLRunnerContextMenu: React.FC<Props> = ({
   const { plusActive } = useIap();
   const { navigate } = useOLNavigation();
   const {
-    params: { competitionId },
+    params: { competitionId, className },
   } = useRoute<RouteProp<RootStack, 'Results'>>();
   const followRunner = useFollowingStore(state => state.follow);
 
@@ -44,15 +44,17 @@ export const OLRunnerContextMenu: React.FC<Props> = ({
       (selectedIndex: number) => {
         switch (selectedIndex) {
           case 0:
-            if (!plusActive) {
-              navigate('Plus', { feature: 'followRunner' });
-              break;
-            }
+            // if (!plusActive) {
+            //   navigate('Plus', { feature: 'followRunner' });
+            //   break;
+            // }
 
             followRunner({
               id: result.id,
               name: result.name,
               type: 'runner',
+              className,
+              competitionId,
             });
             navigate('Follow');
             break;

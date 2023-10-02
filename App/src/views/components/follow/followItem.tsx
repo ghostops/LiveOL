@@ -22,11 +22,9 @@ export const OLFollowItem: React.FC<{ item: FollowingData }> = ({ item }) => {
     }
 
     if (item.type === 'runner') {
-      const [competitionId, className] = item.id.split(':');
-
       navigate('Results', {
-        competitionId: Number(competitionId),
-        className,
+        competitionId: Number(item.competitionId),
+        className: item.className,
         runnerId: item.id,
       });
     }
