@@ -75,8 +75,8 @@ PODS:
   - hermes-engine/Pre-built (0.72.5)
   - libevent (2.1.12)
   - OpenSSL-Universal (1.1.1100)
-  - PurchasesHybridCommon (4.14.0):
-    - RevenueCat (= 4.17.7)
+  - PurchasesHybridCommon (6.1.2):
+    - RevenueCat (= 4.25.9)
   - RCT-Folly (2021.07.22.00):
     - boost
     - DoubleConversion
@@ -498,15 +498,15 @@ PODS:
     - React-jsi (= 0.72.5)
     - React-logger (= 0.72.5)
     - React-perflogger (= 0.72.5)
-  - RevenueCat (4.17.7)
+  - RevenueCat (4.25.9)
   - RNBootSplash (4.3.2):
     - React-Core
   - RNCAsyncStorage (1.17.10):
     - React-Core
   - RNDeviceInfo (10.7.0):
     - React-Core
-  - RNPurchases (5.13.0):
-    - PurchasesHybridCommon (= 4.14.0)
+  - RNPurchases (6.6.5):
+    - PurchasesHybridCommon (= 6.1.2)
     - React-Core
   - RNScreens (3.18.0):
     - React-Core
@@ -736,7 +736,7 @@ SPEC CHECKSUMS:
   hermes-engine: f6cf92a471053245614d9d8097736f6337d5b86c
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
-  PurchasesHybridCommon: 44c861f8646b1a8240b6dd852ec6804318e7b476
+  PurchasesHybridCommon: b7c4205b6d2479cdd8914084a2b536e5e5b1445f
   RCT-Folly: 0080d0a6ebf2577475bda044aa59e2ca1f909cda
   RCTRequired: df81ab637d35fac9e6eb94611cfd20f0feb05455
   RCTTypeSafety: 4636e4a36c7c2df332bda6d59b19b41c443d4287
@@ -772,11 +772,11 @@ SPEC CHECKSUMS:
   React-runtimescheduler: cc32add98c45c5df18436a6a52a7e1f6edec102c
   React-utils: 7a9918a1ffdd39aba67835d42386f592ea3f8e76
   ReactCommon: 91ece8350ebb3dd2be9cef662abd78b6948233c0
-  RevenueCat: 15a06dbce1021474e6dc9b31b1fce43fe55fcaf2
+  RevenueCat: 4160d04575059fc1edbb973981f541b705ddebef
   RNBootSplash: 5f346163977573d6b2aeba1b25df9d2245c0d73c
   RNCAsyncStorage: 0c357f3156fcb16c8589ede67cc036330b6698ca
   RNDeviceInfo: 25d818c85db769cc0e7083d39efaa01a6f450df3
-  RNPurchases: 181b64433ab30e4f3a05b5dc86eaac4879bb49a8
+  RNPurchases: 536d66e63df8dd67f9323d9575eb23580843b4af
   RNScreens: f3230dd008a7d0ce5c0a8bc78ff12cf2315bda24
   RNSVG: 1869ad9534459f24caaa0416a4764548c2aeedad
   RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
