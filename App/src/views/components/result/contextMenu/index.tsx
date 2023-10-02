@@ -25,7 +25,7 @@ export const OLRunnerContextMenu: React.FC<Props> = ({
   const { plusActive } = useIap();
   const { navigate } = useOLNavigation();
   const {
-    params: { competitionId, className },
+    params: { competitionId },
   } = useRoute<RouteProp<RootStack, 'Results'>>();
   const followRunner = useFollowingStore(state => state.follow);
 
@@ -53,7 +53,7 @@ export const OLRunnerContextMenu: React.FC<Props> = ({
               id: result.id,
               name: result.name,
               type: 'runner',
-              className,
+              className: result.class,
               competitionId,
             });
             navigate('Follow');
