@@ -23,7 +23,7 @@ export const OLPlus: React.FC = () => {
           goBack();
           Alert.alert(t('plus.buy.success'));
         } catch (e: any) {
-          if (e.userCancelled) {
+          if (e?.userCancelled) {
             return;
           }
 
