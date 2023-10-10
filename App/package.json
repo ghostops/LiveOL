@@ -1,6 +1,6 @@
 {
   "name": "@liveol/app",
-  "version": "2.13.3",
+  "version": "2.14.0",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.7.0",
+    "@bugsnag/react-native": "^7.21.0",
     "@expo/react-native-action-sheet": "^4.0.1",
     "@react-native-async-storage/async-storage": "^1.17.10",
     "@react-native/eslint-config": "^0.73.1",
@@ -49,6 +50,7 @@
   "devDependencies": {
     "@babel/core": "^7.23.0",
     "@babel/runtime": "^7.12.5",
+    "@bugsnag/source-maps": "^2.3.1",
     "@graphql-codegen/cli": "^2.13.5",
     "@graphql-codegen/import-types-preset": "^2.2.3",
     "@graphql-codegen/typescript": "^2.7.3",

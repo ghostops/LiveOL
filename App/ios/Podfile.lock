@@ -1,5 +1,7 @@
 PODS:
   - boost (1.76.0)
+  - BugsnagReactNative (7.21.0):
+    - React-Core
   - CocoaAsyncSocket (7.6.5)
   - DoubleConversion (1.1.6)
   - FBLazyVector (0.72.5)
@@ -513,7 +515,7 @@ PODS:
     - React-RCTImage
   - RNSVG (13.3.0):
     - React-Core
-  - RNVectorIcons (9.2.0):
+  - RNVectorIcons (10.0.0):
     - React-Core
   - SocketRocket (0.6.1)
   - SwiftAudioEx (0.15.3)
@@ -523,6 +525,7 @@ PODS:
 
 DEPENDENCIES:
   - boost (from `../node_modules/react-native/third-party-podspecs/boost.podspec`)
+  - "BugsnagReactNative (from `../node_modules/@bugsnag/react-native`)"
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/React/FBReactNativeSpec`)
@@ -619,6 +622,8 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   boost:
     :podspec: "../node_modules/react-native/third-party-podspecs/boost.podspec"
+  BugsnagReactNative:
+    :path: "../node_modules/@bugsnag/react-native"
   DoubleConversion:
     :podspec: "../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
   FBLazyVector:
@@ -719,6 +724,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   boost: a7c83b31436843459a1961bfd74b96033dc77234
+  BugsnagReactNative: c681c456736c24344553f48013da8253eb00ee92
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   FBLazyVector: 71803c074f6325f10b5ec891c443b6bbabef0ca7
@@ -779,7 +785,7 @@ SPEC CHECKSUMS:
   RNPurchases: 536d66e63df8dd67f9323d9575eb23580843b4af
   RNScreens: f3230dd008a7d0ce5c0a8bc78ff12cf2315bda24
   RNSVG: 1869ad9534459f24caaa0416a4764548c2aeedad
-  RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
+  RNVectorIcons: 8b5bb0fa61d54cd2020af4f24a51841ce365c7e9
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   SwiftAudioEx: 83eabba2940924fc1c0d5cb0896049921365229c
   Yoga: 86fed2e4d425ee4c6eab3813ba1791101ee153c6
