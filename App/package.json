@@ -11,7 +11,7 @@
     "schema": "graphql-codegen --config code-gen.yml",
     "splashscreen": "react-native generate-bootsplash assets/images/icon.png --background-color=e86a1e --logo-width=220",
     "archive:ios": "cd ios; bundle exec fastlane release; cd ../",
-    "archive:android": "cd android; bundle exec fastlane deploy; cd ../",
+    "archive:android": "cd android; bundle exec fastlane deploy; cd ../; ./upload-sourcemaps.sh",
     "archive": "yarn archive:ios && yarn archive:android"
   },
   "dependencies": {
