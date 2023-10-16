@@ -8,7 +8,6 @@ import { useGetServerVersionQuery } from 'lib/graphql/generated/gql';
 import { useOLNavigation } from 'hooks/useNavigation';
 import { useIap } from 'hooks/useIap';
 import moment from 'moment';
-import { usePlusStore } from 'store/plus';
 
 const translationCredits: { code: string; name: string }[] = [
   {
@@ -39,8 +38,6 @@ const translationCredits: { code: string; name: string }[] = [
 
 export const OLInfo: React.FC = () => {
   const { plusActive, plusExpirationDate, plusWillRenew } = useIap();
-
-  const { toggleRedeemModal } = usePlusStore();
 
   const { navigate } = useOLNavigation();
 
@@ -108,7 +105,7 @@ export const OLInfo: React.FC = () => {
         moment(plusExpirationDate).format(__DEV__ ? undefined : 'LL')
       }
       plusWillRenew={plusWillRenew}
-      redeemPlusCode={toggleRedeemModal}
+      redeemPlusCode={() => navigate('Redeem')}
       onNewsletterPress={onNewsletterPress}
     />
   );
