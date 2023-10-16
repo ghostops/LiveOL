@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { Alert } from 'react-native';
 import { getUniqueId } from 'react-native-device-info';
 import { usePlusStore } from 'store/plus';
+import { useOLNavigation } from './useNavigation';
 
 const PLUS_CODE_KEY = 'plusKey';
 
@@ -17,8 +18,9 @@ getUniqueId().then(id => {
 });
 
 export const usePlusCodes = () => {
-  const { setCustomerInfo, toggleRedeemModal } = usePlusStore();
+  const { setCustomerInfo } = usePlusStore();
   const { t } = useTranslation();
+  const { goBack } = useOLNavigation();
 
   const { refetch } = useValidatePlusCodeQuery({
     skip: true,
@@ -37,7 +39,7 @@ export const usePlusCodes = () => {
           Alert.alert(t('plus.buy.success'));
           AsyncStorage.setItem(PLUS_CODE_KEY, code);
           enableLiveOLPlus();
-          toggleRedeemModal();
+          goBack();
         }
       },
       onError: error => {

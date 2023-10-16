@@ -18,6 +18,7 @@ import { OLPlus } from 'views/scenes/plus/container';
 import { ClubMenuIcon } from 'views/scenes/club/menuIcon';
 import { OLFollow } from 'views/scenes/follow/container';
 import { OLPlusFeatureKey } from 'views/scenes/plus/component';
+import { OLRedeemCode } from 'views/scenes/redeem_modal/component';
 
 export type RootStack = {
   Home: undefined;
@@ -44,6 +45,7 @@ export type RootStack = {
     feature?: OLPlusFeatureKey;
   };
   Follow: undefined;
+  Redeem: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStack>();
@@ -137,6 +139,17 @@ const Component: React.FC = () => {
           options={{
             headerLeft: () => <BackButton cross />,
             title: t('follow.title'),
+            presentation: 'modal',
+            animation: 'slide_from_bottom',
+          }}
+        />
+
+        <Stack.Screen
+          name="Redeem"
+          component={OLRedeemCode}
+          options={{
+            headerLeft: () => <BackButton cross />,
+            title: t('plus.code.redeem'),
             presentation: 'modal',
             animation: 'slide_from_bottom',
           }}

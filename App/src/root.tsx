@@ -8,13 +8,14 @@ import { client } from 'lib/graphql/client';
 import { ApolloProvider } from '@apollo/client';
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import './lib/i18n';
-import { OLRedeemModal } from 'views/components/redeem_modal';
 import Bugsnag from '@bugsnag/react-native';
 import { OLText } from 'views/components/text';
 import { COLORS } from 'util/const';
 
-Bugsnag.start();
-const ErrorBoundary = Bugsnag.getPlugin('react').createErrorBoundary(React);
+!__DEV__ && Bugsnag.start();
+const ErrorBoundary = !__DEV__
+  ? Bugsnag.getPlugin('react').createErrorBoundary(React)
+  : ({ children }: any) => <>{children}</>;
 
 const ErrorView = () => (
   <View
@@ -53,7 +54,6 @@ export default () => {
             <View style={{ flex: 1 }}>
               <OLRotationWatcher>
                 <Router />
-                <OLRedeemModal />
               </OLRotationWatcher>
             </View>
           </ApolloProvider>
