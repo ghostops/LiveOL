@@ -1,0 +1,27 @@
+name: Deploy
+
+on:
+  - push
+
+jobs:
+  deploy-api:
+    name: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@master
+
+      - name: Set up Node.js
+        uses: actions/setup-node@master
+        with:
+          node-version: 20
+
+      - name: Create tar file
+        run: tar -cvf ./deploy.tar --exclude='.git' --exclude='node_modules' --exclude='.env' ./Server/*
+
+      - name: Deploy with CapRover
+        run: npx caprover deploy -t ./deploy.tar
+        env:
+          CAPROVER_URL: ${{ secrets.CAPROVER_URL }}
+          CAPROVER_APP_TOKEN: ${{ secrets.CAPROVER_APP_TOKEN }}
+          CAPROVER_APP: ${{ secrets.CAPROVER_APP }}

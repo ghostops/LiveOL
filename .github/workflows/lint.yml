@@ -1,0 +1,24 @@
+name: Lint app
+
+on:
+  - push
+
+jobs:
+  lint:
+    name: lint-app
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@master
+
+      - name: Set up Node.js
+        uses: actions/setup-node@master
+        with:
+          node-version: 20
+
+      - run:
+          name: yarn install
+          command: cd ./App && yarn install
+      - run:
+          name: lint app
+          command: cd ./App && yarn lint
