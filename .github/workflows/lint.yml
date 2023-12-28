@@ -19,5 +19,5 @@ jobs:
       - name: yarn install
         run: cd ./App && yarn install
 
-      - name: yarn install
+      - name: yarn lint
         run: cd ./App && yarn lint
