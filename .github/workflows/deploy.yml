@@ -17,7 +17,7 @@ jobs:
           node-version: 20
 
       - name: Create tar file
-        run: tar -cvf ./deploy.tar --exclude='.git' --exclude='node_modules' --exclude='.env' ./Server/* ./Dockerfile.server ./captain-definition
+        run: tar -cvf ./deploy.tar --exclude='.git' --exclude='node_modules' --exclude='.env' ./Server/. ./Dockerfile.server ./captain-definition
 
       - name: Deploy with CapRover
         run: npx caprover deploy -t ./deploy.tar
