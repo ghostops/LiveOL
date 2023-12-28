@@ -16,9 +16,8 @@ jobs:
         with:
           node-version: 20
 
-      - run:
-          name: yarn install
-          command: cd ./App && yarn install
-      - run:
-          name: lint app
-          command: cd ./App && yarn lint
+      - name: yarn install
+        run: cd ./App && yarn install
+
+      - name: yarn install
+        run: cd ./App && yarn lint
