@@ -116,7 +116,7 @@ export const marshallResult = (comp: number, _class: string, splitControlls: Liv
 			: [],
 		hasSplits: Boolean(!!splitControlls && splitControlls.length),
 		start,
-		place: res.place,
+		place: res.status > 0 ? '' : res.place,
 		club: res?.club,
 		class: res?.class || _class,
 		name: res.name,
