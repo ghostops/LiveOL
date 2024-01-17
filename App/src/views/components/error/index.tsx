@@ -1,5 +1,4 @@
 import * as React from 'react';
-// @ts-expect-error commonJS
 import { ApolloError } from '@apollo/client';
 import { OLText } from '../text';
 import { ScrollView, RefreshControl } from 'react-native';
