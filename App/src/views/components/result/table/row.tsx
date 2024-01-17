@@ -35,7 +35,11 @@ export const LANDSCAPE_WIDTH = {
   splits: px(90),
 };
 
-export const getExtraSize = (splits: number): number => {
+export const getExtraSize = (splits?: number): number => {
+  if (!splits) {
+    return 0;
+  }
+
   const { width } = Dimensions.get('window');
 
   const noSplits = [

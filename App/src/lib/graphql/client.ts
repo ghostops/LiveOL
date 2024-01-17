@@ -1,3 +1,4 @@
+// @ts-expect-error commonJS
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { Platform } from 'react-native';
 import { VERSION } from '~/util/const';

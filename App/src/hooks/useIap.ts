@@ -32,7 +32,9 @@ export const useIap = () => {
     const loadProducts = async () => {
       try {
         const offerings = await Purchases.getOfferings();
-        setLiveOlPlusProduct(offerings.current);
+        if (offerings.current) {
+          setLiveOlPlusProduct(offerings.current);
+        }
       } catch (e) {
         console.warn(e);
       }

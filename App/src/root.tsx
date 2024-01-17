@@ -5,6 +5,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { promptStoreReview } from '~/util/storeReview';
 import { OLRotationWatcher } from '~/views/components/watcher/rotation';
 import { client } from '~/lib/graphql/client';
+// @ts-expect-error commonJS
 import { ApolloProvider } from '@apollo/client';
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import '~/lib/i18n';

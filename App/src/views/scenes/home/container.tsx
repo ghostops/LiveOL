@@ -19,7 +19,7 @@ export const OLHome: React.FC = () => {
   const { navigate } = useOLNavigation();
 
   const { data, loading, error, fetchMore, refetch } = useGetCompetitionsQuery({
-    variables: { search: searchTerm || null, date: getToday() },
+    variables: { search: searchTerm || undefined, date: getToday() },
     onCompleted: () => {
       RNBootSplash.hide({ fade: true });
     },
@@ -45,8 +45,8 @@ export const OLHome: React.FC = () => {
       return;
     }
 
-    const page = (data.competitions.getCompetitions.page || 0) + 1;
-    const lastPage = data.competitions.getCompetitions.lastPage || 0;
+    const page = (data?.competitions.getCompetitions.page || 0) + 1;
+    const lastPage = data?.competitions.getCompetitions.lastPage || 0;
 
     if (page >= lastPage) {
       return;

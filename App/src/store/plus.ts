@@ -3,7 +3,7 @@ import create from 'zustand';
 
 type PlusState = {
   initialized: boolean;
-  customerInfo: CustomerInfo;
+  customerInfo: CustomerInfo | null;
   liveOlPlusProduct?: PurchasesOffering;
   setCustomerInfo: (customerInfo: CustomerInfo) => void;
   setInitialized: () => void;

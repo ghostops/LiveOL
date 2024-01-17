@@ -55,7 +55,7 @@ const labels =
         text: t('classes.header.name'),
         style: {
           width: table
-            ? LANDSCAPE_WIDTH.name + getExtraSize(splits.length)
+            ? LANDSCAPE_WIDTH.name + getExtraSize(splits?.length)
             : 'auto',
         },
       },
@@ -84,7 +84,7 @@ const labels =
       all.place,
       all.name,
       all.start,
-      ...splits.map(
+      ...(splits || []).map(
         s =>
           ({
             key: `split-${s.id}`,
@@ -196,7 +196,9 @@ export const ResultHeader: React.FC<OwnProps> = ({
       }}
     >
       {!loading && !error && (
-        <Grid>{labels(t)(table, maxRowSize || 0, splits).map(renderCol)}</Grid>
+        <Grid>
+          {labels(t)(!!table, maxRowSize || 0, splits).map(renderCol)}
+        </Grid>
       )}
     </View>
   );

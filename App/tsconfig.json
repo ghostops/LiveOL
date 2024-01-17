@@ -2,16 +2,14 @@
   "extends": "@react-native/typescript-config/tsconfig.json",
   "compilerOptions": {
     "skipLibCheck": true,
-    "module": "Node16",
-    "moduleResolution": "Node16",
     "noEmit": true,
     "resolveJsonModule": true,
     "baseUrl": "./src",
-    "esModuleInterop": true,
-    "strictNullChecks": false,
     "paths": {
       "~/*": ["*"]
-    }
+    },
+    "module": "Node16",
+    "moduleResolution": "Node16"
   },
   "include": ["src"],
   "exclude": ["src/types/graphql-global-types.ts", "node_modules"]

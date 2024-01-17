@@ -8,7 +8,7 @@ interface Props {
 }
 
 export const OLResultLiveRunning: React.FC<Props> = ({ date }) => {
-  const [value, setValue] = React.useState<string>();
+  const [value, setValue] = React.useState<string | null>();
 
   React.useEffect(() => {
     if (!date) {

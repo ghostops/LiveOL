@@ -20,7 +20,7 @@ export const OLRefetcherBar: React.FunctionComponent<Props> = ({
 
   React.useEffect(() => {
     const refresh = async (): Promise<void> => {
-      await promise();
+      await promise?.();
       animate();
     };
 

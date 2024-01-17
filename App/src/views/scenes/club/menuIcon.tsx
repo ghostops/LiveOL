@@ -28,7 +28,10 @@ export const ClubMenuIcon: React.FC = () => {
         options,
         cancelButtonIndex: options.length - 1,
       },
-      (selectedIndex: number) => {
+      selectedIndex => {
+        if (!selectedIndex) {
+          return;
+        }
         switch (selectedIndex) {
           case 0:
             if (!plusActive) {

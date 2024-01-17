@@ -41,7 +41,11 @@ export const OLRunnerContextMenu: React.FC<Props> = ({
         options,
         cancelButtonIndex: options.length - 1,
       },
-      (selectedIndex: number) => {
+      selectedIndex => {
+        if (!selectedIndex) {
+          return;
+        }
+
         switch (selectedIndex) {
           case 0:
             if (!plusActive) {

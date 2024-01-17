@@ -35,7 +35,11 @@ export const ResultMenuIcon: React.FC = () => {
         options,
         cancelButtonIndex: options.length - 1,
       },
-      (selectedIndex: number) => {
+      selectedIndex => {
+        if (!selectedIndex) {
+          return;
+        }
+
         switch (selectedIndex) {
           case 0:
             setMuted(!isMuted);

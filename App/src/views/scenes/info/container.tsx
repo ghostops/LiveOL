@@ -101,8 +101,9 @@ export const OLInfo: React.FC = () => {
       onGetLiveOlPlus={onGetLiveOlPlus}
       showGetLiveOlPlus={!plusActive}
       plusExpirationDate={
-        plusExpirationDate &&
-        moment(plusExpirationDate).format(__DEV__ ? undefined : 'LL')
+        plusExpirationDate
+          ? moment(plusExpirationDate).format(__DEV__ ? undefined : 'LL')
+          : undefined
       }
       plusWillRenew={plusWillRenew}
       redeemPlusCode={() => navigate('Redeem')}

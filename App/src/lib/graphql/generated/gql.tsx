@@ -1,6 +1,7 @@
 import * as Types from './types';
-
+// @ts-expect-error commonJS
 import { gql } from '@apollo/client';
+// @ts-expect-error commonJS
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
 export const ClubFragmentDoc = gql`

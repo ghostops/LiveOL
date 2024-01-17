@@ -60,7 +60,10 @@ export const usePlusCodes = () => {
     try {
       const loadedCode = await AsyncStorage.getItem(PLUS_CODE_KEY);
 
-      const response = await refetch({ code: loadedCode, deviceId });
+      const response = await refetch({
+        code: loadedCode || undefined,
+        deviceId,
+      });
 
       if (!response.data.server.validatePlusCode) {
         return false;

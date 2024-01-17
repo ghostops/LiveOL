@@ -1,4 +1,5 @@
 import * as React from 'react';
+// @ts-expect-error commonJS
 import { ApolloError } from '@apollo/client';
 import { OLText } from '../text';
 import { ScrollView, RefreshControl } from 'react-native';
@@ -20,7 +21,7 @@ export const OLError: React.FC<Props> = ({ error, refetch }) => {
           onRefresh={async () => {
             try {
               setLoading(true);
-              await refetch();
+              await refetch?.();
             } finally {
               setLoading(false);
             }
@@ -38,7 +39,7 @@ export const OLError: React.FC<Props> = ({ error, refetch }) => {
       }}
     >
       <OLText size={16} style={{ textAlign: 'center' }}>
-        {error.message}
+        {error?.message}
       </OLText>
 
       {!!refetch && (
