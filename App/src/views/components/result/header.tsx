@@ -84,16 +84,15 @@ const labels =
       all.place,
       all.name,
       all.start,
-      ...(splits || []).map(
-        s =>
-          ({
-            key: `split-${s.id}`,
-            text: s.name,
-            style: {
-              width: LANDSCAPE_WIDTH.splits,
-            },
-          } as Label),
-      ),
+      ...(splits || []).map(s => {
+        return {
+          key: `split-${s.id}`,
+          text: s.name,
+          style: {
+            width: LANDSCAPE_WIDTH.splits,
+          },
+        } as Label;
+      }),
       all.time,
     ];
 
