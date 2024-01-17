@@ -1,6 +1,6 @@
 PODS:
   - boost (1.83.0)
-  - BugsnagReactNative (7.21.0):
+  - BugsnagReactNative (7.22.3):
     - React-Core
   - CocoaAsyncSocket (7.6.5)
   - DoubleConversion (1.1.6)
@@ -1125,16 +1125,17 @@ PODS:
   - RevenueCat (4.25.9)
   - RNBootSplash (4.3.2):
     - React-Core
-  - RNCAsyncStorage (1.17.10):
+  - RNCAsyncStorage (1.21.0):
     - React-Core
   - RNDeviceInfo (10.7.0):
     - React-Core
   - RNPurchases (6.6.5):
     - PurchasesHybridCommon (= 6.1.2)
     - React-Core
-  - RNScreens (3.18.0):
+  - RNScreens (3.29.0):
+    - glog
+    - RCT-Folly (= 2022.05.16.00)
     - React-Core
-    - React-RCTImage
   - RNSVG (13.3.0):
     - React-Core
   - RNVectorIcons (10.0.0):
@@ -1371,7 +1372,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   boost: d3f49c53809116a5d38da093a8aa78bf551aed09
-  BugsnagReactNative: c681c456736c24344553f48013da8253eb00ee92
+  BugsnagReactNative: d9fa0824cea1beb5ab1f12828d79a2bd1b383e60
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   FBLazyVector: fbc4957d9aa695250b55d879c1d86f79d7e69ab4
@@ -1436,10 +1437,10 @@ SPEC CHECKSUMS:
   ReactCommon: 45b5d4f784e869c44a6f5a8fad5b114ca8f78c53
   RevenueCat: 4160d04575059fc1edbb973981f541b705ddebef
   RNBootSplash: 5f346163977573d6b2aeba1b25df9d2245c0d73c
-  RNCAsyncStorage: 0c357f3156fcb16c8589ede67cc036330b6698ca
+  RNCAsyncStorage: 618d03a5f52fbccb3d7010076bc54712844c18ef
   RNDeviceInfo: 25d818c85db769cc0e7083d39efaa01a6f450df3
   RNPurchases: 536d66e63df8dd67f9323d9575eb23580843b4af
-  RNScreens: f3230dd008a7d0ce5c0a8bc78ff12cf2315bda24
+  RNScreens: b582cb834dc4133307562e930e8fa914b8c04ef2
   RNSVG: 1869ad9534459f24caaa0416a4764548c2aeedad
   RNVectorIcons: 8b5bb0fa61d54cd2020af4f24a51841ce365c7e9
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17

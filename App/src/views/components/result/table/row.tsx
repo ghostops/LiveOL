@@ -36,10 +36,6 @@ export const LANDSCAPE_WIDTH = {
 };
 
 export const getExtraSize = (splits?: number): number => {
-  if (!splits) {
-    return 0;
-  }
-
   const { width } = Dimensions.get('window');
 
   const noSplits = [
@@ -49,7 +45,7 @@ export const getExtraSize = (splits?: number): number => {
     LANDSCAPE_WIDTH.time,
   ].reduce((a, b) => a + b, 0);
 
-  const withSplits = noSplits + LANDSCAPE_WIDTH.splits * splits;
+  const withSplits = noSplits + LANDSCAPE_WIDTH.splits * (splits || 1);
 
   let extraSize = 0;
 
