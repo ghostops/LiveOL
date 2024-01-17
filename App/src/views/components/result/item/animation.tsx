@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import { Animated, ViewStyle } from 'react-native';
-import { resultsChanged } from 'util/hasChanged';
-import { OlResult } from 'lib/graphql/generated/types';
+import { resultsChanged } from '~/util/hasChanged';
+import { OlResult } from '~/lib/graphql/generated/types';
 
 interface Props {
   result: OlResult;

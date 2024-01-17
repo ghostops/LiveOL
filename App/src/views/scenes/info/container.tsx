@@ -1,12 +1,12 @@
 import React from 'react';
-import { VERSION } from 'util/const';
+import { VERSION } from '~/util/const';
 import { OLInfo as Component } from './component';
 import { Alert, Linking } from 'react-native';
-import { useDeviceRotationStore } from 'store/deviceRotation';
-import { useTextStore } from 'store/text';
-import { useGetServerVersionQuery } from 'lib/graphql/generated/gql';
-import { useOLNavigation } from 'hooks/useNavigation';
-import { useIap } from 'hooks/useIap';
+import { useDeviceRotationStore } from '~/store/deviceRotation';
+import { useTextStore } from '~/store/text';
+import { useGetServerVersionQuery } from '~/lib/graphql/generated/gql';
+import { useOLNavigation } from '~/hooks/useNavigation';
+import { useIap } from '~/hooks/useIap';
 import moment from 'moment';
 
 const translationCredits: { code: string; name: string }[] = [

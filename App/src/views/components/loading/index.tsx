@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { COLORS } from 'util/const';
+import { COLORS } from '~/util/const';
 import { ActivityIndicator, View } from 'react-native';
-import { useTheme } from 'hooks/useTheme';
+import { useTheme } from '~/hooks/useTheme';
 
 type Props = {
   badge?: boolean;

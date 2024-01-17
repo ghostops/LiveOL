@@ -1,10 +1,10 @@
 import React from 'react';
-import { useTheme } from 'hooks/useTheme';
+import { useTheme } from '~/hooks/useTheme';
 import { useTranslation } from 'react-i18next';
 import { Platform, TouchableOpacity } from 'react-native';
-import { OLIcon } from 'views/components/icon';
-import { OLText } from 'views/components/text';
-import { useOLNavigation } from 'hooks/useNavigation';
+import { OLIcon } from '~/views/components/icon';
+import { OLText } from '~/views/components/text';
+import { useOLNavigation } from '~/hooks/useNavigation';
 
 type Props = {
   cross?: boolean;

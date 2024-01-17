@@ -1,10 +1,10 @@
-import { useTheme } from 'hooks/useTheme';
+import { useTheme } from '~/hooks/useTheme';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FlatList, View } from 'react-native';
-import { FollowingData } from 'store/following';
-import { OLFollowItem } from 'views/components/follow/followItem';
-import { OLText } from 'views/components/text';
+import { FollowingData } from '~/store/following';
+import { OLFollowItem } from '~/views/components/follow/followItem';
+import { OLText } from '~/views/components/text';
 
 type Props = {
   following: FollowingData[];

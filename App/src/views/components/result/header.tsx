@@ -1,24 +1,24 @@
 import React from 'react';
 import _ from 'lodash';
 import { ViewStyle, FlexAlignType, View, TouchableOpacity } from 'react-native';
-import { HIT_SLOP } from 'util/const';
-import { PORTRAIT_SIZE } from 'views/components/result/list/item';
+import { HIT_SLOP } from '~/util/const';
+import { PORTRAIT_SIZE } from '~/views/components/result/list/item';
 import { OLText } from '../text';
 import { OLResultColumn } from './item/column';
 import {
   LANDSCAPE_WIDTH,
   getExtraSize,
-} from 'views/components/result/table/row';
+} from '~/views/components/result/table/row';
 import { Grid } from 'react-native-easy-grid';
 import { TFunction, useTranslation } from 'react-i18next';
-import { OlSplit } from 'lib/graphql/generated/types';
-import { useGetSplitControlsQuery } from 'lib/graphql/generated/gql';
+import { OlSplit } from '~/lib/graphql/generated/types';
+import { useGetSplitControlsQuery } from '~/lib/graphql/generated/gql';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useSortingStore } from 'store/sorting';
+import { useSortingStore } from '~/store/sorting';
 import { OLIcon } from '../icon';
-import { useTheme } from 'hooks/useTheme';
-import { useOLNavigation } from 'hooks/useNavigation';
-import { useIap } from 'hooks/useIap';
+import { useTheme } from '~/hooks/useTheme';
+import { useOLNavigation } from '~/hooks/useNavigation';
+import { useIap } from '~/hooks/useIap';
 
 interface OwnProps {
   competitionId: number;

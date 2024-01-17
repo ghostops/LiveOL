@@ -2,11 +2,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   useRedeemPlusCodeMutation,
   useValidatePlusCodeQuery,
-} from 'lib/graphql/generated/gql';
+} from '~/lib/graphql/generated/gql';
 import { useTranslation } from 'react-i18next';
 import { Alert } from 'react-native';
 import { getUniqueId } from 'react-native-device-info';
-import { usePlusStore } from 'store/plus';
+import { usePlusStore } from '~/store/plus';
 import { useOLNavigation } from './useNavigation';
 
 const PLUS_CODE_KEY = 'plusKey';

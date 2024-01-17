@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { TouchableOpacity, ViewStyle } from 'react-native';
-import { COLORS, px } from 'util/const';
+import { COLORS, px } from '~/util/const';
 
 interface Props {
   itemDivider?: boolean;

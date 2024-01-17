@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from 'react';
 import TrackPlayer from 'react-native-track-player';
 import { Platform } from 'react-native';
-import { useAudioStore } from 'store/audio';
+import { useAudioStore } from '~/store/audio';
 
 const Tracks = [
   require('../../../../../assets/sound/alert1.mp3'),

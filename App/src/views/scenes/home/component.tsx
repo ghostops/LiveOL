@@ -1,16 +1,16 @@
 import React from 'react';
-import { HomeList } from 'views/components/home/list';
-import { HomeListItem } from 'views/components/home/listItem';
-import { LanguagePicker } from 'views/components/lang/picker';
-import { OLSearch } from 'views/components/search/container';
-import { OLText } from 'views/components/text';
-import { TodaysCompetitions } from 'views/components/home/today';
+import { HomeList } from '~/views/components/home/list';
+import { HomeListItem } from '~/views/components/home/listItem';
+import { LanguagePicker } from '~/views/components/lang/picker';
+import { OLSearch } from '~/views/components/search/container';
+import { OLText } from '~/views/components/text';
+import { TodaysCompetitions } from '~/views/components/home/today';
 import { View, TouchableOpacity } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { OlCompetition } from 'lib/graphql/generated/types';
-import { useTheme } from 'hooks/useTheme';
+import { OlCompetition } from '~/lib/graphql/generated/types';
+import { useTheme } from '~/hooks/useTheme';
 import { OLHomePromo } from './promo';
-import { FollowWidget } from 'views/components/follow/followWidget';
+import { FollowWidget } from '~/views/components/follow/followWidget';
 
 interface Props {
   competitions: OlCompetition[];

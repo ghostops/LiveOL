@@ -1,4 +1,4 @@
-import { OlResult } from 'lib/graphql/generated/types';
+import { OlResult } from '~/lib/graphql/generated/types';
 import { useEffect, useRef, useState } from 'react';
 import { FlatList } from 'react-native';
 

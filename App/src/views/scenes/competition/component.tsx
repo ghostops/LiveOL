@@ -1,13 +1,13 @@
 import React from 'react';
 import { FlatList, View } from 'react-native';
-import { OLCompetitionHeader } from 'views/components/competition/header';
-import { OLListItem } from 'views/components/list/item';
-import { OLLoading } from 'views/components/loading';
-import { OLSafeAreaView } from 'views/components/safeArea';
-import { OLText } from 'views/components/text';
-import { px } from 'util/const';
+import { OLCompetitionHeader } from '~/views/components/competition/header';
+import { OLListItem } from '~/views/components/list/item';
+import { OLLoading } from '~/views/components/loading';
+import { OLSafeAreaView } from '~/views/components/safeArea';
+import { OLText } from '~/views/components/text';
+import { px } from '~/util/const';
 import { useTranslation } from 'react-i18next';
-import { OlClass, OlCompetition } from 'lib/graphql/generated/types';
+import { OlClass, OlCompetition } from '~/lib/graphql/generated/types';
 
 interface Props {
   loading: boolean;

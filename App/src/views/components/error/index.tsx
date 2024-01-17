@@ -2,7 +2,7 @@ import * as React from 'react';
 import { ApolloError } from '@apollo/client';
 import { OLText } from '../text';
 import { ScrollView, RefreshControl } from 'react-native';
-import { COLORS, px } from 'util/const';
+import { COLORS, px } from '~/util/const';
 
 interface Props {
   error?: ApolloError;

@@ -1,8 +1,8 @@
 import React from 'react';
-import { px } from 'util/const';
+import { px } from '~/util/const';
 import { OLText } from '../text';
 import { OLListItem } from '../list/item';
-import { OlCompetition } from 'lib/graphql/generated/types';
+import { OlCompetition } from '~/lib/graphql/generated/types';
 
 interface Props {
   competition: OlCompetition;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, Easing, Animated } from 'react-native';
-import { COLORS, px } from 'util/const';
+import { COLORS, px } from '~/util/const';
 import { OLText } from '../text';
 import { useTranslation } from 'react-i18next';
 

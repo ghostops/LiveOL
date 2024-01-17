@@ -1,14 +1,17 @@
-// prettier-ignore
 {
-  "extends": "@tsconfig/react-native/tsconfig.json",
+  "extends": "@react-native/typescript-config/tsconfig.json",
   "compilerOptions": {
     "skipLibCheck": true,
-    "moduleResolution": "node",
+    "module": "Node16",
+    "moduleResolution": "Node16",
     "noEmit": true,
     "resolveJsonModule": true,
     "baseUrl": "./src",
     "esModuleInterop": true,
-    "strictNullChecks": false
+    "strictNullChecks": false,
+    "paths": {
+      "~/*": ["*"]
+    }
   },
   "include": ["src"],
   "exclude": ["src/types/graphql-global-types.ts", "node_modules"]

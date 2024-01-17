@@ -2,8 +2,8 @@ import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Alert, Platform } from 'react-native';
 import Purchases from 'react-native-purchases';
-import { usePlusStore } from 'store/plus';
-import { usePlusCodes } from 'hooks/usePlusCodes';
+import { usePlusStore } from '~/store/plus';
+import { usePlusCodes } from '~/hooks/usePlusCodes';
 
 export const useIap = () => {
   const { t } = useTranslation();

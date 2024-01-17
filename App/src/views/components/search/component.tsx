@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import { OLText } from '../text';
-import { fontPx, px } from 'util/const';
+import { fontPx, px } from '~/util/const';
 import { OLIcon } from '../icon';
 import { useTranslation } from 'react-i18next';
 

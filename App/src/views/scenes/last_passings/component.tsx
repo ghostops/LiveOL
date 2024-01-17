@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { OLLastPassingResult } from 'views/components/latest_passings/listItem';
-import { OLLoading } from 'views/components/loading';
-import { OLRefetcher } from 'views/components/refetcher';
-import { OLSafeAreaView } from 'views/components/safeArea';
-import { OLText } from 'views/components/text';
-import { px } from 'util/const';
+import { OLLastPassingResult } from '~/views/components/latest_passings/listItem';
+import { OLLoading } from '~/views/components/loading';
+import { OLRefetcher } from '~/views/components/refetcher';
+import { OLSafeAreaView } from '~/views/components/safeArea';
+import { OLText } from '~/views/components/text';
+import { px } from '~/util/const';
 import { View } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { PassingFragment } from 'lib/graphql/generated/types';
+import { PassingFragment } from '~/lib/graphql/generated/types';
 
 interface Props {
   passings: PassingFragment[];

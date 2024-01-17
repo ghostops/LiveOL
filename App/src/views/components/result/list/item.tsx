@@ -1,19 +1,19 @@
 import React from 'react';
-import { px } from 'util/const';
-import { OLResultAnimation } from 'views/components/result/item/animation';
-import { OLResultBadge } from 'views/components/result/item/badge';
-import { OLResultClub } from 'views/components/result/item/club';
-import { OLResultColumn } from 'views/components/result/item/column';
-import { OLResultName } from 'views/components/result/item/name';
-import { OLResultTime } from 'views/components/result/item/time';
-import { OLResultTimeplus } from 'views/components/result/item/timeplus';
-import { OLStartTime } from 'views/components/result/item/start';
+import { px } from '~/util/const';
+import { OLResultAnimation } from '~/views/components/result/item/animation';
+import { OLResultBadge } from '~/views/components/result/item/badge';
+import { OLResultClub } from '~/views/components/result/item/club';
+import { OLResultColumn } from '~/views/components/result/item/column';
+import { OLResultName } from '~/views/components/result/item/name';
+import { OLResultTime } from '~/views/components/result/item/time';
+import { OLResultTimeplus } from '~/views/components/result/item/timeplus';
+import { OLStartTime } from '~/views/components/result/item/start';
 import { View } from 'react-native';
 import { OLResultListItem } from '../item/listItem';
 import { OLResultLiveRunning } from '../item/liveRunning';
-import { isLiveRunning, startIsAfterNow } from 'util/isLive';
+import { isLiveRunning, startIsAfterNow } from '~/util/isLive';
 import { OLClassName } from '../item/className';
-import { OlResult } from 'lib/graphql/generated/types';
+import { OlResult } from '~/lib/graphql/generated/types';
 import { OLRunnerContextMenu } from '../contextMenu';
 
 type Props = {

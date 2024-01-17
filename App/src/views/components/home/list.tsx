@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { FlatList, RefreshControl, View } from 'react-native';
 import { HomeListItem } from './listItem';
-import { isDateToday, dateToReadable } from 'util/date';
+import { isDateToday, dateToReadable } from '~/util/date';
 import { OLListItem } from '../list/item';
 import { OLLoading } from '../loading';
 import { OLSafeAreaView } from '../safeArea';
 import { OLText } from '../text';
-import { px } from 'util/const';
+import { px } from '~/util/const';
 import { useTranslation } from 'react-i18next';
-import { OlCompetition } from 'lib/graphql/generated/types';
+import { OlCompetition } from '~/lib/graphql/generated/types';
 
 interface Props {
   competitions: OlCompetition[];

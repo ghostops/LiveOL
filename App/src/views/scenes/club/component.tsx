@@ -1,9 +1,9 @@
 import React from 'react';
-import { OlResult } from 'lib/graphql/generated/types';
-import { OLRefetcher } from 'views/components/refetcher';
-import { OLResultsList } from 'views/components/result/list';
-import { OLResultsTable } from 'views/components/result/table';
-import { useDeviceRotationStore } from 'store/deviceRotation';
+import { OlResult } from '~/lib/graphql/generated/types';
+import { OLRefetcher } from '~/views/components/refetcher';
+import { OLResultsList } from '~/views/components/result/list';
+import { OLResultsTable } from '~/views/components/result/table';
+import { useDeviceRotationStore } from '~/store/deviceRotation';
 
 interface Props {
   refetch: () => Promise<void>;

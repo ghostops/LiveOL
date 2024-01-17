@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { diffDateNow } from 'util/date';
+import { diffDateNow } from '~/util/date';
 import { View } from 'react-native';
-import { OLText } from 'views/components/text';
+import { OLText } from '~/views/components/text';
 
 interface Props {
   date: string;

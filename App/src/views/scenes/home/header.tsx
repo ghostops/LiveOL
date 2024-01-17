@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { TouchableOpacity, Image, View } from 'react-native';
-import { useTheme } from 'hooks/useTheme';
-import { OLIcon } from 'views/components/icon';
+import { useTheme } from '~/hooks/useTheme';
+import { OLIcon } from '~/views/components/icon';
 import { useTranslation } from 'react-i18next';
-import { OLText } from 'views/components/text';
+import { OLText } from '~/views/components/text';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { COLORS } from 'util/const';
-import { useOLNavigation } from 'hooks/useNavigation';
+import { COLORS } from '~/util/const';
+import { useOLNavigation } from '~/hooks/useNavigation';
 
 const LOGO = require('../../../../assets/images/icon.png');
 

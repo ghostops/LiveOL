@@ -1,12 +1,12 @@
 import React from 'react';
 import _ from 'lodash';
 import { OLPassings as Component } from './component';
-import { OLError } from 'views/components/error';
-import { useDeviceRotationStore } from 'store/deviceRotation';
-import { RootStack } from 'lib/nav/router';
+import { OLError } from '~/views/components/error';
+import { useDeviceRotationStore } from '~/store/deviceRotation';
+import { RootStack } from '~/lib/nav/router';
 import { RouteProp, useRoute } from '@react-navigation/native';
-import { useGetLastPassingsQuery } from 'lib/graphql/generated/gql';
-import { OlPassing } from 'lib/graphql/generated/types';
+import { useGetLastPassingsQuery } from '~/lib/graphql/generated/gql';
+import { OlPassing } from '~/lib/graphql/generated/types';
 
 export const OLPassings: React.FC = () => {
   const { isLandscape } = useDeviceRotationStore();

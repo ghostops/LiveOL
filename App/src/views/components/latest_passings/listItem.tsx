@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { OLText } from '../text';
-import { px, fontPx } from 'util/const';
+import { px, fontPx } from '~/util/const';
 import { TextStyle, View } from 'react-native';
 import { OLCard } from '../card';
 import { useTranslation } from 'react-i18next';
-import { PassingFragment } from 'lib/graphql/generated/types';
+import { PassingFragment } from '~/lib/graphql/generated/types';
 
 interface Props {
   passing: PassingFragment;

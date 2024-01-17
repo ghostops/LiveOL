@@ -2,10 +2,10 @@ import React from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import { OLText } from '../text';
 import { useTranslation } from 'react-i18next';
-import { useIap } from 'hooks/useIap';
-import { useFollowingStore } from 'store/following';
-import { useTheme } from 'hooks/useTheme';
-import { useOLNavigation } from 'hooks/useNavigation';
+import { useIap } from '~/hooks/useIap';
+import { useFollowingStore } from '~/store/following';
+import { useTheme } from '~/hooks/useTheme';
+import { useOLNavigation } from '~/hooks/useNavigation';
 import { OLFollowItem } from './followItem';
 import { OLSafeAreaView } from '../safeArea';
 

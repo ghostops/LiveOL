@@ -2,12 +2,12 @@ import React from 'react';
 import { Alert } from 'react-native';
 import { OLText } from '../text';
 import { useTranslation } from 'react-i18next';
-import { FollowingData, useFollowingStore } from 'store/following';
+import { FollowingData, useFollowingStore } from '~/store/following';
 import { OLListItem } from '../list/item';
-import { useTheme } from 'hooks/useTheme';
-import { useOLNavigation } from 'hooks/useNavigation';
+import { useTheme } from '~/hooks/useTheme';
+import { useOLNavigation } from '~/hooks/useNavigation';
 import { RouteProp, useRoute } from '@react-navigation/native';
-import { RootStack } from 'lib/nav/router';
+import { RootStack } from '~/lib/nav/router';
 
 export const OLFollowItem: React.FC<{ item: FollowingData }> = ({ item }) => {
   const { px } = useTheme();

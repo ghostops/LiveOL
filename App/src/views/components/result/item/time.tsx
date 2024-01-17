@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { OLText } from '../../text';
-import { useStatusI18n } from 'hooks/useStatusI18n';
+import { useStatusI18n } from '~/hooks/useStatusI18n';
 
 interface Props {
   time: string;

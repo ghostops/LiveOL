@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Dimensions } from 'react-native';
-import { useDeviceRotationStore } from 'store/deviceRotation';
+import { useDeviceRotationStore } from '~/store/deviceRotation';
 
 const screen = Dimensions.get('screen');
 

@@ -1,11 +1,11 @@
 import React from 'react';
 import { TouchableOpacity, View, Image, ScrollView } from 'react-native';
-import { OLButton } from 'views/components/button';
-import { OLCard } from 'views/components/card';
-import { OLFlag } from 'views/components/lang/flag';
-import { OLText } from 'views/components/text';
-import { VERSION, px } from 'util/const';
-import { LanguagePicker } from 'views/components/lang/picker';
+import { OLButton } from '~/views/components/button';
+import { OLCard } from '~/views/components/card';
+import { OLFlag } from '~/views/components/lang/flag';
+import { OLText } from '~/views/components/text';
+import { VERSION, px } from '~/util/const';
+import { LanguagePicker } from '~/views/components/lang/picker';
 import { useTranslation } from 'react-i18next';
 
 type Props = {

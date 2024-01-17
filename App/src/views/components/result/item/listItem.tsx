@@ -1,8 +1,8 @@
 import React from 'react';
 import { Grid } from 'react-native-easy-grid';
 import { View, ViewStyle } from 'react-native';
-import { useTheme } from 'hooks/useTheme';
-import { useTextStore } from 'store/text';
+import { useTheme } from '~/hooks/useTheme';
+import { useTextStore } from '~/store/text';
 
 const BASE_SIZE = 60;
 

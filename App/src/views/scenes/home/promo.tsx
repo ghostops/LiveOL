@@ -1,11 +1,11 @@
 import React from 'react';
-import { useOLNavigation } from 'hooks/useNavigation';
-import { OLButton } from 'views/components/button';
-import { useTheme } from 'hooks/useTheme';
-import { usePromoStore } from 'store/promo';
-import { useIap } from 'hooks/useIap';
+import { useOLNavigation } from '~/hooks/useNavigation';
+import { OLButton } from '~/views/components/button';
+import { useTheme } from '~/hooks/useTheme';
+import { usePromoStore } from '~/store/promo';
+import { useIap } from '~/hooks/useIap';
 import { TouchableOpacity, View } from 'react-native';
-import { OLText } from 'views/components/text';
+import { OLText } from '~/views/components/text';
 import { useTranslation } from 'react-i18next';
 
 export const OLHomePromo: React.FC = () => {

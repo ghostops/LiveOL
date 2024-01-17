@@ -2,12 +2,12 @@ import React from 'react';
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import { useTranslation } from 'react-i18next';
 import { TouchableOpacity } from 'react-native';
-import { useIap } from 'hooks/useIap';
-import { useOLNavigation } from 'hooks/useNavigation';
+import { useIap } from '~/hooks/useIap';
+import { useOLNavigation } from '~/hooks/useNavigation';
 import { RouteProp, useRoute } from '@react-navigation/native';
-import { RootStack } from 'lib/nav/router';
-import { OlResult } from 'lib/graphql/generated/types';
-import { useFollowingStore } from 'store/following';
+import { RootStack } from '~/lib/nav/router';
+import { OlResult } from '~/lib/graphql/generated/types';
+import { useFollowingStore } from '~/store/following';
 
 type Props = {
   result: OlResult;

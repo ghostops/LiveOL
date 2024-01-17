@@ -1,6 +1,6 @@
 import React from 'react';
-import { resultsChanged } from 'util/hasChanged';
-import { OlResult } from 'lib/graphql/generated/types';
+import { resultsChanged } from '~/util/hasChanged';
+import { OlResult } from '~/lib/graphql/generated/types';
 
 export const useHasChanged = (currentResults: OlResult[]) => {
   const [previousResults, setPreviousResults] = React.useState<OlResult[]>();

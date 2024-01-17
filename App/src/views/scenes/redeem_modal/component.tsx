@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { KeyboardAvoidingView, TextInput, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { COLORS } from 'util/const';
-import { usePlusCodes } from 'hooks/usePlusCodes';
-import { OLButton } from 'views/components/button';
-import { useTheme } from 'hooks/useTheme';
+import { COLORS } from '~/util/const';
+import { usePlusCodes } from '~/hooks/usePlusCodes';
+import { OLButton } from '~/views/components/button';
+import { useTheme } from '~/hooks/useTheme';
 
 export const OLRedeemCode: React.FC = () => {
   const { t } = useTranslation();

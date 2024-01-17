@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react';
-import Router from 'lib/nav/router';
+import Router from '~/lib/nav/router';
 import { View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { promptStoreReview } from 'util/storeReview';
-import { OLRotationWatcher } from 'views/components/watcher/rotation';
-import { client } from 'lib/graphql/client';
+import { promptStoreReview } from '~/util/storeReview';
+import { OLRotationWatcher } from '~/views/components/watcher/rotation';
+import { client } from '~/lib/graphql/client';
 import { ApolloProvider } from '@apollo/client';
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
-import './lib/i18n';
+import '~/lib/i18n';
 import Bugsnag from '@bugsnag/react-native';
-import { OLText } from 'views/components/text';
-import { COLORS } from 'util/const';
+import { OLText } from '~/views/components/text';
+import { COLORS } from '~/util/const';
 
 !__DEV__ && Bugsnag.start();
 const ErrorBoundary = !__DEV__

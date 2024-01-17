@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTheme } from 'hooks/useTheme';
+import { useTheme } from '~/hooks/useTheme';
 import {
   Linking,
   Platform,
@@ -7,11 +7,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { OLText } from 'views/components/text';
-import { OLButton } from 'views/components/button';
+import { OLText } from '~/views/components/text';
+import { OLButton } from '~/views/components/button';
 import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { OLIcon } from 'views/components/icon';
+import { OLIcon } from '~/views/components/icon';
 
 export type OLPlusFeatureKey =
   | 'followRunner'

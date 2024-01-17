@@ -1,5 +1,5 @@
-import { diffDateNow } from 'util/date';
-import { OlResult } from 'lib/graphql/generated/types';
+import { diffDateNow } from '~/util/date';
+import { OlResult } from '~/lib/graphql/generated/types';
 
 export const startIsAfterNow = (result: OlResult): boolean =>
   !!diffDateNow(result.liveRunningStart);

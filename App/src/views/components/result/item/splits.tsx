@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
-import { OLText } from 'views/components/text';
-import { OlSplit } from 'lib/graphql/generated/types';
+import { OLText } from '~/views/components/text';
+import { OlSplit } from '~/lib/graphql/generated/types';
 
 interface Props {
   split: OlSplit;

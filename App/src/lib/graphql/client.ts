@@ -1,6 +1,6 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { Platform } from 'react-native';
-import { VERSION } from 'util/const';
+import { VERSION } from '~/util/const';
 
 const userId = `LiveOLApp:${VERSION}`;
 

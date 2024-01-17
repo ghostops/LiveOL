@@ -1,15 +1,15 @@
 import React from 'react';
 import _ from 'lodash';
-import { dateToReadable } from 'util/date';
-import { OLButton } from 'views/components/button';
-import { OLCompetitionClub } from 'views/components/competition/club';
-import { OLCompetitionIOSHeader } from 'views/components/competition/iosHeader';
-import { OLText } from 'views/components/text';
+import { dateToReadable } from '~/util/date';
+import { OLButton } from '~/views/components/button';
+import { OLCompetitionClub } from '~/views/components/competition/club';
+import { OLCompetitionIOSHeader } from '~/views/components/competition/iosHeader';
+import { OLText } from '~/views/components/text';
 import { Linking, Platform, View } from 'react-native';
-import { px } from 'util/const';
+import { px } from '~/util/const';
 import { CompetitionInfoBox } from './info';
 import { useTranslation } from 'react-i18next';
-import { OlCompetition } from 'lib/graphql/generated/types';
+import { OlCompetition } from '~/lib/graphql/generated/types';
 
 interface Props {
   competition: OlCompetition;

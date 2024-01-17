@@ -2,23 +2,23 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { StatusBar } from 'react-native';
-import { OLResults } from 'views/scenes/results/container';
-import { OLPassings } from 'views/scenes/last_passings/container';
-import { OLInfo } from 'views/scenes/info/container';
-import { OLHome } from 'views/scenes/home/container';
-import { OLCompetition } from 'views/scenes/competition/container';
-import { OLClubResults } from 'views/scenes/club/container';
+import { OLResults } from '~/views/scenes/results/container';
+import { OLPassings } from '~/views/scenes/last_passings/container';
+import { OLInfo } from '~/views/scenes/info/container';
+import { OLHome } from '~/views/scenes/home/container';
+import { OLCompetition } from '~/views/scenes/competition/container';
+import { OLClubResults } from '~/views/scenes/club/container';
 import { NavigationContainer } from '@react-navigation/native';
-import { HomeHeader } from 'views/scenes/home/header';
+import { HomeHeader } from '~/views/scenes/home/header';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { COLORS } from 'util/const';
+import { COLORS } from '~/util/const';
 import { BackButton } from './backButton';
-import { ResultMenuIcon } from 'views/scenes/results/menuIcon';
-import { OLPlus } from 'views/scenes/plus/container';
-import { ClubMenuIcon } from 'views/scenes/club/menuIcon';
-import { OLFollow } from 'views/scenes/follow/container';
-import { OLPlusFeatureKey } from 'views/scenes/plus/component';
-import { OLRedeemCode } from 'views/scenes/redeem_modal/component';
+import { ResultMenuIcon } from '~/views/scenes/results/menuIcon';
+import { OLPlus } from '~/views/scenes/plus/container';
+import { ClubMenuIcon } from '~/views/scenes/club/menuIcon';
+import { OLFollow } from '~/views/scenes/follow/container';
+import { OLPlusFeatureKey } from '~/views/scenes/plus/component';
+import { OLRedeemCode } from '~/views/scenes/redeem_modal/component';
 
 export type RootStack = {
   Home: undefined;

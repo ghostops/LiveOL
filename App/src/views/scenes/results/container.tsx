@@ -3,14 +3,14 @@ import _ from 'lodash';
 import { usePlayAudio } from './hooks/usePlayAudio';
 import { useHasChanged } from './hooks/useHasChanged';
 import { OLResults as Component } from './component';
-import { OLError } from 'views/components/error';
+import { OLError } from '~/views/components/error';
 import { RouteProp, useIsFocused, useRoute } from '@react-navigation/native';
-import { useDeviceRotationStore } from 'store/deviceRotation';
-import { RootStack } from 'lib/nav/router';
-import { useGetResultsQuery } from 'lib/graphql/generated/gql';
-import { OlResult } from 'lib/graphql/generated/types';
-import { useSortingStore } from 'store/sorting';
-import { usePrevious } from 'hooks/usePrevious';
+import { useDeviceRotationStore } from '~/store/deviceRotation';
+import { RootStack } from '~/lib/nav/router';
+import { useGetResultsQuery } from '~/lib/graphql/generated/gql';
+import { OlResult } from '~/lib/graphql/generated/types';
+import { useSortingStore } from '~/store/sorting';
+import { usePrevious } from '~/hooks/usePrevious';
 
 export const OLResults: React.FC = () => {
   const focus = useIsFocused();

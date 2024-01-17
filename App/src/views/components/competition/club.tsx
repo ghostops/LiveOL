@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { OLText } from '../text';
 import { Image, ViewStyle, View } from 'react-native';
-import { px } from 'util/const';
+import { px } from '~/util/const';
 
 interface Props {
   name: string;

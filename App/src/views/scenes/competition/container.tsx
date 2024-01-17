@@ -1,12 +1,12 @@
 import React from 'react';
 import _ from 'lodash';
-import { OLError } from 'views/components/error';
+import { OLError } from '~/views/components/error';
 import { OLCompetition as Component } from './component';
-import { useOLNavigation } from 'hooks/useNavigation';
+import { useOLNavigation } from '~/hooks/useNavigation';
 import { RouteProp, useRoute } from '@react-navigation/native';
-import { RootStack } from 'lib/nav/router';
-import { useGetCompetitionQuery } from 'lib/graphql/generated/gql';
-import { OlClass, OlCompetition } from 'lib/graphql/generated/types';
+import { RootStack } from '~/lib/nav/router';
+import { useGetCompetitionQuery } from '~/lib/graphql/generated/gql';
+import { OlClass, OlCompetition } from '~/lib/graphql/generated/types';
 
 export const OLCompetition: React.FC = () => {
   const { navigate } = useOLNavigation();

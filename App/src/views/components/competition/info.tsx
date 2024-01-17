@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import { px } from 'util/const';
+import { px } from '~/util/const';
 import { OLText } from '../text';
 import Hyperlink from 'react-native-hyperlink';
 import { useTranslation } from 'react-i18next';

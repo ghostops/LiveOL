@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import { COLORS } from 'util/const';
+import { COLORS } from '~/util/const';
 import { OLText } from '../../../components/text';
 
 interface Props {

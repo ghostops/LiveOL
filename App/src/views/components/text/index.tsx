@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { TextStyle, Text, Platform } from 'react-native';
-import { useTextStore } from 'store/text';
-import { fontPx } from 'util/const';
+import { useTextStore } from '~/store/text';
+import { fontPx } from '~/util/const';
 
 interface Props {
   size: number;

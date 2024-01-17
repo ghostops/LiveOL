@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { FlatList, ScrollView, View } from 'react-native';
-import { px } from 'util/const';
-import { OLTableRow } from 'views/components/result/table/row';
-import { OLText } from 'views/components/text';
-import { ResultHeader } from 'views/components/result/header';
-import { OlResult } from 'lib/graphql/generated/types';
+import { px } from '~/util/const';
+import { OLTableRow } from '~/views/components/result/table/row';
+import { OLText } from '~/views/components/text';
+import { ResultHeader } from '~/views/components/result/header';
+import { OlResult } from '~/lib/graphql/generated/types';
 import { useTranslation } from 'react-i18next';
-import { useScrollToRunner } from 'hooks/useScrollToRunner';
+import { useScrollToRunner } from '~/hooks/useScrollToRunner';
 import { useOlListItemHeight } from '../item/listItem';
 
 interface Props {

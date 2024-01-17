@@ -1,9 +1,9 @@
 import React from 'react';
-import { OLRefetcher } from 'views/components/refetcher';
-import { OLResultsList } from 'views/components/result/list';
-import { OLResultsTable } from 'views/components/result/table';
-import { OlResult } from 'lib/graphql/generated/types';
-import { OLLoading } from 'views/components/loading';
+import { OLRefetcher } from '~/views/components/refetcher';
+import { OLResultsList } from '~/views/components/result/list';
+import { OLResultsTable } from '~/views/components/result/table';
+import { OlResult } from '~/lib/graphql/generated/types';
+import { OLLoading } from '~/views/components/loading';
 
 interface Props {
   refetch: () => Promise<void>;

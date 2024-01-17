@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import { FlatList, View } from 'react-native';
-import { px } from 'util/const';
-import { OLResultItem } from 'views/components/result/list/item';
-import { OLText } from 'views/components/text';
-import { ResultHeader } from 'views/components/result/header';
-import { OlResult } from 'lib/graphql/generated/types';
+import { px } from '~/util/const';
+import { OLResultItem } from '~/views/components/result/list/item';
+import { OLText } from '~/views/components/text';
+import { ResultHeader } from '~/views/components/result/header';
+import { OlResult } from '~/lib/graphql/generated/types';
 import { useTranslation } from 'react-i18next';
-import { useScrollToRunner } from 'hooks/useScrollToRunner';
+import { useScrollToRunner } from '~/hooks/useScrollToRunner';
 import { useOlListItemHeight } from '../item/listItem';
-import { OLSafeAreaView } from 'views/components/safeArea';
+import { OLSafeAreaView } from '~/views/components/safeArea';
 
 interface Props {
   results: OlResult[];

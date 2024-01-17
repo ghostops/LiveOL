@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import { COLORS, px } from 'util/const';
-import { OLText } from 'views/components/text';
+import { COLORS, px } from '~/util/const';
+import { OLText } from '~/views/components/text';
 import { Svg, Path } from 'react-native-svg';
 
 interface Props {

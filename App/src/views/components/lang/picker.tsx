@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { useTheme } from 'hooks/useTheme';
+import { useTheme } from '~/hooks/useTheme';
 import { TouchableOpacity, Modal, View, FlatList } from 'react-native';
 import { OLFlag } from './flag';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { OLText } from 'views/components/text';
-import { OLButton } from 'views/components/button';
+import { OLText } from '~/views/components/text';
+import { OLButton } from '~/views/components/button';
 import { useTranslation } from 'react-i18next';
-import { OLIcon } from 'views/components/icon';
+import { OLIcon } from '~/views/components/icon';
 
 type Props = {
   button?: boolean;

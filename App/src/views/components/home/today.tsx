@@ -1,12 +1,12 @@
 import React from 'react';
-import { dateToReadable } from 'util/date';
+import { dateToReadable } from '~/util/date';
 import { OLCard } from '../card';
 import { OLSafeAreaView } from '../safeArea';
 import { OLText } from '../text';
 import { View } from 'react-native';
-import { useTheme } from 'hooks/useTheme';
+import { useTheme } from '~/hooks/useTheme';
 import { useTranslation } from 'react-i18next';
-import { OlCompetition } from 'lib/graphql/generated/types';
+import { OlCompetition } from '~/lib/graphql/generated/types';
 
 type Props = {
   competitions: OlCompetition[];
