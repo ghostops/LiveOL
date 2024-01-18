@@ -42,7 +42,7 @@ export const OLRunnerContextMenu: React.FC<Props> = ({
         cancelButtonIndex: options.length - 1,
       },
       selectedIndex => {
-        if (!selectedIndex) {
+        if (typeof selectedIndex !== 'number') {
           return;
         }
 

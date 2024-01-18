@@ -29,7 +29,7 @@ export const ClubMenuIcon: React.FC = () => {
         cancelButtonIndex: options.length - 1,
       },
       selectedIndex => {
-        if (!selectedIndex) {
+        if (typeof selectedIndex !== 'number') {
           return;
         }
         switch (selectedIndex) {
