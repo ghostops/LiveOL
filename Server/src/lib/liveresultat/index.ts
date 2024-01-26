@@ -69,7 +69,7 @@ export class LiveresultatAPIClient {
 			'15 seconds',
 		);
 
-	public getclubresults = async (id: string, club: string): Promise<LiveresultatApi.getclubresults> => {
+	public getclubresults = async (id: number, club: string): Promise<LiveresultatApi.getclubresults> => {
 		return this.cachedRequest(
 			this.client.get(`/api.php?method=getclubresults&comp=${id}&club=${encodeURIComponent(club)}`),
 			`getclubresults:${id}:${encodeURIComponent(club)}`,

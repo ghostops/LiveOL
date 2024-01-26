@@ -1,10 +1,13 @@
 import { diffDateNow } from '~/util/date';
-import { OlResult } from '~/lib/graphql/generated/types';
+import { TRPCQueryOutput } from '~/lib/trpc/client';
 
-export const startIsAfterNow = (result: OlResult): boolean =>
-  !!diffDateNow(result.liveRunningStart);
+export const startIsAfterNow = (
+  result: TRPCQueryOutput['getResults'][0],
+): boolean => !!diffDateNow(result.liveRunningStart);
 
-export const isLiveRunning = (result: OlResult): boolean => {
+export const isLiveRunning = (
+  result: TRPCQueryOutput['getResults'][0],
+): boolean => {
   return (
     result.progress < 100 &&
     startIsAfterNow(result) &&

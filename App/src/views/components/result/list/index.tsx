@@ -1,17 +1,17 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { FlatList, View } from 'react-native';
 import { px } from '~/util/const';
 import { OLResultItem } from '~/views/components/result/list/item';
 import { OLText } from '~/views/components/text';
 import { ResultHeader } from '~/views/components/result/header';
-import { OlResult } from '~/lib/graphql/generated/types';
 import { useTranslation } from 'react-i18next';
 import { useScrollToRunner } from '~/hooks/useScrollToRunner';
 import { useOlListItemHeight } from '../item/listItem';
 import { OLSafeAreaView } from '~/views/components/safeArea';
+import { TRPCQueryOutput } from '~/lib/trpc/client';
 
 interface Props {
-  results: OlResult[];
+  results: TRPCQueryOutput['getResults'];
   competitionId: number;
   className: string;
   disabled?: boolean;
@@ -38,7 +38,7 @@ export const OLResultsList: React.FC<Props> = props => {
   }, [flatListRef]);
 
   const renderItem = ({ item }: any) => {
-    const result: OlResult = item;
+    const result: TRPCQueryOutput['getResults'][0] = item;
 
     return (
       <OLResultItem
@@ -75,7 +75,7 @@ export const OLResultsList: React.FC<Props> = props => {
         ListFooterComponent={<View style={{ height: 45 }} />}
         data={props.results}
         renderItem={renderItem}
-        keyExtractor={(item: OlResult) => item.id}
+        keyExtractor={(item: TRPCQueryOutput['getResults'][0]) => item.id}
         ListEmptyComponent={
           <View
             style={{

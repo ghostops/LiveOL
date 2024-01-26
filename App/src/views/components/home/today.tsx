@@ -6,12 +6,12 @@ import { OLText } from '../text';
 import { View } from 'react-native';
 import { useTheme } from '~/hooks/useTheme';
 import { useTranslation } from 'react-i18next';
-import { OlCompetition } from '~/lib/graphql/generated/types';
+import { TRPCQueryOutput } from '~/lib/trpc/client';
 
 type Props = {
-  competitions: OlCompetition[];
+  competitions: TRPCQueryOutput['getTodaysCompetitions']['today'];
   renderListItem: (
-    comp: OlCompetition,
+    comp: TRPCQueryOutput['getTodaysCompetitions']['today'][0],
     index?: number,
     total?: number,
   ) => React.ReactElement;

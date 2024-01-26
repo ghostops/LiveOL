@@ -1,17 +1,17 @@
-import React, { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Animated, ViewStyle } from 'react-native';
 import { resultsChanged } from '~/util/hasChanged';
-import { OlResult } from '~/lib/graphql/generated/types';
+import { TRPCQueryOutput } from '~/lib/trpc/client';
 
 interface Props {
-  result: OlResult;
+  result: TRPCQueryOutput['getResults'][0];
   children: React.ReactNode;
   style?: ViewStyle;
 }
 
 export const OLResultAnimation: React.FC<Props> = props => {
-  const [animation] = React.useState(new Animated.Value(0));
-  const [result, setResult] = React.useState(props.result);
+  const [animation] = useState(new Animated.Value(0));
+  const [result, setResult] = useState(props.result);
 
   const stopAnimation = useCallback(() => {
     Animated.timing(animation, {

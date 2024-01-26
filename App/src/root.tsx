@@ -4,13 +4,14 @@ import { View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { promptStoreReview } from '~/util/storeReview';
 import { OLRotationWatcher } from '~/views/components/watcher/rotation';
-import { client } from '~/lib/graphql/client';
-import { ApolloProvider } from '@apollo/client';
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import '~/lib/i18n';
 import Bugsnag from '@bugsnag/react-native';
 import { OLText } from '~/views/components/text';
 import { COLORS } from '~/util/const';
+import { trpc, trpcClient } from '~/lib/trpc/client';
+import { queryClient } from '~/lib/react-query/client';
+import { QueryClientProvider } from '@tanstack/react-query';
 
 !__DEV__ && Bugsnag.start();
 const ErrorBoundary = !__DEV__
@@ -50,13 +51,15 @@ export default () => {
     <ErrorBoundary FallbackComponent={ErrorView}>
       <SafeAreaProvider>
         <ActionSheetProvider>
-          <ApolloProvider client={client}>
-            <View style={{ flex: 1 }}>
-              <OLRotationWatcher>
-                <Router />
-              </OLRotationWatcher>
-            </View>
-          </ApolloProvider>
+          <trpc.Provider client={trpcClient} queryClient={queryClient}>
+            <QueryClientProvider client={queryClient}>
+              <View style={{ flex: 1 }}>
+                <OLRotationWatcher>
+                  <Router />
+                </OLRotationWatcher>
+              </View>
+            </QueryClientProvider>
+          </trpc.Provider>
         </ActionSheetProvider>
       </SafeAreaProvider>
     </ErrorBoundary>

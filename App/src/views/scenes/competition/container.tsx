@@ -1,12 +1,9 @@
-import React from 'react';
-import _ from 'lodash';
 import { OLError } from '~/views/components/error';
 import { OLCompetition as Component } from './component';
 import { useOLNavigation } from '~/hooks/useNavigation';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { RootStack } from '~/lib/nav/router';
-import { useGetCompetitionQuery } from '~/lib/graphql/generated/gql';
-import { OlClass, OlCompetition } from '~/lib/graphql/generated/types';
+import { trpc } from '~/lib/trpc/client';
 
 export const OLCompetition: React.FC = () => {
   const { navigate } = useOLNavigation();
@@ -14,35 +11,26 @@ export const OLCompetition: React.FC = () => {
     params: { competitionId },
   } = useRoute<RouteProp<RootStack, 'Competition'>>();
 
-  const { data, loading, error, refetch } = useGetCompetitionQuery({
-    variables: { competitionId },
-  });
+  const getCompetitionQuery = trpc.getCompetition.useQuery({ competitionId });
 
-  if (error) {
-    return <OLError error={error} refetch={refetch} />;
+  if (getCompetitionQuery.error) {
+    return (
+      <OLError
+        error={getCompetitionQuery.error}
+        refetch={getCompetitionQuery.refetch}
+      />
+    );
   }
-
-  const competition: OlCompetition = _.get(
-    data,
-    'competitions.getCompetition',
-    null,
-  );
-
-  const classes: OlClass[] = _.get(
-    data,
-    'competitions.getCompetitionClasses',
-    null,
-  );
 
   return (
     <Component
-      loading={loading}
-      competition={competition}
-      classes={classes}
+      loading={getCompetitionQuery.isLoading}
+      competition={getCompetitionQuery.data?.competition}
+      classes={getCompetitionQuery.data?.classes}
       goToLastPassings={() => {
         navigate('Passings', {
           competitionId,
-          title: competition.name || '',
+          title: getCompetitionQuery.data?.competition.name || '',
         });
       }}
       goToClass={(className: string | null) => () => {

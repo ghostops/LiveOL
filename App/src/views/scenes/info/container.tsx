@@ -1,13 +1,13 @@
-import React from 'react';
 import { VERSION } from '~/util/const';
 import { OLInfo as Component } from './component';
 import { Alert, Linking } from 'react-native';
 import { useDeviceRotationStore } from '~/store/deviceRotation';
 import { useTextStore } from '~/store/text';
-import { useGetServerVersionQuery } from '~/lib/graphql/generated/gql';
 import { useOLNavigation } from '~/hooks/useNavigation';
 import { useIap } from '~/hooks/useIap';
 import moment from 'moment';
+import { useState } from 'react';
+import { trpc } from '~/lib/trpc/client';
 
 const translationCredits: { code: string; name: string }[] = [
   {
@@ -43,11 +43,11 @@ export const OLInfo: React.FC = () => {
 
   const { isLandscape } = useDeviceRotationStore();
 
-  const { data } = useGetServerVersionQuery();
+  const { data, refetch } = trpc.getServerVersion.useQuery();
 
   const { setTextSizeMultiplier, textSizeMultiplier } = useTextStore();
 
-  const [secretTaps, setSecretTaps] = React.useState(0);
+  const [secretTaps, setSecretTaps] = useState(0);
   const contact = () =>
     Linking.openURL('https://liveol.larsendahl.se/#contact');
   const openPhraseApp = () => Linking.openURL('https://phrase.com/');
@@ -71,11 +71,11 @@ export const OLInfo: React.FC = () => {
 
     if (secretTaps > 5) {
       setSecretTaps(0);
+      refetch();
 
       Alert.alert(
         'VERSION',
-        `Package Version: ${VERSION}\n` +
-          `Server Version: ${data?.server?.version}\n`,
+        `Package Version: ${VERSION}\n` + `Server Version: ${data?.version}\n`,
       );
     }
   };

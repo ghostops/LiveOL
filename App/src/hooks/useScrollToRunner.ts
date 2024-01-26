@@ -1,9 +1,9 @@
-import { OlResult } from '~/lib/graphql/generated/types';
 import { useEffect, useRef, useState } from 'react';
 import { FlatList } from 'react-native';
+import { TRPCQueryOutput } from '~/lib/trpc/client';
 
 type Options = {
-  results?: OlResult[];
+  results?: TRPCQueryOutput['getResults'];
   followedRunnerId?: string;
 };
 

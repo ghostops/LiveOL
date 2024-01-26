@@ -1,13 +1,12 @@
-import React from 'react';
 import { OLRefetcher } from '~/views/components/refetcher';
 import { OLResultsList } from '~/views/components/result/list';
 import { OLResultsTable } from '~/views/components/result/table';
-import { OlResult } from '~/lib/graphql/generated/types';
 import { OLLoading } from '~/views/components/loading';
+import { TRPCQueryOutput } from '~/lib/trpc/client';
 
 interface Props {
   refetch: () => Promise<void>;
-  results: OlResult[];
+  results: TRPCQueryOutput['getResults'];
   focus: boolean;
   competitionId: number;
   className: string;

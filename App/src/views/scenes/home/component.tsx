@@ -1,21 +1,23 @@
 import React from 'react';
 import { HomeList } from '~/views/components/home/list';
-import { HomeListItem } from '~/views/components/home/listItem';
 import { LanguagePicker } from '~/views/components/lang/picker';
 import { OLSearch } from '~/views/components/search/container';
 import { OLText } from '~/views/components/text';
-import { TodaysCompetitions } from '~/views/components/home/today';
 import { View, TouchableOpacity } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { OlCompetition } from '~/lib/graphql/generated/types';
 import { useTheme } from '~/hooks/useTheme';
 import { OLHomePromo } from './promo';
 import { FollowWidget } from '~/views/components/follow/followWidget';
+import { TRPCQueryOutput } from '~/lib/trpc/client';
+import { TodaysCompetitions } from '~/views/components/home/today';
+import { HomeListItem } from '~/views/components/home/listItem';
 
 interface Props {
-  competitions: OlCompetition[];
-  todaysCompetitions: OlCompetition[];
-  onCompetitionPress: (competition: OlCompetition) => void;
+  competitions: TRPCQueryOutput['getCompetitions']['competitions'];
+  todaysCompetitions: TRPCQueryOutput['getTodaysCompetitions']['today'];
+  onCompetitionPress: (
+    competition: TRPCQueryOutput['getCompetitions']['competitions'][0],
+  ) => void;
   openSearch: () => void;
   searching: boolean;
   loading: boolean;
@@ -28,8 +30,8 @@ export const OLHome: React.FC<Props> = ({
   onCompetitionPress,
   openSearch,
   searching,
-  todaysCompetitions,
   landscape,
+  todaysCompetitions,
   ...passthroughProps
 }) => {
   const { px } = useTheme();
@@ -60,7 +62,7 @@ export const OLHome: React.FC<Props> = ({
         />
       </>
     );
-  }, [searching, todaysCompetitions, onCompetitionPress]);
+  }, [onCompetitionPress, searching, todaysCompetitions]);
 
   const renderHeader = React.useCallback(() => {
     if (searching) {

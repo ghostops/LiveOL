@@ -1,7 +1,0 @@
-query GetClubByName($name: String!) {
-  clubs {
-    getClubByName(clubName: $name) {
-      ...Club
-    }
-  }
-}

@@ -9,10 +9,10 @@ import { Linking, Platform, View } from 'react-native';
 import { px } from '~/util/const';
 import { CompetitionInfoBox } from './info';
 import { useTranslation } from 'react-i18next';
-import { OlCompetition } from '~/lib/graphql/generated/types';
+import { TRPCQueryOutput } from '~/lib/trpc/client';
 
 interface Props {
-  competition: OlCompetition;
+  competition: TRPCQueryOutput['getCompetition']['competition'];
   goToLastPassings: () => void;
 }
 
@@ -26,7 +26,7 @@ export const OLCompetitionHeader: React.FC<Props> = props => {
       )}
       {Platform.OS === 'android' && <View style={{ height: px(10) }} />}
 
-      {props.competition.eventor && props.competition.canceled && (
+      {props.competition.eventorAvailable && props.competition.canceled && (
         <View
           style={{
             borderTopColor: '#b81c1c',
@@ -59,16 +59,16 @@ export const OLCompetitionHeader: React.FC<Props> = props => {
             paddingTop: px(10),
           }}
         >
-          {props.competition.eventor && (
+          {props.competition.eventorAvailable && (
             <View
               style={{
                 alignItems: 'center',
                 paddingBottom: px(25),
               }}
             >
-              {props.competition.eventor && (
+              {props.competition.eventorAvailable && (
                 <OLCompetitionClub
-                  name={props.competition.club}
+                  name={props.competition.club || ''}
                   logoUrl={props.competition.clubLogoUrl}
                   size={_.last(props.competition.clubLogoSizes)}
                 />
@@ -84,7 +84,7 @@ export const OLCompetitionHeader: React.FC<Props> = props => {
             {t('competitions.organizedBy')}: {props.competition.organizer}
           </OLText>
 
-          {props.competition.eventor && (
+          {props.competition.eventorAvailable && (
             <>
               <OLText size={16} style={{ marginBottom: px(15) }}>
                 {t('competitions.distance')}:{' '}
@@ -97,7 +97,10 @@ export const OLCompetitionHeader: React.FC<Props> = props => {
 
               <OLButton
                 small
-                onPress={() => Linking.openURL(props.competition.eventorUrl)}
+                onPress={() =>
+                  props.competition.eventorUrl &&
+                  Linking.openURL(props.competition.eventorUrl)
+                }
                 style={{ alignSelf: 'flex-start', marginBottom: px(15) }}
               >
                 {t('competitions.visitEventor')}
@@ -106,7 +109,7 @@ export const OLCompetitionHeader: React.FC<Props> = props => {
           )}
         </View>
 
-        {props.competition.eventor && !!props.competition.info && (
+        {props.competition.eventorAvailable && !!props.competition.info && (
           <CompetitionInfoBox infoHtml={props.competition.info} />
         )}
       </View>

@@ -1,13 +1,12 @@
-import React from 'react';
-import { OlResult } from '~/lib/graphql/generated/types';
 import { OLRefetcher } from '~/views/components/refetcher';
 import { OLResultsList } from '~/views/components/result/list';
 import { OLResultsTable } from '~/views/components/result/table';
 import { useDeviceRotationStore } from '~/store/deviceRotation';
+import { TRPCQueryOutput } from '~/lib/trpc/client';
 
 interface Props {
   refetch: () => Promise<void>;
-  results: OlResult[];
+  results: TRPCQueryOutput['getClubResults'];
   competitionId: number;
   clubName: string;
 }

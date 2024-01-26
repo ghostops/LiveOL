@@ -6,11 +6,11 @@ import { useIap } from '~/hooks/useIap';
 import { useOLNavigation } from '~/hooks/useNavigation';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { RootStack } from '~/lib/nav/router';
-import { OlResult } from '~/lib/graphql/generated/types';
 import { useFollowingStore } from '~/store/following';
+import { TRPCQueryOutput } from '~/lib/trpc/client';
 
 type Props = {
-  result: OlResult;
+  result: TRPCQueryOutput['getResults'][0];
   children: React.ReactNode;
   club?: boolean;
 };

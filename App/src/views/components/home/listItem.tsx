@@ -2,13 +2,15 @@ import React from 'react';
 import { px } from '~/util/const';
 import { OLText } from '../text';
 import { OLListItem } from '../list/item';
-import { OlCompetition } from '~/lib/graphql/generated/types';
+import { TRPCQueryOutput } from '~/lib/trpc/client';
 
 interface Props {
-  competition: OlCompetition;
+  competition: TRPCQueryOutput['getCompetitions']['competitions'][0];
   index?: number;
   total?: number;
-  onCompetitionPress?: (comp: OlCompetition) => void;
+  onCompetitionPress?: (
+    comp: TRPCQueryOutput['getCompetitions']['competitions'][0],
+  ) => void;
 }
 
 export const HomeListItem: React.FC<Props> = ({

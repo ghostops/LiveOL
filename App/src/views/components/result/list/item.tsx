@@ -1,4 +1,3 @@
-import React from 'react';
 import { px } from '~/util/const';
 import { OLResultAnimation } from '~/views/components/result/item/animation';
 import { OLResultBadge } from '~/views/components/result/item/badge';
@@ -13,11 +12,11 @@ import { OLResultListItem } from '../item/listItem';
 import { OLResultLiveRunning } from '../item/liveRunning';
 import { isLiveRunning, startIsAfterNow } from '~/util/isLive';
 import { OLClassName } from '../item/className';
-import { OlResult } from '~/lib/graphql/generated/types';
 import { OLRunnerContextMenu } from '../contextMenu';
+import { TRPCQueryOutput } from '~/lib/trpc/client';
 
 type Props = {
-  result: OlResult;
+  result: TRPCQueryOutput['getResults'][0];
   disabled?: boolean;
   club?: boolean;
   followed?: boolean;
@@ -78,8 +77,8 @@ export const OLResultItem: React.FC<Props> = ({
           <OLResultColumn size={PORTRAIT_SIZE.name}>
             <OLResultName name={result.name} />
 
-            {!club && <OLResultClub club={result.club} />}
-            {club && <OLClassName className={result.class} />}
+            {!club && <OLResultClub club={result.club || ''} />}
+            {club && <OLClassName className={result.class || ''} />}
           </OLResultColumn>
 
           <OLResultColumn align="flex-end" size={PORTRAIT_SIZE.time}>

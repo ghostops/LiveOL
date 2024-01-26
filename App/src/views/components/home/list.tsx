@@ -8,11 +8,13 @@ import { OLSafeAreaView } from '../safeArea';
 import { OLText } from '../text';
 import { px } from '~/util/const';
 import { useTranslation } from 'react-i18next';
-import { OlCompetition } from '~/lib/graphql/generated/types';
+import { TRPCQueryOutput } from '~/lib/trpc/client';
 
 interface Props {
-  competitions: OlCompetition[];
-  onCompetitionPress: (comp: OlCompetition) => void;
+  competitions: TRPCQueryOutput['getCompetitions']['competitions'];
+  onCompetitionPress: (
+    comp: TRPCQueryOutput['getCompetitions']['competitions'][0],
+  ) => void;
   listHeader: JSX.Element | null;
   loadMore: () => Promise<any>;
   refetch: () => Promise<void>;
@@ -20,8 +22,8 @@ interface Props {
 }
 
 export const groupVisibleCompetitions = (
-  visibleCompetitions: OlCompetition[],
-): Record<string, OlCompetition[]> => {
+  visibleCompetitions: TRPCQueryOutput['getCompetitions']['competitions'],
+): Record<string, TRPCQueryOutput['getCompetitions']['competitions']> => {
   const uniqEs6 = (arrArg: any[]) =>
     arrArg.filter((elem, pos, arr) => {
       return arr.indexOf(elem) === pos;
@@ -57,7 +59,7 @@ export const HomeList: React.FC<Props> = ({
   const visibleCompetitions = groupVisibleCompetitions(competitions);
 
   const renderListItem = (
-    competition: OlCompetition,
+    competition: TRPCQueryOutput['getCompetitions']['competitions'][0],
     index: number,
     total: number,
   ) => (
@@ -72,7 +74,7 @@ export const HomeList: React.FC<Props> = ({
 
   const renderListSection = (
     date: string,
-    comps: Record<string, OlCompetition[]>,
+    comps: Record<string, TRPCQueryOutput['getCompetitions']['competitions']>,
   ) => {
     const isToday = isDateToday(date);
     const dateStr = dateToReadable(date);
@@ -124,7 +126,7 @@ export const HomeList: React.FC<Props> = ({
         await loadMore();
         setMoreLoading(false);
       }}
-      onEndReachedThreshold={0.1}
+      onEndReachedThreshold={0.5}
       ListFooterComponent={moreLoading ? <OLLoading /> : null}
       ListEmptyComponent={
         !loading && (

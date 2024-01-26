@@ -12,14 +12,14 @@ import { OLResultColumn } from '~/views/components/result/item/column';
 import { OLResultClub } from '~/views/components/result/item/club';
 import { OLResultBadge } from '~/views/components/result/item/badge';
 import { OLResultAnimation } from '~/views/components/result/item/animation';
-import { OlResult } from '~/lib/graphql/generated/types';
 import { isLiveRunning } from '~/util/isLive';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { OLRunnerContextMenu } from '../contextMenu';
 import { OLClassName } from '../item/className';
+import { TRPCQueryOutput } from '~/lib/trpc/client';
 
 interface OwnProps {
-  result: OlResult;
+  result: TRPCQueryOutput['getResults'][0];
   disabled?: boolean;
   followed?: boolean;
   club?: boolean;
@@ -109,8 +109,8 @@ export const OLTableRow: React.FC<Props> = ({
 
           <OLResultColumn style={{ width: LANDSCAPE_WIDTH.name + extraSize }}>
             <OLResultName name={result.name} />
-            {!club && <OLResultClub club={result.club} />}
-            {club && <OLClassName className={result.class} />}
+            {!club && <OLResultClub club={result.club || ''} />}
+            {club && <OLClassName className={result.class || ''} />}
           </OLResultColumn>
 
           <OLResultColumn style={{ width: LANDSCAPE_WIDTH.start }}>

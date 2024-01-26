@@ -7,10 +7,10 @@ import { OLText } from '~/views/components/text';
 import { px } from '~/util/const';
 import { View } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { PassingFragment } from '~/lib/graphql/generated/types';
+import { RouterOutput } from '../../../../../Server/src/trpc';
 
 interface Props {
-  passings: PassingFragment[];
+  passings: RouterOutput['getCompetitionLastPassings'];
   refresh: () => Promise<void>;
   landscape: boolean;
   loading: boolean;

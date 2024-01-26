@@ -4,8 +4,7 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"start": "docker-compose up -d && yarn dev",
-		"build": "yarn tsc && yarn babel build --out-dir build",
+		"build": "tsc && babel build --out-dir build",
 		"dev": "nodemon -L -e ts -w ./src -x yarn dev:serve",
 		"dev:serve": "ts-node -r tsconfig-paths/register src/index.ts"
 	},
@@ -14,6 +13,7 @@
 	"license": "ISC",
 	"dependencies": {
 		"@slack/webhook": "^5.0.3",
+		"@trpc/server": "^11.0.0-next-beta.240",
 		"@types/node-cron": "^2.0.3",
 		"apollo-server": "^2.14.2",
 		"axios": "^0.21.2",
@@ -35,7 +35,8 @@
 		"ts-node": "^8.6.2",
 		"tsconfig-paths": "^3.9.0",
 		"typescript": "^5.1.6",
-		"xml-js": "^1.6.11"
+		"xml-js": "^1.6.11",
+		"zod": "^3.22.4"
 	},
 	"devDependencies": {
 		"@types/cheerio": "^0.22.16",
