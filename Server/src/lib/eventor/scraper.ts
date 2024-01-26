@@ -32,7 +32,7 @@ export class EventorScraper {
 
 		if (DEV) {
 			console.info('Read range from DEV cache');
-			data = fs.readFileSync(`${__dirname}/test/list-body.html`).toString();
+			data = fs.readFileSync(`${__dirname}/test/list-body.html.txt`).toString();
 		} else {
 			const key = `eventor:${this.getEventorDomain()}:range:${start}-${end}`;
 
@@ -58,7 +58,7 @@ export class EventorScraper {
 
 		if (DEV) {
 			console.info('Read event from DEV cache');
-			data = fs.readFileSync(`${__dirname}/test/event-body.html`).toString();
+			data = fs.readFileSync(`${__dirname}/test/event-body.html.txt`).toString();
 		} else {
 			const key = `eventor:event:${id}`;
 
