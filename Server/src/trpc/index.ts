@@ -17,14 +17,14 @@ export const appRouter = router({
 	getCompetitionLastPassings,
 
 	getResults,
-  getClubResults,
-  getSplitControls,
+	getClubResults,
+	getSplitControls,
 
 	validatePlusCode,
 	redeemPlusCode,
 
 	getServerVersion: publicProcedure.query(async () => {
-		return {version: '1.2.3'};
+		return { version: '1.2.3' };
 	}),
 });
 

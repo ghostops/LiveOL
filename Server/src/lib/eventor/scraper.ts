@@ -11,7 +11,10 @@ const DEV = getEnv('test') === 'true';
 export class EventorScraper {
 	private client: AxiosInstance;
 
-	constructor(private baseUrl: string, private cache: Cacher) {
+	constructor(
+		private baseUrl: string,
+		private cache: Cacher,
+	) {
 		this.client = axios.create({
 			headers: {
 				'User-Agent': 'LiveOL Server',

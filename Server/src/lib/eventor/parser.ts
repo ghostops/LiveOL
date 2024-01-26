@@ -63,7 +63,10 @@ const parseCompetitionDistance = (input: string): EventorCompetitionDistance => 
 };
 
 export class ListResponseParser {
-	constructor(private body: string, private base: string) {}
+	constructor(
+		private body: string,
+		private base: string,
+	) {}
 
 	private currentWeek: string;
 	private currentDay: string;
@@ -212,7 +215,11 @@ export class ListResponseParser {
 }
 
 export class EventResponseParser {
-	constructor(private body: string, private base: string, private eventUrl: string) {}
+	constructor(
+		private body: string,
+		private base: string,
+		private eventUrl: string,
+	) {}
 
 	public parse = (): EventorEventItem => {
 		const $ = cheerio.load(this.body, { decodeEntities: false });

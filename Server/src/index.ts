@@ -5,7 +5,6 @@ import { OLSelfHelper } from 'lib/selfhelp';
 import { createHTTPServer } from '@trpc/server/adapters/standalone';
 import { appRouter, createContext } from 'trpc';
 
-
 (async () => {
 	dotenv.config();
 	const DEV = getEnv('env') !== 'live';
@@ -21,7 +20,7 @@ import { appRouter, createContext } from 'trpc';
 		router: appRouter,
 		createContext,
 	});
-	 
+
 	const port = 3000;
 	trpcServer.listen(port);
 	console.info(`🚀  TRPC Server ready on port "${port}" with env "${getEnv('env') || 'dev'}"`);

@@ -1,6 +1,6 @@
-import { PlusCodeHandler } from "lib/plusCodes/validator";
-import { publicProcedure } from "trpc/client";
-import { z } from "zod";
+import { PlusCodeHandler } from 'lib/plusCodes/validator';
+import { publicProcedure } from 'trpc/client';
+import { z } from 'zod';
 
 export const validatePlusCode = publicProcedure
 	.input(
@@ -11,8 +11,8 @@ export const validatePlusCode = publicProcedure
 	)
 	.query(async ({ ctx, input }) => {
 		const handler = new PlusCodeHandler(ctx.Redis);
-    const hasPlus = await handler.validatePlusCode(input.code, input.deviceId);
-    return hasPlus;
+		const hasPlus = await handler.validatePlusCode(input.code, input.deviceId);
+		return hasPlus;
 	});
 
 export const redeemPlusCode = publicProcedure
@@ -24,7 +24,7 @@ export const redeemPlusCode = publicProcedure
 	)
 	.mutation(async ({ ctx, input }) => {
 		const handler = new PlusCodeHandler(ctx.Redis);
-    await handler.redeemPlusCode(input.code, input.deviceId);
-    const hasPlus = await handler.validatePlusCode(input.code, input.deviceId);
-    return hasPlus;
+		await handler.redeemPlusCode(input.code, input.deviceId);
+		const hasPlus = await handler.validatePlusCode(input.code, input.deviceId);
+		return hasPlus;
 	});

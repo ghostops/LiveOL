@@ -53,7 +53,9 @@ export class PlusCodeHandler {
 		try {
 			const res = await apiClient.get(`/database/rows/table/${BASEROW_TABLE}/?user_field_names=true`);
 
-			this.availableCodes = res.data.results.filter((item) => !item.Claimed).map((item) => ({ code: item.Code, id: item.id }));
+			this.availableCodes = res.data.results
+				.filter((item) => !item.Claimed)
+				.map((item) => ({ code: item.Code, id: item.id }));
 			this.claimedCodes = res.data.results
 				.filter((item) => item.Claimed)
 				.map((item) => ({ code: item.Code, deviceId: item.DeviceID }));

@@ -13,7 +13,7 @@ const validateDate = (dateString: string): boolean => {
 	}
 
 	return true;
-}
+};
 
 export const isDateToday = (date: string, todaysDate: string): boolean => {
 	if (!validateDate(date)) {

@@ -80,17 +80,17 @@ export const getCompetition = publicProcedure
 	});
 
 export const getCompetitionLastPassings = publicProcedure
-.input(
-  z.object({
-    competitionId: z.number(),
-  }),
-)
-.query(async ({ ctx, input }) => {
-  if (!input.competitionId) {
-    throw new Error('No competition id present');
-  }
-  
-  const { passings } = await ctx.Liveresultat.getlastpassings(input.competitionId);
-  
-  return passings.map(marshallPassing);
-});
+	.input(
+		z.object({
+			competitionId: z.number(),
+		}),
+	)
+	.query(async ({ ctx, input }) => {
+		if (!input.competitionId) {
+			throw new Error('No competition id present');
+		}
+
+		const { passings } = await ctx.Liveresultat.getlastpassings(input.competitionId);
+
+		return passings.map(marshallPassing);
+	});

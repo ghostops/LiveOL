@@ -15,7 +15,10 @@ export class LiveresultatAPIClient {
 
 	private client: AxiosInstance;
 
-	constructor(private root: string, private cache: Cacher) {
+	constructor(
+		private root: string,
+		private cache: Cacher,
+	) {
 		this.client = axios.create({
 			headers: {
 				'User-Agent': 'LiveOL Server',
