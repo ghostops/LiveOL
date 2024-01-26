@@ -7,7 +7,7 @@
 		"build": "tsc && babel build --out-dir build",
 		"dev": "nodemon -L -e ts -w ./src -x yarn dev:serve",
 		"dev:serve": "ts-node -r tsconfig-paths/register src/index.ts",
-		"lint": "oxlint",
+		"lint": "oxlint ./src",
 		"format": "prettier --config ./.prettierrc.js --write ./src"
 	},
 	"keywords": [],

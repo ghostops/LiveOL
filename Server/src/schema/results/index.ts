@@ -111,7 +111,7 @@ export const marshallResult =
 
 		return {
 			id,
-			splits: !!splitControlls
+			splits: splitControlls
 				? splitControlls.map((split) => {
 						return marshallSplits(split)(res);
 					})

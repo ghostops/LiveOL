@@ -107,12 +107,7 @@ export class LiveresultatAPIClient {
 		// Broken JSON fixes
 		if (typeof parsedData === 'string') {
 			parsedData = parsedData.replace('\t', '');
-
-			try {
-				parsedData = JSON.parse(parsedData);
-			} catch (error) {
-				throw error;
-			}
+			parsedData = JSON.parse(parsedData);
 		}
 
 		return parsedData;
