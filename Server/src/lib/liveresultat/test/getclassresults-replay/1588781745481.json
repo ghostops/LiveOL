@@ -1,163 +1,163 @@
 {
-	"id": "28478314-7e5d-47dd-9c60-b7170e2c6d05",
-	"data": {
-		"status": "OK",
-		"className": "Insk",
-		"splitcontrols": [],
-		"results": [
-			{
-				"place": "-",
-				"name": "Ben Carleke",
-				"club": "OK Vilse 87",
-				"result": "ej start",
-				"status": 1,
-				"timeplus": "+ej start",
-				"progress": 100,
-				"start": 6480000
-			},
-			{
-				"place": "",
-				"name": "Lin Ingvarsson",
-				"club": "OK Vilse 87",
-				"result": "",
-				"status": 10,
-				"timeplus": "+",
-				"progress": 0,
-				"start": 6480000
-			},
-			{
-				"place": "",
-				"name": "Liv Olofsson",
-				"club": "OK Vilse 87",
-				"result": "",
-				"status": 10,
-				"timeplus": "+",
-				"progress": 0,
-				"start": 6480000
-			},
-			{
-				"place": "",
-				"name": "Maj Ingvarsson",
-				"club": "OK Vilse 87",
-				"result": "",
-				"status": 10,
-				"timeplus": "+",
-				"progress": 0,
-				"start": 6480000
-			},
-			{
-				"place": "",
-				"name": "Alma Olofsson",
-				"club": "OK Vilse 87",
-				"result": "",
-				"status": 10,
-				"timeplus": "+",
-				"progress": 0,
-				"start": 6480000
-			},
-			{
-				"place": "",
-				"name": "Ellen Olofsson",
-				"club": "OK Vilse 87",
-				"result": "",
-				"status": 10,
-				"timeplus": "+",
-				"progress": 0,
-				"start": 6480000
-			},
-			{
-				"place": "",
-				"name": "Dominykas Prakapas",
-				"club": "OK Vilse 87",
-				"result": "",
-				"status": 10,
-				"timeplus": "+",
-				"progress": 0,
-				"start": 6480000
-			},
-			{
-				"place": "",
-				"name": "Algot Enberg",
-				"club": "OK Vilse 87",
-				"result": "",
-				"status": 10,
-				"timeplus": "+",
-				"progress": 0,
-				"start": 6480000
-			},
-			{
-				"place": "",
-				"name": "Evelina Stjernfeldt",
-				"club": "OK Vilse 87",
-				"result": "",
-				"status": 10,
-				"timeplus": "+",
-				"progress": 0,
-				"start": 6480000
-			},
-			{
-				"place": "",
-				"name": "Olivia Tyma",
-				"club": "OK Vilse 87",
-				"result": "",
-				"status": 10,
-				"timeplus": "+",
-				"progress": 0,
-				"start": 6480000
-			},
-			{
-				"place": "",
-				"name": "Melvin Bujukliev",
-				"club": "OK Vilse 87",
-				"result": "",
-				"status": 10,
-				"timeplus": "+",
-				"progress": 0,
-				"start": 6480000
-			},
-			{
-				"place": "",
-				"name": "Vera Svensson",
-				"club": "OK Vilse 87",
-				"result": "",
-				"status": 10,
-				"timeplus": "+",
-				"progress": 0,
-				"start": 6480000
-			},
-			{
-				"place": "",
-				"name": "Oliver Bujukliev",
-				"club": "OK Vilse 87",
-				"result": "",
-				"status": 10,
-				"timeplus": "+",
-				"progress": 0,
-				"start": 6480000
-			},
-			{
-				"place": "",
-				"name": "Patricija Prakapaite",
-				"club": "OK Vilse 87",
-				"result": "",
-				"status": 10,
-				"timeplus": "+",
-				"progress": 0,
-				"start": ""
-			},
-			{
-				"place": "",
-				"name": "Edwin Erlandsson",
-				"club": "OK Vilse 87",
-				"result": "",
-				"status": 10,
-				"timeplus": "+",
-				"progress": 0,
-				"start": 6498000
-			}
-		],
-		"hash": "5432cc28d31f052ead3bc69c45f0bb28"
-	},
-	"competition": "17337",
-	"classname": "Insk"
+  "id": "28478314-7e5d-47dd-9c60-b7170e2c6d05",
+  "data": {
+    "status": "OK",
+    "className": "Insk",
+    "splitcontrols": [],
+    "results": [
+      {
+        "place": "-",
+        "name": "Ben Carleke",
+        "club": "OK Vilse 87",
+        "result": "ej start",
+        "status": 1,
+        "timeplus": "+ej start",
+        "progress": 100,
+        "start": 6480000
+      },
+      {
+        "place": "",
+        "name": "Lin Ingvarsson",
+        "club": "OK Vilse 87",
+        "result": "",
+        "status": 10,
+        "timeplus": "+",
+        "progress": 0,
+        "start": 6480000
+      },
+      {
+        "place": "",
+        "name": "Liv Olofsson",
+        "club": "OK Vilse 87",
+        "result": "",
+        "status": 10,
+        "timeplus": "+",
+        "progress": 0,
+        "start": 6480000
+      },
+      {
+        "place": "",
+        "name": "Maj Ingvarsson",
+        "club": "OK Vilse 87",
+        "result": "",
+        "status": 10,
+        "timeplus": "+",
+        "progress": 0,
+        "start": 6480000
+      },
+      {
+        "place": "",
+        "name": "Alma Olofsson",
+        "club": "OK Vilse 87",
+        "result": "",
+        "status": 10,
+        "timeplus": "+",
+        "progress": 0,
+        "start": 6480000
+      },
+      {
+        "place": "",
+        "name": "Ellen Olofsson",
+        "club": "OK Vilse 87",
+        "result": "",
+        "status": 10,
+        "timeplus": "+",
+        "progress": 0,
+        "start": 6480000
+      },
+      {
+        "place": "",
+        "name": "Dominykas Prakapas",
+        "club": "OK Vilse 87",
+        "result": "",
+        "status": 10,
+        "timeplus": "+",
+        "progress": 0,
+        "start": 6480000
+      },
+      {
+        "place": "",
+        "name": "Algot Enberg",
+        "club": "OK Vilse 87",
+        "result": "",
+        "status": 10,
+        "timeplus": "+",
+        "progress": 0,
+        "start": 6480000
+      },
+      {
+        "place": "",
+        "name": "Evelina Stjernfeldt",
+        "club": "OK Vilse 87",
+        "result": "",
+        "status": 10,
+        "timeplus": "+",
+        "progress": 0,
+        "start": 6480000
+      },
+      {
+        "place": "",
+        "name": "Olivia Tyma",
+        "club": "OK Vilse 87",
+        "result": "",
+        "status": 10,
+        "timeplus": "+",
+        "progress": 0,
+        "start": 6480000
+      },
+      {
+        "place": "",
+        "name": "Melvin Bujukliev",
+        "club": "OK Vilse 87",
+        "result": "",
+        "status": 10,
+        "timeplus": "+",
+        "progress": 0,
+        "start": 6480000
+      },
+      {
+        "place": "",
+        "name": "Vera Svensson",
+        "club": "OK Vilse 87",
+        "result": "",
+        "status": 10,
+        "timeplus": "+",
+        "progress": 0,
+        "start": 6480000
+      },
+      {
+        "place": "",
+        "name": "Oliver Bujukliev",
+        "club": "OK Vilse 87",
+        "result": "",
+        "status": 10,
+        "timeplus": "+",
+        "progress": 0,
+        "start": 6480000
+      },
+      {
+        "place": "",
+        "name": "Patricija Prakapaite",
+        "club": "OK Vilse 87",
+        "result": "",
+        "status": 10,
+        "timeplus": "+",
+        "progress": 0,
+        "start": ""
+      },
+      {
+        "place": "",
+        "name": "Edwin Erlandsson",
+        "club": "OK Vilse 87",
+        "result": "",
+        "status": 10,
+        "timeplus": "+",
+        "progress": 0,
+        "start": 6498000
+      }
+    ],
+    "hash": "5432cc28d31f052ead3bc69c45f0bb28"
+  },
+  "competition": "17337",
+  "classname": "Insk"
 }

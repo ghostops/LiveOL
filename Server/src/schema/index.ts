@@ -7,24 +7,24 @@ import { ClubsQuery } from 'schema/clubs/query';
 import { ServerMutation } from './server/mutations';
 
 const query = new GraphQLObjectType({
-	name: 'Query',
-	fields: () => ({
-		competitions: { type: CompetitionsQuery, resolve: () => true },
-		lastPassings: { type: LastPassingsQuery, resolve: () => true },
-		results: { type: ResultsQuery, resolve: () => true },
-		server: { type: ServerQuery, resolve: () => true },
-		clubs: { type: ClubsQuery, resolve: () => true },
-	}),
+  name: 'Query',
+  fields: () => ({
+    competitions: { type: CompetitionsQuery, resolve: () => true },
+    lastPassings: { type: LastPassingsQuery, resolve: () => true },
+    results: { type: ResultsQuery, resolve: () => true },
+    server: { type: ServerQuery, resolve: () => true },
+    clubs: { type: ClubsQuery, resolve: () => true },
+  }),
 });
 
 const mutation = new GraphQLObjectType({
-	name: 'Mutation',
-	fields: () => ({
-		server: { type: ServerMutation, resolve: () => true },
-	}),
+  name: 'Mutation',
+  fields: () => ({
+    server: { type: ServerMutation, resolve: () => true },
+  }),
 });
 
 export const schema = new GraphQLSchema({
-	query,
-	mutation,
+  query,
+  mutation,
 });
