@@ -86,7 +86,7 @@ export class ListResponseParser {
 
 	private setStartAndEndDates = (text: string): void => {
 		try {
-			const [startDateStr, endDateStr] = text.match(/(\d+)(\/|\-)(\d+)(\/|\-)(\d+)/gm);
+			const [startDateStr, endDateStr] = text.match(/(\d+)(\/|-)(\d+)(\/|-)(\d+)/gm);
 
 			let startDate = startDateStr;
 			let endDate = endDateStr;
