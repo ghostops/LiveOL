@@ -40,4 +40,4 @@ jobs:
         run: cd ./Server && npm run lint
 
       - name: format
-        run: npx prettier --check ./Server
+        run: npx prettier --check ./Server/src
