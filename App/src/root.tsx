@@ -12,6 +12,8 @@ import { COLORS } from '~/util/const';
 import { trpc, trpcClient } from '~/lib/trpc/client';
 import { queryClient } from '~/lib/react-query/client';
 import { QueryClientProvider } from '@tanstack/react-query';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 
 const fallbackErrorBoundary = ({ children }: any) => <>{children}</>;
 let ErrorBoundary: any;
@@ -57,19 +59,23 @@ export default () => {
 
   return (
     <ErrorBoundary FallbackComponent={ErrorView}>
-      <SafeAreaProvider>
-        <ActionSheetProvider>
-          <trpc.Provider client={trpcClient} queryClient={queryClient}>
-            <QueryClientProvider client={queryClient}>
-              <View style={{ flex: 1 }}>
-                <OLRotationWatcher>
-                  <Router />
-                </OLRotationWatcher>
-              </View>
-            </QueryClientProvider>
-          </trpc.Provider>
-        </ActionSheetProvider>
-      </SafeAreaProvider>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <SafeAreaProvider>
+          <ActionSheetProvider>
+            <trpc.Provider client={trpcClient} queryClient={queryClient}>
+              <QueryClientProvider client={queryClient}>
+                <View style={{ flex: 1 }}>
+                  <BottomSheetModalProvider>
+                    <OLRotationWatcher>
+                      <Router />
+                    </OLRotationWatcher>
+                  </BottomSheetModalProvider>
+                </View>
+              </QueryClientProvider>
+            </trpc.Provider>
+          </ActionSheetProvider>
+        </SafeAreaProvider>
+      </GestureHandlerRootView>
     </ErrorBoundary>
   );
 };

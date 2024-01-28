@@ -8,6 +8,7 @@ import { OLError } from '~/views/components/error';
 import RNBootSplash from 'react-native-bootsplash';
 import { trpc } from '~/lib/trpc/client';
 import { format } from 'date-fns';
+import { OLFollowSheet } from '~/views/components/follow/followSheet';
 
 const getToday = () => format(new Date(), 'yyyy-MM-dd');
 
@@ -59,27 +60,30 @@ export const OLHome: React.FC = () => {
   }
 
   return (
-    <Component
-      competitions={
-        getCompetitionsQuery.data?.pages.flatMap(page => page.competitions) ||
-        []
-      }
-      loading={getCompetitionsQuery.isLoading}
-      loadingMore={getCompetitionsQuery.isFetchingNextPage}
-      loadMore={loadMore}
-      openSearch={() => setIsSearching(true)}
-      searching={isSearching}
-      todaysCompetitions={getTodaysCompetitionsQuery.data?.today || []}
-      refetch={async () => {
-        await getCompetitionsQuery.refetch();
-      }}
-      onCompetitionPress={competition => {
-        navigate('Competition', {
-          competitionId: competition.id || -1,
-          title: Platform.OS === 'android' ? competition.name || '' : '',
-        });
-      }}
-      landscape={isLandscape}
-    />
+    <>
+      <Component
+        competitions={
+          getCompetitionsQuery.data?.pages.flatMap(page => page.competitions) ||
+          []
+        }
+        loading={getCompetitionsQuery.isLoading}
+        loadingMore={getCompetitionsQuery.isFetchingNextPage}
+        loadMore={loadMore}
+        openSearch={() => setIsSearching(true)}
+        searching={isSearching}
+        todaysCompetitions={getTodaysCompetitionsQuery.data?.today || []}
+        refetch={async () => {
+          await getCompetitionsQuery.refetch();
+        }}
+        onCompetitionPress={competition => {
+          navigate('Competition', {
+            competitionId: competition.id || -1,
+            title: Platform.OS === 'android' ? competition.name || '' : '',
+          });
+        }}
+        landscape={isLandscape}
+      />
+      <OLFollowSheet />
+    </>
   );
 };

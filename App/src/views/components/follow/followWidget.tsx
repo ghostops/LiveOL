@@ -1,20 +1,19 @@
-import React from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import { OLText } from '../text';
 import { useTranslation } from 'react-i18next';
 import { useIap } from '~/hooks/useIap';
 import { useFollowingStore } from '~/store/following';
 import { useTheme } from '~/hooks/useTheme';
-import { useOLNavigation } from '~/hooks/useNavigation';
 import { OLFollowItem } from './followItem';
 import { OLSafeAreaView } from '../safeArea';
+import { useFollowBottomSheetStore } from '~/store/followBottomSheet';
 
 export const FollowWidget: React.FC = () => {
   const { px, colors } = useTheme();
   const { t } = useTranslation();
-  const { navigate } = useOLNavigation();
   const { plusActive } = useIap();
   const { following } = useFollowingStore();
+  const open = useFollowBottomSheetStore(state => state.open);
 
   if (!plusActive || !following.length) {
     return null;
@@ -22,7 +21,7 @@ export const FollowWidget: React.FC = () => {
 
   return (
     <TouchableOpacity
-      onPress={() => navigate('Follow')}
+      onPress={() => open()}
       activeOpacity={1}
       style={{
         paddingTop: px(16),
