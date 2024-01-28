@@ -1,4 +1,4 @@
-API_KEY=01177ad57df730f5ba96d55a8112b3fa
+API_KEY=dd68451d76a306898875a881677469b8
 APP_VERSION=$(jq -r .version package.json)
 
 echo "App Version:"
