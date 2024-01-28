@@ -12,11 +12,19 @@ import Bugsnag from '@bugsnag/react-native';
 import { OLText } from '~/views/components/text';
 import { COLORS } from '~/util/const';
 
-!__DEV__ && Bugsnag.start();
-const ErrorBoundary = !__DEV__
-  ? Bugsnag.getPlugin('react').createErrorBoundary(React)
-  : ({ children }: any) => <>{children}</>;
+const fallbackErrorBoundary = ({ children }: any) => <>{children}</>;
+let ErrorBoundary: any;
 
+try {
+  !__DEV__ && Bugsnag.start();
+  ErrorBoundary = !__DEV__
+    ? Bugsnag.getPlugin('react').createErrorBoundary(React)
+    : fallbackErrorBoundary;
+} catch (error) {
+  console.warn('BUGSNAG FAILURE');
+  console.warn(error);
+  ErrorBoundary = fallbackErrorBoundary;
+}
 const ErrorView = () => (
   <View
     style={{
