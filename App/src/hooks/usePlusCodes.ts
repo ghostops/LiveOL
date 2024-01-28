@@ -5,6 +5,7 @@ import { getUniqueId } from 'react-native-device-info';
 import { usePlusStore } from '~/store/plus';
 import { useOLNavigation } from './useNavigation';
 import { plainTrpc, trpc } from '~/lib/trpc/client';
+import { useState } from 'react';
 
 const PLUS_CODE_KEY = 'plusKey';
 
@@ -18,6 +19,7 @@ export const usePlusCodes = () => {
   const { setCustomerInfo } = usePlusStore();
   const { t } = useTranslation();
   const { goBack } = useOLNavigation();
+  const [loadingCode, setLoadingCode] = useState(false);
 
   const enableLiveOLPlus = () =>
     setCustomerInfo({ entitlements: { active: { plus: {} } } } as any);
@@ -52,7 +54,13 @@ export const usePlusCodes = () => {
   };
 
   const loadCode = async () => {
+    if (loadingCode) {
+      return;
+    }
+
     try {
+      setLoadingCode(true);
+
       const loadedCode = await AsyncStorage.getItem(PLUS_CODE_KEY);
 
       const response = await plainTrpc.validatePlusCode.query({
@@ -71,6 +79,8 @@ export const usePlusCodes = () => {
       return true;
     } catch {
       return false;
+    } finally {
+      setLoadingCode(false);
     }
   };
 

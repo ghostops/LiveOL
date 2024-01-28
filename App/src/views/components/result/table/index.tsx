@@ -50,6 +50,7 @@ export const OLResultsTable: React.FC<Props> = props => {
           length: listItemHeight,
           offset: index * listItemHeight,
         })}
+        initialNumToRender={props.results.length}
         stickyHeaderIndices={[0]}
         ListHeaderComponent={
           <ResultHeader

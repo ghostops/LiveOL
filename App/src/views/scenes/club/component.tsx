@@ -9,6 +9,7 @@ interface Props {
   results: TRPCQueryOutput['getClubResults'];
   competitionId: number;
   clubName: string;
+  loading: boolean;
 }
 
 export const OLClubResults: React.FC<Props> = ({
@@ -16,6 +17,7 @@ export const OLClubResults: React.FC<Props> = ({
   competitionId,
   refetch,
   results,
+  loading,
 }) => {
   const { isLandscape } = useDeviceRotationStore();
 
@@ -36,6 +38,7 @@ export const OLClubResults: React.FC<Props> = ({
           competitionId={competitionId}
           className={clubName}
           club
+          loading={loading}
         />
       )}
     </>

@@ -5,7 +5,7 @@ import { OLCard } from '~/views/components/card';
 import { OLFlag } from '~/views/components/lang/flag';
 import { OLText } from '~/views/components/text';
 import { VERSION, px } from '~/util/const';
-import { LanguagePicker } from '~/views/components/lang/picker';
+import { PickerButton } from '~/views/components/lang/picker';
 import { useTranslation } from 'react-i18next';
 
 type Props = {
@@ -281,7 +281,7 @@ export const OLInfo: React.FC<Props> = ({
 
           <View style={{ height: 16 }} />
 
-          <LanguagePicker button />
+          <PickerButton />
         </OLCard>
       </View>
 

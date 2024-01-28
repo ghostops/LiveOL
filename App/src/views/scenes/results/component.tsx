@@ -43,6 +43,7 @@ export const OLResults: React.FC<Props> = ({
           className={className}
           disabled={!focus}
           followedRunnerId={followedRunnerId}
+          loading={!!loading}
         />
       )}
       {loading && <OLLoading badge />}

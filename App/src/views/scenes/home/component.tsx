@@ -1,6 +1,5 @@
-import React from 'react';
 import { HomeList } from '~/views/components/home/list';
-import { LanguagePicker } from '~/views/components/lang/picker';
+import { PickerIcon } from '~/views/components/lang/picker';
 import { OLSearch } from '~/views/components/search/container';
 import { OLText } from '~/views/components/text';
 import { View, TouchableOpacity } from 'react-native';
@@ -11,6 +10,7 @@ import { FollowWidget } from '~/views/components/follow/followWidget';
 import { TRPCQueryOutput } from '~/lib/trpc/client';
 import { TodaysCompetitions } from '~/views/components/home/today';
 import { HomeListItem } from '~/views/components/home/listItem';
+import { useCallback } from 'react';
 
 interface Props {
   competitions: TRPCQueryOutput['getCompetitions']['competitions'];
@@ -24,6 +24,7 @@ interface Props {
   loadMore: () => Promise<any>;
   refetch: () => Promise<void>;
   landscape?: boolean;
+  loadingMore: boolean;
 }
 
 export const OLHome: React.FC<Props> = ({
@@ -34,10 +35,10 @@ export const OLHome: React.FC<Props> = ({
   todaysCompetitions,
   ...passthroughProps
 }) => {
-  const { px } = useTheme();
+  const { px, colors } = useTheme();
   const { t } = useTranslation();
 
-  const renderTodaysCompetitions = React.useCallback(() => {
+  const renderTodaysCompetitions = useCallback(() => {
     if (searching) {
       return null;
     }
@@ -64,7 +65,7 @@ export const OLHome: React.FC<Props> = ({
     );
   }, [onCompetitionPress, searching, todaysCompetitions]);
 
-  const renderHeader = React.useCallback(() => {
+  const renderHeader = useCallback(() => {
     if (searching) {
       return <OLSearch />;
     }
@@ -76,7 +77,7 @@ export const OLHome: React.FC<Props> = ({
           height: px(50),
         }}
       >
-        <LanguagePicker />
+        <PickerIcon />
 
         <View
           style={{
@@ -89,14 +90,21 @@ export const OLHome: React.FC<Props> = ({
         >
           <TouchableOpacity
             onPress={openSearch}
-            style={{ paddingHorizontal: px(landscape ? 25 : 0) }}
+            style={{
+              paddingHorizontal: px(landscape ? 24 : 16),
+              backgroundColor: colors.MAIN,
+              paddingVertical: px(4),
+              borderRadius: 16,
+            }}
           >
-            <OLText size={16}>{t('home.search')}</OLText>
+            <OLText size={16} style={{ color: 'white' }}>
+              {t('home.search')}
+            </OLText>
           </TouchableOpacity>
         </View>
       </View>
     );
-  }, [landscape, openSearch, px, searching, t]);
+  }, [landscape, openSearch, px, searching, t, colors]);
 
   return (
     <View

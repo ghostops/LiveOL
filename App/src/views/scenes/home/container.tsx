@@ -21,7 +21,15 @@ export const OLHome: React.FC = () => {
     {
       search: searchTerm || undefined,
     },
-    { getNextPageParam: lastPage => lastPage.nextPage, initialCursor: 1 },
+    {
+      getNextPageParam: res => {
+        if (res.nextPage >= res.lastPage) {
+          return undefined;
+        }
+        return res.nextPage;
+      },
+      initialCursor: 1,
+    },
   );
 
   const getTodaysCompetitionsQuery = trpc.getTodaysCompetitions.useQuery({
@@ -57,6 +65,7 @@ export const OLHome: React.FC = () => {
         []
       }
       loading={getCompetitionsQuery.isLoading}
+      loadingMore={getCompetitionsQuery.isFetchingNextPage}
       loadMore={loadMore}
       openSearch={() => setIsSearching(true)}
       searching={isSearching}

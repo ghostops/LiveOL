@@ -26,13 +26,13 @@ export const getCompetitions = publicProcedure
 
     let { competitions } = await ctx.Liveresultat.getcompetitions();
 
-    const lastPage = Math.ceil(competitions.length / PER_PAGE);
-
     if (search) {
       competitions = competitions.filter(comp =>
         comp.name.toLowerCase().includes(search.toLowerCase()),
       );
     }
+
+    const lastPage = Math.ceil(competitions.length / PER_PAGE);
 
     competitions = _.drop(competitions, offset).slice(0, PER_PAGE);
 

@@ -36,6 +36,7 @@ export const OLClubResults: React.FC = () => {
       }}
       clubName={clubName}
       competitionId={competitionId}
+      loading={getClubResultsQuery.isLoading}
     />
   );
 };
