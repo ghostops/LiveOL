@@ -8,6 +8,7 @@ import { RouteProp, useRoute } from '@react-navigation/native';
 import { RootStack } from '~/lib/nav/router';
 import { useFollowingStore } from '~/store/following';
 import { TRPCQueryOutput } from '~/lib/trpc/client';
+import { useFollowBottomSheetStore } from '~/store/followBottomSheet';
 
 type Props = {
   result: TRPCQueryOutput['getResults'][0];
@@ -28,6 +29,7 @@ export const OLRunnerContextMenu: React.FC<Props> = ({
     params: { competitionId },
   } = useRoute<RouteProp<RootStack, 'Results'>>();
   const followRunner = useFollowingStore(state => state.follow);
+  const openSheet = useFollowBottomSheetStore(state => state.open);
 
   const onPress = () => {
     const options = [
@@ -57,24 +59,24 @@ export const OLRunnerContextMenu: React.FC<Props> = ({
               id: result.id,
               name: result.name,
               type: 'runner',
-              className: result.class,
+              className: result.class!,
               competitionId,
             });
-            navigate('Follow');
+            openSheet();
             break;
           case 1:
             if (club) {
               navigate('Results', {
                 competitionId,
-                className: result.class,
+                className: result.class!,
               });
               break;
             }
 
             navigate('Club', {
               competitionId,
-              clubName: result.club,
-              title: result.club,
+              clubName: result.club!,
+              title: result.club!,
             });
             break;
         }

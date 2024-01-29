@@ -15,10 +15,10 @@ import { BackButton } from './backButton';
 import { ResultMenuIcon } from '~/views/scenes/results/menuIcon';
 import { OLPlus } from '~/views/scenes/plus/container';
 import { ClubMenuIcon } from '~/views/scenes/club/menuIcon';
-import { OLFollow } from '~/views/scenes/follow/container';
 import { OLPlusFeatureKey } from '~/views/scenes/plus/component';
 import { OLRedeemCode } from '~/views/scenes/redeem_modal/component';
 import { OLLanguageModal } from '~/views/scenes/language_modal/component';
+import { useOLNavigationRef } from '~/hooks/useNavigation';
 
 export type RootStack = {
   Home: undefined;
@@ -44,7 +44,6 @@ export type RootStack = {
   Plus?: {
     feature?: OLPlusFeatureKey;
   };
-  Follow: undefined;
   Redeem: undefined;
   Language: undefined;
 };
@@ -53,9 +52,10 @@ const Stack = createNativeStackNavigator<RootStack>();
 
 const Component: React.FC = () => {
   const { t } = useTranslation();
+  const { setNavRef } = useOLNavigationRef();
 
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={setNavRef}>
       <StatusBar translucent />
 
       <Stack.Navigator
@@ -129,17 +129,6 @@ const Component: React.FC = () => {
           component={OLPlus}
           options={{
             title: 'LiveOL+',
-          }}
-        />
-
-        <Stack.Screen
-          name="Follow"
-          component={OLFollow}
-          options={{
-            headerLeft: () => <BackButton cross />,
-            title: t('follow.title'),
-            presentation: 'modal',
-            animation: 'slide_from_bottom',
           }}
         />
 

@@ -10,6 +10,7 @@ import { useOLNavigation } from '~/hooks/useNavigation';
 import { useFollowingStore } from '~/store/following';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { RootStack } from '~/lib/nav/router';
+import { useFollowBottomSheetStore } from '~/store/followBottomSheet';
 
 export const ResultMenuIcon: React.FC = () => {
   const { showActionSheetWithOptions } = useActionSheet();
@@ -18,6 +19,7 @@ export const ResultMenuIcon: React.FC = () => {
   const { plusActive } = useIap();
   const { navigate } = useOLNavigation();
   const followClass = useFollowingStore(state => state.follow);
+  const openSheet = useFollowBottomSheetStore(state => state.open);
   const {
     params: { className, competitionId },
   } = useRoute<RouteProp<RootStack, 'Results'>>();
@@ -55,7 +57,7 @@ export const ResultMenuIcon: React.FC = () => {
               name: className,
               type: 'class',
             });
-            navigate('Follow');
+            openSheet();
 
             break;
         }
