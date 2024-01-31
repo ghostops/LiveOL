@@ -22,7 +22,7 @@ export const OLHomePromo: React.FC = () => {
   if (!displayPromo) {
     return (
       <TouchableOpacity
-        style={{ backgroundColor: colors.DARK, paddingVertical: px(8) }}
+        style={{ backgroundColor: colors.GREEN, paddingVertical: px(8) }}
         onPress={() => {
           navigate('Plus');
         }}
@@ -40,8 +40,7 @@ export const OLHomePromo: React.FC = () => {
         backgroundColor: 'white',
         padding: px(16),
         borderWidth: 4,
-        borderColor: colors.MAIN,
-        borderRadius: 8,
+        borderColor: colors.GREEN,
         margin: px(8),
       }}
     >
@@ -58,7 +57,10 @@ export const OLHomePromo: React.FC = () => {
         {t('plus.promo.box.text')}
       </OLText>
 
-      <OLButton small onPress={() => navigate('Plus')}>
+      <OLButton
+        onPress={() => navigate('Plus')}
+        style={{ backgroundColor: colors.GREEN }}
+      >
         {t('plus.promo.box.cta')}
       </OLButton>
 

@@ -9,11 +9,11 @@ type Options = {
 
 export const useScrollToRunner = ({ followedRunnerId, results }: Options) => {
   const flatListRef = useRef<FlatList | null>(null);
-  const [hasScrolled, setHasScrolled] = useState(false);
+  const [hasScrolled, setHasScrolled] = useState<string>('');
 
   useEffect(() => {
-    if (results && followedRunnerId && !hasScrolled) {
-      setHasScrolled(true);
+    if (results && followedRunnerId && hasScrolled !== followedRunnerId) {
+      setHasScrolled(followedRunnerId);
 
       const index = results.findIndex(result => result.id === followedRunnerId);
 

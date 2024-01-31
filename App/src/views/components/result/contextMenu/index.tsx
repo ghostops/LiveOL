@@ -13,7 +13,7 @@ import { useFollowBottomSheetStore } from '~/store/followBottomSheet';
 type Props = {
   result: TRPCQueryOutput['getResults'][0];
   children: React.ReactNode;
-  club?: boolean;
+  club: boolean;
 };
 
 export const OLRunnerContextMenu: React.FC<Props> = ({

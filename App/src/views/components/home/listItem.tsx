@@ -3,6 +3,7 @@ import { px } from '~/util/const';
 import { OLText } from '../text';
 import { OLListItem } from '../list/item';
 import { TRPCQueryOutput } from '~/lib/trpc/client';
+import { ViewStyle } from 'react-native';
 
 interface Props {
   competition: TRPCQueryOutput['getCompetitions']['competitions'][0];
@@ -11,6 +12,7 @@ interface Props {
   onCompetitionPress?: (
     comp: TRPCQueryOutput['getCompetitions']['competitions'][0],
   ) => void;
+  style?: ViewStyle;
 }
 
 export const HomeListItem: React.FC<Props> = ({
@@ -18,20 +20,22 @@ export const HomeListItem: React.FC<Props> = ({
   index,
   total,
   onCompetitionPress,
+  style,
 }) => {
   return (
     <OLListItem
       key={competition.id}
       style={{
-        marginLeft: 0,
         paddingHorizontal: px(16),
-        paddingVertical: px(12),
-        width: '100%',
+        paddingVertical: px(8),
         borderBottomWidth: index === (total || 0) - 1 ? 0 : 1,
+        ...style,
       }}
       onPress={() => onCompetitionPress && onCompetitionPress(competition)}
     >
-      <OLText size={16}>{competition.name}</OLText>
+      <OLText size={16} numberOfLines={1}>
+        {competition.name}
+      </OLText>
     </OLListItem>
   );
 };

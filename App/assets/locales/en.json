@@ -47,7 +47,8 @@
       "cta": "Unfollow",
       "hint": "Long-press to unfollow",
       "title": "Do you want to stop following?"
-    }
+    },
+    "empty": "You are not following any competion, club, or runner."
   },
   "home": {
     "goToday": "Scroll to todays events",
@@ -80,7 +81,8 @@
     "title": "Information",
     "translations": {
       "credit": "App translated by",
-      "phraseapp": "Translations powered by"
+      "phraseapp": "Translations powered by",
+      "freePlus": "Help out with translating the app and get free LiveOL+"
     },
     "update": {
       "check": "Check for updates",

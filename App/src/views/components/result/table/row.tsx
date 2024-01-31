@@ -89,7 +89,7 @@ export const OLTableRow: React.FC<Props> = ({
   const extraSize = getExtraSize(result.splits.length);
 
   return (
-    <OLRunnerContextMenu result={result} club={club}>
+    <OLRunnerContextMenu result={result} club={!!club}>
       <OLResultAnimation
         result={result}
         style={{

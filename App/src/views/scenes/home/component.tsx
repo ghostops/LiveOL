@@ -1,17 +1,12 @@
 import { HomeList } from '~/views/components/home/list';
-import { PickerIcon } from '~/views/components/lang/picker';
-import { OLSearch } from '~/views/components/search/container';
-import { OLText } from '~/views/components/text';
-import { View, TouchableOpacity } from 'react-native';
-import { useTranslation } from 'react-i18next';
+import { View, Animated } from 'react-native';
 import { useTheme } from '~/hooks/useTheme';
 import { OLHomePromo } from './promo';
 import { TRPCQueryOutput } from '~/lib/trpc/client';
 import { TodaysCompetitions } from '~/views/components/home/today';
 import { HomeListItem } from '~/views/components/home/listItem';
-import { useCallback } from 'react';
-import { useFollowBottomSheetStore } from '~/store/followBottomSheet';
-import { useIap } from '~/hooks/useIap';
+import { useCallback, useRef } from 'react';
+import { OLHomeBar } from './bar';
 
 interface Props {
   competitions: TRPCQueryOutput['getCompetitions']['competitions'];
@@ -28,34 +23,6 @@ interface Props {
   loadingMore: boolean;
 }
 
-const OLHomeButton = ({
-  onPress,
-  children,
-  landscape,
-}: {
-  onPress: () => void;
-  children: string;
-  landscape: boolean;
-}) => {
-  const { px, colors } = useTheme();
-
-  return (
-    <TouchableOpacity
-      onPress={onPress}
-      style={{
-        paddingHorizontal: px(landscape ? 24 : 16),
-        backgroundColor: colors.MAIN,
-        paddingVertical: px(4),
-        borderRadius: 16,
-      }}
-    >
-      <OLText size={16} style={{ color: 'white' }}>
-        {children}
-      </OLText>
-    </TouchableOpacity>
-  );
-};
-
 export const OLHome: React.FC<Props> = ({
   onCompetitionPress,
   openSearch,
@@ -64,10 +31,8 @@ export const OLHome: React.FC<Props> = ({
   todaysCompetitions,
   ...passthroughProps
 }) => {
+  const scrollOffsetY = useRef(new Animated.Value(0)).current;
   const { px } = useTheme();
-  const { t } = useTranslation();
-  const openFollowSheet = useFollowBottomSheetStore(state => state.open);
-  const { plusActive } = useIap();
 
   const renderTodaysCompetitions = useCallback(() => {
     if (searching) {
@@ -87,67 +52,31 @@ export const OLHome: React.FC<Props> = ({
               key={competition.id}
               onCompetitionPress={onCompetitionPress}
               total={total}
+              style={{ paddingHorizontal: px(8) }}
             />
           )}
         />
       </>
     );
-  }, [onCompetitionPress, searching, todaysCompetitions]);
-
-  const renderHeader = useCallback(() => {
-    if (searching) {
-      return <OLSearch />;
-    }
-
-    return (
-      <View
-        style={{
-          flexDirection: 'row',
-          height: px(50),
-        }}
-      >
-        <PickerIcon />
-
-        <View
-          style={{
-            height: '100%',
-            justifyContent: 'center',
-            alignItems: 'center',
-            paddingRight: px(10),
-            flexDirection: 'row',
-            gap: px(landscape ? 16 : 8),
-          }}
-        >
-          {plusActive && (
-            <OLHomeButton onPress={openFollowSheet} landscape={!!landscape}>
-              {t('follow.title')}
-            </OLHomeButton>
-          )}
-
-          <OLHomeButton onPress={openSearch} landscape={!!landscape}>
-            {t('home.search')}
-          </OLHomeButton>
-        </View>
-      </View>
-    );
-  }, [openSearch, px, searching, t, landscape, openFollowSheet, plusActive]);
+  }, [onCompetitionPress, searching, todaysCompetitions, px]);
 
   return (
-    <View
-      style={{
-        flex: 1,
-        width: '100%',
-      }}
-    >
-      <View style={{ flex: 1 }}>
-        {renderHeader()}
+    <View>
+      <OLHomeBar
+        landscape={!!landscape}
+        openSearch={openSearch}
+        searching={searching}
+      />
 
-        <HomeList
-          onCompetitionPress={onCompetitionPress}
-          listHeader={renderTodaysCompetitions()}
-          {...passthroughProps}
-        />
-      </View>
+      <HomeList
+        onCompetitionPress={onCompetitionPress}
+        listHeader={renderTodaysCompetitions()}
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { y: scrollOffsetY } } }],
+          { useNativeDriver: false },
+        )}
+        {...passthroughProps}
+      />
     </View>
   );
 };

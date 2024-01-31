@@ -1,5 +1,6 @@
 import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import create from 'zustand';
+import { getFollowSheetIndex } from '~/views/components/follow/followSheet';
 
 type FollowBottomSheetState = {
   setBottomSheetRef: (value: BottomSheetModalMethods | null) => void;
@@ -19,7 +20,7 @@ export const useFollowBottomSheetStore = create<FollowBottomSheetState>(
     },
     open: () => {
       if (get().isOpen) {
-        get().bottomSheetRef?.snapToIndex(2);
+        get().bottomSheetRef?.snapToIndex(getFollowSheetIndex(2));
         return;
       }
 

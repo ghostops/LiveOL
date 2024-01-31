@@ -10,6 +10,11 @@ import { useOLNavigationRef } from '~/hooks/useNavigation';
 import { useRef } from 'react';
 import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 
+const firstIndexSize = 65;
+export const followSheetIndexes = [firstIndexSize, '50%', '90%'];
+export const getFollowSheetIndex = (index: number) =>
+  index > followSheetIndexes.length ? followSheetIndexes.length : index;
+
 export const OLFollowSheet: React.FC = () => {
   const localRef = useRef<BottomSheetModalMethods | null>(null);
   const following = useFollowingStore(state => state.following);
@@ -47,7 +52,7 @@ export const OLFollowSheet: React.FC = () => {
       });
     }
 
-    localRef.current?.snapToIndex(0);
+    localRef.current?.snapToIndex(getFollowSheetIndex(0));
   };
 
   return (
@@ -57,7 +62,7 @@ export const OLFollowSheet: React.FC = () => {
         localRef.current = ref;
       }}
       index={2}
-      snapPoints={[75, '50%', '90%']}
+      snapPoints={followSheetIndexes}
       handleStyle={{
         position: 'absolute',
         left: 0,
@@ -70,22 +75,21 @@ export const OLFollowSheet: React.FC = () => {
         <TouchableOpacity
           activeOpacity={1}
           onPress={() => {
-            localRef.current?.snapToIndex(2);
+            localRef.current?.snapToIndex(getFollowSheetIndex(1));
           }}
           style={{
-            backgroundColor: colors.MAIN,
+            backgroundColor: colors.BLUE,
             borderTopLeftRadius: 16,
             borderTopRightRadius: 16,
-            height: 75,
+            height: firstIndexSize,
+            justifyContent: 'center',
           }}
         >
           <OLText
-            size={24}
+            size={18}
             bold
             style={{
               textAlign: 'center',
-              marginTop: px(24),
-              marginBottom: px(16),
               color: 'white',
             }}
           >
@@ -98,10 +102,10 @@ export const OLFollowSheet: React.FC = () => {
             <OLFollowItem item={item} onPress={() => onItemPress(item)} />
           )}
           keyExtractor={item => item.id}
-          ListFooterComponent={
-            <View style={{ marginTop: px(16) }}>
-              <OLText size={12} style={{ textAlign: 'center' }}>
-                {t('follow.unfollow.hint')}
+          ListEmptyComponent={
+            <View style={{ padding: px(16) }}>
+              <OLText size={14} style={{ textAlign: 'center' }}>
+                {t('follow.empty')}
               </OLText>
             </View>
           }

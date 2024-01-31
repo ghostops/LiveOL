@@ -1,4 +1,3 @@
-import React from 'react';
 import { dateToReadable } from '~/util/date';
 import { OLCard } from '../card';
 import { OLSafeAreaView } from '../safeArea';
@@ -27,35 +26,44 @@ export const TodaysCompetitions: React.FC<Props> = ({
   const nothingToday = !competitions || competitions.length === 0;
 
   const innerCompetitions = () => (
-    <React.Fragment>
-      <OLText
-        bold
-        uppercase
-        size={18}
+    <>
+      <View
         style={{
-          textAlign: 'center',
-          color: 'white',
+          flexDirection: 'row',
+          flex: 1,
+          justifyContent: 'space-between',
         }}
       >
-        {t('home.today')}
-      </OLText>
+        <OLText
+          bold
+          uppercase
+          size={18}
+          style={{
+            textAlign: 'center',
+            color: 'white',
+          }}
+        >
+          {t('home.today')}
+        </OLText>
 
-      <OLText
-        size={16}
-        style={{
-          textAlign: 'center',
-          color: 'white',
-        }}
-      >
-        {competitions[0].date &&
-          dateToReadable(new Date(competitions[0].date).toISOString())}
-      </OLText>
+        <OLText
+          size={16}
+          style={{
+            textAlign: 'center',
+            color: 'white',
+          }}
+        >
+          {competitions[0].date &&
+            dateToReadable(new Date(competitions[0].date).toISOString())}
+        </OLText>
+      </View>
 
       <OLSafeAreaView>
         <OLCard
           style={{
-            marginTop: px(16),
+            marginTop: px(8),
             width: '100%',
+            padding: 0,
           }}
         >
           {competitions.map((comp, index) =>
@@ -63,23 +71,21 @@ export const TodaysCompetitions: React.FC<Props> = ({
           )}
         </OLCard>
       </OLSafeAreaView>
-    </React.Fragment>
+    </>
   );
 
   const innerNothing = () => (
-    <React.Fragment>
-      <OLText
-        bold
-        uppercase
-        size={18}
-        style={{
-          color: 'white',
-          textAlign: 'center',
-        }}
-      >
-        {t('home.nothingToday')}
-      </OLText>
-    </React.Fragment>
+    <OLText
+      bold
+      uppercase
+      size={18}
+      style={{
+        color: 'white',
+        textAlign: 'center',
+      }}
+    >
+      {t('home.nothingToday')}
+    </OLText>
   );
 
   return (

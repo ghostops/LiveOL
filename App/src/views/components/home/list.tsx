@@ -21,6 +21,7 @@ interface Props {
   refetch: () => Promise<void>;
   loading: boolean;
   loadingMore: boolean;
+  onScroll: (event: any) => void;
 }
 
 const uniqEs6 = (arrArg: any[]) =>
@@ -55,12 +56,12 @@ export const HomeList: React.FC<Props> = ({
   loading,
   refetch,
   loadingMore,
+  onScroll,
 }) => {
   const { t } = useTranslation();
   const { bottom } = useSafeAreaInsets();
   const { px, colors } = useTheme();
   const setRef = useSearchStore(state => state.setSectionListRef);
-
   const visibleCompetitions = groupVisibleCompetitions(competitions);
 
   const renderListItem = (
@@ -86,6 +87,8 @@ export const HomeList: React.FC<Props> = ({
   return (
     <SectionList
       ref={setRef}
+      scrollEventThrottle={16}
+      onScroll={onScroll}
       refreshControl={
         <RefreshControl
           refreshing={loading}

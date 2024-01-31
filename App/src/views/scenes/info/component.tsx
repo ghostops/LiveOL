@@ -263,6 +263,20 @@ export const OLInfo: React.FC<Props> = ({
             />
           </TouchableOpacity>
 
+          <TouchableOpacity onPress={contact}>
+            <OLText
+              bold
+              size={16}
+              style={{
+                marginTop: px(16),
+                textAlign: 'center',
+                textDecorationLine: 'underline',
+              }}
+            >
+              {t('info.translations.freePlus')}
+            </OLText>
+          </TouchableOpacity>
+
           <View
             style={{
               height: 1,
