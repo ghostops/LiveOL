@@ -14,6 +14,7 @@
     "archive": "npm run archive:ios && npm run archive:android"
   },
   "dependencies": {
+    "@animatereactnative/marquee": "^0.2.0",
     "@bugsnag/react-native": "^7.22.3",
     "@expo/react-native-action-sheet": "^4.0.1",
     "@gorhom/bottom-sheet": "^4.6.0",
@@ -48,7 +49,6 @@
     "react-native-safe-area-context": "^4.8.2",
     "react-native-screens": "^3.29.0",
     "react-native-size-matters": "^0.4.0",
-    "react-native-svg": "^13.3.0",
     "react-native-track-player": "^3.2.0",
     "react-native-vector-icons": "^10.0.0",
     "zustand": "^4.1.1"

@@ -12,12 +12,14 @@ interface Props {
   loading: boolean;
   competition?: TRPCQueryOutput['getCompetition']['competition'];
   classes?: TRPCQueryOutput['getCompetition']['classes'];
-  goToLastPassings: () => void;
   goToClass: (name: string | null) => () => void;
+  latestPassings?: TRPCQueryOutput['getCompetitionLastPassings'];
 }
 
 export const OLCompetition: React.FC<Props> = props => {
   const { t } = useTranslation();
+
+  console.log(props.latestPassings);
 
   const renderClass = ({ item }: any) => {
     const { name }: TRPCQueryOutput['getCompetition']['classes'][0] = item;
@@ -59,7 +61,7 @@ export const OLCompetition: React.FC<Props> = props => {
         ListHeaderComponent={
           <OLCompetitionHeader
             competition={props.competition}
-            goToLastPassings={props.goToLastPassings}
+            latestPassings={props.latestPassings}
           />
         }
         keyExtractor={(

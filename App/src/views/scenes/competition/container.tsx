@@ -13,6 +13,9 @@ export const OLCompetition: React.FC = () => {
 
   const getCompetitionQuery = trpc.getCompetition.useQuery({ competitionId });
 
+  const getCompetitionLastPassingsQuery =
+    trpc.getCompetitionLastPassings.useQuery({ competitionId });
+
   if (getCompetitionQuery.error) {
     return (
       <OLError
@@ -27,12 +30,6 @@ export const OLCompetition: React.FC = () => {
       loading={getCompetitionQuery.isLoading}
       competition={getCompetitionQuery.data?.competition}
       classes={getCompetitionQuery.data?.classes}
-      goToLastPassings={() => {
-        navigate('Passings', {
-          competitionId,
-          title: getCompetitionQuery.data?.competition.name || '',
-        });
-      }}
       goToClass={(className: string | null) => () => {
         if (!className) {
           return;
@@ -43,6 +40,7 @@ export const OLCompetition: React.FC = () => {
           competitionId,
         });
       }}
+      latestPassings={getCompetitionLastPassingsQuery.data}
     />
   );
 };
