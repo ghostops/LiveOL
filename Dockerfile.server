@@ -20,12 +20,12 @@ ENV BASEROW_TABLE $BASEROW_TABLE
 ENV ENV DEV
 
 # Build folders
-ADD ./Server/src ./Server/src
+ADD ./Server/src /app/src
 
 # Build files
-ADD ./Server/package.json ./Server/
-ADD ./Server/package-lock.json ./Server/
-ADD ./Server/tsconfig.json ./Server/
+ADD ./Server/package.json /app/Server/
+ADD ./Server/package-lock.json /app/Server/
+ADD ./Server/tsconfig.json /app/Server/
 
 RUN npm i
 RUN npm run build
