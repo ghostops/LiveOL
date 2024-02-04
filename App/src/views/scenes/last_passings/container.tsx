@@ -1,12 +1,9 @@
-import React from 'react';
-import _ from 'lodash';
 import { OLPassings as Component } from './component';
 import { OLError } from '~/views/components/error';
 import { useDeviceRotationStore } from '~/store/deviceRotation';
 import { RootStack } from '~/lib/nav/router';
 import { RouteProp, useRoute } from '@react-navigation/native';
-import { useGetLastPassingsQuery } from '~/lib/graphql/generated/gql';
-import { OlPassing } from '~/lib/graphql/generated/types';
+import { trpc } from '~/lib/trpc/client';
 
 export const OLPassings: React.FC = () => {
   const { isLandscape } = useDeviceRotationStore();
@@ -15,26 +12,24 @@ export const OLPassings: React.FC = () => {
     params: { competitionId },
   } = useRoute<RouteProp<RootStack, 'Passings'>>();
 
-  const { data, loading, error, refetch } = useGetLastPassingsQuery({
-    variables: { competitionId },
-  });
+  const getCompetitionLastPassingsQuery =
+    trpc.getCompetitionLastPassings.useQuery({ competitionId });
 
-  if (error) {
-    return <OLError error={error} refetch={refetch} />;
+  if (getCompetitionLastPassingsQuery.error) {
+    return (
+      <OLError
+        error={getCompetitionLastPassingsQuery.error}
+        refetch={getCompetitionLastPassingsQuery.refetch}
+      />
+    );
   }
-
-  const passings: OlPassing[] = _.get(
-    data,
-    'lastPassings.getLastPassings',
-    null,
-  );
 
   return (
     <Component
-      loading={loading}
-      passings={passings}
+      loading={getCompetitionLastPassingsQuery.isLoading}
+      passings={getCompetitionLastPassingsQuery.data || []}
       refresh={async () => {
-        await refetch({ competitionId });
+        await getCompetitionLastPassingsQuery.refetch();
       }}
       landscape={isLandscape}
     />

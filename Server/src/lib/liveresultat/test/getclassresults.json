@@ -1,74 +1,74 @@
 {
-	"status": "OK",
-	"className": "D17-20",
-	"splitcontrols": [
-		{
-			"code": 1095,
-			"name": "95"
-		}
-	],
-	"results": [
-		{
-			"place": "",
-			"name": "Nora Tydal",
-			"club": "OK Österåker",
-			"result": "",
-			"status": 9,
-			"timeplus": "+",
-			"progress": 0,
-			"splits": {
-				"1095": "",
-				"1095_status": 1,
-				"1095_place": ""
-			},
-			"start": 6360000
-		},
-		{
-			"place": "",
-			"name": "Sofia Sundin",
-			"club": "Waxholms OK",
-			"result": "",
-			"status": 9,
-			"timeplus": "+",
-			"progress": 0,
-			"splits": {
-				"1095": "",
-				"1095_status": 1,
-				"1095_place": ""
-			},
-			"start": 6600000
-		},
-		{
-			"place": "",
-			"name": "Sara Sundin",
-			"club": "Waxholms OK",
-			"result": "",
-			"status": 9,
-			"timeplus": "+",
-			"progress": 0,
-			"splits": {
-				"1095": "",
-				"1095_status": 1,
-				"1095_place": ""
-			},
-			"start": 6600000
-		},
-		{
-			"place": "",
-			"name": "Tilde Jonsson",
-			"club": "OK Österåker",
-			"result": "",
-			"status": 9,
-			"timeplus": "+",
-			"progress": 50,
-			"splits": {
-				"1095": 257400,
-				"1095_status": 0,
-				"1095_place": 1,
-				"1095_timeplus": 0
-			},
-			"start": 6600000
-		}
-	],
-	"hash": "aa29398132251d7c1e76b2a954bd04a0"
+  "status": "OK",
+  "className": "D17-20",
+  "splitcontrols": [
+    {
+      "code": 1095,
+      "name": "95"
+    }
+  ],
+  "results": [
+    {
+      "place": "",
+      "name": "Nora Tydal",
+      "club": "OK Österåker",
+      "result": "",
+      "status": 9,
+      "timeplus": "+",
+      "progress": 0,
+      "splits": {
+        "1095": "",
+        "1095_status": 1,
+        "1095_place": ""
+      },
+      "start": 6360000
+    },
+    {
+      "place": "",
+      "name": "Sofia Sundin",
+      "club": "Waxholms OK",
+      "result": "",
+      "status": 9,
+      "timeplus": "+",
+      "progress": 0,
+      "splits": {
+        "1095": "",
+        "1095_status": 1,
+        "1095_place": ""
+      },
+      "start": 6600000
+    },
+    {
+      "place": "",
+      "name": "Sara Sundin",
+      "club": "Waxholms OK",
+      "result": "",
+      "status": 9,
+      "timeplus": "+",
+      "progress": 0,
+      "splits": {
+        "1095": "",
+        "1095_status": 1,
+        "1095_place": ""
+      },
+      "start": 6600000
+    },
+    {
+      "place": "",
+      "name": "Tilde Jonsson",
+      "club": "OK Österåker",
+      "result": "",
+      "status": 9,
+      "timeplus": "+",
+      "progress": 50,
+      "splits": {
+        "1095": 257400,
+        "1095_status": 0,
+        "1095_place": 1,
+        "1095_timeplus": 0
+      },
+      "start": 6600000
+    }
+  ],
+  "hash": "aa29398132251d7c1e76b2a954bd04a0"
 }

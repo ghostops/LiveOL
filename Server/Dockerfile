@@ -1,4 +1,4 @@
-FROM node:16-alpine
+FROM node:20-alpine
 
 WORKDIR /app
 
@@ -24,10 +24,10 @@ ADD ./src ./src
 
 # Build files
 ADD ./package.json ./
-ADD ./yarn.lock ./
+ADD ./package-lock.json ./
 ADD ./tsconfig.json ./
 
-RUN yarn
-RUN yarn build
+RUN npm i
+RUN npm run build
 
 CMD ["node", "./build"]

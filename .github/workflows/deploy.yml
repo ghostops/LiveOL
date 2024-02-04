@@ -1,8 +1,10 @@
-name: Deploy
+name: Deploy Server
 
 on:
-  - push
-
+  push:
+    branches:
+      - master
+  workflow_dispatch:
 jobs:
   deploy-api:
     name: deploy

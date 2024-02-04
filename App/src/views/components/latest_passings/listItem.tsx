@@ -4,10 +4,10 @@ import { px, fontPx } from '~/util/const';
 import { TextStyle, View } from 'react-native';
 import { OLCard } from '../card';
 import { useTranslation } from 'react-i18next';
-import { PassingFragment } from '~/lib/graphql/generated/types';
+import { RouterOutput } from '../../../../../Server/src/trpc';
 
 interface Props {
-  passing: PassingFragment;
+  passing: RouterOutput['getCompetitionLastPassings'][0];
   landscape?: boolean;
 }
 

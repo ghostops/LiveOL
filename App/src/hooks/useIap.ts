@@ -129,8 +129,9 @@ export const useIap = () => {
     restore: restoreLiveOLPlus,
     displayPrice: liveOlPlusProduct?.availablePackages[0].product.priceString,
     plusWillRenew: customerInfo?.entitlements?.active?.plus?.willRenew,
-    plusExpirationDate:
-      customerInfo?.entitlements?.active?.plus?.expirationDate,
+    plusExpirationDate: customerInfo?.entitlements?.active?.plus?.expirationDate
+      ? new Date(customerInfo.entitlements.active.plus.expirationDate)
+      : undefined,
     plusActive,
     loading,
   };

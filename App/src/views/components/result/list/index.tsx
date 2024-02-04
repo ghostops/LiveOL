@@ -1,22 +1,22 @@
-import React, { useEffect } from 'react';
 import { FlatList, View } from 'react-native';
 import { px } from '~/util/const';
 import { OLResultItem } from '~/views/components/result/list/item';
 import { OLText } from '~/views/components/text';
 import { ResultHeader } from '~/views/components/result/header';
-import { OlResult } from '~/lib/graphql/generated/types';
 import { useTranslation } from 'react-i18next';
 import { useScrollToRunner } from '~/hooks/useScrollToRunner';
 import { useOlListItemHeight } from '../item/listItem';
 import { OLSafeAreaView } from '~/views/components/safeArea';
+import { TRPCQueryOutput } from '~/lib/trpc/client';
 
 interface Props {
-  results: OlResult[];
+  results: TRPCQueryOutput['getResults'];
   competitionId: number;
   className: string;
   disabled?: boolean;
   club?: boolean;
   followedRunnerId?: string;
+  loading: boolean;
 }
 
 export const OLResultsList: React.FC<Props> = props => {
@@ -24,21 +24,8 @@ export const OLResultsList: React.FC<Props> = props => {
   const flatListRef = useScrollToRunner(props);
   const listItemHeight = useOlListItemHeight();
 
-  // Force update the list to prevent not rendering items
-  useEffect(() => {
-    if (!flatListRef) {
-      return;
-    }
-
-    const timeout = setTimeout(() => {
-      flatListRef?.current?.forceUpdate();
-    }, 2000);
-
-    return () => clearTimeout(timeout);
-  }, [flatListRef]);
-
   const renderItem = ({ item }: any) => {
-    const result: OlResult = item;
+    const result: TRPCQueryOutput['getResults'][0] = item;
 
     return (
       <OLResultItem
@@ -64,6 +51,7 @@ export const OLResultsList: React.FC<Props> = props => {
           length: listItemHeight,
           offset: index * listItemHeight,
         })}
+        initialNumToRender={props.results.length}
         stickyHeaderIndices={[0]}
         ListHeaderComponent={
           <ResultHeader
@@ -75,22 +63,24 @@ export const OLResultsList: React.FC<Props> = props => {
         ListFooterComponent={<View style={{ height: 45 }} />}
         data={props.results}
         renderItem={renderItem}
-        keyExtractor={(item: OlResult) => item.id}
+        keyExtractor={(item: TRPCQueryOutput['getResults'][0]) => item.id}
         ListEmptyComponent={
-          <View
-            style={{
-              paddingVertical: px(50),
-            }}
-          >
-            <OLText
-              size={18}
+          !props.loading ? (
+            <View
               style={{
-                textAlign: 'center',
+                paddingVertical: px(50),
               }}
             >
-              {t('classes.empty')}
-            </OLText>
-          </View>
+              <OLText
+                size={18}
+                style={{
+                  textAlign: 'center',
+                }}
+              >
+                {t('classes.empty')}
+              </OLText>
+            </View>
+          ) : null
         }
       />
     </OLSafeAreaView>

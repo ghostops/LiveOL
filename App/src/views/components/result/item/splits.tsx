@@ -1,10 +1,9 @@
-import React from 'react';
 import { View } from 'react-native';
+import { TRPCQueryOutput } from '~/lib/trpc/client';
 import { OLText } from '~/views/components/text';
-import { OlSplit } from '~/lib/graphql/generated/types';
 
 interface Props {
-  split: OlSplit;
+  split: TRPCQueryOutput['getResults'][0]['splits'][0];
   best?: boolean;
 }
 

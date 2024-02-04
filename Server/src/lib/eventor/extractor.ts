@@ -6,73 +6,78 @@ import * as _ from 'lodash';
 import * as moment from 'moment';
 
 export class EventorExtractor {
-	constructor(private scraper: EventorScraper) {}
+  constructor(private scraper: EventorScraper) {}
 
-	public getEventorData = async (liveresultatComp: LiveresultatApi.competition): Promise<EventorEventItem | null> => {
-		const eventDate = moment.utc(liveresultatComp.date);
+  public getEventorData = async (
+    liveresultatComp: LiveresultatApi.competition,
+  ): Promise<EventorEventItem | null> => {
+    const eventDate = moment.utc(liveresultatComp.date);
 
-		// We batch our start and end date search to not scrape Eventor to hard
-		const [startDate, endDate] = getMonthFromDate(eventDate);
+    // We batch our start and end date search to not scrape Eventor to hard
+    const [startDate, endDate] = getMonthFromDate(eventDate);
 
-		const range = await this.scraper.scrapeDateRange(startDate, endDate);
+    const range = await this.scraper.scrapeDateRange(startDate, endDate);
 
-		const eventInList = this.findInRange(liveresultatComp, range, 2);
+    const eventInList = this.findInRange(liveresultatComp, range, 2);
 
-		if (!eventInList) {
-			return null;
-		}
+    if (!eventInList) {
+      return null;
+    }
 
-		const event = await this.scraper.scrapeEvent(eventInList.id);
+    const event = await this.scraper.scrapeEvent(eventInList.id);
 
-		return event;
-	};
+    return event;
+  };
 
-	private findInRange = (
-		comp: LiveresultatApi.competition,
-		range: EventorListItem[],
-		threshold: number,
-	): EventorListItem | null => {
-		const weightList = range.map((item) => this.weighItem(comp, item));
+  private findInRange = (
+    comp: LiveresultatApi.competition,
+    range: EventorListItem[],
+    threshold: number,
+  ): EventorListItem | null => {
+    const weightList = range.map(item => this.weighItem(comp, item));
 
-		const sorted = _(weightList).sortBy('weight');
+    const sorted = _(weightList).sortBy('weight');
 
-		const winner = sorted.last();
+    const winner = sorted.last();
 
-		if (!winner || winner.weight < threshold) {
-			return null;
-		}
+    if (!winner || winner.weight < threshold) {
+      return null;
+    }
 
-		return range.find((item) => item.id === winner.id);
-	};
+    return range.find(item => item.id === winner.id);
+  };
 
-	private weighItem = (
-		comp: LiveresultatApi.competition,
-		item: EventorListItem,
-	): { id: string; weight: number; weightBy: string[] } => {
-		let weight = 0;
-		const weightBy = [];
+  private weighItem = (
+    comp: LiveresultatApi.competition,
+    item: EventorListItem,
+  ): { id: string; weight: number; weightBy: string[] } => {
+    let weight = 0;
+    const weightBy = [];
 
-		const compDate = moment.utc(comp.date);
+    const compDate = moment.utc(comp.date);
 
-		if (compDate.isSame(moment.utc(item.date), 'date')) {
-			weight += 1;
-			weightBy.push('date');
-		}
+    if (compDate.isSame(moment.utc(item.date), 'date')) {
+      weight += 1;
+      weightBy.push('date');
+    }
 
-		if (item?.name?.toLowerCase() === comp?.name?.toLowerCase()) {
-			weight += 1;
-			weightBy.push('name');
-		}
+    if (item?.name?.toLowerCase() === comp?.name?.toLowerCase()) {
+      weight += 1;
+      weightBy.push('name');
+    }
 
-		if (!!comp.organizer && item?.club?.toLowerCase() === comp.organizer.toLowerCase()) {
-			weight += 1;
-			weightBy.push('club');
-		}
+    if (
+      !!comp.organizer &&
+      item?.club?.toLowerCase() === comp.organizer.toLowerCase()
+    ) {
+      weight += 1;
+      weightBy.push('club');
+    }
 
-		return {
-			weight,
-			weightBy,
-			id: item.id,
-		};
-	};
+    return {
+      weight,
+      weightBy,
+      id: item.id,
+    };
+  };
 }

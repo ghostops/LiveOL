@@ -7,8 +7,9 @@
     "baseUrl": "./src",
     "paths": {
       "~/*": ["*"]
-    }
+    },
   },
   "include": ["src"],
-  "exclude": ["src/types/graphql-global-types.ts", "node_modules"]
+  "exclude": ["node_modules"],
+  "references": [{ "path": "../Server" }],
 }

@@ -1,19 +1,19 @@
-import { OlResult } from '~/lib/graphql/generated/types';
 import { useEffect, useRef, useState } from 'react';
 import { FlatList } from 'react-native';
+import { TRPCQueryOutput } from '~/lib/trpc/client';
 
 type Options = {
-  results?: OlResult[];
+  results?: TRPCQueryOutput['getResults'];
   followedRunnerId?: string;
 };
 
 export const useScrollToRunner = ({ followedRunnerId, results }: Options) => {
   const flatListRef = useRef<FlatList | null>(null);
-  const [hasScrolled, setHasScrolled] = useState(false);
+  const [hasScrolled, setHasScrolled] = useState<string>('');
 
   useEffect(() => {
-    if (results && followedRunnerId && !hasScrolled) {
-      setHasScrolled(true);
+    if (results && followedRunnerId && hasScrolled !== followedRunnerId) {
+      setHasScrolled(followedRunnerId);
 
       const index = results.findIndex(result => result.id === followedRunnerId);
 

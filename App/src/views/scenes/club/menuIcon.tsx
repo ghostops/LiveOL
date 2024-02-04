@@ -9,6 +9,7 @@ import { useOLNavigation } from '~/hooks/useNavigation';
 import { useFollowingStore } from '~/store/following';
 import { RootStack } from '~/lib/nav/router';
 import { RouteProp, useRoute } from '@react-navigation/native';
+import { useFollowBottomSheetStore } from '~/store/followBottomSheet';
 
 export const ClubMenuIcon: React.FC = () => {
   const { showActionSheetWithOptions } = useActionSheet();
@@ -16,6 +17,7 @@ export const ClubMenuIcon: React.FC = () => {
   const { plusActive } = useIap();
   const { navigate } = useOLNavigation();
   const followClub = useFollowingStore(state => state.follow);
+  const openSheet = useFollowBottomSheetStore(state => state.open);
   const {
     params: { clubName, competitionId },
   } = useRoute<RouteProp<RootStack, 'Club'>>();
@@ -44,7 +46,7 @@ export const ClubMenuIcon: React.FC = () => {
               name: clubName,
               type: 'club',
             });
-            navigate('Follow');
+            openSheet();
 
             break;
         }

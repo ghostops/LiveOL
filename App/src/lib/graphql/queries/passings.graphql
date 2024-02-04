@@ -1,7 +1,0 @@
-query GetLastPassings($competitionId: Int!) {
-  lastPassings {
-    getLastPassings(competitionId: $competitionId) {
-      ...Passing
-    }
-  }
-}

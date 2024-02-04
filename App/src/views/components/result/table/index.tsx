@@ -1,16 +1,15 @@
-import * as React from 'react';
 import { FlatList, ScrollView, View } from 'react-native';
 import { px } from '~/util/const';
 import { OLTableRow } from '~/views/components/result/table/row';
 import { OLText } from '~/views/components/text';
 import { ResultHeader } from '~/views/components/result/header';
-import { OlResult } from '~/lib/graphql/generated/types';
 import { useTranslation } from 'react-i18next';
 import { useScrollToRunner } from '~/hooks/useScrollToRunner';
 import { useOlListItemHeight } from '../item/listItem';
+import { TRPCQueryOutput } from '~/lib/trpc/client';
 
 interface Props {
-  results: OlResult[];
+  results: TRPCQueryOutput['getResults'];
   competitionId: number;
   className: string;
   disabled?: boolean;
@@ -24,7 +23,7 @@ export const OLResultsTable: React.FC<Props> = props => {
   const listItemHeight = useOlListItemHeight();
 
   const renderResult = ({ item }: any) => {
-    const result: OlResult = item;
+    const result: TRPCQueryOutput['getResults'][0] = item;
 
     return (
       <OLTableRow
@@ -51,6 +50,7 @@ export const OLResultsTable: React.FC<Props> = props => {
           length: listItemHeight,
           offset: index * listItemHeight,
         })}
+        initialNumToRender={props.results.length}
         stickyHeaderIndices={[0]}
         ListHeaderComponent={
           <ResultHeader
@@ -63,7 +63,7 @@ export const OLResultsTable: React.FC<Props> = props => {
         ListFooterComponent={<View style={{ height: 45 }} />}
         data={props.results}
         renderItem={renderResult}
-        keyExtractor={(item: OlResult) => item.id}
+        keyExtractor={(item: TRPCQueryOutput['getResults'][0]) => item.id}
         ListEmptyComponent={
           <View
             style={{

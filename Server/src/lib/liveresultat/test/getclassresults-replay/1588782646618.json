@@ -1,1 +1,173 @@
-{"id":"bafd4eb5-0eee-4d9b-b4d9-4c4ae89afb44","data":{"status":"OK","className":"Insk","splitcontrols":[],"results":[{"place":"1","name":"Dominykas Prakapas","club":"OK Vilse 87","result":"12:00","status":0,"timeplus":"+00:00","progress":100,"start":6522200},{"place":"2","name":"Vera Svensson","club":"OK Vilse 87","result":"13:54","status":0,"timeplus":"+01:54","progress":100,"start":6541500},{"place":"3","name":"Olivia Tyma","club":"OK Vilse 87","result":"13:54","status":0,"timeplus":"+01:54","progress":100,"start":6528200},{"place":"4","name":"Algot Enberg","club":"OK Vilse 87","result":"14:29","status":0,"timeplus":"+02:29","progress":100,"start":6487200},{"place":"5","name":"Edwin Erlandsson","club":"OK Vilse 87","result":"16:28","status":0,"timeplus":"+04:28","progress":100,"start":6477000},{"place":"6","name":"Alma Olofsson","club":"OK Vilse 87","result":"19:14","status":0,"timeplus":"+07:14","progress":100,"start":6508800},{"place":"7","name":"Liv Olofsson","club":"OK Vilse 87","result":"19:26","status":0,"timeplus":"+07:26","progress":100,"start":6507900},{"place":"8","name":"Ellen Olofsson","club":"OK Vilse 87","result":"21:49","status":0,"timeplus":"+09:49","progress":100,"start":6508200},{"place":"-","name":"Ben Carleke","club":"OK Vilse 87","result":"ej start","status":1,"timeplus":"+ej start","progress":100,"start":6480000},{"place":"","name":"Maj Ingvarsson","club":"OK Vilse 87","result":"","status":10,"timeplus":"+","progress":0,"start":6480000},{"place":"","name":"Oliver Bujukliev","club":"OK Vilse 87","result":"","status":10,"timeplus":"+","progress":0,"start":6480000},{"place":"","name":"Evelina Stjernfeldt","club":"OK Vilse 87","result":"","status":10,"timeplus":"+","progress":0,"start":6480000},{"place":"","name":"Melvin Bujukliev","club":"OK Vilse 87","result":"","status":10,"timeplus":"+","progress":0,"start":6480000},{"place":"","name":"Patricija Prakapaite","club":"OK Vilse 87","result":"","status":10,"timeplus":"+","progress":0,"start":""},{"place":"","name":"Milton Svensson","club":"OK Vilse 87","result":"","status":10,"timeplus":"+","progress":0,"start":""},{"place":"","name":"Lin Ingvarsson","club":"OK Vilse 87","result":"","status":10,"timeplus":"+","progress":0,"start":6480000}],"hash":"106b93d5adce48d8d30a3494ad49f361"},"competition":"17337","classname":"Insk"}
+{
+  "id": "bafd4eb5-0eee-4d9b-b4d9-4c4ae89afb44",
+  "data": {
+    "status": "OK",
+    "className": "Insk",
+    "splitcontrols": [],
+    "results": [
+      {
+        "place": "1",
+        "name": "Dominykas Prakapas",
+        "club": "OK Vilse 87",
+        "result": "12:00",
+        "status": 0,
+        "timeplus": "+00:00",
+        "progress": 100,
+        "start": 6522200
+      },
+      {
+        "place": "2",
+        "name": "Vera Svensson",
+        "club": "OK Vilse 87",
+        "result": "13:54",
+        "status": 0,
+        "timeplus": "+01:54",
+        "progress": 100,
+        "start": 6541500
+      },
+      {
+        "place": "3",
+        "name": "Olivia Tyma",
+        "club": "OK Vilse 87",
+        "result": "13:54",
+        "status": 0,
+        "timeplus": "+01:54",
+        "progress": 100,
+        "start": 6528200
+      },
+      {
+        "place": "4",
+        "name": "Algot Enberg",
+        "club": "OK Vilse 87",
+        "result": "14:29",
+        "status": 0,
+        "timeplus": "+02:29",
+        "progress": 100,
+        "start": 6487200
+      },
+      {
+        "place": "5",
+        "name": "Edwin Erlandsson",
+        "club": "OK Vilse 87",
+        "result": "16:28",
+        "status": 0,
+        "timeplus": "+04:28",
+        "progress": 100,
+        "start": 6477000
+      },
+      {
+        "place": "6",
+        "name": "Alma Olofsson",
+        "club": "OK Vilse 87",
+        "result": "19:14",
+        "status": 0,
+        "timeplus": "+07:14",
+        "progress": 100,
+        "start": 6508800
+      },
+      {
+        "place": "7",
+        "name": "Liv Olofsson",
+        "club": "OK Vilse 87",
+        "result": "19:26",
+        "status": 0,
+        "timeplus": "+07:26",
+        "progress": 100,
+        "start": 6507900
+      },
+      {
+        "place": "8",
+        "name": "Ellen Olofsson",
+        "club": "OK Vilse 87",
+        "result": "21:49",
+        "status": 0,
+        "timeplus": "+09:49",
+        "progress": 100,
+        "start": 6508200
+      },
+      {
+        "place": "-",
+        "name": "Ben Carleke",
+        "club": "OK Vilse 87",
+        "result": "ej start",
+        "status": 1,
+        "timeplus": "+ej start",
+        "progress": 100,
+        "start": 6480000
+      },
+      {
+        "place": "",
+        "name": "Maj Ingvarsson",
+        "club": "OK Vilse 87",
+        "result": "",
+        "status": 10,
+        "timeplus": "+",
+        "progress": 0,
+        "start": 6480000
+      },
+      {
+        "place": "",
+        "name": "Oliver Bujukliev",
+        "club": "OK Vilse 87",
+        "result": "",
+        "status": 10,
+        "timeplus": "+",
+        "progress": 0,
+        "start": 6480000
+      },
+      {
+        "place": "",
+        "name": "Evelina Stjernfeldt",
+        "club": "OK Vilse 87",
+        "result": "",
+        "status": 10,
+        "timeplus": "+",
+        "progress": 0,
+        "start": 6480000
+      },
+      {
+        "place": "",
+        "name": "Melvin Bujukliev",
+        "club": "OK Vilse 87",
+        "result": "",
+        "status": 10,
+        "timeplus": "+",
+        "progress": 0,
+        "start": 6480000
+      },
+      {
+        "place": "",
+        "name": "Patricija Prakapaite",
+        "club": "OK Vilse 87",
+        "result": "",
+        "status": 10,
+        "timeplus": "+",
+        "progress": 0,
+        "start": ""
+      },
+      {
+        "place": "",
+        "name": "Milton Svensson",
+        "club": "OK Vilse 87",
+        "result": "",
+        "status": 10,
+        "timeplus": "+",
+        "progress": 0,
+        "start": ""
+      },
+      {
+        "place": "",
+        "name": "Lin Ingvarsson",
+        "club": "OK Vilse 87",
+        "result": "",
+        "status": 10,
+        "timeplus": "+",
+        "progress": 0,
+        "start": 6480000
+      }
+    ],
+    "hash": "106b93d5adce48d8d30a3494ad49f361"
+  },
+  "competition": "17337",
+  "classname": "Insk"
+}

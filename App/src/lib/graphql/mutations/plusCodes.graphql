@@ -1,5 +1,0 @@
-mutation RedeemPlusCode($code: String!, $deviceId: String!) {
-  server {
-    redeemPlusCode(code: $code, deviceId: $deviceId)
-  }
-}

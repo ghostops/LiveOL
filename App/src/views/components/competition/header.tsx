@@ -1,32 +1,63 @@
-import React from 'react';
-import _ from 'lodash';
 import { dateToReadable } from '~/util/date';
 import { OLButton } from '~/views/components/button';
 import { OLCompetitionClub } from '~/views/components/competition/club';
 import { OLCompetitionIOSHeader } from '~/views/components/competition/iosHeader';
 import { OLText } from '~/views/components/text';
-import { Linking, Platform, View } from 'react-native';
+import { Linking, Platform, TouchableOpacity, View } from 'react-native';
 import { px } from '~/util/const';
 import { CompetitionInfoBox } from './info';
 import { useTranslation } from 'react-i18next';
-import { OlCompetition } from '~/lib/graphql/generated/types';
+import { TRPCQueryOutput } from '~/lib/trpc/client';
+import { useTheme } from '~/hooks/useTheme';
+import { Marquee } from '@animatereactnative/marquee';
+import { useState } from 'react';
 
 interface Props {
-  competition: OlCompetition;
-  goToLastPassings: () => void;
+  competition: TRPCQueryOutput['getCompetition']['competition'];
+  latestPassings?: TRPCQueryOutput['getCompetitionLastPassings'];
 }
 
 export const OLCompetitionHeader: React.FC<Props> = props => {
   const { t } = useTranslation();
+  const { colors } = useTheme();
+  const [marqueeSpeed, setMarqueeSpeed] = useState(0.75);
+
+  const lastLogo =
+    props.competition.clubLogoSizes[props.competition.clubLogoSizes.length - 1];
 
   return (
     <View>
       {Platform.OS === 'ios' && (
         <OLCompetitionIOSHeader name={props.competition.name} />
       )}
-      {Platform.OS === 'android' && <View style={{ height: px(10) }} />}
 
-      {props.competition.eventor && props.competition.canceled && (
+      <TouchableOpacity
+        activeOpacity={1}
+        onPressIn={() => {
+          setMarqueeSpeed(0);
+        }}
+        onPressOut={() => {
+          setMarqueeSpeed(0.75);
+        }}
+      >
+        <Marquee
+          speed={marqueeSpeed}
+          style={{
+            backgroundColor: colors.GREEN,
+            paddingVertical: px(8),
+          }}
+        >
+          <OLText size={16} style={{ color: 'white' }}>
+            {props.latestPassings
+              ?.map(result => {
+                return `${result.runnerName} (${result.class}): ${result.time} ${result.controlName} -- `;
+              })
+              .join('')}
+          </OLText>
+        </Marquee>
+      </TouchableOpacity>
+
+      {props.competition.eventorAvailable && props.competition.canceled && (
         <View
           style={{
             borderTopColor: '#b81c1c',
@@ -59,18 +90,18 @@ export const OLCompetitionHeader: React.FC<Props> = props => {
             paddingTop: px(10),
           }}
         >
-          {props.competition.eventor && (
+          {props.competition.eventorAvailable && (
             <View
               style={{
                 alignItems: 'center',
                 paddingBottom: px(25),
               }}
             >
-              {props.competition.eventor && (
+              {props.competition.eventorAvailable && (
                 <OLCompetitionClub
-                  name={props.competition.club}
+                  name={props.competition.club || ''}
                   logoUrl={props.competition.clubLogoUrl}
-                  size={_.last(props.competition.clubLogoSizes)}
+                  size={lastLogo}
                 />
               )}
             </View>
@@ -84,7 +115,7 @@ export const OLCompetitionHeader: React.FC<Props> = props => {
             {t('competitions.organizedBy')}: {props.competition.organizer}
           </OLText>
 
-          {props.competition.eventor && (
+          {props.competition.eventorAvailable && (
             <>
               <OLText size={16} style={{ marginBottom: px(15) }}>
                 {t('competitions.distance')}:{' '}
@@ -97,8 +128,15 @@ export const OLCompetitionHeader: React.FC<Props> = props => {
 
               <OLButton
                 small
-                onPress={() => Linking.openURL(props.competition.eventorUrl)}
-                style={{ alignSelf: 'flex-start', marginBottom: px(15) }}
+                onPress={() =>
+                  props.competition.eventorUrl &&
+                  Linking.openURL(props.competition.eventorUrl)
+                }
+                style={{
+                  alignSelf: 'flex-start',
+                  marginBottom: px(15),
+                  backgroundColor: colors.BLACK,
+                }}
               >
                 {t('competitions.visitEventor')}
               </OLButton>
@@ -106,37 +144,22 @@ export const OLCompetitionHeader: React.FC<Props> = props => {
           )}
         </View>
 
-        {props.competition.eventor && !!props.competition.info && (
+        {props.competition.eventorAvailable && !!props.competition.info && (
           <CompetitionInfoBox infoHtml={props.competition.info} />
         )}
       </View>
 
-      <View
+      <OLText
+        size={22}
         style={{
-          paddingHorizontal: px(15),
-          marginBottom: px(15),
-          marginTop: px(25),
-          flexDirection: 'row',
+          textAlign: 'left',
+          color: 'black',
+          marginLeft: px(16),
+          marginVertical: px(16),
         }}
       >
-        <View style={{ flex: 1 }}>
-          <OLText
-            size={20}
-            style={{
-              textAlign: 'left',
-              color: 'black',
-            }}
-          >
-            {t('competitions.classes')}
-          </OLText>
-        </View>
-
-        <View>
-          <OLButton small onPress={props.goToLastPassings}>
-            {t('competitions.lastPassings')}
-          </OLButton>
-        </View>
-      </View>
+        {t('competitions.classes')}
+      </OLText>
     </View>
   );
 };
