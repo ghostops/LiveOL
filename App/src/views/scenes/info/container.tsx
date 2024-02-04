@@ -5,9 +5,9 @@ import { useDeviceRotationStore } from '~/store/deviceRotation';
 import { useTextStore } from '~/store/text';
 import { useOLNavigation } from '~/hooks/useNavigation';
 import { useIap } from '~/hooks/useIap';
-import moment from 'moment';
 import { useState } from 'react';
 import { trpc } from '~/lib/trpc/client';
+import { format } from 'date-fns';
 
 const translationCredits: { code: string; name: string }[] = [
   {
@@ -51,7 +51,6 @@ export const OLInfo: React.FC = () => {
   const contact = () =>
     Linking.openURL('https://liveol.larsendahl.se/#contact');
   const openPhraseApp = () => Linking.openURL('https://phrase.com/');
-  const openZapSplat = () => Linking.openURL('https://www.zapsplat.com/');
 
   const increaseTextSize = () => {
     if (textSizeMultiplier > 1.25) {
@@ -93,7 +92,6 @@ export const OLInfo: React.FC = () => {
       landscape={isLandscape}
       translationCredits={translationCredits}
       openPhraseApp={openPhraseApp}
-      openZapSplat={openZapSplat}
       secretTap={secretTap}
       decreaseFontSize={decreaseTextSize}
       increaseFontSize={increaseTextSize}
@@ -101,9 +99,7 @@ export const OLInfo: React.FC = () => {
       onGetLiveOlPlus={onGetLiveOlPlus}
       showGetLiveOlPlus={!plusActive}
       plusExpirationDate={
-        plusExpirationDate
-          ? moment(plusExpirationDate).format(__DEV__ ? undefined : 'LL')
-          : undefined
+        plusExpirationDate ? format(plusExpirationDate, 'P') : undefined
       }
       plusWillRenew={plusWillRenew}
       redeemPlusCode={() => navigate('Redeem')}

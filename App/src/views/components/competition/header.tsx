@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import { dateToReadable } from '~/util/date';
 import { OLButton } from '~/views/components/button';
 import { OLCompetitionClub } from '~/views/components/competition/club';
@@ -23,6 +22,9 @@ export const OLCompetitionHeader: React.FC<Props> = props => {
   const { colors } = useTheme();
   const [marqueeSpeed, setMarqueeSpeed] = useState(0.75);
 
+  const lastLogo =
+    props.competition.clubLogoSizes[props.competition.clubLogoSizes.length - 1];
+
   return (
     <View>
       {Platform.OS === 'ios' && (
@@ -31,14 +33,11 @@ export const OLCompetitionHeader: React.FC<Props> = props => {
 
       <TouchableOpacity
         activeOpacity={1}
-        onPress={() => {
-          if (marqueeSpeed === 0) {
-            setMarqueeSpeed(0.25);
-          } else if (marqueeSpeed === 0.25) {
-            setMarqueeSpeed(0.75);
-          } else {
-            setMarqueeSpeed(0);
-          }
+        onPressIn={() => {
+          setMarqueeSpeed(0);
+        }}
+        onPressOut={() => {
+          setMarqueeSpeed(0.75);
         }}
       >
         <Marquee
@@ -102,7 +101,7 @@ export const OLCompetitionHeader: React.FC<Props> = props => {
                 <OLCompetitionClub
                   name={props.competition.club || ''}
                   logoUrl={props.competition.clubLogoUrl}
-                  size={_.last(props.competition.clubLogoSizes)}
+                  size={lastLogo}
                 />
               )}
             </View>

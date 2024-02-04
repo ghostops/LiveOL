@@ -1,7 +1,6 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { HIT_SLOP, px } from '~/util/const';
-import { useAudioStore } from '~/store/audio';
 import { OLIcon } from '~/views/components/icon';
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import { useTranslation } from 'react-i18next';
@@ -15,7 +14,6 @@ import { useFollowBottomSheetStore } from '~/store/followBottomSheet';
 export const ResultMenuIcon: React.FC = () => {
   const { showActionSheetWithOptions } = useActionSheet();
   const { t } = useTranslation();
-  const { isMuted, setMuted } = useAudioStore();
   const { plusActive } = useIap();
   const { navigate } = useOLNavigation();
   const followClass = useFollowingStore(state => state.follow);
@@ -26,8 +24,6 @@ export const ResultMenuIcon: React.FC = () => {
 
   const onPress = () => {
     const options = [
-      // TODO: This doesnt work on Android?
-      isMuted ? t('result.unmute') : t('result.mute'),
       t('result.followClass'),
       t('info.update.hasUpdate.cancel'),
     ];
@@ -44,9 +40,6 @@ export const ResultMenuIcon: React.FC = () => {
 
         switch (selectedIndex) {
           case 0:
-            setMuted(!isMuted);
-            break;
-          case 1:
             if (!plusActive) {
               navigate('Plus', { feature: 'followClass' });
               break;

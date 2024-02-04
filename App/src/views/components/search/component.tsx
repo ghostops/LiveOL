@@ -1,11 +1,11 @@
-import React, { useCallback, useState } from 'react';
-import _ from 'lodash';
+import { useCallback, useState } from 'react';
 import {
   Animated,
   TouchableOpacity,
   Keyboard,
   TextInput,
   View,
+  InteractionManager,
 } from 'react-native';
 import { OLText } from '../text';
 import { COLORS, fontPx, px } from '~/util/const';
@@ -32,7 +32,7 @@ export const OLSearch: React.FC<Props> = ({ setSearching, setSearchTerm }) => {
   const hideSearch = useCallback(() => {
     Keyboard.dismiss();
 
-    _.defer(() => {
+    InteractionManager.runAfterInteractions(() => {
       setSearching(false);
       setSearchTerm(null);
     });

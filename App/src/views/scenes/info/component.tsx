@@ -11,7 +11,6 @@ import { useTranslation } from 'react-i18next';
 type Props = {
   landscape: boolean;
   contact: () => void;
-  openZapSplat: () => void;
   openPhraseApp: () => void;
   translationCredits: { code: string; name: string }[];
   secretTap: () => void;
@@ -31,7 +30,6 @@ const PHRASE_IMAGE = require('../../../../assets/images/phrase.png');
 export const OLInfo: React.FC<Props> = ({
   landscape,
   contact,
-  openZapSplat,
   openPhraseApp,
   translationCredits,
   secretTap,
@@ -225,19 +223,6 @@ export const OLInfo: React.FC<Props> = ({
 
       <View>
         <OLCard style={{ marginVertical: px(8) }}>
-          <TouchableOpacity onPress={openZapSplat} style={{ marginBottom: 24 }}>
-            <OLText
-              size={14}
-              style={{
-                textAlign: 'center',
-                textDecorationStyle: 'solid',
-                textDecorationLine: 'underline',
-              }}
-            >
-              Additional sound effects from zapsplat.com
-            </OLText>
-          </TouchableOpacity>
-
           <TouchableOpacity
             onPress={openPhraseApp}
             style={{

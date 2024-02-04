@@ -1,4 +1,3 @@
-import { usePlayAudio } from './hooks/usePlayAudio';
 import { useHasChanged } from './hooks/useHasChanged';
 import { OLResults as Component } from './component';
 import { OLError } from '~/views/components/error';
@@ -9,6 +8,7 @@ import { useSortingStore } from '~/store/sorting';
 import { usePrevious } from '~/hooks/usePrevious';
 import { trpc } from '~/lib/trpc/client';
 import { useEffect } from 'react';
+import { Vibration } from 'react-native';
 
 export const OLResults: React.FC = () => {
   const focus = useIsFocused();
@@ -20,8 +20,6 @@ export const OLResults: React.FC = () => {
   const {
     params: { className, competitionId, runnerId },
   } = useRoute<RouteProp<RootStack, 'Results'>>();
-
-  const playAudio = usePlayAudio();
 
   const getResultsQuery = trpc.getResults.useQuery({
     className,
@@ -40,8 +38,8 @@ export const OLResults: React.FC = () => {
       return;
     }
 
-    playAudio();
-  }, [hasAnyChanged, playAudio]);
+    Vibration.vibrate();
+  }, [hasAnyChanged]);
 
   if (getResultsQuery.error) {
     return (
