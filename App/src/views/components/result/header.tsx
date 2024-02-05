@@ -192,6 +192,7 @@ export const ResultHeader: React.FC<OwnProps> = ({
         borderBottomColor: '#cccccc',
         borderBottomWidth: 1,
         paddingLeft: left,
+        height: px(35),
       }}
     >
       {!getSplitControlsQuery.isLoading && !getSplitControlsQuery.error && (

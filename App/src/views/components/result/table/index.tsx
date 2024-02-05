@@ -1,4 +1,4 @@
-import { FlatList, ScrollView, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { px } from '~/util/const';
 import { OLTableRow } from '~/views/components/result/table/row';
 import { OLText } from '~/views/components/text';
@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useScrollToRunner } from '~/hooks/useScrollToRunner';
 import { useOlListItemHeight } from '../item/listItem';
 import { TRPCQueryOutput } from '~/lib/trpc/client';
+import { FlashList } from '@shopify/flash-list';
 
 interface Props {
   results: TRPCQueryOutput['getResults'];
@@ -19,7 +20,7 @@ interface Props {
 
 export const OLResultsTable: React.FC<Props> = props => {
   const { t } = useTranslation();
-  const flatListRef = useScrollToRunner(props);
+  const listRef = useScrollToRunner(props);
   const listItemHeight = useOlListItemHeight();
 
   const renderResult = ({ item }: any) => {
@@ -42,45 +43,39 @@ export const OLResultsTable: React.FC<Props> = props => {
 
   return (
     <ScrollView horizontal>
-      <FlatList
-        ref={flatListRef}
-        nestedScrollEnabled
-        getItemLayout={(_data, index) => ({
-          index,
-          length: listItemHeight,
-          offset: index * listItemHeight,
-        })}
-        initialNumToRender={props.results.length}
-        stickyHeaderIndices={[0]}
-        ListHeaderComponent={
-          <ResultHeader
-            className={props.className}
-            competitionId={props.competitionId}
-            maxRowSize={px(200)}
-            table
-          />
-        }
-        ListFooterComponent={<View style={{ height: 45 }} />}
-        data={props.results}
-        renderItem={renderResult}
-        keyExtractor={(item: TRPCQueryOutput['getResults'][0]) => item.id}
-        ListEmptyComponent={
-          <View
-            style={{
-              paddingVertical: px(50),
-            }}
-          >
-            <OLText
-              size={18}
+      <View>
+        <ResultHeader
+          className={props.className}
+          competitionId={props.competitionId}
+          maxRowSize={px(200)}
+          table
+        />
+        <FlashList
+          ref={listRef}
+          nestedScrollEnabled
+          estimatedItemSize={listItemHeight}
+          ListFooterComponent={<View style={{ height: 45 }} />}
+          data={props.results}
+          renderItem={renderResult}
+          keyExtractor={(item: TRPCQueryOutput['getResults'][0]) => item.id}
+          ListEmptyComponent={
+            <View
               style={{
-                textAlign: 'center',
+                paddingVertical: px(50),
               }}
             >
-              {t('classes.empty')}
-            </OLText>
-          </View>
-        }
-      />
+              <OLText
+                size={18}
+                style={{
+                  textAlign: 'center',
+                }}
+              >
+                {t('classes.empty')}
+              </OLText>
+            </View>
+          }
+        />
+      </View>
     </ScrollView>
   );
 };

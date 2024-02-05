@@ -24,6 +24,7 @@
     "@react-native/typescript-config": "0.73.1",
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/native-stack": "^6.9.17",
+    "@shopify/flash-list": "^1.6.3",
     "@tanstack/react-query": "^5.17.19",
     "@trpc/client": "^11.0.0-next-beta.240",
     "@trpc/react-query": "^11.0.0-next-beta.240",

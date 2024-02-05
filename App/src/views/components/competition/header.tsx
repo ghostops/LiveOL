@@ -31,31 +31,33 @@ export const OLCompetitionHeader: React.FC<Props> = props => {
         <OLCompetitionIOSHeader name={props.competition.name} />
       )}
 
-      <TouchableOpacity
-        activeOpacity={1}
-        onPressIn={() => {
-          setMarqueeSpeed(0);
-        }}
-        onPressOut={() => {
-          setMarqueeSpeed(0.75);
-        }}
-      >
-        <Marquee
-          speed={marqueeSpeed}
-          style={{
-            backgroundColor: colors.GREEN,
-            paddingVertical: px(8),
+      {!!props.latestPassings?.length && (
+        <TouchableOpacity
+          activeOpacity={1}
+          onPressIn={() => {
+            setMarqueeSpeed(0);
+          }}
+          onPressOut={() => {
+            setMarqueeSpeed(0.75);
           }}
         >
-          <OLText size={16} style={{ color: 'white' }}>
-            {props.latestPassings
-              ?.map(result => {
-                return `${result.runnerName} (${result.class}): ${result.time} ${result.controlName} -- `;
-              })
-              .join('')}
-          </OLText>
-        </Marquee>
-      </TouchableOpacity>
+          <Marquee
+            speed={marqueeSpeed}
+            style={{
+              backgroundColor: colors.GREEN,
+              paddingVertical: px(8),
+            }}
+          >
+            <OLText size={16} style={{ color: 'white' }}>
+              {props.latestPassings
+                ?.map(result => {
+                  return `${result.runnerName} (${result.class}): ${result.time} ${result.controlName} -- `;
+                })
+                .join('')}
+            </OLText>
+          </Marquee>
+        </TouchableOpacity>
+      )}
 
       {props.competition.eventorAvailable && props.competition.canceled && (
         <View

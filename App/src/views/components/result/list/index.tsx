@@ -1,4 +1,5 @@
-import { FlatList, View } from 'react-native';
+import { View } from 'react-native';
+import { FlashList } from '@shopify/flash-list';
 import { px } from '~/util/const';
 import { OLResultItem } from '~/views/components/result/list/item';
 import { OLText } from '~/views/components/text';
@@ -21,7 +22,7 @@ interface Props {
 
 export const OLResultsList: React.FC<Props> = props => {
   const { t } = useTranslation();
-  const flatListRef = useScrollToRunner(props);
+  const listRef = useScrollToRunner(props);
   const listItemHeight = useOlListItemHeight();
 
   const renderItem = ({ item }: any) => {
@@ -44,22 +45,15 @@ export const OLResultsList: React.FC<Props> = props => {
 
   return (
     <OLSafeAreaView>
-      <FlatList
-        ref={flatListRef}
-        getItemLayout={(_data, index) => ({
-          index,
-          length: listItemHeight,
-          offset: index * listItemHeight,
-        })}
-        initialNumToRender={props.results.length}
-        stickyHeaderIndices={[0]}
-        ListHeaderComponent={
-          <ResultHeader
-            className={props.className}
-            competitionId={props.competitionId}
-            sorting={!props.club}
-          />
-        }
+      <ResultHeader
+        className={props.className}
+        competitionId={props.competitionId}
+        sorting={!props.club}
+      />
+      <FlashList
+        ref={listRef}
+        initialScrollIndex={0}
+        estimatedItemSize={listItemHeight}
         ListFooterComponent={<View style={{ height: 45 }} />}
         data={props.results}
         renderItem={renderItem}

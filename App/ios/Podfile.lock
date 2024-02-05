@@ -952,9 +952,6 @@ PODS:
     - React-Core
   - react-native-safe-area-context (4.8.2):
     - React-Core
-  - react-native-track-player (3.2.0):
-    - React-Core
-    - SwiftAudioEx (= 0.15.3)
   - React-nativeconfig (0.73.2)
   - React-NativeModulesApple (0.73.2):
     - glog
@@ -1129,6 +1126,8 @@ PODS:
     - React-Core
   - RNDeviceInfo (10.7.0):
     - React-Core
+  - RNFlashList (1.6.3):
+    - React-Core
   - RNGestureHandler (2.14.1):
     - glog
     - RCT-Folly (= 2022.05.16.00)
@@ -1145,12 +1144,9 @@ PODS:
     - glog
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
-  - RNSVG (13.3.0):
-    - React-Core
   - RNVectorIcons (10.0.0):
     - React-Core
   - SocketRocket (0.6.1)
-  - SwiftAudioEx (0.15.3)
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -1209,7 +1205,6 @@ DEPENDENCIES:
   - React-Mapbuffer (from `../node_modules/react-native/ReactCommon`)
   - react-native-in-app-review (from `../node_modules/react-native-in-app-review`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
-  - react-native-track-player (from `../node_modules/react-native-track-player`)
   - React-nativeconfig (from `../node_modules/react-native/ReactCommon`)
   - React-NativeModulesApple (from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
@@ -1233,11 +1228,11 @@ DEPENDENCIES:
   - RNBootSplash (from `../node_modules/react-native-bootsplash`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
+  - "RNFlashList (from `../node_modules/@shopify/flash-list`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNPurchases (from `../node_modules/react-native-purchases`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
-  - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
@@ -1258,7 +1253,6 @@ SPEC REPOS:
     - PurchasesHybridCommon
     - RevenueCat
     - SocketRocket
-    - SwiftAudioEx
 
 EXTERNAL SOURCES:
   boost:
@@ -1322,8 +1316,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-in-app-review"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
-  react-native-track-player:
-    :path: "../node_modules/react-native-track-player"
   React-nativeconfig:
     :path: "../node_modules/react-native/ReactCommon"
   React-NativeModulesApple:
@@ -1370,6 +1362,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-async-storage/async-storage"
   RNDeviceInfo:
     :path: "../node_modules/react-native-device-info"
+  RNFlashList:
+    :path: "../node_modules/@shopify/flash-list"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNPurchases:
@@ -1378,8 +1372,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
-  RNSVG:
-    :path: "../node_modules/react-native-svg"
   RNVectorIcons:
     :path: "../node_modules/react-native-vector-icons"
   Yoga:
@@ -1429,7 +1421,6 @@ SPEC CHECKSUMS:
   React-Mapbuffer: 9ee041e1d7be96da6d76a251f92e72b711c651d6
   react-native-in-app-review: db8bb167a5f238e7ceca5c242d6b36ce8c4404a4
   react-native-safe-area-context: 0ee144a6170530ccc37a0fd9388e28d06f516a89
-  react-native-track-player: 0c26d981b5097910486cbbeb6d8f5352d41be069
   React-nativeconfig: d753fbbc8cecc8ae413d615599ac378bbf6999bb
   React-NativeModulesApple: 964f4eeab1b4325e8b6a799cf4444c3fd4eb0a9c
   React-perflogger: 29efe63b7ef5fbaaa50ef6eaa92482f98a24b97e
@@ -1454,14 +1445,13 @@ SPEC CHECKSUMS:
   RNBootSplash: 5f346163977573d6b2aeba1b25df9d2245c0d73c
   RNCAsyncStorage: 618d03a5f52fbccb3d7010076bc54712844c18ef
   RNDeviceInfo: 25d818c85db769cc0e7083d39efaa01a6f450df3
+  RNFlashList: 4b4b6b093afc0df60ae08f9cbf6ccd4c836c667a
   RNGestureHandler: 25b969a1ffc806b9f9ad2e170d4a3b049c6af85e
   RNPurchases: 536d66e63df8dd67f9323d9575eb23580843b4af
   RNReanimated: 5589be82dc26b3f94738eb7c6b1f942787532b25
   RNScreens: b582cb834dc4133307562e930e8fa914b8c04ef2
-  RNSVG: 1869ad9534459f24caaa0416a4764548c2aeedad
   RNVectorIcons: 8b5bb0fa61d54cd2020af4f24a51841ce365c7e9
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
-  SwiftAudioEx: 83eabba2940924fc1c0d5cb0896049921365229c
   Yoga: e64aa65de36c0832d04e8c7bd614396c77a80047
 
 PODFILE CHECKSUM: 795928eb74e52dc5646300f0146f3ddb31d508af
