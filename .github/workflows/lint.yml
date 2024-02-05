@@ -39,5 +39,5 @@ jobs:
       - name: npm lint
         run: cd ./Server && npm run lint
 
-      - name: format
-        run: npx prettier --check ./Server/src
+      - name: npm build
+        run: cd ./Server && npm run build
