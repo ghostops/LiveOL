@@ -14,6 +14,7 @@ import {
   OLCompetitionResponse,
 } from 'schema/competitions';
 import { isDateToday } from 'lib/helpers/time';
+import _ from 'lodash';
 
 export const CompetitionsQuery = new GraphQLObjectType({
   name: 'CompetitionsQuery',
