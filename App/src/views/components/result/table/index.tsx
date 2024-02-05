@@ -8,6 +8,7 @@ import { useScrollToRunner } from '~/hooks/useScrollToRunner';
 import { useOlListItemHeight } from '../item/listItem';
 import { TRPCQueryOutput } from '~/lib/trpc/client';
 import { FlashList } from '@shopify/flash-list';
+import { firstIndexSize } from '../../follow/followSheet';
 
 interface Props {
   results: TRPCQueryOutput['getResults'];
@@ -54,7 +55,7 @@ export const OLResultsTable: React.FC<Props> = props => {
           ref={listRef}
           nestedScrollEnabled
           estimatedItemSize={listItemHeight}
-          ListFooterComponent={<View style={{ height: 45 }} />}
+          ListFooterComponent={<View style={{ height: 45 + firstIndexSize }} />}
           data={props.results}
           renderItem={renderResult}
           keyExtractor={(item: TRPCQueryOutput['getResults'][0]) => item.id}

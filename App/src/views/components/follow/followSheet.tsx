@@ -1,9 +1,11 @@
+import { BottomSheetFlatList, BottomSheetModal } from '@gorhom/bottom-sheet';
 import {
-  BottomSheetFlatList,
-  BottomSheetModal,
-  WINDOW_WIDTH,
-} from '@gorhom/bottom-sheet';
-import { FlatList, Platform, TouchableOpacity, View } from 'react-native';
+  Dimensions,
+  FlatList,
+  Platform,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { useFollowBottomSheetStore } from '~/store/followBottomSheet';
 import { OLFollowItem } from './followItem';
 import { useTranslation } from 'react-i18next';
@@ -18,7 +20,7 @@ import { useDeviceRotationStore } from '~/store/deviceRotation';
 const ListComponent =
   Platform.OS === 'android' ? BottomSheetFlatList : FlatList;
 
-const firstIndexSize = 65;
+export const firstIndexSize = 65;
 export const followSheetIndexes = [firstIndexSize, '50%', '90%'];
 export const getFollowSheetIndex = (index: number) =>
   index > followSheetIndexes.length ? followSheetIndexes.length : index;
@@ -79,7 +81,9 @@ export const OLFollowSheet: React.FC = () => {
       }}
       handleIndicatorStyle={{ backgroundColor: 'white' }}
       onDismiss={() => setIsOpen(false)}
-      style={{ width: isLandscape ? WINDOW_WIDTH / 2 : undefined }}
+      style={{
+        width: isLandscape ? Dimensions.get('window').width / 2 : undefined,
+      }}
     >
       <View style={{ flex: 1 }}>
         <TouchableOpacity

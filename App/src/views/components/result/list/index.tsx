@@ -9,6 +9,7 @@ import { useScrollToRunner } from '~/hooks/useScrollToRunner';
 import { useOlListItemHeight } from '../item/listItem';
 import { OLSafeAreaView } from '~/views/components/safeArea';
 import { TRPCQueryOutput } from '~/lib/trpc/client';
+import { firstIndexSize } from '../../follow/followSheet';
 
 interface Props {
   results: TRPCQueryOutput['getResults'];
@@ -54,7 +55,7 @@ export const OLResultsList: React.FC<Props> = props => {
         ref={listRef}
         initialScrollIndex={0}
         estimatedItemSize={listItemHeight}
-        ListFooterComponent={<View style={{ height: 45 }} />}
+        ListFooterComponent={<View style={{ height: 45 + firstIndexSize }} />}
         data={props.results}
         renderItem={renderItem}
         keyExtractor={(item: TRPCQueryOutput['getResults'][0]) => item.id}

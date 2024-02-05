@@ -14,6 +14,8 @@ import {
 import { validatePlusCode, redeemPlusCode } from './procedures/plus';
 import { inferRouterInputs, inferRouterOutputs } from '@trpc/server';
 
+const serverVersion = require('../../package.json').version
+
 export const appRouter = router({
   getCompetitions,
   getTodaysCompetitions,
@@ -28,7 +30,7 @@ export const appRouter = router({
   redeemPlusCode,
 
   getServerVersion: publicProcedure.query(async () => {
-    return { version: '1.2.3' };
+    return { version: serverVersion };
   }),
 });
 
