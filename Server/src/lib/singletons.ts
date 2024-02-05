@@ -1,6 +1,7 @@
 import { Cacher } from 'lib/redis';
 import { LiveresultatAPIClient } from 'lib/liveresultat';
 import { EventorCombiner, CombinedEventorApi } from './eventor/combiner';
+import { getEnv } from './helpers/env';
 
 export interface APIResponse {
   Liveresultat: LiveresultatAPIClient;
@@ -15,7 +16,7 @@ const URLS = {
 };
 
 class ApiSingletons {
-  private singletons: APIResponse;
+  private singletons: APIResponse | undefined;
 
   public createApiSingletons = (): APIResponse => {
     if (this.singletons) return this.singletons;
@@ -29,8 +30,14 @@ class ApiSingletons {
     const eventorCombiner = new EventorCombiner({
       cache,
       endpoints: [
-        { url: URLS.eventorSweden, apiKey: process.env.EVENTOR_API_KEY_SE },
-        { url: URLS.eventorAustralia, apiKey: process.env.EVENTOR_API_KEY_AU },
+        {
+          url: URLS.eventorSweden,
+          apiKey: getEnv('EVENTOR_API_KEY_SE', false),
+        },
+        {
+          url: URLS.eventorAustralia,
+          apiKey: getEnv('EVENTOR_API_KEY_AU', false),
+        },
       ],
     });
 

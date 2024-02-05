@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
-import * as ms from 'ms';
-import * as moment from 'moment';
-import * as fs from 'fs';
+import ms from 'ms';
+import moment from 'moment';
+import fs from 'fs';
 import { scrapeAllCompetitions } from './scrape';
 import { LiveresultatReplayer } from './replay';
 import { LiveresultatApi } from './types';
@@ -11,7 +11,7 @@ import { Cacher } from 'lib/redis';
 const DEV = getEnv('test') === 'true';
 
 export class LiveresultatAPIClient {
-  private replayer: LiveresultatReplayer;
+  private replayer: LiveresultatReplayer | undefined;
 
   private client: AxiosInstance;
 
@@ -35,7 +35,7 @@ export class LiveresultatAPIClient {
           'getcompetitions',
           '1 minute',
         );
-      } catch (error) {
+      } catch (error: any) {
         if (error?.message?.includes('JSON at position')) {
           console.warn(error.message + ': getcompetitions');
           return await scrapeAllCompetitions(this.client, this.cache);

@@ -21,7 +21,7 @@ export interface IOLClub {
   clubLogoSizes: EventorClubIconSize[];
 }
 
-export const marshallClub = (res: EventorClub): IOLClub => {
+export const marshallClub = (res?: EventorClub): IOLClub | null => {
   if (!res) {
     return null;
   }

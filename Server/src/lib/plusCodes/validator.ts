@@ -4,7 +4,12 @@ import axios from 'axios';
 
 // If you manage to "exploit" this, enjoy your free LiveOL+ :)
 
-const PLUS_KEYS_KEY = 'plusKeys';
+type BaseRowData = {
+  id: string;
+  Claimed?: boolean;
+  Code?: string;
+  DeviceID?: string;
+};
 
 const BASEROW_KEY = getEnv('BASEROW_KEY', false);
 const BASEROW_TABLE = getEnv('BASEROW_TABLE');
@@ -17,8 +22,8 @@ const apiClient = axios.create({
 });
 
 export class PlusCodeHandler {
-  private availableCodes: { code: string; id: number }[];
-  private claimedCodes: { deviceId: string; code: string }[];
+  private availableCodes: { code: string; id: number }[] = [];
+  private claimedCodes: { deviceId: string; code: string }[] = [];
 
   constructor(private cache: Cacher) {}
 
@@ -65,17 +70,20 @@ export class PlusCodeHandler {
 
   private fetchPlusCodes = async () => {
     try {
-      const res = await apiClient.get(
+      const res = await apiClient.get<any>(
         `/database/rows/table/${BASEROW_TABLE}/?user_field_names=true`,
       );
 
       this.availableCodes = res.data.results
-        .filter(item => !item.Claimed)
-        .map(item => ({ code: item.Code, id: item.id }));
+        .filter((item: BaseRowData) => !item.Claimed)
+        .map((item: BaseRowData) => ({ code: item.Code, id: item.id }));
       this.claimedCodes = res.data.results
-        .filter(item => item.Claimed)
-        .map(item => ({ code: item.Code, deviceId: item.DeviceID }));
-    } catch (err) {
+        .filter((item: BaseRowData) => item.Claimed)
+        .map((item: BaseRowData) => ({
+          code: item.Code,
+          deviceId: item.DeviceID,
+        }));
+    } catch (err: any) {
       console.error('Failed to fetch Plus Codes', err.response.data);
     }
   };
@@ -86,7 +94,7 @@ export class PlusCodeHandler {
         `https://api.baserow.io/api/database/rows/table/${BASEROW_TABLE}/${id}/?user_field_names=true`,
         { DeviceID: deviceId, Claimed: true },
       );
-    } catch (err) {
+    } catch (err: any) {
       console.error('Failed to claim Plus Code', err.response.data);
     }
   };

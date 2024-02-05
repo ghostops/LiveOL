@@ -29,7 +29,7 @@ export const CompetitionsQuery = new GraphQLObjectType({
         { Liveresultat, userId }: GQLContext,
       ): Promise<IOLCompetition[]> => {
         let { competitions } = await Liveresultat.getcompetitions();
-        return competitions.map(marshallCompetition(null));
+        return competitions.map(marshallCompetition(undefined));
       },
     },
     getCompetitions: {
@@ -76,8 +76,8 @@ export const CompetitionsQuery = new GraphQLObjectType({
           page,
           search,
           lastPage,
-          competitions: competitions.map(marshallCompetition(null)),
-          today: today.map(marshallCompetition(null)),
+          competitions: competitions.map(marshallCompetition(undefined)),
+          today: today.map(marshallCompetition(undefined)),
         };
       },
     },
@@ -102,7 +102,7 @@ export const CompetitionsQuery = new GraphQLObjectType({
         );
         const eventorComp = await Eventor.getEventorData(liveresultatComp);
 
-        return marshallCompetition(eventorComp)(liveresultatComp);
+        return marshallCompetition(eventorComp || undefined)(liveresultatComp);
       },
     },
     getCompetitionClasses: {

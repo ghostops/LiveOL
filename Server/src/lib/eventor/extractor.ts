@@ -2,8 +2,8 @@ import { EventorScraper } from 'lib/eventor/scraper';
 import { LiveresultatApi } from 'lib/liveresultat/types';
 import { EventorEventItem, EventorListItem } from 'lib/eventor/types';
 import { getMonthFromDate } from 'lib/helpers/time';
-import * as _ from 'lodash';
-import * as moment from 'moment';
+import _ from 'lodash';
+import moment from 'moment';
 
 export class EventorExtractor {
   constructor(private scraper: EventorScraper) {}
@@ -33,7 +33,7 @@ export class EventorExtractor {
     comp: LiveresultatApi.competition,
     range: EventorListItem[],
     threshold: number,
-  ): EventorListItem | null => {
+  ): EventorListItem | undefined => {
     const weightList = range.map(item => this.weighItem(comp, item));
 
     const sorted = _(weightList).sortBy('weight');
@@ -41,7 +41,7 @@ export class EventorExtractor {
     const winner = sorted.last();
 
     if (!winner || winner.weight < threshold) {
-      return null;
+      return undefined;
     }
 
     return range.find(item => item.id === winner.id);

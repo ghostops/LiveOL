@@ -1,9 +1,9 @@
 import { Cacher } from 'lib/redis';
 import { getEnv } from 'lib/helpers/env';
 import { ListResponseParser, EventResponseParser } from './parser';
-import * as fs from 'fs';
-import * as moment from 'moment';
-import * as ms from 'ms';
+import fs from 'fs';
+import moment from 'moment';
+import ms from 'ms';
 import axios, { AxiosInstance } from 'axios';
 
 const DEV = getEnv('test') === 'true';
@@ -82,5 +82,5 @@ export class EventorScraper {
     return parsed;
   };
 
-  private getEventorDomain = (): string => this.baseUrl.split('://')[1];
+  private getEventorDomain = (): string => this.baseUrl.split('://')[1]!;
 }

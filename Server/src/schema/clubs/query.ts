@@ -17,7 +17,11 @@ export const ClubsQuery = new GraphQLObjectType({
         },
       },
       type: OLClub,
-      resolve: async (_, args, { Eventor }: GQLContext): Promise<IOLClub> => {
+      resolve: async (
+        _,
+        args,
+        { Eventor }: GQLContext,
+      ): Promise<IOLClub | null> => {
         if (!args.clubId) {
           throw new Error('No club id present');
         }
@@ -43,7 +47,7 @@ export const ClubsQuery = new GraphQLObjectType({
 
         const clubs = await Eventor.getClubs();
 
-        const clubIds = [];
+        const clubIds: number[] = [];
         const filtered = clubs.filter(c => {
           const existsInArg = c.name
             .toLowerCase()
@@ -60,7 +64,7 @@ export const ClubsQuery = new GraphQLObjectType({
           return existsInArg;
         });
 
-        return filtered.map(marshallClub);
+        return filtered.map(marshallClub) as IOLClub[];
       },
     },
     getAllClubs: {
@@ -68,7 +72,7 @@ export const ClubsQuery = new GraphQLObjectType({
       resolve: async (_, args, { Eventor }: GQLContext): Promise<IOLClub[]> => {
         const clubs = await Eventor.getClubs();
 
-        return clubs.map(marshallClub);
+        return clubs.map(marshallClub) as IOLClub[];
       },
     },
   }),

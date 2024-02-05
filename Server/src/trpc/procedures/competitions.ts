@@ -19,16 +19,15 @@ export const getCompetitions = publicProcedure
         ? 1
         : input.cursor
       : 1;
-    const search: string = input.search || null;
 
     const PER_PAGE = 50;
     const offset = (page - 1) * PER_PAGE;
 
     let { competitions } = await ctx.Liveresultat.getcompetitions();
 
-    if (search) {
+    if (input.search) {
       competitions = competitions.filter(comp =>
-        comp.name.toLowerCase().includes(search.toLowerCase()),
+        comp.name.toLowerCase().includes(input.search!.toLowerCase()),
       );
     }
 
@@ -38,10 +37,10 @@ export const getCompetitions = publicProcedure
 
     return {
       page,
-      search,
+      search: input.search,
       lastPage,
       nextPage: Math.min(page + 1, lastPage),
-      competitions: competitions.map(marshallCompetition(null)),
+      competitions: competitions.map(marshallCompetition(undefined)),
     };
   });
 
@@ -59,7 +58,7 @@ export const getTodaysCompetitions = publicProcedure
     });
 
     return {
-      today: today.map(marshallCompetition(null)),
+      today: today.map(marshallCompetition(undefined)),
     };
   });
 
@@ -82,7 +81,9 @@ export const getCompetition = publicProcedure
     const { classes } = await ctx.Liveresultat.getclasses(input.competitionId);
 
     return {
-      competition: marshallCompetition(eventorComp)(liveresultatComp),
+      competition: marshallCompetition(eventorComp || undefined)(
+        liveresultatComp,
+      ),
       classes: classes.map(marshallClass(input.competitionId)),
     };
   });

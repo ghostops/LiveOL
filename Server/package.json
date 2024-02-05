@@ -48,6 +48,7 @@
 		"@types/ioredis": "^4.14.9",
 		"@types/lodash": "^4.14.149",
 		"@types/moment-timezone": "^0.5.13",
+		"@types/ms": "^0.7.34",
 		"@types/node": "^13.9.1",
 		"prettier": "^3.2.4"
 	}

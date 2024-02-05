@@ -12,14 +12,17 @@ import {
 const parseClubLogo = (base: string, path: string): string | null => {
   if (!base || !path) return null;
 
-  let clubLogoUrl: string = path;
+  let clubLogoUrl: string | undefined = path;
   clubLogoUrl = clubLogoUrl.split('?')[0];
+  if (!clubLogoUrl) {
+    return null;
+  }
   clubLogoUrl = `${base}${clubLogoUrl}`;
 
   return clubLogoUrl;
 };
 
-const parseCompetitionType = (input: string): EventorCompetitionType => {
+const parseCompetitionType = (input: string): EventorCompetitionType | null => {
   if (!input) {
     return null;
   }
@@ -46,8 +49,8 @@ const parseCompetitionType = (input: string): EventorCompetitionType => {
 };
 
 const parseCompetitionDistance = (
-  input: string,
-): EventorCompetitionDistance => {
+  input?: string,
+): EventorCompetitionDistance | null => {
   if (!input) {
     return null;
   }
@@ -75,11 +78,11 @@ export class ListResponseParser {
     private base: string,
   ) {}
 
-  private currentWeek: string;
-  private currentDay: string;
+  private currentWeek: string | undefined;
+  private currentDay: string | undefined;
 
-  private startDate: moment.Moment;
-  private endDate: moment.Moment;
+  private startDate: moment.Moment | undefined;
+  private endDate: moment.Moment | undefined;
 
   public parse = (): EventorListItem[] => {
     const $ = cheerio.load(this.body);
@@ -88,17 +91,17 @@ export class ListResponseParser {
 
     const entries = $('#eventCalendar tbody tr').toArray();
 
-    return entries.map(this.parseRow).filter(row => !!row);
+    return entries.map(this.parseRow).filter(row => !!row) as EventorListItem[];
   };
 
   private setStartAndEndDates = (text: string): void => {
     try {
       const [startDateStr, endDateStr] = text.match(
         /(\d+)(\/|-)(\d+)(\/|-)(\d+)/gm,
-      );
+      )!;
 
-      let startDate = startDateStr;
-      let endDate = endDateStr;
+      let startDate = startDateStr!;
+      let endDate = endDateStr!;
 
       if (startDate.includes('/') || endDate.includes('/')) {
         const [startD, startM, startY] = startDate.split('/');
@@ -117,9 +120,10 @@ export class ListResponseParser {
     }
   };
 
-  private parseDate = (input: string): moment.Moment | null => {
+  private parseDate = (input: string | undefined): moment.Moment | null => {
     if (!input || !this.startDate || !this.endDate) return null;
 
+    // @ts-expect-error nullcheck
     const [day, month] = input.split(' ')[1].split('/');
 
     let year = this.startDate.year();
@@ -134,7 +138,7 @@ export class ListResponseParser {
     return moment.utc(`${year}-${month}-${day}`, 'YYYY-MM-DD');
   };
 
-  private parseRow = (row: CheerioElement): EventorListItem => {
+  private parseRow = (row: CheerioElement): EventorListItem | null => {
     try {
       let indexModifier = 0;
 
@@ -157,7 +161,7 @@ export class ListResponseParser {
         this.currentDay = _.get(row, `children.0.children.0.data`);
       }
 
-      const date = this.parseDate(this.currentDay).format();
+      const date = this.parseDate(this.currentDay)?.format();
 
       const canceled = !!(
         row.attribs.class && row.attribs.class.includes('canceled')
@@ -260,7 +264,7 @@ export class EventResponseParser {
 
     const bodyLanguage = determineLanguage($('#main > div > h2').text());
 
-    const infoMap = invertKeyValues({
+    const infoMap: any = invertKeyValues({
       name: eventorMetadataInformationI18n[bodyLanguage].name,
       date: eventorMetadataInformationI18n[bodyLanguage].date,
       club: eventorMetadataInformationI18n[bodyLanguage].club,
@@ -300,6 +304,7 @@ export class EventResponseParser {
           return;
         }
 
+        // @ts-expect-error key-types
         mappedInfoData[infoMap[title]] = value;
       }
     });
@@ -309,7 +314,7 @@ export class EventResponseParser {
     const links = $('.documents .documentName')
       .toArray()
       .map(element => {
-        const href = element.attribs.href.startsWith('/')
+        const href = element.attribs.href?.startsWith('/')
           ? `${this.base}${element.attribs.href}`
           : element.attribs.href;
 
@@ -336,18 +341,28 @@ export class EventResponseParser {
     }
 
     return {
+      // @ts-expect-error nullcheck
       id,
+      // @ts-expect-error nullcheck
       links,
+      // @ts-expect-error nullcheck
       info,
       signups: signups as number,
+      // @ts-expect-error nullcheck
       name: mappedInfoData.name,
+      // @ts-expect-error nullcheck
       club: mappedInfoData.club,
+      // @ts-expect-error nullcheck
       district: mappedInfoData.district,
       competitionDistance: parseCompetitionDistance(
+        // @ts-expect-error nullcheck
         mappedInfoData.competitionDistance,
       ),
+      // @ts-expect-error nullcheck
       competitionType: parseCompetitionType(mappedInfoData.competitionType),
-      canceled: (mappedInfoData as any).status === 'inställd',
+      // @ts-expect-error nullcheck and language?
+      canceled: mappedInfoData.status === 'inställd',
+      // @ts-expect-error nullcheck
       clubLogoUrl: parseClubLogo(this.base, mappedInfoData.clubLogoUrl),
       url: this.eventUrl,
     };

@@ -36,7 +36,7 @@ export const marshallSplits =
   (result: LiveresultatApi.result): IOLSplit => {
     const keys = Object.keys(result.splits);
     const foundKeys = keys.filter(key => key.includes(String(split.code)));
-    const keyValue: Record<string, number> = {};
+    const keyValue: Record<string, number | undefined> = {};
 
     for (const key of foundKeys) {
       if (Number(key) === split.code) {
@@ -107,13 +107,17 @@ export interface IOLResult {
 }
 
 export const marshallResult =
-  (comp: number, _class: string, splitControlls: LiveresultatApi.split[]) =>
+  (
+    comp: number,
+    _class: string | undefined,
+    splitControlls: LiveresultatApi.split[],
+  ) =>
   (res: LiveresultatApi.result): IOLResult => {
     const liveRunningDate = Helpers.getLiveRunningStart(res.start);
 
     const start = Helpers.startToReadable(res.start);
 
-    const compositeKey = `${comp}:${_class}:${res.name.replace(/ /g, '_')}:${res.club.replace(/ /g, '_')}`;
+    const compositeKey = `${comp}:${_class}:${res.name.replace(/ /g, '_')}:${res.club?.replace(/ /g, '_')}`;
     const id = createHash('md5').update(compositeKey).digest('hex');
 
     return {

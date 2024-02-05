@@ -1,13 +1,13 @@
 import { LiveresultatApi } from 'lib/liveresultat/types';
-import * as fs from 'fs';
-import * as ms from 'ms';
+import fs from 'fs';
+import ms from 'ms';
 
 export class LiveresultatReplayer {
   private files: string[];
 
   private currentIndex: number = 0;
 
-  private currentFile: string;
+  private currentFile: string | undefined;
 
   constructor(private inDir: string) {
     this.files = fs.readdirSync(this.inDir);

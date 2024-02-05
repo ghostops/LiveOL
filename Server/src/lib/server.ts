@@ -1,7 +1,4 @@
 import { ApolloServer } from 'apollo-server';
-import { EventorApi } from './eventor/api';
-import { EventorExtractor } from './eventor/extractor';
-import { EventorScraper } from './eventor/scraper';
 import { LiveresultatAPIClient } from 'lib/liveresultat';
 import { schema } from 'schema';
 import { apiSingletons } from './singletons';
@@ -17,12 +14,12 @@ export interface GQLContext {
 
 export const server = new ApolloServer({
   schema,
-  context: ({ req, res }): GQLContext => {
+  context: ({ req, res }): GQLContext | undefined => {
     if (req && res) {
       const singletons = apiSingletons.createApiSingletons();
 
       // Headers will transform to lower case
-      const userId = req.headers.userid;
+      const userId = req.headers.userid as string;
 
       const context: GQLContext = {
         userId,

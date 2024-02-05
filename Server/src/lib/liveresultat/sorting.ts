@@ -1,6 +1,6 @@
 import { firstBy } from 'thenby';
 import { LiveresultatApi } from './types';
-import * as _ from 'lodash';
+import _ from 'lodash';
 
 interface ResultCopy extends LiveresultatApi.result {
   start: any;
@@ -26,7 +26,7 @@ const sortSplit = (sortingKey: string) => (a: ResultCopy, b: ResultCopy) => {
     return 0;
   }
 
-  return a.splits[key] - b.splits[key];
+  return a.splits[key]! - b.splits[key]!;
 };
 
 const sortResult = (a: ResultCopy, b: ResultCopy) => {
@@ -71,6 +71,10 @@ export const sortOptimal = (
   });
 
   let [sortingKey, sortingDirection] = sorting.split(':');
+
+  if (!sortingKey || !sortingDirection) {
+    throw new Error('invalid sorting options');
+  }
 
   const sortSplitFunction = sortSplit(sortingKey);
 

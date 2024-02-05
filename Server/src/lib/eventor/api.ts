@@ -1,7 +1,7 @@
 import { Cacher } from 'lib/redis';
 import { EventorClub } from 'lib/eventor/types';
-import * as _ from 'lodash';
-import * as ms from 'ms';
+import _ from 'lodash';
+import ms from 'ms';
 import * as xmlJs from 'xml-js';
 import axios, { AxiosInstance } from 'axios';
 
@@ -38,10 +38,10 @@ export class EventorApi {
     return orgs.map(this.mapClub);
   };
 
-  private mapClub = (data): EventorClub => {
+  private mapClub = (data: any): EventorClub => {
     const map: Partial<EventorClub> = {};
 
-    data.elements.forEach(item => {
+    data.elements.forEach((item: any) => {
       if (item.name === 'OrganisationId') {
         map.id = Number(_.get(item, 'elements.0.text'));
         map.clubLogoUrl = `${this.base}/Organisation/Logotype/${map.id}`;

@@ -13,8 +13,8 @@ import {
 } from 'graphql';
 import { LiveresultatApi } from 'lib/liveresultat/types';
 import { UTCTime } from 'types';
-import * as _ from 'lodash';
-import * as moment from 'moment';
+import _ from 'lodash';
+import moment from 'moment';
 
 export interface IOLCompetitionResponse {
   competitions: IOLCompetition[];
@@ -62,9 +62,9 @@ export const marshallCompetition =
         eventorAvailable: true,
         info: eventor.info,
         club: eventor.club,
-        clubLogoUrl: eventor.clubLogoUrl,
+        clubLogoUrl: eventor.clubLogoUrl || undefined,
         canceled: eventor.canceled,
-        distance: eventor.competitionDistance,
+        distance: eventor.competitionDistance || undefined,
         district: eventor.district,
         signups: eventor.signups,
         eventorUrl: eventor.url,

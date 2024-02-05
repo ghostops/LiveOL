@@ -23,10 +23,10 @@ interface EventorEventBase {
   date?: string;
   name: string;
   club: string;
-  clubLogoUrl: string;
+  clubLogoUrl: string | null;
   district: string;
-  competitionDistance: EventorCompetitionDistance;
-  competitionType: EventorCompetitionType;
+  competitionDistance: EventorCompetitionDistance | null;
+  competitionType: EventorCompetitionType | null;
   canceled: boolean;
 }
 

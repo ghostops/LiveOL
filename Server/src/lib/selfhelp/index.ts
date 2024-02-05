@@ -13,7 +13,7 @@ interface HealthCheck {
 }
 
 export class OLSelfHelper {
-  private webhook: IncomingWebhook;
+  private webhook: IncomingWebhook | undefined;
 
   constructor() {
     if (!process.env.SLACK_WEBHOOK) {

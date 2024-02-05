@@ -8,6 +8,7 @@ import { ServerMutation } from './server/mutations';
 
 const query = new GraphQLObjectType({
   name: 'Query',
+  // @ts-expect-error
   fields: () => ({
     competitions: { type: CompetitionsQuery, resolve: () => true },
     lastPassings: { type: LastPassingsQuery, resolve: () => true },
@@ -19,6 +20,7 @@ const query = new GraphQLObjectType({
 
 const mutation = new GraphQLObjectType({
   name: 'Mutation',
+  // @ts-expect-error
   fields: () => ({
     server: { type: ServerMutation, resolve: () => true },
   }),
