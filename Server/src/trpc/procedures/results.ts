@@ -1,5 +1,5 @@
 import { sortOptimal } from 'lib/liveresultat/sorting';
-import { marshallResult, marshallSplitControl } from 'schema/results';
+import { marshallResult, marshallSplitControl } from 'lib/marshall/results';
 import { publicProcedure } from 'trpc/client';
 import { z } from 'zod';
 

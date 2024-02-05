@@ -62,11 +62,7 @@ export class EventorCombiner {
     const scraper = new EventorScraper(url, this.options.cache);
     const eventorExctactor = new EventorExtractor(scraper);
 
-    const eventorApi = new EventorApi(
-      url,
-      apiKey,
-      this.options.cache,
-    );
+    const eventorApi = new EventorApi(url, apiKey, this.options.cache);
 
     return {
       api: eventorApi,

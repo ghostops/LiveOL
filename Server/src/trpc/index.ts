@@ -15,7 +15,7 @@ import { validatePlusCode, redeemPlusCode } from './procedures/plus';
 import { inferRouterInputs, inferRouterOutputs } from '@trpc/server';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const serverVersion = require('../../package.json').version
+const serverVersion = require('../../package.json').version;
 
 export const appRouter = router({
   getCompetitions,
