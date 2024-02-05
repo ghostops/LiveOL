@@ -16,6 +16,7 @@ import { useOLNavigationRef } from '~/hooks/useNavigation';
 import { useRef } from 'react';
 import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import { useDeviceRotationStore } from '~/store/deviceRotation';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const ListComponent =
   Platform.OS === 'android' ? BottomSheetFlatList : FlatList;
@@ -30,6 +31,7 @@ export const OLFollowSheet: React.FC = () => {
   const following = useFollowingStore(state => state.following);
   const setRef = useFollowBottomSheetStore(state => state.setBottomSheetRef);
   const setIsOpen = useFollowBottomSheetStore(state => state.setIsOpen);
+  const { left, right } = useSafeAreaInsets();
   const { isLandscape } = useDeviceRotationStore();
   const { t } = useTranslation();
   const { px, colors } = useTheme();
@@ -83,6 +85,7 @@ export const OLFollowSheet: React.FC = () => {
       onDismiss={() => setIsOpen(false)}
       style={{
         width: isLandscape ? Dimensions.get('window').width / 2 : undefined,
+        marginLeft: isLandscape ? Math.max(left, right) : 0,
       }}
     >
       <View style={{ flex: 1 }}>
