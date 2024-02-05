@@ -13,6 +13,7 @@
     "resultsFor": "Resultados para",
     "timerHint": "Tiempo hasta la siguiente actualización"
   },
+  "close": "Cerrar",
   "competitions": {
     "canceled": "La competición ha sido cancelada",
     "classes": "Categorías",
@@ -30,7 +31,8 @@
       "passTime": "Tiempo de paso",
       "title": "Últimos pasos"
     },
-    "signups": "Registrado"
+    "signups": "Registrado",
+    "visitEventor": "Ver en Eventor"
   },
   "currentLanguage": "Español",
   "distances": {
@@ -43,6 +45,7 @@
     "title": "Siguiendo",
     "unfollow": {
       "cta": "Dejar de seguir",
+      "hint": "Mantenga presionado para dejar de seguir",
       "title": "Quieres dejar de seguir?"
     }
   },
@@ -97,8 +100,54 @@
     "pick": "Elige un idioma"
   },
   "plus": {
+    "buy": {
+      "error": "Hemos detectado un problema desconocido.",
+      "feature": {
+        "classes": {
+          "text": "Sigue las clases que más te interesen.",
+          "title": "Seguir categoría"
+        },
+        "clubs": {
+          "text": "Accede rápidamente a los resultados de cualquier club en una competición.",
+          "title": "Seguir club"
+        },
+        "follow": {
+          "text": "Accede rápidamente a los resultados de los corredores seleccionados.",
+          "title": "Sigue a los corredores"
+        },
+        "sorting": {
+          "text": "Ordene los resultados en función de las columnas de resultados.",
+          "title": "Ordenar los resultados"
+        }
+      },
+      "privacy": "Política de privacidad",
+      "restore": "Restaurar compras",
+      "restoreError": {
+        "text": "Por favor, póngase en contacto con nosotros si ha comprado anteriormente.",
+        "title": "No se puede restaurar LiveOL+."
+      },
+      "restoreSuccess": "Has restaurado LiveOL+",
+      "success": "LiveOL+ desbloqueado",
+      "terms": "Condiciones de uso",
+      "text": "Desbloquee beneficios exclusivos e impulse el proyecto con una suscripción anual económica, lo que garantiza que LiveOL prospere.",
+      "title": "Haz más con LiveOL+",
+      "yearly": "por año"
+    },
+    "code": {
+      "invalid": "Código no válido",
+      "redeem": "Canjear código"
+    },
     "promo": {
+      "box": {
+        "cta": "Mira esto",
+        "text": "Saca el máximo partido a LiveOL y apoya su desarrollo continuo. Echa un vistazo a LiveOL+ hoy mismo:"
+      },
       "get": "Obtén LiveOL+"
+    },
+    "status": {
+      "expire": "Gracias por haber apoyado LiveOL, tu suscripción expirará por: {{ date }}",
+      "renew": "Gracias por apoyar LiveOL, tu suscripción se renovará por: {{ date }}",
+      "title": "LiveOL+"
     }
   },
   "promotions": {
@@ -108,6 +157,7 @@
   "result": {
     "followClass": "Seguir categoría",
     "followClub": "Seguir club",
+    "followRunner": "Seguir corredor",
     "goToClass": "Ver resultados de categoría",
     "goToClub": "Ver resultados del club",
     "mute": "Muta audio",

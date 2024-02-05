@@ -13,6 +13,7 @@
     "resultsFor": "Ergebnisse für",
     "timerHint": "Zeit bis zur nächsten Aktualisierung"
   },
+  "close": "Schließen",
   "competitions": {
     "canceled": "Der Wettkampf wurde abgesagt",
     "classes": "Kategorien",
@@ -30,7 +31,9 @@
       "passTime": "Passierzeit",
       "title": "Letzte Durchgänge"
     },
-    "signups": "Angemeldet"
+    "readMore": "Weiterlesen",
+    "signups": "Angemeldet",
+    "visitEventor": "Siehe auf Eventor"
   },
   "currentLanguage": "Deutsch",
   "distances": {
@@ -38,6 +41,15 @@
     "middle": "Mittel",
     "sprint": "Sprint",
     "ultralong": "Ultra Lang"
+  },
+  "follow": {
+    "empty": "Du folgst keinem Wettbewerb, keinem Verein oder Läufer.",
+    "title": "Verfolgen",
+    "unfollow": {
+      "cta": "Aufhören zu folgen",
+      "hint": "Lang drücken, um nicht mehr zu folgen",
+      "title": "Wollen SIe aufhören zu folgen?"
+    }
   },
   "home": {
     "goToday": "Wischen zu den heutigen Ereignissen",
@@ -63,12 +75,14 @@
       "title": "Textgröße ändern"
     },
     "contact": "Kontaktiere mich",
+    "newsletter": "Melden Sie sich für Neuigkeiten an",
     "purgeCache": "Zwischengespeicherte Ergebnisse löschen",
     "purged": "gespeicherte Ereignisse wurden entfernt",
     "rate": "Bewerte die App",
     "title": "Information",
     "translations": {
       "credit": "App übersetzt von",
+      "freePlus": "Helfen Sie bei der Übersetzung der App und erhalten Sie kostenloses LiveOL+",
       "phraseapp": "Übersetzungen von"
     },
     "update": {
@@ -86,9 +100,74 @@
     },
     "version": "Aktuelle Version"
   },
+  "language": {
+    "pick": "Sprache auswählen"
+  },
+  "plus": {
+    "buy": {
+      "error": "Irgendetwas ist schief gelaufen...",
+      "feature": {
+        "classes": {
+          "text": "Folgen sie Kategorien, die Sie am meisten interessieren.",
+          "title": "Den Kategorien folgen"
+        },
+        "clubs": {
+          "text": "Greifen Sie schnell auf die Ergebnisse eines beliebigen Vereins in einem Wettlauf zu.",
+          "title": "Vereinen folgen"
+        },
+        "follow": {
+          "text": "Erhalten Sie schnellen Zugriff auf ausgewählte Läuferergebnisse.",
+          "title": "Läufern folgen"
+        },
+        "sorting": {
+          "text": "Sortieren Sie die Ergebnisse basierend auf den Ergebnisspalten.",
+          "title": "Sortieren der Ergebnisse"
+        }
+      },
+      "privacy": "Datenschutz",
+      "restore": "Käufe wiederherstellen",
+      "restoreError": {
+        "text": "Bitte wenden Sie sich an uns, wenn Sie zuvor gekauft haben.",
+        "title": "LiveOL+ kann nicht wiederhergestellt werden."
+      },
+      "restoreSuccess": "Sie haben LiveOL+ wiederhergestellt",
+      "success": "LiveOL+ freigeschaltet",
+      "terms": "Nutzungsbedingungen",
+      "text": "Schalten Sie exklusive Vorteile frei und unterstützen Sie das Projekt mit einem günstigen Jahresabonnement, damit LiveOL weiter funktionieren kann.",
+      "title": "Mehr Möglichkeiten mit LiveOL+",
+      "yearly": "pro Jahr"
+    },
+    "code": {
+      "claimed": "Code bereits benutzt",
+      "enter": "Geben Sie hier den Code ein",
+      "invalid": "Ungültiger Code",
+      "redeem": "Code einlösen"
+    },
+    "promo": {
+      "box": {
+        "cta": "Schauen Sie es sich an",
+        "text": "Holen Sie das Beste aus LiveOL heraus und unterstützen Sie die Weiterentwicklung. Schauen Sie sich LiveOL+ noch heute an:"
+      },
+      "get": "Holen Sie sich LiveOL+"
+    },
+    "status": {
+      "expire": "Vielen Dank, dass Sie LiveOL unterstützt haben, Ihr Abonnement läuft ab am: {{ date }}",
+      "renew": "Vielen Dank für Ihre Unterstützung von LiveOL, Ihr Abonnement verlängert sich bis zum: {{ date }}",
+      "title": "LiveOL+"
+    }
+  },
   "promotions": {
     "didYouKnow": "Schon gewusst?",
     "rotate": "Drehen Sie Ihr Telefon, um Funkkontrollposten zu sehen."
+  },
+  "result": {
+    "followClass": "Kategorien folgen",
+    "followClub": "Dem Verein folgen",
+    "followRunner": "Läufer folgen",
+    "goToClass": "Ergebnisse nach Kategorien anzeigen",
+    "goToClub": "Ergebnisse nach Vereine anzeigen",
+    "mute": "Stummschalten",
+    "unmute": "Stummschaltung aufheben"
   },
   "status": {
     "long": [

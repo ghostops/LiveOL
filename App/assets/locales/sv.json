@@ -31,6 +31,7 @@
       "passTime": "Passeringstid",
       "title": "Senaste passeringarna"
     },
+    "readMore": "Läs mer",
     "signups": "Anmälda",
     "visitEventor": "Se på Eventor"
   },
@@ -42,6 +43,7 @@
     "ultralong": "Ultralång"
   },
   "follow": {
+    "empty": "Du följer inte någon tävling, klubb eller löpare.",
     "title": "Följer",
     "unfollow": {
       "cta": "Avfölj",
@@ -80,6 +82,7 @@
     "title": "Information",
     "translations": {
       "credit": "Appen är översatt av",
+      "freePlus": "Hjälp till med att översätta appen och få gratis LiveOL+",
       "phraseapp": "Översättningar med hjälp av"
     },
     "update": {
@@ -136,6 +139,7 @@
     },
     "code": {
       "claimed": "Koden har redan använts",
+      "enter": "Ange koden här",
       "invalid": "Ogiltig kod",
       "redeem": "Lös in kod"
     },

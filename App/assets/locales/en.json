@@ -20,7 +20,6 @@
     "date": "Date",
     "distance": "Distance",
     "info": "Info",
-    "readMore": "Read more",
     "lastPassings": "Last Passings",
     "noClasses": "No classes",
     "organizedBy": "Organized by",
@@ -32,6 +31,7 @@
       "passTime": "Pass-time",
       "title": "Latest passings"
     },
+    "readMore": "Read more",
     "signups": "Signed up",
     "visitEventor": "See on Eventor"
   },
@@ -43,13 +43,13 @@
     "ultralong": "Ultra Long"
   },
   "follow": {
+    "empty": "You are not following any competion, club, or runner.",
     "title": "Following",
     "unfollow": {
       "cta": "Unfollow",
       "hint": "Long-press to unfollow",
       "title": "Do you want to stop following?"
-    },
-    "empty": "You are not following any competion, club, or runner."
+    }
   },
   "home": {
     "goToday": "Scroll to todays events",
@@ -82,8 +82,8 @@
     "title": "Information",
     "translations": {
       "credit": "App translated by",
-      "phraseapp": "Translations powered by",
-      "freePlus": "Help out with translating the app and get free LiveOL+"
+      "freePlus": "Help out with translating the app and get free LiveOL+",
+      "phraseapp": "Translations powered by"
     },
     "update": {
       "check": "Check for updates",
@@ -139,9 +139,9 @@
     },
     "code": {
       "claimed": "Code already claimed",
+      "enter": "Enter code here",
       "invalid": "Invalid code",
-      "redeem": "Redeem code",
-      "enter": "Enter code here"
+      "redeem": "Redeem code"
     },
     "promo": {
       "box": {
