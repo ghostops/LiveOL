@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"start": "ts-node -r tsconfig-paths/register src/index.ts",
-		"build": "tsc",
+		"tscheck": "tsc --noEmit",
 		"dev": "nodemon -L -e ts -w ./src -x npm run start",
 		"lint": "eslint ./src",
 		"format": "prettier --config ./.prettierrc.js --write ./src"

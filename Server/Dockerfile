@@ -28,6 +28,5 @@ ADD ./package-lock.json ./
 ADD ./tsconfig.json ./
 
 RUN npm i
-RUN npm run build
 
-CMD ["node", "./build"]
+CMD ["npm", "run", "start"]

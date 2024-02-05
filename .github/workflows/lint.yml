@@ -36,8 +36,8 @@ jobs:
       - name: npm install
         run: cd ./Server && npm install
 
+      - name: npm tsc
+        run: cd ./Server && npm run tscheck
+
       - name: npm lint
         run: cd ./Server && npm run lint
-
-      - name: npm build
-        run: cd ./Server && npm run build
