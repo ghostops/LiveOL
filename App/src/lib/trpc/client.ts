@@ -18,7 +18,7 @@ const getUri = () => {
     });
   }
 
-  return 'https://api-liveol.larsendahl.se';
+  return 'https://trpc-liveol.larsendahl.se';
 };
 
 export const trpc = createTRPCReact<AppRouter>();
