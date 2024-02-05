@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-namespace */
+
 export declare namespace LiveresultatApi {
   export interface hashed {
     hash: string;

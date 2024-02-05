@@ -12,6 +12,7 @@ export const ServerQuery = new GraphQLObjectType({
   fields: () => ({
     version: {
       type: GraphQLString,
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
       resolve: () => require('../../../package.json').version,
     },
     validatePlusCode: {

@@ -13,7 +13,6 @@ import {
   IOLSplitControl,
   marshallSplitControl,
 } from 'schema/results';
-import * as _ from 'lodash';
 import { sortOptimal } from 'lib/liveresultat/sorting';
 
 export const ResultsQuery = new GraphQLObjectType({

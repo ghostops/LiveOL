@@ -14,7 +14,6 @@ import {
   OLCompetitionResponse,
 } from 'schema/competitions';
 import { isDateToday } from 'lib/helpers/time';
-import * as _ from 'lodash';
 
 export const CompetitionsQuery = new GraphQLObjectType({
   name: 'CompetitionsQuery',
@@ -26,7 +25,7 @@ export const CompetitionsQuery = new GraphQLObjectType({
       resolve: async (
         _,
         args,
-        { Liveresultat, userId }: GQLContext,
+        { Liveresultat }: GQLContext,
       ): Promise<IOLCompetition[]> => {
         const { competitions } = await Liveresultat.getcompetitions();
         return competitions.map(marshallCompetition(undefined));
@@ -48,7 +47,7 @@ export const CompetitionsQuery = new GraphQLObjectType({
       resolve: async (
         x,
         args,
-        { Liveresultat, userId }: GQLContext,
+        { Liveresultat }: GQLContext,
       ): Promise<IOLCompetitionResponse> => {
         const page: number = args.page ? (args.page < 1 ? 1 : args.page) : 1;
         const search: string = args.search || null;

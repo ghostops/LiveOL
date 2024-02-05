@@ -1,8 +1,12 @@
 import _ from 'lodash';
 import moment from 'moment';
 
-const validateDate = (dateString: string): boolean => {
-  const [year] = dateString?.split('-');
+const validateDate = (dateString?: string): boolean => {
+  if (!dateString) {
+    return false;
+  }
+
+  const [year] = dateString.split('-');
 
   if (!year) {
     return false;

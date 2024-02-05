@@ -3,7 +3,6 @@ import {
   GraphQLObjectType,
   GraphQLList,
   GraphQLInt,
-  GraphQLString,
 } from 'graphql';
 import { marshallPassing, IOLPassing, OLPassing } from 'schema/lastPassings';
 

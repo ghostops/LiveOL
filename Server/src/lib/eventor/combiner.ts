@@ -1,11 +1,9 @@
 import { LiveresultatApi } from 'lib/liveresultat/types';
 import { Cacher } from 'lib/redis';
-import { reject } from 'lodash';
 import { EventorApi } from './api';
 import { EventorExtractor } from './extractor';
 import { EventorScraper } from './scraper';
 import { EventorClub, EventorEventItem } from './types';
-import { getEnv } from 'lib/helpers/env';
 
 interface CombinerConstructorOptions {
   endpoints: {
@@ -66,7 +64,7 @@ export class EventorCombiner {
 
     const eventorApi = new EventorApi(
       url,
-      getEnv('EVENTOR_API_KEY_SE', false),
+      apiKey,
       this.options.cache,
     );
 

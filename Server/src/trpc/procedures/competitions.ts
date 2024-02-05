@@ -1,4 +1,3 @@
-import { TRPCError } from '@trpc/server';
 import { isDateToday } from 'lib/helpers/time';
 import _ from 'lodash';
 import { marshallClass } from 'schema/classes';
