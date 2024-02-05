@@ -1,12 +1,12 @@
 {
-	"status": "OK",
-	"classes": [
-		{
-			"className": "Men"
-		},
-		{
-			"className": "Women"
-		}
-	],
-	"hash": "5cba1c0d52d9eeab53bab73927755796"
+  "status": "OK",
+  "classes": [
+    {
+      "className": "Men"
+    },
+    {
+      "className": "Women"
+    }
+  ],
+  "hash": "5cba1c0d52d9eeab53bab73927755796"
 }

@@ -1,13 +1,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {
-  useRedeemPlusCodeMutation,
-  useValidatePlusCodeQuery,
-} from '~/lib/graphql/generated/gql';
 import { useTranslation } from 'react-i18next';
 import { Alert } from 'react-native';
 import { getUniqueId } from 'react-native-device-info';
 import { usePlusStore } from '~/store/plus';
 import { useOLNavigation } from './useNavigation';
+import { plainTrpc, trpc } from '~/lib/trpc/client';
+import { useState } from 'react';
 
 const PLUS_CODE_KEY = 'plusKey';
 
@@ -21,51 +19,56 @@ export const usePlusCodes = () => {
   const { setCustomerInfo } = usePlusStore();
   const { t } = useTranslation();
   const { goBack } = useOLNavigation();
-
-  const { refetch } = useValidatePlusCodeQuery({
-    skip: true,
-  });
+  const [loadingCode, setLoadingCode] = useState(false);
 
   const enableLiveOLPlus = () =>
     setCustomerInfo({ entitlements: { active: { plus: {} } } } as any);
 
-  const [redeemPlusCode] = useRedeemPlusCodeMutation();
+  const { mutateAsync: redeemPlusCode } = trpc.redeemPlusCode.useMutation();
 
   const redeem = async (code: string) => {
-    redeemPlusCode({
-      variables: { code, deviceId },
-      onCompleted: data => {
-        if (data.server.redeemPlusCode) {
-          Alert.alert(t('plus.buy.success'));
-          AsyncStorage.setItem(PLUS_CODE_KEY, code);
-          enableLiveOLPlus();
-          goBack();
-        }
-      },
-      onError: error => {
-        if (error.message === 'Invalid code') {
-          Alert.alert(t('plus.code.invalid'));
-          return;
-        }
+    redeemPlusCode(
+      { code, deviceId },
+      {
+        onSuccess: res => {
+          if (res) {
+            Alert.alert(t('plus.buy.success'));
+            AsyncStorage.setItem(PLUS_CODE_KEY, code);
+            enableLiveOLPlus();
+            goBack();
+          }
+        },
+        onError: error => {
+          if (error.message === 'Invalid code') {
+            Alert.alert(t('plus.code.invalid'));
+            return;
+          }
 
-        if (error.message === 'Code claimed') {
-          Alert.alert(t('plus.code.claimed'));
-          return;
-        }
+          if (error.message === 'Code claimed') {
+            Alert.alert(t('plus.code.claimed'));
+            return;
+          }
+        },
       },
-    });
+    );
   };
 
   const loadCode = async () => {
+    if (loadingCode) {
+      return;
+    }
+
     try {
+      setLoadingCode(true);
+
       const loadedCode = await AsyncStorage.getItem(PLUS_CODE_KEY);
 
-      const response = await refetch({
-        code: loadedCode || undefined,
+      const response = await plainTrpc.validatePlusCode.query({
+        code: loadedCode || '',
         deviceId,
       });
 
-      if (!response.data.server.validatePlusCode) {
+      if (!response) {
         return false;
       }
 
@@ -76,6 +79,8 @@ export const usePlusCodes = () => {
       return true;
     } catch {
       return false;
+    } finally {
+      setLoadingCode(false);
     }
   };
 

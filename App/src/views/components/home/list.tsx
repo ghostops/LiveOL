@@ -1,32 +1,37 @@
-import * as React from 'react';
-import { FlatList, RefreshControl, View } from 'react-native';
+import { RefreshControl, SectionList, View } from 'react-native';
 import { HomeListItem } from './listItem';
 import { isDateToday, dateToReadable } from '~/util/date';
 import { OLListItem } from '../list/item';
 import { OLLoading } from '../loading';
-import { OLSafeAreaView } from '../safeArea';
 import { OLText } from '../text';
-import { px } from '~/util/const';
 import { useTranslation } from 'react-i18next';
-import { OlCompetition } from '~/lib/graphql/generated/types';
+import { TRPCQueryOutput } from '~/lib/trpc/client';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useTheme } from '~/hooks/useTheme';
+import { OLSafeAreaView } from '../safeArea';
+import { useSearchStore } from '~/store/search';
 
 interface Props {
-  competitions: OlCompetition[];
-  onCompetitionPress: (comp: OlCompetition) => void;
+  competitions: TRPCQueryOutput['getCompetitions']['competitions'];
+  onCompetitionPress: (
+    comp: TRPCQueryOutput['getCompetitions']['competitions'][0],
+  ) => void;
   listHeader: JSX.Element | null;
   loadMore: () => Promise<any>;
   refetch: () => Promise<void>;
   loading: boolean;
+  loadingMore: boolean;
+  onScroll: (event: any) => void;
 }
 
-export const groupVisibleCompetitions = (
-  visibleCompetitions: OlCompetition[],
-): Record<string, OlCompetition[]> => {
-  const uniqEs6 = (arrArg: any[]) =>
-    arrArg.filter((elem, pos, arr) => {
-      return arr.indexOf(elem) === pos;
-    }) as string[];
+const uniqEs6 = (arrArg: any[]) =>
+  arrArg.filter((elem, pos, arr) => {
+    return arr.indexOf(elem) === pos;
+  }) as string[];
 
+export const groupVisibleCompetitions = (
+  visibleCompetitions: TRPCQueryOutput['getCompetitions']['competitions'],
+): Record<string, TRPCQueryOutput['getCompetitions']['competitions']> => {
   const keys = uniqEs6(visibleCompetitions.map(comp => comp.date));
   const map: any = {};
 
@@ -50,82 +55,84 @@ export const HomeList: React.FC<Props> = ({
   loadMore,
   loading,
   refetch,
+  loadingMore,
+  onScroll,
 }) => {
   const { t } = useTranslation();
-  const [moreLoading, setMoreLoading] = React.useState(false);
-
+  const { bottom } = useSafeAreaInsets();
+  const { px, colors } = useTheme();
+  const setRef = useSearchStore(state => state.setSectionListRef);
   const visibleCompetitions = groupVisibleCompetitions(competitions);
 
   const renderListItem = (
-    competition: OlCompetition,
+    competition: TRPCQueryOutput['getCompetitions']['competitions'][0],
     index: number,
     total: number,
   ) => (
-    <HomeListItem
-      key={competition.id}
-      competition={competition}
-      index={index}
-      onCompetitionPress={onCompetitionPress}
-      total={total}
-    />
+    <OLSafeAreaView>
+      <HomeListItem
+        key={competition.id}
+        competition={competition}
+        index={index}
+        onCompetitionPress={onCompetitionPress}
+        total={total}
+      />
+    </OLSafeAreaView>
   );
-
-  const renderListSection = (
-    date: string,
-    comps: Record<string, OlCompetition[]>,
-  ) => {
-    const isToday = isDateToday(date);
-    const dateStr = dateToReadable(date);
-
-    return (
-      <OLSafeAreaView key={date}>
-        <View>
-          <OLListItem
-            itemDivider
-            style={{
-              marginLeft: 0,
-              paddingHorizontal: px(16),
-            }}
-          >
-            <OLText size={16}>
-              {dateStr} {isToday && `(${t('home.today')})`}
-            </OLText>
-          </OLListItem>
-
-          <View style={{ backgroundColor: 'white' }}>
-            {comps[date].map((comp, index) =>
-              renderListItem(comp, index, comps[date].length),
-            )}
-          </View>
-        </View>
-      </OLSafeAreaView>
-    );
-  };
 
   if (loading) {
     return <OLLoading />;
   }
 
   return (
-    <FlatList
+    <SectionList
+      ref={setRef}
+      scrollEventThrottle={16}
+      onScroll={onScroll}
       refreshControl={
         <RefreshControl
           refreshing={loading}
           onRefresh={refetch}
-          tintColor="black"
+          tintColor={colors.MAIN}
         />
       }
-      ListHeaderComponent={listHeader}
-      data={Object.keys(visibleCompetitions)}
-      renderItem={({ item }) => renderListSection(item, visibleCompetitions)}
-      keyExtractor={item => `${item}`}
-      onEndReached={async () => {
-        setMoreLoading(true);
-        await loadMore();
-        setMoreLoading(false);
+      sections={Object.keys(visibleCompetitions).map(key => {
+        const value = visibleCompetitions[key];
+        return {
+          date: key,
+          data: value,
+        };
+      })}
+      renderItem={({ item, index, section }) =>
+        renderListItem(item, index, section.data.length)
+      }
+      renderSectionHeader={({ section: { date } }) => {
+        const isToday = isDateToday(date);
+        const dateStr = dateToReadable(date);
+
+        return (
+          <OLSafeAreaView>
+            <OLListItem
+              itemDivider
+              style={{
+                marginLeft: 0,
+                paddingHorizontal: px(16),
+                backgroundColor: isToday ? colors.MAIN : colors.BORDER,
+              }}
+            >
+              <OLText
+                size={16}
+                style={{ color: isToday ? 'white' : '#141823' }}
+              >
+                {dateStr} {isToday && `(${t('home.today')})`}
+              </OLText>
+            </OLListItem>
+          </OLSafeAreaView>
+        );
       }}
-      onEndReachedThreshold={0.1}
-      ListFooterComponent={moreLoading ? <OLLoading /> : null}
+      contentContainerStyle={{ paddingBottom: bottom }}
+      ListHeaderComponent={listHeader}
+      keyExtractor={item => item.id.toString()}
       ListEmptyComponent={
         !loading && (
           <View
@@ -145,6 +152,15 @@ export const HomeList: React.FC<Props> = ({
           </View>
         )
       }
+      ListFooterComponent={
+        loadingMore ? (
+          <View style={{ padding: px(16) }}>
+            <OLLoading />
+          </View>
+        ) : null
+      }
+      onEndReached={loadMore}
+      onEndReachedThreshold={0.5}
     />
   );
 };

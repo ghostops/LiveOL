@@ -1,19 +1,20 @@
-import * as React from 'react';
-import { View } from 'react-native';
-import { px } from '~/util/const';
+import { TouchableOpacity, View } from 'react-native';
 import { OLText } from '../text';
 import Hyperlink from 'react-native-hyperlink';
 import { useTranslation } from 'react-i18next';
+import { useState } from 'react';
+import { useTheme } from '~/hooks/useTheme';
 
 interface Props {
   infoHtml: string;
 }
 export const CompetitionInfoBox: React.FC<Props> = ({ infoHtml }) => {
   const { t } = useTranslation();
+  const { px, colors } = useTheme();
   return (
     <View
       style={{
-        backgroundColor: '#3867d6',
+        backgroundColor: colors.BLUE,
         padding: px(20),
         borderRadius: 4,
         marginTop: px(5),
@@ -35,7 +36,7 @@ export const CompetitionInfoBox: React.FC<Props> = ({ infoHtml }) => {
   );
 };
 
-const parseHtml = (text: string): string => {
+const parseHtml = (text: string, long = true): string => {
   let parsed: string = text;
 
   // Parse line breaks
@@ -47,23 +48,45 @@ const parseHtml = (text: string): string => {
   // Parse a-tag openers
   parsed = parsed.replace(/<a(.*?)>/gm, '');
 
+  if (!long) {
+    parsed = parsed.substring(0, 120) + '...';
+  }
+
   return parsed;
 };
 
 const InfoHtml: React.FC<{ html: string }> = ({ html }) => {
-  const parsedText = parseHtml(html);
+  const [seeMore, setSeeMore] = useState(false);
+  const { px } = useTheme();
+  const { t } = useTranslation();
+  const parsedText = parseHtml(html, seeMore);
 
   return (
-    <Hyperlink
-      linkDefault={true}
-      linkStyle={{
-        textDecorationStyle: 'solid',
-        textDecorationLine: 'underline',
-      }}
-    >
-      <OLText size={14} style={{ color: 'white' }}>
-        {parsedText}
-      </OLText>
-    </Hyperlink>
+    <>
+      <Hyperlink
+        linkDefault={true}
+        linkStyle={{
+          textDecorationStyle: 'solid',
+          textDecorationLine: 'underline',
+        }}
+      >
+        <OLText size={14} style={{ color: 'white' }}>
+          {parsedText}
+        </OLText>
+      </Hyperlink>
+      {!seeMore && (
+        <TouchableOpacity
+          onPress={() => setSeeMore(true)}
+          style={{ marginTop: px(8) }}
+        >
+          <OLText
+            size={12}
+            style={{ color: 'white', textDecorationLine: 'underline' }}
+          >
+            {t('competitions.readMore')}
+          </OLText>
+        </TouchableOpacity>
+      )}
+    </>
   );
 };

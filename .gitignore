@@ -34,3 +34,4 @@ App/ios/LiveOL.xcworkspace/xcuserdata/*
 *.p8
 
 .phrase.yml
+/Server/tsconfig.tsbuildinfo

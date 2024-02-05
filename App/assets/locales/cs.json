@@ -13,6 +13,7 @@
     "resultsFor": "Výsledky pro",
     "timerHint": "Čas do příštího obnovení"
   },
+  "close": "Zavřít",
   "competitions": {
     "canceled": "Závody byly zrušeny",
     "classes": "Kategorie",
@@ -30,7 +31,9 @@
       "passTime": "Čas průběhu",
       "title": "Poslední průběhy"
     },
-    "signups": "Přihlášen"
+    "readMore": "Další informace",
+    "signups": "Přihlášen",
+    "visitEventor": "Shlédni Eventor"
   },
   "currentLanguage": "Česky",
   "distances": {
@@ -38,6 +41,15 @@
     "middle": "Střední",
     "sprint": "Sprint",
     "ultralong": "Dlouhá"
+  },
+  "follow": {
+    "empty": "Nesledujete žádnou soutěž, klub ani běžce.",
+    "title": "Sledování",
+    "unfollow": {
+      "cta": "Přestat sledovat.",
+      "hint": "Dlouhým stisknutím zrušíte sledování",
+      "title": "Chcete přestat sledovat?"
+    }
   },
   "home": {
     "goToday": "Přesunout k dnešním událostem",
@@ -63,12 +75,14 @@
       "title": "Změň velikost písma"
     },
     "contact": "Kontaktuj mě",
+    "newsletter": "Přihlaste se k odběru novinek",
     "purgeCache": "Vymazat výsledky uložené v mezipaměti",
     "purged": "uložené události byly odstraněny",
     "rate": "Ohodnoť aplikaci",
     "title": "Informace",
     "translations": {
       "credit": "Aplikaci přeložil",
+      "freePlus": "Pomozte s překladem aplikace a získejte zdarma LiveOL+",
       "phraseapp": "Překlady provedl"
     },
     "update": {
@@ -86,9 +100,74 @@
     },
     "version": "Současná verze"
   },
+  "language": {
+    "pick": "Vyberte jazyk"
+  },
+  "plus": {
+    "buy": {
+      "error": "Něco se pokazilo...",
+      "feature": {
+        "classes": {
+          "text": "Sledujte kategorie, které vás nejvíce zajímají.",
+          "title": "Sledovat katergorie"
+        },
+        "clubs": {
+          "text": "Rychlý přístup k výsledkům jakéhokoli klubu v soutěži.",
+          "title": "Sledujte kluby"
+        },
+        "follow": {
+          "text": "Získejte rychlý přístup k výsledkům vybraných běžců.",
+          "title": "Sledujte běžce"
+        },
+        "sorting": {
+          "text": "Seřaďte výsledky podle sloupců výsledků.",
+          "title": "Řazení výsledků"
+        }
+      },
+      "privacy": "Zásady ochrany osobních údajů",
+      "restore": "Obnovení zakoupených položek",
+      "restoreError": {
+        "text": "Obraťte se na nás, pokud jste již dříve zakoupili.",
+        "title": "Službu LiveOL+ nelze obnovit."
+      },
+      "restoreSuccess": "Obnovili jste službu LiveOL+",
+      "success": "LiveOL+ zpřístupněno.",
+      "terms": "Podmínky použití",
+      "text": "Získejte exkluzivní výhody a posuňte projekt vpřed skrze příznivé roční předplatné, které zajistí vývoj služby LiveOL.",
+      "title": "Se službou LiveOL+ toho zvládnete víc",
+      "yearly": "Ročně"
+    },
+    "code": {
+      "claimed": "Kód již uplatněn",
+      "enter": "Zde zadejte kód",
+      "invalid": "Neplatný kód",
+      "redeem": "Uplatnit kód"
+    },
+    "promo": {
+      "box": {
+        "cta": "Podívejte se na to",
+        "text": "Využijte LiveOL na maximum a podpořte jeho další vývoj. Získejte LiveOL+ ještě dnes:"
+      },
+      "get": "Získat LiveOL+"
+    },
+    "status": {
+      "expire": "Děkujeme, že jste podpořili službu LiveOL, platnost vašeho předplatného vyprší: {{ date }}",
+      "renew": "Děkujeme, že podporujete službu LiveOL, Vaše předplatné bude obnoveno k: {{ date }}",
+      "title": "LiveOL+"
+    }
+  },
   "promotions": {
     "didYouKnow": "Věděl jsi?",
     "rotate": "Otoč svým telefonem k zobrazení radiokontrol"
+  },
+  "result": {
+    "followClass": "Sledovat kategorii",
+    "followClub": "Sledujte klub",
+    "followRunner": "Sledovat běžce",
+    "goToClass": "Zobrazení výsledků kategorií",
+    "goToClub": "Zobrazit klubové výsledky",
+    "mute": "Vypnout zvuk",
+    "unmute": "Obnovit zvuk"
   },
   "status": {
     "long": [

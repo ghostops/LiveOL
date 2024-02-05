@@ -1,4 +1,3 @@
-import React from 'react';
 import { FlatList, View } from 'react-native';
 import { OLCompetitionHeader } from '~/views/components/competition/header';
 import { OLListItem } from '~/views/components/list/item';
@@ -7,21 +6,21 @@ import { OLSafeAreaView } from '~/views/components/safeArea';
 import { OLText } from '~/views/components/text';
 import { px } from '~/util/const';
 import { useTranslation } from 'react-i18next';
-import { OlClass, OlCompetition } from '~/lib/graphql/generated/types';
+import { TRPCQueryOutput } from '~/lib/trpc/client';
 
 interface Props {
   loading: boolean;
-  competition: OlCompetition;
-  classes: OlClass[] | null;
-  goToLastPassings: () => void;
+  competition?: TRPCQueryOutput['getCompetition']['competition'];
+  classes?: TRPCQueryOutput['getCompetition']['classes'];
   goToClass: (name: string | null) => () => void;
+  latestPassings?: TRPCQueryOutput['getCompetitionLastPassings'];
 }
 
 export const OLCompetition: React.FC<Props> = props => {
   const { t } = useTranslation();
 
   const renderClass = ({ item }: any) => {
-    const { name }: OlClass = item;
+    const { name }: TRPCQueryOutput['getCompetition']['classes'][0] = item;
 
     return (
       <OLListItem
@@ -37,7 +36,7 @@ export const OLCompetition: React.FC<Props> = props => {
     );
   };
 
-  if (props.loading) {
+  if (props.loading || !props.competition) {
     return <OLLoading />;
   }
 
@@ -60,10 +59,13 @@ export const OLCompetition: React.FC<Props> = props => {
         ListHeaderComponent={
           <OLCompetitionHeader
             competition={props.competition}
-            goToLastPassings={props.goToLastPassings}
+            latestPassings={props.latestPassings}
           />
         }
-        keyExtractor={(item: OlClass, index) => item.id || index.toString()}
+        keyExtractor={(
+          item: TRPCQueryOutput['getCompetition']['classes'][0],
+          index,
+        ) => item.id || index.toString()}
         ListFooterComponent={<View style={{ height: px(45) }} />}
       />
     </OLSafeAreaView>

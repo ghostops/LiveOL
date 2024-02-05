@@ -1,9 +1,7 @@
 /* eslint-disable react/no-unstable-nested-components */
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { StatusBar } from 'react-native';
 import { OLResults } from '~/views/scenes/results/container';
-import { OLPassings } from '~/views/scenes/last_passings/container';
 import { OLInfo } from '~/views/scenes/info/container';
 import { OLHome } from '~/views/scenes/home/container';
 import { OLCompetition } from '~/views/scenes/competition/container';
@@ -16,18 +14,15 @@ import { BackButton } from './backButton';
 import { ResultMenuIcon } from '~/views/scenes/results/menuIcon';
 import { OLPlus } from '~/views/scenes/plus/container';
 import { ClubMenuIcon } from '~/views/scenes/club/menuIcon';
-import { OLFollow } from '~/views/scenes/follow/container';
 import { OLPlusFeatureKey } from '~/views/scenes/plus/component';
 import { OLRedeemCode } from '~/views/scenes/redeem_modal/component';
+import { OLLanguageModal } from '~/views/scenes/language_modal/component';
+import { useOLNavigationRef } from '~/hooks/useNavigation';
 
 export type RootStack = {
   Home: undefined;
   Info: undefined;
   Competition: {
-    competitionId: number;
-    title: string;
-  };
-  Passings: {
     competitionId: number;
     title: string;
   };
@@ -44,17 +39,18 @@ export type RootStack = {
   Plus?: {
     feature?: OLPlusFeatureKey;
   };
-  Follow: undefined;
   Redeem: undefined;
+  Language: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStack>();
 
 const Component: React.FC = () => {
   const { t } = useTranslation();
+  const { setNavRef } = useOLNavigationRef();
 
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={setNavRef}>
       <StatusBar translucent />
 
       <Stack.Navigator
@@ -94,20 +90,10 @@ const Component: React.FC = () => {
         />
 
         <Stack.Screen
-          name="Passings"
-          component={OLPassings}
-          options={props => ({
-            title: props.route.params.title,
-          })}
-        />
-
-        <Stack.Screen
           name="Results"
           component={OLResults}
           options={props => ({
-            title: `${t('classes.resultsFor')}: ${
-              props.route.params.className as string
-            }`,
+            title: `${t('classes.resultsFor')}: ${props.route.params.className as string}`,
             headerRight: () => <ResultMenuIcon />,
           })}
           initialParams={{
@@ -133,27 +119,27 @@ const Component: React.FC = () => {
           }}
         />
 
-        <Stack.Screen
-          name="Follow"
-          component={OLFollow}
-          options={{
+        <Stack.Group
+          screenOptions={{
             headerLeft: () => <BackButton cross />,
-            title: t('follow.title'),
-            presentation: 'modal',
-            animation: 'slide_from_bottom',
-          }}
-        />
 
-        <Stack.Screen
-          name="Redeem"
-          component={OLRedeemCode}
-          options={{
-            headerLeft: () => <BackButton cross />,
-            title: t('plus.code.redeem'),
             presentation: 'modal',
             animation: 'slide_from_bottom',
           }}
-        />
+        >
+          <Stack.Screen
+            name="Redeem"
+            component={OLRedeemCode}
+            options={{ title: t('plus.code.redeem') }}
+          />
+          <Stack.Screen
+            name="Language"
+            component={OLLanguageModal}
+            options={{
+              title: t('language.pick'),
+            }}
+          />
+        </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>
   );

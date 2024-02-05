@@ -1,4 +1,4 @@
-FROM node:16
+FROM node:20-alpine
 
 WORKDIR /app
 
@@ -17,18 +17,17 @@ ENV REDIS_HOST $REDIS_HOST
 ENV REDIS_PASSWORD $REDIS_PASSWORD
 ENV BASEROW_KEY $BASEROW_KEY
 ENV BASEROW_TABLE $BASEROW_TABLE
-ENV ENV LIVE
+ENV ENV DEV
 
-ADD ./Server/package.json ./
-ADD ./Server/yarn.lock ./
-RUN yarn install
+# Build folders
+ADD ./Server/src /app/src
 
-ADD ./Server/tsconfig.json ./
-ADD ./Server/.babelrc ./
-ADD ./Server/src ./src
+# Build files
+ADD ./Server/package.json /app/package.json
+ADD ./Server/package-lock.json /app/package-lock.json
+ADD ./Server/tsconfig.json /app/tsconfig.json
 
-RUN yarn build
+RUN npm i
+RUN npm run build
 
-EXPOSE 4000
-
-CMD node ./build
+CMD ["node", "./build"]

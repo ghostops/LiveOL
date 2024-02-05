@@ -1,107 +1,95 @@
-import React from 'react';
-import moment from 'moment';
-import _ from 'lodash';
+import { useRef } from 'react';
 import { useSearchStore } from '~/store/search';
 import { useOLNavigation } from '~/hooks/useNavigation';
 import { useDeviceRotationStore } from '~/store/deviceRotation';
-import { useGetCompetitionsQuery } from '~/lib/graphql/generated/gql';
 import { Platform } from 'react-native';
 import { OLHome as Component } from './component';
 import { OLError } from '~/views/components/error';
-import { OlCompetition } from '~/lib/graphql/generated/types';
 import RNBootSplash from 'react-native-bootsplash';
+import { trpc } from '~/lib/trpc/client';
+import { format } from 'date-fns';
+import { OLFollowSheet } from '~/views/components/follow/followSheet';
 
-const getToday = () => moment().format('YYYY-MM-DD');
+const getToday = () => format(new Date(), 'yyyy-MM-dd');
 
 export const OLHome: React.FC = () => {
   const { isLandscape } = useDeviceRotationStore();
   const { isSearching, searchTerm, setIsSearching } = useSearchStore();
   const { navigate } = useOLNavigation();
+  const hasLoaded = useRef(false);
 
-  const { data, loading, error, fetchMore, refetch } = useGetCompetitionsQuery({
-    variables: { search: searchTerm || undefined, date: getToday() },
-    onCompleted: () => {
-      RNBootSplash.hide({ fade: true });
+  const getCompetitionsQuery = trpc.getCompetitions.useInfiniteQuery(
+    {
+      search: searchTerm || undefined,
     },
-    onError: () => {
-      RNBootSplash.hide({ fade: true });
+    {
+      getNextPageParam: res => {
+        if (res.nextPage >= res.lastPage) {
+          return undefined;
+        }
+        return res.nextPage;
+      },
+      initialCursor: 1,
+      retry: 3,
+      retryDelay: 1000,
     },
+  );
+
+  const getTodaysCompetitionsQuery = trpc.getTodaysCompetitions.useQuery({
+    date: getToday(),
   });
 
-  if (error) {
+  if (getCompetitionsQuery.error) {
     return (
-      <OLError error={error} refetch={() => refetch({ date: getToday() })} />
+      <OLError
+        error={getCompetitionsQuery.error}
+        refetch={() => getCompetitionsQuery.refetch()}
+      />
     );
   }
 
-  const competitions =
-    (data?.competitions?.getCompetitions?.competitions as OlCompetition[]) ||
-    [];
-  const today =
-    (data?.competitions?.getCompetitions?.today as OlCompetition[]) || [];
-
   const loadMore = async () => {
-    if (loading) {
+    if (getCompetitionsQuery.isLoading) {
       return;
     }
 
-    const page = (data?.competitions.getCompetitions.page || 0) + 1;
-    const lastPage = data?.competitions.getCompetitions.lastPage || 0;
-
-    if (page >= lastPage) {
-      return;
-    }
-
-    await fetchMore({
-      variables: {
-        page,
-      },
-      updateQuery: (prev, { fetchMoreResult }) => {
-        if (!fetchMoreResult) {
-          return prev;
-        }
-
-        const comps = _.uniqBy(
-          [
-            ...(prev?.competitions.getCompetitions?.competitions || []),
-            ...(fetchMoreResult?.competitions.getCompetitions?.competitions ||
-              []),
-          ],
-          'id',
-        );
-
-        return Object.assign({}, prev, {
-          ...fetchMoreResult,
-          competitions: {
-            ...fetchMoreResult?.competitions,
-            getCompetitions: {
-              ...fetchMoreResult?.competitions?.getCompetitions,
-              competitions: comps,
-            },
-          },
-        });
-      },
-    });
+    await getCompetitionsQuery.fetchNextPage();
   };
 
+  if (
+    (getCompetitionsQuery.data?.pages.length ||
+      getCompetitionsQuery.failureCount > 0) &&
+    !hasLoaded.current
+  ) {
+    hasLoaded.current = true;
+    RNBootSplash.hide({ fade: true });
+  }
+
   return (
-    <Component
-      competitions={competitions}
-      loading={loading}
-      loadMore={loadMore}
-      openSearch={() => setIsSearching(true)}
-      searching={isSearching}
-      todaysCompetitions={today}
-      refetch={async () => {
-        await refetch({ date: getToday() });
-      }}
-      onCompetitionPress={competition => {
-        navigate('Competition', {
-          competitionId: competition.id || -1,
-          title: Platform.OS === 'android' ? competition.name || '' : '',
-        });
-      }}
-      landscape={isLandscape}
-    />
+    <>
+      <Component
+        competitions={
+          getCompetitionsQuery.data?.pages.flatMap(page => page.competitions) ||
+          []
+        }
+        loading={getCompetitionsQuery.isLoading}
+        loadingMore={getCompetitionsQuery.isFetchingNextPage}
+        loadMore={loadMore}
+        openSearch={() => setIsSearching(true)}
+        searching={isSearching}
+        todaysCompetitions={getTodaysCompetitionsQuery.data?.today || []}
+        refetch={async () => {
+          await getCompetitionsQuery.refetch();
+        }}
+        onCompetitionPress={competition => {
+          navigate('Competition', {
+            competitionId: competition.id || -1,
+            title: Platform.OS === 'android' ? competition.name || '' : '',
+          });
+        }}
+        landscape={isLandscape}
+      />
+      <OLFollowSheet />
+    </>
   );
 };

@@ -1,16 +1,14 @@
-import React from 'react';
-import _ from 'lodash';
-import { usePlayAudio } from './hooks/usePlayAudio';
 import { useHasChanged } from './hooks/useHasChanged';
 import { OLResults as Component } from './component';
 import { OLError } from '~/views/components/error';
 import { RouteProp, useIsFocused, useRoute } from '@react-navigation/native';
 import { useDeviceRotationStore } from '~/store/deviceRotation';
 import { RootStack } from '~/lib/nav/router';
-import { useGetResultsQuery } from '~/lib/graphql/generated/gql';
-import { OlResult } from '~/lib/graphql/generated/types';
 import { useSortingStore } from '~/store/sorting';
 import { usePrevious } from '~/hooks/usePrevious';
+import { trpc } from '~/lib/trpc/client';
+import { useEffect } from 'react';
+import { Vibration } from 'react-native';
 
 export const OLResults: React.FC = () => {
   const focus = useIsFocused();
@@ -23,39 +21,41 @@ export const OLResults: React.FC = () => {
     params: { className, competitionId, runnerId },
   } = useRoute<RouteProp<RootStack, 'Results'>>();
 
-  const playAudio = usePlayAudio();
-
-  const { data, loading, error, refetch } = useGetResultsQuery({
-    variables: { competitionId, className, sorting },
+  const getResultsQuery = trpc.getResults.useQuery({
+    className,
+    competitionId,
+    sorting,
   });
-  const previousData = usePrevious(data);
 
-  const results: OlResult[] = _.get(
-    data || previousData,
-    'results.getResults',
-    null,
-  );
+  const previousData = usePrevious(getResultsQuery.data);
+
+  const results = getResultsQuery.data || previousData;
 
   const hasAnyChanged = useHasChanged(results);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!hasAnyChanged) {
       return;
     }
 
-    playAudio();
-  }, [hasAnyChanged, playAudio]);
+    Vibration.vibrate();
+  }, [hasAnyChanged]);
 
-  if (error) {
-    return <OLError error={error} refetch={refetch} />;
+  if (getResultsQuery.error) {
+    return (
+      <OLError
+        error={getResultsQuery.error}
+        refetch={getResultsQuery.refetch}
+      />
+    );
   }
 
   return (
     <Component
-      loading={loading}
-      results={results}
+      loading={getResultsQuery.isLoading}
+      results={getResultsQuery.data || []}
       refetch={async () => {
-        await refetch({ className, competitionId });
+        await getResultsQuery.refetch();
       }}
       isLandscape={isLandscape}
       className={className}

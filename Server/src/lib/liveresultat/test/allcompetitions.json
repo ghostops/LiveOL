@@ -1,25 +1,25 @@
 {
-	"competitions": [
-		{
-			"id": 1,
-			"name": "TEST EVENT 1 ",
-			"organizer": "TEST GUY",
-			"date": "2019-03-31",
-			"timediff": 0
-		},
-		{
-			"id": 2,
-			"name": "TEST EVENT 2",
-			"organizer": "TEST GUY",
-			"date": "2019-03-31",
-			"timediff": 0
-		},
-		{
-			"id": 3,
-			"name": "TEST EVENT 3",
-			"organizer": "TEST GUY",
-			"date": "TODAY",
-			"timediff": 0
-		}
-	]
+  "competitions": [
+    {
+      "id": 1,
+      "name": "TEST EVENT 1 ",
+      "organizer": "TEST GUY",
+      "date": "2019-03-31",
+      "timediff": 0
+    },
+    {
+      "id": 2,
+      "name": "TEST EVENT 2",
+      "organizer": "TEST GUY",
+      "date": "2019-03-31",
+      "timediff": 0
+    },
+    {
+      "id": 3,
+      "name": "TEST EVENT 3",
+      "organizer": "TEST GUY",
+      "date": "TODAY",
+      "timediff": 0
+    }
+  ]
 }

@@ -1,6 +1,9 @@
-import { OlResult } from '~/lib/graphql/generated/types';
+import { TRPCQueryOutput } from '~/lib/trpc/client';
 
-export const resultsChanged = (prev: OlResult, now: OlResult) =>
+export const resultsChanged = (
+  prev: TRPCQueryOutput['getResults'][0],
+  now: TRPCQueryOutput['getResults'][0],
+) =>
   prev.place !== now.place ||
   prev.result !== now.result ||
   prev.status !== now.status ||

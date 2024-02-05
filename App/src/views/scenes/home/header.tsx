@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { TouchableOpacity, Image, View } from 'react-native';
 import { useTheme } from '~/hooks/useTheme';
 import { OLIcon } from '~/views/components/icon';

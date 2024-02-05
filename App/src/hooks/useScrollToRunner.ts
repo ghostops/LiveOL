@@ -1,32 +1,43 @@
-import { OlResult } from '~/lib/graphql/generated/types';
+import { FlashList } from '@shopify/flash-list';
 import { useEffect, useRef, useState } from 'react';
-import { FlatList } from 'react-native';
+import { TRPCQueryOutput } from '~/lib/trpc/client';
 
 type Options = {
-  results?: OlResult[];
+  results?: TRPCQueryOutput['getResults'];
   followedRunnerId?: string;
+  className?: string;
 };
 
-export const useScrollToRunner = ({ followedRunnerId, results }: Options) => {
-  const flatListRef = useRef<FlatList | null>(null);
-  const [hasScrolled, setHasScrolled] = useState(false);
+export const useScrollToRunner = ({
+  followedRunnerId,
+  results,
+  className,
+}: Options) => {
+  const flashListRef = useRef<FlashList<any> | null>(null);
+  const [hasScrolled, setHasScrolled] = useState<string>('');
 
   useEffect(() => {
-    if (results && followedRunnerId && !hasScrolled) {
-      setHasScrolled(true);
+    if (
+      results?.length &&
+      followedRunnerId &&
+      hasScrolled !== followedRunnerId
+    ) {
+      setHasScrolled(followedRunnerId);
 
       const index = results.findIndex(result => result.id === followedRunnerId);
 
       setTimeout(() => {
-        if (!flatListRef.current || index < 0) {
+        if (!flashListRef.current || index < 0) {
           return;
         }
 
-        flatListRef.current.scrollToIndex({ index });
-        flatListRef.current.forceUpdate();
+        flashListRef.current.scrollToIndex({ index, animated: true });
       }, 1000);
+    } else if (results?.length && !followedRunnerId) {
+      setHasScrolled('');
+      flashListRef.current?.scrollToIndex({ index: 0 });
     }
-  }, [followedRunnerId, results, hasScrolled]);
+  }, [followedRunnerId, results, hasScrolled, className]);
 
-  return flatListRef;
+  return flashListRef;
 };

@@ -1,40 +1,42 @@
-import React from 'react';
-import _ from 'lodash';
 import { OLClubResults as Component } from './component';
 import { OLLoading } from '~/views/components/loading';
 import { OLError } from '~/views/components/error';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { RootStack } from '~/lib/nav/router';
-import { useGetClubResultsQuery } from '~/lib/graphql/generated/gql';
-import { OlResult } from '~/lib/graphql/generated/types';
+import { trpc } from '~/lib/trpc/client';
 
 export const OLClubResults: React.FC = () => {
   const {
     params: { clubName, competitionId },
   } = useRoute<RouteProp<RootStack, 'Club'>>();
 
-  const { data, loading, error, refetch } = useGetClubResultsQuery({
-    variables: { competitionId, clubName },
+  const getClubResultsQuery = trpc.getClubResults.useQuery({
+    clubName,
+    competitionId,
   });
 
-  if (error) {
-    return <OLError error={error} refetch={refetch} />;
+  if (getClubResultsQuery.error) {
+    return (
+      <OLError
+        error={getClubResultsQuery.error}
+        refetch={getClubResultsQuery.refetch}
+      />
+    );
   }
 
-  if (loading) {
+  if (getClubResultsQuery.isLoading) {
     return <OLLoading />;
   }
 
-  const results: OlResult[] = _.get(data, 'results.getClubResults', null);
-
   return (
     <Component
-      results={results}
+      results={getClubResultsQuery.data || []}
       refetch={async () => {
-        await refetch({ clubName, competitionId });
+        await getClubResultsQuery.refetch();
       }}
       clubName={clubName}
       competitionId={competitionId}
+      loading={getClubResultsQuery.isLoading}
     />
   );
 };

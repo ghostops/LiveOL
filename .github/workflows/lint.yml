@@ -4,7 +4,7 @@ on:
   - push
 
 jobs:
-  lint:
+  lint-app:
     name: lint-app
     runs-on: ubuntu-latest
     steps:
@@ -16,8 +16,28 @@ jobs:
         with:
           node-version: 20
 
-      - name: yarn install
-        run: cd ./App && yarn install
+      - name: npm install
+        run: cd ./App && npm install
 
-      - name: yarn lint
-        run: cd ./App && yarn lint
+      - name: npm lint
+        run: cd ./App && npm run lint
+  lint-api:
+    name: lint-api
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@master
+
+      - name: Set up Node.js
+        uses: actions/setup-node@master
+        with:
+          node-version: 20
+
+      - name: npm install
+        run: cd ./Server && npm install
+
+      - name: npm lint
+        run: cd ./Server && npm run lint
+
+      - name: npm build
+        run: cd ./Server && npm run build

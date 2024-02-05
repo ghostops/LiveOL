@@ -1,7 +1,9 @@
-export const invertKeyValues = (obj: any, fn?: Function) =>
+export const invertKeyValues = (obj: any) =>
   Object.keys(obj).reduce((acc, key) => {
-    const val = fn ? fn(obj[key]) : obj[key];
+    const val = obj[key];
+    // @ts-expect-error key-type
     acc[val] = acc[val] || [];
+    // @ts-expect-error key-type
     acc[val].push(key);
     return acc;
   }, {});

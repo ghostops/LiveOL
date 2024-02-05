@@ -7,6 +7,7 @@ services:
         command: yarn dev
         ports:
             - 4000:4000
+            - 3000:3000
         volumes:
             - ./src:/app/src/
         depends_on:

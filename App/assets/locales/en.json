@@ -31,6 +31,7 @@
       "passTime": "Pass-time",
       "title": "Latest passings"
     },
+    "readMore": "Read more",
     "signups": "Signed up",
     "visitEventor": "See on Eventor"
   },
@@ -42,6 +43,7 @@
     "ultralong": "Ultra Long"
   },
   "follow": {
+    "empty": "You are not following any competion, club, or runner.",
     "title": "Following",
     "unfollow": {
       "cta": "Unfollow",
@@ -80,6 +82,7 @@
     "title": "Information",
     "translations": {
       "credit": "App translated by",
+      "freePlus": "Help out with translating the app and get free LiveOL+",
       "phraseapp": "Translations powered by"
     },
     "update": {
@@ -136,9 +139,9 @@
     },
     "code": {
       "claimed": "Code already claimed",
+      "enter": "Enter code here",
       "invalid": "Invalid code",
-      "redeem": "Redeem code",
-      "enter": "Enter code here"
+      "redeem": "Redeem code"
     },
     "promo": {
       "box": {

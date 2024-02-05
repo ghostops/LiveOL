@@ -7,7 +7,7 @@ interface Props {
   style?: ViewStyle;
   onPress?: () => any;
   onLongPress?: () => void;
-  children: React.ReactElement;
+  children: React.ReactNode;
 }
 
 export const OLListItem: React.FC<Props> = ({

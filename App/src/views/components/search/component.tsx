@@ -1,14 +1,14 @@
-import React, { useCallback, useState } from 'react';
-import _ from 'lodash';
+import { useCallback, useState } from 'react';
 import {
   Animated,
   TouchableOpacity,
   Keyboard,
   TextInput,
   View,
+  InteractionManager,
 } from 'react-native';
 import { OLText } from '../text';
-import { fontPx, px } from '~/util/const';
+import { COLORS, fontPx, px } from '~/util/const';
 import { OLIcon } from '../icon';
 import { useTranslation } from 'react-i18next';
 
@@ -32,7 +32,7 @@ export const OLSearch: React.FC<Props> = ({ setSearching, setSearchTerm }) => {
   const hideSearch = useCallback(() => {
     Keyboard.dismiss();
 
-    _.defer(() => {
+    InteractionManager.runAfterInteractions(() => {
       setSearching(false);
       setSearchTerm(null);
     });
@@ -95,9 +95,13 @@ export const OLSearch: React.FC<Props> = ({ setSearching, setSearchTerm }) => {
             flex: 0.25,
             justifyContent: 'center',
             alignItems: 'center',
+            backgroundColor: COLORS.MAIN,
+            marginHorizontal: px(16),
+            paddingVertical: px(4),
+            borderRadius: 16,
           }}
         >
-          <OLText size={16} style={{ color: 'black' }}>
+          <OLText size={16} style={{ color: 'white' }}>
             {t('home.search')}
           </OLText>
         </TouchableOpacity>

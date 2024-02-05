@@ -6,6 +6,7 @@ phrase:
     - file: ./App/assets/locales/en.json
       params:
         update_translations: true
+        autotranslate: true
         locale_id: a61cd4f3dde450679d5ffd38e3d50613
         file_format: nested_json
   pull:

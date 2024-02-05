@@ -1,75 +1,88 @@
-import React from 'react';
-import { Alert } from 'react-native';
 import { OLText } from '../text';
 import { useTranslation } from 'react-i18next';
 import { FollowingData, useFollowingStore } from '~/store/following';
 import { OLListItem } from '../list/item';
 import { useTheme } from '~/hooks/useTheme';
-import { useOLNavigation } from '~/hooks/useNavigation';
-import { RouteProp, useRoute } from '@react-navigation/native';
-import { RootStack } from '~/lib/nav/router';
+import { Swipeable } from 'react-native-gesture-handler';
+import { Animated } from 'react-native';
+import { TouchableOpacity } from 'react-native';
+import { trpc } from '~/lib/trpc/client';
 
-export const OLFollowItem: React.FC<{ item: FollowingData }> = ({ item }) => {
+type Props = { item: FollowingData; onPress: () => void };
+
+const useSubtitle = (data: FollowingData) => {
+  const [competitionId] = data.id.split(':');
+  const id = Number(
+    data.type === 'runner' ? data.competitionId : competitionId,
+  );
+
+  const competition = trpc.getCompetition.useQuery(
+    {
+      competitionId: id,
+    },
+    { enabled: !!id },
+  );
+
+  if (data.type === 'runner') {
+    return `${competition.data?.competition.name} - ${data.className}`;
+  }
+
+  return competition.data?.competition.name;
+};
+
+export const OLFollowItem: React.FC<Props> = ({ item, onPress }) => {
   const { px } = useTheme();
-  const { navigate, pop } = useOLNavigation();
-  const { name } = useRoute<RouteProp<RootStack>>();
   const { unFollow } = useFollowingStore();
   const { t } = useTranslation();
+  const subtitle = useSubtitle(item);
 
-  const goToFollow = () => {
-    if (name === 'Follow') {
-      pop();
-    }
-
-    if (item.type === 'runner') {
-      navigate('Results', {
-        competitionId: Number(item.competitionId),
-        className: item.className,
-        runnerId: item.id,
-      });
-    }
-
-    if (item.type === 'club') {
-      const [competitionId, clubName] = item.id.split(':');
-
-      navigate('Club', {
-        competitionId: Number(competitionId),
-        clubName,
-        title: clubName,
-      });
-    }
-
-    if (item.type === 'class') {
-      const [competitionId, className] = item.id.split(':');
-
-      navigate('Results', {
-        competitionId: Number(competitionId),
-        className,
-      });
-    }
+  const renderRightActions = (
+    _progress: Animated.AnimatedInterpolation<any>,
+    dragAnimatedValue: Animated.AnimatedInterpolation<any>,
+  ) => {
+    const opacity = dragAnimatedValue.interpolate({
+      inputRange: [-125, 0],
+      outputRange: [1, 0],
+      extrapolate: 'clamp',
+    });
+    return (
+      <Animated.View style={[{ opacity }]}>
+        <TouchableOpacity
+          style={{
+            backgroundColor: '#e74c3c',
+            height: '100%',
+            width: 125,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+          onPress={() => unFollow(item.id)}
+        >
+          <OLText size={16} style={{ color: 'white' }}>
+            {t('follow.unfollow.cta')}
+          </OLText>
+        </TouchableOpacity>
+      </Animated.View>
+    );
   };
 
   return (
-    <OLListItem
-      style={{
-        marginLeft: 0,
-        paddingHorizontal: px(16),
-        paddingVertical: px(12),
-        width: '100%',
-      }}
-      onPress={goToFollow}
-      onLongPress={() =>
-        Alert.alert(t('follow.unfollow.title'), undefined, [
-          {
-            onPress: () => unFollow(item.id),
-            text: t('follow.unfollow.cta'),
-            style: 'destructive',
-          },
-          { text: t('info.update.hasUpdate.cancel'), style: 'cancel' },
-        ])
-      }
-    >
-      <OLText size={16}>{item.name}</OLText>
-    </OLListItem>
+    <Swipeable renderRightActions={renderRightActions}>
+      <OLListItem
+        style={{
+          marginLeft: 0,
+          paddingHorizontal: px(16),
+          paddingVertical: px(12),
+          width: '100%',
+        }}
+        onPress={onPress}
+      >
+        <OLText size={16}>{item.name}</OLText>
+        {subtitle && (
+          <OLText size={12} style={{ marginTop: px(4) }}>
+            {subtitle}
+          </OLText>
+        )}
+      </OLListItem>
+    </Swipeable>
   );
 };

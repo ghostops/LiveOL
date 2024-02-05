@@ -1,5 +1,3 @@
-import React from 'react';
-import _ from 'lodash';
 import { ViewStyle, FlexAlignType, View, TouchableOpacity } from 'react-native';
 import { HIT_SLOP } from '~/util/const';
 import { PORTRAIT_SIZE } from '~/views/components/result/list/item';
@@ -11,14 +9,13 @@ import {
 } from '~/views/components/result/table/row';
 import { Grid } from 'react-native-easy-grid';
 import { TFunction, useTranslation } from 'react-i18next';
-import { OlSplit } from '~/lib/graphql/generated/types';
-import { useGetSplitControlsQuery } from '~/lib/graphql/generated/gql';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useSortingStore } from '~/store/sorting';
 import { OLIcon } from '../icon';
 import { useTheme } from '~/hooks/useTheme';
 import { useOLNavigation } from '~/hooks/useNavigation';
 import { useIap } from '~/hooks/useIap';
+import { TRPCQueryOutput, trpc } from '~/lib/trpc/client';
 
 interface OwnProps {
   competitionId: number;
@@ -38,7 +35,11 @@ interface Label {
 
 const labels =
   (t: TFunction) =>
-  (table: boolean, maxSize: number, splits?: OlSplit[]): Label[] => {
+  (
+    table: boolean,
+    maxSize: number,
+    splits?: TRPCQueryOutput['getSplitControls'],
+  ): Label[] => {
     const all: Record<string, Label> = {
       place: {
         key: 'place',
@@ -115,11 +116,10 @@ export const ResultHeader: React.FC<OwnProps> = ({
   const { setSortingDirection, setSortingKey, sortingDirection, sortingKey } =
     useSortingStore();
 
-  const { data, loading, error } = useGetSplitControlsQuery({
-    variables: { competitionId, className },
+  const getSplitControlsQuery = trpc.getSplitControls.useQuery({
+    competitionId,
+    className,
   });
-
-  const splits: OlSplit[] = _.get(data, 'results.getSplitControls', []);
 
   const renderCol = (
     { text, size, align, style, key }: Label,
@@ -192,11 +192,16 @@ export const ResultHeader: React.FC<OwnProps> = ({
         borderBottomColor: '#cccccc',
         borderBottomWidth: 1,
         paddingLeft: left,
+        height: px(35),
       }}
     >
-      {!loading && !error && (
+      {!getSplitControlsQuery.isLoading && !getSplitControlsQuery.error && (
         <Grid>
-          {labels(t)(!!table, maxRowSize || 0, splits).map(renderCol)}
+          {labels(t)(
+            !!table,
+            maxRowSize || 0,
+            getSplitControlsQuery.data || [],
+          ).map(renderCol)}
         </Grid>
       )}
     </View>

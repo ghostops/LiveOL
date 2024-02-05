@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import moment from 'moment';
 import 'moment-duration-format';
 
@@ -32,4 +31,4 @@ export const diffDateNow = (datestring: string): string | null => {
 };
 
 export const padTime = (time: number, len = 2) =>
-  _.padStart(String(time), len, '0');
+  String(time).padStart(len, '0');

@@ -1,49 +1,46 @@
-import React from 'react';
 import { HomeList } from '~/views/components/home/list';
-import { HomeListItem } from '~/views/components/home/listItem';
-import { LanguagePicker } from '~/views/components/lang/picker';
-import { OLSearch } from '~/views/components/search/container';
-import { OLText } from '~/views/components/text';
-import { TodaysCompetitions } from '~/views/components/home/today';
-import { View, TouchableOpacity } from 'react-native';
-import { useTranslation } from 'react-i18next';
-import { OlCompetition } from '~/lib/graphql/generated/types';
+import { View, Animated } from 'react-native';
 import { useTheme } from '~/hooks/useTheme';
 import { OLHomePromo } from './promo';
-import { FollowWidget } from '~/views/components/follow/followWidget';
+import { TRPCQueryOutput } from '~/lib/trpc/client';
+import { TodaysCompetitions } from '~/views/components/home/today';
+import { HomeListItem } from '~/views/components/home/listItem';
+import { useCallback, useRef } from 'react';
+import { OLHomeBar } from './bar';
 
 interface Props {
-  competitions: OlCompetition[];
-  todaysCompetitions: OlCompetition[];
-  onCompetitionPress: (competition: OlCompetition) => void;
+  competitions: TRPCQueryOutput['getCompetitions']['competitions'];
+  todaysCompetitions: TRPCQueryOutput['getTodaysCompetitions']['today'];
+  onCompetitionPress: (
+    competition: TRPCQueryOutput['getCompetitions']['competitions'][0],
+  ) => void;
   openSearch: () => void;
   searching: boolean;
   loading: boolean;
   loadMore: () => Promise<any>;
   refetch: () => Promise<void>;
   landscape?: boolean;
+  loadingMore: boolean;
 }
 
 export const OLHome: React.FC<Props> = ({
   onCompetitionPress,
   openSearch,
   searching,
-  todaysCompetitions,
   landscape,
+  todaysCompetitions,
   ...passthroughProps
 }) => {
+  const scrollOffsetY = useRef(new Animated.Value(0)).current;
   const { px } = useTheme();
-  const { t } = useTranslation();
 
-  const renderTodaysCompetitions = React.useCallback(() => {
+  const renderTodaysCompetitions = useCallback(() => {
     if (searching) {
       return null;
     }
 
     return (
       <>
-        <FollowWidget />
-
         <OLHomePromo />
 
         <TodaysCompetitions
@@ -55,63 +52,31 @@ export const OLHome: React.FC<Props> = ({
               key={competition.id}
               onCompetitionPress={onCompetitionPress}
               total={total}
+              style={{ paddingHorizontal: px(8) }}
             />
           )}
         />
       </>
     );
-  }, [searching, todaysCompetitions, onCompetitionPress]);
-
-  const renderHeader = React.useCallback(() => {
-    if (searching) {
-      return <OLSearch />;
-    }
-
-    return (
-      <View
-        style={{
-          flexDirection: 'row',
-          height: px(50),
-        }}
-      >
-        <LanguagePicker />
-
-        <View
-          style={{
-            height: '100%',
-            justifyContent: 'center',
-            alignItems: 'center',
-            paddingRight: px(10),
-            flexDirection: 'row',
-          }}
-        >
-          <TouchableOpacity
-            onPress={openSearch}
-            style={{ paddingHorizontal: px(landscape ? 25 : 0) }}
-          >
-            <OLText size={16}>{t('home.search')}</OLText>
-          </TouchableOpacity>
-        </View>
-      </View>
-    );
-  }, [landscape, openSearch, px, searching, t]);
+  }, [onCompetitionPress, searching, todaysCompetitions, px]);
 
   return (
-    <View
-      style={{
-        flex: 1,
-        width: '100%',
-      }}
-    >
-      <View style={{ flex: 1 }}>
-        {renderHeader()}
+    <View>
+      <OLHomeBar
+        landscape={!!landscape}
+        openSearch={openSearch}
+        searching={searching}
+      />
 
-        <HomeList
-          onCompetitionPress={onCompetitionPress}
-          listHeader={renderTodaysCompetitions()}
-          {...passthroughProps}
-        />
-      </View>
+      <HomeList
+        onCompetitionPress={onCompetitionPress}
+        listHeader={renderTodaysCompetitions()}
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { y: scrollOffsetY } } }],
+          { useNativeDriver: false },
+        )}
+        {...passthroughProps}
+      />
     </View>
   );
 };

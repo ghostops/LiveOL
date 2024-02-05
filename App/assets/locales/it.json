@@ -30,6 +30,7 @@
       "passTime": "Tempo passaggio",
       "title": "Ultimi passaggi"
     },
+    "readMore": "Per saperne di più",
     "signups": "Iscritti",
     "visitEventor": "Vedi su Eventor"
   },
@@ -41,6 +42,7 @@
     "ultralong": "Ultra Long"
   },
   "follow": {
+    "empty": "Non stai seguendo alcuna competizione, club o corridore.",
     "title": "Seguendo",
     "unfollow": {
       "cta": "Non seguire",
@@ -79,6 +81,7 @@
     "title": "Informazioni",
     "translations": {
       "credit": "App tradotta da",
+      "freePlus": "Aiutaci a tradurre l'app e ricevi gratuitamente LiveOL+",
       "phraseapp": "Traduzioni tramite"
     },
     "update": {
@@ -135,6 +138,7 @@
     },
     "code": {
       "claimed": "Codice già richiesto",
+      "enter": "Inserire il codice qui",
       "invalid": "Codice non valido",
       "redeem": "Riscatta codice"
     },

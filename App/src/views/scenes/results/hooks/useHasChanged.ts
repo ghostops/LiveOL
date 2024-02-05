@@ -1,12 +1,15 @@
-import React from 'react';
 import { resultsChanged } from '~/util/hasChanged';
-import { OlResult } from '~/lib/graphql/generated/types';
+import { TRPCQueryOutput } from '~/lib/trpc/client';
+import { useEffect, useState } from 'react';
 
-export const useHasChanged = (currentResults: OlResult[]) => {
-  const [previousResults, setPreviousResults] = React.useState<OlResult[]>();
-  const [hasChanged, setHasChanged] = React.useState(false);
+export const useHasChanged = (
+  currentResults?: TRPCQueryOutput['getResults'],
+) => {
+  const [previousResults, setPreviousResults] =
+    useState<TRPCQueryOutput['getResults']>();
+  const [hasChanged, setHasChanged] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setPreviousResults(currentResults);
 
     if (!currentResults || !previousResults) {
