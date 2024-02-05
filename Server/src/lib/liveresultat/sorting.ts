@@ -70,7 +70,7 @@ export const sortOptimal = (
     };
   });
 
-  let [sortingKey, sortingDirection] = sorting.split(':');
+  const [sortingKey, sortingDirection] = sorting.split(':');
 
   if (!sortingKey || !sortingDirection) {
     throw new Error('invalid sorting options');

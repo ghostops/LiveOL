@@ -186,7 +186,7 @@ export class ListResponseParser {
         `children[${1 + indexModifier}].children.0.children.1.data`,
       );
 
-      let clubLogoUrl = parseClubLogo(
+      const clubLogoUrl = parseClubLogo(
         this.base,
         _.get(
           row,

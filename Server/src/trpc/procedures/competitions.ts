@@ -52,7 +52,7 @@ export const getTodaysCompetitions = publicProcedure
     }),
   )
   .query(async ({ ctx, input }) => {
-    let { competitions } = await ctx.Liveresultat.getcompetitions();
+    const { competitions } = await ctx.Liveresultat.getcompetitions();
 
     const today = competitions.filter(comp => {
       return isDateToday(comp.date, input.date);

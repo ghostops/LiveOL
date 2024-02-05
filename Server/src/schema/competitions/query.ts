@@ -28,7 +28,7 @@ export const CompetitionsQuery = new GraphQLObjectType({
         args,
         { Liveresultat, userId }: GQLContext,
       ): Promise<IOLCompetition[]> => {
-        let { competitions } = await Liveresultat.getcompetitions();
+        const { competitions } = await Liveresultat.getcompetitions();
         return competitions.map(marshallCompetition(undefined));
       },
     },

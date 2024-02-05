@@ -19,8 +19,6 @@ interface Props {
 export const OLCompetition: React.FC<Props> = props => {
   const { t } = useTranslation();
 
-  console.log(props.latestPassings);
-
   const renderClass = ({ item }: any) => {
     const { name }: TRPCQueryOutput['getCompetition']['classes'][0] = item;
 
