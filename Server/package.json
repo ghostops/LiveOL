@@ -4,7 +4,7 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"build": "tsc && babel build --out-dir build",
+		"build": "tsc",
 		"dev": "nodemon -L -e ts -w ./src -x yarn dev:serve",
 		"dev:serve": "ts-node -r tsconfig-paths/register src/index.ts",
 		"lint": "oxlint ./src",
@@ -19,8 +19,6 @@
 		"@types/node-cron": "^2.0.3",
 		"apollo-server": "^2.14.2",
 		"axios": "^0.21.2",
-		"babel-cli": "^6.26.0",
-		"babel-plugin-module-resolver": "^4.0.0",
 		"cheerio": "^1.0.0-rc.3",
 		"cross-fetch": "^3.0.5",
 		"dotenv": "^8.2.0",
