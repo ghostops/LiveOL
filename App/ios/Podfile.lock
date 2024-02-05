@@ -1120,7 +1120,7 @@ PODS:
     - React-logger (= 0.73.2)
     - React-perflogger (= 0.73.2)
   - RevenueCat (4.25.9)
-  - RNBootSplash (4.3.2):
+  - RNBootSplash (5.3.0):
     - React-Core
   - RNCAsyncStorage (1.21.0):
     - React-Core
@@ -1442,7 +1442,7 @@ SPEC CHECKSUMS:
   React-utils: f5bc61e7ea3325c0732ae2d755f4441940163b85
   ReactCommon: 45b5d4f784e869c44a6f5a8fad5b114ca8f78c53
   RevenueCat: 4160d04575059fc1edbb973981f541b705ddebef
-  RNBootSplash: 5f346163977573d6b2aeba1b25df9d2245c0d73c
+  RNBootSplash: 73c2a97d761db234125638c24ad6da6d781d049d
   RNCAsyncStorage: 618d03a5f52fbccb3d7010076bc54712844c18ef
   RNDeviceInfo: 25d818c85db769cc0e7083d39efaa01a6f450df3
   RNFlashList: 4b4b6b093afc0df60ae08f9cbf6ccd4c836c667a

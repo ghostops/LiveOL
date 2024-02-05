@@ -1,5 +1,9 @@
-import { BottomSheetModal, WINDOW_WIDTH } from '@gorhom/bottom-sheet';
-import { FlatList, TouchableOpacity, View } from 'react-native';
+import {
+  BottomSheetFlatList,
+  BottomSheetModal,
+  WINDOW_WIDTH,
+} from '@gorhom/bottom-sheet';
+import { FlatList, Platform, TouchableOpacity, View } from 'react-native';
 import { useFollowBottomSheetStore } from '~/store/followBottomSheet';
 import { OLFollowItem } from './followItem';
 import { useTranslation } from 'react-i18next';
@@ -10,6 +14,9 @@ import { useOLNavigationRef } from '~/hooks/useNavigation';
 import { useRef } from 'react';
 import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import { useDeviceRotationStore } from '~/store/deviceRotation';
+
+const ListComponent =
+  Platform.OS === 'android' ? BottomSheetFlatList : FlatList;
 
 const firstIndexSize = 65;
 export const followSheetIndexes = [firstIndexSize, '50%', '90%'];
@@ -63,7 +70,7 @@ export const OLFollowSheet: React.FC = () => {
         setRef(ref);
         localRef.current = ref;
       }}
-      index={2}
+      index={followSheetIndexes.length - 1}
       snapPoints={followSheetIndexes}
       handleStyle={{
         position: 'absolute',
@@ -72,13 +79,15 @@ export const OLFollowSheet: React.FC = () => {
       }}
       handleIndicatorStyle={{ backgroundColor: 'white' }}
       onDismiss={() => setIsOpen(false)}
-      style={{ maxWidth: isLandscape ? WINDOW_WIDTH / 2 : undefined }}
+      style={{ width: isLandscape ? WINDOW_WIDTH / 2 : undefined }}
     >
       <View style={{ flex: 1 }}>
         <TouchableOpacity
           activeOpacity={1}
           onPress={() => {
-            localRef.current?.snapToIndex(getFollowSheetIndex(1));
+            localRef.current?.snapToIndex(
+              getFollowSheetIndex(isLandscape ? 2 : 1),
+            );
           }}
           style={{
             backgroundColor: colors.BLUE,
@@ -99,7 +108,7 @@ export const OLFollowSheet: React.FC = () => {
             {t('follow.title')}
           </OLText>
         </TouchableOpacity>
-        <FlatList
+        <ListComponent
           data={following}
           renderItem={({ item }) => (
             <OLFollowItem item={item} onPress={() => onItemPress(item)} />

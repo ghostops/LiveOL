@@ -15,7 +15,7 @@ class MainActivity : ReactActivity() {
   override fun getMainComponentName(): String = "LiveOL"
   
   override fun onCreate(savedInstanceState: Bundle?) {
-    RNBootSplash.init(this)
+    RNBootSplash.init(this, R.style.BootTheme)
     super.onCreate(savedInstanceState)
   }
 

@@ -30,6 +30,8 @@ export const OLHome: React.FC = () => {
         return res.nextPage;
       },
       initialCursor: 1,
+      retry: 3,
+      retryDelay: 1000,
     },
   );
 
@@ -54,7 +56,11 @@ export const OLHome: React.FC = () => {
     await getCompetitionsQuery.fetchNextPage();
   };
 
-  if (!!getCompetitionsQuery.data?.pages && !hasLoaded.current) {
+  if (
+    (getCompetitionsQuery.data?.pages.length ||
+      getCompetitionsQuery.failureCount > 0) &&
+    !hasLoaded.current
+  ) {
     hasLoaded.current = true;
     RNBootSplash.hide({ fade: true });
   }

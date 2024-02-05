@@ -1,5 +1,6 @@
+import { TRPCError } from '@trpc/server';
 import { isDateToday } from 'lib/helpers/time';
-import * as _ from 'lodash';
+import _ from 'lodash';
 import { marshallClass } from 'schema/classes';
 import { marshallCompetition } from 'schema/competitions';
 import { marshallPassing } from 'schema/lastPassings';
