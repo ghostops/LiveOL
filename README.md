@@ -9,11 +9,11 @@ Our vision is to be the best orienteering platform for mobile devices.
 # Get the app
 
 <a href="https://itunes.apple.com/us/app/liveol/id1450106846">
-    <img class="ios" src="/Content/app_btn1.png" alt="Download on the App Store" width="120">
+    Download on the App Store
 </a>
 
 <a href="https://play.google.com/store/apps/details?id=se.liveol.rn">
-    <img class="google" src="/Content/app_btn2.png" alt="Download on Google Play" width="120">
+    Download on Google Play
 </a>
 
 # Sponsor
