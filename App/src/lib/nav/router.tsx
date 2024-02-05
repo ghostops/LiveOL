@@ -2,7 +2,6 @@
 import { useTranslation } from 'react-i18next';
 import { StatusBar } from 'react-native';
 import { OLResults } from '~/views/scenes/results/container';
-import { OLPassings } from '~/views/scenes/last_passings/container';
 import { OLInfo } from '~/views/scenes/info/container';
 import { OLHome } from '~/views/scenes/home/container';
 import { OLCompetition } from '~/views/scenes/competition/container';
@@ -24,10 +23,6 @@ export type RootStack = {
   Home: undefined;
   Info: undefined;
   Competition: {
-    competitionId: number;
-    title: string;
-  };
-  Passings: {
     competitionId: number;
     title: string;
   };
@@ -89,14 +84,6 @@ const Component: React.FC = () => {
         <Stack.Screen
           name="Competition"
           component={OLCompetition}
-          options={props => ({
-            title: props.route.params.title,
-          })}
-        />
-
-        <Stack.Screen
-          name="Passings"
-          component={OLPassings}
           options={props => ({
             title: props.route.params.title,
           })}

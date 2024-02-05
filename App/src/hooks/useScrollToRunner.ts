@@ -17,7 +17,11 @@ export const useScrollToRunner = ({
   const [hasScrolled, setHasScrolled] = useState<string>('');
 
   useEffect(() => {
-    if (results && followedRunnerId && hasScrolled !== followedRunnerId) {
+    if (
+      results?.length &&
+      followedRunnerId &&
+      hasScrolled !== followedRunnerId
+    ) {
       setHasScrolled(followedRunnerId);
 
       const index = results.findIndex(result => result.id === followedRunnerId);
@@ -29,7 +33,7 @@ export const useScrollToRunner = ({
 
         flashListRef.current.scrollToIndex({ index, animated: true });
       }, 1000);
-    } else if (!followedRunnerId && className) {
+    } else if (results?.length && !followedRunnerId) {
       setHasScrolled('');
       flashListRef.current?.scrollToIndex({ index: 0 });
     }
