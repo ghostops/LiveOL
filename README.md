@@ -10,7 +10,7 @@ Our vision is to be the best orienteering platform for mobile devices.
 
 <a href="https://itunes.apple.com/us/app/liveol/id1450106846">
     Download on the App Store
-</a>
+</a><br />
 
 <a href="https://play.google.com/store/apps/details?id=se.liveol.rn">
     Download on Google Play
