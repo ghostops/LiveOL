@@ -8,7 +8,10 @@ import { OLSelfHelper } from 'lib/selfhelp';
   dotenv.config();
 
   const selfHelp = new OLSelfHelper();
-  selfHelp.start();
+
+  if (getEnv('NODE_ENV', true) !== 'development') {
+    selfHelp.start();
+  }
 
   const trpcServer = createHTTPServer({
     router: appRouter,

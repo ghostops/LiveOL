@@ -2,6 +2,7 @@ import { TouchableOpacity } from 'react-native';
 import { OLText } from '../text';
 import { useTheme } from '~/hooks/useTheme';
 import { OLIcon } from '../icon';
+import { OLSafeAreaView } from '../safeArea';
 
 type Props = {
   children: string;
@@ -15,17 +16,23 @@ export const OLHint: React.FC<Props> = ({ children, onPress }) => {
     <TouchableOpacity
       style={{
         backgroundColor: colors.BLACK,
-        flexDirection: 'row',
-        alignItems: 'center',
         padding: px(8),
       }}
       onPress={onPress}
       disabled={!onPress}
     >
-      <OLIcon name="alert-circle-outline" size={24} color="white" />
-      <OLText size={16} style={{ color: 'white', marginLeft: px(8) }}>
-        {children}
-      </OLText>
+      <OLSafeAreaView
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          flex: 0,
+        }}
+      >
+        <OLIcon name="close-circle-outline" size={24} color="white" />
+        <OLText size={16} style={{ color: 'white', marginLeft: px(8) }}>
+          {children}
+        </OLText>
+      </OLSafeAreaView>
     </TouchableOpacity>
   );
 };

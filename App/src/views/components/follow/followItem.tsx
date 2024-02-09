@@ -25,10 +25,10 @@ const useSubtitle = (data: FollowingData) => {
 
   if (data.type === 'runner') {
     if (competition.data?.competition.name) {
-      return `${competition.data?.competition.name} - ${data.className}`;
+      return `${competition.data?.competition.name}: ${data.className}`;
     }
 
-    return `... - ${data.className}`;
+    return data.className;
   }
 
   return competition.data?.competition.name;

@@ -17,16 +17,18 @@ type Props = {
   setSearching: (value: boolean) => void;
 };
 
-const SEARCH_SIZE = px(60);
+const SEARCH_SIZE = px(45);
 
 export const OLSearch: React.FC<Props> = ({ setSearching, setSearchTerm }) => {
   const { t } = useTranslation();
   const [searchText, setSearchText] = useState('');
 
   const search = useCallback(() => {
-    setTimeout(() => {
+    Keyboard.dismiss();
+
+    InteractionManager.runAfterInteractions(() => {
       setSearchTerm(searchText);
-    }, 0);
+    });
   }, [setSearchTerm, searchText]);
 
   const hideSearch = useCallback(() => {
@@ -57,6 +59,7 @@ export const OLSearch: React.FC<Props> = ({ setSearching, setSearchTerm }) => {
             paddingHorizontal: px(8),
           }}
           onPress={hideSearch}
+          hitSlop={16}
         >
           <OLIcon name="close" size={fontPx(20)} />
         </TouchableOpacity>
@@ -92,16 +95,18 @@ export const OLSearch: React.FC<Props> = ({ setSearching, setSearchTerm }) => {
         <TouchableOpacity
           onPress={search}
           style={{
-            flex: 0.25,
             justifyContent: 'center',
             alignItems: 'center',
             backgroundColor: COLORS.MAIN,
-            marginHorizontal: px(16),
+            marginHorizontal: px(8),
             paddingVertical: px(4),
             borderRadius: 16,
           }}
         >
-          <OLText size={16} style={{ color: 'white' }}>
+          <OLText
+            size={16}
+            style={{ color: 'white', paddingHorizontal: px(16) }}
+          >
             {t('home.search')}
           </OLText>
         </TouchableOpacity>

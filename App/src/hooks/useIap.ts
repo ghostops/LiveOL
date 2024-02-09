@@ -5,6 +5,8 @@ import Purchases from 'react-native-purchases';
 import { usePlusStore } from '~/store/plus';
 import { usePlusCodes } from '~/hooks/usePlusCodes';
 
+let isInitializing = false;
+
 export const useIap = () => {
   const { t } = useTranslation();
 
@@ -41,12 +43,12 @@ export const useIap = () => {
     };
 
     const init = async () => {
-      if (initialized || loading) {
+      if (initialized || isInitializing) {
         return;
       }
 
       try {
-        setLoading(true);
+        isInitializing = true;
 
         if (Platform.OS === 'ios') {
           Purchases.configure({
@@ -69,7 +71,7 @@ export const useIap = () => {
 
         setInitialized();
       } finally {
-        setLoading(false);
+        isInitializing = false;
       }
     };
 

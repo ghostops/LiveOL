@@ -80,87 +80,86 @@ export const HomeList: React.FC<Props> = ({
     </OLSafeAreaView>
   );
 
-  if (loading) {
-    return <OLLoading />;
-  }
-
   return (
-    <SectionList
-      ref={setRef}
-      scrollEventThrottle={16}
-      onScroll={onScroll}
-      refreshControl={
-        <RefreshControl
-          refreshing={loading}
-          onRefresh={refetch}
-          tintColor={colors.MAIN}
-        />
-      }
-      sections={Object.keys(visibleCompetitions).map(key => {
-        const value = visibleCompetitions[key];
-        return {
-          date: key,
-          data: value,
-        };
-      })}
-      renderItem={({ item, index, section }) =>
-        renderListItem(item, index, section.data.length)
-      }
-      renderSectionHeader={({ section: { date } }) => {
-        const isToday = isDateToday(date);
-        const dateStr = dateToReadable(date);
+    <>
+      <SectionList
+        ref={setRef}
+        scrollEventThrottle={16}
+        onScroll={onScroll}
+        refreshControl={
+          <RefreshControl
+            refreshing={loading}
+            onRefresh={refetch}
+            tintColor={colors.MAIN}
+          />
+        }
+        sections={Object.keys(visibleCompetitions).map(key => {
+          const value = visibleCompetitions[key];
+          return {
+            date: key,
+            data: value,
+          };
+        })}
+        renderItem={({ item, index, section }) =>
+          renderListItem(item, index, section.data.length)
+        }
+        renderSectionHeader={({ section: { date } }) => {
+          const isToday = isDateToday(date);
+          const dateStr = dateToReadable(date);
 
-        return (
-          <OLSafeAreaView>
-            <OLListItem
-              itemDivider
+          return (
+            <OLSafeAreaView>
+              <OLListItem
+                itemDivider
+                style={{
+                  marginLeft: 0,
+                  paddingHorizontal: px(16),
+                  backgroundColor: isToday ? colors.MAIN : colors.BORDER,
+                }}
+              >
+                <OLText
+                  size={16}
+                  style={{ color: isToday ? 'white' : '#141823' }}
+                >
+                  {dateStr} {isToday && `(${t('home.today')})`}
+                </OLText>
+              </OLListItem>
+            </OLSafeAreaView>
+          );
+        }}
+        contentContainerStyle={{ paddingBottom: bottom }}
+        ListHeaderComponent={listHeader}
+        keyExtractor={item => item.id.toString()}
+        ListEmptyComponent={
+          !loading ? (
+            <View
               style={{
-                marginLeft: 0,
-                paddingHorizontal: px(16),
-                backgroundColor: isToday ? colors.MAIN : colors.BORDER,
+                width: '100%',
+                paddingVertical: px(16 * 4),
               }}
             >
               <OLText
                 size={16}
-                style={{ color: isToday ? 'white' : '#141823' }}
+                style={{
+                  textAlign: 'center',
+                }}
               >
-                {dateStr} {isToday && `(${t('home.today')})`}
+                {t('home.nothingSearch')}
               </OLText>
-            </OLListItem>
-          </OLSafeAreaView>
-        );
-      }}
-      contentContainerStyle={{ paddingBottom: bottom }}
-      ListHeaderComponent={listHeader}
-      keyExtractor={item => item.id.toString()}
-      ListEmptyComponent={
-        !loading && (
-          <View
-            style={{
-              width: '100%',
-              paddingVertical: px(16 * 4),
-            }}
-          >
-            <OLText
-              size={16}
-              style={{
-                textAlign: 'center',
-              }}
-            >
-              {t('home.nothingSearch')}
-            </OLText>
-          </View>
-        )
-      }
-      ListFooterComponent={
-        loadingMore ? (
-          <View style={{ padding: px(16) }}>
-            <OLLoading />
-          </View>
-        ) : null
-      }
-      onEndReached={loadMore}
-      onEndReachedThreshold={0.5}
-    />
+            </View>
+          ) : null
+        }
+        ListFooterComponent={
+          loadingMore ? (
+            <View style={{ padding: px(16) }}>
+              <OLLoading />
+            </View>
+          ) : null
+        }
+        onEndReached={loadMore}
+        onEndReachedThreshold={0.5}
+      />
+      {loading && <OLLoading badge top={32} />}
+    </>
   );
 };

@@ -5,9 +5,10 @@ import { useTheme } from '~/hooks/useTheme';
 
 type Props = {
   badge?: boolean;
+  top?: number;
 };
 
-export const OLLoading: React.FC<Props> = ({ badge }) => {
+export const OLLoading: React.FC<Props> = ({ badge, top }) => {
   const { px } = useTheme();
 
   return (
@@ -16,7 +17,7 @@ export const OLLoading: React.FC<Props> = ({ badge }) => {
         badge
           ? {
               position: 'absolute',
-              top: 0,
+              top: top || 0,
               left: 0,
               right: 0,
               bottom: 0,
