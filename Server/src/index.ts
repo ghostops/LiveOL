@@ -2,15 +2,13 @@ import { getEnv } from 'lib/helpers/env';
 import * as dotenv from 'dotenv';
 import { createHTTPServer } from '@trpc/server/adapters/standalone';
 import { appRouter, createContext } from 'trpc';
+import { OLSelfHelper } from 'lib/selfhelp';
 
 (async () => {
   dotenv.config();
 
-  // TODO: Fix the selfhelp module
-  // if (!DEV) {
-  //   // On creation this class monitors the GQL queries for errors
-  //   new OLSelfHelper();
-  // }
+  const selfHelp = new OLSelfHelper();
+  selfHelp.start();
 
   const trpcServer = createHTTPServer({
     router: appRouter,

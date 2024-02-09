@@ -1,35 +1,34 @@
-import 'cross-fetch/polyfill';
 import * as cron from 'node-cron';
-import { request } from 'graphql-request';
 import { IncomingWebhook } from '@slack/webhook';
 import { getEnv } from 'lib/helpers/env';
+import { appRouter } from 'trpc';
+import { createCallerFactory } from 'trpc/client';
+import { apiSingletons } from 'lib/singletons';
 
 const DEV = getEnv('env') !== 'live';
 
 interface HealthCheck {
   name: string;
-  query: string;
-  meta?: any;
+  query: () => Promise<boolean>;
 }
+
+const createCaller = createCallerFactory(appRouter);
+const caller = createCaller(apiSingletons.createApiSingletons());
 
 export class OLSelfHelper {
   private webhook: IncomingWebhook | undefined;
 
   constructor() {
     if (!process.env.SLACK_WEBHOOK) {
-      console.warn(
-        'No SLACK_WEBHOOK defined - remote error reporting not started!',
-      );
+      console.warn('No SLACK_WEBHOOK defined for self helper!');
     } else {
       this.webhook = new IncomingWebhook(process.env.SLACK_WEBHOOK, {
         icon_emoji: ':interrobang:',
       });
     }
-
-    this.start();
   }
 
-  private start = () => {
+  public start = () => {
     const schedule = DEV ? '* * * * *' : '*/15 * * * *';
     cron.schedule(schedule, this.healthcheck);
     setTimeout(this.healthcheck, DEV ? 1000 : 5000);
@@ -39,13 +38,59 @@ export class OLSelfHelper {
     const checks: HealthCheck[] = [
       {
         name: 'GetCompetitions',
-        query: this.getCompetitions,
+        query: async () => {
+          const res = await caller.getCompetitions({ cursor: 1 });
+
+          if (res?.competitions?.length) {
+            return true;
+          }
+
+          return false;
+        },
       },
       {
         name: 'GetSingleCompetition',
-        query: this.getCompetition,
-        meta: {
-          competitionId: 18595,
+        query: async () => {
+          const res = await caller.getCompetition({ competitionId: 18595 });
+
+          if (res.competition.name === 'Ungdomscupen deltävling 2') {
+            return true;
+          }
+
+          return false;
+        },
+      },
+      {
+        name: 'GetClub',
+        query: async () => {
+          const club = 'OK Gynge';
+
+          const res = await caller.getClubResults({
+            competitionId: 18595,
+            clubName: club,
+          });
+
+          if (res[0]?.club === club) {
+            return true;
+          }
+
+          return false;
+        },
+      },
+      {
+        name: 'GetResults',
+        query: async () => {
+          const res = await caller.getResults({
+            competitionId: 26860,
+            className: 'Men 20',
+            sorting: 'place:asc',
+          });
+
+          if (res[0]?.club === 'GER Germany') {
+            return true;
+          }
+
+          return false;
         },
       },
     ];
@@ -55,10 +100,13 @@ export class OLSelfHelper {
     for (const check of checks) {
       try {
         console.info(`Test: running ${check.name}`);
-        await request('http://localhost:4000', check.query);
+        const res = await check.query();
+        if (!res) {
+          throw new Error(`Query succeded but response data was invalid.`);
+        }
         console.info(`Test: success ${check.name}`);
-      } catch (err) {
-        errors.push({ name: check.name, error: err });
+      } catch (err: any) {
+        errors.push({ name: check.name, error: err?.message || err });
       }
     }
 
@@ -102,37 +150,4 @@ export class OLSelfHelper {
       return String(error);
     }
   };
-
-  private getCompetitions = `query getCompetitionsHealthcheck {
-        competitions {
-            getCompetitions {
-                today {
-                    id
-                }
-                competitions {
-                    id
-                }
-            }
-        }
-    }`;
-
-  private getCompetition = `query getCompetitionHealthcheck {
-        competitions {
-          getCompetition(competitionId: 18595) {
-            name
-            id
-            organizer
-            eventor
-            clubLogoUrl
-            info
-            clubLogoSizes
-            canceled
-            distance
-            district
-            signups
-            date
-            club
-          }
-        }
-      }`;
 }

@@ -14,7 +14,10 @@ export const OLCompetition: React.FC = () => {
   const getCompetitionQuery = trpc.getCompetition.useQuery({ competitionId });
 
   const getCompetitionLastPassingsQuery =
-    trpc.getCompetitionLastPassings.useQuery({ competitionId });
+    trpc.getCompetitionLastPassings.useQuery(
+      { competitionId },
+      { refetchInterval: 15_000 },
+    );
 
   if (getCompetitionQuery.error) {
     return (
