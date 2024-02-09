@@ -23,6 +23,7 @@ type Props = {
   plusExpirationDate?: string;
   redeemPlusCode: () => void;
   onNewsletterPress: () => void;
+  goToMyWebsite: () => void;
 };
 
 const PHRASE_IMAGE = require('../../../../assets/images/phrase.png');
@@ -42,6 +43,7 @@ export const OLInfo: React.FC<Props> = ({
   plusWillRenew,
   redeemPlusCode,
   onNewsletterPress,
+  goToMyWebsite,
 }) => {
   const { t } = useTranslation();
 
@@ -284,7 +286,11 @@ export const OLInfo: React.FC<Props> = ({
         </OLCard>
       </View>
 
-      <View style={{ height: px(25) }} />
+      <TouchableOpacity onPress={goToMyWebsite} style={{ marginTop: px(8) }}>
+        <OLText size={16}>LiveOL by Ludvig Larsendahl</OLText>
+      </TouchableOpacity>
+
+      <View style={{ height: px(65) }} />
     </ScrollView>
   );
 };
