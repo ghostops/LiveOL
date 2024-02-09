@@ -26,7 +26,7 @@ export const TodaysCompetitions: React.FC<Props> = ({
   const nothingToday = !competitions || competitions.length === 0;
 
   const innerCompetitions = () => (
-    <>
+    <OLSafeAreaView>
       <View
         style={{
           flexDirection: 'row',
@@ -57,21 +57,18 @@ export const TodaysCompetitions: React.FC<Props> = ({
             dateToReadable(new Date(competitions[0].date).toISOString())}
         </OLText>
       </View>
-
-      <OLSafeAreaView>
-        <OLCard
-          style={{
-            marginTop: px(8),
-            width: '100%',
-            padding: 0,
-          }}
-        >
-          {competitions.map((comp, index) =>
-            renderListItem(comp, index, competitions.length),
-          )}
-        </OLCard>
-      </OLSafeAreaView>
-    </>
+      <OLCard
+        style={{
+          marginTop: px(8),
+          width: '100%',
+          padding: 0,
+        }}
+      >
+        {competitions.map((comp, index) =>
+          renderListItem(comp, index, competitions.length),
+        )}
+      </OLCard>
+    </OLSafeAreaView>
   );
 
   const innerNothing = () => (
