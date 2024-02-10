@@ -33,6 +33,10 @@ export const OLResults: React.FC = () => {
   );
 
   useEffect(() => {
+    oldHashes.current = [];
+  }, [className, competitionId]);
+
+  useEffect(() => {
     if (getResultsQuery.data?.hash) {
       if (
         oldHashes.current.length &&
