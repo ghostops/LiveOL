@@ -58,7 +58,9 @@ export const OLResultsList: React.FC<Props> = props => {
         ListFooterComponent={<View style={{ height: 45 + firstIndexSize }} />}
         data={props.results}
         renderItem={renderItem}
-        keyExtractor={(item: TRPCQueryOutput['getResults']['results'][0]) => item.id}
+        keyExtractor={(item: TRPCQueryOutput['getResults']['results'][0]) =>
+          item.id
+        }
         ListEmptyComponent={
           !props.loading ? (
             <View

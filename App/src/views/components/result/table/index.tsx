@@ -58,7 +58,9 @@ export const OLResultsTable: React.FC<Props> = props => {
           ListFooterComponent={<View style={{ height: 45 + firstIndexSize }} />}
           data={props.results}
           renderItem={renderResult}
-          keyExtractor={(item: TRPCQueryOutput['getResults']['results'][0]) => item.id}
+          keyExtractor={(item: TRPCQueryOutput['getResults']['results'][0]) =>
+            item.id
+          }
           ListEmptyComponent={
             <View
               style={{
