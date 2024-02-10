@@ -7,6 +7,7 @@ import { OLText } from '~/views/components/text';
 import { px } from '~/util/const';
 import { useTranslation } from 'react-i18next';
 import { TRPCQueryOutput } from '~/lib/trpc/client';
+import { firstIndexSize } from '~/views/components/follow/followSheet';
 
 interface Props {
   loading: boolean;
@@ -66,7 +67,9 @@ export const OLCompetition: React.FC<Props> = props => {
           item: TRPCQueryOutput['getCompetition']['classes'][0],
           index,
         ) => item.id || index.toString()}
-        ListFooterComponent={<View style={{ height: px(45) }} />}
+        ListFooterComponent={
+          <View style={{ height: px(45) + firstIndexSize }} />
+        }
       />
     </OLSafeAreaView>
   );

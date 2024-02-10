@@ -77,6 +77,7 @@ export const OLResultsList: React.FC<Props> = props => {
             </View>
           ) : null
         }
+        extraData={{ followed: props.followedRunnerId }}
       />
     </OLSafeAreaView>
   );

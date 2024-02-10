@@ -16,6 +16,9 @@ import { OLSelfHelper } from 'lib/selfhelp';
   const trpcServer = createHTTPServer({
     router: appRouter,
     createContext,
+    batching: {
+      enabled: false,
+    },
   });
 
   const port = 3000;

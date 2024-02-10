@@ -13,7 +13,7 @@ export interface IOLPassing {
 
 export const marshallPassing = (res: LiveresultatApi.passing): IOLPassing => {
   return {
-    id: `${res.class.replace(/ /g, '_')}:${res.runnerName.replace(/ /g, '_')}`.toLowerCase(),
+    id: `${res.class.replace(/ /g, '_')}:${res.runnerName.replace(/ /g, '_')}:${res.time.replace(/ /g, '_')}`.toLowerCase(),
     class: res.class,
     controlName: res.controlName,
     control: res.control,
