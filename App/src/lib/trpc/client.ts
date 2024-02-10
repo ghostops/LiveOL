@@ -13,8 +13,8 @@ const userId = `LiveOLApp:${VERSION}`;
 const getUri = () => {
   if (__DEV__) {
     return Platform.select({
-      default: 'http://localhost:3000',
-      android: 'http://10.0.2.2:3000',
+      default: 'http://localhost:3001',
+      android: 'http://10.0.2.2:3001',
     });
   }
 
@@ -32,9 +32,10 @@ const link = httpLink({
   },
 });
 
-export const trpcClient = trpc.createClient({
-  links: [link],
-});
+export const trpcClient = () =>
+  trpc.createClient({
+    links: [link],
+  });
 
 export type TRPCQueryOutput = RouterOutput;
 export type TRPCQueryInput = RouterInput;

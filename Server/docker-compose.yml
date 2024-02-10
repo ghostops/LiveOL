@@ -6,8 +6,7 @@ services:
             dockerfile: Dockerfile
         command: npm run dev
         ports:
-            - 4000:4000
-            - 3000:3000
+            - 3001:3001
         volumes:
             - ./src:/app/src/
         depends_on:

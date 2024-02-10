@@ -21,7 +21,7 @@ import { OLSelfHelper } from 'lib/selfhelp';
     },
   });
 
-  const port = 3000;
+  const port = 3001;
   trpcServer.listen(port);
   console.info(
     `🚀  TRPC Server ready on port "${port}" with env "${getEnv('env') || 'dev'}"`,

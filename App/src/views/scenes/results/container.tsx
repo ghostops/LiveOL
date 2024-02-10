@@ -13,10 +13,8 @@ export const OLResults: React.FC = () => {
   const focus = useIsFocused();
   const { isLandscape } = useDeviceRotationStore();
   const { sortingKey, sortingDirection } = useSortingStore();
-  const [startTicking, stopTicking] = useLiveRunningStore(state => [
-    state.startTicking,
-    state.stopTicking,
-  ]);
+  const startTicking = useLiveRunningStore(state => state.startTicking);
+  const stopTicking = useLiveRunningStore(state => state.stopTicking);
   const oldHashes = useRef<string[]>([]);
 
   const sorting = `${sortingKey}:${sortingDirection}`;

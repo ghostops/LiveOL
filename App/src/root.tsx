@@ -62,7 +62,7 @@ export default () => {
       <GestureHandlerRootView style={{ flex: 1 }}>
         <SafeAreaProvider>
           <ActionSheetProvider>
-            <trpc.Provider client={trpcClient} queryClient={queryClient}>
+            <trpc.Provider client={trpcClient()} queryClient={queryClient}>
               <QueryClientProvider client={queryClient}>
                 <View style={{ flex: 1 }}>
                   <BottomSheetModalProvider>
