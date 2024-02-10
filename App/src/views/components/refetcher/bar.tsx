@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { View } from 'react-native';
 import { Easing, Animated, Dimensions } from 'react-native';
 import { COLORS, px } from '~/util/const';
 
@@ -44,13 +45,15 @@ export const OLRefetcherBar: React.FunctionComponent<Props> = ({
   });
 
   return (
-    <Animated.View
-      style={{
-        height: px(12),
-        width: '100%',
-        backgroundColor: COLORS.DARK,
-        transform: [{ translateX: width }],
-      }}
-    />
+    <View style={{ width: '100%', overflow: 'hidden' }}>
+      <Animated.View
+        style={{
+          height: px(12),
+          width: '100%',
+          backgroundColor: COLORS.DARK,
+          transform: [{ translateX: width }],
+        }}
+      />
+    </View>
   );
 };
