@@ -23,9 +23,12 @@ export const getResults = publicProcedure
 
     const sorted = sortOptimal(res.results, input.sorting || 'place:asc');
 
-    return sorted.map(
-      marshallResult(input.competitionId, input.className, res.splitcontrols),
-    );
+    return {
+      results: sorted.map(
+        marshallResult(input.competitionId, input.className, res.splitcontrols),
+      ),
+      hash: res.hash,
+    };
   });
 
 export const getClubResults = publicProcedure

@@ -3,7 +3,7 @@ import { TRPCQueryOutput } from '~/lib/trpc/client';
 import { OLText } from '~/views/components/text';
 
 interface Props {
-  split: TRPCQueryOutput['getResults'][0]['splits'][0];
+  split: TRPCQueryOutput['getResults']['results'][0]['splits'][0];
   best?: boolean;
 }
 

@@ -12,7 +12,7 @@ import { TRPCQueryOutput } from '~/lib/trpc/client';
 import { firstIndexSize } from '../../follow/followSheet';
 
 interface Props {
-  results: TRPCQueryOutput['getResults'];
+  results: TRPCQueryOutput['getResults']['results'];
   competitionId: number;
   className: string;
   disabled?: boolean;
@@ -27,7 +27,7 @@ export const OLResultsList: React.FC<Props> = props => {
   const listItemHeight = useOlListItemHeight();
 
   const renderItem = ({ item }: any) => {
-    const result: TRPCQueryOutput['getResults'][0] = item;
+    const result: TRPCQueryOutput['getResults']['results'][0] = item;
 
     return (
       <OLResultItem
@@ -58,7 +58,7 @@ export const OLResultsList: React.FC<Props> = props => {
         ListFooterComponent={<View style={{ height: 45 + firstIndexSize }} />}
         data={props.results}
         renderItem={renderItem}
-        keyExtractor={(item: TRPCQueryOutput['getResults'][0]) => item.id}
+        keyExtractor={(item: TRPCQueryOutput['getResults']['results'][0]) => item.id}
         ListEmptyComponent={
           !props.loading ? (
             <View

@@ -86,7 +86,7 @@ export class OLSelfHelper {
             sorting: 'place:asc',
           });
 
-          if (res[0]?.club === 'GER Germany') {
+          if (res.results[0]?.club === 'GER Germany') {
             return true;
           }
 

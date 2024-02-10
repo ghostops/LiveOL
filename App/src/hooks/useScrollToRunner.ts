@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { TRPCQueryOutput } from '~/lib/trpc/client';
 
 type Options = {
-  results?: TRPCQueryOutput['getResults'];
+  results?: TRPCQueryOutput['getResults']['results'];
   followedRunnerId?: string;
   className?: string;
 };

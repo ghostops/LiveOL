@@ -81,7 +81,10 @@ export const OLHome: React.FC = () => {
         searching={isSearching}
         todaysCompetitions={getTodaysCompetitionsQuery.data?.today || []}
         refetch={async () => {
-          await getCompetitionsQuery.refetch();
+          await Promise.all([
+            getCompetitionsQuery.refetch(),
+            getTodaysCompetitionsQuery.refetch(),
+          ]);
         }}
         onCompetitionPress={competition => {
           navigate('Competition', {

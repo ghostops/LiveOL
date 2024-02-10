@@ -10,7 +10,7 @@ import { usePromoStore } from '~/store/promo';
 
 interface Props {
   refetch: () => Promise<void>;
-  results: TRPCQueryOutput['getResults'];
+  results: TRPCQueryOutput['getResults']['results'];
   focus: boolean;
   competitionId: number;
   className: string;

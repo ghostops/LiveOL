@@ -1,8 +1,6 @@
-import React from 'react';
-import { TouchableOpacity, Easing, Animated } from 'react-native';
+import { useEffect, useState } from 'react';
+import { Easing, Animated, Dimensions } from 'react-native';
 import { COLORS, px } from '~/util/const';
-import { OLText } from '../text';
-import { useTranslation } from 'react-i18next';
 
 interface Props {
   interval: number;
@@ -13,12 +11,9 @@ export const OLRefetcherBar: React.FunctionComponent<Props> = ({
   interval,
   promise,
 }) => {
-  const { t } = useTranslation();
-  const [isAnimating, setIsAnimating] = React.useState(false);
-  const [animatedWidth] = React.useState(new Animated.Value(0));
-  const [animatedHint] = React.useState(new Animated.Value(0));
+  const [animatedWidth] = useState(new Animated.Value(0));
 
-  React.useEffect(() => {
+  useEffect(() => {
     const refresh = async (): Promise<void> => {
       await promise?.();
       animate();
@@ -30,7 +25,7 @@ export const OLRefetcherBar: React.FunctionComponent<Props> = ({
       Animated.timing(animatedWidth, {
         toValue: 1,
         duration: interval,
-        useNativeDriver: false,
+        useNativeDriver: true,
         easing: Easing.linear,
       }).start();
     };
@@ -43,58 +38,19 @@ export const OLRefetcherBar: React.FunctionComponent<Props> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const getHint = async () => {
-    if (isAnimating) {
-      return;
-    }
-    setIsAnimating(true);
-    const duration = 500;
-    Animated.timing(animatedHint, {
-      toValue: 1,
-      duration,
-      useNativeDriver: false,
-    }).start();
-    await new Promise((r: any) => setTimeout(r, 2000));
-    Animated.timing(animatedHint, {
-      toValue: 0,
-      duration,
-      useNativeDriver: false,
-    }).start();
-    setIsAnimating(false);
-  };
-
   const width = animatedWidth.interpolate({
     inputRange: [0, 1],
-    outputRange: ['0%', '100%'],
-  });
-  const height = animatedHint.interpolate({
-    inputRange: [0, 1],
-    outputRange: [px(12), px(22)],
+    outputRange: [-Dimensions.get('window').width, 0],
   });
 
   return (
-    <TouchableOpacity onPress={getHint} activeOpacity={1}>
-      <Animated.View style={{ height, width, backgroundColor: COLORS.DARK }} />
-
-      <Animated.View
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          justifyContent: 'center',
-          alignItems: 'center',
-          transform: [{ scale: animatedHint }],
-        }}
-      >
-        <OLText
-          size={14}
-          style={{ backgroundColor: 'rgba(255, 255, 255, .5)' }}
-        >
-          {t('classes.timerHint')}
-        </OLText>
-      </Animated.View>
-    </TouchableOpacity>
+    <Animated.View
+      style={{
+        height: px(12),
+        width: '100%',
+        backgroundColor: COLORS.DARK,
+        transform: [{ translateX: width }],
+      }}
+    />
   );
 };

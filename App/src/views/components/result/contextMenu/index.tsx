@@ -11,7 +11,7 @@ import { TRPCQueryOutput } from '~/lib/trpc/client';
 import { useFollowBottomSheetStore } from '~/store/followBottomSheet';
 
 type Props = {
-  result: TRPCQueryOutput['getResults'][0];
+  result: TRPCQueryOutput['getResults']['results'][0];
   children: React.ReactNode;
   club: boolean;
 };

@@ -16,7 +16,7 @@ import { OLRunnerContextMenu } from '../contextMenu';
 import { TRPCQueryOutput } from '~/lib/trpc/client';
 
 type Props = {
-  result: TRPCQueryOutput['getResults'][0];
+  result: TRPCQueryOutput['getResults']['results'][0];
   disabled?: boolean;
   club?: boolean;
   followed?: boolean;

@@ -7,12 +7,16 @@ interface ResultCopy extends LiveresultatApi.result {
   place: any;
 }
 
-const parseToNumber = (maybeNumber: any, fallback: number): number => {
-  let asNumber = _.isNaN(_.toNumber(maybeNumber)) ? 0 : _.toNumber(maybeNumber);
+const parseToNumber = (maybeNumber: unknown, fallback: number): number => {
+  if (_.isNaN(_.toNumber(maybeNumber))) {
+    return fallback;
+  }
 
-  if (asNumber === 0) asNumber = fallback;
+  if (maybeNumber === '') {
+    return fallback;
+  }
 
-  return asNumber;
+  return _.toNumber(maybeNumber);
 };
 
 const sortSplit = (sortingKey: string) => (a: ResultCopy, b: ResultCopy) => {
@@ -78,7 +82,8 @@ export const sortOptimal = (
 
   const sortSplitFunction = sortSplit(sortingKey);
 
-  let sortingFunction: any = sortingKey;
+  let sortingFunction: string | ((a: ResultCopy, b: ResultCopy) => number) =
+    sortingKey;
 
   if (sortingKey.includes('split-')) {
     sortingFunction = sortSplitFunction;
@@ -89,14 +94,12 @@ export const sortOptimal = (
   }
 
   const sorted = copy.sort(
-    firstBy(sortingFunction, sortingDirection as SortOrder)
-      .thenBy('start', { ignoreCase: true })
-      .thenBy('status', { ignoreCase: true }),
+    firstBy(sortingFunction as any, sortingDirection as SortOrder),
   );
 
   const parsed = sorted.map(res => ({
     ...res,
-    start: res.start?.toString(),
+    start: res.start === Number.MAX_SAFE_INTEGER ? 0 : res.start?.toString(),
     place: res.place?.toString(),
   }));
 

@@ -11,7 +11,7 @@ import { FlashList } from '@shopify/flash-list';
 import { firstIndexSize } from '../../follow/followSheet';
 
 interface Props {
-  results: TRPCQueryOutput['getResults'];
+  results: TRPCQueryOutput['getResults']['results'];
   competitionId: number;
   className: string;
   disabled?: boolean;
@@ -25,7 +25,7 @@ export const OLResultsTable: React.FC<Props> = props => {
   const listItemHeight = useOlListItemHeight();
 
   const renderResult = ({ item }: any) => {
-    const result: TRPCQueryOutput['getResults'][0] = item;
+    const result: TRPCQueryOutput['getResults']['results'][0] = item;
 
     return (
       <OLTableRow
@@ -58,7 +58,7 @@ export const OLResultsTable: React.FC<Props> = props => {
           ListFooterComponent={<View style={{ height: 45 + firstIndexSize }} />}
           data={props.results}
           renderItem={renderResult}
-          keyExtractor={(item: TRPCQueryOutput['getResults'][0]) => item.id}
+          keyExtractor={(item: TRPCQueryOutput['getResults']['results'][0]) => item.id}
           ListEmptyComponent={
             <View
               style={{

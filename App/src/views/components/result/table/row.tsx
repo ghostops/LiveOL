@@ -19,7 +19,7 @@ import { OLClassName } from '../item/className';
 import { TRPCQueryOutput } from '~/lib/trpc/client';
 
 interface OwnProps {
-  result: TRPCQueryOutput['getResults'][0];
+  result: TRPCQueryOutput['getResults']['results'][0];
   disabled?: boolean;
   followed?: boolean;
   club?: boolean;

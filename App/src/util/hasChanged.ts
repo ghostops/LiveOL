@@ -1,8 +1,8 @@
 import { TRPCQueryOutput } from '~/lib/trpc/client';
 
 export const resultsChanged = (
-  prev: TRPCQueryOutput['getResults'][0],
-  now: TRPCQueryOutput['getResults'][0],
+  prev: TRPCQueryOutput['getResults']['results'][0],
+  now: TRPCQueryOutput['getResults']['results'][0],
 ) =>
   prev.place !== now.place ||
   prev.result !== now.result ||

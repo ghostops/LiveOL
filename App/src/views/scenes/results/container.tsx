@@ -1,15 +1,13 @@
-import { useHasChanged } from './hooks/useHasChanged';
 import { OLResults as Component } from './component';
 import { OLError } from '~/views/components/error';
 import { RouteProp, useIsFocused, useRoute } from '@react-navigation/native';
 import { useDeviceRotationStore } from '~/store/deviceRotation';
 import { RootStack } from '~/lib/nav/router';
 import { useSortingStore } from '~/store/sorting';
-import { usePrevious } from '~/hooks/usePrevious';
 import { trpc } from '~/lib/trpc/client';
-import { useEffect } from 'react';
-import { Vibration } from 'react-native';
+import { useEffect, useRef } from 'react';
 import { useLiveRunningStore } from '~/store/liveRunning';
+import { Vibration } from 'react-native';
 
 export const OLResults: React.FC = () => {
   const focus = useIsFocused();
@@ -19,6 +17,7 @@ export const OLResults: React.FC = () => {
     state.startTicking,
     state.stopTicking,
   ]);
+  const oldHashes = useRef<string[]>([]);
 
   const sorting = `${sortingKey}:${sortingDirection}`;
 
@@ -26,25 +25,28 @@ export const OLResults: React.FC = () => {
     params: { className, competitionId, runnerId },
   } = useRoute<RouteProp<RootStack, 'Results'>>();
 
-  const getResultsQuery = trpc.getResults.useQuery({
-    className,
-    competitionId,
-    sorting,
-  });
-
-  const previousData = usePrevious(getResultsQuery.data);
-
-  const results = getResultsQuery.data || previousData;
-
-  const hasAnyChanged = useHasChanged(results);
+  const getResultsQuery = trpc.getResults.useQuery(
+    {
+      className,
+      competitionId,
+      sorting,
+    },
+    { staleTime: 0 },
+  );
 
   useEffect(() => {
-    if (!hasAnyChanged) {
-      return;
-    }
+    if (getResultsQuery.data?.hash) {
+      if (
+        oldHashes.current.length &&
+        !oldHashes.current.includes(getResultsQuery.data.hash)
+      ) {
+        Vibration.vibrate();
+        __DEV__ && console.log('[vibrated]', getResultsQuery.data?.hash);
+      }
 
-    Vibration.vibrate();
-  }, [hasAnyChanged]);
+      oldHashes.current = [...oldHashes.current, getResultsQuery.data.hash];
+    }
+  }, [getResultsQuery.data?.hash]);
 
   useEffect(() => {
     startTicking();
@@ -64,7 +66,7 @@ export const OLResults: React.FC = () => {
   return (
     <Component
       loading={getResultsQuery.isLoading}
-      results={getResultsQuery.data || []}
+      results={getResultsQuery.data?.results || []}
       refetch={async () => {
         await getResultsQuery.refetch();
       }}
