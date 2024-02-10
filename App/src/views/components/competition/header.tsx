@@ -1,7 +1,6 @@
 import { dateToReadable } from '~/util/date';
 import { OLButton } from '~/views/components/button';
 import { OLCompetitionClub } from '~/views/components/competition/club';
-import { OLCompetitionIOSHeader } from '~/views/components/competition/iosHeader';
 import { OLText } from '~/views/components/text';
 import { Linking, Platform, TouchableOpacity, View } from 'react-native';
 import { px } from '~/util/const';
@@ -11,6 +10,7 @@ import { TRPCQueryOutput } from '~/lib/trpc/client';
 import { useTheme } from '~/hooks/useTheme';
 import { Marquee } from '@animatereactnative/marquee';
 import { useState } from 'react';
+import { OLLastPassing } from './lastPassing';
 
 interface Props {
   competition: TRPCQueryOutput['getCompetition']['competition'];
@@ -27,10 +27,6 @@ export const OLCompetitionHeader: React.FC<Props> = props => {
 
   return (
     <View>
-      {Platform.OS === 'ios' && (
-        <OLCompetitionIOSHeader name={props.competition.name} />
-      )}
-
       {!!props.latestPassings?.length && (
         <TouchableOpacity
           activeOpacity={1}
@@ -48,12 +44,10 @@ export const OLCompetitionHeader: React.FC<Props> = props => {
               paddingVertical: px(8),
             }}
           >
-            <OLText size={16} style={{ color: 'white' }}>
-              {props.latestPassings
-                ?.map(result => {
-                  return `${result.runnerName} (${result.class}): ${result.time} ${result.controlName} -- `;
-                })
-                .join('')}
+            <OLText size={16}>
+              {props.latestPassings?.map(result => {
+                return <OLLastPassing key={result.id} result={result} />;
+              })}
             </OLText>
           </Marquee>
         </TouchableOpacity>

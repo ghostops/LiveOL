@@ -158,6 +158,7 @@ export const HomeList: React.FC<Props> = ({
         }
         onEndReached={loadMore}
         onEndReachedThreshold={0.5}
+        stickySectionHeadersEnabled={false}
       />
       {loading && <OLLoading badge top={32} />}
     </>

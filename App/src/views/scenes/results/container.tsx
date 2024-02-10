@@ -9,11 +9,16 @@ import { usePrevious } from '~/hooks/usePrevious';
 import { trpc } from '~/lib/trpc/client';
 import { useEffect } from 'react';
 import { Vibration } from 'react-native';
+import { useLiveRunningStore } from '~/store/liveRunning';
 
 export const OLResults: React.FC = () => {
   const focus = useIsFocused();
   const { isLandscape } = useDeviceRotationStore();
   const { sortingKey, sortingDirection } = useSortingStore();
+  const [startTicking, stopTicking] = useLiveRunningStore(state => [
+    state.startTicking,
+    state.stopTicking,
+  ]);
 
   const sorting = `${sortingKey}:${sortingDirection}`;
 
@@ -40,6 +45,12 @@ export const OLResults: React.FC = () => {
 
     Vibration.vibrate();
   }, [hasAnyChanged]);
+
+  useEffect(() => {
+    startTicking();
+
+    return () => stopTicking();
+  }, [startTicking, stopTicking]);
 
   if (getResultsQuery.error) {
     return (

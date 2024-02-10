@@ -2,7 +2,6 @@ import { useRef } from 'react';
 import { useSearchStore } from '~/store/search';
 import { useOLNavigation } from '~/hooks/useNavigation';
 import { useDeviceRotationStore } from '~/store/deviceRotation';
-import { Platform } from 'react-native';
 import { OLHome as Component } from './component';
 import { OLError } from '~/views/components/error';
 import RNBootSplash from 'react-native-bootsplash';
@@ -84,7 +83,7 @@ export const OLHome: React.FC = () => {
         onCompetitionPress={competition => {
           navigate('Competition', {
             competitionId: competition.id || -1,
-            title: Platform.OS === 'android' ? competition.name || '' : '',
+            title: competition.name,
           });
         }}
         landscape={isLandscape}
