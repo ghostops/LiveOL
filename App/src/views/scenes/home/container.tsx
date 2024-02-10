@@ -34,9 +34,12 @@ export const OLHome: React.FC = () => {
     },
   );
 
-  const getTodaysCompetitionsQuery = trpc.getTodaysCompetitions.useQuery({
-    date: getToday(),
-  });
+  const getTodaysCompetitionsQuery = trpc.getTodaysCompetitions.useQuery(
+    {
+      date: getToday(),
+    },
+    { gcTime: 0, staleTime: 0 },
+  );
 
   if (getCompetitionsQuery.error) {
     return (

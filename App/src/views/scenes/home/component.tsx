@@ -7,6 +7,7 @@ import { TodaysCompetitions } from '~/views/components/home/today';
 import { HomeListItem } from '~/views/components/home/listItem';
 import { useCallback, useRef } from 'react';
 import { OLHomeBar } from './bar';
+import { OLLoading } from '~/views/components/loading';
 
 interface Props {
   competitions: TRPCQueryOutput['getCompetitions']['competitions'];
@@ -61,7 +62,7 @@ export const OLHome: React.FC<Props> = ({
   }, [onCompetitionPress, searching, todaysCompetitions, px]);
 
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <OLHomeBar
         landscape={!!landscape}
         openSearch={openSearch}
@@ -77,6 +78,7 @@ export const OLHome: React.FC<Props> = ({
         )}
         {...passthroughProps}
       />
+      {passthroughProps.loading && <OLLoading badge top={32} />}
     </View>
   );
 };

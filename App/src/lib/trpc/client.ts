@@ -1,4 +1,4 @@
-import { createTRPCClient, httpBatchLink } from '@trpc/client';
+import { httpBatchLink } from '@trpc/client';
 import type {
   AppRouter,
   RouterInput,
@@ -33,10 +33,6 @@ const httpLink = httpBatchLink({
 });
 
 export const trpcClient = trpc.createClient({
-  links: [httpLink],
-});
-
-export const plainTrpc = createTRPCClient<AppRouter>({
   links: [httpLink],
 });
 
