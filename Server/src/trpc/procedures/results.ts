@@ -49,9 +49,7 @@ export const getClubResults = publicProcedure
       input.clubName,
     );
 
-    const sorted = sortOptimal(res.results, input.sorting || 'place:asc');
-
-    return sorted.map(result =>
+    return res.results.map(result =>
       marshallResult(input.competitionId, result.class, [])(result),
     );
   });

@@ -30,7 +30,6 @@ export declare namespace LiveresultatApi {
     className: string;
     splitcontrols: split[];
     results: result[];
-    DT_RowClass?: 'new_result';
   }
 
   export interface result {
@@ -38,13 +37,13 @@ export declare namespace LiveresultatApi {
     name: string;
     club?: string;
     class?: string;
-    result: string;
+    result: number;
     status: number;
-    timeplus: string;
+    timeplus: number;
     progress: number;
     start: number;
     splits: Record<string, number>;
-    DT_RowClass?: string;
+    DT_RowClass?: 'new_result';
   }
 
   export interface split {

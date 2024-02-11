@@ -4,7 +4,7 @@ import { COLORS } from '~/util/const';
 import { OLText } from '../../../components/text';
 
 interface Props {
-  place: string;
+  place: number;
 }
 
 export const OLResultBadge: React.FC<Props> = ({ place }) => (
@@ -15,7 +15,7 @@ export const OLResultBadge: React.FC<Props> = ({ place }) => (
       flex: 1,
     }}
   >
-    {Boolean(place.length > 0 && place !== '-') && (
+    {Boolean(place && place > 0) && (
       <View
         style={{
           backgroundColor: COLORS.MAIN,

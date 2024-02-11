@@ -1,77 +1,78 @@
-import { firstBy } from 'thenby';
 import { LiveresultatApi } from './types';
-import _ from 'lodash';
 
-interface ResultCopy extends LiveresultatApi.result {
-  start: any;
-  place: any;
-}
-
-const parseToNumber = (maybeNumber: unknown, fallback: number): number => {
-  if (_.isNaN(_.toNumber(maybeNumber))) {
-    return fallback;
-  }
-
-  if (maybeNumber === '') {
-    return fallback;
-  }
-
-  return _.toNumber(maybeNumber);
+export type SortedResult = Omit<LiveresultatApi.result, 'place'> & {
+  place: number;
 };
 
-const sortSplit = (sortingKey: string) => (a: ResultCopy, b: ResultCopy) => {
-  const key = sortingKey.replace('split-', '');
+const sortSplit =
+  (sortingKey: string, direction: string) =>
+  (a: SortedResult, b: SortedResult) => {
+    const desc = direction === 'desc';
+    const key = sortingKey.replace('split-', '');
 
-  if (!a.splits[key]) {
-    return 1;
+    if (!a.splits[key]) {
+      return desc ? -1 : 1;
+    }
+
+    if (!b.splits[key]) {
+      return 0;
+    }
+
+    if (desc) {
+      return b.splits[key]! - a.splits[key]!;
+    }
+
+    return a.splits[key]! - b.splits[key]!;
+  };
+
+const sortPlace = (direction: string) => (a: SortedResult, b: SortedResult) => {
+  const desc = direction === 'desc';
+
+  if (a.place > b.place) {
+    return desc ? -1 : 1;
+  } else if (a.place < b.place) {
+    return desc ? 1 : -1;
   }
 
-  if (!b.splits[key]) {
+  return 0;
+};
+
+const sortResult =
+  (direction: string) => (a: SortedResult, b: SortedResult) => {
+    const desc = direction === 'desc';
+
+    if (a.result > b.result) {
+      return desc ? -1 : 1;
+    } else if (a.result < b.result) {
+      return desc ? 1 : -1;
+    }
+
     return 0;
+  };
+
+const sortName = (direction: string) => (a: SortedResult, b: SortedResult) => {
+  const desc = direction === 'desc';
+
+  if (a.name < b.name) {
+    return desc ? 1 : -1;
   }
-
-  return a.splits[key]! - b.splits[key]!;
-};
-
-const sortResult = (a: ResultCopy, b: ResultCopy) => {
-  const [aMinString, aSecString] = a.result.split(':');
-  const [bMinString, bSecString] = b.result.split(':');
-
-  const bMin = Number(bMinString);
-  const bSec = Number(bSecString);
-
-  if (Number.isNaN(bMin) || Number.isNaN(bSec)) {
-    return -1;
+  if (a.name > b.name) {
+    return desc ? -1 : 1;
   }
-
-  const aMin = Number(aMinString);
-  const aSec = Number(aSecString);
-
-  if (Number.isNaN(aMin) || Number.isNaN(aSec)) {
-    return 1;
-  }
-
-  const aComb = aMin * 60 + aSec;
-  const bComb = bMin * 60 + bSec;
-
-  return bComb > aComb ? -1 : 1;
+  return 0;
 };
 
 export const sortOptimal = (
   original: LiveresultatApi.result[],
   sorting: string,
-): LiveresultatApi.result[] => {
-  let copy: ResultCopy[] = [...original];
-
-  copy = copy.map(result => {
-    const place = parseToNumber(result.place, copy.length);
-    const start = parseToNumber(result.start, Number.MAX_SAFE_INTEGER);
+) => {
+  const copy: SortedResult[] = [...original].map(result => {
+    const placeNumber = Number(result.place);
 
     return {
       ...result,
-      place,
-      start,
-    };
+      place: placeNumber,
+    } as any;
   });
 
   const [sortingKey, sortingDirection] = sorting.split(':');
@@ -80,28 +81,40 @@ export const sortOptimal = (
     throw new Error('invalid sorting options');
   }
 
-  const sortSplitFunction = sortSplit(sortingKey);
+  const sortSplitFunction = sortSplit(sortingKey, sortingDirection);
 
-  let sortingFunction: string | ((a: ResultCopy, b: ResultCopy) => number) =
-    sortingKey;
+  let sortingFunction:
+    | ((a: SortedResult, b: SortedResult) => number)
+    | undefined = undefined;
 
   if (sortingKey.includes('split-')) {
     sortingFunction = sortSplitFunction;
+  } else if (sortingKey === 'place') {
+    sortingFunction = sortPlace(sortingDirection);
+  } else if (sortingKey === 'result') {
+    sortingFunction = sortResult(sortingDirection);
+  } else if (sortingKey === 'name') {
+    sortingFunction = sortName(sortingDirection);
   }
 
-  if (sortingKey === 'result') {
-    sortingFunction = sortResult;
+  if (sortingFunction === undefined) {
+    throw new Error('no sorting function found');
   }
 
-  const sorted = copy.sort(
-    firstBy(sortingFunction as any, sortingDirection as SortOrder),
-  );
+  let sorted = copy.sort(sortingFunction);
 
-  const parsed = sorted.map(res => ({
-    ...res,
-    start: res.start === Number.MAX_SAFE_INTEGER ? 0 : res.start?.toString(),
-    place: res.place?.toString(),
-  }));
+  if (sortingKey === 'result' || sortingKey === 'place') {
+    sorted = sorted.sort((a, b) => {
+      if (a.status > 0) {
+        return 1;
+      }
+      if (b.status > 0) {
+        return -1;
+      }
 
-  return parsed;
+      return 0;
+    });
+  }
+
+  return sorted;
 };

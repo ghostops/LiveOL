@@ -67,7 +67,7 @@ export class LiveresultatAPIClient {
   ): Promise<LiveresultatApi.getclassresults> =>
     this.cachedRequest(
       this.client.get(
-        `/api.php?method=getclassresults&comp=${id}&class=${encodeURIComponent(_class)}`,
+        `/api.php?method=getclassresults&comp=${id}&class=${encodeURIComponent(_class)}&unformattedTimes=true`,
         {
           headers: {
             'Content-Type': 'application/json;charset=UTF-8',
@@ -93,7 +93,7 @@ export class LiveresultatAPIClient {
   ): Promise<LiveresultatApi.getclubresults> => {
     return this.cachedRequest(
       this.client.get(
-        `/api.php?method=getclubresults&comp=${id}&club=${encodeURIComponent(club)}`,
+        `/api.php?method=getclubresults&comp=${id}&club=${encodeURIComponent(club)}&unformattedTimes=true`,
       ),
       `getclubresults:${id}:${encodeURIComponent(club)}`,
       '15 seconds',

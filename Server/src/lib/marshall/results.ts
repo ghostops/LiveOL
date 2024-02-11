@@ -3,9 +3,11 @@ import { OLTime } from 'types';
 import * as Helpers from 'lib/helpers/time';
 import _ from 'lodash';
 import { createHash } from 'crypto';
+import { SortedResult } from 'lib/liveresultat/sorting';
 
 export interface IOLSplit {
   id: string;
+  code: number;
   name: string;
   status: number;
   place: number;
@@ -25,7 +27,7 @@ const parsePlace = (place: any): number => {
 
 export const marshallSplits =
   (split: LiveresultatApi.split) =>
-  (result: LiveresultatApi.result): IOLSplit => {
+  (result: LiveresultatApi.result | SortedResult): IOLSplit => {
     const keys = Object.keys(result.splits);
     const foundKeys = keys.filter(key => key.includes(String(split.code)));
     const keyValue: Record<string, number | undefined> = {};
@@ -41,6 +43,7 @@ export const marshallSplits =
 
     return {
       id: `${split.code}:${result.name.replace(/ /g, '_')}`,
+      code: split.code,
       name: split.name,
       time: Helpers.splitTimestampToReadable(keyValue['time'] || 0),
       status: keyValue['status'] || NaN,
@@ -68,7 +71,7 @@ export interface IOLResult {
   splits: IOLSplit[];
   hasSplits: boolean;
   start: OLTime;
-  place: string;
+  place?: number;
   name: string;
   club?: string;
   class?: string;
@@ -86,13 +89,15 @@ export const marshallResult =
     _class: string | undefined,
     splitControlls: LiveresultatApi.split[],
   ) =>
-  (res: LiveresultatApi.result): IOLResult => {
+  (res: LiveresultatApi.result | SortedResult): IOLResult => {
     const liveRunningDate = Helpers.getLiveRunningStart(res.start);
 
     const start = Helpers.startToReadable(res.start);
 
     const compositeKey = `${comp}:${_class}:${res.name.replace(/ /g, '_')}:${res.club?.replace(/ /g, '_')}`;
     const id = createHash('md5').update(compositeKey).digest('hex');
+
+    const place = typeof res.place === 'string' ? Number(res.place) : res.place;
 
     return {
       id,
@@ -103,13 +108,13 @@ export const marshallResult =
         : [],
       hasSplits: Boolean(!!splitControlls && splitControlls.length),
       start,
-      place: res.status > 0 ? '' : res.place,
+      place: res.status > 0 ? undefined : place,
       club: res?.club,
       class: res?.class || _class,
       name: res.name,
-      result: res.result,
+      result: Helpers.splitTimestampToReadable(res.result),
       status: res.status,
-      timeplus: res.timeplus,
+      timeplus: Helpers.timeplusToReadable(res.timeplus),
       liveRunningStart: liveRunningDate.format(),
       progress: res.progress,
       hasUpdated: res.DT_RowClass === 'new_result',

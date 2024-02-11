@@ -39,7 +39,7 @@ const OLItemTime: React.FC<Pick<Props, 'result' | 'disabled'>> = ({
 
   if (!result.result.length) {
     if (isLiveRunning(result)) {
-      return <OLResultLiveRunning date={result.liveRunningStart} />;
+      return <OLResultLiveRunning date={result.start} />;
     }
 
     if (!startIsAfterNow(result)) {
