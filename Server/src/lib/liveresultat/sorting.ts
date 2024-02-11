@@ -38,12 +38,19 @@ const sortPlace = (direction: string) => (a: SortedResult, b: SortedResult) => {
 };
 
 const sortResult =
-  (direction: string) => (a: SortedResult, b: SortedResult) => {
+  (direction: string, nowTimestamp: number) =>
+  (a: SortedResult, b: SortedResult) => {
     const desc = direction === 'desc';
 
-    if (a.result > b.result) {
+    const startDiffA = nowTimestamp - a.start;
+    const startDiffB = nowTimestamp - b.start;
+
+    const resA = a.result || startDiffA > 0 ? startDiffA : 0;
+    const resB = b.result || startDiffB > 0 ? startDiffB : 0;
+
+    if (resA > resB) {
       return desc ? -1 : 1;
-    } else if (a.result < b.result) {
+    } else if (resA < resB) {
       return desc ? 1 : -1;
     }
 
@@ -65,6 +72,7 @@ const sortName = (direction: string) => (a: SortedResult, b: SortedResult) => {
 export const sortOptimal = (
   original: LiveresultatApi.result[],
   sorting: string,
+  nowTimestamp: number,
 ) => {
   const copy: SortedResult[] = [...original].map(result => {
     const placeNumber = Number(result.place);
@@ -92,7 +100,7 @@ export const sortOptimal = (
   } else if (sortingKey === 'place') {
     sortingFunction = sortPlace(sortingDirection);
   } else if (sortingKey === 'result') {
-    sortingFunction = sortResult(sortingDirection);
+    sortingFunction = sortResult(sortingDirection, nowTimestamp);
   } else if (sortingKey === 'name') {
     sortingFunction = sortName(sortingDirection);
   }

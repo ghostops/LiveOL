@@ -84,6 +84,7 @@ export class OLSelfHelper {
             competitionId: 26860,
             className: 'Men 20',
             sorting: 'place:asc',
+            nowTimestamp: 1,
           });
 
           if (res.results[0]?.club === 'GER Germany') {

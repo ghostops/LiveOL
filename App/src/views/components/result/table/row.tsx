@@ -61,10 +61,8 @@ const OLRowTime: React.FC<Props> = ({ result, disabled }) => {
     return null;
   }
 
-  if (!result.result.length) {
-    if (isLiveRunning(result)) {
-      return <OLResultLiveRunning date={result.liveRunningStart} />;
-    }
+  if (isLiveRunning(result)) {
+    return <OLResultLiveRunning startTime={result.startTime} />;
   }
 
   return (

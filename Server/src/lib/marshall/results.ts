@@ -70,15 +70,15 @@ export interface IOLResult {
   id: string;
   splits: IOLSplit[];
   hasSplits: boolean;
-  start: OLTime;
   place?: number;
   name: string;
   club?: string;
   class?: string;
-  result: string;
   status: number;
-  timeplus: string;
-  liveRunningStart: string;
+  start: OLTime;
+  startTime: number;
+  result: OLTime;
+  timeplus: OLTime;
   progress: number;
   hasUpdated: boolean;
 }
@@ -90,8 +90,6 @@ export const marshallResult =
     splitControlls: LiveresultatApi.split[],
   ) =>
   (res: LiveresultatApi.result | SortedResult): IOLResult => {
-    const liveRunningDate = Helpers.getLiveRunningStart(res.start);
-
     const start = Helpers.startToReadable(res.start);
 
     const compositeKey = `${comp}:${_class}:${res.name.replace(/ /g, '_')}:${res.club?.replace(/ /g, '_')}`;
@@ -115,7 +113,7 @@ export const marshallResult =
       result: Helpers.splitTimestampToReadable(res.result),
       status: res.status,
       timeplus: Helpers.timeplusToReadable(res.timeplus),
-      liveRunningStart: liveRunningDate.format(),
+      startTime: res.start,
       progress: res.progress,
       hasUpdated: res.DT_RowClass === 'new_result',
     };

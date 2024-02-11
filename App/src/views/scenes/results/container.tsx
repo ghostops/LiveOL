@@ -8,6 +8,7 @@ import { trpc } from '~/lib/trpc/client';
 import { useEffect, useRef } from 'react';
 import { useLiveRunningStore } from '~/store/liveRunning';
 import { Vibration } from 'react-native';
+import { nowTimestamp } from '~/util/isLive';
 
 export const OLResults: React.FC = () => {
   const focus = useIsFocused();
@@ -28,6 +29,7 @@ export const OLResults: React.FC = () => {
       className,
       competitionId,
       sorting,
+      nowTimestamp: nowTimestamp(),
     },
     { staleTime: 0 },
   );

@@ -5,8 +5,6 @@ import {
   EventorEventItem,
 } from 'lib/eventor/types';
 import { LiveresultatApi } from 'lib/liveresultat/types';
-import moment from 'moment';
-import { UTCTime } from 'types';
 
 export interface IOLCompetitionResponse {
   competitions: IOLCompetition[];
@@ -20,7 +18,7 @@ export interface IOLCompetition {
   id: number;
   name: string;
   organizer: string;
-  date: UTCTime;
+  date: string;
 
   // Eventor props
   eventorAvailable: boolean;
@@ -42,7 +40,7 @@ export const marshallCompetition =
       id: liveres.id,
       name: liveres.name,
       organizer: liveres.organizer,
-      date: moment.utc(liveres.date).format(),
+      date: liveres.date,
       clubLogoSizes: EVENTOR_CLUB_ICON_SIZES,
       eventorAvailable: false,
       eventorUrl: undefined,

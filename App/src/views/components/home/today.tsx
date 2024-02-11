@@ -53,8 +53,7 @@ export const TodaysCompetitions: React.FC<Props> = ({
             color: 'white',
           }}
         >
-          {competitions[0].date &&
-            dateToReadable(new Date(competitions[0].date).toISOString())}
+          {competitions[0].date && dateToReadable(competitions[0].date)}
         </OLText>
       </View>
       <OLCard

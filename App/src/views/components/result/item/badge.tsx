@@ -4,7 +4,7 @@ import { COLORS } from '~/util/const';
 import { OLText } from '../../../components/text';
 
 interface Props {
-  place: number;
+  place?: number;
 }
 
 export const OLResultBadge: React.FC<Props> = ({ place }) => (

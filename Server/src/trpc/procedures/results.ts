@@ -9,6 +9,7 @@ export const getResults = publicProcedure
       competitionId: z.number(),
       className: z.string(),
       sorting: z.string(),
+      nowTimestamp: z.number(),
     }),
   )
   .query(async ({ ctx, input }) => {
@@ -21,7 +22,11 @@ export const getResults = publicProcedure
       input.className,
     );
 
-    const sorted = sortOptimal(res.results, input.sorting || 'place:asc');
+    const sorted = sortOptimal(
+      res.results,
+      input.sorting || 'place:asc',
+      input.nowTimestamp,
+    );
 
     return {
       results: sorted.map(

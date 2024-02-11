@@ -1,37 +1,35 @@
-import moment from 'moment';
-import 'moment-duration-format';
+import { Locale, format, isSameDay, parse } from 'date-fns';
+import { enUS, sv, it, de, cs, es, sr } from 'date-fns/locale';
+import i18next from 'i18next';
+import { SupportedLocale } from '~/lib/i18n';
+
+const dateFnsLocales: Record<SupportedLocale, Locale> = {
+  en: enUS,
+  sv,
+  it,
+  de,
+  cs,
+  es,
+  no: sv,
+  sr,
+};
 
 export const isDateToday = (date: string): boolean => {
-  const input = moment.utc(date);
-  const today = moment.utc();
-
-  return today.isSame(input, 'date');
+  const parsed = parse(date, 'yyyy-MM-dd', new Date());
+  if (isNaN(parsed?.getTime())) {
+    return false;
+  }
+  return isSameDay(new Date(), parsed);
 };
 
 export const dateToReadable = (date: string): string => {
-  return moment.utc(date).format('YYYY-MM-DD');
-};
-
-export const diffDateNow = (datestring: string): string | null => {
-  if (datestring === 'Invalid date') {
-    return null;
+  const parsed = parse(date, 'yyyy-MM-dd', new Date());
+  if (isNaN(parsed?.getTime())) {
+    return '';
   }
-
-  const date = moment(datestring).utcOffset(-120);
-  // To use this with the liveresults replayer (serverside) you need to set your clock locally
-  // to match the results returned by the replayer.
-  const now = moment();
-
-  const difference = now.diff(date);
-
-  if (difference < 0) {
-    return null;
-  }
-
-  const duration: any = moment.duration(difference);
-  const formated = duration.format('mm:ss', { trim: false }) as string;
-
-  return formated;
+  return format(parsed, 'P', {
+    locale: dateFnsLocales[i18next.language as SupportedLocale],
+  });
 };
 
 export const padTime = (time: number, len = 2) =>

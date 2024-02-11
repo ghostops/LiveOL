@@ -1,21 +1,20 @@
-import { diffDateNow } from '~/util/date';
 import { View } from 'react-native';
 import { OLText } from '~/views/components/text';
 import { useLiveRunningStore } from '~/store/liveRunning';
 import { useEffect, useState } from 'react';
+import { getLiveRunningTime } from '~/util/isLive';
 
 interface Props {
-  date: string;
+  startTime: number;
 }
 
-export const OLResultLiveRunning: React.FC<Props> = ({ date }) => {
+export const OLResultLiveRunning: React.FC<Props> = ({ startTime }) => {
   const tick = useLiveRunningStore(state => state.tick);
   const [value, setValue] = useState<string | null>();
 
   useEffect(() => {
-    const time = diffDateNow(date);
-    setValue(time);
-  }, [tick, date]);
+    setValue(getLiveRunningTime(startTime));
+  }, [startTime, tick]);
 
   if (!value) {
     return null;

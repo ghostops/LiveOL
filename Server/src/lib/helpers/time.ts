@@ -88,18 +88,3 @@ export const getMonthFromDate = (
 
   return [start, end];
 };
-
-export const getLiveRunningStart = (start: number): moment.Moment => {
-  const [hours, minutes, seconds] = startToReadable(start)
-    .split(':')
-    .map(n => Number(n));
-  const today = moment.utc().format('YYYY-MM-DD');
-
-  const startTime = moment.tz(
-    `${today} ${hours}:${minutes}:${seconds}`,
-    'YYYY-MM-DD HH:mm:ss',
-    'Europe/Stockholm',
-  );
-
-  return startTime;
-};
