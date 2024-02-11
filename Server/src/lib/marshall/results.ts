@@ -75,11 +75,9 @@ export interface IOLResult {
   result: string;
   status: number;
   timeplus: string;
-
-  liveRunning: boolean;
   liveRunningStart: string;
-
   progress: number;
+  hasUpdated: boolean;
 }
 
 export const marshallResult =
@@ -114,8 +112,6 @@ export const marshallResult =
       timeplus: res.timeplus,
       liveRunningStart: liveRunningDate.format(),
       progress: res.progress,
-
-      // deprecated
-      liveRunning: res.progress < 100,
+      hasUpdated: res.DT_RowClass === 'new_result',
     };
   };

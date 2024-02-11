@@ -44,6 +44,7 @@ export declare namespace LiveresultatApi {
     progress: number;
     start: number;
     splits: Record<string, number>;
+    DT_RowClass?: string;
   }
 
   export interface split {
