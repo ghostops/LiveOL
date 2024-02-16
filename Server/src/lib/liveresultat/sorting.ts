@@ -37,20 +37,35 @@ const sortPlace = (direction: string) => (a: SortedResult, b: SortedResult) => {
   return 0;
 };
 
+const sortStart = (direction: string) => (a: SortedResult, b: SortedResult) => {
+  const desc = direction === 'desc';
+
+  if (a.start > b.start) {
+    return desc ? -1 : 1;
+  } else if (a.start < b.start) {
+    return desc ? 1 : -1;
+  }
+
+  return 0;
+};
+
 const sortResult =
   (direction: string, nowTimestamp: number) =>
   (a: SortedResult, b: SortedResult) => {
     const desc = direction === 'desc';
 
+    const resA = a.result ? Number(a.result) : undefined;
+    const resB = b.result ? Number(b.result) : undefined;
+
     const startDiffA = nowTimestamp - a.start;
     const startDiffB = nowTimestamp - b.start;
 
-    const resA = a.result || startDiffA > 0 ? startDiffA : 0;
-    const resB = b.result || startDiffB > 0 ? startDiffB : 0;
+    const sortByA = resA ? resA : startDiffA > 0 ? startDiffA : 0;
+    const sortByB = resB ? resB : startDiffB > 0 ? startDiffB : 0;
 
-    if (resA > resB) {
+    if (sortByA > sortByB) {
       return desc ? -1 : 1;
-    } else if (resA < resB) {
+    } else if (sortByA < sortByB) {
       return desc ? 1 : -1;
     }
 
@@ -103,6 +118,8 @@ export const sortOptimal = (
     sortingFunction = sortResult(sortingDirection, nowTimestamp);
   } else if (sortingKey === 'name') {
     sortingFunction = sortName(sortingDirection);
+  } else if (sortingKey === 'start') {
+    sortingFunction = sortStart(sortingDirection);
   }
 
   if (sortingFunction === undefined) {
