@@ -72,8 +72,7 @@ export const OLResults: React.FC = () => {
     );
   }
 
-  const followedRunnerId =
-    typeof foundRunner === 'string' ? runnerId : foundRunner?.id;
+  const followedRunnerId = !foundRunner ? runnerId : foundRunner?.id;
 
   return (
     <Component
