@@ -9,6 +9,7 @@ import { useEffect, useRef } from 'react';
 import { useLiveRunningStore } from '~/store/liveRunning';
 import { Vibration } from 'react-native';
 import { nowTimestamp } from '~/util/isLive';
+import { useSearchRunner } from './useSearchRunner';
 
 export const OLResults: React.FC = () => {
   const focus = useIsFocused();
@@ -34,6 +35,8 @@ export const OLResults: React.FC = () => {
     { staleTime: 0 },
   );
 
+  const foundRunner = useSearchRunner(getResultsQuery.data?.results);
+
   useEffect(() => {
     oldHashes.current = [];
   }, [className, competitionId]);
@@ -55,7 +58,9 @@ export const OLResults: React.FC = () => {
   useEffect(() => {
     startTicking();
 
-    return () => stopTicking();
+    return () => {
+      stopTicking();
+    };
   }, [startTicking, stopTicking]);
 
   if (getResultsQuery.error) {
@@ -66,6 +71,9 @@ export const OLResults: React.FC = () => {
       />
     );
   }
+
+  const followedRunnerId =
+    typeof foundRunner === 'string' ? runnerId : foundRunner?.id;
 
   return (
     <Component
@@ -78,7 +86,7 @@ export const OLResults: React.FC = () => {
       className={className}
       competitionId={competitionId}
       focus={focus}
-      followedRunnerId={runnerId}
+      followedRunnerId={followedRunnerId}
     />
   );
 };

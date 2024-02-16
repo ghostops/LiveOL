@@ -10,7 +10,7 @@ type SearchState = {
   setSectionListRef: (value: SectionList) => void;
 };
 
-export const useSearchStore = create<SearchState>((set, get) => ({
+export const useHomeSearchStore = create<SearchState>((set, get) => ({
   isSearching: false,
   searchTerm: '',
   setIsSearching(value) {

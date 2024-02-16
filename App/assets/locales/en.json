@@ -49,7 +49,8 @@
       "cta": "Unfollow",
       "hint": "Long-press to unfollow",
       "title": "Do you want to stop following?"
-    }
+    },
+    "openFollowing": "Open following"
   },
   "home": {
     "goToday": "Scroll to todays events",
@@ -167,7 +168,12 @@
     "goToClass": "See class results",
     "goToClub": "See club results",
     "mute": "Mute audio",
-    "unmute": "Unmute audio"
+    "unmute": "Unmute audio",
+    "searchRunner": {
+      "title": "Search for runner",
+      "text": "Search by name"
+    },
+    "notFound": "No runner found"
   },
   "status": {
     "long": [

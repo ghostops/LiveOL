@@ -9,7 +9,7 @@ import { TRPCQueryOutput } from '~/lib/trpc/client';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '~/hooks/useTheme';
 import { OLSafeAreaView } from '../safeArea';
-import { useSearchStore } from '~/store/search';
+import { useHomeSearchStore } from '~/store/homeSearch';
 
 interface Props {
   competitions: TRPCQueryOutput['getCompetitions']['competitions'];
@@ -61,7 +61,7 @@ export const HomeList: React.FC<Props> = ({
   const { t } = useTranslation();
   const { bottom } = useSafeAreaInsets();
   const { px, colors } = useTheme();
-  const setRef = useSearchStore(state => state.setSectionListRef);
+  const setRef = useHomeSearchStore(state => state.setSectionListRef);
   const visibleCompetitions = groupVisibleCompetitions(competitions);
 
   const renderListItem = (

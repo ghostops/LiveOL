@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
+import { Alert, TouchableOpacity } from 'react-native';
 import { HIT_SLOP, px } from '~/util/const';
 import { OLIcon } from '~/views/components/icon';
 import { useActionSheet } from '@expo/react-native-action-sheet';
@@ -10,6 +10,7 @@ import { useFollowingStore } from '~/store/following';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { RootStack } from '~/lib/nav/router';
 import { useFollowBottomSheetStore } from '~/store/followBottomSheet';
+import { useResultSearchStore } from '~/store/resultSearch';
 
 export const ResultMenuIcon: React.FC = () => {
   const { showActionSheetWithOptions } = useActionSheet();
@@ -21,9 +22,12 @@ export const ResultMenuIcon: React.FC = () => {
   const {
     params: { className, competitionId },
   } = useRoute<RouteProp<RootStack, 'Results'>>();
+  const setSearchTerm = useResultSearchStore(state => state.setSearchTerm);
 
   const onPress = () => {
     const options = [
+      t('result.searchRunner.title'),
+      t('follow.openFollowing'),
       t('result.followClass'),
       t('info.update.hasUpdate.cancel'),
     ];
@@ -39,7 +43,7 @@ export const ResultMenuIcon: React.FC = () => {
         }
 
         switch (selectedIndex) {
-          case 0:
+          case 2:
             if (!plusActive) {
               navigate('Plus', { feature: 'followClass' });
               break;
@@ -52,6 +56,23 @@ export const ResultMenuIcon: React.FC = () => {
             });
             openSheet();
 
+            break;
+
+          case 1:
+            if (!plusActive) {
+              navigate('Plus', { feature: 'followClass' });
+              break;
+            }
+            openSheet();
+            break;
+          case 0:
+            Alert.prompt(
+              t('result.searchRunner.title'),
+              t('result.searchRunner.text'),
+              text => {
+                setSearchTerm(text);
+              },
+            );
             break;
         }
       },

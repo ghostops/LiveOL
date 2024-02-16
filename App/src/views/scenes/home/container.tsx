@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { useSearchStore } from '~/store/search';
+import { useHomeSearchStore } from '~/store/homeSearch';
 import { useOLNavigation } from '~/hooks/useNavigation';
 import { useDeviceRotationStore } from '~/store/deviceRotation';
 import { OLHome as Component } from './component';
@@ -13,7 +13,7 @@ const getToday = () => format(new Date(), 'yyyy-MM-dd');
 
 export const OLHome: React.FC = () => {
   const { isLandscape } = useDeviceRotationStore();
-  const { isSearching, searchTerm, setIsSearching } = useSearchStore();
+  const { isSearching, searchTerm, setIsSearching } = useHomeSearchStore();
   const { navigate } = useOLNavigation();
   const hasLoaded = useRef(false);
 
