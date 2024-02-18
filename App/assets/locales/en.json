@@ -44,13 +44,13 @@
   },
   "follow": {
     "empty": "You are not following any competion, club, or runner.",
+    "openFollowing": "Open following",
     "title": "Following",
     "unfollow": {
       "cta": "Unfollow",
       "hint": "Long-press to unfollow",
       "title": "Do you want to stop following?"
-    },
-    "openFollowing": "Open following"
+    }
   },
   "home": {
     "goToday": "Scroll to todays events",
@@ -168,12 +168,12 @@
     "goToClass": "See class results",
     "goToClub": "See club results",
     "mute": "Mute audio",
-    "unmute": "Unmute audio",
+    "notFound": "No runner found",
     "searchRunner": {
-      "title": "Search for runner",
-      "text": "Search by name"
+      "text": "Search by name",
+      "title": "Search for runner"
     },
-    "notFound": "No runner found"
+    "unmute": "Unmute audio"
   },
   "status": {
     "long": [

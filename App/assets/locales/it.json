@@ -43,6 +43,7 @@
   },
   "follow": {
     "empty": "Non stai seguendo alcuna competizione, club o corridore.",
+    "openFollowing": "Aprire a seguire",
     "title": "Seguendo",
     "unfollow": {
       "cta": "Non seguire",
@@ -166,6 +167,11 @@
     "goToClass": "Vedi i risultati della categoria",
     "goToClub": "Vedi i risultati della società",
     "mute": "Disattiva audio",
+    "notFound": "Nessun corridore trovato",
+    "searchRunner": {
+      "text": "Ricerca per nome",
+      "title": "Cerca runner"
+    },
     "unmute": "Riattivare l'audio"
   },
   "status": {

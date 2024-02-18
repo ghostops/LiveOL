@@ -31,6 +31,7 @@
       "passTime": "Tiempo de paso",
       "title": "Últimos pasos"
     },
+    "readMore": "Leer más",
     "signups": "Registrado",
     "visitEventor": "Ver en Eventor"
   },
@@ -42,6 +43,8 @@
     "ultralong": "Ultra largo"
   },
   "follow": {
+    "empty": "No estás siguiendo a ninguna competencia, club o corredor.",
+    "openFollowing": "Abrir después",
     "title": "Siguiendo",
     "unfollow": {
       "cta": "Dejar de seguir",
@@ -73,12 +76,14 @@
       "title": "Cambiar el tamaño del texto"
     },
     "contact": "Contáctame",
+    "newsletter": "Regístrese para recibir noticias",
     "purgeCache": "Limpiar resultados en caché",
     "purged": "los eventos guardados fueron eliminados",
     "rate": "Valora la app",
     "title": "Información",
     "translations": {
       "credit": "App traducida por",
+      "freePlus": "Ayuda a traducir la aplicación y obtén LiveOL+ gratis",
       "phraseapp": "Traducciones desarrolladas por"
     },
     "update": {
@@ -134,6 +139,8 @@
       "yearly": "por año"
     },
     "code": {
+      "claimed": "Código ya reclamado",
+      "enter": "Introduzca el código aquí",
       "invalid": "Código no válido",
       "redeem": "Canjear código"
     },
@@ -161,6 +168,11 @@
     "goToClass": "Ver resultados de categoría",
     "goToClub": "Ver resultados del club",
     "mute": "Muta audio",
+    "notFound": "No se ha encontrado ningún corredor",
+    "searchRunner": {
+      "text": "Buscar por nombre",
+      "title": "Buscar corredor"
+    },
     "unmute": "Desmutea el audio"
   },
   "status": {

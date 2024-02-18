@@ -44,6 +44,7 @@
   },
   "follow": {
     "empty": "Du folgst keinem Wettbewerb, keinem Verein oder Läufer.",
+    "openFollowing": "Folgen öffnen",
     "title": "Verfolgen",
     "unfollow": {
       "cta": "Aufhören zu folgen",
@@ -167,6 +168,11 @@
     "goToClass": "Ergebnisse nach Kategorien anzeigen",
     "goToClub": "Ergebnisse nach Vereine anzeigen",
     "mute": "Stummschalten",
+    "notFound": "Kein Läufer gefunden",
+    "searchRunner": {
+      "text": "Suche nach Name",
+      "title": "Suche nach Läufer"
+    },
     "unmute": "Stummschaltung aufheben"
   },
   "status": {

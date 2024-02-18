@@ -44,6 +44,7 @@
   },
   "follow": {
     "empty": "Nesledujete žádnou soutěž, klub ani běžce.",
+    "openFollowing": "Otevřít sledování",
     "title": "Sledování",
     "unfollow": {
       "cta": "Přestat sledovat.",
@@ -167,6 +168,11 @@
     "goToClass": "Zobrazení výsledků kategorií",
     "goToClub": "Zobrazit klubové výsledky",
     "mute": "Vypnout zvuk",
+    "notFound": "Nebyl nalezen žádný běžec",
+    "searchRunner": {
+      "text": "Vyhledávání podle názvu",
+      "title": "Vyhledat běžce"
+    },
     "unmute": "Obnovit zvuk"
   },
   "status": {

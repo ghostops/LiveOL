@@ -44,6 +44,7 @@
   },
   "follow": {
     "empty": "Du följer inte någon tävling, klubb eller löpare.",
+    "openFollowing": "Öppna följer",
     "title": "Följer",
     "unfollow": {
       "cta": "Avfölj",
@@ -167,6 +168,11 @@
     "goToClass": "Se klassresultat",
     "goToClub": "Se klubbresultat",
     "mute": "Stäng av ljudet",
+    "notFound": "Ingen löpare hittades",
+    "searchRunner": {
+      "text": "Sök på namn",
+      "title": "Sök efter löpare"
+    },
     "unmute": "Slå på ljudet"
   },
   "status": {
