@@ -77,7 +77,7 @@ export interface IOLResult {
   status: number;
   start: OLTime;
   startTime: number;
-  result: OLTime;
+  result?: OLTime;
   timeplus: OLTime;
   progress: number;
   hasUpdated: boolean;
@@ -110,7 +110,9 @@ export const marshallResult =
       club: res?.club,
       class: res?.class || _class,
       name: res.name,
-      result: Helpers.splitTimestampToReadable(res.result),
+      result: res.result
+        ? Helpers.splitTimestampToReadable(res.result)
+        : undefined,
       status: res.status,
       timeplus: Helpers.timeplusToReadable(res.timeplus),
       startTime: res.start,

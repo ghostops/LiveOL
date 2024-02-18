@@ -11,12 +11,7 @@ export const startIsAfterNow = (
 export const isLiveRunning = (
   result: TRPCQueryOutput['getResults']['results'][0],
 ): boolean => {
-  return (
-    !result.result &&
-    result.status < 1 &&
-    result.startTime > 0 &&
-    startIsAfterNow(result)
-  );
+  return !result.result && result.startTime > 0 && startIsAfterNow(result);
 };
 
 const objectToTimestamp = (dateObj: {
