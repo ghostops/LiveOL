@@ -115,12 +115,16 @@ export const useIap = () => {
           t('plus.buy.restoreError.text'),
         );
       }
+
+      return true;
     } catch (e: any) {
       if (e.userCancelled) {
-        return;
+        return false;
       }
 
       console.warn(e);
+
+      return false;
     } finally {
       setLoading(false);
     }

@@ -30,7 +30,13 @@ export const OLPlus: React.FC = () => {
           Alert.alert(t('plus.buy.error'));
         }
       }}
-      onRestore={restore}
+      onRestore={async () => {
+        const success = await restore();
+
+        if (success) {
+          goBack();
+        }
+      }}
       loading={loading}
     />
   );
