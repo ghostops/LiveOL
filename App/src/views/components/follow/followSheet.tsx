@@ -31,7 +31,7 @@ export const OLFollowSheet: React.FC = () => {
   const following = useFollowingStore(state => state.following);
   const setRef = useFollowBottomSheetStore(state => state.setBottomSheetRef);
   const setIsOpen = useFollowBottomSheetStore(state => state.setIsOpen);
-  const { left, right } = useSafeAreaInsets();
+  const { left, right, bottom } = useSafeAreaInsets();
   const { isLandscape } = useDeviceRotationStore();
   const { t } = useTranslation();
   const { px, colors } = useTheme();
@@ -130,6 +130,7 @@ export const OLFollowSheet: React.FC = () => {
           }
         />
       </View>
+      <View style={{ height: bottom }} />
     </BottomSheetModal>
   );
 };
