@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useHomeSearchStore } from '~/store/homeSearch';
 import { useOLNavigation } from '~/hooks/useNavigation';
 import { useDeviceRotationStore } from '~/store/deviceRotation';
@@ -8,6 +8,7 @@ import RNBootSplash from 'react-native-bootsplash';
 import { trpc } from '~/lib/trpc/client';
 import { format } from 'date-fns';
 import { OLFollowSheet } from '~/views/components/follow/followSheet';
+import { AppState } from 'react-native';
 
 const getToday = () => format(new Date(), 'yyyy-MM-dd');
 
@@ -40,6 +41,17 @@ export const OLHome: React.FC = () => {
     },
     { gcTime: 0, staleTime: 0 },
   );
+
+  useEffect(() => {
+    const callback = AppState.addEventListener('change', status => {
+      if (status === 'active') {
+        getCompetitionsQuery.refetch();
+        getTodaysCompetitionsQuery.refetch();
+      }
+    });
+
+    return () => callback.remove();
+  }, [getCompetitionsQuery, getTodaysCompetitionsQuery]);
 
   if (getCompetitionsQuery.error) {
     return (

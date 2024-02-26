@@ -75,8 +75,8 @@ PODS:
   - hermes-engine/Pre-built (0.73.2)
   - libevent (2.1.12)
   - OpenSSL-Universal (1.1.1100)
-  - PurchasesHybridCommon (6.1.2):
-    - RevenueCat (= 4.25.9)
+  - PurchasesHybridCommon (9.7.2):
+    - RevenueCat (= 4.36.3)
   - RCT-Folly (2022.05.16.00):
     - boost
     - DoubleConversion
@@ -1119,7 +1119,7 @@ PODS:
     - React-jsi (= 0.73.2)
     - React-logger (= 0.73.2)
     - React-perflogger (= 0.73.2)
-  - RevenueCat (4.25.9)
+  - RevenueCat (4.36.3)
   - RNBootSplash (5.3.0):
     - React-Core
   - RNCAsyncStorage (1.21.0):
@@ -1132,8 +1132,8 @@ PODS:
     - glog
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
-  - RNPurchases (6.6.5):
-    - PurchasesHybridCommon (= 6.1.2)
+  - RNPurchases (7.21.1):
+    - PurchasesHybridCommon (= 9.7.2)
     - React-Core
   - RNReanimated (3.6.2):
     - glog
@@ -1397,7 +1397,7 @@ SPEC CHECKSUMS:
   hermes-engine: b361c9ef5ef3cda53f66e195599b47e1f84ffa35
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
-  PurchasesHybridCommon: b7c4205b6d2479cdd8914084a2b536e5e5b1445f
+  PurchasesHybridCommon: 9250db8073ad8ad7e84e4544c1f7b8ef6cd969af
   RCT-Folly: 7169b2b1c44399c76a47b5deaaba715eeeb476c0
   RCTRequired: 9b1e7e262745fb671e33c51c1078d093bd30e322
   RCTTypeSafety: a759e3b086eccf3e2cbf2493d22f28e082f958e6
@@ -1441,13 +1441,13 @@ SPEC CHECKSUMS:
   React-runtimescheduler: df8945a656356ff10f58f65a70820478bfcf33ad
   React-utils: f5bc61e7ea3325c0732ae2d755f4441940163b85
   ReactCommon: 45b5d4f784e869c44a6f5a8fad5b114ca8f78c53
-  RevenueCat: 4160d04575059fc1edbb973981f541b705ddebef
+  RevenueCat: 7be0d7bde9efb2fc1ebd1888522c55bb4f9feb18
   RNBootSplash: 73c2a97d761db234125638c24ad6da6d781d049d
   RNCAsyncStorage: 618d03a5f52fbccb3d7010076bc54712844c18ef
   RNDeviceInfo: 25d818c85db769cc0e7083d39efaa01a6f450df3
   RNFlashList: 4b4b6b093afc0df60ae08f9cbf6ccd4c836c667a
   RNGestureHandler: 25b969a1ffc806b9f9ad2e170d4a3b049c6af85e
-  RNPurchases: 536d66e63df8dd67f9323d9575eb23580843b4af
+  RNPurchases: 06957eb2f35bd7bb336d32fccf3534d45a3fda8a
   RNReanimated: 5589be82dc26b3f94738eb7c6b1f942787532b25
   RNScreens: b582cb834dc4133307562e930e8fa914b8c04ef2
   RNVectorIcons: 8b5bb0fa61d54cd2020af4f24a51841ce365c7e9
