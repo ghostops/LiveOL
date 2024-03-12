@@ -1,4 +1,4 @@
-import { httpBatchLink } from '@trpc/client';
+import { httpLink } from '@trpc/client';
 import type {
   AppRouter,
   RouterInput,
@@ -23,7 +23,7 @@ const getUri = () => {
 
 export const trpc = createTRPCReact<AppRouter>();
 
-const link = httpBatchLink({
+const link = httpLink({
   url: getUri(),
   async headers() {
     return {

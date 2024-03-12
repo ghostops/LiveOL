@@ -3,7 +3,7 @@ import { OLText } from '../../text';
 import { useStatusI18n } from '~/hooks/useStatusI18n';
 
 interface Props {
-  time: string;
+  time?: string;
   status: number;
 }
 

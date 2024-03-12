@@ -1,8 +1,6 @@
 import { LiveresultatApi } from './types';
 
-export type SortedResult = Omit<LiveresultatApi.result, 'place'> & {
-  place: number;
-};
+export type SortedResult = LiveresultatApi.result;
 
 const sortSplit =
   (sortingKey: string, direction: string) =>
@@ -25,16 +23,11 @@ const sortSplit =
     return a.splits[key]! - b.splits[key]!;
   };
 
-const sortPlace = (direction: string) => (a: SortedResult, b: SortedResult) => {
+// Parsing the place is a mess, so just flipping the already sorted list is easier
+const sortPlace = (direction: string) => () => {
   const desc = direction === 'desc';
 
-  if (a.place > b.place) {
-    return desc ? -1 : 1;
-  } else if (a.place < b.place) {
-    return desc ? 1 : -1;
-  }
-
-  return 0;
+  return desc ? -1 : 1;
 };
 
 const sortStart = (direction: string) => (a: SortedResult, b: SortedResult) => {
@@ -89,15 +82,6 @@ export const sortOptimal = (
   sorting: string,
   nowTimestamp: number,
 ) => {
-  const copy: SortedResult[] = [...original].map(result => {
-    const placeNumber = Number(result.place);
-
-    return {
-      ...result,
-      place: placeNumber,
-    } as any;
-  });
-
   const [sortingKey, sortingDirection] = sorting.split(':');
 
   if (!sortingKey || !sortingDirection) {
@@ -126,7 +110,7 @@ export const sortOptimal = (
     throw new Error('no sorting function found');
   }
 
-  let sorted = copy.sort(sortingFunction);
+  let sorted = original.sort(sortingFunction);
 
   if (sortingKey === 'result' || sortingKey === 'place') {
     sorted = sorted.sort((a, b) => {

@@ -70,7 +70,7 @@ export interface IOLResult {
   id: string;
   splits: IOLSplit[];
   hasSplits: boolean;
-  place?: number;
+  place?: string;
   name: string;
   club?: string;
   class?: string;
@@ -89,13 +89,11 @@ export const marshallResult =
     _class: string | undefined,
     splitControlls: LiveresultatApi.split[],
   ) =>
-  (res: LiveresultatApi.result | SortedResult): IOLResult => {
+  (res: LiveresultatApi.result): IOLResult => {
     const start = Helpers.startToReadable(res.start);
 
     const compositeKey = `${comp}:${_class}:${res.name.replace(/ /g, '_')}:${res.club?.replace(/ /g, '_')}`;
     const id = createHash('md5').update(compositeKey).digest('hex');
-
-    const place = typeof res.place === 'string' ? Number(res.place) : res.place;
 
     return {
       id,
@@ -106,7 +104,7 @@ export const marshallResult =
         : [],
       hasSplits: Boolean(!!splitControlls && splitControlls.length),
       start,
-      place: res.status > 0 ? undefined : place,
+      place: res.status > 0 ? undefined : res.place,
       club: res?.club,
       class: res?.class || _class,
       name: res.name,
