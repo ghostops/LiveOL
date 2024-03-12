@@ -12,7 +12,7 @@ export const useIap = () => {
 
   const { loadCode } = usePlusCodes();
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const {
     initialized,
@@ -71,6 +71,7 @@ export const useIap = () => {
 
         setInitialized();
       } finally {
+        setLoading(false);
         isInitializing = false;
       }
     };
@@ -78,7 +79,6 @@ export const useIap = () => {
     init();
   }, [
     initialized,
-    loading,
     loadPurchase,
     setInitialized,
     setLiveOlPlusProduct,

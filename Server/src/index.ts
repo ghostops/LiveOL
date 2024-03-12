@@ -17,7 +17,7 @@ import { OLSelfHelper } from 'lib/selfhelp';
     router: appRouter,
     createContext,
     batching: {
-      enabled: false,
+      enabled: true,
     },
   });
 

@@ -76,7 +76,9 @@ export const OLHome: React.FC = () => {
     !hasLoaded.current
   ) {
     hasLoaded.current = true;
-    RNBootSplash.hide({ fade: true });
+    setTimeout(() => {
+      RNBootSplash.hide({ fade: true });
+    }, 500);
   }
 
   return (
