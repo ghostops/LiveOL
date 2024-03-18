@@ -5,18 +5,18 @@ import { COLORS, px } from '~/util/const';
 
 interface Props {
   interval: number;
-  promise?: () => Promise<void>;
+  refetch: () => Promise<void>;
 }
 
 export const OLRefetcherBar: React.FunctionComponent<Props> = ({
   interval,
-  promise,
+  refetch,
 }) => {
   const [animatedWidth] = useState(new Animated.Value(0));
 
   useEffect(() => {
     const refresh = async (): Promise<void> => {
-      await promise?.();
+      await refetch();
       animate();
     };
 

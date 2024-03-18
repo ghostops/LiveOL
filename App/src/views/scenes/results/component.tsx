@@ -1,4 +1,4 @@
-import { OLRefetcher } from '~/views/components/refetcher';
+import { OLRefetcherBar } from '~/views/components/refetcher/bar';
 import { OLResultsList } from '~/views/components/result/list';
 import { OLResultsTable } from '~/views/components/result/table';
 import { OLLoading } from '~/views/components/loading';
@@ -34,7 +34,7 @@ export const OLResults: React.FC<Props> = ({
 
   return (
     <View style={{ flex: 1 }}>
-      {focus && <OLRefetcher interval={15000} refetch={refetch} />}
+      {focus && <OLRefetcherBar interval={15000} refetch={refetch} />}
       {displayRotatePromo && (
         <OLHint onPress={() => setDisplayRotatePromo(false)}>
           {t('promotions.rotate')}

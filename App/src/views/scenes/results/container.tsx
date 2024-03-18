@@ -11,12 +11,17 @@ import { Vibration } from 'react-native';
 import { nowTimestamp } from '~/util/isLive';
 import { useSearchRunner } from './useSearchRunner';
 
+function getTickTimestamp(_tick: number) {
+  return nowTimestamp();
+}
+
 export const OLResults: React.FC = () => {
   const focus = useIsFocused();
   const { isLandscape } = useDeviceRotationStore();
   const { sortingKey, sortingDirection } = useSortingStore();
   const startTicking = useLiveRunningStore(state => state.startTicking);
   const stopTicking = useLiveRunningStore(state => state.stopTicking);
+  const tick = useLiveRunningStore(state => state.tick);
   const oldHashes = useRef<string[]>([]);
 
   const sorting = `${sortingKey}:${sortingDirection}`;
@@ -30,9 +35,12 @@ export const OLResults: React.FC = () => {
       className,
       competitionId,
       sorting,
-      nowTimestamp: nowTimestamp(),
+      nowTimestamp: getTickTimestamp(tick),
     },
-    { staleTime: 0 },
+    {
+      staleTime: 0,
+      queryKeyHashFn: () => `${competitionId}:${className}:${sorting}`,
+    },
   );
 
   const foundRunner = useSearchRunner(getResultsQuery.data?.results);

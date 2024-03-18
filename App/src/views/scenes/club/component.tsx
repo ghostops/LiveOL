@@ -1,4 +1,4 @@
-import { OLRefetcher } from '~/views/components/refetcher';
+import { OLRefetcherBar } from '~/views/components/refetcher/bar';
 import { OLResultsList } from '~/views/components/result/list';
 import { OLResultsTable } from '~/views/components/result/table';
 import { useDeviceRotationStore } from '~/store/deviceRotation';
@@ -23,7 +23,7 @@ export const OLClubResults: React.FC<Props> = ({
 
   return (
     <>
-      <OLRefetcher interval={15000} refetch={refetch} />
+      <OLRefetcherBar interval={15000} refetch={refetch} />
 
       {isLandscape ? (
         <OLResultsTable
