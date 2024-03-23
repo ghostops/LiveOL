@@ -2,6 +2,7 @@ import * as React from 'react';
 import { View } from 'react-native';
 import { COLORS } from '~/util/const';
 import { OLText } from '../../../components/text';
+import { useTextStore } from '~/store/text';
 
 interface Props {
   place?: string;
@@ -9,6 +10,8 @@ interface Props {
 }
 
 export const OLResultBadge: React.FC<Props> = ({ place }) => {
+  const { textSizeMultiplier } = useTextStore();
+  const size = 25 * textSizeMultiplier;
   return (
     <View
       style={{
@@ -23,9 +26,9 @@ export const OLResultBadge: React.FC<Props> = ({ place }) => {
             backgroundColor: COLORS.MAIN,
             justifyContent: 'center',
             alignItems: 'center',
-            width: 25,
-            height: 25,
-            borderRadius: 50,
+            width: size,
+            height: size,
+            borderRadius: 999,
           }}
         >
           <OLText size={12} style={{ color: 'white' }}>
