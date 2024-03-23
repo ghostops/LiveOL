@@ -56,6 +56,10 @@ const sortResult =
     const sortByA = resA ? resA : startDiffA > 0 ? startDiffA : 0;
     const sortByB = resB ? resB : startDiffB > 0 ? startDiffB : 0;
 
+    if (sortByA === 0 && sortByB === 0) {
+      return desc ? a.start - b.start : b.start - a.start;
+    }
+
     if (sortByA > sortByB) {
       return desc ? -1 : 1;
     } else if (sortByA < sortByB) {
@@ -114,10 +118,10 @@ export const sortOptimal = (
 
   if (sortingKey === 'result' || sortingKey === 'place') {
     sorted = sorted.sort((a, b) => {
-      if (a.status > 0) {
-        return 1;
+      if (b.status === 0) {
+        return 0;
       }
-      if (b.status > 0) {
+      if (b.status > 0 && b.status !== 9 && b.status !== 10) {
         return -1;
       }
 
