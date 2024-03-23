@@ -13,9 +13,9 @@ export const OLHomePromo: React.FC = () => {
   const { px, colors } = useTheme();
   const { navigate } = useOLNavigation();
   const { displayPromo, setDisplayPromo } = usePromoStore();
-  const { plusActive, loading } = useIap();
+  const { plusActive, initialized } = useIap();
 
-  if (plusActive || loading) {
+  if (plusActive || !initialized) {
     return null;
   }
 

@@ -157,8 +157,16 @@ export const ResultHeader: React.FC<OwnProps> = ({
             alignItems: 'center',
           }}
         >
-          {key === sortingKey &&
-            !(sortingKey === 'place' && sortingDirection === 'asc') && (
+          {(() => {
+            if (!sorting || key !== sortingKey) {
+              return null;
+            }
+
+            if (sortingKey === 'place' && sortingDirection === 'asc') {
+              return null;
+            }
+
+            return (
               <OLIcon
                 size={fontPx(14)}
                 name={
@@ -166,7 +174,8 @@ export const ResultHeader: React.FC<OwnProps> = ({
                 }
                 style={{ marginRight: px(2) }}
               />
-            )}
+            );
+          })()}
           <OLText
             size={16}
             bold

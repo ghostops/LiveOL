@@ -8,7 +8,7 @@ import { Alert } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 export const OLPlus: React.FC = () => {
-  const { buy, displayPrice, restore, loading } = useIap();
+  const { buy, displayPrice, restore, loading, initialized } = useIap();
   const route = useRoute<RouteProp<RootStack, 'Plus'>>();
   const { goBack } = useOLNavigation();
   const { t } = useTranslation();
@@ -37,7 +37,7 @@ export const OLPlus: React.FC = () => {
           goBack();
         }
       }}
-      loading={loading}
+      loading={!initialized || loading}
     />
   );
 };

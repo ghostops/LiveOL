@@ -37,7 +37,8 @@ const translationCredits: { code: string; name: string }[] = [
 ];
 
 export const OLInfo: React.FC = () => {
-  const { plusActive, plusExpirationDate, plusWillRenew } = useIap();
+  const { plusActive, plusExpirationDate, plusWillRenew, initialized } =
+    useIap();
 
   const { navigate } = useOLNavigation();
 
@@ -99,7 +100,7 @@ export const OLInfo: React.FC = () => {
       increaseFontSize={increaseTextSize}
       textSizeMultiplier={textSizeMultiplier}
       onGetLiveOlPlus={onGetLiveOlPlus}
-      showGetLiveOlPlus={!plusActive}
+      showGetLiveOlPlus={initialized && !plusActive}
       plusExpirationDate={
         plusExpirationDate ? format(plusExpirationDate, 'P') : undefined
       }
