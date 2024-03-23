@@ -28,10 +28,14 @@ export const getResults = publicProcedure
       input.nowTimestamp,
     );
 
+    const f = sorted.map(
+      marshallResult(input.competitionId, input.className, res.splitcontrols),
+    );
+
+    console.log(f[0]?.result);
+
     return {
-      results: sorted.map(
-        marshallResult(input.competitionId, input.className, res.splitcontrols),
-      ),
+      results: f,
       hash: res.hash,
     };
   });
