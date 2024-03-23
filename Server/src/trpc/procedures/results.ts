@@ -22,6 +22,8 @@ export const getResults = publicProcedure
       input.className,
     );
 
+    console.log(res.results[0]?.result, 'LIVERES');
+
     const sorted = sortOptimal(
       res.results,
       input.sorting || 'place:asc',
@@ -32,7 +34,7 @@ export const getResults = publicProcedure
       marshallResult(input.competitionId, input.className, res.splitcontrols),
     );
 
-    console.log(f[0]?.result);
+    console.log(f[0]?.result, 'LIVEOL');
 
     return {
       results: f,
