@@ -47,6 +47,10 @@ const sortResult =
   (a: SortedResult, b: SortedResult) => {
     const desc = direction === 'desc';
 
+    if (!a.start) {
+      return 0;
+    }
+
     const resA = a.result ? Number(a.result) : undefined;
     const resB = b.result ? Number(b.result) : undefined;
 
