@@ -11,7 +11,8 @@
     "splashscreen": "react-native generate-bootsplash assets/images/icon.png --background-color=e86a1e --logo-width=220",
     "archive:ios": "cd ios; bundle exec fastlane release && cd ../",
     "archive:android": "cd android; bundle exec fastlane deploy && cd ../; ./upload-sourcemaps.sh",
-    "archive": "npm run archive:ios && npm run archive:android"
+    "archive": "npm run archive:ios && npm run archive:android",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@animatereactnative/marquee": "^0.2.0",
@@ -74,6 +75,7 @@
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-native": "^4.1.0",
     "jest": "29.6.3",
+    "patch-package": "^8.0.0",
     "prettier": "^3.2.4",
     "react-test-renderer": "18.1.0",
     "typescript": "5.0.4"
