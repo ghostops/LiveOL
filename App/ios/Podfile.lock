@@ -941,7 +941,7 @@ PODS:
     - React-debug
   - react-native-in-app-review (4.3.3):
     - React-Core
-  - react-native-safe-area-context (4.8.2):
+  - react-native-safe-area-context (4.10.8):
     - React-Core
   - React-nativeconfig (0.74.3)
   - React-NativeModulesApple (0.74.3):
@@ -1175,7 +1175,7 @@ PODS:
   - RevenueCat (4.43.2)
   - RNBootSplash (5.3.0):
     - React-Core
-  - RNCAsyncStorage (1.21.0):
+  - RNCAsyncStorage (1.23.1):
     - React-Core
   - RNDeviceInfo (10.7.0):
     - React-Core
@@ -1205,7 +1205,7 @@ PODS:
   - RNPurchases (7.28.0):
     - PurchasesHybridCommon (= 11.1.1)
     - React-Core
-  - RNReanimated (3.6.2):
+  - RNReanimated (3.13.0):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1497,7 +1497,7 @@ SPEC CHECKSUMS:
   React-logger: fa92ba4d3a5d39ac450f59be2a3cec7b099f0304
   React-Mapbuffer: 9f68550e7c6839d01411ac8896aea5c868eff63a
   react-native-in-app-review: db8bb167a5f238e7ceca5c242d6b36ce8c4404a4
-  react-native-safe-area-context: 0ee144a6170530ccc37a0fd9388e28d06f516a89
+  react-native-safe-area-context: b7daa1a8df36095a032dff095a1ea8963cb48371
   React-nativeconfig: fa5de9d8f4dbd5917358f8ad3ad1e08762f01dcb
   React-NativeModulesApple: 585d1b78e0597de364d259cb56007052d0bda5e5
   React-perflogger: 7bb9ba49435ff66b666e7966ee10082508a203e8
@@ -1523,12 +1523,12 @@ SPEC CHECKSUMS:
   ReactCommon: f00e436b3925a7ae44dfa294b43ef360fbd8ccc4
   RevenueCat: 3d934653b7e8b09af88fd47e9e84cfaf5d0a89ba
   RNBootSplash: 73c2a97d761db234125638c24ad6da6d781d049d
-  RNCAsyncStorage: 618d03a5f52fbccb3d7010076bc54712844c18ef
+  RNCAsyncStorage: 826b603ae9c0f88b5ac4e956801f755109fa4d5c
   RNDeviceInfo: 25d818c85db769cc0e7083d39efaa01a6f450df3
   RNFlashList: 4b4b6b093afc0df60ae08f9cbf6ccd4c836c667a
   RNGestureHandler: 160291049337c1fd647288b1d571fc6701b44a63
   RNPurchases: 1663e39aecc5d8730d97e349419cfd223c1c04ff
-  RNReanimated: 7e3f88c693b752bbbcab734292759031c65629e3
+  RNReanimated: 9c213184c27dc4a2ed7e9ff41a4b0b9258bb54f0
   RNScreens: 23dad53fc9db1da2c93e647ae33fd7ce2bd49d60
   RNVectorIcons: 8b5bb0fa61d54cd2020af4f24a51841ce365c7e9
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
