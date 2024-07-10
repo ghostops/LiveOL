@@ -20,6 +20,7 @@ DerivedData
 *.hmap
 *.ipa
 *.xcuserstate
+**/.xcode.env.local
 ios/.xcode.env.local
 ios/LiveOL.app.dSYM.zip
 
@@ -61,9 +62,17 @@ buck-out/
 *.jsbundle
 
 # Ruby / CocoaPods
-/ios/Pods/
 /vendor/bundle/
+**/Pods/
 
 # env
 .env
 .env.local
+
+# Yarn
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
