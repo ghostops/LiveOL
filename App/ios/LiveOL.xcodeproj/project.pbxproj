@@ -45,7 +45,7 @@
 		5DCACB8F33CDC322A6C60F78 /* libPods-LiveOL.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LiveOL.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = LiveOL/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-LiveOL-LiveOLTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiveOL-LiveOLTests.release.xcconfig"; path = "Target Support Files/Pods-LiveOL-LiveOLTests/Pods-LiveOL-LiveOLTests.release.xcconfig"; sourceTree = "<group>"; };
-		9610BC3F71F21381C55F9F98 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = LiveOL/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		9610BC3F71F21381C55F9F98 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = LiveOL/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		E6357A9528F41A5000DE51F1 /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		E6F3E8C828F5A34E0031DEFD /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = LiveOL/BootSplash.storyboard; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -547,7 +547,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 60;
+				CURRENT_PROJECT_VERSION = 64;
 				DEVELOPMENT_TEAM = 2CFY4D82MF;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = LiveOL/Info.plist;
@@ -578,7 +578,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 60;
+				CURRENT_PROJECT_VERSION = 64;
 				DEVELOPMENT_TEAM = 2CFY4D82MF;
 				INFOPLIST_FILE = LiveOL/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
