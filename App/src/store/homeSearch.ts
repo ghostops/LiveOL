@@ -1,5 +1,5 @@
 import { SectionList } from 'react-native';
-import create from 'zustand';
+import { create } from 'zustand';
 
 type SearchState = {
   isSearching: boolean;

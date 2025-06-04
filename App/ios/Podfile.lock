@@ -1,6 +1,6 @@
 PODS:
   - boost (1.84.0)
-  - BugsnagReactNative (7.22.3):
+  - BugsnagReactNative (8.3.1):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2300,7 +2300,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   boost: 7e761d76ca2ce687f7cc98e698152abd03a18f90
-  BugsnagReactNative: 3179e5a8ab4dc812d55af7f8746c412a93acfbe9
+  BugsnagReactNative: 40830c349aeb671bf567460de745fbe7d0fad970
   DoubleConversion: cb417026b2400c8f53ae97020b2be961b59470cb
   fast_float: 06eeec4fe712a76acc9376682e4808b05ce978b6
   FBLazyVector: 84b955f7b4da8b895faf5946f73748267347c975
@@ -2385,6 +2385,6 @@ SPEC CHECKSUMS:
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   Yoga: 9f110fc4b7aa538663cba3c14cbb1c335f43c13f
 
-PODFILE CHECKSUM: 56d7dcb64a52c80a157b5d7e6de222bf33c96a54
+PODFILE CHECKSUM: 7302996375840d93cf870bce3522a10d3521c65f
 
 COCOAPODS: 1.14.3

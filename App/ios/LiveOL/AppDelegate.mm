@@ -3,6 +3,8 @@
 #import "RNBootSplash.h"
 
 #import <React/RCTBundleURLProvider.h>
+#import <ReactAppDependencyProvider/RCTAppDependencyProvider.h>
+
 
 @implementation AppDelegate
 
