@@ -11,12 +11,12 @@ import { VERSION } from '~/util/const';
 const userId = `LiveOLApp:${VERSION}`;
 
 const getUri = () => {
-  if (__DEV__) {
-    return Platform.select({
-      default: 'http://localhost:3001',
-      android: 'http://10.0.2.2:3001',
-    });
-  }
+  // if (__DEV__) {
+  //   return Platform.select({
+  //     default: 'http://localhost:3001',
+  //     android: 'http://10.0.2.2:3001',
+  //   });
+  // }
 
   return 'https://trpc-liveol.larsendahl.se';
 };
