@@ -14,14 +14,14 @@ export enum SupportedLocale {
 }
 
 const locales: Record<SupportedLocale, any> = {
-  en: require('../../assets/locales/en.json'),
-  sv: require('../../assets/locales/sv.json'),
-  no: require('../../assets/locales/no.json'),
-  sr: require('../../assets/locales/sr.json'),
-  it: require('../../assets/locales/it.json'),
-  de: require('../../assets/locales/de.json'),
-  cs: require('../../assets/locales/cs.json'),
-  es: require('../../assets/locales/es.json'),
+  en: { translation: require('../../assets/locales/en.json') },
+  sv: { translation: require('../../assets/locales/sv.json') },
+  no: { translation: require('../../assets/locales/no.json') },
+  sr: { translation: require('../../assets/locales/sr.json') },
+  it: { translation: require('../../assets/locales/it.json') },
+  de: { translation: require('../../assets/locales/de.json') },
+  cs: { translation: require('../../assets/locales/cs.json') },
+  es: { translation: require('../../assets/locales/es.json') },
 };
 
 const resources = Object.keys(locales).reduce((root, locale) => {
@@ -35,7 +35,7 @@ i18n
   .use(languageDetectorPlugin)
   .init({
     resources,
-    compatibilityJSON: 'v3',
+    compatibilityJSON: 'v4',
     fallbackLng: 'en',
     interpolation: {
       escapeValue: false,

@@ -1,5 +1,6 @@
+/* eslint-disable react/no-unstable-nested-components */
 import { useTranslation } from 'react-i18next';
-import { StatusBar, View } from 'react-native';
+import { StatusBar } from 'react-native';
 import { OLResults } from '~/views/scenes/results/container';
 import { OLInfo } from '~/views/scenes/info/container';
 import { OLHome } from '~/views/scenes/home/container';
@@ -17,7 +18,6 @@ import { OLPlusFeatureKey } from '~/views/scenes/plus/component';
 import { OLRedeemCode } from '~/views/scenes/redeem_modal/component';
 import { OLLanguageModal } from '~/views/scenes/language_modal/component';
 import { useOLNavigationRef } from '~/hooks/useNavigation';
-import { Text } from 'react-native';
 
 export type RootStack = {
   Home: undefined;
@@ -43,26 +43,106 @@ export type RootStack = {
   Language: undefined;
 };
 
-const Stack = createNativeStackNavigator();
-function HomeScreen() {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Home Screen</Text>
-    </View>
-  );
-}
-function RootStack() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name="Home" component={HomeScreen} />
-    </Stack.Navigator>
-  );
-}
+const Stack = createNativeStackNavigator<RootStack>();
 
-export default function App() {
+const Component: React.FC = () => {
+  const { t } = useTranslation();
+  const { setNavRef } = useOLNavigationRef();
+
   return (
-    <NavigationContainer>
-      <RootStack />
+    <NavigationContainer ref={setNavRef}>
+      <StatusBar translucent />
+
+      <Stack.Navigator
+        initialRouteName="Home"
+        screenOptions={{
+          headerLeft: () => <BackButton />,
+          headerStyle: {
+            backgroundColor: COLORS.MAIN,
+          },
+          headerTitleStyle: {
+            color: '#fff',
+          },
+          headerShadowVisible: false,
+          headerTitleAlign: 'center',
+        }}
+      >
+        <Stack.Screen
+          name="Home"
+          component={OLHome}
+          options={{
+            header: () => <HomeHeader />,
+          }}
+        />
+
+        <Stack.Screen
+          name="Info"
+          component={OLInfo}
+          options={{ title: t('info.title') }}
+        />
+
+        <Stack.Screen
+          name="Competition"
+          component={OLCompetition}
+          options={props => ({
+            title: props.route.params.title,
+          })}
+        />
+
+        <Stack.Screen
+          name="Results"
+          component={OLResults}
+          options={props => ({
+            title: `${t('classes.resultsFor')}: ${props.route.params.className as string}`,
+            headerRight: () => <ResultMenuIcon />,
+          })}
+          initialParams={{
+            competitionId: 16011,
+            className: 'M20-1',
+          }}
+        />
+
+        <Stack.Screen
+          name="Club"
+          component={OLClubResults}
+          options={props => ({
+            title: props.route.params.title,
+            headerRight: () => <ClubMenuIcon />,
+          })}
+        />
+
+        <Stack.Screen
+          name="Plus"
+          component={OLPlus}
+          options={{
+            title: 'LiveOL+',
+          }}
+        />
+
+        <Stack.Group
+          screenOptions={{
+            headerLeft: () => <BackButton cross />,
+
+            presentation: 'modal',
+            animation: 'slide_from_bottom',
+          }}
+        >
+          <Stack.Screen
+            name="Redeem"
+            component={OLRedeemCode}
+            options={{ title: t('plus.code.redeem') }}
+          />
+          <Stack.Screen
+            name="Language"
+            component={OLLanguageModal}
+            options={{
+              title: t('language.pick'),
+            }}
+          />
+        </Stack.Group>
+      </Stack.Navigator>
     </NavigationContainer>
   );
-}
+};
+
+export default Component;

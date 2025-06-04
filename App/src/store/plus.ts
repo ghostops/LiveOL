@@ -1,5 +1,5 @@
 import { CustomerInfo, PurchasesOffering } from 'react-native-purchases';
-import { create } from 'zustand';
+import create from 'zustand';
 
 type PlusState = {
   initialized: boolean;

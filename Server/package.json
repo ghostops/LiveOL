@@ -15,7 +15,7 @@
 	"license": "ISC",
 	"dependencies": {
 		"@slack/webhook": "^5.0.3",
-		"@trpc/server": "^11.2.0",
+		"@trpc/server": "^11.1.4",
 		"@types/node-cron": "^2.0.3",
 		"apollo-server": "^2.14.2",
 		"axios": "^0.21.2",

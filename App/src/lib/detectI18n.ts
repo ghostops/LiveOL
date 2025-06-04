@@ -1,38 +1,45 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LanguageDetectorAsyncModule } from 'i18next';
-import { NativeModules, Platform } from 'react-native';
+import { i18nMap } from './i18nmap';
 
 const languageKey = 'language';
 
-export const getDeviceLang = () => {
-  const appLanguage =
-    Platform.OS === 'ios'
-      ? NativeModules.SettingsManager.settings.AppleLocale ||
-        NativeModules.SettingsManager.settings.AppleLanguages[0]
-      : NativeModules.I18nManager.localeIdentifier;
+const getCountryLang = async (): Promise<string> => {
+  const data = await fetch('https://api.country.is/').then(response =>
+    response.json(),
+  );
 
-  return appLanguage.search(/-|_/g) !== -1
-    ? appLanguage.slice(0, 2)
-    : appLanguage;
+  const lang = data?.country;
+
+  if (!lang) {
+    return 'en';
+  }
+
+  const langStr = i18nMap[lang];
+
+  if (!langStr) {
+    return 'en';
+  }
+
+  return langStr.slice(0, 2).toLowerCase();
 };
 
 export const languageDetectorPlugin: LanguageDetectorAsyncModule = {
   type: 'languageDetector',
   async: true,
   init: () => {},
-  detect: async (callback: (lang: string) => void) => {
-    const deviceLang = getDeviceLang();
-
+  detect: async () => {
+    const deviceLang = await getCountryLang();
     try {
       const selectedLang = await AsyncStorage.getItem(languageKey);
 
       if (selectedLang) {
-        return callback(selectedLang);
+        return selectedLang;
       } else {
-        return callback(deviceLang);
+        return deviceLang;
       }
     } catch (error) {
-      return callback(deviceLang);
+      return deviceLang;
     }
   },
   cacheUserLanguage: async (language: string) => {

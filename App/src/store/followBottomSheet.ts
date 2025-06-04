@@ -1,5 +1,5 @@
 import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
-import { create } from 'zustand';
+import create from 'zustand';
 import { getFollowSheetIndex } from '~/views/components/follow/followSheet';
 
 type FollowBottomSheetState = {
