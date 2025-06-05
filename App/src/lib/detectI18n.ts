@@ -29,16 +29,17 @@ export const languageDetectorPlugin: LanguageDetectorAsyncModule = {
   async: true,
   init: () => {},
   detect: async () => {
-    const deviceLang = await getCountryLang();
     try {
       const selectedLang = await AsyncStorage.getItem(languageKey);
 
       if (selectedLang) {
         return selectedLang;
       } else {
+        const deviceLang = await getCountryLang();
         return deviceLang;
       }
     } catch (error) {
+      const deviceLang = await getCountryLang();
       return deviceLang;
     }
   },

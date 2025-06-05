@@ -1,7 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { TouchableOpacity, View } from 'react-native';
 import { useIap } from '~/hooks/useIap';
-import { useOLNavigation } from '~/hooks/useNavigation';
 import { useTheme } from '~/hooks/useTheme';
 import { useFollowBottomSheetStore } from '~/store/followBottomSheet';
 import { useFollowingStore } from '~/store/following';
@@ -47,8 +46,7 @@ export const OLHomeBar = ({ searching, landscape, openSearch }: Props) => {
   const { px } = useTheme();
   const { t } = useTranslation();
   const followingCount = useFollowingStore(state => state.following.length);
-  const { plusActive } = useIap();
-  const { navigate } = useOLNavigation();
+  const { plusActive, presentPaywall } = useIap();
   const openFollowSheet = useFollowBottomSheetStore(state => state.open);
 
   if (searching) {
@@ -87,7 +85,7 @@ export const OLHomeBar = ({ searching, landscape, openSearch }: Props) => {
         <OLHomeButton
           onPress={() => {
             if (!plusActive) {
-              navigate('Plus');
+              presentPaywall();
               return;
             }
 

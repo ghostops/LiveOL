@@ -7,6 +7,7 @@ import { useOLNavigation } from '~/hooks/useNavigation';
 import { Alert } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
+/** @deprecated This container is deprecated and will be removed in future releases. */
 export const OLPlus: React.FC = () => {
   const { buy, displayPrice, restore, loading, initialized } = useIap();
   const route = useRoute<RouteProp<RootStack, 'Plus'>>();

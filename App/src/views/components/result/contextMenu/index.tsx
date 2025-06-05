@@ -23,7 +23,7 @@ export const OLRunnerContextMenu: React.FC<Props> = ({
 }) => {
   const { showActionSheetWithOptions } = useActionSheet();
   const { t } = useTranslation();
-  const { plusActive } = useIap();
+  const { plusActive, presentPaywall } = useIap();
   const { navigate } = useOLNavigation();
   const {
     params: { competitionId },
@@ -51,7 +51,7 @@ export const OLRunnerContextMenu: React.FC<Props> = ({
         switch (selectedIndex) {
           case 0:
             if (!plusActive) {
-              navigate('Plus', { feature: 'followRunner' });
+              presentPaywall();
               break;
             }
 

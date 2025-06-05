@@ -32,8 +32,11 @@ PODS:
   - hermes-engine (0.79.2):
     - hermes-engine/Pre-built (= 0.79.2)
   - hermes-engine/Pre-built (0.79.2)
-  - PurchasesHybridCommon (11.1.1):
-    - RevenueCat (= 4.43.2)
+  - PurchasesHybridCommon (13.33.0):
+    - RevenueCat (= 5.26.0)
+  - PurchasesHybridCommonUI (13.33.0):
+    - PurchasesHybridCommon (= 13.33.0)
+    - RevenueCatUI (= 5.26.0)
   - RCT-Folly (2024.11.18.00):
     - boost
     - DoubleConversion
@@ -1757,8 +1760,10 @@ PODS:
     - React-logger (= 0.79.2)
     - React-perflogger (= 0.79.2)
     - React-utils (= 0.79.2)
-  - RevenueCat (4.43.2)
-  - RNBootSplash (5.3.0):
+  - RevenueCat (5.26.0)
+  - RevenueCatUI (5.26.0):
+    - RevenueCat (= 5.26.0)
+  - RNBootSplash (6.3.8):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1834,8 +1839,11 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNPurchases (7.28.0):
-    - PurchasesHybridCommon (= 11.1.1)
+  - RNPaywalls (8.11.1):
+    - PurchasesHybridCommonUI (= 13.33.0)
+    - React-Core
+  - RNPurchases (8.11.1):
+    - PurchasesHybridCommon (= 13.33.0)
     - React-Core
   - RNReanimated (3.18.0):
     - DoubleConversion
@@ -2119,6 +2127,7 @@ DEPENDENCIES:
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - "RNFlashList (from `../node_modules/@shopify/flash-list`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - RNPaywalls (from `../node_modules/react-native-purchases-ui`)
   - RNPurchases (from `../node_modules/react-native-purchases`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
@@ -2128,7 +2137,9 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - PurchasesHybridCommon
+    - PurchasesHybridCommonUI
     - RevenueCat
+    - RevenueCatUI
     - SocketRocket
 
 EXTERNAL SOURCES:
@@ -2287,6 +2298,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@shopify/flash-list"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
+  RNPaywalls:
+    :path: "../node_modules/react-native-purchases-ui"
   RNPurchases:
     :path: "../node_modules/react-native-purchases"
   RNReanimated:
@@ -2307,7 +2320,8 @@ SPEC CHECKSUMS:
   fmt: a40bb5bd0294ea969aaaba240a927bd33d878cdd
   glog: 5683914934d5b6e4240e497e0f4a3b42d1854183
   hermes-engine: 314be5250afa5692b57b4dd1705959e1973a8ebe
-  PurchasesHybridCommon: 73f4f2c6e4ec3487b4219bf60e1661100fb85da3
+  PurchasesHybridCommon: cce67d208599efd1557e7a4746d964179c00f55e
+  PurchasesHybridCommonUI: c853f6ae5241e03505ae7fa4867b3b89ddc7dd49
   RCT-Folly: 36fe2295e44b10d831836cc0d1daec5f8abcf809
   RCTDeprecation: 83ffb90c23ee5cea353bd32008a7bca100908f8c
   RCTRequired: eb7c0aba998009f47a540bec9e9d69a54f68136e
@@ -2372,13 +2386,15 @@ SPEC CHECKSUMS:
   ReactAppDependencyProvider: d5dcc564f129632276bd3184e60f053fcd574d6b
   ReactCodegen: fda99a79c866370190e162083a35602fdc314e5d
   ReactCommon: 4d0da92a5eb8da86c08e3ec34bd23ab439fb2461
-  RevenueCat: 3d934653b7e8b09af88fd47e9e84cfaf5d0a89ba
-  RNBootSplash: 6c3e01c5d43f1d805831708156ca5a1d6da8bfe4
+  RevenueCat: 30ef961962ccc42c9cd0f375fdac62baee22238b
+  RevenueCatUI: 618d0069f337f5d4cd86b8b68c31d00eaa0f739c
+  RNBootSplash: 1d93abb45016adce71a7f0cdbdf4f7b622777276
   RNCAsyncStorage: c1bbcf629d7206d1e19310827848b98d68a4cbaf
   RNDeviceInfo: 25d818c85db769cc0e7083d39efaa01a6f450df3
   RNFlashList: 4b4b6b093afc0df60ae08f9cbf6ccd4c836c667a
   RNGestureHandler: 5d8431415d4b8518e86e289e9ad5bb9be78f6dba
-  RNPurchases: 1663e39aecc5d8730d97e349419cfd223c1c04ff
+  RNPaywalls: 9ccc6508f79020513ab931f3020c8fcb6ea27c81
+  RNPurchases: 1d6689272e05539f8401d88b6de0dce69c21d515
   RNReanimated: 6a437c90e263e4a2202a282f9d6dea0ad28d018d
   RNScreens: c2e3cc506212228c607b4785b315205e28acbf0f
   RNVectorIcons: f6868e40844409a5de6dae5a0038d16c75af1d04

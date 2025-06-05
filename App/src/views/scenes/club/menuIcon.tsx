@@ -5,7 +5,6 @@ import { OLIcon } from '~/views/components/icon';
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import { useTranslation } from 'react-i18next';
 import { useIap } from '~/hooks/useIap';
-import { useOLNavigation } from '~/hooks/useNavigation';
 import { useFollowingStore } from '~/store/following';
 import { RootStack } from '~/lib/nav/router';
 import { RouteProp, useRoute } from '@react-navigation/native';
@@ -14,8 +13,7 @@ import { useFollowBottomSheetStore } from '~/store/followBottomSheet';
 export const ClubMenuIcon: React.FC = () => {
   const { showActionSheetWithOptions } = useActionSheet();
   const { t } = useTranslation();
-  const { plusActive } = useIap();
-  const { navigate } = useOLNavigation();
+  const { plusActive, presentPaywall } = useIap();
   const followClub = useFollowingStore(state => state.follow);
   const openSheet = useFollowBottomSheetStore(state => state.open);
   const {
@@ -37,7 +35,7 @@ export const ClubMenuIcon: React.FC = () => {
         switch (selectedIndex) {
           case 0:
             if (!plusActive) {
-              navigate('Plus', { feature: 'followClub' });
+              presentPaywall();
               break;
             }
 

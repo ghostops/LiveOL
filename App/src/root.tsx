@@ -58,8 +58,6 @@ export default () => {
     }, 3000);
   }, []);
 
-RNBootSplash.hide({ fade: true });
-
   return (
     <ErrorBoundary FallbackComponent={ErrorView}>
       <GestureHandlerRootView style={{ flex: 1 }}>

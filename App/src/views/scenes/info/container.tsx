@@ -37,8 +37,13 @@ const translationCredits: { code: string; name: string }[] = [
 ];
 
 export const OLInfo: React.FC = () => {
-  const { plusActive, plusExpirationDate, plusWillRenew, initialized } =
-    useIap();
+  const {
+    plusActive,
+    plusExpirationDate,
+    plusWillRenew,
+    initialized,
+    presentPaywall,
+  } = useIap();
 
   const { navigate } = useOLNavigation();
 
@@ -81,7 +86,7 @@ export const OLInfo: React.FC = () => {
   };
 
   const onGetLiveOlPlus = () => {
-    navigate('Plus');
+    presentPaywall();
   };
 
   const onNewsletterPress = () =>

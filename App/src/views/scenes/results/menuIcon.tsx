@@ -5,7 +5,6 @@ import { OLIcon } from '~/views/components/icon';
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import { useTranslation } from 'react-i18next';
 import { useIap } from '~/hooks/useIap';
-import { useOLNavigation } from '~/hooks/useNavigation';
 import { useFollowingStore } from '~/store/following';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { RootStack } from '~/lib/nav/router';
@@ -15,8 +14,7 @@ import { useResultSearchStore } from '~/store/resultSearch';
 export const ResultMenuIcon: React.FC = () => {
   const { showActionSheetWithOptions } = useActionSheet();
   const { t } = useTranslation();
-  const { plusActive } = useIap();
-  const { navigate } = useOLNavigation();
+  const { plusActive, presentPaywall } = useIap();
   const followClass = useFollowingStore(state => state.follow);
   const openSheet = useFollowBottomSheetStore(state => state.open);
   const {
@@ -45,7 +43,7 @@ export const ResultMenuIcon: React.FC = () => {
         switch (selectedIndex) {
           case 2:
             if (!plusActive) {
-              navigate('Plus', { feature: 'followClass' });
+              presentPaywall();
               break;
             }
 
@@ -60,7 +58,7 @@ export const ResultMenuIcon: React.FC = () => {
 
           case 1:
             if (!plusActive) {
-              navigate('Plus', { feature: 'followClass' });
+              presentPaywall();
               break;
             }
             openSheet();

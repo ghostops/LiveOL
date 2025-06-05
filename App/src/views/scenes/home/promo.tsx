@@ -1,5 +1,3 @@
-import React from 'react';
-import { useOLNavigation } from '~/hooks/useNavigation';
 import { OLButton } from '~/views/components/button';
 import { useTheme } from '~/hooks/useTheme';
 import { usePromoStore } from '~/store/promo';
@@ -11,9 +9,8 @@ import { useTranslation } from 'react-i18next';
 export const OLHomePromo: React.FC = () => {
   const { t } = useTranslation();
   const { px, colors } = useTheme();
-  const { navigate } = useOLNavigation();
   const { displayPromo, setDisplayPromo } = usePromoStore();
-  const { plusActive, initialized } = useIap();
+  const { plusActive, initialized, presentPaywall } = useIap();
 
   if (plusActive || !initialized) {
     return null;
@@ -24,7 +21,7 @@ export const OLHomePromo: React.FC = () => {
       <TouchableOpacity
         style={{ backgroundColor: colors.GREEN, paddingVertical: px(8) }}
         onPress={() => {
-          navigate('Plus');
+          presentPaywall();
         }}
       >
         <OLText bold size={16} style={{ color: 'white', textAlign: 'center' }}>
@@ -58,7 +55,7 @@ export const OLHomePromo: React.FC = () => {
       </OLText>
 
       <OLButton
-        onPress={() => navigate('Plus')}
+        onPress={() => presentPaywall()}
         style={{ backgroundColor: colors.GREEN }}
       >
         {t('plus.promo.box.cta')}

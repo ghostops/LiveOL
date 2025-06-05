@@ -4,8 +4,25 @@ import { Alert, Platform } from 'react-native';
 import Purchases from 'react-native-purchases';
 import { usePlusStore } from '~/store/plus';
 import { usePlusCodes } from '~/hooks/usePlusCodes';
+import RevenueCatUI, { PAYWALL_RESULT } from 'react-native-purchases-ui';
 
 let isInitializing = false;
+
+async function presentPaywall(): Promise<boolean> {
+  const paywallResult: PAYWALL_RESULT = await RevenueCatUI.presentPaywall();
+
+  switch (paywallResult) {
+    case PAYWALL_RESULT.NOT_PRESENTED:
+    case PAYWALL_RESULT.ERROR:
+    case PAYWALL_RESULT.CANCELLED:
+      return false;
+    case PAYWALL_RESULT.PURCHASED:
+    case PAYWALL_RESULT.RESTORED:
+      return true;
+    default:
+      return false;
+  }
+}
 
 export const useIap = () => {
   const { t } = useTranslation();
@@ -140,5 +157,13 @@ export const useIap = () => {
     plusActive,
     loading,
     initialized,
+    presentPaywall: async () => {
+      setLoading(true);
+      const success = await presentPaywall();
+      if (success) {
+        await loadPurchase();
+      }
+      setLoading(false);
+    },
   };
 };

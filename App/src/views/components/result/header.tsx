@@ -8,12 +8,11 @@ import {
   getExtraSize,
 } from '~/views/components/result/table/row';
 import { Grid } from 'react-native-easy-grid';
-import { TFunction, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useSortingStore } from '~/store/sorting';
 import { OLIcon } from '../icon';
 import { useTheme } from '~/hooks/useTheme';
-import { useOLNavigation } from '~/hooks/useNavigation';
 import { useIap } from '~/hooks/useIap';
 import { TRPCQueryOutput, trpc } from '~/lib/trpc/client';
 
@@ -34,7 +33,7 @@ interface Label {
 }
 
 const labels =
-  (t: TFunction) =>
+  (t: any) =>
   (
     table: boolean,
     maxSize: number,
@@ -110,8 +109,7 @@ export const ResultHeader: React.FC<OwnProps> = ({
   const { t } = useTranslation();
   const { left, right } = useSafeAreaInsets();
   const { fontPx, px } = useTheme();
-  const { plusActive } = useIap();
-  const { navigate } = useOLNavigation();
+  const { plusActive, presentPaywall } = useIap();
 
   const { setSortingDirection, setSortingKey, sortingDirection, sortingKey } =
     useSortingStore();
@@ -142,7 +140,7 @@ export const ResultHeader: React.FC<OwnProps> = ({
             }
 
             if (!plusActive) {
-              navigate('Plus', { feature: 'sorting' });
+              presentPaywall();
               setSortingKey('place');
               setSortingDirection('asc');
               return;
