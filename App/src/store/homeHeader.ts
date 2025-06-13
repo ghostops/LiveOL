@@ -1,5 +1,5 @@
 import { Animated } from 'react-native';
-import create from 'zustand';
+import { create } from 'zustand';
 
 type HomeHeaderState = {
   scrollY: Animated.Value;

@@ -1,6 +1,6 @@
 {
   "name": "@liveol/app",
-  "version": "3.0.2",
+  "version": "3.1.0",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -52,7 +52,7 @@
     "react-native-size-matters": "^0.4.0",
     "react-native-vector-icons": "^10.1.0",
     "remove": "^0.1.5",
-    "zustand": "^4.1.1"
+    "zustand": "^5.0.5"
   },
   "devDependencies": {
     "@babel/core": "^7.23.0",
