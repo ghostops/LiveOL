@@ -11,4 +11,4 @@ npx bugsnag-source-maps upload-react-native \
   --app-version $APP_VERSION \
   --platform android \
   --source-map android/app/build/generated/sourcemaps/react/release/index.android.bundle.map \
-  --bundle android/app/build/generated/assets/react/release/index.android.bundle
+  --bundle android/app/build/generated/assets/createBundleReleaseJsAndAssets/index.android.bundle
