@@ -13,7 +13,6 @@ import { queryClient } from '~/lib/react-query/client';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
-import RNBootSplash from 'react-native-bootsplash';
 import '~/lib/i18n';
 
 const fallbackErrorBoundary = ({ children }: any) => <>{children}</>;

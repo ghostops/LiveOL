@@ -93,7 +93,7 @@ android {
         applicationId "se.liveol.rn"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 77
+        versionCode 78
         versionName vname
     }
     signingConfigs {
@@ -128,9 +128,6 @@ dependencies {
         implementation jscFlavor
     }
 }
-
-apply plugin: "com.bugsnag.android.gradle"
-
 
 project.ext.vectoricons = [
     iconFontNames: ['Ionicons.ttf'] // Name of the font files you want to copy
