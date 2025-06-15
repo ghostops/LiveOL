@@ -1,6 +1,6 @@
 {
   "name": "@liveol/app",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -17,7 +17,7 @@
   "dependencies": {
     "@animatereactnative/marquee": "^0.5.2",
     "@bugsnag/react-native": "^8.3.1",
-    "@expo/react-native-action-sheet": "^4.0.1",
+    "@expo/react-native-action-sheet": "^4.1.1",
     "@gorhom/bottom-sheet": "^4.6.3",
     "@react-native-async-storage/async-storage": "^2.0.0",
     "@react-native-community/cli": "^18.0.0",

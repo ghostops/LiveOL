@@ -1,6 +1,6 @@
 import React from 'react';
-import { Alert, TouchableOpacity } from 'react-native';
-import { HIT_SLOP, px } from '~/util/const';
+import { TouchableOpacity } from 'react-native';
+import { COLORS, HIT_SLOP, px } from '~/util/const';
 import { OLIcon } from '~/views/components/icon';
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import { useTranslation } from 'react-i18next';
@@ -10,6 +10,8 @@ import { RouteProp, useRoute } from '@react-navigation/native';
 import { RootStack } from '~/lib/nav/router';
 import { useFollowBottomSheetStore } from '~/store/followBottomSheet';
 import { useResultSearchStore } from '~/store/resultSearch';
+import { useState } from 'react';
+import { Modal, View, TextInput, Button, Text } from 'react-native';
 
 export const ResultMenuIcon: React.FC = () => {
   const { showActionSheetWithOptions } = useActionSheet();
@@ -21,6 +23,8 @@ export const ResultMenuIcon: React.FC = () => {
     params: { className, competitionId },
   } = useRoute<RouteProp<RootStack, 'Results'>>();
   const setSearchTerm = useResultSearchStore(state => state.setSearchTerm);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [searchInput, setSearchInput] = useState('');
 
   const onPress = () => {
     const options = [
@@ -64,13 +68,7 @@ export const ResultMenuIcon: React.FC = () => {
             openSheet();
             break;
           case 0:
-            Alert.prompt(
-              t('result.searchRunner.title'),
-              t('result.searchRunner.text'),
-              text => {
-                setSearchTerm(text);
-              },
-            );
+            setModalVisible(true);
             break;
         }
       },
@@ -78,12 +76,85 @@ export const ResultMenuIcon: React.FC = () => {
   };
 
   return (
-    <TouchableOpacity
-      onPress={onPress}
-      style={{ marginRight: px(12) }}
-      hitSlop={HIT_SLOP}
-    >
-      <OLIcon name="ellipsis-vertical" size={24} color="white" />
-    </TouchableOpacity>
+    <>
+      <TouchableOpacity
+        onPress={onPress}
+        style={{ marginRight: px(12) }}
+        hitSlop={HIT_SLOP}
+      >
+        <OLIcon name="ellipsis-vertical" size={24} color="white" />
+      </TouchableOpacity>
+
+      <Modal
+        visible={modalVisible}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: 'rgba(0,0,0,0.5)',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <View
+            style={{
+              backgroundColor: 'white',
+              borderRadius: 8,
+              padding: 24,
+              width: '80%',
+              alignItems: 'stretch',
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 18,
+                fontWeight: 'bold',
+                marginBottom: 8,
+                textAlign: 'center',
+              }}
+            >
+              {t('result.searchRunner.title')}
+            </Text>
+            <TextInput
+              style={{
+                borderWidth: 1,
+                borderColor: '#ccc',
+                borderRadius: 4,
+                padding: 8,
+                marginBottom: 16,
+                fontSize: 16,
+              }}
+              value={searchInput}
+              onChangeText={setSearchInput}
+              placeholder={t('result.searchRunner.text')}
+              autoFocus
+            />
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}
+            >
+              <Button
+                title={t('info.update.hasUpdate.cancel')}
+                onPress={() => setModalVisible(false)}
+                color={COLORS.DARK}
+              />
+              <Button
+                title={t('home.search')}
+                onPress={() => {
+                  setSearchTerm(searchInput);
+                  setModalVisible(false);
+                }}
+                color={COLORS.MAIN}
+              />
+            </View>
+          </View>
+        </View>
+      </Modal>
+    </>
   );
 };
