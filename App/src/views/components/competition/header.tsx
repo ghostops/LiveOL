@@ -6,15 +6,15 @@ import { Linking, Platform, TouchableOpacity, View } from 'react-native';
 import { px } from '~/util/const';
 import { CompetitionInfoBox } from './info';
 import { useTranslation } from 'react-i18next';
-import { TRPCQueryOutput } from '~/lib/trpc/client';
 import { useTheme } from '~/hooks/useTheme';
 import { Marquee } from '@animatereactnative/marquee';
 import { useState } from 'react';
 import { OLLastPassing } from './lastPassing';
+import { paths } from '~/lib/react-query/schema';
 
 interface Props {
-  competition: TRPCQueryOutput['getCompetition']['competition'];
-  latestPassings?: TRPCQueryOutput['getCompetitionLastPassings'];
+  competition: paths['/v1/competitions/{competitionId}']['get']['responses']['200']['content']['application/json']['data']['competition'];
+  latestPassings?: paths['/v1/competitions/{competitionId}/last-passings']['get']['responses']['200']['content']['application/json']['data']['passings'];
 }
 
 export const OLCompetitionHeader: React.FC<Props> = props => {

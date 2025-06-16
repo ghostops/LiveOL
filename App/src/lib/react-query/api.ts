@@ -19,3 +19,5 @@ const fetchClient = createFetchClient<paths>({
 });
 
 export const $api = createClient(fetchClient);
+
+export const $fetch = fetchClient;

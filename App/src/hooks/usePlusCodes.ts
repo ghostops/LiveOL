@@ -4,8 +4,8 @@ import { Alert } from 'react-native';
 import { getUniqueId } from 'react-native-device-info';
 import { usePlusStore } from '~/store/plus';
 import { useOLNavigation } from './useNavigation';
-import { trpc } from '~/lib/trpc/client';
 import { useState } from 'react';
+import { $api } from '~/lib/react-query/api';
 
 const PLUS_CODE_KEY = 'plusKey';
 
@@ -20,16 +20,23 @@ export const usePlusCodes = () => {
   const { t } = useTranslation();
   const { goBack } = useOLNavigation();
   const [loadingCode, setLoadingCode] = useState(false);
-  const utils = trpc.useUtils();
 
   const enableLiveOLPlus = () =>
     setCustomerInfo({ entitlements: { active: { plus: {} } } } as any);
 
-  const { mutateAsync: redeemPlusCode } = trpc.redeemPlusCode.useMutation();
+  const { mutateAsync: redeemPlusCode } = $api.useMutation(
+    'post',
+    '/v1/plus/redeem',
+  );
+
+  const { mutateAsync: validatePlusCode } = $api.useMutation(
+    'post',
+    '/v1/plus/validate',
+  );
 
   const redeem = async (code: string) => {
     redeemPlusCode(
-      { code, deviceId },
+      { body: { code, deviceId } },
       {
         onSuccess: res => {
           if (res) {
@@ -39,7 +46,7 @@ export const usePlusCodes = () => {
             goBack();
           }
         },
-        onError: error => {
+        onError: ({ error }) => {
           if (error.message === 'Invalid code') {
             Alert.alert(t('plus.code.invalid'));
             return;
@@ -64,12 +71,14 @@ export const usePlusCodes = () => {
 
       const loadedCode = await AsyncStorage.getItem(PLUS_CODE_KEY);
 
-      const response = await utils.client.validatePlusCode.query({
-        code: loadedCode || '',
-        deviceId,
+      const response = await validatePlusCode({
+        body: {
+          code: loadedCode || '',
+          deviceId,
+        },
       });
 
-      if (!response) {
+      if (!response.data.result) {
         return false;
       }
 

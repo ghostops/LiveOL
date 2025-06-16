@@ -2,7 +2,7 @@ import {
   getCompetitions,
   getCompetitionsToday,
   getCompetition,
-  getCompetitionSplits,
+  getCompetitionLastPassings,
 } from 'controllers/competitions';
 import { redeemPlusCode, validatePlusCode } from 'controllers/plus';
 import {
@@ -22,7 +22,7 @@ export const routing: Routing = {
   'v1/competitions': getCompetitions,
   'v1/competitions/today': getCompetitionsToday,
   'v1/competitions/:competitionId': getCompetition,
-  'v1/competitions/:competitionId/splits': getCompetitionSplits,
+  'v1/competitions/:competitionId/last-passings': getCompetitionLastPassings,
 
   'v1/results/:competitionId/class/:className': getResultsForClass,
   'v1/results/:competitionId/club/:clubName': getResultsForClub,

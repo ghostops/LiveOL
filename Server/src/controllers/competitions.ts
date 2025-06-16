@@ -19,14 +19,14 @@ const competitionSchema = z.object({
   date: z.string(),
   clubLogoSizes: z.string().array(),
   eventorAvailable: z.boolean(),
-  eventorUrl: z.string().optional(),
-  info: z.string().optional(),
-  club: z.string().optional(),
-  clubLogoUrl: z.string().optional(),
+  eventorUrl: z.string().nullish(),
+  info: z.string().nullish(),
+  club: z.string().nullish(),
+  clubLogoUrl: z.string().nullish(),
   canceled: z.boolean().nullish(),
-  distance: z.string().optional(),
-  district: z.string().optional(),
-  signups: z.number().optional(),
+  distance: z.string().nullish(),
+  district: z.string().nullish(),
+  signups: z.number().nullish(),
 });
 
 export const getCompetitions = defaultEndpointsFactory.build({
@@ -91,7 +91,7 @@ export const getCompetitionsToday = defaultEndpointsFactory.build({
 export const getCompetition = defaultEndpointsFactory.build({
   method: 'get',
   input: z.object({
-    competitionId: z.number(),
+    competitionId: z.coerce.number(),
   }),
   output: z.object({
     competition: competitionSchema,
@@ -119,13 +119,13 @@ export const getCompetition = defaultEndpointsFactory.build({
   },
 });
 
-export const getCompetitionSplits = defaultEndpointsFactory.build({
+export const getCompetitionLastPassings = defaultEndpointsFactory.build({
   method: 'get',
   input: z.object({
-    competitionId: z.number(),
+    competitionId: z.coerce.number(),
   }),
   output: z.object({
-    splits: z.array(
+    passings: z.array(
       z.object({
         id: z.string(),
         class: z.string(),
@@ -141,7 +141,7 @@ export const getCompetitionSplits = defaultEndpointsFactory.build({
   handler: async ({ input: { competitionId } }) => {
     const { passings } = await api.Liveresultat.getlastpassings(competitionId);
 
-    return { splits: passings.map(marshallPassing) };
+    return { passings: passings.map(marshallPassing) };
   },
 });
 

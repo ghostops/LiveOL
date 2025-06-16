@@ -11,7 +11,7 @@ const plusCodeSchema = z.object({
 const api = apiSingletons.createApiSingletons();
 
 export const validatePlusCode = defaultEndpointsFactory.build({
-  method: 'get',
+  method: 'post',
   input: plusCodeSchema,
   output: z.object({
     result: z.boolean(),
@@ -24,7 +24,7 @@ export const validatePlusCode = defaultEndpointsFactory.build({
 });
 
 export const redeemPlusCode = defaultEndpointsFactory.build({
-  method: 'get',
+  method: 'post',
   input: plusCodeSchema,
   output: z.object({
     result: z.boolean(),

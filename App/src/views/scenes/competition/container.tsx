@@ -3,7 +3,7 @@ import { OLCompetition as Component } from './component';
 import { useOLNavigation } from '~/hooks/useNavigation';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { RootStack } from '~/lib/nav/router';
-import { trpc } from '~/lib/trpc/client';
+import { $api } from '~/lib/react-query/api';
 
 export const OLCompetition: React.FC = () => {
   const { navigate } = useOLNavigation();
@@ -11,13 +11,24 @@ export const OLCompetition: React.FC = () => {
     params: { competitionId },
   } = useRoute<RouteProp<RootStack, 'Competition'>>();
 
-  const getCompetitionQuery = trpc.getCompetition.useQuery({ competitionId });
+  const getCompetitionQuery = $api.useQuery(
+    'get',
+    '/v1/competitions/{competitionId}',
+    {
+      params: { path: { competitionId } },
+    },
+  );
 
-  const getCompetitionLastPassingsQuery =
-    trpc.getCompetitionLastPassings.useQuery(
-      { competitionId },
-      { refetchInterval: 15_000 },
-    );
+  console.log(getCompetitionQuery.error);
+
+  const getCompetitionLastPassingsQuery = $api.useQuery(
+    'get',
+    '/v1/competitions/{competitionId}/last-passings',
+    {
+      params: { path: { competitionId } },
+      refetchInterval: 15_000,
+    },
+  );
 
   if (getCompetitionQuery.error) {
     return (
@@ -31,8 +42,8 @@ export const OLCompetition: React.FC = () => {
   return (
     <Component
       loading={getCompetitionQuery.isLoading}
-      competition={getCompetitionQuery.data?.competition}
-      classes={getCompetitionQuery.data?.classes}
+      competition={getCompetitionQuery.data?.data.competition}
+      classes={getCompetitionQuery.data?.data.classes}
       goToClass={(className: string | null) => () => {
         if (!className) {
           return;
@@ -43,7 +54,7 @@ export const OLCompetition: React.FC = () => {
           competitionId,
         });
       }}
-      latestPassings={getCompetitionLastPassingsQuery.data}
+      latestPassings={getCompetitionLastPassingsQuery.data?.data.passings}
     />
   );
 };

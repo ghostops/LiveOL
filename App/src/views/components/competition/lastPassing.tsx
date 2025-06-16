@@ -1,9 +1,9 @@
-import { TRPCQueryOutput } from '~/lib/trpc/client';
 import { OLText } from '../text';
 import { useStatusI18n } from '~/hooks/useStatusI18n';
+import { paths } from '~/lib/react-query/schema';
 
 type Props = {
-  result: TRPCQueryOutput['getCompetitionLastPassings'][0];
+  result: paths['/v1/competitions/{competitionId}/last-passings']['get']['responses']['200']['content']['application/json']['data']['passings'][number];
 };
 
 export const OLLastPassing: React.FC<Props> = ({ result }) => {

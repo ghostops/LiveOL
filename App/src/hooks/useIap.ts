@@ -40,8 +40,7 @@ export const useIap = () => {
     customerInfo,
   } = usePlusStore();
 
-  // TODO FIX THIS!
-  const plusActive = true; // customerInfo?.entitlements?.active?.plus !== undefined;
+  const plusActive = customerInfo?.entitlements?.active?.plus !== undefined;
 
   const loadPurchase = useCallback(async () => {
     const info = await Purchases.getCustomerInfo();

@@ -8,11 +8,12 @@ import { px } from '~/util/const';
 import { useTranslation } from 'react-i18next';
 import { TRPCQueryOutput } from '~/lib/trpc/client';
 import { firstIndexSize } from '~/views/components/follow/followSheet';
+import { paths } from '~/lib/react-query/schema';
 
 interface Props {
   loading: boolean;
-  competition?: TRPCQueryOutput['getCompetition']['competition'];
-  classes?: TRPCQueryOutput['getCompetition']['classes'];
+  competition?: paths['/v1/competitions/{competitionId}']['get']['responses']['200']['content']['application/json']['data']['competition'];
+  classes?: paths['/v1/competitions/{competitionId}']['get']['responses']['200']['content']['application/json']['data']['classes'];
   goToClass: (name: string | null) => () => void;
   latestPassings?: TRPCQueryOutput['getCompetitionLastPassings'];
 }
