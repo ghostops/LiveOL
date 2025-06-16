@@ -1,9 +1,7 @@
-import express from 'express';
+import { defaultEndpointsFactory } from 'express-zod-api';
 import { PlusCodeHandler } from 'lib/plusCodes/validator';
 import { apiSingletons } from 'lib/singletons';
-import { z } from 'zod';
-
-const router = express.Router();
+import { z } from 'zod/v4';
 
 const plusCodeSchema = z.object({
   code: z.string(),
@@ -12,35 +10,29 @@ const plusCodeSchema = z.object({
 
 const api = apiSingletons.createApiSingletons();
 
-router.post('/validate', async (req, res, next) => {
-  try {
-    const parseResult = plusCodeSchema.safeParse(req.body);
-    if (!parseResult.success) {
-      return res.status(400).json({ error: parseResult.error.errors });
-    }
-    const { code, deviceId } = parseResult.data;
+export const validatePlusCode = defaultEndpointsFactory.build({
+  method: 'get',
+  input: plusCodeSchema,
+  output: z.object({
+    result: z.boolean(),
+  }),
+  handler: async ({ input: { code, deviceId } }) => {
     const handler = new PlusCodeHandler(api.Redis);
     const hasPlus = await handler.validatePlusCode(code, deviceId);
-    res.json({ result: hasPlus });
-  } catch (error) {
-    next(error);
-  }
+    return { result: hasPlus };
+  },
 });
 
-router.post('/redeem', async (req, res, next) => {
-  try {
-    const parseResult = plusCodeSchema.safeParse(req.body);
-    if (!parseResult.success) {
-      return res.status(400).json({ error: parseResult.error.errors });
-    }
-    const { code, deviceId } = parseResult.data;
+export const redeemPlusCode = defaultEndpointsFactory.build({
+  method: 'get',
+  input: plusCodeSchema,
+  output: z.object({
+    result: z.boolean(),
+  }),
+  handler: async ({ input: { code, deviceId } }) => {
     const handler = new PlusCodeHandler(api.Redis);
     await handler.redeemPlusCode(code, deviceId);
     const hasPlus = await handler.validatePlusCode(code, deviceId);
-    res.json({ result: hasPlus });
-  } catch (error) {
-    next(error);
-  }
+    return { result: hasPlus };
+  },
 });
-
-export default router;
