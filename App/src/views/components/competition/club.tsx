@@ -5,7 +5,7 @@ import { px } from '~/util/const';
 
 interface Props {
   name: string;
-  logoUrl?: string;
+  logoUrl?: string | null;
   size?: string;
   style?: ViewStyle;
 }

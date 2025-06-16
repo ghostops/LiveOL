@@ -2,10 +2,9 @@ import * as React from 'react';
 import { OLText } from '../text';
 import { ScrollView, RefreshControl } from 'react-native';
 import { COLORS, px } from '~/util/const';
-import { TRPCClientErrorBase } from '@trpc/client';
 
 interface Props {
-  error?: TRPCClientErrorBase<any> | any;
+  error?: any;
   refetch?: () => Promise<any>;
 }
 

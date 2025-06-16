@@ -7,7 +7,7 @@ type LiveRunningState = {
   stopTicking: () => void;
 };
 
-let ticker: NodeJS.Timeout | undefined;
+let ticker: number | undefined;
 
 export const useLiveRunningStore = create<LiveRunningState>()((set, get) => ({
   tick: 0,

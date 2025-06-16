@@ -11,5 +11,4 @@
   },
   "include": ["src"],
   "exclude": ["node_modules"],
-  "references": [{ "path": "../Server" }],
 }

@@ -18,7 +18,9 @@ export const OLFollow: React.FC<Props> = ({ following }) => {
     <View style={{ flex: 1 }}>
       <FlatList
         data={following}
-        renderItem={({ item }) => <OLFollowItem item={item} />}
+        renderItem={({ item }) => (
+          <OLFollowItem item={item} onPress={() => {}} />
+        )}
         keyExtractor={item => item.id}
         ListFooterComponent={
           <View style={{ marginTop: px(16) }}>

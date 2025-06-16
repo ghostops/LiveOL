@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Image, ImageStyle } from 'react-native';
 
 interface Props {
-  code: string;
+  code: string | undefined;
   size: number;
   style?: ImageStyle;
 }
@@ -30,6 +30,10 @@ const FLAGS: Record<string, any> = {
 };
 
 export const OLFlag: React.FC<Props> = ({ code, size, style }) => {
+  if (!code) {
+    return null;
+  }
+
   const flag = FLAGS[remapCode[code]];
 
   if (!flag) {
