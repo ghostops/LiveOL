@@ -2,11 +2,11 @@ import { OLRefetcherBar } from '~/views/components/refetcher/bar';
 import { OLResultsList } from '~/views/components/result/list';
 import { OLResultsTable } from '~/views/components/result/table';
 import { useDeviceRotationStore } from '~/store/deviceRotation';
-import { TRPCQueryOutput } from '~/lib/trpc/client';
+import { paths } from '~/lib/react-query/schema';
 
 interface Props {
   refetch: () => Promise<void>;
-  results: TRPCQueryOutput['getClubResults'];
+  results: paths['/v1/results/{competitionId}/club/{clubName}']['get']['responses']['200']['content']['application/json']['data']['results'];
   competitionId: number;
   clubName: string;
   loading: boolean;

@@ -1,15 +1,15 @@
-import { TRPCQueryOutput } from '~/lib/trpc/client';
+import { paths } from '~/lib/react-query/schema';
 import { padTime } from './date';
 
 export const startIsAfterNow = (
-  result: TRPCQueryOutput['getResults']['results'][0],
+  result: paths['/v1/results/{competitionId}/club/{clubName}']['get']['responses']['200']['content']['application/json']['data']['results'][0],
 ): boolean => {
   const diff = result.startTime - nowTimestamp();
   return diff < 1;
 };
 
 export const isLiveRunning = (
-  result: TRPCQueryOutput['getResults']['results'][0],
+  result: paths['/v1/results/{competitionId}/club/{clubName}']['get']['responses']['200']['content']['application/json']['data']['results'][0],
 ): boolean => {
   return !result.result && result.startTime > 0 && startIsAfterNow(result);
 };

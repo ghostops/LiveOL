@@ -6,7 +6,7 @@ import { useTheme } from '~/hooks/useTheme';
 import { Swipeable } from 'react-native-gesture-handler';
 import { Animated } from 'react-native';
 import { TouchableOpacity } from 'react-native';
-import { trpc } from '~/lib/trpc/client';
+import { $api } from '~/lib/react-query/api';
 
 type Props = { item: FollowingData; onPress: () => void };
 
@@ -16,22 +16,20 @@ const useSubtitle = (data: FollowingData) => {
     data.type === 'runner' ? data.competitionId : competitionId,
   );
 
-  const competition = trpc.getCompetition.useQuery(
-    {
-      competitionId: id,
-    },
-    { enabled: !!id },
-  );
+  const competition = $api.useQuery('get', '/v1/competitions/{competitionId}', {
+    params: { path: { competitionId: id } },
+    enabled: !!id,
+  });
 
   if (data.type === 'runner') {
-    if (competition.data?.competition.name) {
-      return `${competition.data?.competition.name}: ${data.className}`;
+    if (competition.data?.data.competition.name) {
+      return `${competition.data?.data.competition.name}: ${data.className}`;
     }
 
     return data.className;
   }
 
-  return competition.data?.competition.name;
+  return competition.data?.data.competition.name;
 };
 
 export const OLFollowItem: React.FC<Props> = ({ item, onPress }) => {

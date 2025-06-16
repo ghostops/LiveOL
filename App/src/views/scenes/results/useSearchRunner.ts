@@ -1,11 +1,11 @@
 import { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Alert } from 'react-native';
-import { TRPCQueryOutput } from '~/lib/trpc/client';
+import { paths } from '~/lib/react-query/schema';
 import { useResultSearchStore } from '~/store/resultSearch';
 
 export const useSearchRunner = (
-  results?: TRPCQueryOutput['getResults']['results'],
+  results?: paths['/v1/results/{competitionId}/club/{clubName}']['get']['responses']['200']['content']['application/json']['data']['results'],
 ) => {
   const { t } = useTranslation();
 

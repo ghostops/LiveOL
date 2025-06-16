@@ -13,10 +13,10 @@ import { OLResultLiveRunning } from '../item/liveRunning';
 import { isLiveRunning, startIsAfterNow } from '~/util/isLive';
 import { OLClassName } from '../item/className';
 import { OLRunnerContextMenu } from '../contextMenu';
-import { TRPCQueryOutput } from '~/lib/trpc/client';
+import { paths } from '~/lib/react-query/schema';
 
 type Props = {
-  result: TRPCQueryOutput['getResults']['results'][0];
+  result: paths['/v1/results/{competitionId}/club/{clubName}']['get']['responses']['200']['content']['application/json']['data']['results'][0];
   disabled?: boolean;
   club?: boolean;
   followed?: boolean;

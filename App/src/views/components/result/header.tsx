@@ -14,7 +14,8 @@ import { useSortingStore } from '~/store/sorting';
 import { OLIcon } from '../icon';
 import { useTheme } from '~/hooks/useTheme';
 import { useIap } from '~/hooks/useIap';
-import { TRPCQueryOutput, trpc } from '~/lib/trpc/client';
+import { paths } from '~/lib/react-query/schema';
+import { $api } from '~/lib/react-query/api';
 
 interface OwnProps {
   competitionId: number;
@@ -37,7 +38,7 @@ const labels =
   (
     table: boolean,
     maxSize: number,
-    splits?: TRPCQueryOutput['getSplitControls'],
+    splits?: paths['/v1/results/{competitionId}/class/{className}/splits']['get']['responses']['200']['content']['application/json']['data']['splits'],
   ): Label[] => {
     const all: Record<string, Label> = {
       place: {
@@ -114,10 +115,13 @@ export const ResultHeader: React.FC<OwnProps> = ({
   const { setSortingDirection, setSortingKey, sortingDirection, sortingKey } =
     useSortingStore();
 
-  const getSplitControlsQuery = trpc.getSplitControls.useQuery({
-    competitionId,
-    className,
-  });
+  const getSplitControlsQuery = $api.useQuery(
+    'get',
+    '/v1/results/{competitionId}/class/{className}/splits',
+    {
+      params: { path: { competitionId, className } },
+    },
+  );
 
   const renderCol = (
     { text, size, align, style, key }: Label,
@@ -207,7 +211,7 @@ export const ResultHeader: React.FC<OwnProps> = ({
           {labels(t)(
             !!table,
             maxRowSize || 0,
-            getSplitControlsQuery.data || [],
+            getSplitControlsQuery.data?.data.splits || [],
           ).map(renderCol)}
         </Grid>
       )}

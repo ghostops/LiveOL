@@ -1,9 +1,9 @@
 import { useRef, useState } from 'react';
 import { Animated, ViewStyle } from 'react-native';
-import { TRPCQueryOutput } from '~/lib/trpc/client';
+import { paths } from '~/lib/react-query/schema';
 
 interface Props {
-  result: TRPCQueryOutput['getResults']['results'][0];
+  result: paths['/v1/results/{competitionId}/club/{clubName}']['get']['responses']['200']['content']['application/json']['data']['results'][0];
   children: React.ReactNode;
   style?: ViewStyle;
 }

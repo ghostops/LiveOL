@@ -6,7 +6,6 @@ import { OLSafeAreaView } from '~/views/components/safeArea';
 import { OLText } from '~/views/components/text';
 import { px } from '~/util/const';
 import { useTranslation } from 'react-i18next';
-import { TRPCQueryOutput } from '~/lib/trpc/client';
 import { firstIndexSize } from '~/views/components/follow/followSheet';
 import { paths } from '~/lib/react-query/schema';
 
@@ -15,14 +14,17 @@ interface Props {
   competition?: paths['/v1/competitions/{competitionId}']['get']['responses']['200']['content']['application/json']['data']['competition'];
   classes?: paths['/v1/competitions/{competitionId}']['get']['responses']['200']['content']['application/json']['data']['classes'];
   goToClass: (name: string | null) => () => void;
-  latestPassings?: TRPCQueryOutput['getCompetitionLastPassings'];
+  latestPassings?: paths['/v1/competitions/{competitionId}/last-passings']['get']['responses']['200']['content']['application/json']['data']['passings'];
 }
 
 export const OLCompetition: React.FC<Props> = props => {
   const { t } = useTranslation();
 
   const renderClass = ({ item }: any) => {
-    const { name }: TRPCQueryOutput['getCompetition']['classes'][0] = item;
+    const {
+      name,
+    }: paths['/v1/competitions/{competitionId}']['get']['responses']['200']['content']['application/json']['data']['classes'][0] =
+      item;
 
     return (
       <OLListItem
@@ -64,10 +66,7 @@ export const OLCompetition: React.FC<Props> = props => {
             latestPassings={props.latestPassings}
           />
         }
-        keyExtractor={(
-          item: TRPCQueryOutput['getCompetition']['classes'][0],
-          index,
-        ) => item.id || index.toString()}
+        keyExtractor={(item, index) => item.id || index.toString()}
         ListFooterComponent={
           <View style={{ height: px(45) + firstIndexSize }} />
         }

@@ -6,7 +6,6 @@ import { useTextStore } from '~/store/text';
 import { useOLNavigation } from '~/hooks/useNavigation';
 import { useIap } from '~/hooks/useIap';
 import { useState } from 'react';
-import { trpc } from '~/lib/trpc/client';
 import { format } from 'date-fns';
 
 const translationCredits: { code: string; name: string }[] = [
@@ -49,8 +48,6 @@ export const OLInfo: React.FC = () => {
 
   const { isLandscape } = useDeviceRotationStore();
 
-  const { data, refetch } = trpc.getServerVersion.useQuery();
-
   const { setTextSizeMultiplier, textSizeMultiplier } = useTextStore();
 
   const [secretTaps, setSecretTaps] = useState(0);
@@ -76,12 +73,8 @@ export const OLInfo: React.FC = () => {
 
     if (secretTaps > 5) {
       setSecretTaps(0);
-      refetch();
 
-      Alert.alert(
-        'VERSION',
-        `Package Version: ${VERSION}\n` + `Server Version: ${data?.version}\n`,
-      );
+      Alert.alert('VERSION', `Package Version: ${VERSION}`);
     }
   };
 

@@ -18,5 +18,9 @@ export const useStatusI18n = (
   len: 'short' | 'long' = 'short',
 ) => {
   const { t } = useTranslation();
-  return t(`status.${len}`, { returnObjects: true })[status];
+  const statuses = t(`status.${len}`, { returnObjects: true }) as Record<
+    number,
+    string
+  >;
+  return statuses[status];
 };

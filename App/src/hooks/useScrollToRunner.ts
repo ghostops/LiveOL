@@ -1,9 +1,9 @@
 import { FlashList } from '@shopify/flash-list';
 import { useEffect, useRef, useState } from 'react';
-import { TRPCQueryOutput } from '~/lib/trpc/client';
+import { paths } from '~/lib/react-query/schema';
 
 type Options = {
-  results?: TRPCQueryOutput['getResults']['results'];
+  results?: paths['/v1/results/{competitionId}/class/{className}']['get']['responses']['200']['content']['application/json']['data']['results'];
   followedRunnerId?: string;
   className?: string;
 };

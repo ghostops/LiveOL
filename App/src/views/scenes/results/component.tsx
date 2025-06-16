@@ -2,15 +2,15 @@ import { OLRefetcherBar } from '~/views/components/refetcher/bar';
 import { OLResultsList } from '~/views/components/result/list';
 import { OLResultsTable } from '~/views/components/result/table';
 import { OLLoading } from '~/views/components/loading';
-import { TRPCQueryOutput } from '~/lib/trpc/client';
 import { View } from 'react-native';
 import { OLHint } from '~/views/components/hint';
 import { useTranslation } from 'react-i18next';
 import { usePromoStore } from '~/store/promo';
+import { paths } from '~/lib/react-query/schema';
 
 interface Props {
   refetch: () => Promise<void>;
-  results: TRPCQueryOutput['getResults']['results'];
+  results: paths['/v1/results/{competitionId}/club/{clubName}']['get']['responses']['200']['content']['application/json']['data']['results'];
   focus: boolean;
   competitionId: number;
   className: string;

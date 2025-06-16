@@ -5,7 +5,6 @@ import { OLListItem } from '../list/item';
 import { OLLoading } from '../loading';
 import { OLText } from '../text';
 import { useTranslation } from 'react-i18next';
-import { TRPCQueryOutput } from '~/lib/trpc/client';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '~/hooks/useTheme';
 import { OLSafeAreaView } from '../safeArea';
@@ -70,7 +69,7 @@ export const HomeList: React.FC<Props> = ({
   const visibleCompetitions = groupVisibleCompetitions(competitions);
 
   const renderListItem = (
-    competition: TRPCQueryOutput['getCompetitions']['competitions'][0],
+    competition: paths['/v1/competitions']['get']['responses']['200']['content']['application/json']['data']['competitions'][0],
     index: number,
     total: number,
   ) => (

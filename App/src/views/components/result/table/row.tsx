@@ -16,10 +16,10 @@ import { isLiveRunning } from '~/util/isLive';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { OLRunnerContextMenu } from '../contextMenu';
 import { OLClassName } from '../item/className';
-import { TRPCQueryOutput } from '~/lib/trpc/client';
+import { paths } from '~/lib/react-query/schema';
 
 interface OwnProps {
-  result: TRPCQueryOutput['getResults']['results'][0];
+  result: paths['/v1/results/{competitionId}/club/{clubName}']['get']['responses']['200']['content']['application/json']['data']['results'][0];
   disabled?: boolean;
   followed?: boolean;
   club?: boolean;

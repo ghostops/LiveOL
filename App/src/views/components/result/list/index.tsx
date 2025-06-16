@@ -8,11 +8,11 @@ import { useTranslation } from 'react-i18next';
 import { useScrollToRunner } from '~/hooks/useScrollToRunner';
 import { useOlListItemHeight } from '../item/listItem';
 import { OLSafeAreaView } from '~/views/components/safeArea';
-import { TRPCQueryOutput } from '~/lib/trpc/client';
 import { firstIndexSize } from '../../follow/followSheet';
+import { paths } from '~/lib/react-query/schema';
 
 interface Props {
-  results: TRPCQueryOutput['getResults']['results'];
+  results: paths['/v1/results/{competitionId}/club/{clubName}']['get']['responses']['200']['content']['application/json']['data']['results'];
   competitionId: number;
   className: string;
   disabled?: boolean;
@@ -27,7 +27,8 @@ export const OLResultsList: React.FC<Props> = props => {
   const listItemHeight = useOlListItemHeight();
 
   const renderItem = ({ item }: any) => {
-    const result: TRPCQueryOutput['getResults']['results'][0] = item;
+    const result: paths['/v1/results/{competitionId}/club/{clubName}']['get']['responses']['200']['content']['application/json']['data']['results'][0] =
+      item;
 
     return (
       <OLResultItem
@@ -58,9 +59,9 @@ export const OLResultsList: React.FC<Props> = props => {
         ListFooterComponent={<View style={{ height: 45 + firstIndexSize }} />}
         data={props.results}
         renderItem={renderItem}
-        keyExtractor={(item: TRPCQueryOutput['getResults']['results'][0]) =>
-          item.id
-        }
+        keyExtractor={(
+          item: paths['/v1/results/{competitionId}/club/{clubName}']['get']['responses']['200']['content']['application/json']['data']['results'][0],
+        ) => item.id}
         ListEmptyComponent={
           !props.loading ? (
             <View

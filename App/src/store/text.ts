@@ -1,6 +1,6 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { zustandAsyncStorage } from './asyncStorage';
 
 type TextState = {
   textSizeMultiplier: number;
@@ -15,6 +15,6 @@ export const useTextStore = create<TextState>()(
         set(() => ({ textSizeMultiplier: value }));
       },
     }),
-    { name: '@liveol/text', getStorage: () => AsyncStorage },
+    { name: '@liveol/text', storage: zustandAsyncStorage },
   ),
 );

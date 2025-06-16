@@ -1,6 +1,6 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { zustandAsyncStorage } from './asyncStorage';
 
 type FollowingRunnerData = {
   type: 'runner';
@@ -40,6 +40,6 @@ export const useFollowingStore = create<FollowingState>()(
         }),
       following: [],
     }),
-    { name: '@liveol/following', getStorage: () => AsyncStorage },
+    { name: '@liveol/following', storage: zustandAsyncStorage },
   ),
 );

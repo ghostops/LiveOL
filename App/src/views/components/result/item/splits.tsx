@@ -1,9 +1,9 @@
 import { View } from 'react-native';
-import { TRPCQueryOutput } from '~/lib/trpc/client';
+import { paths } from '~/lib/react-query/schema';
 import { OLText } from '~/views/components/text';
 
 interface Props {
-  split: TRPCQueryOutput['getResults']['results'][0]['splits'][0];
+  split: paths['/v1/results/{competitionId}/club/{clubName}']['get']['responses']['200']['content']['application/json']['data']['results'][0]['splits'][0];
   best?: boolean;
 }
 

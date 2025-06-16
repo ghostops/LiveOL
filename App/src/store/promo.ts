@@ -1,6 +1,6 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { zustandAsyncStorage } from './asyncStorage';
 
 type PromoState = {
   displayPromo: boolean;
@@ -21,6 +21,6 @@ export const usePromoStore = create<PromoState>()(
         set({ displayRotatePromo: value });
       },
     }),
-    { name: '@liveol/promo', getStorage: () => AsyncStorage },
+    { name: '@liveol/promo', storage: zustandAsyncStorage },
   ),
 );

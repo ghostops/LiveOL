@@ -29,7 +29,7 @@ const resultSchema = z.object({
   startTime: z.number(),
   result: z.string().optional(),
   timeplus: z.string(),
-  progress: z.number(),
+  progress: z.number().nullish(),
   hasUpdated: z.boolean(),
 });
 

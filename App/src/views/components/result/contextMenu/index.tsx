@@ -7,11 +7,11 @@ import { useOLNavigation } from '~/hooks/useNavigation';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { RootStack } from '~/lib/nav/router';
 import { useFollowingStore } from '~/store/following';
-import { TRPCQueryOutput } from '~/lib/trpc/client';
 import { useFollowBottomSheetStore } from '~/store/followBottomSheet';
+import { paths } from '~/lib/react-query/schema';
 
 type Props = {
-  result: TRPCQueryOutput['getResults']['results'][0];
+  result: paths['/v1/results/{competitionId}/club/{clubName}']['get']['responses']['200']['content']['application/json']['data']['results'][0];
   children: React.ReactNode;
   club: boolean;
 };

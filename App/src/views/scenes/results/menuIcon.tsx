@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
+import { KeyboardAvoidingView, Platform, TouchableOpacity } from 'react-native';
 import { COLORS, HIT_SLOP, px } from '~/util/const';
 import { OLIcon } from '~/views/components/icon';
 import { useActionSheet } from '@expo/react-native-action-sheet';
@@ -91,7 +91,8 @@ export const ResultMenuIcon: React.FC = () => {
         animationType="fade"
         onRequestClose={() => setModalVisible(false)}
       >
-        <View
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           style={{
             flex: 1,
             backgroundColor: 'rgba(0,0,0,0.5)',
@@ -153,7 +154,7 @@ export const ResultMenuIcon: React.FC = () => {
               />
             </View>
           </View>
-        </View>
+        </KeyboardAvoidingView>
       </Modal>
     </>
   );
