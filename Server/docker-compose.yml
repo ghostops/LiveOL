@@ -5,7 +5,8 @@ services:
             dockerfile: Dockerfile
         command: npm run dev
         ports:
-            - 3001:3001
+            - 3037:3001
+            - 3036:3000
         volumes:
             - ./src:/app/src/
         depends_on:
@@ -18,11 +19,3 @@ services:
         image: redis:latest
         ports:
             - '6379:6379'
-    redis-commander:
-        image: rediscommander/redis-commander:latest
-        depends_on:
-            - redis
-        environment:
-            - REDIS_HOSTS=local:redis:6379
-        ports:
-            - '8002:8081'

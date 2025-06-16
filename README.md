@@ -33,9 +33,3 @@ non-critical aspects of the application.
 - [Website](https://liveol.larsendahl.se/)
 - [License](https://choosealicense.com/licenses/apache-2.0/)
 
-### Translations powered by:
-
-<a href="https://phraseapp.com/">
-    <img src="/App/assets/images/phrase.png" width="140" height="40">
-</a>
-

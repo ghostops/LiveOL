@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, View, Image, ScrollView } from 'react-native';
+import { TouchableOpacity, View, ScrollView } from 'react-native';
 import { OLButton } from '~/views/components/button';
 import { OLCard } from '~/views/components/card';
 import { OLFlag } from '~/views/components/lang/flag';
@@ -26,12 +26,9 @@ type Props = {
   goToMyWebsite: () => void;
 };
 
-const PHRASE_IMAGE = require('../../../../assets/images/phrase.png');
-
 export const OLInfo: React.FC<Props> = ({
   landscape,
   contact,
-  openPhraseApp,
   translationCredits,
   secretTap,
   increaseFontSize,
@@ -225,55 +222,6 @@ export const OLInfo: React.FC<Props> = ({
 
       <View>
         <OLCard style={{ marginVertical: px(8) }}>
-          <TouchableOpacity
-            onPress={openPhraseApp}
-            style={{
-              alignItems: 'center',
-              width: '100%',
-            }}
-          >
-            <OLText
-              bold
-              size={16}
-              style={{
-                marginBottom: px(16),
-                textAlign: 'center',
-              }}
-            >
-              {t('info.translations.phraseapp')}:
-            </OLText>
-
-            <Image
-              source={PHRASE_IMAGE}
-              style={{ width: 180, height: 60 }}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
-
-          <TouchableOpacity onPress={contact}>
-            <OLText
-              bold
-              size={16}
-              style={{
-                marginTop: px(16),
-                textAlign: 'center',
-                textDecorationLine: 'underline',
-              }}
-            >
-              {t('info.translations.freePlus')}
-            </OLText>
-          </TouchableOpacity>
-
-          <View
-            style={{
-              height: 1,
-              width: '100%',
-              backgroundColor: 'black',
-              opacity: 0.15,
-              marginVertical: 25,
-            }}
-          />
-
           <OLText bold size={18}>
             {t('info.translations.credit')}:
           </OLText>

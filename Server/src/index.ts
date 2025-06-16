@@ -3,6 +3,7 @@ import * as dotenv from 'dotenv';
 import { createHTTPServer } from '@trpc/server/adapters/standalone';
 import { appRouter, createContext } from 'trpc';
 import { OLSelfHelper } from 'lib/selfhelp';
+import { startExpressServer } from 'express/server';
 
 (async () => {
   dotenv.config();
@@ -28,4 +29,6 @@ import { OLSelfHelper } from 'lib/selfhelp';
   );
 
   console.info(`Test responses enabled: "${getEnv('test') || 'false'}"`);
+
+  startExpressServer();
 })();
