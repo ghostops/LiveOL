@@ -2,15 +2,15 @@ import React from 'react';
 import { px } from '~/util/const';
 import { OLText } from '../text';
 import { OLListItem } from '../list/item';
-import { TRPCQueryOutput } from '~/lib/trpc/client';
 import { ViewStyle } from 'react-native';
+import { paths } from '~/lib/react-query/schema';
 
 interface Props {
-  competition: TRPCQueryOutput['getCompetitions']['competitions'][0];
+  competition: paths['/v1/competitions']['get']['responses']['200']['content']['application/json']['data']['competitions'][0];
   index?: number;
   total?: number;
   onCompetitionPress?: (
-    comp: TRPCQueryOutput['getCompetitions']['competitions'][0],
+    comp: paths['/v1/competitions']['get']['responses']['200']['content']['application/json']['data']['competitions'][0],
   ) => void;
   style?: ViewStyle;
 }

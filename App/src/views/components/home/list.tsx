@@ -10,11 +10,13 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '~/hooks/useTheme';
 import { OLSafeAreaView } from '../safeArea';
 import { useHomeSearchStore } from '~/store/homeSearch';
+import { JSX } from 'react';
+import { paths } from '~/lib/react-query/schema';
 
 interface Props {
-  competitions: TRPCQueryOutput['getCompetitions']['competitions'];
+  competitions: paths['/v1/competitions']['get']['responses']['200']['content']['application/json']['data']['competitions'];
   onCompetitionPress: (
-    comp: TRPCQueryOutput['getCompetitions']['competitions'][0],
+    comp: paths['/v1/competitions']['get']['responses']['200']['content']['application/json']['data']['competitions'][0],
   ) => void;
   listHeader: JSX.Element | null;
   loadMore: () => Promise<any>;
@@ -30,8 +32,11 @@ const uniqEs6 = (arrArg: any[]) =>
   }) as string[];
 
 export const groupVisibleCompetitions = (
-  visibleCompetitions: TRPCQueryOutput['getCompetitions']['competitions'],
-): Record<string, TRPCQueryOutput['getCompetitions']['competitions']> => {
+  visibleCompetitions: paths['/v1/competitions']['get']['responses']['200']['content']['application/json']['data']['competitions'],
+): Record<
+  string,
+  paths['/v1/competitions']['get']['responses']['200']['content']['application/json']['data']['competitions']
+> => {
   const keys = uniqEs6(visibleCompetitions.map(comp => comp.date));
   const map: any = {};
 

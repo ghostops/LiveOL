@@ -5,12 +5,12 @@ import { OLText } from '../text';
 import { View } from 'react-native';
 import { useTheme } from '~/hooks/useTheme';
 import { useTranslation } from 'react-i18next';
-import { TRPCQueryOutput } from '~/lib/trpc/client';
+import { paths } from '~/lib/react-query/schema';
 
 type Props = {
-  competitions: TRPCQueryOutput['getTodaysCompetitions']['today'];
+  competitions: paths['/v1/competitions/today']['get']['responses']['200']['content']['application/json']['data']['today'];
   renderListItem: (
-    comp: TRPCQueryOutput['getTodaysCompetitions']['today'][0],
+    comp: paths['/v1/competitions/today']['get']['responses']['200']['content']['application/json']['data']['today'][0],
     index?: number,
     total?: number,
   ) => React.ReactElement;

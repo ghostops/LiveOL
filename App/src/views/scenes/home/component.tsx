@@ -2,18 +2,18 @@ import { HomeList } from '~/views/components/home/list';
 import { View, Animated } from 'react-native';
 import { useTheme } from '~/hooks/useTheme';
 import { OLHomePromo } from './promo';
-import { TRPCQueryOutput } from '~/lib/trpc/client';
 import { TodaysCompetitions } from '~/views/components/home/today';
 import { HomeListItem } from '~/views/components/home/listItem';
 import { useCallback, useRef } from 'react';
 import { OLHomeBar } from './bar';
 import { OLLoading } from '~/views/components/loading';
+import { paths } from '~/lib/react-query/schema';
 
 interface Props {
-  competitions: TRPCQueryOutput['getCompetitions']['competitions'];
-  todaysCompetitions: TRPCQueryOutput['getTodaysCompetitions']['today'];
+  competitions: paths['/v1/competitions']['get']['responses']['200']['content']['application/json']['data']['competitions'];
+  todaysCompetitions: paths['/v1/competitions/today']['get']['responses']['200']['content']['application/json']['data']['today'];
   onCompetitionPress: (
-    competition: TRPCQueryOutput['getCompetitions']['competitions'][0],
+    competition: paths['/v1/competitions']['get']['responses']['200']['content']['application/json']['data']['competitions'][0],
   ) => void;
   openSearch: () => void;
   searching: boolean;

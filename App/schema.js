@@ -12,7 +12,7 @@ getDataKey()
     fs.writeFileSync('/tmp/data.json', JSON.stringify(data, null, 2));
     console.log('Data written to /tmp/data.json');
     exec(
-      'npx openapi-typescript /tmp/data.json -o ./src/schema.d.ts',
+      'npx openapi-typescript /tmp/data.json -o ./src/lib/react-query/schema.d.ts',
       (error, stdout, stderr) => {
         if (error) {
           console.error(`exec error: ${error}`);

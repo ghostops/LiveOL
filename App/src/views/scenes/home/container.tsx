@@ -5,10 +5,11 @@ import { useDeviceRotationStore } from '~/store/deviceRotation';
 import { OLHome as Component } from './component';
 import { OLError } from '~/views/components/error';
 import RNBootSplash from 'react-native-bootsplash';
-import { trpc } from '~/lib/trpc/client';
 import { format } from 'date-fns';
 import { OLFollowSheet } from '~/views/components/follow/followSheet';
 import { AppState } from 'react-native';
+import { $api } from '~/lib/react-query/api';
+import { paths } from '~/lib/react-query/schema';
 
 const getToday = () => format(new Date(), 'yyyy-MM-dd');
 
@@ -18,27 +19,35 @@ export const OLHome: React.FC = () => {
   const { navigate } = useOLNavigation();
   const hasLoaded = useRef(false);
 
-  const getCompetitionsQuery = trpc.getCompetitions.useInfiniteQuery(
+  const getCompetitionsQuery = $api.useInfiniteQuery(
+    'get',
+    '/v1/competitions',
     {
-      search: searchTerm || undefined,
+      params: {
+        query: {
+          search: searchTerm || undefined,
+          date: getToday(),
+          cursor: 1,
+        },
+      },
     },
     {
-      getNextPageParam: res => {
-        if (res.nextPage >= res.lastPage) {
+      getNextPageParam: (
+        res: paths['/v1/competitions']['get']['responses']['200']['content']['application/json'],
+      ) => {
+        if (res.data.nextPage >= res.data.lastPage) {
           return undefined;
         }
-        return res.nextPage;
+        return res.data.nextPage;
       },
-      initialCursor: 1,
-      retry: 3,
-      retryDelay: 1000,
+      initialPageParam: 0,
     },
   );
 
-  const getTodaysCompetitionsQuery = trpc.getTodaysCompetitions.useQuery(
-    {
-      date: getToday(),
-    },
+  const getTodaysCompetitionsQuery = $api.useQuery(
+    'get',
+    '/v1/competitions/today',
+    { params: { query: { date: getToday() } } },
     { gcTime: 0, staleTime: 0 },
   );
 
@@ -85,15 +94,16 @@ export const OLHome: React.FC = () => {
     <>
       <Component
         competitions={
-          getCompetitionsQuery.data?.pages.flatMap(page => page.competitions) ||
-          []
+          getCompetitionsQuery.data?.pages.flatMap(
+            page => page.data.competitions,
+          ) || []
         }
         loading={getCompetitionsQuery.isLoading}
         loadingMore={getCompetitionsQuery.isFetchingNextPage}
         loadMore={loadMore}
         openSearch={() => setIsSearching(true)}
         searching={isSearching}
-        todaysCompetitions={getTodaysCompetitionsQuery.data?.today || []}
+        todaysCompetitions={getTodaysCompetitionsQuery.data?.data.today || []}
         refetch={async () => {
           await Promise.all([
             getCompetitionsQuery.refetch(),
