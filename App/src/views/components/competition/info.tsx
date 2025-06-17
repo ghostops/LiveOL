@@ -36,6 +36,8 @@ export const CompetitionInfoBox: React.FC<Props> = ({ infoHtml }) => {
   );
 };
 
+const longTextLength = 120;
+
 const parseHtml = (text: string, long = true): string => {
   let parsed: string = text;
 
@@ -49,7 +51,7 @@ const parseHtml = (text: string, long = true): string => {
   parsed = parsed.replace(/<a(.*?)>/gm, '');
 
   if (!long) {
-    parsed = parsed.substring(0, 120) + '...';
+    parsed = parsed.substring(0, longTextLength) + '...';
   }
 
   return parsed;
@@ -59,7 +61,8 @@ const InfoHtml: React.FC<{ html: string }> = ({ html }) => {
   const [seeMore, setSeeMore] = useState(false);
   const { px } = useTheme();
   const { t } = useTranslation();
-  const parsedText = parseHtml(html, seeMore);
+  const shortText = parseHtml(html, false);
+  const longText = parseHtml(html, true);
 
   return (
     <>
@@ -71,10 +74,10 @@ const InfoHtml: React.FC<{ html: string }> = ({ html }) => {
         }}
       >
         <OLText size={14} style={{ color: 'white' }}>
-          {parsedText}
+          {seeMore ? longText : shortText}
         </OLText>
       </Hyperlink>
-      {!seeMore && (
+      {!!(!seeMore && longText.length > longTextLength) && (
         <TouchableOpacity
           onPress={() => setSeeMore(true)}
           style={{ marginTop: px(8) }}

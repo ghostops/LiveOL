@@ -1813,8 +1813,30 @@ PODS:
     - Yoga
   - RNDeviceInfo (10.7.0):
     - React-Core
-  - RNFlashList (1.6.3):
+  - RNFlashList (1.8.3):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.11.18.00)
+    - RCTRequired
+    - RCTTypeSafety
     - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-hermes
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - RNGestureHandler (2.25.0):
     - DoubleConversion
     - glog
@@ -2391,7 +2413,7 @@ SPEC CHECKSUMS:
   RNBootSplash: 1d93abb45016adce71a7f0cdbdf4f7b622777276
   RNCAsyncStorage: c1bbcf629d7206d1e19310827848b98d68a4cbaf
   RNDeviceInfo: 25d818c85db769cc0e7083d39efaa01a6f450df3
-  RNFlashList: 4b4b6b093afc0df60ae08f9cbf6ccd4c836c667a
+  RNFlashList: ba3d97b748d6dc058798336eaced40424f7636fb
   RNGestureHandler: 5d8431415d4b8518e86e289e9ad5bb9be78f6dba
   RNPaywalls: 9ccc6508f79020513ab931f3020c8fcb6ea27c81
   RNPurchases: 1d6689272e05539f8401d88b6de0dce69c21d515
