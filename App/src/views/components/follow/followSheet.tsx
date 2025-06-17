@@ -1,8 +1,9 @@
-import { BottomSheetFlatList, BottomSheetModal } from '@gorhom/bottom-sheet';
+import { BottomSheetSectionList, BottomSheetModal } from '@gorhom/bottom-sheet';
 import {
+  Alert,
   Dimensions,
-  FlatList,
   Platform,
+  SectionList,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -17,9 +18,17 @@ import { useRef } from 'react';
 import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import { useDeviceRotationStore } from '~/store/deviceRotation';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { OLButton } from '../button';
+import { $api } from '~/lib/react-query/api';
+import { useDeviceIdStore } from '~/store/deviceId';
+import { paths } from '~/lib/react-query/schema';
+import { OLTrackingItem } from './trackingItem';
 
 const ListComponent =
-  Platform.OS === 'android' ? BottomSheetFlatList : FlatList;
+  Platform.OS === 'android' ? BottomSheetSectionList : SectionList;
+
+export type OLTrackingData =
+  paths['/v1/track']['get']['responses']['200']['content']['application/json']['data']['runners'][number];
 
 export const firstIndexSize = 65;
 export const followSheetIndexes = [firstIndexSize, '50%', '90%'];
@@ -36,6 +45,14 @@ export const OLFollowSheet: React.FC = () => {
   const { t } = useTranslation();
   const { px, colors } = useTheme();
   const { getNavRef } = useOLNavigationRef();
+  const deviceId = useDeviceIdStore(state => state.deviceId);
+  const { mutateAsync: trackNewRunner } = $api.useMutation(
+    'post',
+    '/v1/track/add',
+  );
+  const { data } = $api.useQuery('get', '/v1/track', {
+    params: { query: { deviceId } },
+  });
 
   const onItemPress = (item: FollowingData) => {
     if (item.type === 'runner') {
@@ -115,17 +132,78 @@ export const OLFollowSheet: React.FC = () => {
             {t('follow.title')}
           </OLText>
         </TouchableOpacity>
-        <ListComponent
-          data={following}
-          renderItem={({ item }) => (
-            <OLFollowItem item={item} onPress={() => onItemPress(item)} />
+        <ListComponent<FollowingData | OLTrackingData>
+          sections={[
+            {
+              title: t('follow.title'),
+              data: following,
+              key: 'following',
+            },
+            {
+              title: t('follow.track.title'),
+              data: data?.data.runners || [],
+              key: 'tracking',
+            },
+          ]}
+          renderSectionHeader={({ section }) => (
+            <View style={{ backgroundColor: colors.BLUE, padding: px(12) }}>
+              <OLText size={px(16)} style={{ color: 'white' }} bold>
+                {section.title}
+              </OLText>
+            </View>
           )}
-          keyExtractor={item => item.id}
+          renderItem={({ item, section }) => {
+            if (section.key === 'following') {
+              return (
+                <OLFollowItem
+                  item={item as FollowingData}
+                  onPress={() => onItemPress(item as FollowingData)}
+                />
+              );
+            }
+
+            if (section.key === 'tracking') {
+              return (
+                <OLTrackingItem
+                  item={item as OLTrackingData}
+                  onPress={() => {}}
+                />
+              );
+            }
+
+            return null;
+          }}
+          keyExtractor={item => item.id.toString()}
           ListEmptyComponent={
             <View style={{ padding: px(16) }}>
-              <OLText size={14} style={{ textAlign: 'center' }}>
+              <OLText size={px(14)} style={{ color: 'white' }} bold>
                 {t('follow.empty')}
               </OLText>
+            </View>
+          }
+          ListFooterComponent={
+            <View style={{ padding: px(8) }}>
+              <OLButton
+                onPress={() => {
+                  Alert.prompt('track', '', cb => {
+                    trackNewRunner({
+                      body: {
+                        deviceId,
+                        runnerClasses: ['M20-1', 'H21', 'H20'],
+                        runnerClubs: [
+                          'Västerås Skid- och Orienteringsklubb',
+                          'VSOK',
+                          'SV',
+                          'SE',
+                        ],
+                        runnerName: cb || '',
+                      },
+                    });
+                  });
+                }}
+              >
+                {t('follow.track.add')}
+              </OLButton>
             </View>
           }
         />

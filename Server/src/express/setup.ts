@@ -10,6 +10,7 @@ import {
   getResultsForClub,
   getSplitControls,
 } from 'controllers/results';
+import { getTrackedRunners, trackNewRunner } from 'controllers/track';
 import { createConfig, Routing } from 'express-zod-api';
 
 export const config = createConfig({
@@ -30,4 +31,7 @@ export const routing: Routing = {
 
   'v1/plus/validate': validatePlusCode,
   'v1/plus/redeem': redeemPlusCode,
+
+  'v1/track/add': trackNewRunner,
+  'v1/track': getTrackedRunners,
 };

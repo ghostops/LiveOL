@@ -13,6 +13,8 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import '~/lib/i18n';
+import { useDeviceIdStore } from './store/deviceId';
+import { getUniqueId } from 'react-native-device-info';
 
 const fallbackErrorBoundary = ({ children }: any) => <>{children}</>;
 let ErrorBoundary: any;
@@ -50,11 +52,23 @@ const ErrorView = () => (
 );
 
 export default () => {
+  const setDeviceId = useDeviceIdStore(state => state.setDeviceId);
+
   useEffect(() => {
     setTimeout(() => {
       !__DEV__ && promptStoreReview();
     }, 3000);
   }, []);
+
+  useEffect(() => {
+    async function initializeDeviceId() {
+      const id = await getUniqueId();
+      setDeviceId(id);
+      console.log('Device ID initialized:', id);
+    }
+
+    initializeDeviceId();
+  }, [setDeviceId]);
 
   return (
     <ErrorBoundary FallbackComponent={ErrorView}>

@@ -50,6 +50,10 @@
       "cta": "Unfollow",
       "hint": "Long-press to unfollow",
       "title": "Do you want to stop following?"
+    },
+    "track": {
+      "title": "Tracking runners",
+      "add": "Track new runner"
     }
   },
   "home": {

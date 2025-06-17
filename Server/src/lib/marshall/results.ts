@@ -9,7 +9,7 @@ export interface IOLSplit {
   id: string;
   code: number;
   name: string;
-  status: number;
+  status: number | null;
   place: number;
   time: OLTime;
   timeplus: OLTime;
@@ -46,7 +46,7 @@ export const marshallSplits =
       code: split.code,
       name: split.name,
       time: Helpers.splitTimestampToReadable(keyValue['time'] || 0),
-      status: keyValue['status'] || NaN,
+      status: keyValue['status'] || null,
       place: parsePlace(keyValue['place'] || 0),
       timeplus: Helpers.timeplusToReadable(keyValue['timeplus'] || 0),
     };

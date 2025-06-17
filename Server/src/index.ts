@@ -1,5 +1,5 @@
 import { getEnv } from 'lib/helpers/env';
-import * as dotenv from 'dotenv';
+import dotenv from 'dotenv';
 import { createHTTPServer } from '@trpc/server/adapters/standalone';
 import { appRouter, createContext } from 'trpc';
 import { OLSelfHelper } from 'lib/selfhelp';

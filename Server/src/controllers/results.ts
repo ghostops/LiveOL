@@ -10,7 +10,7 @@ const splitSchema = z.object({
   id: z.string(),
   code: z.number(),
   name: z.string(),
-  status: z.union([z.string(), z.number(), z.nan()]),
+  status: z.union([z.string(), z.number(), z.null()]),
   place: z.coerce.number(),
   time: z.string(),
   timeplus: z.string(),
