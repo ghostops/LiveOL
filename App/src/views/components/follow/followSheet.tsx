@@ -23,6 +23,7 @@ import { $api } from '~/lib/react-query/api';
 import { useDeviceIdStore } from '~/store/deviceId';
 import { paths } from '~/lib/react-query/schema';
 import { OLTrackingItem } from './trackingItem';
+import { queryClient } from '~/lib/react-query/client';
 
 const ListComponent =
   Platform.OS === 'android' ? BottomSheetSectionList : SectionList;
@@ -49,12 +50,24 @@ export const OLFollowSheet: React.FC = () => {
   const { mutateAsync: trackNewRunner } = $api.useMutation(
     'post',
     '/v1/track/add',
+    {
+      onSettled: () => {
+        queryClient.invalidateQueries({ queryKey: ['get', '/v1/track'] });
+      },
+    },
   );
   const { data } = $api.useQuery('get', '/v1/track', {
     params: { query: { deviceId } },
   });
 
-  const onItemPress = (item: FollowingData) => {
+  const onTrackItemPress = (item: OLTrackingData) => {
+    getNavRef()?.navigate('TrackRunner', {
+      runner: item,
+    });
+    localRef.current?.close();
+  };
+
+  const onFollowItemPress = (item: FollowingData) => {
     if (item.type === 'runner') {
       getNavRef()?.navigate('Results', {
         competitionId: Number(item.competitionId),
@@ -157,7 +170,7 @@ export const OLFollowSheet: React.FC = () => {
               return (
                 <OLFollowItem
                   item={item as FollowingData}
-                  onPress={() => onItemPress(item as FollowingData)}
+                  onPress={() => onFollowItemPress(item as FollowingData)}
                 />
               );
             }
@@ -166,7 +179,7 @@ export const OLFollowSheet: React.FC = () => {
               return (
                 <OLTrackingItem
                   item={item as OLTrackingData}
-                  onPress={() => {}}
+                  onPress={onTrackItemPress}
                 />
               );
             }

@@ -3,15 +3,26 @@ import { useTranslation } from 'react-i18next';
 import { OLListItem } from '../list/item';
 import { useTheme } from '~/hooks/useTheme';
 import { Swipeable } from 'react-native-gesture-handler';
-import { Animated } from 'react-native';
+import { ActivityIndicator, Animated } from 'react-native';
 import { TouchableOpacity } from 'react-native';
 import type { OLTrackingData } from './followSheet';
+import { $api } from '~/lib/react-query/api';
+import { queryClient } from '~/lib/react-query/client';
 
-type Props = { item: OLTrackingData; onPress: () => void };
+type Props = { item: OLTrackingData; onPress: (item: OLTrackingData) => void };
 
 export const OLTrackingItem: React.FC<Props> = ({ item, onPress }) => {
   const { px } = useTheme();
   const { t } = useTranslation();
+  const { mutateAsync: removeTrack, isPending } = $api.useMutation(
+    'delete',
+    '/v1/track/{id}',
+    {
+      onSettled: () => {
+        queryClient.invalidateQueries({ queryKey: ['get', '/v1/track'] });
+      },
+    },
+  );
 
   const renderRightActions = (
     _progress: Animated.AnimatedInterpolation<any>,
@@ -31,9 +42,15 @@ export const OLTrackingItem: React.FC<Props> = ({ item, onPress }) => {
             width: 125,
             justifyContent: 'center',
             alignItems: 'center',
+            flexDirection: 'row',
+            gap: px(8),
           }}
-          onPress={() => {}}
+          onPress={() => {
+            removeTrack({ params: { path: { id: item.id } } });
+          }}
+          disabled={isPending}
         >
+          {isPending && <ActivityIndicator size="small" color="white" />}
           <OLText size={16} style={{ color: 'white' }}>
             {t('follow.unfollow.cta')}
           </OLText>
@@ -51,7 +68,7 @@ export const OLTrackingItem: React.FC<Props> = ({ item, onPress }) => {
           paddingVertical: px(12),
           width: '100%',
         }}
-        onPress={onPress}
+        onPress={() => onPress(item)}
       >
         <OLText size={16}>{item.runnerName}</OLText>
       </OLListItem>

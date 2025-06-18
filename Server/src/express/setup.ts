@@ -10,8 +10,13 @@ import {
   getResultsForClub,
   getSplitControls,
 } from 'controllers/results';
-import { getTrackedRunners, trackNewRunner } from 'controllers/track';
-import { createConfig, Routing } from 'express-zod-api';
+import {
+  getTrackedRunners,
+  removeTrackedRunner,
+  trackNewRunner,
+  getTrackedRunner,
+} from 'controllers/track';
+import { createConfig, DependsOnMethod, Routing } from 'express-zod-api';
 
 export const config = createConfig({
   http: { listen: 3000 },
@@ -34,4 +39,8 @@ export const routing: Routing = {
 
   'v1/track/add': trackNewRunner,
   'v1/track': getTrackedRunners,
+  'v1/track/:id': new DependsOnMethod({
+    delete: removeTrackedRunner,
+    get: getTrackedRunner,
+  }),
 };
