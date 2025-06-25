@@ -2,11 +2,31 @@ import { eq } from 'drizzle-orm';
 import { defaultEndpointsFactory } from 'express-zod-api';
 import db from 'lib/db';
 import { trackingTable } from 'lib/db/schema';
+import { isDateTodayOrFutureWithin7Days } from 'lib/helpers/time';
+import { apiSingletons } from 'lib/singletons';
 import { z } from 'zod/v4';
+import { resultSchema } from './results';
+import { classSchema, competitionSchema } from './competitions';
+import { IOLCompetition, marshallCompetition } from 'lib/marshall/competitions';
+import { IOLResult, marshallResult } from 'lib/marshall/results';
+import { IOLClass, marshallClass } from 'lib/marshall/classes';
+import ms from 'ms';
+
+const api = apiSingletons.createApiSingletons();
+
+const sanitize = (str: string) => str.toLowerCase().trim();
 
 const runnerSchema = z.object({
   id: z.number(),
   runnerName: z.string(),
+  runnerClasses: z.array(z.string()),
+  runnerClubs: z.array(z.string()),
+});
+
+const resultsSchema = z.object({
+  class: classSchema,
+  competition: competitionSchema,
+  result: resultSchema,
 });
 
 export const getTrackedRunners = defaultEndpointsFactory.build({
@@ -19,7 +39,7 @@ export const getTrackedRunners = defaultEndpointsFactory.build({
   }),
   handler: async ({ input: { deviceId } }) => {
     const runners = await db
-      .select({ runnerName: trackingTable.runnerName, id: trackingTable.id })
+      .select()
       .from(trackingTable)
       .where(() => eq(trackingTable.deviceId, deviceId));
 
@@ -36,7 +56,7 @@ export const trackNewRunner = defaultEndpointsFactory.build({
     deviceId: z.string(),
   }),
   output: z.object({
-    trackId: z.string(),
+    runner: runnerSchema,
   }),
   handler: async ({
     input: { deviceId, runnerClasses, runnerClubs, runnerName },
@@ -45,13 +65,64 @@ export const trackNewRunner = defaultEndpointsFactory.build({
       .insert(trackingTable)
       .values({
         deviceId,
-        runnerClasses: JSON.stringify(runnerClasses),
-        runnerClubs: JSON.stringify(runnerClubs),
+        runnerClasses,
+        runnerClubs,
         runnerName,
       })
-      .returning({ trackId: trackingTable.id });
+      .returning();
 
-    return { trackId: res[0]?.trackId.toString() ?? '' };
+    return { runner: res[0]! };
+  },
+});
+
+export const updateTrackedRunner = defaultEndpointsFactory.build({
+  method: 'put',
+  input: z.object({
+    id: z.coerce.number(),
+    runnerName: z.string(),
+    runnerClasses: z.array(z.string()),
+    runnerClubs: z.array(z.string()),
+    deviceId: z.string(),
+  }),
+  output: z.object({
+    runner: runnerSchema,
+  }),
+  handler: async ({
+    input: { id, deviceId, runnerClasses, runnerClubs, runnerName },
+  }) => {
+    const runnerQuery = await db
+      .select()
+      .from(trackingTable)
+      .where(eq(trackingTable.id, id));
+
+    if (runnerQuery.length === 0) {
+      throw new Error('Runner not found');
+    }
+
+    const runner = runnerQuery[0]!;
+
+    if (runner.deviceId !== deviceId) {
+      throw new Error('Device ID mismatch');
+    }
+
+    const updateQuery = await db
+      .update(trackingTable)
+      .set({
+        runnerName,
+        runnerClasses,
+        runnerClubs,
+        deviceId,
+      })
+      .where(eq(trackingTable.id, id))
+      .returning();
+
+    if (updateQuery.length === 0) {
+      throw new Error('Updated runner not found');
+    }
+
+    const updatedRunner = updateQuery[0]!;
+
+    return { runner: updatedRunner };
   },
 });
 
@@ -75,24 +146,91 @@ export const removeTrackedRunner = defaultEndpointsFactory.build({
   },
 });
 
+type FoundResults = {
+  competition: IOLCompetition;
+  class: IOLClass;
+  result: IOLResult;
+};
+
 export const getTrackedRunner = defaultEndpointsFactory.build({
   method: 'get',
   input: z.object({
     id: z.coerce.number(),
+    date: z.string(),
   }),
   output: z.object({
     runner: runnerSchema,
+    results: z.array(resultsSchema),
   }),
-  handler: async ({ input: { id } }) => {
-    const runner = await db
-      .select({ runnerName: trackingTable.runnerName, id: trackingTable.id })
+  handler: async ({ input: { id, date } }) => {
+    const runnerQuery = await db
+      .select()
       .from(trackingTable)
       .where(eq(trackingTable.id, id));
 
-    if (runner.length === 0) {
+    if (runnerQuery.length === 0) {
       throw new Error('Runner not found');
     }
 
-    return { runner: runner[0]! };
+    const runner = runnerQuery[0]!;
+
+    const cachedResults: FoundResults[] | null = await api.Redis.get(
+      `track:${runner.id}:results:${date}`,
+    );
+
+    if (cachedResults) {
+      console.log('using cached results for runner id:', runner.id);
+      return { results: cachedResults, runner };
+    }
+
+    const { competitions } = await api.Liveresultat.getcompetitions();
+    const futureCompetitions = competitions.filter(comp =>
+      isDateTodayOrFutureWithin7Days(comp.date, date),
+    );
+
+    const foundResults: FoundResults[] = [];
+
+    for (const comp of futureCompetitions) {
+      const { classes } = await api.Liveresultat.getclasses(comp.id);
+      const foundClasses = classes.filter(c =>
+        runner.runnerClasses.map(sanitize).includes(sanitize(c.className)),
+      );
+
+      for (const c of foundClasses) {
+        const { results, splitcontrols } =
+          await api.Liveresultat.getclassresults(comp.id, c.className);
+
+        const runnerResult = results.find(result => {
+          return (
+            result.name === runner.runnerName &&
+            runner.runnerClubs.some(club =>
+              result.club
+                ? sanitize(result.club).includes(sanitize(club))
+                : false,
+            )
+          );
+        });
+
+        if (runnerResult) {
+          foundResults.push({
+            competition: marshallCompetition(undefined)(comp),
+            class: marshallClass(comp.id)(c),
+            result: marshallResult(
+              comp.id,
+              c.className,
+              splitcontrols,
+            )(runnerResult),
+          });
+
+          break;
+        }
+      }
+    }
+
+    await api.Redis.set(`track:${runner.id}:results:${date}`, foundResults, {
+      ttlMs: ms('5 minutes'),
+    });
+
+    return { runner, results: foundResults };
   },
 });

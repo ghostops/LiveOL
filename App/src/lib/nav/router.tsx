@@ -20,6 +20,7 @@ import { OLLanguageModal } from '~/views/scenes/language_modal/component';
 import { useOLNavigationRef } from '~/hooks/useNavigation';
 import { OLTrackRunner } from '~/views/scenes/track/container';
 import type { OLTrackingData } from '~/views/components/follow/followSheet';
+import { OLEditTrackRunner } from '~/views/scenes/track-edit/container';
 
 export type RootStack = {
   Home: undefined;
@@ -44,6 +45,7 @@ export type RootStack = {
   Redeem: undefined;
   Language: undefined;
   TrackRunner: { runner: OLTrackingData };
+  EditTrackRunner: { isNew: true } | { isNew: false; runner: OLTrackingData };
 };
 
 const Stack = createNativeStackNavigator<RootStack>();
@@ -125,6 +127,14 @@ const Component: React.FC = () => {
         <Stack.Screen
           name="TrackRunner"
           component={OLTrackRunner}
+          options={{
+            title: '',
+          }}
+        />
+
+        <Stack.Screen
+          name="EditTrackRunner"
+          component={OLEditTrackRunner}
           options={{
             title: '',
           }}

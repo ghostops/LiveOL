@@ -29,7 +29,7 @@ export const PORTRAIT_SIZE = {
   time: 35,
 };
 
-const OLItemTime: React.FC<Pick<Props, 'result' | 'disabled'>> = ({
+export const OLItemTime: React.FC<Pick<Props, 'result' | 'disabled'>> = ({
   result,
   disabled,
 }) => {

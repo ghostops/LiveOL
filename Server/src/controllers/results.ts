@@ -16,7 +16,7 @@ const splitSchema = z.object({
   timeplus: z.string(),
 });
 
-const resultSchema = z.object({
+export const resultSchema = z.object({
   id: z.string(),
   splits: z.array(splitSchema),
   hasSplits: z.boolean(),

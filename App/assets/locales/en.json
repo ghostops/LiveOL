@@ -53,7 +53,25 @@
     },
     "track": {
       "title": "Tracking runners",
-      "add": "Track new runner"
+      "name": "Runner name",
+      "add": "Track new runner",
+      "classes": "Runner classes",
+      "clubs": "Runner clubs",
+      "live": "Live",
+      "disclaimer": "This list only shows upcoming races within 7 days and can be updated every 10 minutes at most. To view the latest results, please press on the list item.",
+      "empty": "No competitions found in the upcoming 7 days",
+      "edit": {
+        "title": "Edit runner",
+        "add": "Add",
+        "clubPlaceholder": "Add new club",
+        "classPlaceholder": "Add new class",
+        "save": "Save",
+        "error": {
+          "nameRequired": "Runner name is required",
+          "clubRequired": "At least one club is required",
+          "classRequired": "At least one class is required"
+        }
+      }
     }
   },
   "home": {

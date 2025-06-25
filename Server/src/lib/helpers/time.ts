@@ -30,6 +30,23 @@ export const isDateToday = (date: string, todaysDate: string): boolean => {
   return today.isSame(input, 'date');
 };
 
+export const isDateTodayOrFutureWithin7Days = (
+  date: string,
+  todaysDate: string,
+): boolean => {
+  if (!validateDate(date)) {
+    return false;
+  }
+
+  const input = moment(date);
+  const today = todaysDate ? moment(todaysDate) : moment.utc();
+
+  return (
+    input.isBefore(today.clone().add(7, 'days')) &&
+    (input.isAfter(today) || input.isSame(today, 'date'))
+  );
+};
+
 export const timestampToObject = (time: number) => {
   const hours = Math.floor(time / 360000);
   const minutes = Math.floor((time - hours * 360000) / 6000);

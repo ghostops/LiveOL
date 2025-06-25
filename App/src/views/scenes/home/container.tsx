@@ -11,7 +11,7 @@ import { AppState } from 'react-native';
 import { $api } from '~/lib/react-query/api';
 import { paths } from '~/lib/react-query/schema';
 
-const getToday = () => format(new Date(), 'yyyy-MM-dd');
+export const getToday = () => format(new Date(), 'yyyy-MM-dd');
 
 export const OLHome: React.FC = () => {
   const { isLandscape } = useDeviceRotationStore();

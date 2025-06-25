@@ -12,7 +12,13 @@ const router = express.Router();
 
 const api = apiSingletons.createApiSingletons();
 
-const competitionSchema = z.object({
+export const classSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  competition: z.number(),
+});
+
+export const competitionSchema = z.object({
   id: z.number(),
   name: z.string(),
   organizer: z.string(),
@@ -95,13 +101,7 @@ export const getCompetition = defaultEndpointsFactory.build({
   }),
   output: z.object({
     competition: competitionSchema,
-    classes: z.array(
-      z.object({
-        id: z.string(),
-        name: z.string(),
-        competition: z.number(),
-      }),
-    ),
+    classes: z.array(classSchema),
   }),
   handler: async ({ input: { competitionId } }) => {
     const liveresultatComp =

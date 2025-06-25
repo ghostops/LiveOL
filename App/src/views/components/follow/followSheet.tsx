@@ -1,6 +1,5 @@
 import { BottomSheetSectionList, BottomSheetModal } from '@gorhom/bottom-sheet';
 import {
-  Alert,
   Dimensions,
   Platform,
   SectionList,
@@ -23,7 +22,6 @@ import { $api } from '~/lib/react-query/api';
 import { useDeviceIdStore } from '~/store/deviceId';
 import { paths } from '~/lib/react-query/schema';
 import { OLTrackingItem } from './trackingItem';
-import { queryClient } from '~/lib/react-query/client';
 
 const ListComponent =
   Platform.OS === 'android' ? BottomSheetSectionList : SectionList;
@@ -47,15 +45,6 @@ export const OLFollowSheet: React.FC = () => {
   const { px, colors } = useTheme();
   const { getNavRef } = useOLNavigationRef();
   const deviceId = useDeviceIdStore(state => state.deviceId);
-  const { mutateAsync: trackNewRunner } = $api.useMutation(
-    'post',
-    '/v1/track/add',
-    {
-      onSettled: () => {
-        queryClient.invalidateQueries({ queryKey: ['get', '/v1/track'] });
-      },
-    },
-  );
   const { data } = $api.useQuery('get', '/v1/track', {
     params: { query: { deviceId } },
   });
@@ -64,7 +53,7 @@ export const OLFollowSheet: React.FC = () => {
     getNavRef()?.navigate('TrackRunner', {
       runner: item,
     });
-    localRef.current?.close();
+    localRef.current?.snapToIndex(getFollowSheetIndex(0));
   };
 
   const onFollowItemPress = (item: FollowingData) => {
@@ -198,21 +187,8 @@ export const OLFollowSheet: React.FC = () => {
             <View style={{ padding: px(8) }}>
               <OLButton
                 onPress={() => {
-                  Alert.prompt('track', '', cb => {
-                    trackNewRunner({
-                      body: {
-                        deviceId,
-                        runnerClasses: ['M20-1', 'H21', 'H20'],
-                        runnerClubs: [
-                          'Västerås Skid- och Orienteringsklubb',
-                          'VSOK',
-                          'SV',
-                          'SE',
-                        ],
-                        runnerName: cb || '',
-                      },
-                    });
-                  });
+                  getNavRef()?.navigate('EditTrackRunner', { isNew: true });
+                  localRef.current?.snapToIndex(getFollowSheetIndex(0));
                 }}
               >
                 {t('follow.track.add')}

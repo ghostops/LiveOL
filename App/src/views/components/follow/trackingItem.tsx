@@ -70,7 +70,15 @@ export const OLTrackingItem: React.FC<Props> = ({ item, onPress }) => {
         }}
         onPress={() => onPress(item)}
       >
-        <OLText size={16}>{item.runnerName}</OLText>
+        <OLText size={16} style={{ marginBottom: px(4) }}>
+          {item.runnerName}
+        </OLText>
+        <OLText size={12} numberOfLines={1}>
+          {item.runnerClubs.join(', ')}
+        </OLText>
+        <OLText size={12} numberOfLines={1}>
+          {item.runnerClasses.join(', ')}
+        </OLText>
       </OLListItem>
     </Swipeable>
   );

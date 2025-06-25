@@ -2,6 +2,8 @@ import { useTranslation } from 'react-i18next';
 import { TouchableOpacity, View } from 'react-native';
 import { useIap } from '~/hooks/useIap';
 import { useTheme } from '~/hooks/useTheme';
+import { $api } from '~/lib/react-query/api';
+import { useDeviceIdStore } from '~/store/deviceId';
 import { useFollowBottomSheetStore } from '~/store/followBottomSheet';
 import { useFollowingStore } from '~/store/following';
 import { PickerIcon } from '~/views/components/lang/picker';
@@ -48,19 +50,25 @@ export const OLHomeBar = ({ searching, landscape, openSearch }: Props) => {
   const followingCount = useFollowingStore(state => state.following.length);
   const { plusActive, presentPaywall } = useIap();
   const openFollowSheet = useFollowBottomSheetStore(state => state.open);
+  const deviceId = useDeviceIdStore(state => state.deviceId);
+
+  const { data } = $api.useQuery('get', '/v1/track', {
+    params: { query: { deviceId } },
+  });
+
+  const trackingCount = data?.data.runners?.length || 0;
+  const totalCount = followingCount + trackingCount;
 
   if (searching) {
     return <OLSearch />;
   }
 
   const getFollowingText = () => {
-    if (followingCount < 1) {
+    if (totalCount < 1) {
       return t('follow.title');
     }
 
-    return (
-      t('follow.title') + ` (${followingCount > 99 ? '99+' : followingCount})`
-    );
+    return t('follow.title') + ` (${totalCount > 99 ? '99+' : totalCount})`;
   };
 
   return (

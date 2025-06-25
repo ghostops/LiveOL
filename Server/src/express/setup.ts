@@ -15,6 +15,7 @@ import {
   removeTrackedRunner,
   trackNewRunner,
   getTrackedRunner,
+  updateTrackedRunner,
 } from 'controllers/track';
 import { createConfig, DependsOnMethod, Routing } from 'express-zod-api';
 
@@ -42,5 +43,6 @@ export const routing: Routing = {
   'v1/track/:id': new DependsOnMethod({
     delete: removeTrackedRunner,
     get: getTrackedRunner,
+    put: updateTrackedRunner,
   }),
 };
