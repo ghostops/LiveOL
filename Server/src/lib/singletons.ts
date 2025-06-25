@@ -5,6 +5,7 @@ import { getEnv } from './helpers/env';
 
 export interface APIResponse {
   Liveresultat: LiveresultatAPIClient;
+  LiveresultatLongCache: LiveresultatAPIClient;
   Eventor: CombinedEventorApi;
   Redis: Cacher;
 }
@@ -45,8 +46,23 @@ class ApiSingletons {
 
     const liveresultatApi = new LiveresultatAPIClient(URLS.liveresultat, cache);
 
+    const liveresultatLongCacheApi = new LiveresultatAPIClient(
+      URLS.liveresultat,
+      cache,
+      {
+        getcompetitions: '1 hour',
+        getcompetition: '10 minutes',
+        getclasses: '10 minutes',
+        getclassresults: '10 minutes',
+        getlastpassings: '10 minutes',
+        getclubresults: '10 minutes',
+      },
+      'liveresultat-long-cache:',
+    );
+
     this.singletons = {
       Liveresultat: liveresultatApi,
+      LiveresultatLongCache: liveresultatLongCacheApi,
       Eventor: combinedEventorApi,
       Redis: cache,
     };

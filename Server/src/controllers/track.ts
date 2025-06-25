@@ -10,7 +10,6 @@ import { classSchema, competitionSchema } from './competitions';
 import { IOLCompetition, marshallCompetition } from 'lib/marshall/competitions';
 import { IOLResult, marshallResult } from 'lib/marshall/results';
 import { IOLClass, marshallClass } from 'lib/marshall/classes';
-import ms from 'ms';
 
 const api = apiSingletons.createApiSingletons();
 
@@ -174,16 +173,7 @@ export const getTrackedRunner = defaultEndpointsFactory.build({
 
     const runner = runnerQuery[0]!;
 
-    const cachedResults: FoundResults[] | null = await api.Redis.get(
-      `track:${runner.id}:results:${date}`,
-    );
-
-    if (cachedResults) {
-      console.log('using cached results for runner id:', runner.id);
-      return { results: cachedResults, runner };
-    }
-
-    const { competitions } = await api.Liveresultat.getcompetitions();
+    const { competitions } = await api.LiveresultatLongCache.getcompetitions();
     const futureCompetitions = competitions.filter(comp =>
       isDateTodayOrFutureWithin7Days(comp.date, date),
     );
@@ -191,14 +181,14 @@ export const getTrackedRunner = defaultEndpointsFactory.build({
     const foundResults: FoundResults[] = [];
 
     for (const comp of futureCompetitions) {
-      const { classes } = await api.Liveresultat.getclasses(comp.id);
+      const { classes } = await api.LiveresultatLongCache.getclasses(comp.id);
       const foundClasses = classes.filter(c =>
         runner.runnerClasses.map(sanitize).includes(sanitize(c.className)),
       );
 
       for (const c of foundClasses) {
         const { results, splitcontrols } =
-          await api.Liveresultat.getclassresults(comp.id, c.className);
+          await api.LiveresultatLongCache.getclassresults(comp.id, c.className);
 
         const runnerResult = results.find(result => {
           return (
@@ -226,10 +216,6 @@ export const getTrackedRunner = defaultEndpointsFactory.build({
         }
       }
     }
-
-    await api.Redis.set(`track:${runner.id}:results:${date}`, foundResults, {
-      ttlMs: ms('5 minutes'),
-    });
 
     return { runner, results: foundResults };
   },

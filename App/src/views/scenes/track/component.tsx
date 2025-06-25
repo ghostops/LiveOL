@@ -119,11 +119,13 @@ export const OLTrackRunner: React.FC<Props> = ({
           </View>
         }
         ListEmptyComponent={
-          <View style={{ padding: px(16) }}>
-            <OLText size={24} style={{ textAlign: 'center' }}>
-              {t('follow.track.empty')}
-            </OLText>
-          </View>
+          isLoading === false ? (
+            <View style={{ padding: px(16) }}>
+              <OLText size={24} style={{ textAlign: 'center' }}>
+                {t('follow.track.empty')}
+              </OLText>
+            </View>
+          ) : null
         }
         refreshControl={
           <RefreshControl

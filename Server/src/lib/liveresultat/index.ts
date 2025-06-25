@@ -18,6 +18,15 @@ export class LiveresultatAPIClient {
   constructor(
     private root: string,
     private cache: Cacher,
+    private cacheTimes = {
+      getcompetitions: '1 minute',
+      getcompetition: '1 minute',
+      getclasses: '1 minute',
+      getclassresults: '15 seconds',
+      getlastpassings: '15 seconds',
+      getclubresults: '15 seconds',
+    },
+    private cacheKeyPrefix = 'liveresultat:',
   ) {
     this.client = axios.create({
       headers: {
@@ -33,7 +42,7 @@ export class LiveresultatAPIClient {
         return await this.cachedRequest(
           this.client.get(`/api.php?method=getcompetitions`),
           'getcompetitions',
-          '1 minute',
+          this.cacheTimes.getcompetitions,
         );
       } catch (error: any) {
         if (error?.message?.includes('JSON at position')) {
@@ -51,14 +60,14 @@ export class LiveresultatAPIClient {
     this.cachedRequest(
       this.client.get(`/api.php?method=getcompetitioninfo&comp=${id}`),
       `getcompetition:${id}`,
-      '1 minute',
+      this.cacheTimes.getcompetition,
     );
 
   public getclasses = async (id: number): Promise<LiveresultatApi.getclasses> =>
     this.cachedRequest(
       this.client.get(`/api.php?method=getclasses&comp=${id}`),
       `getclasses:${id}`,
-      '1 minute',
+      this.cacheTimes.getclasses,
     );
 
   public getclassresults = async (
@@ -75,7 +84,7 @@ export class LiveresultatAPIClient {
         },
       ),
       `getclassresults:${id}:${encodeURIComponent(_class)}`,
-      '15 seconds',
+      this.cacheTimes.getclassresults,
     );
 
   public getlastpassings = async (
@@ -84,7 +93,7 @@ export class LiveresultatAPIClient {
     this.cachedRequest(
       this.client.get(`/api.php?method=getlastpassings&comp=${id}`),
       `getlastpassings:${id}`,
-      '15 seconds',
+      this.cacheTimes.getlastpassings,
     );
 
   public getclubresults = async (
@@ -96,7 +105,7 @@ export class LiveresultatAPIClient {
         `/api.php?method=getclubresults&comp=${id}&club=${encodeURIComponent(club)}&unformattedTimes=true`,
       ),
       `getclubresults:${id}:${encodeURIComponent(club)}`,
-      '15 seconds',
+      this.cacheTimes.getclubresults,
     );
   };
 
@@ -109,13 +118,15 @@ export class LiveresultatAPIClient {
       return this.testRequest(key);
     }
 
-    let data = await this.cache.get(key);
+    let data = await this.cache.get(this.cacheKeyPrefix + key);
 
     if (!data) {
       const res = await request;
       data = this.parseApiData(res.data);
 
-      await this.cache.set(key, data, { ttlMs: ms(ttlString) });
+      await this.cache.set(this.cacheKeyPrefix + key, data, {
+        ttlMs: ms(ttlString),
+      });
     }
 
     return data;
