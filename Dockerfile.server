@@ -29,6 +29,6 @@ ADD ./Server/tsconfig.json /app/tsconfig.json
 
 RUN npm i
 
-RUN npx drizzle-kit push --yes
+RUN npx drizzle-kit push
 
 CMD ["npm", "run", "start"]
