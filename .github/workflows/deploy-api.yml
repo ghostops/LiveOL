@@ -1,4 +1,4 @@
-name: Deploy Server (tRPC)
+name: Deploy API (Express)
 
 on:
   workflow_dispatch:
@@ -22,5 +22,5 @@ jobs:
         run: npx caprover deploy -t ./deploy.tar
         env:
           CAPROVER_URL: ${{ secrets.CAPROVER_URL }}
-          CAPROVER_APP_TOKEN: ${{ secrets.CAPROVER_APP_TOKEN }}
-          CAPROVER_APP: ${{ secrets.CAPROVER_APP }}
+          CAPROVER_APP_TOKEN: ${{ secrets.CAPROVER_APP_API_TOKEN }}
+          CAPROVER_APP: ${{ secrets.CAPROVER_API_APP }}
