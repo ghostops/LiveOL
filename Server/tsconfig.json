@@ -17,7 +17,7 @@
     "module": "NodeNext",
     "outDir": "build",
     "sourceMap": true,
-    "rootDir": "src",
+    "rootDir": ".",
     "baseUrl": "src",
     "paths": {
       "*": ["./*"],
