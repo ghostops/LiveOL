@@ -42,7 +42,11 @@ export const OLEditTrackRunner: React.FC = () => {
   const [runnerClubsError, setRunnerClubsError] = useState<string | null>(null);
 
   const addRunnerClass = (name: string) => {
-    if (runnerClasses.includes(name)) {
+    if (
+      runnerClasses.includes(name) ||
+      name.trim() === '' ||
+      runnerClasses.length > 10
+    ) {
       return;
     }
 
@@ -58,7 +62,7 @@ export const OLEditTrackRunner: React.FC = () => {
   };
 
   const addRunnerClub = (name: string) => {
-    if (runnerClubs.includes(name)) {
+    if (runnerClubs.includes(name) || name.trim() === '') {
       return;
     }
 

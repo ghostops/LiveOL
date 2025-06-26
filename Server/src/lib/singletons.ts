@@ -53,7 +53,7 @@ class ApiSingletons {
         getcompetitions: '1 hour',
         getcompetition: '10 minutes',
         getclasses: '10 minutes',
-        getclassresults: '10 minutes',
+        getclassresults: '1 minute',
         getlastpassings: '10 minutes',
         getclubresults: '10 minutes',
       },

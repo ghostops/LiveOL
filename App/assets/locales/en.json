@@ -69,7 +69,13 @@
         "error": {
           "nameRequired": "Runner name is required",
           "clubRequired": "At least one club is required",
-          "classRequired": "At least one class is required"
+          "classRequired": "At least one class is required",
+          "tooManyClasses": "The amount of classes will slow down the tracking process significantly."
+        },
+        "hints": {
+          "name": "Name of the runner, it must match the name in the results exactly.",
+          "club": "You can add multiple clubs and we will look for a runner that exist in any of the clubs.",
+          "class": "Add all the classes that the runner could be  competing in. If you add multiple classes, we will look for a runner that exist in any of the classes."
         }
       }
     }

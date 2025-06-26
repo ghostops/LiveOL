@@ -79,6 +79,9 @@ export const OLEditTrackRunner: React.FC<Props> = ({
         <OLText size={14} bold style={{ marginLeft: px(4) }}>
           {t('follow.track.name')}
         </OLText>
+        <OLText size={14} style={{ marginLeft: px(4), opacity: 0.9 }}>
+          {t('follow.track.edit.hints.name')}
+        </OLText>
         <TextInput
           style={inputStyle}
           value={runnerName}
@@ -100,10 +103,20 @@ export const OLEditTrackRunner: React.FC<Props> = ({
           borderColor: '#ddd',
         }}
       >
-        <OLText size={14} bold style={{ marginBottom: px(8) }}>
+        <OLText size={14} bold style={{}}>
           {t('follow.track.clubs')}
         </OLText>
-        <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: px(4) }}>
+        <OLText size={14} style={{ opacity: 0.9 }}>
+          {t('follow.track.edit.hints.club')}
+        </OLText>
+        <View
+          style={{
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            gap: px(4),
+            marginTop: px(8),
+          }}
+        >
           {runnerClubs.map((club, index) => (
             <TouchableOpacity
               key={index}
@@ -173,10 +186,21 @@ export const OLEditTrackRunner: React.FC<Props> = ({
           borderColor: '#ddd',
         }}
       >
-        <OLText size={14} bold style={{ marginBottom: px(8) }}>
+        <OLText size={14} bold>
           {t('follow.track.classes')}
         </OLText>
-        <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: px(4) }}>
+
+        <OLText size={14} style={{ opacity: 0.9 }}>
+          {t('follow.track.edit.hints.class')}
+        </OLText>
+        <View
+          style={{
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            gap: px(4),
+            marginTop: px(8),
+          }}
+        >
           {runnerClasses.map((_class, index) => (
             <TouchableOpacity
               key={index}
@@ -206,6 +230,20 @@ export const OLEditTrackRunner: React.FC<Props> = ({
             </TouchableOpacity>
           ))}
         </View>
+        {runnerClasses.length > 5 && (
+          <OLText
+            size={14}
+            style={{
+              backgroundColor: '#c90000',
+              color: 'white',
+              marginTop: px(8),
+              padding: px(4),
+              borderRadius: 4,
+            }}
+          >
+            {t('follow.track.edit.error.tooManyClasses')}
+          </OLText>
+        )}
         <View
           style={{
             flexDirection: 'row',
@@ -226,6 +264,7 @@ export const OLEditTrackRunner: React.FC<Props> = ({
               addRunnerClass(newClassText.trim());
               setNewClassText('');
             }}
+            disabled={runnerClasses.length > 10}
           >
             {t('follow.track.edit.add')}
           </OLButton>

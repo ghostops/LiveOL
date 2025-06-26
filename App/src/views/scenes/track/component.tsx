@@ -38,7 +38,14 @@ export const OLTrackRunner: React.FC<Props> = ({
       <FlatList
         data={results}
         renderItem={({ item: { result, class: _class, competition } }) => {
-          const onPress = () => {
+          const onPressTitle = () => {
+            navigate('Competition', {
+              competitionId: Number(competition.id),
+              title: competition.name,
+            });
+          };
+
+          const onPressResult = () => {
             navigate('Results', {
               competitionId: Number(competition.id),
               className: _class.name,
@@ -47,51 +54,53 @@ export const OLTrackRunner: React.FC<Props> = ({
           };
 
           return (
-            <TouchableOpacity
-              style={{ backgroundColor: 'white' }}
-              onPress={onPress}
-            >
-              <View
-                style={{
-                  padding: px(8),
-                  backgroundColor: '#eee',
-                }}
-              >
-                <OLText size={16} bold>
-                  {competition.name}: {_class.name}
-                </OLText>
-              </View>
-              <OLResultListItem>
-                <OLResultColumn size={PORTRAIT_SIZE.place} align="center">
-                  <OLResultBadge place={result.place} />
-                </OLResultColumn>
+            <View style={{ backgroundColor: 'white' }}>
+              <TouchableOpacity onPress={onPressTitle}>
+                <View
+                  style={{
+                    padding: px(8),
+                    backgroundColor: '#eee',
+                  }}
+                >
+                  <OLText size={16} bold>
+                    {competition.name}: {_class.name}
+                  </OLText>
+                </View>
+              </TouchableOpacity>
 
-                <OLResultColumn size={PORTRAIT_SIZE.name}>
-                  <OLResultName name={result.name} />
+              <TouchableOpacity onPress={onPressResult}>
+                <OLResultListItem>
+                  <OLResultColumn size={PORTRAIT_SIZE.place} align="center">
+                    <OLResultBadge place={result.place} />
+                  </OLResultColumn>
 
-                  <OLResultClub club={result.club || ''} />
-                </OLResultColumn>
+                  <OLResultColumn size={PORTRAIT_SIZE.name}>
+                    <OLResultName name={result.name} />
 
-                <OLResultColumn align="flex-end" size={PORTRAIT_SIZE.time}>
-                  {isLiveRunning(result) ? (
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        gap: px(8),
-                      }}
-                    >
-                      <FlashingRedDot />
-                      <OLText size={16} style={{ color: 'red' }}>
-                        {t('follow.track.live')}
-                      </OLText>
-                    </View>
-                  ) : (
-                    <OLItemTime result={result} />
-                  )}
-                </OLResultColumn>
-              </OLResultListItem>
-            </TouchableOpacity>
+                    <OLResultClub club={result.club || ''} />
+                  </OLResultColumn>
+
+                  <OLResultColumn align="flex-end" size={PORTRAIT_SIZE.time}>
+                    {isLiveRunning(result) ? (
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                          gap: px(8),
+                        }}
+                      >
+                        <FlashingRedDot />
+                        <OLText size={16} style={{ color: 'red' }}>
+                          {t('follow.track.live')}
+                        </OLText>
+                      </View>
+                    ) : (
+                      <OLItemTime result={result} />
+                    )}
+                  </OLResultColumn>
+                </OLResultListItem>
+              </TouchableOpacity>
+            </View>
           );
         }}
         style={{ flex: 1 }}
