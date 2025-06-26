@@ -26,6 +26,7 @@ ADD ./Server/src /app/src
 ADD ./Server/package.json /app/package.json
 ADD ./Server/package-lock.json /app/package-lock.json
 ADD ./Server/tsconfig.json /app/tsconfig.json
+ADD ./Server/drizzle.config.ts /app/drizzle.config.ts
 
 RUN npm i
 
