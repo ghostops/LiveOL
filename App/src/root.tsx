@@ -15,6 +15,15 @@ import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import '~/lib/i18n';
 import { useDeviceIdStore } from './store/deviceId';
 import { getUniqueId } from 'react-native-device-info';
+import {
+  TelemetryDeckProvider,
+  createTelemetryDeck,
+} from '@typedigital/telemetrydeck-react';
+
+const td = createTelemetryDeck({
+  appID: '37598E68-7474-4EA1-A1AE-353B04D4ADFB',
+  clientUser: 'anonymous',
+});
 
 const fallbackErrorBoundary = ({ children }: any) => <>{children}</>;
 let ErrorBoundary: any;
@@ -72,21 +81,23 @@ export default () => {
 
   return (
     <ErrorBoundary FallbackComponent={ErrorView}>
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <SafeAreaProvider>
-          <ActionSheetProvider>
-            <QueryClientProvider client={queryClient}>
-              <View style={{ flex: 1 }}>
-                <BottomSheetModalProvider>
-                  <OLRotationWatcher>
-                    <Router />
-                  </OLRotationWatcher>
-                </BottomSheetModalProvider>
-              </View>
-            </QueryClientProvider>
-          </ActionSheetProvider>
-        </SafeAreaProvider>
-      </GestureHandlerRootView>
+      <TelemetryDeckProvider telemetryDeck={td}>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <SafeAreaProvider>
+            <ActionSheetProvider>
+              <QueryClientProvider client={queryClient}>
+                <View style={{ flex: 1 }}>
+                  <BottomSheetModalProvider>
+                    <OLRotationWatcher>
+                      <Router />
+                    </OLRotationWatcher>
+                  </BottomSheetModalProvider>
+                </View>
+              </QueryClientProvider>
+            </ActionSheetProvider>
+          </SafeAreaProvider>
+        </GestureHandlerRootView>
+      </TelemetryDeckProvider>
     </ErrorBoundary>
   );
 };

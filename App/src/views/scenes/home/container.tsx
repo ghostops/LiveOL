@@ -10,6 +10,7 @@ import { OLFollowSheet } from '~/views/components/follow/followSheet';
 import { AppState } from 'react-native';
 import { $api } from '~/lib/react-query/api';
 import { paths } from '~/lib/react-query/schema';
+import { useTelemetryDeck } from '@typedigital/telemetrydeck-react';
 
 export const getToday = () => format(new Date(), 'yyyy-MM-dd');
 
@@ -18,6 +19,7 @@ export const OLHome: React.FC = () => {
   const { isSearching, searchTerm, setIsSearching } = useHomeSearchStore();
   const { navigate } = useOLNavigation();
   const hasLoaded = useRef(false);
+  const { signal } = useTelemetryDeck();
 
   const getCompetitionsQuery = $api.useInfiniteQuery(
     'get',
@@ -50,6 +52,12 @@ export const OLHome: React.FC = () => {
     { params: { query: { date: getToday() } } },
     { gcTime: 0, staleTime: 0 },
   );
+
+  useEffect(() => {
+    signal('screen', {
+      event: 'home-screen',
+    });
+  }, [signal]);
 
   useEffect(() => {
     const callback = AppState.addEventListener('change', status => {
