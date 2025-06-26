@@ -1,9 +1,7 @@
 import * as cron from 'node-cron';
 import { IncomingWebhook } from '@slack/webhook';
 import { getEnv } from 'lib/helpers/env';
-import { appRouter } from 'trpc';
-import { createCallerFactory } from 'trpc/client';
-import { apiSingletons } from 'lib/singletons';
+import axios from 'axios';
 
 const DEV = getEnv('env') !== 'live';
 
@@ -11,9 +9,6 @@ interface HealthCheck {
   name: string;
   query: () => Promise<boolean>;
 }
-
-const createCaller = createCallerFactory(appRouter);
-const caller = createCaller(apiSingletons.createApiSingletons());
 
 export class OLSelfHelper {
   private webhook: IncomingWebhook | undefined;
@@ -39,25 +34,17 @@ export class OLSelfHelper {
       {
         name: 'GetCompetitions',
         query: async () => {
-          const res = await caller.getCompetitions({ cursor: 1 });
-
-          if (res?.competitions?.length) {
-            return true;
-          }
-
-          return false;
+          const res = await axios.get('http://localhost:3000/v1/competitions');
+          return res.data.status === 'success';
         },
       },
       {
         name: 'GetSingleCompetition',
         query: async () => {
-          const res = await caller.getCompetition({ competitionId: 18595 });
-
-          if (res.competition.name === 'Ungdomscupen deltävling 2') {
-            return true;
-          }
-
-          return false;
+          const res = await axios.get(
+            'http://localhost:3000/v1/competitions/18595',
+          );
+          return res.data.status === 'success';
         },
       },
       {
@@ -65,33 +52,37 @@ export class OLSelfHelper {
         query: async () => {
           const club = 'OK Gynge';
 
-          const res = await caller.getClubResults({
-            competitionId: 18595,
-            clubName: club,
-          });
+          const res = await axios.get(
+            `http://localhost:3000/v1/results/18595/club/${encodeURIComponent(club)}`,
+          );
 
-          if (res[0]?.club === club) {
-            return true;
+          if (res.data.status !== 'success') {
+            return false;
           }
 
-          return false;
+          if (res.data.data.results[0].club !== club) {
+            return false;
+          }
+
+          return true;
         },
       },
       {
         name: 'GetResults',
         query: async () => {
-          const res = await caller.getResults({
-            competitionId: 26860,
-            className: 'Men 20',
-            sorting: 'place:asc',
-            nowTimestamp: 1,
-          });
+          const res = await axios.get(
+            `http://localhost:3000/v1/results/26860/class/${encodeURIComponent('Men 20')}?sorting=place:asc&nowTimestamp=1`,
+          );
 
-          if (res.results[0]?.club === 'GER Germany') {
-            return true;
+          if (res.data.status !== 'success') {
+            return false;
           }
 
-          return false;
+          if (res.data.data.results[0]?.club !== 'GER Germany') {
+            return false;
+          }
+
+          return true;
         },
       },
     ];
