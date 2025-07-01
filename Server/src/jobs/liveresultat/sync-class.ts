@@ -6,17 +6,24 @@ import { APIResponse, apiSingletons } from 'lib/singletons';
 export class SyncCompetitionJob {
   private api: APIResponse;
 
-  constructor(private competitionId: number) {
+  constructor(
+    private competitionId: number,
+    private className: string,
+  ) {
     if (!competitionId) {
       throw new Error('Competition ID is required');
+    }
+    if (!className) {
+      throw new Error('Class name is required');
     }
     this.api = apiSingletons.createApiSingletons();
   }
 
   async run() {
     try {
-      const competition = await this.api.Liveresultat.getcompetition(
+      const competition = await this.api.Liveresultat.getclassresults(
         this.competitionId,
+        this.className,
       );
 
       await this.insertCompetition(competition);
@@ -27,7 +34,7 @@ export class SyncCompetitionJob {
     }
   }
 
-  private async insertCompetition(competition: LiveresultatApi.competition) {
+  private async insertClass(competition: LiveresultatApi.competition) {
     const existing = await this.api.Drizzle.db
       .select()
       .from(competitionTable)

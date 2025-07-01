@@ -30,6 +30,8 @@ export class OLQueue {
     this.worker = new Worker(OLQueue.queueName, this.handleJob, {
       autorun: false,
       connection: this.connection,
+      concurrency: 1,
+      limiter: { duration: 1000, max: 1 },
     });
   }
 

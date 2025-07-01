@@ -25,6 +25,22 @@ export class SyncCompetitionsJob {
     }
   }
 
+  private async dispatchCompetitionSync(
+    competitions: LiveresultatApi.competition[],
+  ) {
+    competitions.forEach(competition => {
+      this.api.Queue.addJob({
+        name: 'sync-competition',
+        data: {
+          competitionId: competition.id,
+        },
+      });
+    });
+  }
+
+  /**
+   * Can be used instead of dispatching jobs if you want to insert directly
+   */
   private async insertBatch(competitions: LiveresultatApi.competition[]) {
     for (const competition of competitions) {
       const existing = await this.api.Drizzle.db

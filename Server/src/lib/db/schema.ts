@@ -26,8 +26,10 @@ export const competitionRelations = relations(competitionTable, ({ many }) => ({
 }));
 
 export const classTable = pgTable('classes', {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  id: varchar({ length: 255 }).primaryKey(),
   name: varchar({ length: 255 }).notNull(),
+  status: varchar({ length: 255 }),
+  hash: varchar({ length: 255 }),
 });
 
 export const classRelations = relations(classTable, ({ one, many }) => ({
@@ -36,12 +38,37 @@ export const classRelations = relations(classTable, ({ one, many }) => ({
     references: [competitionTable.id],
   }),
   results: many(resultTable),
+  splitControls: many(splitControlTable),
 }));
+
+export const splitControlTable = pgTable('splitControls', {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  classId: integer().notNull(),
+  name: varchar({ length: 255 }).notNull(),
+  code: varchar({ length: 255 }).notNull(),
+});
+
+export const splitControlRelations = relations(
+  splitControlTable,
+  ({ one }) => ({
+    class: one(classTable, {
+      fields: [splitControlTable.classId],
+      references: [classTable.id],
+    }),
+  }),
+);
 
 export const resultTable = pgTable('results', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   classId: integer().notNull(),
   name: varchar({ length: 255 }).notNull(),
+  club: varchar({ length: 255 }),
+  result: varchar({ length: 255 }),
+  status: varchar({ length: 255 }),
+  timeplus: varchar({ length: 255 }),
+  progress: integer().default(0),
+  splits: json().$type<Record<string, string>>(),
+  start: integer(),
 });
 
 export const resultRelations = relations(resultTable, ({ one }) => ({
