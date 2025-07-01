@@ -1,5 +1,5 @@
 import { eq } from 'drizzle-orm';
-import { competitionTable } from 'lib/db/schema';
+import { classTable, competitionTable } from 'lib/db/schema';
 import type { LiveresultatApi } from 'lib/liveresultat/types';
 import { APIResponse, apiSingletons } from 'lib/singletons';
 
@@ -21,24 +21,24 @@ export class SyncCompetitionJob {
 
   async run() {
     try {
-      const competition = await this.api.Liveresultat.getclassresults(
+      const results = await this.api.Liveresultat.getclassresults(
         this.competitionId,
         this.className,
       );
 
-      await this.insertCompetition(competition);
+      await this.insertClass(results);
 
-      console.log(`Synced ${competition.id} successfully.`);
+      console.log(`Synced ${results.className} successfully.`);
     } catch (error) {
       console.error('Error syncing competitions:', error);
     }
   }
 
-  private async insertClass(competition: LiveresultatApi.competition) {
+  private async insertClass(classResults: LiveresultatApi.getclassresults) {
     const existing = await this.api.Drizzle.db
       .select()
-      .from(competitionTable)
-      .where(eq(competitionTable.id, competition.id))
+      .from(classTable)
+      .where(eq(competitionTable.id, classResults.))
       .limit(1);
 
     const body = {
@@ -71,4 +71,5 @@ export class SyncCompetitionJob {
       return null;
     }
   }
+
 }

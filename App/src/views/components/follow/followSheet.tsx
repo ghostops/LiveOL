@@ -22,7 +22,6 @@ import { $api } from '~/lib/react-query/api';
 import { useDeviceIdStore } from '~/store/deviceId';
 import { paths } from '~/lib/react-query/schema';
 import { OLTrackingItem } from './trackingItem';
-import { useTelemetryDeck } from '@typedigital/telemetrydeck-react';
 
 const ListComponent =
   Platform.OS === 'android' ? BottomSheetSectionList : SectionList;
@@ -49,13 +48,8 @@ export const OLFollowSheet: React.FC = () => {
   const { data } = $api.useQuery('get', '/v1/track', {
     params: { query: { deviceId } },
   });
-  const { signal } = useTelemetryDeck();
 
   const onTrackItemPress = (item: OLTrackingData) => {
-    signal('click', {
-      event: 'press-track-item',
-    });
-
     getNavRef()?.navigate('TrackRunner', {
       runner: item,
     });
@@ -63,11 +57,6 @@ export const OLFollowSheet: React.FC = () => {
   };
 
   const onFollowItemPress = (item: FollowingData) => {
-    signal('click', {
-      event: 'press-follow-item',
-      followType: item.type,
-    });
-
     if (item.type === 'runner') {
       getNavRef()?.navigate('Results', {
         competitionId: Number(item.competitionId),
