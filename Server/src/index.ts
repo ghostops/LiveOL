@@ -4,6 +4,9 @@ import { createHTTPServer } from '@trpc/server/adapters/standalone';
 import { appRouter, createContext } from 'trpc';
 import { OLSelfHelper } from 'lib/selfhelp';
 import { startExpressServer } from 'express/server';
+import { apiSingletons } from 'lib/singletons';
+
+apiSingletons.createApiSingletons().Queue.startWorker();
 
 (async () => {
   dotenv.config();

@@ -198,7 +198,7 @@ export const OLFollowSheet: React.FC = () => {
             <View style={{ padding: px(8) }}>
               <OLButton
                 onPress={() => {
-                  getNavRef()?.navigate('EditTrackRunner', { isNew: true });
+                  getNavRef()?.navigate('EditTrackRunner', { status: 'new' });
                   localRef.current?.snapToIndex(getFollowSheetIndex(0));
                 }}
               >

@@ -2,12 +2,16 @@ import { Cacher } from 'lib/redis';
 import { LiveresultatAPIClient } from 'lib/liveresultat';
 import { EventorCombiner, CombinedEventorApi } from './eventor/combiner';
 import { getEnv } from './helpers/env';
+import { Drizzle } from './db';
+import { OLQueue } from './queue';
 
 export interface APIResponse {
   Liveresultat: LiveresultatAPIClient;
   LiveresultatLongCache: LiveresultatAPIClient;
   Eventor: CombinedEventorApi;
   Redis: Cacher;
+  Drizzle: Drizzle;
+  Queue: OLQueue;
 }
 
 const URLS = {
@@ -60,11 +64,19 @@ class ApiSingletons {
       'liveresultat-long-cache:',
     );
 
+    const queue = new OLQueue(
+      process.env.REDIS_HOST!,
+      6379,
+      process.env.REDIS_PASSWORD,
+    );
+
     this.singletons = {
       Liveresultat: liveresultatApi,
       LiveresultatLongCache: liveresultatLongCacheApi,
       Eventor: combinedEventorApi,
       Redis: cache,
+      Drizzle: new Drizzle(getEnv('DATABASE_URL', false)),
+      Queue: queue,
     };
 
     return this.singletons;

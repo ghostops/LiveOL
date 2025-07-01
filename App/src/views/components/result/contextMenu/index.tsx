@@ -35,6 +35,7 @@ export const OLRunnerContextMenu: React.FC<Props> = ({
     const options = [
       t('result.followRunner'),
       club ? t('result.goToClass') : t('result.goToClub'),
+      t('result.followRunner'),
       t('info.update.hasUpdate.cancel'),
     ];
 
@@ -77,6 +78,21 @@ export const OLRunnerContextMenu: React.FC<Props> = ({
               competitionId,
               clubName: result.club!,
               title: result.club!,
+            });
+            break;
+          case 2:
+            if (!plusActive) {
+              presentPaywall();
+              break;
+            }
+
+            navigate('EditTrackRunner', {
+              status: 'create-from',
+              runner: {
+                runnerName: result.name,
+                runnerClasses: result.class ? [result.class] : [],
+                runnerClubs: result.club ? [result.club] : [],
+              },
             });
             break;
         }

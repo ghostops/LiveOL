@@ -15,29 +15,29 @@ export const OLEditTrackRunner: React.FC = () => {
   const deviceId = useDeviceIdStore(state => state.deviceId);
 
   useLayoutEffect(() => {
-    if (params.isNew === false) {
+    if (params.status === 'edit') {
       navigation.setOptions({ title: params.runner.runnerName });
     } else {
       navigation.setOptions({ title: t('follow.track.edit.title') });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [navigation, params.isNew]);
+  }, [navigation, params.status]);
 
   const [runnerName, setRunnerName] = useState(
-    params.isNew === false ? params.runner.runnerName : '',
+    params.status !== 'new' ? params.runner.runnerName : '',
   );
 
   const [runnerNameError, setRunnerNameError] = useState<string | null>(null);
 
   const [runnerClasses, setRunnerClasses] = useState(
-    params.isNew === false ? params.runner.runnerClasses : [],
+    params.status !== 'new' ? params.runner.runnerClasses : [],
   );
   const [runnerClassesError, setRunnerClassesError] = useState<string | null>(
     null,
   );
 
   const [runnerClubs, setRunnerClubs] = useState(
-    params.isNew === false ? params.runner.runnerClubs : [],
+    params.status !== 'new' ? params.runner.runnerClubs : [],
   );
   const [runnerClubsError, setRunnerClubsError] = useState<string | null>(null);
 
@@ -113,7 +113,7 @@ export const OLEditTrackRunner: React.FC = () => {
       return;
     }
 
-    if (params.isNew) {
+    if (params.status !== 'edit') {
       const newRunner = await trackNewRunner({
         body: {
           runnerName,

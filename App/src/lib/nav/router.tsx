@@ -45,7 +45,10 @@ export type RootStack = {
   Redeem: undefined;
   Language: undefined;
   TrackRunner: { runner: OLTrackingData };
-  EditTrackRunner: { isNew: true } | { isNew: false; runner: OLTrackingData };
+  EditTrackRunner:
+    | { status: 'new' }
+    | { status: 'edit'; runner: OLTrackingData }
+    | { status: 'create-from'; runner: Omit<OLTrackingData, 'id'> };
 };
 
 const Stack = createNativeStackNavigator<RootStack>();

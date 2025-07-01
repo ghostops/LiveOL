@@ -118,7 +118,7 @@ export const OLTrackRunner: React.FC<Props> = ({
             <OLButton
               onPress={() => {
                 navigate('EditTrackRunner', {
-                  isNew: false,
+                  status: 'edit',
                   runner,
                 });
               }}

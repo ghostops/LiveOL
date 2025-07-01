@@ -1,6 +1,5 @@
 import { eq } from 'drizzle-orm';
 import { defaultEndpointsFactory } from 'express-zod-api';
-import db from 'lib/db';
 import { trackingTable } from 'lib/db/schema';
 import { isDateTodayOrFutureWithin7Days } from 'lib/helpers/time';
 import { apiSingletons } from 'lib/singletons';
@@ -37,7 +36,7 @@ export const getTrackedRunners = defaultEndpointsFactory.build({
     runners: z.array(runnerSchema),
   }),
   handler: async ({ input: { deviceId } }) => {
-    const runners = await db
+    const runners = await api.Drizzle.db
       .select()
       .from(trackingTable)
       .where(() => eq(trackingTable.deviceId, deviceId));
@@ -60,7 +59,7 @@ export const trackNewRunner = defaultEndpointsFactory.build({
   handler: async ({
     input: { deviceId, runnerClasses, runnerClubs, runnerName },
   }) => {
-    const res = await db
+    const res = await api.Drizzle.db
       .insert(trackingTable)
       .values({
         deviceId,
@@ -89,7 +88,7 @@ export const updateTrackedRunner = defaultEndpointsFactory.build({
   handler: async ({
     input: { id, deviceId, runnerClasses, runnerClubs, runnerName },
   }) => {
-    const runnerQuery = await db
+    const runnerQuery = await api.Drizzle.db
       .select()
       .from(trackingTable)
       .where(eq(trackingTable.id, id));
@@ -104,7 +103,7 @@ export const updateTrackedRunner = defaultEndpointsFactory.build({
       throw new Error('Device ID mismatch');
     }
 
-    const updateQuery = await db
+    const updateQuery = await api.Drizzle.db
       .update(trackingTable)
       .set({
         runnerName,
@@ -135,7 +134,9 @@ export const removeTrackedRunner = defaultEndpointsFactory.build({
   }),
   handler: async ({ input: { id } }) => {
     try {
-      await db.delete(trackingTable).where(eq(trackingTable.id, id));
+      await api.Drizzle.db
+        .delete(trackingTable)
+        .where(eq(trackingTable.id, id));
 
       return { success: true };
     } catch (err) {
@@ -162,7 +163,7 @@ export const getTrackedRunner = defaultEndpointsFactory.build({
     results: z.array(resultsSchema),
   }),
   handler: async ({ input: { id, date } }) => {
-    const runnerQuery = await db
+    const runnerQuery = await api.Drizzle.db
       .select()
       .from(trackingTable)
       .where(eq(trackingTable.id, id));

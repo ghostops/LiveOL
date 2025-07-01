@@ -1,5 +1,21 @@
-import { drizzle } from 'drizzle-orm/node-postgres';
+import {
+  drizzle,
+  NodePgClient,
+  NodePgDatabase,
+} from 'drizzle-orm/node-postgres';
 
-const db = drizzle(process.env.DATABASE_URL!);
+type DrizzlePostgresDb = NodePgDatabase<Record<string, never>> & {
+  $client: NodePgClient;
+};
 
-export default db;
+export class Drizzle {
+  public db: DrizzlePostgresDb;
+
+  constructor(url: string) {
+    if (!url) {
+      throw new Error('DATABASE_URL is not defined');
+    }
+
+    this.db = drizzle(url);
+  }
+}
