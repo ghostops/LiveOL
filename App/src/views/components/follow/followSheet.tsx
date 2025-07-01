@@ -17,9 +17,9 @@ import { useRef } from 'react';
 import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import { useDeviceRotationStore } from '~/store/deviceRotation';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-// import { OLButton } from '../button';
-// import { $api } from '~/lib/react-query/api';
-// import { useDeviceIdStore } from '~/store/deviceId';
+import { OLButton } from '../button';
+import { $api } from '~/lib/react-query/api';
+import { useDeviceIdStore } from '~/store/deviceId';
 import { paths } from '~/lib/react-query/schema';
 import { OLTrackingItem } from './trackingItem';
 import { useTelemetryDeck } from '@typedigital/telemetrydeck-react';
@@ -45,10 +45,10 @@ export const OLFollowSheet: React.FC = () => {
   const { t } = useTranslation();
   const { px, colors } = useTheme();
   const { getNavRef } = useOLNavigationRef();
-  // const deviceId = useDeviceIdStore(state => state.deviceId);
-  // const { data } = $api.useQuery('get', '/v1/track', {
-  //   params: { query: { deviceId } },
-  // });
+  const deviceId = useDeviceIdStore(state => state.deviceId);
+  const { data } = $api.useQuery('get', '/v1/track', {
+    params: { query: { deviceId } },
+  });
   const { signal } = useTelemetryDeck();
 
   const onTrackItemPress = (item: OLTrackingData) => {
@@ -152,11 +152,11 @@ export const OLFollowSheet: React.FC = () => {
               data: following,
               key: 'following',
             },
-            // {
-            //   title: t('follow.track.title'),
-            //   data: data?.data.runners || [],
-            //   key: 'tracking',
-            // },
+            {
+              title: t('follow.track.title'),
+              data: data?.data.runners || [],
+              key: 'tracking',
+            },
           ]}
           renderSectionHeader={({ section }) => (
             <View style={{ backgroundColor: colors.BLUE, padding: px(12) }}>
@@ -194,18 +194,18 @@ export const OLFollowSheet: React.FC = () => {
               </OLText>
             </View>
           }
-          // ListFooterComponent={
-          //   <View style={{ padding: px(8) }}>
-          //     <OLButton
-          //       onPress={() => {
-          //         getNavRef()?.navigate('EditTrackRunner', { isNew: true });
-          //         localRef.current?.snapToIndex(getFollowSheetIndex(0));
-          //       }}
-          //     >
-          //       {t('follow.track.add')}
-          //     </OLButton>
-          //   </View>
-          // }
+          ListFooterComponent={
+            <View style={{ padding: px(8) }}>
+              <OLButton
+                onPress={() => {
+                  getNavRef()?.navigate('EditTrackRunner', { isNew: true });
+                  localRef.current?.snapToIndex(getFollowSheetIndex(0));
+                }}
+              >
+                {t('follow.track.add')}
+              </OLButton>
+            </View>
+          }
         />
       </View>
       <View style={{ height: bottom }} />

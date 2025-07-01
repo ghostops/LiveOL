@@ -21,7 +21,9 @@ import {
 } from '@typedigital/telemetrydeck-react';
 
 const td = createTelemetryDeck({
-  appID: '37598E68-7474-4EA1-A1AE-353B04D4ADFB',
+  appID: __DEV__
+    ? 'AFCC3094-F31F-4D69-AC7C-90C1D0868C24'
+    : '37598E68-7474-4EA1-A1AE-353B04D4ADFB',
   clientUser: 'anonymous',
 });
 
