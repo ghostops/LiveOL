@@ -2,6 +2,7 @@ import { eq } from 'drizzle-orm';
 import { competitionTable } from 'lib/db/schema';
 import type { LiveresultatApi } from 'lib/liveresultat/types';
 import { APIResponse, apiSingletons } from 'lib/singletons';
+import { SyncClassJob } from './sync-class';
 
 export class SyncCompetitionJob {
   private api: APIResponse;
@@ -22,8 +23,25 @@ export class SyncCompetitionJob {
       await this.insertCompetition(competition);
 
       console.log(`Synced ${competition.id} successfully.`);
+
+      const classes = await this.api.Liveresultat.getclasses(
+        this.competitionId,
+      );
+
+      await this.dispatchSyncClasses(classes);
+
+      console.log(
+        `Synced classes for competition ${competition.id} successfully.`,
+      );
     } catch (error) {
       console.error('Error syncing competitions:', error);
+    }
+  }
+
+  private async dispatchSyncClasses(classes: LiveresultatApi.getclasses) {
+    for (const classResult of classes.classes) {
+      const job = new SyncClassJob(this.competitionId, classResult.className);
+      await job.run();
     }
   }
 

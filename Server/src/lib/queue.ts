@@ -31,7 +31,7 @@ export class OLQueue {
       autorun: false,
       connection: this.connection,
       concurrency: 1,
-      limiter: { duration: 1000, max: 1 },
+      limiter: { duration: 1000, max: 3 },
     });
   }
 
@@ -44,6 +44,7 @@ export class OLQueue {
   }
 
   public async startWorker() {
+    return;
     if (this.worker.isRunning()) {
       await this.worker.close();
     }

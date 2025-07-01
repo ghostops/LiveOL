@@ -1,9 +1,9 @@
 import { eq } from 'drizzle-orm';
-import { classTable, competitionTable } from 'lib/db/schema';
+import { classTable } from 'lib/db/schema';
 import type { LiveresultatApi } from 'lib/liveresultat/types';
 import { APIResponse, apiSingletons } from 'lib/singletons';
 
-export class SyncCompetitionJob {
+export class SyncClassJob {
   private api: APIResponse;
 
   constructor(
@@ -30,46 +30,35 @@ export class SyncCompetitionJob {
 
       console.log(`Synced ${results.className} successfully.`);
     } catch (error) {
-      console.error('Error syncing competitions:', error);
+      console.error('Error syncing class:', error);
     }
   }
 
   private async insertClass(classResults: LiveresultatApi.getclassresults) {
+    const hashedClassId = 'abc123';
+
     const existing = await this.api.Drizzle.db
       .select()
       .from(classTable)
-      .where(eq(competitionTable.id, classResults.))
+      .where(eq(classTable.id, hashedClassId))
       .limit(1);
 
     const body = {
-      name: competition.name,
-      organizer: competition.organizer,
-      dateString: competition.date,
-      date: this.parseDate(competition.date),
-      timediff: String(competition.timediff),
-      timezone: '',
-      isPublic: 1,
+      name: classResults.className,
+      status: classResults.status,
+      hash: classResults.hash,
     };
 
     if (existing.length === 0) {
-      await this.api.Drizzle.db.insert(competitionTable).values({
-        id: competition.id,
+      await this.api.Drizzle.db.insert(classTable).values({
+        id: hashedClassId,
         ...body,
       });
     } else {
       await this.api.Drizzle.db
-        .update(competitionTable)
+        .update(classTable)
         .set(body)
-        .where(eq(competitionTable.id, competition.id));
+        .where(eq(classTable.id, hashedClassId));
     }
   }
-
-  parseDate(dateString: string): string | null {
-    try {
-      return new Date(dateString + 'T00:00:00Z').toISOString();
-    } catch {
-      return null;
-    }
-  }
-
 }

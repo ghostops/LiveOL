@@ -17,7 +17,9 @@ export class SyncCompetitionsJob {
 
       const batches = _.chunk(competitions, 50);
 
-      await Promise.all(batches.map(batch => this.insertBatch(batch)));
+      await Promise.all(
+        batches.map(batch => this.dispatchCompetitionSync(batch)),
+      );
 
       console.log(`Synced ${competitions.length} competitions successfully.`);
     } catch (error) {
