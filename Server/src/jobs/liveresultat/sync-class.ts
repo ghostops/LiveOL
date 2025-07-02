@@ -82,6 +82,7 @@ export class SyncClassJob {
               Object.entries(result.splits).map(([k, v]) => [k, String(v)]),
             )
           : null,
+        place: result.place ? String(result.place) : null,
       };
 
       if (existing.length === 0) {

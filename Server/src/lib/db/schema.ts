@@ -72,6 +72,7 @@ export const resultTable = pgTable('results', {
   progress: integer().default(0),
   splits: json().$type<Record<string, string>>(),
   start: integer(),
+  place: varchar({ length: 255 }),
 });
 
 export const resultRelations = relations(resultTable, ({ one }) => ({
