@@ -1,5 +1,6 @@
 import { Job, Queue, Worker } from 'bullmq';
 import Redis from 'ioredis';
+import { SyncClassJob } from 'jobs/liveresultat/sync-class';
 import { SyncCompetitionJob } from 'jobs/liveresultat/sync-competition';
 import { SyncCompetitionsJob } from 'jobs/liveresultat/sync-competitions';
 
@@ -44,7 +45,6 @@ export class OLQueue {
   }
 
   public async startWorker() {
-    return;
     if (this.worker.isRunning()) {
       await this.worker.close();
     }
@@ -60,6 +60,12 @@ export class OLQueue {
     });
   }
 
+  public async purge() {
+    await this.queue.drain();
+    await this.queue.close();
+    await this.connection.quit();
+  }
+
   private async handleJob(job: Job) {
     switch (job.name) {
       case 'sync-competitions':
@@ -67,6 +73,9 @@ export class OLQueue {
         break;
       case 'sync-competition':
         new SyncCompetitionJob(job.data.competitionId).run();
+        break;
+      case 'sync-class':
+        new SyncClassJob(job.data.competitionId, job.data.className).run();
         break;
       default:
         console.warn(`Unknown job type: ${job.name}`);

@@ -26,7 +26,9 @@ export const competitionRelations = relations(competitionTable, ({ many }) => ({
 }));
 
 export const classTable = pgTable('classes', {
-  id: varchar({ length: 255 }).primaryKey(),
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  competitionId: integer().notNull(),
+  classId: varchar({ length: 255 }).notNull(),
   name: varchar({ length: 255 }).notNull(),
   status: varchar({ length: 255 }),
   hash: varchar({ length: 255 }),
@@ -34,7 +36,7 @@ export const classTable = pgTable('classes', {
 
 export const classRelations = relations(classTable, ({ one, many }) => ({
   competition: one(competitionTable, {
-    fields: [classTable.id],
+    fields: [classTable.competitionId],
     references: [competitionTable.id],
   }),
   results: many(resultTable),
@@ -43,9 +45,9 @@ export const classRelations = relations(classTable, ({ one, many }) => ({
 
 export const splitControlTable = pgTable('splitControls', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  classId: integer().notNull(),
+  classId: varchar({ length: 255 }).notNull(),
   name: varchar({ length: 255 }).notNull(),
-  code: varchar({ length: 255 }).notNull(),
+  code: integer().notNull(),
 });
 
 export const splitControlRelations = relations(
@@ -53,19 +55,20 @@ export const splitControlRelations = relations(
   ({ one }) => ({
     class: one(classTable, {
       fields: [splitControlTable.classId],
-      references: [classTable.id],
+      references: [classTable.classId],
     }),
   }),
 );
 
 export const resultTable = pgTable('results', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  classId: integer().notNull(),
+  resultId: varchar({ length: 255 }).notNull(),
+  classId: varchar({ length: 255 }).notNull(),
   name: varchar({ length: 255 }).notNull(),
   club: varchar({ length: 255 }),
-  result: varchar({ length: 255 }),
-  status: varchar({ length: 255 }),
-  timeplus: varchar({ length: 255 }),
+  result: integer(),
+  status: integer(),
+  timeplus: integer(),
   progress: integer().default(0),
   splits: json().$type<Record<string, string>>(),
   start: integer(),
@@ -74,6 +77,6 @@ export const resultTable = pgTable('results', {
 export const resultRelations = relations(resultTable, ({ one }) => ({
   class: one(classTable, {
     fields: [resultTable.classId],
-    references: [classTable.id],
+    references: [classTable.classId],
   }),
 }));
