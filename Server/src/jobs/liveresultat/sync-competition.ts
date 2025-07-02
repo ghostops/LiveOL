@@ -1,8 +1,10 @@
 import { eq } from 'drizzle-orm';
-import { competitionTable } from 'lib/db/schema';
+import { LiveCompetitionsTable, OLCompetitionsTable } from 'lib/db/schema';
 import type { LiveresultatApi } from 'lib/liveresultat/types';
 import { APIResponse, apiSingletons } from 'lib/singletons';
 import { SyncClassJob } from './sync-class';
+import { parse } from 'date-fns';
+import { fromZonedTime } from 'date-fns-tz';
 
 export class SyncCompetitionJob {
   private api: APIResponse;
@@ -20,19 +22,14 @@ export class SyncCompetitionJob {
         this.competitionId,
       );
 
-      await this.insertCompetition(competition);
-
-      console.log(`Synced ${competition.id} successfully.`);
+      await this.insertLiveCompetition(competition);
+      await this.createOLCompetitionIfNotExists(competition);
 
       const classes = await this.api.Liveresultat.getclasses(
         this.competitionId,
       );
 
       await this.dispatchSyncClasses(classes);
-
-      console.log(
-        `Synced classes for competition ${competition.id} successfully.`,
-      );
     } catch (error) {
       console.error('Error syncing competitions:', error);
     }
@@ -45,41 +42,58 @@ export class SyncCompetitionJob {
     }
   }
 
-  private async insertCompetition(competition: LiveresultatApi.competition) {
-    const existing = await this.api.Drizzle.db
-      .select()
-      .from(competitionTable)
-      .where(eq(competitionTable.id, competition.id))
-      .limit(1);
+  private createOLCompetitionIfNotExists(
+    competition: LiveresultatApi.competition,
+  ) {
+    // ToDo:
+    // Check for EventorCompetitions and try to match them!
+    return this.api.Drizzle.db
+      .insert(OLCompetitionsTable)
+      .values({
+        liveId: competition.id,
+      })
+      .onConflictDoNothing();
+  }
 
+  private async insertLiveCompetition(
+    competition: LiveresultatApi.competition,
+  ) {
     const body = {
       name: competition.name,
       organizer: competition.organizer,
-      dateString: competition.date,
-      date: this.parseDate(competition.date),
-      timediff: String(competition.timediff),
-      timezone: '',
-      isPublic: 1,
+      date: this.parseDateToUtc(competition.date, competition.timediff),
+      isPublic: true,
+      updatedAt: new Date(),
     };
 
-    if (existing.length === 0) {
-      await this.api.Drizzle.db.insert(competitionTable).values({
-        id: competition.id,
-        ...body,
-      });
-    } else {
-      await this.api.Drizzle.db
-        .update(competitionTable)
-        .set(body)
-        .where(eq(competitionTable.id, competition.id));
-    }
+    const [existing] = await this.api.Drizzle.db
+      .select()
+      .from(LiveCompetitionsTable)
+      .where(eq(LiveCompetitionsTable.id, competition.id))
+      .limit(1);
+
+    existing
+      ? await this.api.Drizzle.db
+          .update(LiveCompetitionsTable)
+          .set(body)
+          .where(eq(LiveCompetitionsTable.id, competition.id))
+      : await this.api.Drizzle.db
+          .insert(LiveCompetitionsTable)
+          .values({ id: competition.id, ...body });
   }
 
-  parseDate(dateString: string): string | null {
-    try {
-      return new Date(dateString + 'T00:00:00Z').toISOString();
-    } catch {
-      return null;
+  parseDateToUtc(dateString: string, timediff?: number) {
+    const format = 'yyyy-MM-dd';
+    const parsed = parse(dateString, format, new Date());
+    if (timediff && timediff > 0) {
+      parsed.setHours(parsed.getHours() + timediff);
     }
+    if (timediff && timediff < 0) {
+      parsed.setHours(parsed.getHours() - timediff);
+    }
+
+    const utcDate = fromZonedTime(parsed, 'Europe/Stockholm');
+
+    return utcDate;
   }
 }

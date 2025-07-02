@@ -1,5 +1,10 @@
 import { eq, and } from 'drizzle-orm';
-import { classTable, resultTable, splitControlTable } from 'lib/db/schema';
+import {
+  LiveClassesTable,
+  LiveResultsTable,
+  LiveSplitControllsTable,
+  LiveSplitResultsTable,
+} from 'lib/db/schema';
 import type { LiveresultatApi } from 'lib/liveresultat/types';
 import { APIResponse, apiSingletons } from 'lib/singletons';
 import crypto from 'crypto';
@@ -30,8 +35,6 @@ export class SyncClassJob {
       const id = await this.insertClass(this.competitionId, results);
       await this.insertSplitControls(id, results);
       await this.insertResults(id, results);
-
-      console.log(`Synced ${results.className} successfully.`);
     } catch (error) {
       console.error('Error syncing class:', error);
     }
@@ -48,13 +51,13 @@ export class SyncClassJob {
         .update(resultCompositeId)
         .digest('hex');
 
-      const existing = await this.api.Drizzle.db
+      const [existing] = await this.api.Drizzle.db
         .select()
-        .from(resultTable)
+        .from(LiveResultsTable)
         .where(
           and(
-            eq(resultTable.classId, classId),
-            eq(resultTable.resultId, hashedResultId),
+            eq(LiveResultsTable.liveClassId, classId),
+            eq(LiveResultsTable.liveResultId, hashedResultId),
           ),
         )
         .limit(1);
@@ -70,35 +73,109 @@ export class SyncClassJob {
       };
 
       const body = {
+        // ToDo:
+        // Scan for a OLRunner and insert it if it exists
+        olRunnerId: null,
         name: result.name,
         club: result.club,
-        result: !isEmpty(result.result) ? result.result : null,
-        start: !isEmpty(result.start) ? result.start : null,
-        status: !isEmpty(result.status) ? result.status : null,
-        timeplus: !isEmpty(result.timeplus) ? result.timeplus : null,
+        endAt: new Date(),
+        startAt: new Date(),
         progress: !isEmpty(result.progress) ? result.progress : 0,
-        splits: result.splits
-          ? Object.fromEntries(
-              Object.entries(result.splits).map(([k, v]) => [k, String(v)]),
-            )
-          : null,
         place: result.place ? String(result.place) : null,
+        status: !isEmpty(result.status) ? result.status : null,
+        updatedAt: new Date(),
       };
 
-      if (existing.length === 0) {
-        await this.api.Drizzle.db.insert(resultTable).values({
+      if (!existing) {
+        await this.api.Drizzle.db.insert(LiveResultsTable).values({
           ...body,
-          classId,
-          resultId: hashedResultId,
+          liveClassId: classId,
+          liveResultId: hashedResultId,
         });
       } else {
         await this.api.Drizzle.db
-          .update(resultTable)
+          .update(LiveResultsTable)
           .set(body)
           .where(
             and(
-              eq(resultTable.classId, classId),
-              eq(resultTable.resultId, hashedResultId),
+              eq(LiveResultsTable.liveClassId, classId),
+              eq(LiveResultsTable.liveResultId, hashedResultId),
+            ),
+          );
+      }
+
+      await this.insertSplitResults(hashedResultId, result);
+    }
+  }
+
+  private async insertSplitResults(
+    liveResultId: string,
+    result: LiveresultatApi.result,
+  ) {
+    const splits = Object.entries(result.splits).reduce(
+      (root, [key, value]) => {
+        const keyWithoutUnderscore = key.includes('_')
+          ? key.split('_')[0]!
+          : key;
+
+        const isNotTime =
+          key.endsWith('status') ||
+          key.endsWith('timeplus') ||
+          key.endsWith('place');
+
+        const obj: ParsedSplit = root[keyWithoutUnderscore] || {};
+        if (obj.code === undefined) {
+          obj.code = keyWithoutUnderscore;
+        }
+        if (obj.time === undefined && isNotTime === false) {
+          obj.time = typeof value === 'number' ? value : undefined;
+        }
+        if (obj.timeplus === undefined && key.endsWith('timeplus')) {
+          obj.timeplus = typeof value === 'number' ? value : undefined;
+        }
+        if (obj.timeplus === undefined && key.endsWith('status')) {
+          obj.status = typeof value === 'number' ? value : undefined;
+        }
+        if (obj.timeplus === undefined && key.endsWith('place')) {
+          obj.place = typeof value === 'number' ? value : undefined;
+        }
+
+        return Object.assign(root, {
+          [keyWithoutUnderscore]: obj,
+        });
+      },
+      {} as Record<string, ParsedSplit>,
+    );
+    for (const split of Object.values(splits)) {
+      const [existing] = await this.api.Drizzle.db
+        .select()
+        .from(LiveSplitResultsTable)
+        .where(
+          and(
+            eq(LiveSplitResultsTable.liveResultId, liveResultId),
+            eq(LiveSplitResultsTable.code, String(split.code)),
+          ),
+        )
+        .limit(1);
+
+      const body = {
+        ...split,
+        updatedAt: new Date(),
+      };
+
+      if (!existing) {
+        await this.api.Drizzle.db.insert(LiveSplitResultsTable).values({
+          ...body,
+          liveResultId,
+        });
+      } else {
+        await this.api.Drizzle.db
+          .update(LiveSplitResultsTable)
+          .set(body)
+          .where(
+            and(
+              eq(LiveSplitResultsTable.liveResultId, liveResultId),
+              eq(LiveSplitResultsTable.code, String(split.code)),
             ),
           );
       }
@@ -110,38 +187,39 @@ export class SyncClassJob {
     classResults: LiveresultatApi.getclassresults,
   ) {
     for (const split of classResults.splitcontrols) {
-      const existing = await this.api.Drizzle.db
+      const [existing] = await this.api.Drizzle.db
         .select()
-        .from(splitControlTable)
+        .from(LiveSplitControllsTable)
         .where(
           and(
-            eq(splitControlTable.classId, classId),
-            eq(splitControlTable.code, split.code),
+            eq(LiveSplitControllsTable.liveClassId, classId),
+            eq(LiveSplitControllsTable.code, String(split.code)),
           ),
         )
         .limit(1);
 
       const body = {
         name: split.name,
-        code: split.code,
+        code: String(split.code),
+        updatedAt: new Date(),
       };
 
-      if (existing.length === 0) {
-        await this.api.Drizzle.db.insert(splitControlTable).values({
+      if (!existing) {
+        await this.api.Drizzle.db.insert(LiveSplitControllsTable).values({
           ...body,
-          classId,
+          liveClassId: classId,
         });
       } else {
-        const hasChanged = existing[0]?.name !== split.name;
+        const hasChanged = existing?.name !== split.name;
         if (!hasChanged) continue;
 
         await this.api.Drizzle.db
-          .update(splitControlTable)
+          .update(LiveSplitControllsTable)
           .set(body)
           .where(
             and(
-              eq(splitControlTable.classId, classId),
-              eq(splitControlTable.code, split.code),
+              eq(LiveSplitControllsTable.liveClassId, classId),
+              eq(LiveSplitControllsTable.code, String(split.code)),
             ),
           );
       }
@@ -157,34 +235,39 @@ export class SyncClassJob {
       .update(`${competitionId}${encodeURIComponent(classResults.className)}`)
       .digest('hex');
 
-    const existing = await this.api.Drizzle.db
+    const [existing] = await this.api.Drizzle.db
       .select()
-      .from(classTable)
-      .where(eq(classTable.classId, hashedClassId))
+      .from(LiveClassesTable)
+      .where(eq(LiveClassesTable.liveClassId, hashedClassId))
       .limit(1);
 
     const body = {
       name: classResults.className,
       status: classResults.status,
-      hash: classResults.hash,
-      competitionId,
+      liveCompetitionId: competitionId,
+      updatedAt: new Date(),
     };
 
-    if (existing.length === 0) {
-      await this.api.Drizzle.db.insert(classTable).values({
-        classId: hashedClassId,
+    if (!existing) {
+      await this.api.Drizzle.db.insert(LiveClassesTable).values({
+        liveClassId: hashedClassId,
         ...body,
       });
     } else {
-      const hasChanged = existing[0]?.hash !== classResults.hash;
-      if (hasChanged) {
-        await this.api.Drizzle.db
-          .update(classTable)
-          .set(body)
-          .where(eq(classTable.classId, hashedClassId));
-      }
+      await this.api.Drizzle.db
+        .update(LiveClassesTable)
+        .set(body)
+        .where(eq(LiveClassesTable.liveClassId, hashedClassId));
     }
 
     return hashedClassId;
   }
 }
+
+type ParsedSplit = {
+  code?: string;
+  status?: number;
+  time?: number;
+  place?: number;
+  timeplus?: number;
+};

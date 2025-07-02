@@ -7,14 +7,7 @@ async function runJob() {
   await q.addJob({
     name: 'sync-competition',
     data: {
-      competitionId: 33767,
-    },
-  });
-  await q.addJob({
-    name: 'sync-class',
-    data: {
-      competitionId: 33767,
-      className: 'H21',
+      competitionId: 33766,
     },
   });
 
