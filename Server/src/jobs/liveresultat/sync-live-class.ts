@@ -9,7 +9,7 @@ import type { LiveresultatApi } from 'lib/liveresultat/types';
 import { APIResponse, apiSingletons } from 'lib/singletons';
 import crypto from 'crypto';
 
-export class SyncClassJob {
+export class SyncLiveClassJob {
   private api: APIResponse;
 
   constructor(
@@ -35,6 +35,10 @@ export class SyncClassJob {
       const id = await this.insertClass(this.competitionId, results);
       await this.insertSplitControls(id, results);
       await this.insertResults(id, results);
+
+      console.log(
+        `Class ${this.className} (${this.competitionId}) synced successfully.`,
+      );
     } catch (error) {
       console.error('Error syncing class:', error);
     }

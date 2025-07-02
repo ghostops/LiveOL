@@ -6,8 +6,8 @@ import { EventorCompetitionsTable } from './eventor_competitions';
 
 export const OLCompetitionsTable = pgTable('ol_competitions', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  liveId: integer(),
-  eventorId: varchar({ length: 255 }),
+  liveId: integer().unique(),
+  eventorId: varchar({ length: 255 }).unique(),
   ...commonFields,
 });
 

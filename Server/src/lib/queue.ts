@@ -1,8 +1,8 @@
 import { Job, Queue, Worker } from 'bullmq';
 import Redis from 'ioredis';
-import { SyncClassJob } from 'jobs/liveresultat/sync-class';
-import { SyncCompetitionJob } from 'jobs/liveresultat/sync-competition';
-import { SyncCompetitionsJob } from 'jobs/liveresultat/sync-competitions';
+import { SyncLiveClassJob } from 'jobs/liveresultat/sync-live-class';
+import { SyncLiveCompetitionJob } from 'jobs/liveresultat/sync-live-competition';
+import { SyncLiveCompetitionsJob } from 'jobs/liveresultat/sync-live-competitions';
 
 type OLQueueMessage = {
   name: string;
@@ -68,14 +68,14 @@ export class OLQueue {
 
   private async handleJob(job: Job) {
     switch (job.name) {
-      case 'sync-competitions':
-        new SyncCompetitionsJob().run();
+      case 'sync-live-competitions':
+        new SyncLiveCompetitionsJob().run();
         break;
-      case 'sync-competition':
-        new SyncCompetitionJob(job.data.competitionId).run();
+      case 'sync-live-competition':
+        new SyncLiveCompetitionJob(job.data.competitionId).run();
         break;
-      case 'sync-class':
-        new SyncClassJob(job.data.competitionId, job.data.className).run();
+      case 'sync-live-class':
+        new SyncLiveClassJob(job.data.competitionId, job.data.className).run();
         break;
       default:
         console.warn(`Unknown job type: ${job.name}`);

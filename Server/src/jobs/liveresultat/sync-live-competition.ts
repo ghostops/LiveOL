@@ -2,11 +2,10 @@ import { eq } from 'drizzle-orm';
 import { LiveCompetitionsTable, OLCompetitionsTable } from 'lib/db/schema';
 import type { LiveresultatApi } from 'lib/liveresultat/types';
 import { APIResponse, apiSingletons } from 'lib/singletons';
-import { SyncClassJob } from './sync-class';
 import { parse } from 'date-fns';
 import { fromZonedTime } from 'date-fns-tz';
 
-export class SyncCompetitionJob {
+export class SyncLiveCompetitionJob {
   private api: APIResponse;
 
   constructor(private competitionId: number) {
@@ -30,6 +29,10 @@ export class SyncCompetitionJob {
       );
 
       await this.dispatchSyncClasses(classes);
+
+      console.log(
+        `Competition ${competition.name} (${this.competitionId}) synced successfully.`,
+      );
     } catch (error) {
       console.error('Error syncing competitions:', error);
     }
@@ -37,8 +40,13 @@ export class SyncCompetitionJob {
 
   private async dispatchSyncClasses(classes: LiveresultatApi.getclasses) {
     for (const classResult of classes.classes) {
-      const job = new SyncClassJob(this.competitionId, classResult.className);
-      await job.run();
+      await this.api.Queue.addJob({
+        name: 'sync-live-class',
+        data: {
+          competitionId: this.competitionId,
+          className: classResult.className,
+        },
+      });
     }
   }
 
@@ -47,6 +55,7 @@ export class SyncCompetitionJob {
   ) {
     // ToDo:
     // Check for EventorCompetitions and try to match them!
+    // Do this in a scheduled job instead of here
     return this.api.Drizzle.db
       .insert(OLCompetitionsTable)
       .values({
