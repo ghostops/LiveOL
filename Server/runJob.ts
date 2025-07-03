@@ -5,9 +5,9 @@ const q = new OLQueue('localhost', 6379, process.env.REDIS_PASSWORD);
 
 async function runJob() {
   await q.addJob({
-    name: 'sync-live-competition',
+    name: 'sync-eventor-competitions',
     data: {
-      competitionId: 33767,
+      //competitionId: 33767,
     },
   });
 

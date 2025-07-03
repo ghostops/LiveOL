@@ -97,11 +97,9 @@ export const timeplusToReadable = (time: number): string => {
   return `+${padTime(realMinutes)}:${padTime(seconds)}`;
 };
 
-export const getMonthFromDate = (
-  date: moment.Moment,
-): [moment.Moment, moment.Moment] => {
+export const getMonthFromDate = (date: moment.Moment): [Date, Date] => {
   const start = date.clone().startOf('month');
   const end = date.clone().endOf('month');
 
-  return [start, end];
+  return [start.toDate(), end.toDate()];
 };

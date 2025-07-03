@@ -2,9 +2,9 @@ import { Cacher } from 'lib/redis';
 import { getEnv } from 'lib/helpers/env';
 import { ListResponseParser, EventResponseParser } from './parser';
 import fs from 'fs';
-import moment from 'moment';
 import ms from 'ms';
 import axios, { AxiosInstance } from 'axios';
+import { format } from 'date-fns';
 
 const DEV = getEnv('test') === 'true';
 
@@ -22,12 +22,9 @@ export class EventorScraper {
     });
   }
 
-  public scrapeDateRange = async (
-    startDate: moment.Moment,
-    endDate: moment.Moment,
-  ) => {
-    const start = startDate.format('YYYY-MM-DD');
-    const end = endDate.format('YYYY-MM-DD');
+  public scrapeDateRange = async (startDate: Date, endDate: Date) => {
+    const start = format(startDate, 'yyyy-MM-dd');
+    const end = format(endDate, 'yyyy-MM-dd');
 
     const url = `${this.baseUrl}/Events?startDate=${start}&endDate=${end}`;
 

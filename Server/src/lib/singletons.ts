@@ -14,7 +14,7 @@ export interface APIResponse {
   Queue: OLQueue;
 }
 
-const URLS = {
+export const URLS = {
   liveresultat: 'https://liveresultat.orientering.se',
   eventorSweden: 'https://eventor.orientering.se',
   eventorAustralia: 'https://eventor.orienteering.asn.au',
