@@ -268,6 +268,7 @@ export class EventResponseParser {
       name: eventorMetadataInformationI18n[bodyLanguage].name,
       date: eventorMetadataInformationI18n[bodyLanguage].date,
       club: eventorMetadataInformationI18n[bodyLanguage].club,
+      clubs: eventorMetadataInformationI18n[bodyLanguage].clubs,
       clubLogoUrl: eventorMetadataInformationI18n[bodyLanguage].clubLogoUrl,
       district: eventorMetadataInformationI18n[bodyLanguage].district,
       competitionDistance:
@@ -302,6 +303,11 @@ export class EventResponseParser {
           mappedInfoData.clubLogoUrl = imageUrl;
 
           return;
+        }
+        // ToDo: Propper fix for multiple clubs
+        if (infoMap[title].includes('clubs') && !mappedInfoData.club) {
+          const club = 'Multiple clubs';
+          mappedInfoData.club = club;
         }
 
         // @ts-expect-error key-types
@@ -375,6 +381,7 @@ type EventorMetadataInformationKeys =
   | 'name'
   | 'date'
   | 'club'
+  | 'clubs'
   | 'clubLogoUrl'
   | 'district'
   | 'competitionDistance'
@@ -397,6 +404,7 @@ const eventorMetadataInformationI18n: Record<
     name: 'Tävling',
     date: 'Datum',
     club: 'Arrangörsorganisation',
+    clubs: 'Arrangörsorganisationer',
     clubLogoUrl: 'Arrangörsorganisation',
     district: 'Distrikt',
     competitionDistance: 'Tävlingsdistans',
@@ -407,6 +415,7 @@ const eventorMetadataInformationI18n: Record<
     name: 'Event',
     date: 'Date',
     club: 'Organiser',
+    clubs: 'Organisers',
     clubLogoUrl: 'Organiser',
     district: 'State',
     competitionDistance: 'Race distance',

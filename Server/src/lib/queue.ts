@@ -73,7 +73,6 @@ export class OLQueue {
   }
 
   private async handleJob(job: Job) {
-    return;
     switch (job.name) {
       case 'sync-live-competitions':
         new SyncLiveCompetitionsJob().run();

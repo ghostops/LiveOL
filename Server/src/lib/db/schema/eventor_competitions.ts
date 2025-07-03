@@ -12,6 +12,7 @@ import { EventorResultsTable } from './eventor_results';
 import { EventorStartTable } from './eventor_start';
 import { EventorSignupsTable } from './eventor_signups';
 import { OLCompetitionsTable } from './ol_competitions';
+import { json } from 'drizzle-orm/pg-core';
 
 export const EventorCompetitionsTable = pgTable('eventor_competitions', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -26,6 +27,7 @@ export const EventorCompetitionsTable = pgTable('eventor_competitions', {
   lat: decimal({ precision: 8, scale: 6 }),
   lng: decimal({ precision: 9, scale: 6 }),
   notification: text(),
+  links: json().$type<{ href: string; text: string }[]>(),
   ...commonFields,
 });
 
