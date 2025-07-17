@@ -1,3 +1,4 @@
+import { endOfMonth, startOfMonth } from 'date-fns';
 import _ from 'lodash';
 import moment from 'moment';
 
@@ -97,9 +98,9 @@ export const timeplusToReadable = (time: number): string => {
   return `+${padTime(realMinutes)}:${padTime(seconds)}`;
 };
 
-export const getMonthFromDate = (date: moment.Moment): [Date, Date] => {
-  const start = date.clone().startOf('month');
-  const end = date.clone().endOf('month');
+export const getMonthFromDate = (date: Date): [Date, Date] => {
+  const start = startOfMonth(new Date(date.getTime()));
+  const end = endOfMonth(new Date(date.getTime()));
 
-  return [start.toDate(), end.toDate()];
+  return [start, end];
 };

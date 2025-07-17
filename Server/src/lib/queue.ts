@@ -5,6 +5,7 @@ import { SyncEventorCompetitions } from 'jobs/eventor/sync-eventor-competitions'
 import { SyncLiveClassJob } from 'jobs/liveresultat/sync-live-class';
 import { SyncLiveCompetitionJob } from 'jobs/liveresultat/sync-live-competition';
 import { SyncLiveCompetitionsJob } from 'jobs/liveresultat/sync-live-competitions';
+import { MatchEventorAndLiveJob } from 'jobs/match/match-eventor-and-live';
 
 type OLQueueMessage = {
   name: string;
@@ -86,9 +87,11 @@ export class OLQueue {
       case 'sync-eventor-competitions':
         new SyncEventorCompetitions().run();
         break;
-
       case 'sync-eventor-competition':
         new SyncEventorCompetition(job.data.eventorId).run();
+        break;
+      case 'match-eventor-and-live':
+        new MatchEventorAndLiveJob().run();
         break;
       default:
         console.warn(`Unknown job type: ${job.name}`);

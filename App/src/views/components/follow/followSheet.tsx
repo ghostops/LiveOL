@@ -1,11 +1,5 @@
 import { BottomSheetSectionList, BottomSheetModal } from '@gorhom/bottom-sheet';
-import {
-  Dimensions,
-  Platform,
-  SectionList,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Dimensions, TouchableOpacity, View } from 'react-native';
 import { useFollowBottomSheetStore } from '~/store/followBottomSheet';
 import { OLFollowItem } from './followItem';
 import { useTranslation } from 'react-i18next';
@@ -23,8 +17,7 @@ import { useDeviceIdStore } from '~/store/deviceId';
 import { paths } from '~/lib/react-query/schema';
 import { OLTrackingItem } from './trackingItem';
 
-const ListComponent =
-  Platform.OS === 'android' ? BottomSheetSectionList : SectionList;
+let enableTracking = false;
 
 export type OLTrackingData =
   paths['/v1/track']['get']['responses']['200']['content']['application/json']['data']['runners'][number];
@@ -87,6 +80,22 @@ export const OLFollowSheet: React.FC = () => {
     localRef.current?.snapToIndex(getFollowSheetIndex(0));
   };
 
+  const sections = [
+    {
+      title: t('follow.title'),
+      data: following,
+      key: 'following',
+    },
+  ];
+
+  if (enableTracking) {
+    sections.push({
+      title: t('follow.track.title'),
+      data: data?.data.runners || ([] as any[]),
+      key: 'tracking',
+    });
+  }
+
   return (
     <BottomSheetModal
       ref={ref => {
@@ -134,19 +143,8 @@ export const OLFollowSheet: React.FC = () => {
             {t('follow.title')}
           </OLText>
         </TouchableOpacity>
-        <ListComponent<FollowingData | OLTrackingData>
-          sections={[
-            {
-              title: t('follow.title'),
-              data: following,
-              key: 'following',
-            },
-            {
-              title: t('follow.track.title'),
-              data: data?.data.runners || [],
-              key: 'tracking',
-            },
-          ]}
+        <BottomSheetSectionList<FollowingData | OLTrackingData>
+          sections={sections}
           renderSectionHeader={({ section }) => (
             <View style={{ backgroundColor: colors.BLUE, padding: px(12) }}>
               <OLText size={px(16)} style={{ color: 'white' }} bold>
@@ -184,16 +182,18 @@ export const OLFollowSheet: React.FC = () => {
             </View>
           }
           ListFooterComponent={
-            <View style={{ padding: px(8) }}>
-              <OLButton
-                onPress={() => {
-                  getNavRef()?.navigate('EditTrackRunner', { status: 'new' });
-                  localRef.current?.snapToIndex(getFollowSheetIndex(0));
-                }}
-              >
-                {t('follow.track.add')}
-              </OLButton>
-            </View>
+            enableTracking ? (
+              <View style={{ padding: px(8) }}>
+                <OLButton
+                  onPress={() => {
+                    getNavRef()?.navigate('EditTrackRunner', { status: 'new' });
+                    localRef.current?.snapToIndex(getFollowSheetIndex(0));
+                  }}
+                >
+                  {t('follow.track.add')}
+                </OLButton>
+              </View>
+            ) : null
           }
         />
       </View>
