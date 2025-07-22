@@ -8,7 +8,11 @@ export const promptStoreReview = async (): Promise<void> => {
 
   if (InAppReview.isAvailable()) {
     if (launchCount > 3) {
-      await InAppReview.RequestInAppReview();
+      try {
+        await InAppReview.RequestInAppReview();
+      } catch (error: any) {
+        // Silent errors, what could go wrong?
+      }
     }
   }
 
