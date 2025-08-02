@@ -9,6 +9,7 @@ import { RootStack } from '~/lib/nav/router';
 import { useFollowingStore } from '~/store/following';
 import { useFollowBottomSheetStore } from '~/store/followBottomSheet';
 import { paths } from '~/lib/react-query/schema';
+import { enableNewTracking } from '~/util/enableNewTracking';
 
 type Props = {
   result: paths['/v1/results/{competitionId}/club/{clubName}']['get']['responses']['200']['content']['application/json']['data']['results'][0];
@@ -35,7 +36,7 @@ export const OLRunnerContextMenu: React.FC<Props> = ({
     const options = [
       t('result.followRunner'),
       club ? t('result.goToClass') : t('result.goToClub'),
-      t('result.followRunner'),
+      enableNewTracking ? t('result.followRunner') : '',
       t('info.update.hasUpdate.cancel'),
     ];
 
@@ -84,6 +85,9 @@ export const OLRunnerContextMenu: React.FC<Props> = ({
             if (!plusActive) {
               presentPaywall();
               break;
+            }
+            if (!enableNewTracking) {
+              return;
             }
 
             navigate('EditTrackRunner', {

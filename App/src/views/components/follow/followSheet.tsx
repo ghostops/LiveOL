@@ -16,8 +16,7 @@ import { $api } from '~/lib/react-query/api';
 import { useDeviceIdStore } from '~/store/deviceId';
 import { paths } from '~/lib/react-query/schema';
 import { OLTrackingItem } from './trackingItem';
-
-let enableTracking = false;
+import { enableNewTracking } from '~/util/enableNewTracking';
 
 export type OLTrackingData =
   paths['/v1/track']['get']['responses']['200']['content']['application/json']['data']['runners'][number];
@@ -88,7 +87,7 @@ export const OLFollowSheet: React.FC = () => {
     },
   ];
 
-  if (enableTracking) {
+  if (enableNewTracking) {
     sections.push({
       title: t('follow.track.title'),
       data: data?.data.runners || ([] as any[]),
@@ -182,7 +181,7 @@ export const OLFollowSheet: React.FC = () => {
             </View>
           }
           ListFooterComponent={
-            enableTracking ? (
+            enableNewTracking ? (
               <View style={{ padding: px(8) }}>
                 <OLButton
                   onPress={() => {
