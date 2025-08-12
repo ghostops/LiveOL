@@ -91,7 +91,7 @@ export class OLQueue {
         new SyncEventorCompetition(job.data.eventorId).run();
         break;
       case 'match-eventor-and-live':
-        new MatchEventorAndLiveJob().run();
+        new MatchEventorAndLiveJob(job.data.liveId, job.data.eventorId).run();
         break;
       default:
         console.warn(`Unknown job type: ${job.name}`);

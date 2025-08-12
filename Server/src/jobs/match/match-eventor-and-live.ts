@@ -1,5 +1,5 @@
 import { format } from 'date-fns';
-import { and, eq, or } from 'drizzle-orm';
+import { eq, or } from 'drizzle-orm';
 import {
   EventorCompetitionsTable,
   LiveCompetitionsTable,
@@ -10,44 +10,189 @@ import { APIResponse, apiSingletons } from 'lib/singletons';
 
 export class MatchEventorAndLiveJob {
   private api: APIResponse;
+  // How many checks need to be true for a match
   private threshold = 2;
 
-  constructor() {
+  constructor(
+    private liveId: number | undefined = undefined,
+    private eventorId: string | undefined = undefined,
+  ) {
     this.api = apiSingletons.createApiSingletons();
   }
 
   async run() {
-    // ToDo: Add where based on relationship with OLCompetition
-    const eventorCompetitions = await this.api.Drizzle.db
-      .select()
-      .from(EventorCompetitionsTable);
+    // If only liveId is provided, find matching eventor competition.
+    if (this.liveId !== undefined && this.eventorId === undefined) {
+      const [liveCompetition] = await this.api.Drizzle.db
+        .select()
+        .from(LiveCompetitionsTable)
+        .where(eq(LiveCompetitionsTable.id, this.liveId))
+        .limit(1);
 
-    // ToDo: Add where based on relationship with OLCompetition
-    const liveCompetitions = await this.api.Drizzle.db
-      .select()
-      .from(LiveCompetitionsTable);
+      if (!liveCompetition) {
+        throw new Error(`Live competition with ID ${this.liveId} not found.`);
+      }
 
-    // Match Eventor competitions with Live competitions
-    // for (const liveCompetition of liveCompetitions) {
-    //   for (const eventorCompetition of eventorCompetitions) {
-    //     const weight = this.getWeight(liveCompetition, eventorCompetition);
-    //     const match = weight.weight >= this.threshold;
+      // ToDo: Add where based on relationship with OLCompetition
+      const eventorCompetitions = await this.api.Drizzle.db
+        .select()
+        .from(EventorCompetitionsTable);
 
-    //     if (existing) {
-    //       await this.api.Drizzle.db.update(OLCompetitionsTable).set({
-    //         eventorId: eventorCompetition.id.toString(),
-    //         liveId: liveCompetition.id,
-    //       });
-    //     } else {
-    //       await this.api.Drizzle.db.insert(OLCompetitionsTable).values({
-    //         eventorId: eventorCompetition.id.toString(),
-    //         liveId: liveCompetition.id,
-    //       });
-    //     }
-    //   }
-    //}
+      let matchCount = 0;
 
-    console.log('Eventor and Live competitions matched successfully.');
+      for (const eventorCompetition of eventorCompetitions) {
+        const weight = this.getWeight(liveCompetition, eventorCompetition);
+        const match = weight.weight >= this.threshold;
+
+        if (match) {
+          matchCount++;
+
+          const existing = await this.findOLCompetition({
+            liveId: liveCompetition.id,
+            eventorId: eventorCompetition.eventorId,
+          });
+
+          if (existing) {
+            await this.api.Drizzle.db.update(OLCompetitionsTable).set({
+              eventorId: eventorCompetition.eventorId,
+              liveId: liveCompetition.id,
+            });
+          } else {
+            await this.api.Drizzle.db.insert(OLCompetitionsTable).values({
+              eventorId: eventorCompetition.eventorId,
+              liveId: liveCompetition.id,
+            });
+          }
+
+          console.log('Eventor and Live competitions matched successfully.');
+        }
+      }
+
+      if (matchCount === 0) {
+        await this.api.Drizzle.db
+          .insert(OLCompetitionsTable)
+          .values({
+            eventorId: undefined,
+            liveId: liveCompetition.id,
+          })
+          .onConflictDoNothing();
+
+        console.log('Inserted only live competition.');
+      }
+    }
+
+    // If only eventorId is provided, find matching live competition.
+    if (this.eventorId !== undefined && this.liveId === undefined) {
+      const [eventorCompetition] = await this.api.Drizzle.db
+        .select()
+        .from(EventorCompetitionsTable)
+        .where(eq(EventorCompetitionsTable.eventorId, this.eventorId))
+        .limit(1);
+
+      if (!eventorCompetition) {
+        throw new Error(
+          `Eventor competition with ID ${this.eventorId} not found.`,
+        );
+      }
+
+      // ToDo: Add where based on relationship with OLCompetition
+      const liveCompetitions = await this.api.Drizzle.db
+        .select()
+        .from(LiveCompetitionsTable);
+
+      let matchCount = 0;
+
+      for (const liveCompetition of liveCompetitions) {
+        const weight = this.getWeight(liveCompetition, eventorCompetition);
+        const match = weight.weight >= this.threshold;
+
+        if (match) {
+          matchCount++;
+
+          const existing = await this.findOLCompetition({
+            liveId: liveCompetition.id,
+            eventorId: eventorCompetition.eventorId,
+          });
+
+          if (existing) {
+            await this.api.Drizzle.db.update(OLCompetitionsTable).set({
+              eventorId: eventorCompetition.eventorId,
+              liveId: liveCompetition.id,
+            });
+          } else {
+            await this.api.Drizzle.db.insert(OLCompetitionsTable).values({
+              eventorId: eventorCompetition.eventorId,
+              liveId: liveCompetition.id,
+            });
+          }
+
+          console.log('Eventor and Live competitions matched successfully.');
+        }
+      }
+
+      if (matchCount === 0) {
+        await this.api.Drizzle.db
+          .insert(OLCompetitionsTable)
+          .values({
+            eventorId: eventorCompetition.eventorId,
+            liveId: undefined,
+          })
+          .onConflictDoNothing();
+
+        console.log('Inserted only live competition.');
+      }
+    }
+
+    // If neither liveId nor eventorId is provided, throw an error.
+    if (this.liveId === undefined && this.eventorId === undefined) {
+      throw new Error(
+        'Either liveId or eventorId must be provided to match competitions.',
+      );
+    }
+
+    // If both liveId and eventorId are provided, match them.
+    if (this.liveId !== undefined && this.eventorId !== undefined) {
+      const [eventorCompetition] = await this.api.Drizzle.db
+        .select()
+        .from(EventorCompetitionsTable)
+        .where(eq(EventorCompetitionsTable.eventorId, this.eventorId))
+        .limit(1);
+
+      if (!eventorCompetition) {
+        throw new Error(
+          `Eventor competition with ID ${this.eventorId} not found.`,
+        );
+      }
+
+      const [liveCompetition] = await this.api.Drizzle.db
+        .select()
+        .from(LiveCompetitionsTable)
+        .where(eq(LiveCompetitionsTable.id, this.liveId))
+        .limit(1);
+
+      if (!liveCompetition) {
+        throw new Error(`Live competition with ID ${this.liveId} not found.`);
+      }
+
+      const existing = await this.findOLCompetition({
+        liveId: liveCompetition.id,
+        eventorId: eventorCompetition.eventorId,
+      });
+
+      if (existing) {
+        await this.api.Drizzle.db.update(OLCompetitionsTable).set({
+          eventorId: eventorCompetition.eventorId,
+          liveId: liveCompetition.id,
+        });
+      } else {
+        await this.api.Drizzle.db.insert(OLCompetitionsTable).values({
+          eventorId: eventorCompetition.eventorId,
+          liveId: liveCompetition.id,
+        });
+      }
+
+      console.log('Eventor and Live competitions matched successfully.');
+    }
   }
 
   private async findOLCompetition({

@@ -1,5 +1,5 @@
 import { eq } from 'drizzle-orm';
-import { LiveCompetitionsTable, OLCompetitionsTable } from 'lib/db/schema';
+import { LiveCompetitionsTable } from 'lib/db/schema';
 import type { LiveresultatApi } from 'lib/liveresultat/types';
 import { APIResponse, apiSingletons } from 'lib/singletons';
 import { parse } from 'date-fns';
@@ -22,7 +22,7 @@ export class SyncLiveCompetitionJob {
       );
 
       await this.insertLiveCompetition(competition);
-      await this.createOLCompetitionIfNotExists(competition);
+      await this.dispatchMatchEventorAndLive(competition);
 
       const classes = await this.api.Liveresultat.getclasses(
         this.competitionId,
@@ -50,18 +50,15 @@ export class SyncLiveCompetitionJob {
     }
   }
 
-  private createOLCompetitionIfNotExists(
+  private dispatchMatchEventorAndLive(
     competition: LiveresultatApi.competition,
   ) {
-    // ToDo:
-    // Check for EventorCompetitions and try to match them!
-    // Do this in a scheduled job instead of here
-    return this.api.Drizzle.db
-      .insert(OLCompetitionsTable)
-      .values({
+    return this.api.Queue.addJob({
+      name: 'match-eventor-and-live',
+      data: {
         liveId: competition.id,
-      })
-      .onConflictDoNothing();
+      },
+    });
   }
 
   private async insertLiveCompetition(

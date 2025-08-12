@@ -1,1 +1,1 @@
-export const enableNewTracking = false;
+export const enableNewTracking = __DEV__;

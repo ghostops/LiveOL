@@ -7,7 +7,7 @@ async function runJob() {
   await q.addJob({
     name: 'match-eventor-and-live',
     data: {
-      //competitionId: 33767,
+      liveId: 33766,
     },
   });
 

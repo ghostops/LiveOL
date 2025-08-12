@@ -60,5 +60,16 @@ export class SyncEventorCompetition {
       : await this.api.Drizzle.db
           .insert(EventorCompetitionsTable)
           .values({ eventorId: event.id, ...body });
+
+    await this.dispatchMatchEventorAndLive(event);
+  }
+
+  private dispatchMatchEventorAndLive(event: EventorEventItem) {
+    return this.api.Queue.addJob({
+      name: 'match-eventor-and-live',
+      data: {
+        eventorId: event.id,
+      },
+    });
   }
 }

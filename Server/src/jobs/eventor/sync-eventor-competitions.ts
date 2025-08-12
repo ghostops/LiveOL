@@ -9,12 +9,14 @@ export class SyncEventorCompetitions {
 
   constructor() {
     this.api = apiSingletons.createApiSingletons();
+    // ToDo: Provide country in job options
     this.scraper = new EventorScraper(URLS.eventorSweden, this.api.Redis);
   }
 
   async run() {
     try {
       const now = new Date();
+      // ToDo: Scrape more days!
       const end = addDays(now, 1);
       const data = await this.scraper.scrapeDateRange(now, end);
       await this.dispatchScrapeCompetition(data);

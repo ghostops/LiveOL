@@ -44,12 +44,13 @@ export class SyncLiveClassJob {
     }
   }
 
+  // The "hashedClassId" contains the competition ID so it will be unique
   private async insertResults(
-    classId: string,
+    hashedClassId: string,
     classResults: LiveresultatApi.getclassresults,
   ) {
     for (const result of classResults.results) {
-      const resultCompositeId = `${classId}:${result.name.replace(/ /g, '_')}:${result.club?.replace(/ /g, '_')}`;
+      const resultCompositeId = `${hashedClassId}:${result.name.replace(/ /g, '_')}:${result.club?.replace(/ /g, '_')}`;
       const hashedResultId = crypto
         .createHash('md5')
         .update(resultCompositeId)
@@ -60,7 +61,7 @@ export class SyncLiveClassJob {
         .from(LiveResultsTable)
         .where(
           and(
-            eq(LiveResultsTable.liveClassId, classId),
+            eq(LiveResultsTable.liveClassId, hashedClassId),
             eq(LiveResultsTable.liveResultId, hashedResultId),
           ),
         )
@@ -93,7 +94,7 @@ export class SyncLiveClassJob {
       if (!existing) {
         await this.api.Drizzle.db.insert(LiveResultsTable).values({
           ...body,
-          liveClassId: classId,
+          liveClassId: hashedClassId,
           liveResultId: hashedResultId,
         });
       } else {
@@ -102,7 +103,7 @@ export class SyncLiveClassJob {
           .set(body)
           .where(
             and(
-              eq(LiveResultsTable.liveClassId, classId),
+              eq(LiveResultsTable.liveClassId, hashedClassId),
               eq(LiveResultsTable.liveResultId, hashedResultId),
             ),
           );
