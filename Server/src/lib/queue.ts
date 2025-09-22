@@ -2,6 +2,8 @@ import { Job, Queue, Worker } from 'bullmq';
 import Redis from 'ioredis';
 import { SyncEventorCompetition } from 'jobs/eventor/sync-eventor-competition';
 import { SyncEventorCompetitions } from 'jobs/eventor/sync-eventor-competitions';
+import { SyncEventorResultsJob } from 'jobs/eventor/sync-eventor-results';
+import { SyncEventorSignupsJob } from 'jobs/eventor/sync-eventor-signups';
 import { SyncLiveClassJob } from 'jobs/liveresultat/sync-live-class';
 import { SyncLiveCompetitionJob } from 'jobs/liveresultat/sync-live-competition';
 import { SyncLiveCompetitionsJob } from 'jobs/liveresultat/sync-live-competitions';
@@ -92,6 +94,12 @@ export class OLQueue {
         break;
       case 'match-eventor-and-live':
         new MatchEventorAndLiveJob(job.data.liveId, job.data.eventorId).run();
+        break;
+      case 'sync-eventor-signups':
+        new SyncEventorSignupsJob(job.data.eventorId).run();
+        break;
+      case 'sync-eventor-results':
+        new SyncEventorResultsJob(job.data.eventorId).run();
         break;
       default:
         console.warn(`Unknown job type: ${job.name}`);

@@ -8,6 +8,7 @@ import { OLOrganizationsTable } from './ol_organizations';
 
 export const EventorResultsTable = pgTable('eventor_results', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  resultId: varchar({ length: 255 }).notNull().unique(),
   eventorClassId: varchar({ length: 255 }).notNull(),
   eventorId: varchar({ length: 255 }).notNull(),
   place: varchar({ length: 255 }),
@@ -18,6 +19,7 @@ export const EventorResultsTable = pgTable('eventor_results', {
   time: integer(),
   timePlus: integer(),
   status: varchar({ length: 255 }),
+  distanceInMeters: integer(),
   ...commonFields,
 });
 
