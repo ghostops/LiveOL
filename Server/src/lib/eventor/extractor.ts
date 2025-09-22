@@ -59,21 +59,26 @@ export class EventorExtractor {
     const trim = (str: string | undefined) =>
       str ? str.trim().toLowerCase() : '';
 
+    // These dates need to match up correctly based on TZ...
+    // Currently it is not working!!
     const compDate = parse(comp.date, 'yyyy-MM-dd', new Date());
     const itemDate = item.date
       ? parse(item.date, 'yyyy-MM-dd', new Date())
       : null;
 
+    console.log(compDate, itemDate);
     if (itemDate && isSameDay(compDate, itemDate)) {
       weight += 1;
       weightBy.push('date');
     }
 
+    console.log(comp.name, item.name);
     if (trim(item?.name) === trim(comp?.name)) {
       weight += 1;
       weightBy.push('name');
     }
 
+    console.log(comp.organizer, item.club);
     if (!!comp.organizer && trim(item?.club) === trim(comp.organizer)) {
       weight += 1;
       weightBy.push('club');

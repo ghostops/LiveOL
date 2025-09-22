@@ -276,6 +276,8 @@ export class EventResponseParser {
       competitionType:
         eventorMetadataInformationI18n[bodyLanguage].competitionType,
       status: eventorMetadataInformationI18n[bodyLanguage].status,
+      ageClasses: eventorMetadataInformationI18n[bodyLanguage].ageClasses,
+      openClasses: eventorMetadataInformationI18n[bodyLanguage].openClasses,
     });
 
     const mappedInfoData: Partial<EventorEventItem> = {};
@@ -360,6 +362,7 @@ export class EventResponseParser {
       club: mappedInfoData.club,
       // @ts-expect-error nullcheck
       district: mappedInfoData.district,
+      date: mappedInfoData.date,
       competitionDistance: parseCompetitionDistance(
         // @ts-expect-error nullcheck
         mappedInfoData.competitionDistance,
@@ -371,6 +374,14 @@ export class EventResponseParser {
       // @ts-expect-error nullcheck
       clubLogoUrl: parseClubLogo(this.base, mappedInfoData.clubLogoUrl),
       url: this.eventUrl,
+      ageClasses:
+        (mappedInfoData.ageClasses as unknown as string)
+          ?.split(', ')
+          .map(c => c.trim()) || [],
+      openClasses:
+        (mappedInfoData.openClasses as unknown as string)
+          ?.split(', ')
+          .map(c => c.trim()) || [],
     };
   };
 }
@@ -386,7 +397,9 @@ type EventorMetadataInformationKeys =
   | 'district'
   | 'competitionDistance'
   | 'competitionType'
-  | 'status';
+  | 'status'
+  | 'ageClasses'
+  | 'openClasses';
 
 const determineLanguage = (title: string): EventorI18n => {
   if (title.toLowerCase().includes('tävlingsinformation')) {
@@ -410,6 +423,8 @@ const eventorMetadataInformationI18n: Record<
     competitionDistance: 'Tävlingsdistans',
     competitionType: 'Gren',
     status: 'Status',
+    ageClasses: 'Åldersklasser',
+    openClasses: 'Öppna klasser',
   },
   en: {
     name: 'Event',
@@ -421,5 +436,7 @@ const eventorMetadataInformationI18n: Record<
     competitionDistance: 'Race distance',
     competitionType: 'Discipline',
     status: 'Status',
+    ageClasses: 'Age classes', //unconfirmed
+    openClasses: 'Open classes', //unconfirmed
   },
 };

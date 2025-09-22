@@ -232,10 +232,14 @@ export class MatchEventorAndLiveJob {
     liveCompetition: typeof LiveCompetitionsTable.$inferSelect,
     eventorCompetition: typeof EventorCompetitionsTable.$inferSelect,
   ) {
+    // Helper to remove special characters and normalize strings
+    const normalize = (str: string) =>
+      str.replace(/[^a-zA-Z0-9 ]/g, '').toLowerCase();
+
     return EventorExtractor.weighItem(
       {
-        name: liveCompetition.name,
-        organizer: liveCompetition.organizer,
+        name: normalize(liveCompetition.name),
+        organizer: normalize(liveCompetition.organizer),
         date:
           liveCompetition.date instanceof Date
             ? format(liveCompetition.date, 'yyyy-MM-dd')
@@ -243,13 +247,13 @@ export class MatchEventorAndLiveJob {
       },
       {
         id: String(eventorCompetition.id),
-        name: eventorCompetition.name,
+        name: normalize(eventorCompetition.name),
         date: eventorCompetition.date
           ? eventorCompetition.date instanceof Date
             ? format(eventorCompetition.date, 'yyyy-MM-dd')
             : String(eventorCompetition.date)
           : undefined,
-        club: eventorCompetition.organizer,
+        club: normalize(eventorCompetition.organizer),
       },
     );
   }

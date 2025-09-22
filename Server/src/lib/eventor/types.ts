@@ -38,6 +38,8 @@ export interface EventorEventItem extends EventorEventBase {
   }[];
   signups: number;
   url: string;
+  ageClasses: string[];
+  openClasses: string[];
 }
 
 export interface EventorListItem extends EventorEventBase {

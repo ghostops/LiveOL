@@ -11,7 +11,6 @@ export const EventorClassesTable = pgTable('eventor_classes', {
   eventorClassId: varchar({ length: 255 }).notNull().unique(),
   eventorId: varchar({ length: 255 }).notNull(),
   name: varchar({ length: 255 }).notNull(),
-  distanceInMeters: integer(),
   ...commonFields,
 });
 

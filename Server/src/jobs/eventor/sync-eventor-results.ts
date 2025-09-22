@@ -6,6 +6,7 @@ import { APIResponse, apiSingletons } from 'lib/singletons';
 import crypto from 'crypto';
 import { eq } from 'drizzle-orm';
 import { EventorResultsTable } from 'lib/db/schema';
+import { snakeCase } from 'lodash';
 
 export class SyncEventorResultsJob {
   private scraper: EventorResultsScraper;
@@ -22,6 +23,10 @@ export class SyncEventorResultsJob {
     for (const result of results) {
       await this.insertEventorResult(result);
     }
+
+    console.log(
+      `Eventor results for event ${this.eventorId} synced successfully.`,
+    );
   }
 
   private async insertEventorResult(result: EventorResult) {
@@ -33,7 +38,7 @@ export class SyncEventorResultsJob {
 
     const body = {
       resultId: hashedSignupId,
-      eventorClassId: result.className,
+      eventorClassId: `${this.eventorId}-${snakeCase(result.className)}`,
       eventorId: this.eventorId,
       place: result.position,
       name: result.name,

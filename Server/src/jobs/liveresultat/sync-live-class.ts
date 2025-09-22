@@ -117,6 +117,9 @@ export class SyncLiveClassJob {
     liveResultId: string,
     result: LiveresultatApi.result,
   ) {
+    if (!result.splits) {
+      return;
+    }
     const splits = Object.entries(result.splits).reduce(
       (root, [key, value]) => {
         const keyWithoutUnderscore = key.includes('_')

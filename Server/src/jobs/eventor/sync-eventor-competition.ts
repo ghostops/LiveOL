@@ -1,8 +1,11 @@
 import { eq } from 'drizzle-orm';
-import { EventorCompetitionsTable } from 'lib/db/schema';
+import { EventorClassesTable, EventorCompetitionsTable } from 'lib/db/schema';
 import { EventorScraper } from 'lib/eventor/scraper';
 import { EventorEventItem } from 'lib/eventor/types';
 import { APIResponse, apiSingletons, URLS } from 'lib/singletons';
+import { snakeCase } from 'lodash';
+import { parse } from 'date-fns';
+import { sv } from 'date-fns/locale';
 
 export class SyncEventorCompetition {
   private api: APIResponse;
@@ -22,6 +25,10 @@ export class SyncEventorCompetition {
       const data = await this.scraper.scrapeEvent(this.eventorId);
 
       await this.insertEventorCompetition(data);
+
+      for (const cls of data.ageClasses.concat(data.openClasses)) {
+        await this.insertEventorClass(cls);
+      }
 
       console.log(`Eventor competition ${data.id} synced successfully.`);
     } catch (error) {
@@ -44,6 +51,12 @@ export class SyncEventorCompetition {
       organizerId,
       notification: event.info,
       links: event.links,
+      date: event.date
+        ? //TODO: Make this UTC
+          parse(event.date, "EEEE d MMMM yyyy 'klockan' HH:mm", new Date(), {
+            locale: sv,
+          })
+        : undefined,
     };
 
     const [existing] = await this.api.Drizzle.db
@@ -62,6 +75,23 @@ export class SyncEventorCompetition {
           .values({ eventorId: event.id, ...body });
 
     await this.dispatchMatchEventorAndLive(event);
+    await this.dispatchOtherDataSyncs(event);
+  }
+
+  private async insertEventorClass(cls: string) {
+    const eventorClassId = `${this.eventorId}-${snakeCase(cls.toLowerCase())}`;
+
+    const [existing] = await this.api.Drizzle.db
+      .select()
+      .from(EventorClassesTable)
+      .where(eq(EventorClassesTable.eventorClassId, eventorClassId))
+      .limit(1);
+
+    if (!existing) {
+      await this.api.Drizzle.db
+        .insert(EventorClassesTable)
+        .values({ eventorClassId, eventorId: this.eventorId, name: cls });
+    }
   }
 
   private dispatchMatchEventorAndLive(event: EventorEventItem) {
@@ -71,5 +101,23 @@ export class SyncEventorCompetition {
         eventorId: event.id,
       },
     });
+  }
+
+  private dispatchOtherDataSyncs(event: EventorEventItem) {
+    const a = this.api.Queue.addJob({
+      name: 'sync-eventor-signups',
+      data: {
+        eventorId: event.id,
+      },
+    });
+
+    const b = this.api.Queue.addJob({
+      name: 'sync-eventor-results',
+      data: {
+        eventorId: event.id,
+      },
+    });
+
+    return Promise.all([a, b]);
   }
 }

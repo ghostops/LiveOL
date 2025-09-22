@@ -6,6 +6,7 @@ import {
 } from 'lib/eventor/scrapers/signups';
 import { APIResponse, apiSingletons } from 'lib/singletons';
 import crypto from 'crypto';
+import { snakeCase } from 'lodash';
 
 export class SyncEventorSignupsJob {
   private api: APIResponse;
@@ -22,6 +23,10 @@ export class SyncEventorSignupsJob {
     for (const signup of results) {
       await this.insertEventorSignup(signup);
     }
+
+    console.log(
+      `Eventor signups for event ${this.eventorId} synced successfully.`,
+    );
   }
 
   private async insertEventorSignup(signup: EventorSignup) {
@@ -33,7 +38,7 @@ export class SyncEventorSignupsJob {
 
     const body = {
       signupId: hashedSignupId,
-      eventorClassId: signup.className,
+      eventorClassId: `${this.eventorId}-${snakeCase(signup.className)}`,
       eventorId: this.eventorId,
       name: signup.name,
       organization: signup.club,

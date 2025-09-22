@@ -69,7 +69,7 @@ export class EventorScraper {
       if (!data) {
         data = (await this.client.get(url)).data;
 
-        await this.cache.set(key, data, { ttlMs: ms('12 hours') });
+        await this.cache.set(key, data, { ttlMs: ms('1 hour') });
       }
     }
 
