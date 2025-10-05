@@ -85,7 +85,7 @@ export class SyncLiveClassJob {
         club: result.club,
         endAt: new Date(),
         startAt: new Date(),
-        progress: !isEmpty(result.progress) ? result.progress : 0,
+        progress: !isEmpty(result.progress) ? Math.round(result.progress) : 0,
         place: result.place ? String(result.place) : null,
         status: !isEmpty(result.status) ? result.status : null,
         updatedAt: new Date(),

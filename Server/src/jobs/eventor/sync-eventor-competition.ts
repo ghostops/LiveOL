@@ -4,7 +4,7 @@ import { EventorScraper } from 'lib/eventor/scraper';
 import { EventorEventItem } from 'lib/eventor/types';
 import { APIResponse, apiSingletons, URLS } from 'lib/singletons';
 import { snakeCase } from 'lodash';
-import { Locale, parse } from 'date-fns';
+import { isAfter, Locale, parse } from 'date-fns';
 import { sv } from 'date-fns/locale';
 import { fromZonedTime } from 'date-fns-tz';
 
@@ -47,13 +47,15 @@ export class SyncEventorCompetition {
       }
     }
 
+    const utcDate = this.parseDateToUtc(event.date, 'Europe/Stockholm', sv);
+
     const body = {
       name: event.name,
       organizer: event.club,
       organizerId,
       notification: event.info,
       links: event.links,
-      date: this.parseDateToUtc(event.date, 'Europe/Stockholm', sv),
+      date: utcDate,
     };
 
     const [existing] = await this.api.Drizzle.db
@@ -72,7 +74,7 @@ export class SyncEventorCompetition {
           .values({ eventorId: event.id, ...body });
 
     await this.dispatchMatchEventorAndLive(event);
-    await this.dispatchOtherDataSyncs(event);
+    await this.dispatchOtherDataSyncs(event, utcDate);
   }
 
   private async insertEventorClass(cls: string) {
@@ -100,29 +102,42 @@ export class SyncEventorCompetition {
     });
   }
 
-  private dispatchOtherDataSyncs(event: EventorEventItem) {
-    const a = this.api.Queue.addJob({
-      name: 'sync-eventor-signups',
-      data: {
-        eventorId: event.id,
-      },
-    });
+  private dispatchOtherDataSyncs(
+    event: EventorEventItem,
+    utcDate: Date | null,
+  ) {
+    const syncs = [];
 
-    const b = this.api.Queue.addJob({
-      name: 'sync-eventor-results',
-      data: {
-        eventorId: event.id,
-      },
-    });
+    syncs.push(
+      this.api.Queue.addJob({
+        name: 'sync-eventor-signups',
+        data: {
+          eventorId: event.id,
+        },
+      }),
+    );
 
-    const c = this.api.Queue.addJob({
-      name: 'match-eventor-and-organizer',
-      data: {
-        eventorId: this.eventorId,
-      },
-    });
+    if (utcDate && isAfter(new Date(), utcDate)) {
+      syncs.push(
+        this.api.Queue.addJob({
+          name: 'sync-eventor-results',
+          data: {
+            eventorId: event.id,
+          },
+        }),
+      );
+    }
 
-    return Promise.all([a, b, c]);
+    syncs.push(
+      this.api.Queue.addJob({
+        name: 'match-eventor-and-organizer',
+        data: {
+          eventorId: event.id,
+        },
+      }),
+    );
+
+    return Promise.all(syncs);
   }
 
   private parseDateToUtc(
@@ -130,16 +145,35 @@ export class SyncEventorCompetition {
     timezone: string,
     locale: Locale,
   ) {
-    if (!dateString) return undefined;
+    if (!dateString) return null;
 
-    const localDate = parse(
-      dateString,
-      "EEEE d MMMM yyyy 'klockan' HH:mm",
-      new Date(),
-      {
-        locale,
-      },
-    );
+    // Try multiple formats until one succeeds
+    const formats = [
+      'EEEE d MMMM yyyy', // söndag 5 oktober 2025 ELLER måndag 16 juni 2025 - söndag 26 oktober 2025
+      "EEEE d MMMM yyyy 'klockan' HH:mm", // söndag 3 augusti 2025 klockan 10:00 ELLER söndag 5 oktober 2025 klockan 11:00 - 12:30
+    ];
+
+    let localDate: Date | null = null;
+
+    for (const format of formats) {
+      try {
+        if (dateString.includes(' - ')) {
+          dateString = dateString.split(' - ')[0]!.trim();
+        }
+        const parsed = parse(dateString, format, new Date(), { locale });
+        if (!isNaN(parsed.getTime())) {
+          localDate = parsed;
+          break;
+        }
+      } catch {
+        // Ignore parse errors and try next format
+      }
+    }
+
+    if (!localDate) {
+      console.warn(`Could not parse date string: "${dateString}"`);
+      return null;
+    }
 
     const utcDate = fromZonedTime(localDate, timezone);
 

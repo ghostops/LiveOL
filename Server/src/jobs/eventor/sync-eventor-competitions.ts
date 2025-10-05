@@ -1,4 +1,4 @@
-import { addDays } from 'date-fns';
+import { addDays, parse } from 'date-fns';
 import { EventorScraper } from 'lib/eventor/scraper';
 import { EventorListItem } from 'lib/eventor/types';
 import { APIResponse, apiSingletons, URLS } from 'lib/singletons';
@@ -7,7 +7,10 @@ export class SyncEventorCompetitions {
   private api: APIResponse;
   private scraper: EventorScraper;
 
-  constructor() {
+  constructor(
+    private startDate?: string,
+    private endDate?: string,
+  ) {
     this.api = apiSingletons.createApiSingletons();
     // ToDo: Provide country in job options
     this.scraper = new EventorScraper(URLS.eventorSweden, this.api.Redis);
@@ -15,10 +18,13 @@ export class SyncEventorCompetitions {
 
   async run() {
     try {
-      const now = new Date();
-      // ToDo: Scrape more days!
-      const end = addDays(now, 1);
-      const data = await this.scraper.scrapeDateRange(now, end);
+      const start = this.startDate
+        ? parse(this.startDate, 'yyyy-MM-dd', new Date())
+        : new Date();
+      const end = this.endDate
+        ? parse(this.endDate, 'yyyy-MM-dd', new Date())
+        : addDays(start, 1);
+      const data = await this.scraper.scrapeDateRange(start, end);
       await this.dispatchScrapeCompetition(data);
     } catch (error) {
       console.error('Error syncing eventor competitions:', error);

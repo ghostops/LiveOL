@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import * as cheerio from 'cheerio';
 
 export interface EventorResult {
@@ -14,7 +14,7 @@ export interface EventorResult {
 export class EventorResultsScraper {
   private readonly url: string;
 
-  constructor(eventId: string) {
+  constructor(private eventId: string) {
     this.url = `https://eventor.orientering.se/Events/ResultList?eventId=${eventId}&groupBy=EventClass`;
   }
 
@@ -58,8 +58,21 @@ export class EventorResultsScraper {
       });
 
       return results;
-    } catch (error) {
-      console.error('Failed to fetch or parse Eventor results:', error);
+    } catch (error: AxiosError | unknown) {
+      if (
+        (error as AxiosError).response &&
+        (error as AxiosError).response?.status === 404
+      ) {
+        console.warn(
+          `Eventor event results with ID ${this.eventId} not found (404).`,
+        );
+        return [];
+      }
+      console.error(
+        this.eventId,
+        'Failed to fetch or parse Eventor results:',
+        error,
+      );
       return [];
     }
   }

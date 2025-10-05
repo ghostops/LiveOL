@@ -80,7 +80,7 @@ export class OLQueue {
   private async handleJob(job: Job) {
     switch (job.name) {
       case 'sync-live-competitions':
-        new SyncLiveCompetitionsJob().run();
+        new SyncLiveCompetitionsJob(job.data.startDate, job.data.endDate).run();
         break;
       case 'sync-live-competition':
         new SyncLiveCompetitionJob(job.data.competitionId).run();
@@ -89,7 +89,7 @@ export class OLQueue {
         new SyncLiveClassJob(job.data.competitionId, job.data.className).run();
         break;
       case 'sync-eventor-competitions':
-        new SyncEventorCompetitions().run();
+        new SyncEventorCompetitions(job.data.startDate, job.data.endDate).run();
         break;
       case 'sync-eventor-competition':
         new SyncEventorCompetition(job.data.eventorId).run();

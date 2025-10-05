@@ -39,7 +39,7 @@ export class MatchLiveAndOrganizer {
           levenshtein(
             org.liveName.toLowerCase().trim(),
             liveCompetition.organizer.toLowerCase().trim(),
-          ) <= 3
+          ) <= 2
         );
       }
 
@@ -48,7 +48,7 @@ export class MatchLiveAndOrganizer {
           levenshtein(
             org.eventorName.toLowerCase().trim(),
             liveCompetition.organizer.toLowerCase().trim(),
-          ) <= 3
+          ) <= 2
         );
       }
 
@@ -67,7 +67,7 @@ export class MatchLiveAndOrganizer {
       console.log(
         `Inserted new organizer with liveName "${liveCompetition.organizer}" and id ${matchedOrganizer.id}.`,
       );
-    } else {
+    } else if (!matchedOrganizer.liveName) {
       await this.api.Drizzle.db
         .update(OLOrganizationsTable)
         .set({ liveName: liveCompetition.organizer })

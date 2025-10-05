@@ -88,8 +88,6 @@ export class MatchEventorAndLiveJob {
             liveId: liveCompetition.id,
           })
           .onConflictDoNothing();
-
-        console.log('Inserted only live competition.');
       }
     }
 
@@ -162,8 +160,6 @@ export class MatchEventorAndLiveJob {
             liveId: undefined,
           })
           .onConflictDoNothing();
-
-        console.log('Inserted only live competition.');
       }
     }
 

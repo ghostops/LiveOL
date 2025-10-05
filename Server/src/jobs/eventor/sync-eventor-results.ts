@@ -104,6 +104,8 @@ export class SyncEventorResultsJob {
   private eventorDistanceToMeters(eventorDistance: string): number | undefined {
     if (!eventorDistance) return undefined;
     const meters = eventorDistance.replace(/\s+/g, '').slice(0, -1);
-    return Number(meters);
+    const asNumber = Number(meters);
+    if (isNaN(asNumber)) return undefined;
+    return asNumber;
   }
 }
