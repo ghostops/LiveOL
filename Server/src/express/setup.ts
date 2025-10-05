@@ -18,11 +18,19 @@ import {
   updateTrackedRunner,
 } from 'controllers/track';
 import { createConfig, DependsOnMethod, Routing } from 'express-zod-api';
-import { getCompetitions as getCompetitionsV2 } from 'controllers/v2/competitions';
+import {
+  getCompetitions as getCompetitionsV2,
+  getCompetition as getCompetitionV2,
+} from 'controllers/v2/competitions';
+import { getEnv } from 'lib/helpers/env';
+import {
+  getOrganization,
+  getOrganizationCompetitions,
+} from 'controllers/v2/organizations';
 
 export const config = createConfig({
   http: { listen: 3000 },
-  cors: false,
+  cors: getEnv('NODE_ENV', true) === 'development',
   startupLogo: false,
 });
 
@@ -48,4 +56,8 @@ export const routing: Routing = {
   }),
 
   'v2/competitions': getCompetitionsV2,
+  'v2/competitions/:id': getCompetitionV2,
+
+  'v2/organizations/:id': getOrganization,
+  'v2/organizations/:id/competitions': getOrganizationCompetitions,
 };

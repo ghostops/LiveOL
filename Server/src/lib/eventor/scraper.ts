@@ -26,7 +26,7 @@ export class EventorScraper {
     const start = format(startDate, 'yyyy-MM-dd');
     const end = format(endDate, 'yyyy-MM-dd');
 
-    const url = `${this.baseUrl}/Events?startDate=${start}&endDate=${end}`;
+    const url = `${this.baseUrl}/Events?startDate=${start}&endDate=${end}&competitionTypes=level1,level2,level3`;
 
     let data: string;
 
