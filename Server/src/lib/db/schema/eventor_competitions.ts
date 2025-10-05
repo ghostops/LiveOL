@@ -19,7 +19,7 @@ export const EventorCompetitionsTable = pgTable('eventor_competitions', {
   eventorId: varchar({ length: 255 }).notNull(),
   name: varchar({ length: 255 }).notNull(),
   organizer: varchar({ length: 255 }).notNull(),
-  organizerId: integer(),
+  olOrganizerId: integer(),
   status: varchar({ length: 255 }),
   date: timestamp(),
   distance: varchar({ length: 255 }),

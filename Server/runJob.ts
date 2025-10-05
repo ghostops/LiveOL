@@ -4,12 +4,12 @@ import { OLQueue } from 'lib/queue';
 const q = new OLQueue('localhost', 6379, process.env.REDIS_PASSWORD);
 
 async function runJob() {
-  await q.addJob({
-    name: 'sync-eventor-competition',
-    data: {
-      eventorId: 49078,
-    },
-  });
+  // await q.addJob({
+  //   name: 'sync-eventor-competition',
+  //   data: {
+  //     eventorId: 49078,
+  //   },
+  // });
 
   await q.addJob({
     name: 'sync-live-competition',
@@ -17,6 +17,20 @@ async function runJob() {
       competitionId: 34169,
     },
   });
+
+  // await q.addJob({
+  //   name: 'match-live-and-organizer',
+  //   data: {
+  //     competitionId: 34169,
+  //   },
+  // });
+
+  // await q.addJob({
+  //   name: 'match-eventor-and-organizer',
+  //   data: {
+  //     eventorId: '49078',
+  //   },
+  // });
 
   process.exit(0);
 }

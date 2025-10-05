@@ -1,5 +1,5 @@
 import { format } from 'date-fns';
-import { eq, or } from 'drizzle-orm';
+import { eq, or, isNull } from 'drizzle-orm';
 import {
   EventorCompetitionsTable,
   LiveCompetitionsTable,
@@ -33,36 +33,48 @@ export class MatchEventorAndLiveJob {
         throw new Error(`Live competition with ID ${this.liveId} not found.`);
       }
 
-      // ToDo: Add where based on relationship with OLCompetition
       const eventorCompetitions = await this.api.Drizzle.db
         .select()
-        .from(EventorCompetitionsTable);
+        .from(OLCompetitionsTable)
+        .where(isNull(OLCompetitionsTable.liveId))
+        .leftJoin(
+          EventorCompetitionsTable,
+          eq(OLCompetitionsTable.eventorId, EventorCompetitionsTable.eventorId),
+        );
 
       let matchCount = 0;
 
-      for (const eventorCompetition of eventorCompetitions) {
-        const weight = this.getWeight(liveCompetition, eventorCompetition);
+      for (const row of eventorCompetitions) {
+        if (!row.eventor_competitions) {
+          continue;
+        }
+
+        const weight = this.getWeight(
+          liveCompetition,
+          row.eventor_competitions,
+        );
         const match = weight.weight >= this.threshold;
 
-        if (match) {
+        if (match && matchCount === 0) {
           matchCount++;
 
           const existing = await this.findOLCompetition({
             liveId: liveCompetition.id,
-            eventorId: eventorCompetition.eventorId,
+            eventorId: row.eventor_competitions.eventorId,
           });
 
-          if (existing) {
-            await this.api.Drizzle.db.update(OLCompetitionsTable).set({
-              eventorId: eventorCompetition.eventorId,
-              liveId: liveCompetition.id,
-            });
-          } else {
-            await this.api.Drizzle.db.insert(OLCompetitionsTable).values({
-              eventorId: eventorCompetition.eventorId,
-              liveId: liveCompetition.id,
-            });
+          if (existing.length) {
+            for (const ex of existing) {
+              await this.api.Drizzle.db
+                .delete(OLCompetitionsTable)
+                .where(eq(OLCompetitionsTable.id, ex.id));
+            }
           }
+
+          await this.api.Drizzle.db.insert(OLCompetitionsTable).values({
+            eventorId: row.eventor_competitions.eventorId,
+            liveId: liveCompetition.id,
+          });
 
           console.log('Eventor and Live competitions matched successfully.');
         }
@@ -95,36 +107,48 @@ export class MatchEventorAndLiveJob {
         );
       }
 
-      // ToDo: Add where based on relationship with OLCompetition
       const liveCompetitions = await this.api.Drizzle.db
         .select()
-        .from(LiveCompetitionsTable);
+        .from(OLCompetitionsTable)
+        .where(isNull(OLCompetitionsTable.eventorId))
+        .leftJoin(
+          LiveCompetitionsTable,
+          eq(OLCompetitionsTable.liveId, LiveCompetitionsTable.id),
+        );
 
       let matchCount = 0;
 
-      for (const liveCompetition of liveCompetitions) {
-        const weight = this.getWeight(liveCompetition, eventorCompetition);
+      for (const row of liveCompetitions) {
+        if (!row.live_competitions) {
+          continue;
+        }
+
+        const weight = this.getWeight(
+          row.live_competitions,
+          eventorCompetition,
+        );
         const match = weight.weight >= this.threshold;
 
-        if (match) {
+        if (match && matchCount === 0) {
           matchCount++;
 
           const existing = await this.findOLCompetition({
-            liveId: liveCompetition.id,
+            liveId: row.live_competitions.id,
             eventorId: eventorCompetition.eventorId,
           });
 
-          if (existing) {
-            await this.api.Drizzle.db.update(OLCompetitionsTable).set({
-              eventorId: eventorCompetition.eventorId,
-              liveId: liveCompetition.id,
-            });
-          } else {
-            await this.api.Drizzle.db.insert(OLCompetitionsTable).values({
-              eventorId: eventorCompetition.eventorId,
-              liveId: liveCompetition.id,
-            });
+          if (existing.length) {
+            for (const ex of existing) {
+              await this.api.Drizzle.db
+                .delete(OLCompetitionsTable)
+                .where(eq(OLCompetitionsTable.id, ex.id));
+            }
           }
+
+          await this.api.Drizzle.db.insert(OLCompetitionsTable).values({
+            eventorId: eventorCompetition.eventorId,
+            liveId: row.live_competitions.id,
+          });
 
           console.log('Eventor and Live competitions matched successfully.');
         }
@@ -216,14 +240,13 @@ export class MatchEventorAndLiveJob {
     }
 
     if (whereClause === null) {
-      return undefined;
+      return [];
     }
 
-    const [existing] = await this.api.Drizzle.db
+    const existing = await this.api.Drizzle.db
       .select()
       .from(OLCompetitionsTable)
-      .where(whereClause)
-      .limit(1);
+      .where(whereClause);
 
     return existing;
   }

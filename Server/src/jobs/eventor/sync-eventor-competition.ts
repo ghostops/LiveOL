@@ -4,8 +4,9 @@ import { EventorScraper } from 'lib/eventor/scraper';
 import { EventorEventItem } from 'lib/eventor/types';
 import { APIResponse, apiSingletons, URLS } from 'lib/singletons';
 import { snakeCase } from 'lodash';
-import { parse } from 'date-fns';
+import { Locale, parse } from 'date-fns';
 import { sv } from 'date-fns/locale';
+import { fromZonedTime } from 'date-fns-tz';
 
 export class SyncEventorCompetition {
   private api: APIResponse;
@@ -45,18 +46,14 @@ export class SyncEventorCompetition {
         organizerId = Number(id);
       }
     }
+
     const body = {
       name: event.name,
       organizer: event.club,
       organizerId,
       notification: event.info,
       links: event.links,
-      date: event.date
-        ? //TODO: Make this UTC
-          parse(event.date, "EEEE d MMMM yyyy 'klockan' HH:mm", new Date(), {
-            locale: sv,
-          })
-        : undefined,
+      date: this.parseDateToUtc(event.date, 'Europe/Stockholm', sv),
     };
 
     const [existing] = await this.api.Drizzle.db
@@ -118,6 +115,34 @@ export class SyncEventorCompetition {
       },
     });
 
-    return Promise.all([a, b]);
+    const c = this.api.Queue.addJob({
+      name: 'match-eventor-and-organizer',
+      data: {
+        eventorId: this.eventorId,
+      },
+    });
+
+    return Promise.all([a, b, c]);
+  }
+
+  private parseDateToUtc(
+    dateString: string = '',
+    timezone: string,
+    locale: Locale,
+  ) {
+    if (!dateString) return undefined;
+
+    const localDate = parse(
+      dateString,
+      "EEEE d MMMM yyyy 'klockan' HH:mm",
+      new Date(),
+      {
+        locale,
+      },
+    );
+
+    const utcDate = fromZonedTime(localDate, timezone);
+
+    return utcDate;
   }
 }

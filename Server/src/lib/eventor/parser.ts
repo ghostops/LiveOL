@@ -306,10 +306,17 @@ export class EventResponseParser {
 
           return;
         }
-        // ToDo: Propper fix for multiple clubs
+        // Hacky special case for multiple clubs
         if (infoMap[title].includes('clubs') && !mappedInfoData.club) {
-          const club = 'Multiple clubs';
-          mappedInfoData.club = club;
+          const clubA = _.get(element, 'children.3.children.0.children.1.data');
+          const clubB = _.get(element, 'children.3.children.2.children.1.data');
+          const clubC = _.get(element, 'children.3.children.4.children.1.data');
+          const clubD = _.get(element, 'children.3.children.6.children.1.data');
+          const clubs = [clubA, clubB, clubC, clubD]
+            .filter(c => !!c)
+            .join(', ');
+
+          mappedInfoData.club = clubs;
         }
 
         // @ts-expect-error key-types

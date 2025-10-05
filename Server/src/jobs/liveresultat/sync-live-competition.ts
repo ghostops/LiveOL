@@ -3,7 +3,6 @@ import { LiveCompetitionsTable } from 'lib/db/schema';
 import type { LiveresultatApi } from 'lib/liveresultat/types';
 import { APIResponse, apiSingletons } from 'lib/singletons';
 import { parse } from 'date-fns';
-import { fromZonedTime } from 'date-fns-tz';
 
 export class SyncLiveCompetitionJob {
   private api: APIResponse;
@@ -67,7 +66,7 @@ export class SyncLiveCompetitionJob {
     const body = {
       name: competition.name,
       organizer: competition.organizer,
-      date: this.parseDateToUtc(competition.date, competition.timediff),
+      date: this.parseDateToUtc(competition.date),
       isPublic: true,
       updatedAt: new Date(),
     };
@@ -86,20 +85,34 @@ export class SyncLiveCompetitionJob {
       : await this.api.Drizzle.db
           .insert(LiveCompetitionsTable)
           .values({ id: competition.id, ...body });
+
+    await this.dispatchSyncOrganizer();
   }
 
-  parseDateToUtc(dateString: string, timediff?: number) {
+  parseDateToUtc(dateString: string) {
     const format = 'yyyy-MM-dd';
     const parsed = parse(dateString, format, new Date());
-    if (timediff && timediff > 0) {
-      parsed.setHours(parsed.getHours() + timediff);
-    }
-    if (timediff && timediff < 0) {
-      parsed.setHours(parsed.getHours() - timediff);
-    }
+    // Timediff has nothing to do with the date, just the time of the runners!
+    // if (timediff && timediff > 0) {
+    //   parsed.setHours(parsed.getHours() + timediff);
+    // }
+    // if (timediff && timediff < 0) {
+    //   parsed.setHours(parsed.getHours() - timediff);
+    // }
 
-    const utcDate = fromZonedTime(parsed, 'Europe/Stockholm');
+    // Neither do this, it gives wrong results
+    // const utcDate = fromZonedTime(parsed, 'Europe/Stockholm');
 
-    return utcDate;
+    // The date given IS universal, so just return it as is.
+    return parsed;
+  }
+
+  private dispatchSyncOrganizer() {
+    return this.api.Queue.addJob({
+      name: 'match-live-and-organizer',
+      data: {
+        competitionId: this.competitionId,
+      },
+    });
   }
 }
