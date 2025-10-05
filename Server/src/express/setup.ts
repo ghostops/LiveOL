@@ -18,6 +18,7 @@ import {
   updateTrackedRunner,
 } from 'controllers/track';
 import { createConfig, DependsOnMethod, Routing } from 'express-zod-api';
+import { getCompetitions as getCompetitionsV2 } from 'controllers/v2/competitions';
 
 export const config = createConfig({
   http: { listen: 3000 },
@@ -45,4 +46,6 @@ export const routing: Routing = {
     get: getTrackedRunner,
     put: updateTrackedRunner,
   }),
+
+  'v2/competitions': getCompetitionsV2,
 };
