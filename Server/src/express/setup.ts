@@ -27,6 +27,7 @@ import {
   getOrganization,
   getOrganizationCompetitions,
 } from 'controllers/v2/organizations';
+import { getRunnersForCompetition } from 'controllers/v2/runners';
 
 export const config = createConfig({
   http: { listen: 3000 },
@@ -57,6 +58,7 @@ export const routing: Routing = {
 
   'v2/competitions': getCompetitionsV2,
   'v2/competitions/:id': getCompetitionV2,
+  'v2/competitions/:id/runners': getRunnersForCompetition,
 
   'v2/organizations/:id': getOrganization,
   'v2/organizations/:id/competitions': getOrganizationCompetitions,

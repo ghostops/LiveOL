@@ -33,7 +33,7 @@ export class SyncLiveCompetitionJob {
         `Competition ${competition.name} (${this.competitionId}) synced successfully.`,
       );
     } catch (error) {
-      console.error('Error syncing competitions:', error);
+      console.error('Error syncing competition:', error, this.competitionId);
     }
   }
 

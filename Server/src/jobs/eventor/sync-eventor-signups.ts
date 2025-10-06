@@ -7,6 +7,7 @@ import {
 import { APIResponse, apiSingletons } from 'lib/singletons';
 import crypto from 'crypto';
 import { snakeCase } from 'lodash';
+import { matchEventorSignUpToRunner } from 'lib/match/eventorToRunner';
 
 export class SyncEventorSignupsJob {
   private api: APIResponse;
@@ -42,24 +43,29 @@ export class SyncEventorSignupsJob {
       eventorId: this.eventorId,
       name: signup.name,
       organization: signup.club,
-      olOrganizationId: undefined,
-      olRunnerId: undefined,
       punchCardNumber: signup.siCard,
     };
 
-    const [existing] = await this.api.Drizzle.db
+    let [runner] = await this.api.Drizzle.db
       .select()
       .from(EventorSignupsTable)
       .where(eq(EventorSignupsTable.signupId, hashedSignupId))
       .limit(1);
 
-    existing
-      ? await this.api.Drizzle.db
-          .update(EventorSignupsTable)
-          .set(body)
-          .where(eq(EventorSignupsTable.signupId, hashedSignupId))
-      : await this.api.Drizzle.db
-          .insert(EventorSignupsTable)
-          .values({ ...body });
+    if (runner) {
+      await this.api.Drizzle.db
+        .update(EventorSignupsTable)
+        .set(body)
+        .where(eq(EventorSignupsTable.signupId, hashedSignupId));
+    } else {
+      [runner] = await this.api.Drizzle.db
+        .insert(EventorSignupsTable)
+        .values({ ...body })
+        .returning();
+    }
+
+    if (runner && runner.olRunnerId === null) {
+      await matchEventorSignUpToRunner(runner);
+    }
   }
 }

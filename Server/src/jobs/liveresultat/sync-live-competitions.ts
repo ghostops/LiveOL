@@ -39,8 +39,6 @@ export class SyncLiveCompetitionsJob {
       ? parse(this.endDate, 'yyyy-MM-dd', new Date())
       : addDays(start, 1);
 
-    console.log(start, end);
-
     competitions.forEach(competition => {
       const parsedDate = this.parseDate(competition.date);
 

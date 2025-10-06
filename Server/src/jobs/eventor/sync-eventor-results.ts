@@ -7,6 +7,7 @@ import crypto from 'crypto';
 import { eq } from 'drizzle-orm';
 import { EventorResultsTable } from 'lib/db/schema';
 import { snakeCase } from 'lodash';
+import { matchEventorResultToRunner } from 'lib/match/eventorToRunner';
 
 export class SyncEventorResultsJob {
   private scraper: EventorResultsScraper;
@@ -43,28 +44,33 @@ export class SyncEventorResultsJob {
       place: result.position,
       name: result.name,
       organization: result.club,
-      olOrganizationId: undefined,
-      olRunnerId: undefined,
       time: this.eventorTimeToSeconds(result.time),
       timePlus: this.eventorTimeToSeconds(result.timePlus),
       status: this.eventorStatusToNumber(result.time)?.toString(),
       distanceInMeters: this.eventorDistanceToMeters(result.distance),
     };
 
-    const [existing] = await this.api.Drizzle.db
+    let [runner] = await this.api.Drizzle.db
       .select()
       .from(EventorResultsTable)
       .where(eq(EventorResultsTable.resultId, hashedSignupId))
       .limit(1);
 
-    existing
-      ? await this.api.Drizzle.db
-          .update(EventorResultsTable)
-          .set(body)
-          .where(eq(EventorResultsTable.resultId, hashedSignupId))
-      : await this.api.Drizzle.db
-          .insert(EventorResultsTable)
-          .values({ ...body });
+    if (runner) {
+      await this.api.Drizzle.db
+        .update(EventorResultsTable)
+        .set(body)
+        .where(eq(EventorResultsTable.resultId, hashedSignupId));
+    } else {
+      [runner] = await this.api.Drizzle.db
+        .insert(EventorResultsTable)
+        .values({ ...body })
+        .returning();
+    }
+
+    if (runner && runner.olRunnerId === null) {
+      await matchEventorResultToRunner(runner);
+    }
   }
 
   private eventorTimeToSeconds(eventorTime: string): number | undefined {

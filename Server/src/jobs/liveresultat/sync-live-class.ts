@@ -96,6 +96,7 @@ export class SyncLiveClassJob {
           ...body,
           liveClassId: hashedClassId,
           liveResultId: hashedResultId,
+          liveCompetitionId: this.competitionId,
         });
       } else {
         await this.api.Drizzle.db

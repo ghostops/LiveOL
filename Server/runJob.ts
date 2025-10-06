@@ -10,17 +10,17 @@ async function runJob() {
     name: 'sync-eventor-competitions',
     data: {
       startDate: '2025-10-05',
-      endDate: '2025-10-07',
+      endDate: '2025-10-06',
     },
   });
 
-  // await q.addJob({
-  //   name: 'sync-live-competitions',
-  //   data: {
-  //     startDate: '2025-10-05',
-  //     endDate: '2025-10-07',
-  //   },
-  // });
+  await q.addJob({
+    name: 'sync-live-competitions',
+    data: {
+      startDate: '2025-10-05',
+      endDate: '2025-10-06',
+    },
+  });
 
   // await q.addJob({
   //   name: 'sync-eventor-competition',
