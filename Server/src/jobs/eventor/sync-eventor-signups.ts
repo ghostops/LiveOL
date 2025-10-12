@@ -7,7 +7,7 @@ import {
 import { APIResponse, apiSingletons } from 'lib/singletons';
 import crypto from 'crypto';
 import { snakeCase } from 'lodash';
-import { matchEventorSignUpToRunner } from 'lib/match/eventorToRunner';
+import { OrganizationId, RunnerId } from 'lib/match/generateIds';
 
 export class SyncEventorSignupsJob {
   private api: APIResponse;
@@ -37,13 +37,21 @@ export class SyncEventorSignupsJob {
       .update(signupCompositeId)
       .digest('hex');
 
-    const body = {
+    const body: typeof EventorSignupsTable.$inferInsert = {
       signupId: hashedSignupId,
       eventorClassId: `${this.eventorId}-${snakeCase(signup.className)}`,
       eventorId: this.eventorId,
       name: signup.name,
       organization: signup.club,
       punchCardNumber: signup.siCard,
+      olOrganizationId: new OrganizationId().generateId({
+        organizationName: signup.club,
+      }),
+      olRunnerId: new RunnerId().generateId({
+        className: signup.className,
+        fullName: signup.name,
+        organizationName: signup.club,
+      }),
     };
 
     let [runner] = await this.api.Drizzle.db
@@ -62,10 +70,6 @@ export class SyncEventorSignupsJob {
         .insert(EventorSignupsTable)
         .values({ ...body })
         .returning();
-    }
-
-    if (runner && runner.olRunnerId === null) {
-      await matchEventorSignUpToRunner(runner);
     }
   }
 }

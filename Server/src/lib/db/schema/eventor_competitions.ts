@@ -7,19 +7,14 @@ import {
   text,
 } from 'drizzle-orm/pg-core';
 import { commonFields } from './commonFields';
-import { relations } from 'drizzle-orm';
-import { EventorResultsTable } from './eventor_results';
-import { EventorStartTable } from './eventor_start';
-import { EventorSignupsTable } from './eventor_signups';
-import { OLCompetitionsTable } from './ol_competitions';
 import { json } from 'drizzle-orm/pg-core';
 
 export const EventorCompetitionsTable = pgTable('eventor_competitions', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   eventorId: varchar({ length: 255 }).notNull(),
   name: varchar({ length: 255 }).notNull(),
-  organizer: varchar({ length: 255 }).notNull(),
-  olOrganizerId: integer(),
+  organizer: varchar({ length: 255 }),
+  olOrganizerId: varchar({ length: 255 }),
   status: varchar({ length: 255 }),
   date: timestamp(),
   distance: varchar({ length: 255 }),
@@ -30,16 +25,3 @@ export const EventorCompetitionsTable = pgTable('eventor_competitions', {
   links: json().$type<{ href: string; text: string }[]>(),
   ...commonFields,
 });
-
-export const EventorCompetitionsRelations = relations(
-  EventorCompetitionsTable,
-  ({ one, many }) => ({
-    eventorResults: many(EventorResultsTable),
-    eventorStart: many(EventorStartTable),
-    eventorSignups: many(EventorSignupsTable),
-    olCompetition: one(OLCompetitionsTable, {
-      fields: [EventorCompetitionsTable.eventorId],
-      references: [OLCompetitionsTable.eventorId],
-    }),
-  }),
-);

@@ -37,7 +37,7 @@ export const getOrganization = defaultEndpointsFactory.build({
 export const getOrganizationCompetitions = defaultEndpointsFactory.build({
   method: 'get',
   input: z.object({
-    id: z.coerce.number(),
+    id: z.string(),
   }),
   output: z.object({
     // TODO!

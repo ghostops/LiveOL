@@ -36,20 +36,6 @@ async function runJob() {
   //   },
   // });
 
-  // await q.addJob({
-  //   name: 'match-live-and-organizer',
-  //   data: {
-  //     competitionId: 34169,
-  //   },
-  // });
-
-  // await q.addJob({
-  //   name: 'match-eventor-and-organizer',
-  //   data: {
-  //     eventorId: '49078',
-  //   },
-  // });
-
   process.exit(0);
 }
 runJob();

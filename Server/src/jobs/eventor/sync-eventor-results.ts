@@ -7,7 +7,7 @@ import crypto from 'crypto';
 import { eq } from 'drizzle-orm';
 import { EventorResultsTable } from 'lib/db/schema';
 import { snakeCase } from 'lodash';
-import { matchEventorResultToRunner } from 'lib/match/eventorToRunner';
+import { OrganizationId, RunnerId } from 'lib/match/generateIds';
 
 export class SyncEventorResultsJob {
   private scraper: EventorResultsScraper;
@@ -37,7 +37,7 @@ export class SyncEventorResultsJob {
       .update(resultCompositeId)
       .digest('hex');
 
-    const body = {
+    const body: typeof EventorResultsTable.$inferInsert = {
       resultId: hashedSignupId,
       eventorClassId: `${this.eventorId}-${snakeCase(result.className)}`,
       eventorId: this.eventorId,
@@ -48,6 +48,15 @@ export class SyncEventorResultsJob {
       timePlus: this.eventorTimeToSeconds(result.timePlus),
       status: this.eventorStatusToNumber(result.time)?.toString(),
       distanceInMeters: this.eventorDistanceToMeters(result.distance),
+
+      olOrganizationId: new OrganizationId().generateId({
+        organizationName: result.club,
+      }),
+      olRunnerId: new RunnerId().generateId({
+        className: result.className,
+        fullName: result.name,
+        organizationName: result.club,
+      }),
     };
 
     let [runner] = await this.api.Drizzle.db
@@ -66,10 +75,6 @@ export class SyncEventorResultsJob {
         .insert(EventorResultsTable)
         .values({ ...body })
         .returning();
-    }
-
-    if (runner && runner.olRunnerId === null) {
-      await matchEventorResultToRunner(runner);
     }
   }
 

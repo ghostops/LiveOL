@@ -73,7 +73,6 @@ export class SyncEventorCompetition {
           .insert(EventorCompetitionsTable)
           .values({ eventorId: event.id, ...body });
 
-    await this.dispatchMatchEventorAndLive(event);
     await this.dispatchOtherDataSyncs(event, utcDate);
   }
 
@@ -91,15 +90,6 @@ export class SyncEventorCompetition {
         .insert(EventorClassesTable)
         .values({ eventorClassId, eventorId: this.eventorId, name: cls });
     }
-  }
-
-  private dispatchMatchEventorAndLive(event: EventorEventItem) {
-    return this.api.Queue.addJob({
-      name: 'match-eventor-and-live',
-      data: {
-        eventorId: event.id,
-      },
-    });
   }
 
   private dispatchOtherDataSyncs(
@@ -127,15 +117,6 @@ export class SyncEventorCompetition {
         }),
       );
     }
-
-    syncs.push(
-      this.api.Queue.addJob({
-        name: 'match-eventor-and-organizer',
-        data: {
-          eventorId: event.id,
-        },
-      }),
-    );
 
     return Promise.all(syncs);
   }

@@ -21,7 +21,6 @@ export class SyncLiveCompetitionJob {
       );
 
       await this.insertLiveCompetition(competition);
-      await this.dispatchMatchEventorAndLive(competition);
 
       const classes = await this.api.Liveresultat.getclasses(
         this.competitionId,
@@ -49,17 +48,6 @@ export class SyncLiveCompetitionJob {
     }
   }
 
-  private dispatchMatchEventorAndLive(
-    competition: LiveresultatApi.competition,
-  ) {
-    return this.api.Queue.addJob({
-      name: 'match-eventor-and-live',
-      data: {
-        liveId: competition.id,
-      },
-    });
-  }
-
   private async insertLiveCompetition(
     competition: LiveresultatApi.competition,
   ) {
@@ -85,8 +73,6 @@ export class SyncLiveCompetitionJob {
       : await this.api.Drizzle.db
           .insert(LiveCompetitionsTable)
           .values({ id: competition.id, ...body });
-
-    await this.dispatchSyncOrganizer();
   }
 
   parseDateToUtc(dateString: string) {
@@ -105,14 +91,5 @@ export class SyncLiveCompetitionJob {
 
     // The date given IS universal, so just return it as is.
     return parsed;
-  }
-
-  private dispatchSyncOrganizer() {
-    return this.api.Queue.addJob({
-      name: 'match-live-and-organizer',
-      data: {
-        competitionId: this.competitionId,
-      },
-    });
   }
 }

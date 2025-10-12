@@ -8,6 +8,7 @@ import {
 import type { LiveresultatApi } from 'lib/liveresultat/types';
 import { APIResponse, apiSingletons } from 'lib/singletons';
 import crypto from 'crypto';
+import { OrganizationId, RunnerId } from 'lib/match/generateIds';
 
 export class SyncLiveClassJob {
   private api: APIResponse;
@@ -77,18 +78,29 @@ export class SyncLiveClassJob {
         return false;
       };
 
-      const body = {
-        // ToDo:
-        // Scan for a OLRunner and insert it if it exists
-        olRunnerId: null,
+      const body: Omit<
+        typeof LiveResultsTable.$inferInsert,
+        'liveClassId' | 'liveResultId' | 'liveCompetitionId'
+      > = {
         name: result.name,
-        club: result.club,
+        organization: result.club,
         endAt: new Date(),
         startAt: new Date(),
         progress: !isEmpty(result.progress) ? Math.round(result.progress) : 0,
         place: result.place ? String(result.place) : null,
         status: !isEmpty(result.status) ? result.status : null,
         updatedAt: new Date(),
+
+        olRunnerId: new RunnerId().generateId({
+          className: classResults.className,
+          fullName: result.name,
+          organizationName: result.club,
+        }),
+        olOrganizationId: result.club
+          ? new OrganizationId().generateId({
+              organizationName: result.club,
+            })
+          : null,
       };
 
       if (!existing) {
@@ -250,7 +262,7 @@ export class SyncLiveClassJob {
       .where(eq(LiveClassesTable.liveClassId, hashedClassId))
       .limit(1);
 
-    const body = {
+    const body: Omit<typeof LiveClassesTable.$inferInsert, 'liveClassId'> = {
       name: classResults.className,
       status: classResults.status,
       liveCompetitionId: competitionId,
