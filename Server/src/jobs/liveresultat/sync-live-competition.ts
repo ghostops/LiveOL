@@ -1,8 +1,13 @@
 import { eq } from 'drizzle-orm';
-import { LiveCompetitionsTable } from 'lib/db/schema';
+import {
+  LiveCompetitionsTable,
+  OLCompetitionsTable,
+  OLOrganizationsTable,
+} from 'lib/db/schema';
 import type { LiveresultatApi } from 'lib/liveresultat/types';
 import { APIResponse, apiSingletons } from 'lib/singletons';
 import { parse } from 'date-fns';
+import { CompetitionId, OrganizationId } from 'lib/match/generateIds';
 
 export class SyncLiveCompetitionJob {
   private api: APIResponse;
@@ -51,12 +56,19 @@ export class SyncLiveCompetitionJob {
   private async insertLiveCompetition(
     competition: LiveresultatApi.competition,
   ) {
-    const body = {
+    const body: Omit<typeof LiveCompetitionsTable.$inferInsert, 'id'> = {
       name: competition.name,
       organizer: competition.organizer,
       date: this.parseDateToUtc(competition.date),
       isPublic: true,
       updatedAt: new Date(),
+      olCompetitionId: new CompetitionId().generateId({
+        competitionName: competition.name,
+        organizationName: competition.organizer,
+      }),
+      olOrganizationId: new OrganizationId().generateId({
+        organizationName: competition.organizer,
+      }),
     };
 
     const [existing] = await this.api.Drizzle.db
@@ -73,6 +85,20 @@ export class SyncLiveCompetitionJob {
       : await this.api.Drizzle.db
           .insert(LiveCompetitionsTable)
           .values({ id: competition.id, ...body });
+
+    await this.api.Drizzle.db
+      .insert(OLCompetitionsTable)
+      .values({
+        id: body.olCompetitionId,
+      })
+      .onConflictDoNothing();
+
+    await this.api.Drizzle.db
+      .insert(OLOrganizationsTable)
+      .values({
+        id: body.olOrganizationId,
+      })
+      .onConflictDoNothing();
   }
 
   parseDateToUtc(dateString: string) {

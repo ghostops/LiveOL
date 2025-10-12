@@ -4,37 +4,34 @@ import { OLQueue } from 'lib/queue';
 const q = new OLQueue('localhost', 6379, process.env.REDIS_PASSWORD);
 
 async function runJob() {
-  //await q.purge();
+  if (process.argv.length < 3) {
+    console.error('Please provide a job name as an argument.');
+    process.exit(1);
+  }
 
-  await q.addJob({
-    name: 'sync-eventor-competitions',
-    data: {
-      startDate: '2025-10-05',
-      endDate: '2025-10-06',
-    },
-  });
+  const jobName = process.argv[2];
 
-  await q.addJob({
-    name: 'sync-live-competitions',
-    data: {
-      startDate: '2025-10-05',
-      endDate: '2025-10-06',
-    },
-  });
+  if (jobName === 'purge') {
+    await q.purge();
+  }
 
-  // await q.addJob({
-  //   name: 'sync-eventor-competition',
-  //   data: {
-  //     eventorId: 49078,
-  //   },
-  // });
+  if (jobName === 'run') {
+    await q.addJob({
+      name: 'sync-eventor-competitions',
+      data: {
+        startDate: '2025-10-05',
+        endDate: '2025-10-06',
+      },
+    });
 
-  // await q.addJob({
-  //   name: 'sync-live-competition',
-  //   data: {
-  //     competitionId: 34169,
-  //   },
-  // });
+    await q.addJob({
+      name: 'sync-live-competitions',
+      data: {
+        startDate: '2025-10-05',
+        endDate: '2025-10-06',
+      },
+    });
+  }
 
   process.exit(0);
 }

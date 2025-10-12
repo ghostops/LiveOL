@@ -5,7 +5,11 @@ import {
 import { APIResponse, apiSingletons } from 'lib/singletons';
 import crypto from 'crypto';
 import { eq } from 'drizzle-orm';
-import { EventorResultsTable } from 'lib/db/schema';
+import {
+  EventorResultsTable,
+  OLOrganizationsTable,
+  OLRunnersTable,
+} from 'lib/db/schema';
 import { snakeCase } from 'lodash';
 import { OrganizationId, RunnerId } from 'lib/match/generateIds';
 
@@ -76,6 +80,20 @@ export class SyncEventorResultsJob {
         .values({ ...body })
         .returning();
     }
+
+    await this.api.Drizzle.db
+      .insert(OLOrganizationsTable)
+      .values({
+        id: body.olOrganizationId,
+      })
+      .onConflictDoNothing();
+
+    await this.api.Drizzle.db
+      .insert(OLRunnersTable)
+      .values({
+        id: body.olRunnerId,
+      })
+      .onConflictDoNothing();
   }
 
   private eventorTimeToSeconds(eventorTime: string): number | undefined {

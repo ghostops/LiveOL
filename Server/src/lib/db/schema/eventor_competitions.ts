@@ -14,7 +14,7 @@ export const EventorCompetitionsTable = pgTable('eventor_competitions', {
   eventorId: varchar({ length: 255 }).notNull(),
   name: varchar({ length: 255 }).notNull(),
   organizer: varchar({ length: 255 }),
-  olOrganizerId: varchar({ length: 255 }),
+  olOrganizationId: varchar({ length: 255 }).notNull(),
   status: varchar({ length: 255 }),
   date: timestamp(),
   distance: varchar({ length: 255 }),
@@ -23,5 +23,6 @@ export const EventorCompetitionsTable = pgTable('eventor_competitions', {
   lng: decimal({ precision: 9, scale: 6 }),
   notification: text(),
   links: json().$type<{ href: string; text: string }[]>(),
+  olCompetitionId: varchar({ length: 255 }).notNull(),
   ...commonFields,
 });

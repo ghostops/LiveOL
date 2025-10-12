@@ -4,6 +4,8 @@ import {
   LiveResultsTable,
   LiveSplitControllsTable,
   LiveSplitResultsTable,
+  OLOrganizationsTable,
+  OLRunnersTable,
 } from 'lib/db/schema';
 import type { LiveresultatApi } from 'lib/liveresultat/types';
 import { APIResponse, apiSingletons } from 'lib/singletons';
@@ -96,11 +98,9 @@ export class SyncLiveClassJob {
           fullName: result.name,
           organizationName: result.club,
         }),
-        olOrganizationId: result.club
-          ? new OrganizationId().generateId({
-              organizationName: result.club,
-            })
-          : null,
+        olOrganizationId: new OrganizationId().generateId({
+          organizationName: result.club ?? OrganizationId.noOrganizationId,
+        }),
       };
 
       if (!existing) {
@@ -121,6 +121,20 @@ export class SyncLiveClassJob {
             ),
           );
       }
+
+      await this.api.Drizzle.db
+        .insert(OLOrganizationsTable)
+        .values({
+          id: body.olOrganizationId,
+        })
+        .onConflictDoNothing();
+
+      await this.api.Drizzle.db
+        .insert(OLRunnersTable)
+        .values({
+          id: body.olRunnerId,
+        })
+        .onConflictDoNothing();
 
       await this.insertSplitResults(hashedResultId, result);
     }

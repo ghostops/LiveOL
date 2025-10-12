@@ -9,7 +9,7 @@ export const LiveResultsTable = pgTable('live_results', {
   olRunnerId: varchar({ length: 255 }).notNull(),
   name: varchar({ length: 255 }).notNull(),
   organization: varchar({ length: 255 }),
-  olOrganizationId: varchar({ length: 255 }),
+  olOrganizationId: varchar({ length: 255 }).notNull(),
   endAt: timestamp(),
   startAt: timestamp(),
   progress: integer().default(0),

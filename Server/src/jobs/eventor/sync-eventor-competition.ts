@@ -1,5 +1,10 @@
 import { eq } from 'drizzle-orm';
-import { EventorClassesTable, EventorCompetitionsTable } from 'lib/db/schema';
+import {
+  EventorClassesTable,
+  EventorCompetitionsTable,
+  OLCompetitionsTable,
+  OLOrganizationsTable,
+} from 'lib/db/schema';
 import { EventorScraper } from 'lib/eventor/scraper';
 import { EventorEventItem } from 'lib/eventor/types';
 import { APIResponse, apiSingletons, URLS } from 'lib/singletons';
@@ -7,6 +12,7 @@ import { snakeCase } from 'lodash';
 import { isAfter, Locale, parse } from 'date-fns';
 import { sv } from 'date-fns/locale';
 import { fromZonedTime } from 'date-fns-tz';
+import { CompetitionId, OrganizationId } from 'lib/match/generateIds';
 
 export class SyncEventorCompetition {
   private api: APIResponse;
@@ -38,24 +44,24 @@ export class SyncEventorCompetition {
   }
 
   private async insertEventorCompetition(event: EventorEventItem) {
-    let organizerId: number | null = null;
-    if (event.clubLogoUrl) {
-      const parts = event.clubLogoUrl.split('/');
-      const id = parts[parts.length - 1];
-      if (id) {
-        organizerId = Number(id);
-      }
-    }
-
     const utcDate = this.parseDateToUtc(event.date, 'Europe/Stockholm', sv);
 
-    const body = {
+    const body: Omit<
+      typeof EventorCompetitionsTable.$inferInsert,
+      'eventorId'
+    > = {
       name: event.name,
       organizer: event.club,
-      organizerId,
       notification: event.info,
       links: event.links,
       date: utcDate,
+      olOrganizationId: new OrganizationId().generateId({
+        organizationName: event.club,
+      }),
+      olCompetitionId: new CompetitionId().generateId({
+        competitionName: event.name,
+        organizationName: event.club,
+      }),
     };
 
     const [existing] = await this.api.Drizzle.db
@@ -72,6 +78,20 @@ export class SyncEventorCompetition {
       : await this.api.Drizzle.db
           .insert(EventorCompetitionsTable)
           .values({ eventorId: event.id, ...body });
+
+    await this.api.Drizzle.db
+      .insert(OLCompetitionsTable)
+      .values({
+        id: body.olCompetitionId,
+      })
+      .onConflictDoNothing();
+
+    await this.api.Drizzle.db
+      .insert(OLOrganizationsTable)
+      .values({
+        id: body.olOrganizationId,
+      })
+      .onConflictDoNothing();
 
     await this.dispatchOtherDataSyncs(event, utcDate);
   }

@@ -1,5 +1,9 @@
 import { eq } from 'drizzle-orm';
-import { EventorSignupsTable } from 'lib/db/schema';
+import {
+  EventorSignupsTable,
+  OLOrganizationsTable,
+  OLRunnersTable,
+} from 'lib/db/schema';
 import {
   EventorSignup,
   EventorSignupsScraper,
@@ -71,5 +75,19 @@ export class SyncEventorSignupsJob {
         .values({ ...body })
         .returning();
     }
+
+    await this.api.Drizzle.db
+      .insert(OLOrganizationsTable)
+      .values({
+        id: body.olOrganizationId,
+      })
+      .onConflictDoNothing();
+
+    await this.api.Drizzle.db
+      .insert(OLRunnersTable)
+      .values({
+        id: body.olRunnerId,
+      })
+      .onConflictDoNothing();
   }
 }
