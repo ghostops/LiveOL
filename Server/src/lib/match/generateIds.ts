@@ -6,8 +6,28 @@
  * 4. Maybe check for spelling mistakes somehow, cannot compare so it has to be from common static logic
  */
 
+const globalSeparator = '~';
+const noOrganizationId = 'noorg';
+const maxIdLength = 255;
+
+const asciiFold = (s: string) =>
+  s.normalize('NFD').replace(/\p{Diacritic}/gu, '') ?? '';
+
+const norm = (s: string, { foldAscii = true } = {}) => {
+  let t: string = s
+    .toString()
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, '')
+    .replace(/[.,']/g, '');
+  if (t.length > maxIdLength) {
+    // Add the # character to indicate that the id was truncated
+    t = t.substring(0, maxIdLength - 1) + '#';
+  }
+  return foldAscii ? asciiFold(t) : t;
+};
+
 export class RunnerId {
-  private static separator = ':';
   private static noOrganizationId = 'noorg';
 
   public generateId(opts: {
@@ -16,37 +36,49 @@ export class RunnerId {
     organizationName?: string;
   }): string {
     const orgName = opts.organizationName
-      ? opts.organizationName
+      ? OrganizationId.tokenize(opts.organizationName)
       : RunnerId.noOrganizationId;
 
-    return `${opts.fullName}${RunnerId.separator}${opts.className}${RunnerId.separator}${orgName}`
-      .toLowerCase()
-      .replace(/\s+/g, '');
+    return norm(
+      `${opts.fullName}${globalSeparator}${opts.className}${globalSeparator}${orgName}`,
+    );
   }
 }
 
 export class OrganizationId {
-  public static noOrganizationId = 'noorg';
+  public static tokenize = (org: string) => {
+    let t = norm(org);
 
-  public generateId(opts: { organizationName: string }): string {
-    return opts.organizationName.toLowerCase().replace(/\s+/g, '');
+    t = t
+      .replace(/\borienteringsklubb\b/g, ' ok')
+      .replace(/\bidrottsklubb\b/g, ' ik')
+      .replace(/\bidrottsforening\b/g, ' if')
+      .replace(/\bsportklubb\b/g, ' sk');
+
+    t = Array.from(new Set(t.split(' ').filter(Boolean)))
+      .sort()
+      .join(' ');
+
+    return t;
+  };
+
+  public generateId(opts: { organizationName?: string }): string {
+    if (!opts.organizationName) {
+      return noOrganizationId;
+    }
+    return OrganizationId.tokenize(opts.organizationName);
   }
 }
 
 export class CompetitionId {
-  private static separator = ':';
-  private static noOrganizationId = 'noorg';
-
   public generateId(opts: {
     competitionName: string;
     organizationName: string;
   }): string {
     const orgName = opts.organizationName
-      ? opts.organizationName
-      : CompetitionId.noOrganizationId;
+      ? OrganizationId.tokenize(opts.organizationName)
+      : noOrganizationId;
 
-    return `${opts.competitionName}${CompetitionId.separator}${orgName}`
-      .toLowerCase()
-      .replace(/\s+/g, '');
+    return norm(`${opts.competitionName}${globalSeparator}${orgName}`);
   }
 }

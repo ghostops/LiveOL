@@ -99,7 +99,7 @@ export class SyncLiveClassJob {
           organizationName: result.club,
         }),
         olOrganizationId: new OrganizationId().generateId({
-          organizationName: result.club ?? OrganizationId.noOrganizationId,
+          organizationName: result.club,
         }),
       };
 
