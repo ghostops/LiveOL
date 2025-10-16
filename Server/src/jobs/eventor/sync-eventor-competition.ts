@@ -82,6 +82,11 @@ export class SyncEventorCompetition {
       }),
       countryCode: this.countryCode,
       dateString: event.date,
+      punchSystem: event.punchSystem,
+      lat: event.lat,
+      lng: event.lng,
+      distance: event.distance,
+      status: undefined,
     };
 
     const [existing] = await this.api.Drizzle.db

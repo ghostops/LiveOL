@@ -17,6 +17,10 @@ export interface EventorCompetition {
   status?: string;
   info?: string;
   links: { text: string; href: string }[];
+  punchSystem?: string;
+  distance?: string;
+  lat?: string;
+  lng?: string;
 }
 
 export class EventorCompetitionScraper {
@@ -57,6 +61,8 @@ export class EventorCompetitionScraper {
         throw new Error('Missing required event data (name, date, or club)');
       }
 
+      const location = this.extractCoordinates($);
+
       return {
         id: this.eventorId,
         ...eventTableData,
@@ -64,7 +70,10 @@ export class EventorCompetitionScraper {
         name: eventTableData.name,
         date: eventTableData.date,
         club: eventTableData.club,
-        links: [],
+        links: this.extractLinks($),
+        info: $('p.info').text().trim() || undefined,
+        lat: location.lat,
+        lng: location.lng,
       };
     } catch (error: AxiosError | unknown) {
       console.error(
@@ -74,6 +83,34 @@ export class EventorCompetitionScraper {
       );
       throw error;
     }
+  }
+
+  private extractCoordinates($: CheerioStatic): {
+    lat: string | undefined;
+    lng: string | undefined;
+  } {
+    try {
+      const json = $('#ShowEvent_EventCenterPosition > input').val();
+      const data = JSON.parse(json);
+      const lat = data.latitude;
+      const lng = data.longitude;
+      return { lat, lng };
+    } catch {
+      return { lat: undefined, lng: undefined };
+    }
+  }
+
+  private extractLinks($: CheerioStatic): { text: string; href: string }[] {
+    const links: { text: string; href: string }[] = [];
+    $('ul.documents li .text a').each((_, element) => {
+      const link = $(element);
+      const href = link.attr('href');
+      const text = link.text().trim();
+      if (href && text) {
+        links.push({ text, href });
+      }
+    });
+    return links;
   }
 
   private extractInfoTableRowData(
@@ -116,6 +153,8 @@ export class EventorCompetitionScraper {
       competitionDistance: rows[this.metadata.competitionDistance],
       competitionType: rows[this.metadata.competitionType],
       status: rows[this.metadata.status],
+      punchSystem: rows[this.metadata.punchSystem],
+      distance: rows[this.metadata.distance],
     };
   }
 }
@@ -129,7 +168,9 @@ type EventorMetadataInformationKeys =
   | 'district'
   | 'competitionDistance'
   | 'competitionType'
-  | 'status';
+  | 'status'
+  | 'punchSystem'
+  | 'distance';
 
 const eventorMetadataInformationI18n: Record<
   string,
@@ -145,6 +186,8 @@ const eventorMetadataInformationI18n: Record<
     competitionDistance: 'Tävlingsdistans',
     competitionType: 'Gren',
     status: 'Status',
+    punchSystem: 'Stämplingssystem',
+    distance: 'Tävlingsdistans',
   },
   au: {
     name: 'Event',
@@ -156,5 +199,7 @@ const eventorMetadataInformationI18n: Record<
     competitionDistance: 'Race distance',
     competitionType: 'Discipline',
     status: 'Status',
+    punchSystem: 'Punching systems',
+    distance: 'Race distance',
   },
 };
