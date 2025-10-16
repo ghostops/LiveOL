@@ -86,8 +86,8 @@ export class SyncLiveClassJob {
       > = {
         name: result.name,
         organization: result.club,
-        endAt: new Date(),
-        startAt: new Date(),
+        result: this.parseResultNumber(result.result),
+        timeplus: this.parseResultNumber(result.timeplus),
         progress: !isEmpty(result.progress) ? Math.round(result.progress) : 0,
         place: result.place ? String(result.place) : null,
         status: !isEmpty(result.status) ? result.status : null,
@@ -138,6 +138,25 @@ export class SyncLiveClassJob {
 
       await this.insertSplitResults(hashedResultId, result);
     }
+  }
+
+  private parseResultNumber(value: unknown): number | null {
+    let numberOrNull: number | null = null;
+    if (value === null || value === undefined) {
+      numberOrNull = null;
+    }
+    if (typeof value === 'number') {
+      numberOrNull = value;
+    }
+    if (typeof value === 'string') {
+      const parsed = parseFloat(value);
+      numberOrNull = isNaN(parsed) ? null : parsed;
+    }
+    // Ignore all 0s or negative values as those can't be real
+    if (typeof numberOrNull === 'number' && numberOrNull < 1) {
+      numberOrNull = null;
+    }
+    return numberOrNull;
   }
 
   private async insertSplitResults(

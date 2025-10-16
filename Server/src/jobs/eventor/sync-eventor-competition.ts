@@ -5,39 +5,50 @@ import {
   OLCompetitionsTable,
   OLOrganizationsTable,
 } from 'lib/db/schema';
-import { EventorScraper } from 'lib/eventor/scraper';
 import { EventorEventItem } from 'lib/eventor/types';
-import { APIResponse, apiSingletons, URLS } from 'lib/singletons';
+import { APIResponse, apiSingletons } from 'lib/singletons';
 import { snakeCase } from 'lodash';
 import { isAfter, Locale, parse } from 'date-fns';
 import { sv } from 'date-fns/locale';
 import { fromZonedTime } from 'date-fns-tz';
 import { CompetitionId, OrganizationId } from 'lib/match/generateIds';
+import { EventorCompetitionScraper } from 'lib/eventor/scrapers/competition';
 
 export class SyncEventorCompetition {
   private api: APIResponse;
-  private scraper: EventorScraper;
+  private scraper: EventorCompetitionScraper;
 
-  constructor(private eventorId: string) {
+  constructor(
+    private eventorId: string,
+    private countryCode: string,
+  ) {
     if (!eventorId) {
       throw new Error('Eventor ID is required');
     }
+    if (!countryCode) {
+      throw new Error('Country code is required');
+    }
 
     this.api = apiSingletons.createApiSingletons();
-    this.scraper = new EventorScraper(URLS.eventorSweden, this.api.Redis);
+    this.scraper = new EventorCompetitionScraper(
+      this.countryCode,
+      this.eventorId,
+    );
   }
 
   async run() {
     try {
-      const data = await this.scraper.scrapeEvent(this.eventorId);
+      const data = await this.scraper.fetchCompetition();
+      console.log(data);
+      return;
 
-      await this.insertEventorCompetition(data);
+      // await this.insertEventorCompetition(data);
 
-      for (const cls of data.ageClasses.concat(data.openClasses)) {
-        await this.insertEventorClass(cls);
-      }
+      // for (const cls of data.ageClasses.concat(data.openClasses)) {
+      //   await this.insertEventorClass(cls);
+      // }
 
-      console.log(`Eventor competition ${data.id} synced successfully.`);
+      // console.log(`Eventor competition ${data.id} synced successfully.`);
     } catch (error) {
       console.error('Error syncing eventor competition:', error);
     }
@@ -62,6 +73,7 @@ export class SyncEventorCompetition {
         competitionName: event.name,
         organizationName: event.club,
       }),
+      countryCode: this.countryCode,
     };
 
     const [existing] = await this.api.Drizzle.db

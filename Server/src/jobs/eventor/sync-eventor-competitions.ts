@@ -1,44 +1,62 @@
-import { addDays, parse } from 'date-fns';
-import { EventorScraper } from 'lib/eventor/scraper';
-import { EventorListItem } from 'lib/eventor/types';
-import { APIResponse, apiSingletons, URLS } from 'lib/singletons';
+import { parse } from 'date-fns';
+import {
+  EventorCompetitions,
+  EventorCompetitionsScraper,
+} from 'lib/eventor/scrapers/competitions';
+import { APIResponse, apiSingletons } from 'lib/singletons';
 
 export class SyncEventorCompetitions {
   private api: APIResponse;
-  private scraper: EventorScraper;
+  private scraper: EventorCompetitionsScraper;
 
   constructor(
-    private startDate?: string,
-    private endDate?: string,
+    private countryCode: string,
+    private startDate: string,
+    private endDate: string,
   ) {
+    if (!countryCode) {
+      throw new Error('Country code is required');
+    }
+    if (!startDate) {
+      throw new Error('Start date is required');
+    }
+    if (!endDate) {
+      throw new Error('End date is required');
+    }
     this.api = apiSingletons.createApiSingletons();
-    // ToDo: Provide country in job options
-    this.scraper = new EventorScraper(URLS.eventorSweden, this.api.Redis);
+    this.scraper = new EventorCompetitionsScraper(
+      this.countryCode,
+      parse(this.startDate, 'yyyy-MM-dd', new Date()),
+      parse(this.endDate, 'yyyy-MM-dd', new Date()),
+    );
   }
 
   async run() {
     try {
-      const start = this.startDate
-        ? parse(this.startDate, 'yyyy-MM-dd', new Date())
-        : new Date();
-      const end = this.endDate
-        ? parse(this.endDate, 'yyyy-MM-dd', new Date())
-        : addDays(start, 1);
-      const data = await this.scraper.scrapeDateRange(start, end);
+      const data = await this.scraper.fetchCompetitions();
       await this.dispatchScrapeCompetition(data);
     } catch (error) {
       console.error('Error syncing eventor competitions:', error);
     }
   }
 
-  private async dispatchScrapeCompetition(items: EventorListItem[]) {
-    for (const item of items) {
-      await this.api.Queue.addJob({
-        name: 'sync-eventor-competition',
-        data: {
-          eventorId: item.id,
-        },
-      });
-    }
+  private async dispatchScrapeCompetition(items: EventorCompetitions[]) {
+    // TODO!!!!!!
+    // for (const item of items) {
+    //   await this.api.Queue.addJob({
+    //     name: 'sync-eventor-competition',
+    //     data: {
+    //       eventorId: item.eventorId,
+    //       countryCode: this.countryCode,
+    //     },
+    //   });
+    // }
+    await this.api.Queue.addJob({
+      name: 'sync-eventor-competition',
+      data: {
+        eventorId: items[0]!.eventorId,
+        countryCode: this.countryCode,
+      },
+    });
   }
 }

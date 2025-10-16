@@ -21,16 +21,17 @@ async function runJob() {
       data: {
         startDate: '2025-10-05',
         endDate: '2025-10-06',
+        countryCode: 'au',
       },
     });
 
-    await q.addJob({
-      name: 'sync-live-competitions',
-      data: {
-        startDate: '2025-10-05',
-        endDate: '2025-10-06',
-      },
-    });
+    // await q.addJob({
+    //   name: 'sync-live-competitions',
+    //   data: {
+    //     startDate: '2025-10-05',
+    //     endDate: '2025-10-06',
+    //   },
+    // });
   }
 
   process.exit(0);

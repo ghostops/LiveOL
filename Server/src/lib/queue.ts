@@ -86,10 +86,17 @@ export class OLQueue {
         new SyncLiveClassJob(job.data.competitionId, job.data.className).run();
         break;
       case 'sync-eventor-competitions':
-        new SyncEventorCompetitions(job.data.startDate, job.data.endDate).run();
+        new SyncEventorCompetitions(
+          job.data.countryCode,
+          job.data.startDate,
+          job.data.endDate,
+        ).run();
         break;
       case 'sync-eventor-competition':
-        new SyncEventorCompetition(job.data.eventorId).run();
+        new SyncEventorCompetition(
+          job.data.eventorId,
+          job.data.countryCode,
+        ).run();
         break;
       case 'sync-eventor-signups':
         new SyncEventorSignupsJob(job.data.eventorId).run();

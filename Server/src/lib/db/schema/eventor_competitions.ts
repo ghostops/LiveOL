@@ -24,5 +24,6 @@ export const EventorCompetitionsTable = pgTable('eventor_competitions', {
   notification: text(),
   links: json().$type<{ href: string; text: string }[]>(),
   olCompetitionId: varchar({ length: 255 }).notNull(),
+  countryCode: varchar({ length: 2 }).notNull(),
   ...commonFields,
 });

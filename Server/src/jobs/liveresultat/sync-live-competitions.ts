@@ -23,7 +23,7 @@ export class SyncLiveCompetitionsJob {
         batches.map(batch => this.dispatchCompetitionSync(batch)),
       );
 
-      console.log(`Dispatched ${competitions.length} competitions for sync.`);
+      console.log(`Dispatched live competitions for sync.`);
     } catch (error) {
       console.error('Error syncing competitions:', error);
     }
