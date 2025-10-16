@@ -1,5 +1,6 @@
 import { Job, Queue, Worker } from 'bullmq';
 import Redis from 'ioredis';
+import { EventorDateParser } from 'jobs/eventor/eventor-date-parser';
 import { SyncEventorCompetition } from 'jobs/eventor/sync-eventor-competition';
 import { SyncEventorCompetitions } from 'jobs/eventor/sync-eventor-competitions';
 import { SyncEventorResultsJob } from 'jobs/eventor/sync-eventor-results';
@@ -103,6 +104,9 @@ export class OLQueue {
         break;
       case 'sync-eventor-results':
         new SyncEventorResultsJob(job.data.eventorId).run();
+        break;
+      case 'parse-eventor-dates':
+        new EventorDateParser().run();
         break;
       default:
         console.warn(`Unknown job type: ${job.name}`);

@@ -16,14 +16,32 @@ async function runJob() {
   }
 
   if (jobName === 'run') {
+    // await q.addJob({
+    //   name: 'sync-eventor-competition',
+    //   data: {
+    //     eventorId: '23182',
+    //     countryCode: 'au',
+    //   },
+    // });
+    // await q.addJob({
+    //   name: 'sync-eventor-competition',
+    //   data: {
+    //     eventorId: '55138',
+    //     countryCode: 'se',
+    //   },
+    // });
     await q.addJob({
-      name: 'sync-eventor-competitions',
-      data: {
-        startDate: '2025-10-05',
-        endDate: '2025-10-06',
-        countryCode: 'au',
-      },
+      name: 'parse-eventor-dates',
+      data: {},
     });
+    // await q.addJob({
+    //   name: 'sync-eventor-competitions',
+    //   data: {
+    //     startDate: '2025-10-05',
+    //     endDate: '2025-10-06',
+    //     countryCode: 'au',
+    //   },
+    // });
 
     // await q.addJob({
     //   name: 'sync-live-competitions',

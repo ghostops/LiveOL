@@ -41,22 +41,14 @@ export class SyncEventorCompetitions {
   }
 
   private async dispatchScrapeCompetition(items: EventorCompetitions[]) {
-    // TODO!!!!!!
-    // for (const item of items) {
-    //   await this.api.Queue.addJob({
-    //     name: 'sync-eventor-competition',
-    //     data: {
-    //       eventorId: item.eventorId,
-    //       countryCode: this.countryCode,
-    //     },
-    //   });
-    // }
-    await this.api.Queue.addJob({
-      name: 'sync-eventor-competition',
-      data: {
-        eventorId: items[0]!.eventorId,
-        countryCode: this.countryCode,
-      },
-    });
+    for (const item of items) {
+      await this.api.Queue.addJob({
+        name: 'sync-eventor-competition',
+        data: {
+          eventorId: item.eventorId,
+          countryCode: this.countryCode,
+        },
+      });
+    }
   }
 }

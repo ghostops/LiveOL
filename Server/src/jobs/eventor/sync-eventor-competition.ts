@@ -5,14 +5,14 @@ import {
   OLCompetitionsTable,
   OLOrganizationsTable,
 } from 'lib/db/schema';
-import { EventorEventItem } from 'lib/eventor/types';
 import { APIResponse, apiSingletons } from 'lib/singletons';
 import { snakeCase } from 'lodash';
-import { isAfter, Locale, parse } from 'date-fns';
-import { sv } from 'date-fns/locale';
-import { fromZonedTime } from 'date-fns-tz';
+import { isAfter } from 'date-fns';
 import { CompetitionId, OrganizationId } from 'lib/match/generateIds';
-import { EventorCompetitionScraper } from 'lib/eventor/scrapers/competition';
+import {
+  EventorCompetition,
+  EventorCompetitionScraper,
+} from 'lib/eventor/scrapers/competition';
 
 export class SyncEventorCompetition {
   private api: APIResponse;
@@ -39,41 +39,49 @@ export class SyncEventorCompetition {
   async run() {
     try {
       const data = await this.scraper.fetchCompetition();
-      console.log(data);
-      return;
 
-      // await this.insertEventorCompetition(data);
+      await this.insertEventorCompetition(data);
 
+      // ToDo: Reimplement or scrap?
       // for (const cls of data.ageClasses.concat(data.openClasses)) {
       //   await this.insertEventorClass(cls);
       // }
 
-      // console.log(`Eventor competition ${data.id} synced successfully.`);
+      console.log(`Eventor competition ${data.id} synced successfully.`);
     } catch (error) {
       console.error('Error syncing eventor competition:', error);
     }
   }
 
-  private async insertEventorCompetition(event: EventorEventItem) {
-    const utcDate = this.parseDateToUtc(event.date, 'Europe/Stockholm', sv);
-
+  private async insertEventorCompetition(event: EventorCompetition) {
     const body: Omit<
       typeof EventorCompetitionsTable.$inferInsert,
-      'eventorId'
+      'eventorId' | 'date'
     > = {
       name: event.name,
       organizer: event.club,
       notification: event.info,
       links: event.links,
-      date: utcDate,
       olOrganizationId: new OrganizationId().generateId({
         organizationName: event.club,
       }),
+      additionalOlOrganizationIds:
+        event.clubs && event.clubs.length > 1
+          ? event.clubs
+              .split(',')
+              .filter(club => club !== event.club)
+              .map(club =>
+                new OrganizationId().generateId({
+                  organizationName: club.trim(),
+                }),
+              )
+          : undefined,
       olCompetitionId: new CompetitionId().generateId({
         competitionName: event.name,
         organizationName: event.club,
       }),
       countryCode: this.countryCode,
+      dateString: event.date,
     };
 
     const [existing] = await this.api.Drizzle.db
@@ -87,9 +95,10 @@ export class SyncEventorCompetition {
           .update(EventorCompetitionsTable)
           .set(body)
           .where(eq(EventorCompetitionsTable.eventorId, event.id))
-      : await this.api.Drizzle.db
-          .insert(EventorCompetitionsTable)
-          .values({ eventorId: event.id, ...body });
+      : await this.api.Drizzle.db.insert(EventorCompetitionsTable).values({
+          eventorId: event.id,
+          ...body,
+        });
 
     await this.api.Drizzle.db
       .insert(OLCompetitionsTable)
@@ -105,7 +114,7 @@ export class SyncEventorCompetition {
       })
       .onConflictDoNothing();
 
-    await this.dispatchOtherDataSyncs(event, utcDate);
+    await this.dispatchOtherDataSyncs(event, existing?.date);
   }
 
   private async insertEventorClass(cls: string) {
@@ -125,8 +134,8 @@ export class SyncEventorCompetition {
   }
 
   private dispatchOtherDataSyncs(
-    event: EventorEventItem,
-    utcDate: Date | null,
+    event: EventorCompetition,
+    utcDate?: Date | null,
   ) {
     const syncs = [];
 
@@ -151,45 +160,5 @@ export class SyncEventorCompetition {
     }
 
     return Promise.all(syncs);
-  }
-
-  private parseDateToUtc(
-    dateString: string = '',
-    timezone: string,
-    locale: Locale,
-  ) {
-    if (!dateString) return null;
-
-    // Try multiple formats until one succeeds
-    const formats = [
-      'EEEE d MMMM yyyy', // söndag 5 oktober 2025 ELLER måndag 16 juni 2025 - söndag 26 oktober 2025
-      "EEEE d MMMM yyyy 'klockan' HH:mm", // söndag 3 augusti 2025 klockan 10:00 ELLER söndag 5 oktober 2025 klockan 11:00 - 12:30
-    ];
-
-    let localDate: Date | null = null;
-
-    for (const format of formats) {
-      try {
-        if (dateString.includes(' - ')) {
-          dateString = dateString.split(' - ')[0]!.trim();
-        }
-        const parsed = parse(dateString, format, new Date(), { locale });
-        if (!isNaN(parsed.getTime())) {
-          localDate = parsed;
-          break;
-        }
-      } catch {
-        // Ignore parse errors and try next format
-      }
-    }
-
-    if (!localDate) {
-      console.warn(`Could not parse date string: "${dateString}"`);
-      return null;
-    }
-
-    const utcDate = fromZonedTime(localDate, timezone);
-
-    return utcDate;
   }
 }
