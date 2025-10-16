@@ -42,6 +42,7 @@ export const competitionSchema = z.object({
         }),
       ),
       olCompetitionId: z.string(),
+      countryCode: z.string(),
     })
     .optional(),
 });
