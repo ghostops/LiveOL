@@ -35,10 +35,6 @@ export class EventorSignupsScraper {
 
       const isRelay = $('.relayLineupEntryList').length > 0;
 
-      if (isRelay) {
-        console.log('Event contains relay entries, which are not supported.');
-      }
-
       $('.entryList').each((_, table) => {
         const classHeader = $(table).prev().text().trim();
         const className = classHeader.replace(/\s*\(\d+\)\s*$/, '').trim();

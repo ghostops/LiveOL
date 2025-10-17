@@ -11,6 +11,7 @@ import type { LiveresultatApi } from 'lib/liveresultat/types';
 import { APIResponse, apiSingletons } from 'lib/singletons';
 import crypto from 'crypto';
 import { OrganizationId, RunnerId } from 'lib/match/generateIds';
+import logger from 'lib/logger';
 
 export class SyncLiveClassJob {
   private api: APIResponse;
@@ -39,11 +40,11 @@ export class SyncLiveClassJob {
       await this.insertSplitControls(id, results);
       await this.insertResults(id, results);
 
-      console.log(
+      logger.info(
         `Class ${this.className} (${this.competitionId}) synced successfully.`,
       );
     } catch (error) {
-      console.error('Error syncing class:', error);
+      logger.error(`Error syncing class: ${error}`);
     }
   }
 

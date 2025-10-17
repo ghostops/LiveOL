@@ -1,6 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import * as cheerio from 'cheerio';
 import { EventorUrls } from './urls';
+import logger from 'lib/logger';
 
 export interface EventorResult {
   className: string;
@@ -75,15 +76,13 @@ export class EventorResultsScraper {
         (error as AxiosError).response &&
         (error as AxiosError).response?.status === 404
       ) {
-        console.warn(
+        logger.warn(
           `Eventor event results with ID ${this.eventorId} not found (404).`,
         );
         return [];
       }
-      console.error(
-        this.eventorId,
-        'Failed to fetch or parse Eventor results:',
-        error,
+      logger.error(
+        `Failed to fetch or parse Eventor results: ID ${this.eventorId} ${error}`,
       );
       return [];
     }

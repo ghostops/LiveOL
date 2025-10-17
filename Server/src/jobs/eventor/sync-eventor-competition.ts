@@ -11,6 +11,7 @@ import {
   EventorCompetition,
   EventorCompetitionScraper,
 } from 'lib/eventor/scrapers/competition';
+import logger from 'lib/logger';
 
 export class SyncEventorCompetition {
   private api: APIResponse;
@@ -45,7 +46,7 @@ export class SyncEventorCompetition {
       //   await this.insertEventorClass(cls);
       // }
 
-      console.log(`Eventor competition ${data.id} synced successfully.`);
+      logger.info(`Eventor competition ${data.id} synced successfully.`);
     } catch (error) {
       console.error('Error syncing eventor competition:', error);
     }
@@ -54,7 +55,7 @@ export class SyncEventorCompetition {
   private async insertEventorCompetition(event: EventorCompetition) {
     const body: Omit<
       typeof EventorCompetitionsTable.$inferInsert,
-      'eventorId' | 'date'
+      'eventorId' | 'countryCode'
     > = {
       name: event.name,
       organizer: event.club,
@@ -78,7 +79,6 @@ export class SyncEventorCompetition {
         competitionName: event.name,
         organizationName: event.club,
       }),
-      countryCode: this.countryCode,
       dateString: event.date,
       punchSystem: event.punchSystem,
       lat: event.lat,
@@ -106,6 +106,7 @@ export class SyncEventorCompetition {
           .insert(EventorCompetitionsTable)
           .values({
             eventorId: event.id,
+            countryCode: this.countryCode,
             ...body,
           })
           .returning({
@@ -149,7 +150,7 @@ export class SyncEventorCompetition {
     event?:
       | {
           id: number;
-          utcDate?: Date | null;
+          date?: Date | null;
         }
       | { id: number },
   ) {
@@ -168,11 +169,7 @@ export class SyncEventorCompetition {
       }),
     );
 
-    if (
-      'utcDate' in event &&
-      event.utcDate &&
-      isAfter(new Date(), event.utcDate)
-    ) {
+    if ('date' in event && event.date && isAfter(new Date(), event.date)) {
       syncs.push(
         this.api.Queue.addJob({
           name: 'sync-eventor-results',

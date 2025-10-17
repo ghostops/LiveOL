@@ -8,6 +8,7 @@ import type { LiveresultatApi } from 'lib/liveresultat/types';
 import { APIResponse, apiSingletons } from 'lib/singletons';
 import { parse } from 'date-fns';
 import { CompetitionId, OrganizationId } from 'lib/match/generateIds';
+import logger from 'lib/logger';
 
 export class SyncLiveCompetitionJob {
   private api: APIResponse;
@@ -33,11 +34,11 @@ export class SyncLiveCompetitionJob {
 
       await this.dispatchSyncClasses(classes);
 
-      console.log(
+      logger.info(
         `Competition ${competition.name} (${this.competitionId}) synced successfully.`,
       );
     } catch (error) {
-      console.error('Error syncing competition:', error, this.competitionId);
+      logger.error(`Error syncing competition: ${error} ${this.competitionId}`);
     }
   }
 

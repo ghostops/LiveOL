@@ -2,6 +2,7 @@ import { parse } from 'date-fns';
 import { and, eq, isNotNull, isNull } from 'drizzle-orm';
 import { EventorCompetitionsTable } from 'lib/db/schema';
 import { parseDateWithAI } from 'lib/genai';
+import logger from 'lib/logger';
 import { APIResponse, apiSingletons } from 'lib/singletons';
 
 export class EventorDateParser {
@@ -27,7 +28,7 @@ export class EventorDateParser {
       .limit(10);
 
     if (!withMissingDates.length) {
-      console.log('No competitions with missing dates found.');
+      logger.info('No competitions with missing dates found.');
       return;
     }
 
@@ -37,7 +38,7 @@ export class EventorDateParser {
     const parsedDates = await this.parseDateToUtc(dateStrings);
 
     if (!parsedDates) {
-      console.log('No dates could be parsed.');
+      logger.warn('No dates could be parsed.');
       return;
     }
 
@@ -51,13 +52,13 @@ export class EventorDateParser {
       }
       index++;
     }
-    console.log(`Parsed dates of ${withMissingDates.length} competitions.`);
+    logger.info(`Parsed dates of ${withMissingDates.length} competitions.`);
   }
 
   private async parseDateToUtc(dateStrings: string[] = []) {
     const aiString = await parseDateWithAI(dateStrings);
     if (!aiString || aiString === 'INVALID') {
-      console.warn(`AI could not parse date string: "${dateStrings}"`);
+      logger.warn(`AI could not parse date string: "${dateStrings}"`);
       return null;
     }
     const dates = aiString.match(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z/g);
@@ -67,7 +68,7 @@ export class EventorDateParser {
     );
 
     if (!utcDates) {
-      console.warn(`Could not parse date string: "${aiString}"`);
+      logger.warn(`Could not parse date string: "${aiString}"`);
       return null;
     }
 

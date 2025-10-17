@@ -13,6 +13,7 @@ import {
 } from 'lib/db/schema';
 import { snakeCase } from 'lodash';
 import { OrganizationId, RunnerId } from 'lib/match/generateIds';
+import logger from 'lib/logger';
 
 export class SyncEventorResultsJob {
   private scraper: EventorResultsScraper | null = null;
@@ -36,8 +37,8 @@ export class SyncEventorResultsJob {
     }
 
     this.scraper = new EventorResultsScraper(
-      competition.eventorId,
       competition.countryCode,
+      competition.eventorId,
     );
 
     const results = await this.scraper.fetchResults();
@@ -46,7 +47,7 @@ export class SyncEventorResultsJob {
       await this.insertEventorResult(result);
     }
 
-    console.log(
+    logger.info(
       `Eventor results for event ${this.eventorDatabaseId} synced successfully.`,
     );
   }

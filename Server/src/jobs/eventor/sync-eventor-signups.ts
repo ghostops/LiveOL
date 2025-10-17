@@ -13,6 +13,7 @@ import { APIResponse, apiSingletons } from 'lib/singletons';
 import crypto from 'crypto';
 import { snakeCase } from 'lodash';
 import { OrganizationId, RunnerId } from 'lib/match/generateIds';
+import logger from 'lib/logger';
 
 export class SyncEventorSignupsJob {
   private api: APIResponse;
@@ -46,7 +47,7 @@ export class SyncEventorSignupsJob {
       await this.insertEventorSignup(signup);
     }
 
-    console.log(
+    logger.info(
       `Eventor signups for event ${competition.eventorId} synced successfully.`,
     );
   }

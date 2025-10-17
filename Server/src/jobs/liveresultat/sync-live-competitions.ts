@@ -1,5 +1,6 @@
 import { addDays, isAfter, parse } from 'date-fns';
 import type { LiveresultatApi } from 'lib/liveresultat/types';
+import logger from 'lib/logger';
 import { APIResponse, apiSingletons } from 'lib/singletons';
 import _ from 'lodash';
 
@@ -23,9 +24,9 @@ export class SyncLiveCompetitionsJob {
         batches.map(batch => this.dispatchCompetitionSync(batch)),
       );
 
-      console.log(`Dispatched live competitions for sync.`);
+      logger.info(`Dispatched live competitions for sync.`);
     } catch (error) {
-      console.error('Error syncing competitions:', error);
+      logger.error(`Error syncing competitions: ${error}`);
     }
   }
 

@@ -8,6 +8,7 @@ import { SyncEventorSignupsJob } from 'jobs/eventor/sync-eventor-signups';
 import { SyncLiveClassJob } from 'jobs/liveresultat/sync-live-class';
 import { SyncLiveCompetitionJob } from 'jobs/liveresultat/sync-live-competition';
 import { SyncLiveCompetitionsJob } from 'jobs/liveresultat/sync-live-competitions';
+import logger from './logger';
 
 type OLQueueMessage = {
   name: string;
@@ -59,7 +60,7 @@ export class OLQueue {
     }
     this.worker.run();
     this.worker.on('ready', () => {
-      console.log('Worker is ready');
+      logger.info('Worker is ready');
     });
     this.worker.on('error', e => {
       console.error('Queue error:', e.stack || e);
@@ -109,7 +110,7 @@ export class OLQueue {
         new EventorDateParser().run();
         break;
       default:
-        console.warn(`Unknown job type: ${job.name}`);
+        logger.warn(`Unknown job type: ${job.name}`);
         break;
     }
     return true;
