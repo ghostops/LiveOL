@@ -100,10 +100,10 @@ export class OLQueue {
         ).run();
         break;
       case 'sync-eventor-signups':
-        new SyncEventorSignupsJob(job.data.eventorId).run();
+        new SyncEventorSignupsJob(job.data.eventorDatabaseId).run();
         break;
       case 'sync-eventor-results':
-        new SyncEventorResultsJob(job.data.eventorId).run();
+        new SyncEventorResultsJob(job.data.eventorDatabaseId).run();
         break;
       case 'parse-eventor-dates':
         new EventorDateParser().run();

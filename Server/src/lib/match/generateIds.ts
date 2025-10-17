@@ -1,11 +1,3 @@
-/**
- * ToDo:
- * 1. Handle too long ids, max 255 chars in the database
- * 2. Handle special characters (like åäö) - maybe use some library for slugification
- * 3. Handle multiple organizations (clubs) - maybe remove common endings like "OK", "IF", "SK", "FK", "SOK", "AIK", "KFUM"
- * 4. Maybe check for spelling mistakes somehow, cannot compare so it has to be from common static logic
- */
-
 const globalSeparator = '~';
 const noOrganizationId = 'noorg';
 const maxIdLength = 255;

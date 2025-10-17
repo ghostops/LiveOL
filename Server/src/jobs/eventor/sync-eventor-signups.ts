@@ -1,5 +1,6 @@
 import { eq } from 'drizzle-orm';
 import {
+  EventorCompetitionsTable,
   EventorSignupsTable,
   OLOrganizationsTable,
   OLRunnersTable,
@@ -15,14 +16,30 @@ import { OrganizationId, RunnerId } from 'lib/match/generateIds';
 
 export class SyncEventorSignupsJob {
   private api: APIResponse;
-  private scraper: EventorSignupsScraper;
+  private scraper: EventorSignupsScraper | null = null;
 
-  constructor(private eventorId: string) {
+  constructor(private eventorDatabaseId: number) {
     this.api = apiSingletons.createApiSingletons();
-    this.scraper = new EventorSignupsScraper(this.eventorId);
   }
 
   async run() {
+    const [competition] = await this.api.Drizzle.db
+      .select()
+      .from(EventorCompetitionsTable)
+      .where(eq(EventorCompetitionsTable.id, this.eventorDatabaseId))
+      .limit(1);
+
+    if (!competition) {
+      throw new Error(
+        `Eventor competition with database ID ${this.eventorDatabaseId} not found.`,
+      );
+    }
+
+    this.scraper = new EventorSignupsScraper(
+      competition.countryCode,
+      competition.eventorId,
+    );
+
     const results = await this.scraper.fetchEntries();
 
     for (const signup of results) {
@@ -30,7 +47,7 @@ export class SyncEventorSignupsJob {
     }
 
     console.log(
-      `Eventor signups for event ${this.eventorId} synced successfully.`,
+      `Eventor signups for event ${competition.eventorId} synced successfully.`,
     );
   }
 
@@ -43,8 +60,8 @@ export class SyncEventorSignupsJob {
 
     const body: typeof EventorSignupsTable.$inferInsert = {
       signupId: hashedSignupId,
-      eventorClassId: `${this.eventorId}-${snakeCase(signup.className)}`,
-      eventorId: this.eventorId,
+      eventorClassId: `${this.eventorDatabaseId}-${snakeCase(signup.className)}`,
+      eventorDatabaseId: this.eventorDatabaseId,
       name: signup.name,
       organization: signup.club,
       punchCardNumber: signup.siCard,

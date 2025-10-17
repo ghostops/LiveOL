@@ -6,6 +6,7 @@ import { APIResponse, apiSingletons } from 'lib/singletons';
 import crypto from 'crypto';
 import { eq } from 'drizzle-orm';
 import {
+  EventorCompetitionsTable,
   EventorResultsTable,
   OLOrganizationsTable,
   OLRunnersTable,
@@ -14,15 +15,31 @@ import { snakeCase } from 'lodash';
 import { OrganizationId, RunnerId } from 'lib/match/generateIds';
 
 export class SyncEventorResultsJob {
-  private scraper: EventorResultsScraper;
+  private scraper: EventorResultsScraper | null = null;
   private api: APIResponse;
 
-  constructor(private eventorId: string) {
-    this.scraper = new EventorResultsScraper(eventorId);
+  constructor(private eventorDatabaseId: number) {
     this.api = apiSingletons.createApiSingletons();
   }
 
   async run() {
+    const [competition] = await this.api.Drizzle.db
+      .select()
+      .from(EventorCompetitionsTable)
+      .where(eq(EventorCompetitionsTable.id, this.eventorDatabaseId))
+      .limit(1);
+
+    if (!competition) {
+      throw new Error(
+        `Eventor competition with database ID ${this.eventorDatabaseId} not found.`,
+      );
+    }
+
+    this.scraper = new EventorResultsScraper(
+      competition.eventorId,
+      competition.countryCode,
+    );
+
     const results = await this.scraper.fetchResults();
 
     for (const result of results) {
@@ -30,7 +47,7 @@ export class SyncEventorResultsJob {
     }
 
     console.log(
-      `Eventor results for event ${this.eventorId} synced successfully.`,
+      `Eventor results for event ${this.eventorDatabaseId} synced successfully.`,
     );
   }
 
@@ -43,8 +60,8 @@ export class SyncEventorResultsJob {
 
     const body: typeof EventorResultsTable.$inferInsert = {
       resultId: hashedSignupId,
-      eventorClassId: `${this.eventorId}-${snakeCase(result.className)}`,
-      eventorId: this.eventorId,
+      eventorClassId: `${this.eventorDatabaseId}-${snakeCase(result.className)}`,
+      eventorDatabaseId: this.eventorDatabaseId,
       place: result.position,
       name: result.name,
       organization: result.club,

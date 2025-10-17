@@ -20,7 +20,6 @@ export const getEventorResultsForCompetition = defaultEndpointsFactory.build({
     results: z.array(
       z.object({
         eventorClassId: z.string(),
-        eventorId: z.string(),
         olRunnerId: z.string(),
         place: z.string().nullish(),
         name: z.string().nullish(),
@@ -47,7 +46,8 @@ export const getEventorResultsForCompetition = defaultEndpointsFactory.build({
     const results = await api.Drizzle.db
       .select()
       .from(EventorResultsTable)
-      .where(eq(EventorResultsTable.eventorId, competition.eventorId));
+      // TODO: FIX THIS
+      .where(eq(EventorResultsTable.eventorDatabaseId, 1));
 
     return { results };
   },

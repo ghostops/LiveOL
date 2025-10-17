@@ -150,7 +150,6 @@ export class EventorCompetitionScraper {
       clubs: rows[this.metadata.clubs],
       clubLogoUrl: rows[this.metadata.clubLogoUrl],
       district: rows[this.metadata.district],
-      competitionDistance: rows[this.metadata.competitionDistance],
       competitionType: rows[this.metadata.competitionType],
       status: rows[this.metadata.status],
       punchSystem: rows[this.metadata.punchSystem],
@@ -166,7 +165,6 @@ type EventorMetadataInformationKeys =
   | 'clubs'
   | 'clubLogoUrl'
   | 'district'
-  | 'competitionDistance'
   | 'competitionType'
   | 'status'
   | 'punchSystem'
@@ -183,7 +181,6 @@ const eventorMetadataInformationI18n: Record<
     clubs: 'Arrangörsorganisationer',
     clubLogoUrl: 'Arrangörsorganisation',
     district: 'Distrikt',
-    competitionDistance: 'Tävlingsdistans',
     competitionType: 'Gren',
     status: 'Status',
     punchSystem: 'Stämplingssystem',
@@ -196,10 +193,21 @@ const eventorMetadataInformationI18n: Record<
     clubs: 'Organisers',
     clubLogoUrl: 'Organiser',
     district: 'State',
-    competitionDistance: 'Race distance',
     competitionType: 'Discipline',
     status: 'Status',
     punchSystem: 'Punching systems',
     distance: 'Race distance',
+  },
+  no: {
+    name: 'Konkurranse',
+    date: 'Dato',
+    club: 'Arrangørorganisasjon',
+    clubs: 'Arrangørorganisasjoner',
+    clubLogoUrl: 'Arrangørorganisasjon',
+    district: 'Distrikt',
+    competitionType: 'Lysforhold',
+    status: 'Status',
+    punchSystem: 'Stemplingssystem',
+    distance: 'Distanse',
   },
 };

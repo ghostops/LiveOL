@@ -9,44 +9,69 @@ async function runJob() {
     process.exit(1);
   }
 
-  const jobName = process.argv[2];
+  const methodName = process.argv[2];
+  const jobName = process.argv[3];
+  const jobArgs: string[] = process.argv.slice(4);
+  const jobData: Record<string, string> = {};
 
-  if (jobName === 'purge') {
+  for (const arg of jobArgs) {
+    const [key, value] = arg.split('=');
+    if (key && value) {
+      jobData[key] = value;
+    }
+  }
+
+  if (methodName === 'purge') {
     await q.purge();
   }
 
-  if (jobName === 'run') {
+  if (methodName === 'run' && jobName) {
     await q.addJob({
-      name: 'sync-eventor-competition',
-      data: {
-        eventorId: '23185',
-        countryCode: 'au',
-      },
+      name: jobName,
+      data: jobData,
     });
-    await q.addJob({
-      name: 'sync-eventor-competition',
-      data: {
-        eventorId: '55138',
-        countryCode: 'se',
-      },
-    });
-    // await q.addJob({
-    //   name: 'sync-eventor-competitions',
-    //   data: {
-    //     startDate: '2025-10-05',
-    //     endDate: '2025-10-06',
-    //     countryCode: 'au',
-    //   },
-    // });
-
-    // await q.addJob({
-    //   name: 'sync-live-competitions',
-    //   data: {
-    //     startDate: '2025-10-05',
-    //     endDate: '2025-10-06',
-    //   },
-    // });
   }
+  // await q.addJob({
+  //   name: 'parse-eventor-dates',
+  //   data: {},
+  // });
+  // await q.addJob({
+  //   name: 'sync-eventor-competition',
+  //   data: {
+  //     eventorId: '22600',
+  //     countryCode: 'no',
+  //   },
+  // });
+  // await q.addJob({
+  //   name: 'sync-eventor-competition',
+  //   data: {
+  //     eventorId: '23185',
+  //     countryCode: 'au',
+  //   },
+  // });
+  // await q.addJob({
+  //   name: 'sync-eventor-competition',
+  //   data: {
+  //     eventorId: '49056',
+  //     countryCode: 'se',
+  //   },
+  // });
+  // await q.addJob({
+  //   name: 'sync-eventor-competitions',
+  //   data: {
+  //     startDate: '2025-10-05',
+  //     endDate: '2025-10-06',
+  //     countryCode: 'au',
+  //   },
+  // });
+
+  // await q.addJob({
+  //   name: 'sync-live-competitions',
+  //   data: {
+  //     startDate: '2025-10-05',
+  //     endDate: '2025-10-06',
+  //   },
+  // });
 
   process.exit(0);
 }

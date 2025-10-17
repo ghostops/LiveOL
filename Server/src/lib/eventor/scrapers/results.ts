@@ -1,5 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import * as cheerio from 'cheerio';
+import { EventorUrls } from './urls';
 
 export interface EventorResult {
   className: string;
@@ -14,8 +15,19 @@ export interface EventorResult {
 export class EventorResultsScraper {
   private readonly url: string;
 
-  constructor(private eventId: string) {
-    this.url = `https://eventor.orientering.se/Events/ResultList?eventId=${eventId}&groupBy=EventClass`;
+  constructor(
+    private countryCode: string,
+    private eventorId: string,
+  ) {
+    if (!eventorId) {
+      throw new Error('Eventor ID is required');
+    }
+    const url =
+      EventorUrls[this.countryCode.toLowerCase() as keyof typeof EventorUrls];
+    if (!url) {
+      throw new Error(`Unsupported country code: ${this.countryCode}`);
+    }
+    this.url = `${url}/Events/ResultList?eventId=${this.eventorId}&groupBy=EventClass`;
   }
 
   async fetchResults(): Promise<EventorResult[]> {
@@ -64,12 +76,12 @@ export class EventorResultsScraper {
         (error as AxiosError).response?.status === 404
       ) {
         console.warn(
-          `Eventor event results with ID ${this.eventId} not found (404).`,
+          `Eventor event results with ID ${this.eventorId} not found (404).`,
         );
         return [];
       }
       console.error(
-        this.eventId,
+        this.eventorId,
         'Failed to fetch or parse Eventor results:',
         error,
       );

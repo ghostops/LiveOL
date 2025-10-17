@@ -1,12 +1,10 @@
 import { eq } from 'drizzle-orm';
 import {
-  EventorClassesTable,
   EventorCompetitionsTable,
   OLCompetitionsTable,
   OLOrganizationsTable,
 } from 'lib/db/schema';
 import { APIResponse, apiSingletons } from 'lib/singletons';
-import { snakeCase } from 'lodash';
 import { isAfter } from 'date-fns';
 import { CompetitionId, OrganizationId } from 'lib/match/generateIds';
 import {
@@ -95,15 +93,24 @@ export class SyncEventorCompetition {
       .where(eq(EventorCompetitionsTable.eventorId, event.id))
       .limit(1);
 
-    existing
+    const [createdOrUpdated] = existing
       ? await this.api.Drizzle.db
           .update(EventorCompetitionsTable)
           .set(body)
           .where(eq(EventorCompetitionsTable.eventorId, event.id))
-      : await this.api.Drizzle.db.insert(EventorCompetitionsTable).values({
-          eventorId: event.id,
-          ...body,
-        });
+          .returning({
+            id: EventorCompetitionsTable.id,
+            date: EventorCompetitionsTable.date,
+          })
+      : await this.api.Drizzle.db
+          .insert(EventorCompetitionsTable)
+          .values({
+            eventorId: event.id,
+            ...body,
+          })
+          .returning({
+            id: EventorCompetitionsTable.id,
+          });
 
     await this.api.Drizzle.db
       .insert(OLCompetitionsTable)
@@ -119,46 +126,58 @@ export class SyncEventorCompetition {
       })
       .onConflictDoNothing();
 
-    await this.dispatchOtherDataSyncs(event, existing?.date);
+    await this.dispatchOtherDataSyncs(createdOrUpdated);
   }
 
-  private async insertEventorClass(cls: string) {
-    const eventorClassId = `${this.eventorId}-${snakeCase(cls.toLowerCase())}`;
+  // private async insertEventorClass(cls: string) {
+  //   const eventorClassId = `${this.eventorId}-${snakeCase(cls.toLowerCase())}`;
 
-    const [existing] = await this.api.Drizzle.db
-      .select()
-      .from(EventorClassesTable)
-      .where(eq(EventorClassesTable.eventorClassId, eventorClassId))
-      .limit(1);
+  //   const [existing] = await this.api.Drizzle.db
+  //     .select()
+  //     .from(EventorClassesTable)
+  //     .where(eq(EventorClassesTable.eventorClassId, eventorClassId))
+  //     .limit(1);
 
-    if (!existing) {
-      await this.api.Drizzle.db
-        .insert(EventorClassesTable)
-        .values({ eventorClassId, eventorId: this.eventorId, name: cls });
-    }
-  }
+  //   if (!existing) {
+  //     await this.api.Drizzle.db
+  //       .insert(EventorClassesTable)
+  //       .values({ eventorClassId, eventorId: this.eventorId, name: cls });
+  //   }
+  // }
 
   private dispatchOtherDataSyncs(
-    event: EventorCompetition,
-    utcDate?: Date | null,
+    event?:
+      | {
+          id: number;
+          utcDate?: Date | null;
+        }
+      | { id: number },
   ) {
+    if (!event) {
+      return Promise.resolve();
+    }
+
     const syncs = [];
 
     syncs.push(
       this.api.Queue.addJob({
         name: 'sync-eventor-signups',
         data: {
-          eventorId: event.id,
+          eventorDatabaseId: event.id,
         },
       }),
     );
 
-    if (utcDate && isAfter(new Date(), utcDate)) {
+    if (
+      'utcDate' in event &&
+      event.utcDate &&
+      isAfter(new Date(), event.utcDate)
+    ) {
       syncs.push(
         this.api.Queue.addJob({
           name: 'sync-eventor-results',
           data: {
-            eventorId: event.id,
+            eventorDatabaseId: event.id,
           },
         }),
       );

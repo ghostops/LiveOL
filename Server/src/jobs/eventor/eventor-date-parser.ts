@@ -4,9 +4,6 @@ import { EventorCompetitionsTable } from 'lib/db/schema';
 import { parseDateWithAI } from 'lib/genai';
 import { APIResponse, apiSingletons } from 'lib/singletons';
 
-// ToDo:
-// - Rate limit this to match the free tier rate limits
-// - Schedule this job to run every so often
 export class EventorDateParser {
   private api: APIResponse;
   constructor() {
@@ -15,54 +12,65 @@ export class EventorDateParser {
 
   async run() {
     const withMissingDates = await this.api.Drizzle.db
-      .select()
+      .select({
+        id: EventorCompetitionsTable.id,
+        dateString: EventorCompetitionsTable.dateString,
+      })
       .from(EventorCompetitionsTable)
       .where(
         and(
           isNull(EventorCompetitionsTable.date),
           isNotNull(EventorCompetitionsTable.dateString),
         ),
-      );
+      )
+      // This limit is to avoid being rate limited
+      .limit(10);
 
     if (!withMissingDates.length) {
       console.log('No competitions with missing dates found.');
       return;
     }
 
-    let parsed = 0;
-    for (const competition of withMissingDates) {
-      if (!competition.dateString) {
-        continue;
-      }
-      const parsedDate = await this.parseDateToUtc(competition.dateString);
+    const dateStrings: string[] = withMissingDates
+      .map(c => c.dateString as string)
+      .filter(Boolean);
+    const parsedDates = await this.parseDateToUtc(dateStrings);
+
+    if (!parsedDates) {
+      console.log('No dates could be parsed.');
+      return;
+    }
+
+    let index = 0;
+    for (const parsedDate of parsedDates) {
       if (parsedDate) {
         await this.api.Drizzle.db
           .update(EventorCompetitionsTable)
           .set({ date: parsedDate })
-          .where(eq(EventorCompetitionsTable.id, competition.id));
-        parsed++;
+          .where(eq(EventorCompetitionsTable.id, withMissingDates[index]!.id));
       }
+      index++;
     }
-    console.log(
-      `Parsed ${parsed} dates out of ${withMissingDates.length} competitions.`,
-    );
+    console.log(`Parsed dates of ${withMissingDates.length} competitions.`);
   }
 
-  private async parseDateToUtc(dateString: string = '') {
-    if (!dateString) return null;
-
-    const aiString = await parseDateWithAI(dateString);
+  private async parseDateToUtc(dateStrings: string[] = []) {
+    const aiString = await parseDateWithAI(dateStrings);
     if (!aiString || aiString === 'INVALID') {
-      console.warn(`AI could not parse date string: "${dateString}"`);
+      console.warn(`AI could not parse date string: "${dateStrings}"`);
       return null;
     }
-    const utcDate = parse(aiString, "yyyy-MM-dd'T'HH:mm:ssX", new Date());
+    const dates = aiString.match(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z/g);
 
-    if (!utcDate) {
+    const utcDates = dates?.map(date =>
+      parse(date, "yyyy-MM-dd'T'HH:mm:ssX", new Date()),
+    );
+
+    if (!utcDates) {
       console.warn(`Could not parse date string: "${aiString}"`);
       return null;
     }
 
-    return utcDate;
+    return utcDates;
   }
 }
