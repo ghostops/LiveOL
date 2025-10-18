@@ -11,8 +11,7 @@ import {
 } from 'lib/eventor/scrapers/signups';
 import { APIResponse, apiSingletons } from 'lib/singletons';
 import crypto from 'crypto';
-import { snakeCase } from 'lodash';
-import { OrganizationId, RunnerId } from 'lib/match/generateIds';
+import { ClassId, OrganizationId, RunnerId } from 'lib/match/generateIds';
 import logger from 'lib/logger';
 
 export class SyncEventorSignupsJob {
@@ -61,7 +60,7 @@ export class SyncEventorSignupsJob {
 
     const body: typeof EventorSignupsTable.$inferInsert = {
       signupId: hashedSignupId,
-      eventorClassId: `${this.eventorDatabaseId}-${snakeCase(signup.className)}`,
+      olClassId: new ClassId().generateId({ className: signup.className }),
       eventorDatabaseId: this.eventorDatabaseId,
       name: signup.name,
       organization: signup.club,

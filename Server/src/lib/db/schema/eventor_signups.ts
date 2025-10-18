@@ -4,7 +4,7 @@ import { commonFields } from './commonFields';
 export const EventorSignupsTable = pgTable('eventor_signups', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   signupId: varchar({ length: 64 }).notNull().unique(),
-  eventorClassId: varchar({ length: 255 }).notNull(),
+  olClassId: varchar({ length: 255 }).notNull(),
   eventorDatabaseId: integer().notNull(),
   name: varchar({ length: 255 }).notNull(),
   organization: varchar({ length: 255 }),

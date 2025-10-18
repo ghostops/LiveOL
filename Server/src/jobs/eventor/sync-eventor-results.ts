@@ -11,8 +11,7 @@ import {
   OLOrganizationsTable,
   OLRunnersTable,
 } from 'lib/db/schema';
-import { snakeCase } from 'lodash';
-import { OrganizationId, RunnerId } from 'lib/match/generateIds';
+import { ClassId, OrganizationId, RunnerId } from 'lib/match/generateIds';
 import logger from 'lib/logger';
 
 export class SyncEventorResultsJob {
@@ -61,7 +60,7 @@ export class SyncEventorResultsJob {
 
     const body: typeof EventorResultsTable.$inferInsert = {
       resultId: hashedSignupId,
-      eventorClassId: `${this.eventorDatabaseId}-${snakeCase(result.className)}`,
+      olClassId: new ClassId().generateId({ className: result.className }),
       eventorDatabaseId: this.eventorDatabaseId,
       place: result.position,
       name: result.name,

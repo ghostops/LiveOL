@@ -41,11 +41,6 @@ export class SyncEventorCompetition {
 
       await this.insertEventorCompetition(data);
 
-      // ToDo: Reimplement or scrap?
-      // for (const cls of data.ageClasses.concat(data.openClasses)) {
-      //   await this.insertEventorClass(cls);
-      // }
-
       logger.info(`Eventor competition ${data.id} synced successfully.`);
     } catch (error) {
       console.error('Error syncing eventor competition:', error);
@@ -129,22 +124,6 @@ export class SyncEventorCompetition {
 
     await this.dispatchOtherDataSyncs(createdOrUpdated);
   }
-
-  // private async insertEventorClass(cls: string) {
-  //   const eventorClassId = `${this.eventorId}-${snakeCase(cls.toLowerCase())}`;
-
-  //   const [existing] = await this.api.Drizzle.db
-  //     .select()
-  //     .from(EventorClassesTable)
-  //     .where(eq(EventorClassesTable.eventorClassId, eventorClassId))
-  //     .limit(1);
-
-  //   if (!existing) {
-  //     await this.api.Drizzle.db
-  //       .insert(EventorClassesTable)
-  //       .values({ eventorClassId, eventorId: this.eventorId, name: cls });
-  //   }
-  // }
 
   private dispatchOtherDataSyncs(
     event?:

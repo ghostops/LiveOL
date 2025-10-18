@@ -5,7 +5,6 @@ export * from './ol_users';
 export * from './ol_tracking';
 export * from './ol_runners';
 export * from './ol_organizations';
-export * from './eventor_classes';
 export * from './eventor_competitions';
 export * from './eventor_signups';
 export * from './eventor_results';

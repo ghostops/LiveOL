@@ -19,7 +19,7 @@ export const getEventorResultsForCompetition = defaultEndpointsFactory.build({
   output: z.object({
     results: z.array(
       z.object({
-        eventorClassId: z.string(),
+        olClassId: z.string(),
         olRunnerId: z.string(),
         place: z.string().nullish(),
         name: z.string().nullish(),

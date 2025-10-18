@@ -74,3 +74,57 @@ export class CompetitionId {
     return norm(`${opts.competitionName}${globalSeparator}${orgName}`);
   }
 }
+
+export class ClassId {
+  private prefixes = {
+    // Swedish
+    herrar: 'h',
+    herr: 'h',
+    dam: 'd',
+    damer: 'd',
+    pojkar: 'h',
+    flickor: 'd',
+    // English
+    men: 'h',
+    women: 'd',
+    male: 'h',
+    female: 'd',
+    // Norwegian/Danish variants
+    gutter: 'h',
+    jenter: 'd',
+    // generic
+    m: 'h',
+    f: 'd',
+    w: 'd',
+  };
+
+  private normalizeClass(raw: string): string {
+    let s = raw.toLowerCase().trim();
+    s = s.replace(/[^a-z0-9åäö\s]/gi, '').replace(/\s+/g, '');
+
+    for (const [k, v] of Object.entries(this.prefixes)) {
+      if (s.startsWith(k)) {
+        s = s.replace(k, v);
+        break;
+      }
+    }
+
+    // extract gender
+    let gender = '';
+    const gmatch = s.match(/^(h|d)/); // 'h' = men, 'd' = women
+    if (gmatch) gender = gmatch[1]!;
+
+    // extract number (age)
+    const ageMatch = s.match(/(\d{1,2})/);
+    const age = ageMatch ? ageMatch[1] : '';
+
+    // optional: elite suffix
+    const elite = /e$/.test(s) ? 'e' : '';
+
+    return `${gender}${age}${elite}`; // e.g. h21e, d20, h35
+  }
+
+  public generateId(opts: { className: string }): string {
+    return this.normalizeClass(opts.className);
+  }
+}
