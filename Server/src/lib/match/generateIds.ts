@@ -84,6 +84,8 @@ export class ClassId {
     damer: 'd',
     pojkar: 'h',
     flickor: 'd',
+    svart: 'black',
+    // Finnish
     // English
     men: 'h',
     women: 'd',

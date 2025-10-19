@@ -9,6 +9,7 @@ import { SyncLiveClassJob } from 'jobs/liveresultat/sync-live-class';
 import { SyncLiveCompetitionJob } from 'jobs/liveresultat/sync-live-competition';
 import { SyncLiveCompetitionsJob } from 'jobs/liveresultat/sync-live-competitions';
 import logger from './logger';
+import { SyncEventorStartsJob } from 'jobs/eventor/sync-eventor-starts';
 
 type OLQueueMessage = {
   name: string;
@@ -105,6 +106,9 @@ export class OLQueue {
         break;
       case 'sync-eventor-results':
         new SyncEventorResultsJob(job.data.eventorDatabaseId).run();
+        break;
+      case 'sync-eventor-starts':
+        new SyncEventorStartsJob(job.data.eventorDatabaseId).run();
         break;
       case 'parse-eventor-dates':
         new EventorDateParser().run();

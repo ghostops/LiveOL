@@ -5,7 +5,7 @@ import {
   OLOrganizationsTable,
 } from 'lib/db/schema';
 import { APIResponse, apiSingletons } from 'lib/singletons';
-import { isAfter } from 'date-fns';
+import { isAfter, subDays } from 'date-fns';
 import { CompetitionId, OrganizationId } from 'lib/match/generateIds';
 import {
   EventorCompetition,
@@ -148,15 +148,28 @@ export class SyncEventorCompetition {
       }),
     );
 
-    if ('date' in event && event.date && isAfter(new Date(), event.date)) {
-      syncs.push(
-        this.api.Queue.addJob({
-          name: 'sync-eventor-results',
-          data: {
-            eventorDatabaseId: event.id,
-          },
-        }),
-      );
+    if ('date' in event && event.date) {
+      if (isAfter(new Date(), subDays(event.date, 7))) {
+        syncs.push(
+          this.api.Queue.addJob({
+            name: 'sync-eventor-starts',
+            data: {
+              eventorDatabaseId: event.id,
+            },
+          }),
+        );
+      }
+
+      if (isAfter(new Date(), event.date)) {
+        syncs.push(
+          this.api.Queue.addJob({
+            name: 'sync-eventor-results',
+            data: {
+              eventorDatabaseId: event.id,
+            },
+          }),
+        );
+      }
     }
 
     return Promise.all(syncs);

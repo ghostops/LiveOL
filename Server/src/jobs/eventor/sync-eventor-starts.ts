@@ -1,22 +1,22 @@
+import { APIResponse, apiSingletons } from 'lib/singletons';
+import crypto from 'crypto';
 import { eq } from 'drizzle-orm';
 import {
   EventorCompetitionsTable,
-  EventorSignupsTable,
+  EventorStartTable,
   OLOrganizationsTable,
   OLRunnersTable,
 } from 'lib/db/schema';
-import {
-  EventorSignup,
-  EventorSignupsScraper,
-} from 'lib/eventor/scrapers/signups';
-import { APIResponse, apiSingletons } from 'lib/singletons';
-import crypto from 'crypto';
 import { ClassId, OrganizationId, RunnerId } from 'lib/match/generateIds';
 import logger from 'lib/logger';
+import {
+  EventorStart,
+  EventorStartsScraper,
+} from 'lib/eventor/scrapers/starts';
 
-export class SyncEventorSignupsJob {
+export class SyncEventorStartsJob {
+  private scraper: EventorStartsScraper | null = null;
   private api: APIResponse;
-  private scraper: EventorSignupsScraper | null = null;
 
   constructor(private eventorDatabaseId: number) {
     this.api = apiSingletons.createApiSingletons();
@@ -35,60 +35,62 @@ export class SyncEventorSignupsJob {
       );
     }
 
-    this.scraper = new EventorSignupsScraper(
+    this.scraper = new EventorStartsScraper(
       competition.countryCode,
       competition.eventorId,
     );
 
-    const results = await this.scraper.fetchEntries();
+    const results = await this.scraper.fetchResults();
 
-    for (const signup of results) {
-      await this.insertEventorSignup(signup);
+    for (const result of results) {
+      await this.insertEventorStart(result);
     }
 
     logger.info(
-      `Eventor signups for event ${competition.id} synced successfully.`,
+      `Eventor start times for event ${this.eventorDatabaseId} synced successfully.`,
     );
   }
 
-  private async insertEventorSignup(signup: EventorSignup) {
-    const signupCompositeId = `${signup.className}-${signup.name}-${signup.club}-${signup.siCard}`;
+  private async insertEventorStart(result: EventorStart) {
+    const startCompositeId = `${result.className}-${result.name}-${result.club}-${result.startTime}`;
     const hashedSignupId = crypto
       .createHash('md5')
-      .update(signupCompositeId)
+      .update(startCompositeId)
       .digest('hex');
 
-    const body: typeof EventorSignupsTable.$inferInsert = {
-      signupId: hashedSignupId,
-      olClassId: new ClassId().generateId({ className: signup.className }),
+    const body: typeof EventorStartTable.$inferInsert = {
+      startId: hashedSignupId,
       eventorDatabaseId: this.eventorDatabaseId,
-      name: signup.name,
-      organization: signup.club,
-      punchCardNumber: signup.siCard,
+      name: result.name,
+      organization: result.club,
+      olClassId: new ClassId().generateId({
+        className: result.className,
+      }),
       olOrganizationId: new OrganizationId().generateId({
-        organizationName: signup.club,
+        organizationName: result.club,
       }),
       olRunnerId: new RunnerId().generateId({
-        className: signup.className,
-        fullName: signup.name,
-        organizationName: signup.club,
+        fullName: result.name,
+        organizationName: result.club,
+        className: result.className,
       }),
+      startTime: result.startTime,
     };
 
     let [runner] = await this.api.Drizzle.db
       .select()
-      .from(EventorSignupsTable)
-      .where(eq(EventorSignupsTable.signupId, hashedSignupId))
+      .from(EventorStartTable)
+      .where(eq(EventorStartTable.startId, hashedSignupId))
       .limit(1);
 
     if (runner) {
       await this.api.Drizzle.db
-        .update(EventorSignupsTable)
+        .update(EventorStartTable)
         .set(body)
-        .where(eq(EventorSignupsTable.signupId, hashedSignupId));
+        .where(eq(EventorStartTable.startId, hashedSignupId));
     } else {
       [runner] = await this.api.Drizzle.db
-        .insert(EventorSignupsTable)
+        .insert(EventorStartTable)
         .values({ ...body })
         .returning();
     }
