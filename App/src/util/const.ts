@@ -18,6 +18,7 @@ export const COLORS = {
   BLACK: '#000500',
   BLUE: '#2B59C3',
   GREEN: '#417B5A',
+  WHITE: '#FFFFFF',
 };
 
 export const HIT_SLOP = { top: 10, left: 10, right: 10, bottom: 10 };

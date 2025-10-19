@@ -108,10 +108,22 @@ export class SyncEventorCompetition {
             id: EventorCompetitionsTable.id,
           });
 
+    if (!createdOrUpdated) {
+      return;
+    }
+
+    await this.saveOtherModels(body);
+    await this.dispatchOtherDataSyncs(createdOrUpdated);
+  }
+
+  private async saveOtherModels(event: {
+    olOrganizationId: string;
+    olCompetitionId: string;
+  }) {
     await this.api.Drizzle.db
       .insert(OLCompetitionsTable)
       .values({
-        id: body.olCompetitionId,
+        id: event.olCompetitionId,
         countryCode: this.countryCode,
       })
       .onConflictDoUpdate({
@@ -121,12 +133,8 @@ export class SyncEventorCompetition {
 
     await this.api.Drizzle.db
       .insert(OLOrganizationsTable)
-      .values({
-        id: body.olOrganizationId,
-      })
+      .values({ id: event.olOrganizationId })
       .onConflictDoNothing();
-
-    await this.dispatchOtherDataSyncs(createdOrUpdated);
   }
 
   private dispatchOtherDataSyncs(

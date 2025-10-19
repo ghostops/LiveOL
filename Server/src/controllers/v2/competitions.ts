@@ -6,84 +6,59 @@ import {
 } from 'lib/db/schema';
 import { apiSingletons } from 'lib/singletons';
 import { z } from 'zod/v4';
-import { count, eq, isNull, or } from 'drizzle-orm';
+import { eq, sql } from 'drizzle-orm';
 
 const api = apiSingletons.createApiSingletons();
 
 export const competitionSchema = z.object({
   id: z.string(),
-  live: z
-    .object({
-      name: z.string(),
-      organizer: z.string().nullish(),
-      olOrganizationId: z.string(),
-      date: z.string(),
-      isPublic: z.boolean(),
-      olCompetitionId: z.string(),
-    })
-    .optional(),
-  eventor: z
-    .object({
-      eventorId: z.string(),
-      name: z.string(),
-      organizer: z.string().nullish(),
-      olOrganizationId: z.string(),
-      status: z.string().nullish(),
-      date: z.string(),
-      distance: z.string().nullish(),
-      punchSystem: z.string().nullish(),
-      lat: z.number().nullish(),
-      lng: z.number().nullish(),
-      notification: z.string().nullish(),
-      links: z.array(
-        z.object({
-          href: z.string(),
-          text: z.string(),
-        }),
-      ),
-      olCompetitionId: z.string(),
-      countryCode: z.string(),
-    })
-    .optional(),
+  olCompetitionId: z.string(),
+  organizer: z.string().nullish(),
+  olOrganizationId: z.string(),
+  name: z.string(),
+  date: z.string(),
+  eventorId: z.string().nullish(),
+  distance: z.string().nullish(),
+  punchSystem: z.string().nullish(),
+  lat: z.number().nullish(),
+  lng: z.number().nullish(),
+  notification: z.string().nullish(),
+  links: z.array(
+    z.object({
+      href: z.string(),
+      text: z.string(),
+    }),
+  ),
+
+  countryCode: z.string().nullish(),
 });
 
-const fetchCompetitions = async (
-  olCompetitions: (typeof OLCompetitionsTable.$inferSelect)[],
-) => {
-  return await Promise.all(
-    olCompetitions.map(async comp => {
-      const [liveComp] = await api.Drizzle.db
-        .select()
-        .from(LiveCompetitionsTable)
-        .where(eq(LiveCompetitionsTable.olCompetitionId, comp.id))
-        .limit(1);
-      const [eventorComp] = await api.Drizzle.db
-        .select()
-        .from(EventorCompetitionsTable)
-        .where(eq(EventorCompetitionsTable.olCompetitionId, comp.id))
-        .limit(1);
+export type Competition = z.infer<typeof competitionSchema>;
+const marshalCompetition = (competition: {
+  id: string;
+  live: typeof LiveCompetitionsTable.$inferSelect | null;
+  eventor: typeof EventorCompetitionsTable.$inferSelect | null;
+}): Competition => {
+  // Eventor will have prio always
+  const e = competition.eventor;
+  const l = competition.live;
 
-      return {
-        id: comp.id,
-        live: liveComp
-          ? {
-              ...liveComp,
-              date: liveComp.date ? liveComp.date.toISOString() : '',
-              isPublic: Boolean(liveComp.isPublic),
-            }
-          : undefined,
-        eventor: eventorComp
-          ? {
-              ...eventorComp,
-              date: eventorComp.date ? eventorComp.date.toISOString() : '',
-              lat: eventorComp.lat ? Number(eventorComp.lat) : undefined,
-              lng: eventorComp.lng ? Number(eventorComp.lng) : undefined,
-              links: eventorComp.links ?? [],
-            }
-          : undefined,
-      };
-    }),
-  );
+  return {
+    id: competition.id,
+    date: e ? (e.date as unknown as string) : (l?.date as unknown as string),
+    lat: e?.lat ? Number(e.lat) : undefined,
+    lng: e?.lng ? Number(e.lng) : undefined,
+    links: e?.links ?? [],
+    name: e?.name ?? l?.name ?? 'Unnamed Competition',
+    olCompetitionId: e ? e.olCompetitionId : l ? l.olCompetitionId : '',
+    olOrganizationId: e ? e.olOrganizationId : l ? l.olOrganizationId : '',
+    organizer: e?.organizer ?? l?.organizer ?? null,
+    eventorId: e?.eventorId ?? null,
+    distance: e?.distance ?? null,
+    punchSystem: e?.punchSystem ?? null,
+    notification: e?.notification ?? null,
+    countryCode: e?.countryCode ?? null,
+  };
 };
 
 export const getCompetitions = defaultEndpointsFactory.build({
@@ -91,45 +66,73 @@ export const getCompetitions = defaultEndpointsFactory.build({
   input: z.object({
     cursor: z.coerce.number().default(1),
     countryCode: z.string().optional(),
+    now: z.coerce.date().optional(),
   }),
   output: z.object({
     page: z.number(),
     lastPage: z.number(),
     nextPage: z.number(),
-    competitions: z.array(competitionSchema),
+    competitions: z.array(
+      z.object({
+        competition_date: z.string(),
+        competitions: z.array(competitionSchema),
+      }),
+    ),
   }),
-  handler: async ({ input: { cursor, countryCode } }) => {
+  handler: async ({ input: { cursor } }) => {
     const page: number = cursor < 1 ? 1 : cursor;
-    const PER_PAGE = 50;
+    const PER_PAGE = 10;
 
-    // Get total count for pagination
-    const [res] = await api.Drizzle.db
-      .select({ count: count() })
-      .from(OLCompetitionsTable)
-      .where(
-        // If we have a country code, filter by it and include all with null country code
-        countryCode
-          ? or(
-              eq(OLCompetitionsTable.countryCode, countryCode),
-              isNull(OLCompetitionsTable.countryCode),
-            )
-          : undefined,
-      );
+    const qRes = await api.Drizzle.db.execute<{
+      competition_date: string;
+      competitions: {
+        competition: typeof OLCompetitionsTable.$inferSelect;
+        live: typeof LiveCompetitionsTable.$inferSelect | null;
+        eventor: typeof EventorCompetitionsTable.$inferSelect | null;
+      }[];
+      total_count: string;
+    }>(sql`
+      SELECT 
+        DATE(COALESCE(ec.date, lc.date)) AS competition_date,
+        JSON_AGG(
+          JSON_BUILD_OBJECT(
+            'competition', oc,
+            'live', to_jsonb(lc),
+            'eventor', to_jsonb(ec)
+          )
+        ) AS competitions,
+        COUNT(*) AS total_count
+      FROM ol_competitions AS oc
+      LEFT JOIN live_competitions AS lc 
+        ON lc."olCompetitionId" = oc.id
+      LEFT JOIN eventor_competitions AS ec 
+        ON ec."olCompetitionId" = oc.id
+      GROUP BY 
+        DATE(COALESCE(ec.date, lc.date))
+      ORDER BY 
+        DATE(COALESCE(ec.date, lc.date)) DESC
+      LIMIT ${PER_PAGE}
+      OFFSET ${(page - 1) * PER_PAGE};
+    `);
 
-    const lastPage = Math.max(1, Math.ceil(Number(res?.count) / PER_PAGE));
-    const nextPage = page < lastPage ? page + 1 : lastPage;
-
-    const olCompetitions = await api.Drizzle.db
-      .select()
-      .from(OLCompetitionsTable)
-      .limit(PER_PAGE)
-      .offset((page - 1) * PER_PAGE);
+    const totalCount = Number(qRes.rows[0]?.total_count || 0);
+    const lastPage = Math.ceil(totalCount / PER_PAGE);
+    const nextPage = page < lastPage ? page + 1 : 0;
 
     return {
       page,
       lastPage,
       nextPage,
-      competitions: await fetchCompetitions(olCompetitions),
+      competitions: qRes.rows.map(row => ({
+        competition_date: row.competition_date,
+        competitions: row.competitions.map(comp =>
+          marshalCompetition({
+            id: comp.competition.id,
+            live: comp.live,
+            eventor: comp.eventor,
+          }),
+        ),
+      })),
     };
   },
 });
@@ -148,12 +151,12 @@ export const getCompetition = defaultEndpointsFactory.build({
       .from(OLCompetitionsTable)
       .where(eq(OLCompetitionsTable.id, id));
 
-    const [competition] = await fetchCompetitions(olCompetitions);
+    const [competition] = await olCompetitions;
     if (!competition) {
       throw new Error('Competition not found');
     }
     return {
-      competition,
+      competition: {} as any,
     };
   },
 });

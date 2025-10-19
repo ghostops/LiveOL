@@ -1,18 +1,15 @@
-import { TouchableOpacity, Image, View } from 'react-native';
+import { Image, View } from 'react-native';
 import { useTheme } from '~/hooks/useTheme';
-import { OLIcon } from '~/views/components/icon';
 import { useTranslation } from 'react-i18next';
 import { OLText } from '~/views/components/text';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { COLORS } from '~/util/const';
-import { useOLNavigation } from '~/hooks/useNavigation';
 
 const LOGO = require('../../../../assets/images/icon.png');
 
 export const HomeHeader: React.FC = () => {
   const { t } = useTranslation();
-  const { hitSlop, px } = useTheme();
-  const { navigate } = useOLNavigation();
+  const { px } = useTheme();
   const { top } = useSafeAreaInsets();
 
   return (
@@ -43,21 +40,13 @@ export const HomeHeader: React.FC = () => {
           />
         </View>
 
-        <View>
+        <View style={{ flex: 1, alignItems: 'center' }}>
           <OLText size={18} style={{ color: '#fff' }}>
             {t('home.title')}
           </OLText>
         </View>
 
-        <View>
-          <TouchableOpacity
-            onPress={() => navigate('Info')}
-            style={{ marginRight: px(16) }}
-            hitSlop={hitSlop}
-          >
-            <OLIcon name="information-circle" size={24} color="white" />
-          </TouchableOpacity>
-        </View>
+        <View style={{ flex: 0.25 }} />
       </View>
     </View>
   );

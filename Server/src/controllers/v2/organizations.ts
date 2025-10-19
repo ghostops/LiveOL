@@ -1,4 +1,3 @@
-import { competitionSchema } from 'controllers/v2/competitions';
 import { eq, sql } from 'drizzle-orm';
 import { defaultEndpointsFactory } from 'express-zod-api';
 import {
@@ -70,7 +69,7 @@ export const getOrganizationCompetitions = defaultEndpointsFactory.build({
     id: z.string(),
   }),
   output: z.object({
-    competitions: z.array(competitionSchema),
+    competitions: z.any(),
   }),
   handler: async ({ input: { id } }) => {
     const [olOrganization] = await api.Drizzle.db

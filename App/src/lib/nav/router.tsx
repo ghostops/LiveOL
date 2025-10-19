@@ -9,6 +9,7 @@ import { OLClubResults } from '~/views/scenes/club/container';
 import { NavigationContainer } from '@react-navigation/native';
 import { HomeHeader } from '~/views/scenes/home/header';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { COLORS } from '~/util/const';
 import { BackButton } from './backButton';
 import { ResultMenuIcon } from '~/views/scenes/results/menuIcon';
@@ -21,8 +22,17 @@ import { useOLNavigationRef } from '~/hooks/useNavigation';
 import { OLTrackRunner } from '~/views/scenes/track/container';
 import type { OLTrackingData } from '~/views/components/follow/followSheet';
 import { OLEditTrackRunner } from '~/views/scenes/track-edit/container';
+import { OLSceneHome } from '~/views/scenes/homev2';
+
+export type TabStack = {
+  Home: undefined;
+  Info: undefined;
+};
 
 export type RootStack = {
+  HomeTabs: undefined;
+
+  // Old
   Home: undefined;
   Info: undefined;
   Competition: {
@@ -53,6 +63,25 @@ export type RootStack = {
 
 const Stack = createNativeStackNavigator<RootStack>();
 
+const Tabs = createBottomTabNavigator<TabStack>({
+  screens: {
+    Home: OLSceneHome,
+    Info: OLInfo,
+  },
+});
+
+const OLHomeTabs: React.FC = () => {
+  return (
+    <Tabs.Navigator
+      screenOptions={{ headerShown: false }}
+      initialRouteName="Home"
+    >
+      <Tabs.Screen name="Home" component={OLSceneHome} />
+      <Tabs.Screen name="Info" component={OLInfo} />
+    </Tabs.Navigator>
+  );
+};
+
 const Component: React.FC = () => {
   const { t } = useTranslation();
   const { setNavRef } = useOLNavigationRef();
@@ -62,7 +91,7 @@ const Component: React.FC = () => {
       <StatusBar translucent />
 
       <Stack.Navigator
-        initialRouteName="Home"
+        initialRouteName="HomeTabs"
         screenOptions={{
           headerLeft: () => <BackButton />,
           headerStyle: {
@@ -75,6 +104,13 @@ const Component: React.FC = () => {
           headerTitleAlign: 'center',
         }}
       >
+        <Stack.Screen
+          name="HomeTabs"
+          component={OLHomeTabs}
+          options={{
+            header: () => <HomeHeader />,
+          }}
+        />
         <Stack.Screen
           name="Home"
           component={OLHome}
