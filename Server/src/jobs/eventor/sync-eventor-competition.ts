@@ -112,8 +112,12 @@ export class SyncEventorCompetition {
       .insert(OLCompetitionsTable)
       .values({
         id: body.olCompetitionId,
+        countryCode: this.countryCode,
       })
-      .onConflictDoNothing();
+      .onConflictDoUpdate({
+        target: OLCompetitionsTable.id,
+        set: { countryCode: this.countryCode },
+      });
 
     await this.api.Drizzle.db
       .insert(OLOrganizationsTable)

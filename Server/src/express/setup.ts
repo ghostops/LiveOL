@@ -10,14 +10,7 @@ import {
   getResultsForClub,
   getSplitControls,
 } from 'controllers/results';
-import {
-  getTrackedRunners,
-  removeTrackedRunner,
-  trackNewRunner,
-  getTrackedRunner,
-  updateTrackedRunner,
-} from 'controllers/track';
-import { createConfig, DependsOnMethod, Routing } from 'express-zod-api';
+import { createConfig, Routing } from 'express-zod-api';
 import {
   getCompetitions as getCompetitionsV2,
   getCompetition as getCompetitionV2,
@@ -50,14 +43,6 @@ export const routing: Routing = {
 
   'v1/plus/validate': validatePlusCode,
   'v1/plus/redeem': redeemPlusCode,
-
-  'v1/track/add': trackNewRunner,
-  'v1/track': getTrackedRunners,
-  'v1/track/:id': new DependsOnMethod({
-    delete: removeTrackedRunner,
-    get: getTrackedRunner,
-    put: updateTrackedRunner,
-  }),
 
   'v2/competitions': getCompetitionsV2,
   'v2/competitions/:id': getCompetitionV2,

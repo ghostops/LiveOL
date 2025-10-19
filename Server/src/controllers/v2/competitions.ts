@@ -6,7 +6,7 @@ import {
 } from 'lib/db/schema';
 import { apiSingletons } from 'lib/singletons';
 import { z } from 'zod/v4';
-import { count, eq } from 'drizzle-orm';
+import { count, eq, isNull, or } from 'drizzle-orm';
 
 const api = apiSingletons.createApiSingletons();
 
@@ -90,6 +90,7 @@ export const getCompetitions = defaultEndpointsFactory.build({
   method: 'get',
   input: z.object({
     cursor: z.coerce.number().default(1),
+    countryCode: z.string().optional(),
   }),
   output: z.object({
     page: z.number(),
@@ -97,14 +98,23 @@ export const getCompetitions = defaultEndpointsFactory.build({
     nextPage: z.number(),
     competitions: z.array(competitionSchema),
   }),
-  handler: async ({ input: { cursor, search } }) => {
+  handler: async ({ input: { cursor, countryCode } }) => {
     const page: number = cursor < 1 ? 1 : cursor;
     const PER_PAGE = 50;
 
     // Get total count for pagination
     const [res] = await api.Drizzle.db
       .select({ count: count() })
-      .from(OLCompetitionsTable);
+      .from(OLCompetitionsTable)
+      .where(
+        // If we have a country code, filter by it and include all with null country code
+        countryCode
+          ? or(
+              eq(OLCompetitionsTable.countryCode, countryCode),
+              isNull(OLCompetitionsTable.countryCode),
+            )
+          : undefined,
+      );
 
     const lastPage = Math.max(1, Math.ceil(Number(res?.count) / PER_PAGE));
     const nextPage = page < lastPage ? page + 1 : lastPage;
@@ -117,7 +127,6 @@ export const getCompetitions = defaultEndpointsFactory.build({
 
     return {
       page,
-      search,
       lastPage,
       nextPage,
       competitions: await fetchCompetitions(olCompetitions),
