@@ -23,14 +23,20 @@ import { OLTrackRunner } from '~/views/scenes/track/container';
 import type { OLTrackingData } from '~/views/components/follow/followSheet';
 import { OLEditTrackRunner } from '~/views/scenes/track-edit/container';
 import { OLSceneHome } from '~/views/scenes/homev2';
+import { OLSceneTracking } from '~/views/scenes/tracking';
+import { OLSceneCompetitionV2 } from '~/views/scenes/competitionv2';
+import { OLIcon } from '~/views/components/icon';
+import { OLText } from '~/views/components/text';
 
 export type TabStack = {
   Home: undefined;
-  Info: undefined;
+  Profile: undefined;
+  Tracking: undefined;
 };
 
 export type RootStack = {
   HomeTabs: undefined;
+  CompetitionV2: { olCompetitionId: string };
 
   // Old
   Home: undefined;
@@ -62,22 +68,88 @@ export type RootStack = {
 };
 
 const Stack = createNativeStackNavigator<RootStack>();
-
-const Tabs = createBottomTabNavigator<TabStack>({
-  screens: {
-    Home: OLSceneHome,
-    Info: OLInfo,
-  },
-});
+const Tabs = createBottomTabNavigator<TabStack>();
 
 const OLHomeTabs: React.FC = () => {
+  const { t } = useTranslation();
+
   return (
     <Tabs.Navigator
-      screenOptions={{ headerShown: false }}
+      screenOptions={{
+        headerShown: false,
+        tabBarStyle: {
+          backgroundColor: COLORS.MAIN,
+          borderTopColor: COLORS.DARK,
+        },
+      }}
       initialRouteName="Home"
     >
-      <Tabs.Screen name="Home" component={OLSceneHome} />
-      <Tabs.Screen name="Info" component={OLInfo} />
+      <Tabs.Screen
+        name="Tracking"
+        component={OLSceneTracking}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <OLIcon
+              name="search"
+              size={20}
+              color={COLORS.WHITE}
+              style={{ opacity: focused ? 1 : 0.8 }}
+            />
+          ),
+          tabBarLabel: ({ focused }) => (
+            <OLText
+              size={11}
+              style={{ opacity: focused ? 1 : 0.8, color: COLORS.WHITE }}
+            >
+              {t('tabs.follow')}
+            </OLText>
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="Home"
+        component={OLSceneHome}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <OLIcon
+              name="search"
+              size={20}
+              color={COLORS.WHITE}
+              style={{ opacity: focused ? 1 : 0.8 }}
+            />
+          ),
+          tabBarLabel: ({ focused }) => (
+            <OLText
+              size={11}
+              style={{ opacity: focused ? 1 : 0.8, color: COLORS.WHITE }}
+            >
+              {t('tabs.home')}
+            </OLText>
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="Profile"
+        component={OLInfo}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <OLIcon
+              name="search"
+              size={20}
+              color={COLORS.WHITE}
+              style={{ opacity: focused ? 1 : 0.8 }}
+            />
+          ),
+          tabBarLabel: ({ focused }) => (
+            <OLText
+              size={11}
+              style={{ opacity: focused ? 1 : 0.8, color: COLORS.WHITE }}
+            >
+              {t('tabs.profile')}
+            </OLText>
+          ),
+        }}
+      />
     </Tabs.Navigator>
   );
 };
@@ -111,6 +183,12 @@ const Component: React.FC = () => {
             header: () => <HomeHeader />,
           }}
         />
+        <Stack.Screen
+          name="CompetitionV2"
+          component={OLSceneCompetitionV2}
+          options={{}}
+        />
+
         <Stack.Screen
           name="Home"
           component={OLHome}

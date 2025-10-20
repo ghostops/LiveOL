@@ -1,9 +1,10 @@
-import { Image, View } from 'react-native';
+import { Image, TouchableOpacity, View } from 'react-native';
 import { useTheme } from '~/hooks/useTheme';
 import { useTranslation } from 'react-i18next';
 import { OLText } from '~/views/components/text';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { COLORS } from '~/util/const';
+import { OLIcon } from '~/views/components/icon';
 
 const LOGO = require('../../../../assets/images/icon.png');
 
@@ -46,7 +47,11 @@ export const HomeHeader: React.FC = () => {
           </OLText>
         </View>
 
-        <View style={{ flex: 0.25 }} />
+        <View style={{ marginRight: px(16) }}>
+          <TouchableOpacity onPress={() => {}} hitSlop={16}>
+            <OLIcon name="search" color="#fff" style={{ fontSize: 20 }} />
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );

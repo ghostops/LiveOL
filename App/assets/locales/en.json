@@ -236,5 +236,10 @@
       "MU",
       "FIN"
     ]
+  },
+  "tabs": {
+    "follow": "Following",
+    "home": "Competitions",
+    "profile": "Profile"
   }
 }

@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { useOLNavigation } from '~/hooks/useNavigation';
 import { useTheme } from '~/hooks/useTheme';
 import { $api } from '~/lib/react-query/api';
 import { paths } from '~/lib/react-query/schema';
@@ -13,6 +14,7 @@ import { OLText } from '~/views/components/text';
 
 export const OLSceneHome = () => {
   const { colors } = useTheme();
+  const { navigate } = useOLNavigation();
 
   const getCompetitionsQuery = $api.useInfiniteQuery(
     'get',
@@ -59,7 +61,14 @@ export const OLSceneHome = () => {
         }}
         renderItem={({ item }) => {
           return (
-            <TouchableOpacity style={style.item}>
+            <TouchableOpacity
+              style={style.item}
+              onPress={() => {
+                navigate('CompetitionV2', {
+                  olCompetitionId: item.olCompetitionId,
+                });
+              }}
+            >
               <OLText>{item.id}</OLText>
             </TouchableOpacity>
           );
