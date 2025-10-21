@@ -10,10 +10,13 @@ import { useTheme } from '~/hooks/useTheme';
 import { $api } from '~/lib/react-query/api';
 import { paths } from '~/lib/react-query/schema';
 import { COLORS } from '~/util/const';
+import { OLLoading } from '~/views/components/loading';
 import { OLText } from '~/views/components/text';
+import { OLHomeBadge } from './badge';
+import { flagEmoji } from '~/util/flagEmoji';
 
 export const OLSceneHome = () => {
-  const { colors } = useTheme();
+  const { colors, px } = useTheme();
   const { navigate } = useOLNavigation();
 
   const getCompetitionsQuery = $api.useInfiniteQuery(
@@ -30,7 +33,7 @@ export const OLSceneHome = () => {
       getNextPageParam: (
         res: paths['/v2/competitions']['get']['responses']['200']['content']['application/json'],
       ) => {
-        if (res.data.nextPage >= res.data.lastPage) {
+        if (!res.data.nextPage || res.data.nextPage >= res.data.lastPage) {
           return undefined;
         }
         return res.data.nextPage;
@@ -69,7 +72,41 @@ export const OLSceneHome = () => {
                 });
               }}
             >
-              <OLText>{item.id}</OLText>
+              <View style={style.row}>
+                <View style={{ flex: 1 }}>
+                  <OLText size={16} numberOfLines={1} style={{ flexShrink: 1 }}>
+                    {item.name}
+                  </OLText>
+                </View>
+              </View>
+              <View style={[style.row, { marginTop: px(2) }]}>
+                <View style={{ flex: 1 }}>
+                  {item.countryCode && flagEmoji[item.countryCode] && (
+                    <OLText>{flagEmoji[item.countryCode]}</OLText>
+                  )}
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    gap: px(2),
+                  }}
+                >
+                  {item.hasLiveData && (
+                    <OLHomeBadge
+                      text="Live"
+                      background={colors.RED}
+                      color={colors.WHITE}
+                    />
+                  )}
+                  {item.hasEventorData && (
+                    <OLHomeBadge
+                      text="Eventor"
+                      background={colors.BLUE}
+                      color={colors.WHITE}
+                    />
+                  )}
+                </View>
+              </View>
             </TouchableOpacity>
           );
         }}
@@ -82,13 +119,13 @@ export const OLSceneHome = () => {
             tintColor={colors.MAIN}
           />
         }
-        // ListFooterComponent={
-        //   getCompetitionsQuery.isFetchingNextPage ? (
-        //     <View style={{ padding: px(16) }}>
-        //       <OLLoading />
-        //     </View>
-        //   ) : null
-        // }
+        ListFooterComponent={
+          getCompetitionsQuery.isFetchingNextPage ? (
+            <View style={{ padding: px(16) }}>
+              <OLLoading />
+            </View>
+          ) : null
+        }
         onEndReached={() => {
           getCompetitionsQuery.fetchNextPage();
         }}
@@ -107,5 +144,9 @@ const style = StyleSheet.create({
     backgroundColor: COLORS.WHITE,
     borderBottomWidth: 1,
     borderBottomColor: COLORS.BORDER,
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });

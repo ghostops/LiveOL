@@ -6,7 +6,7 @@ import {
 } from 'lib/db/schema';
 import { apiSingletons } from 'lib/singletons';
 import { z } from 'zod/v4';
-import { eq, sql } from 'drizzle-orm';
+import { sql } from 'drizzle-orm';
 
 const api = apiSingletons.createApiSingletons();
 
@@ -29,8 +29,9 @@ export const competitionSchema = z.object({
       text: z.string(),
     }),
   ),
-
   countryCode: z.string().nullish(),
+  hasLiveData: z.boolean(),
+  hasEventorData: z.boolean(),
 });
 
 export type Competition = z.infer<typeof competitionSchema>;
@@ -58,6 +59,8 @@ const marshalCompetition = (competition: {
     punchSystem: e?.punchSystem ?? null,
     notification: e?.notification ?? null,
     countryCode: e?.countryCode ?? null,
+    hasLiveData: !!l,
+    hasEventorData: !!e,
   };
 };
 
@@ -71,7 +74,7 @@ export const getCompetitions = defaultEndpointsFactory.build({
   output: z.object({
     page: z.number(),
     lastPage: z.number(),
-    nextPage: z.number(),
+    nextPage: z.number().nullable(),
     competitions: z.array(
       z.object({
         competition_date: z.string(),
@@ -117,7 +120,7 @@ export const getCompetitions = defaultEndpointsFactory.build({
 
     const totalCount = Number(qRes.rows[0]?.total_count || 0);
     const lastPage = Math.ceil(totalCount / PER_PAGE);
-    const nextPage = page < lastPage ? page + 1 : 0;
+    const nextPage = page < lastPage ? page + 1 : null;
 
     return {
       page,
@@ -146,17 +149,40 @@ export const getCompetition = defaultEndpointsFactory.build({
     competition: competitionSchema,
   }),
   handler: async ({ input: { id } }) => {
-    const olCompetitions = await api.Drizzle.db
-      .select()
-      .from(OLCompetitionsTable)
-      .where(eq(OLCompetitionsTable.id, id));
+    const result = await api.Drizzle.db.execute<{
+      competition: {
+        competition: typeof OLCompetitionsTable.$inferSelect;
+        live: typeof LiveCompetitionsTable.$inferSelect | null;
+        eventor: typeof EventorCompetitionsTable.$inferSelect | null;
+      };
+    }>(sql`
+      SELECT 
+        JSON_BUILD_OBJECT(
+          'competition', to_jsonb(oc),
+          'live', to_jsonb(lc),
+          'eventor', to_jsonb(ec)
+        ) AS competition
+      FROM ol_competitions AS oc
+      LEFT JOIN live_competitions AS lc 
+        ON lc."olCompetitionId" = oc.id
+      LEFT JOIN eventor_competitions AS ec 
+        ON ec."olCompetitionId" = oc.id
+      WHERE oc.id = ${id}
+      LIMIT 1;
+    `);
 
-    const [competition] = await olCompetitions;
-    if (!competition) {
+    const competitionRow = result.rows[0]?.competition;
+
+    if (!competitionRow) {
       throw new Error('Competition not found');
     }
+
     return {
-      competition: {} as any,
+      competition: marshalCompetition({
+        id: competitionRow.competition.id,
+        live: competitionRow.live,
+        eventor: competitionRow.eventor,
+      }),
     };
   },
 });

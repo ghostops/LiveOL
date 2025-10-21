@@ -1,9 +1,7 @@
-import React from 'react';
-import { IconProps } from 'react-native-vector-icons/Icon';
-import Ionicon from 'react-native-vector-icons/Ionicons';
+import { Ionicons } from '@react-native-vector-icons/ionicons';
 
-const IoniconNoTypes: any = Ionicon;
+type IconProps = React.ComponentProps<typeof Ionicons>;
 
 export const OLIcon: React.FC<IconProps> = props => {
-  return <IoniconNoTypes {...props} />;
+  return <Ionicons {...props} />;
 };

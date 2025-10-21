@@ -90,7 +90,7 @@ const OLHomeTabs: React.FC = () => {
         options={{
           tabBarIcon: ({ focused }) => (
             <OLIcon
-              name="search"
+              name={focused ? 'people' : 'people-outline'}
               size={20}
               color={COLORS.WHITE}
               style={{ opacity: focused ? 1 : 0.8 }}
@@ -112,7 +112,7 @@ const OLHomeTabs: React.FC = () => {
         options={{
           tabBarIcon: ({ focused }) => (
             <OLIcon
-              name="search"
+              name={focused ? 'search' : 'search-outline'}
               size={20}
               color={COLORS.WHITE}
               style={{ opacity: focused ? 1 : 0.8 }}
@@ -134,7 +134,7 @@ const OLHomeTabs: React.FC = () => {
         options={{
           tabBarIcon: ({ focused }) => (
             <OLIcon
-              name="search"
+              name={focused ? 'person' : 'person-outline'}
               size={20}
               color={COLORS.WHITE}
               style={{ opacity: focused ? 1 : 0.8 }}
