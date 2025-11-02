@@ -69,7 +69,7 @@ export const getCompetitions = defaultEndpointsFactory.build({
   input: z.object({
     cursor: z.coerce.number().default(1),
     countryCode: z.string().optional(),
-    now: z.coerce.date().optional(),
+    now: z.string().optional(),
   }),
   output: z.object({
     page: z.number(),
