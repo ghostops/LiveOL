@@ -1,5 +1,5 @@
 import { RouteProp, useRoute } from '@react-navigation/native';
-import { View } from 'react-native';
+import { FlatList, TouchableOpacity, View } from 'react-native';
 import { useTheme } from '~/hooks/useTheme';
 import { RootStack } from '~/lib/nav/router';
 import { $api } from '~/lib/react-query/api';
@@ -7,6 +7,9 @@ import { OLText } from '~/views/components/text';
 import { useOLNavigation } from '~/hooks/useNavigation';
 import { useLayoutEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { format } from 'date-fns';
+import { CompetitionInfoBox } from '~/views/components/competition/info';
+import { OLHomeBadge } from '../homev2/badge';
 
 export const OLSceneCompetitionV2 = () => {
   const { colors } = useTheme();
@@ -35,70 +38,119 @@ export const OLSceneCompetitionV2 = () => {
         backgroundColor: colors.WHITE,
       }}
     >
-      <View style={{ padding: 8 }}>
-        {getCompetitionQuery.data?.data.competition.organizer && (
-          <OLText size={16}>
-            {t('competitions.organizedBy')}:{' '}
-            {getCompetitionQuery.data.data.competition.organizer}
-          </OLText>
-        )}
-      </View>
-      {getCompetitionQuery.data?.data.competition && (
-        <>
-          <OLText>
-            OL Organization ID:{' '}
-            {getCompetitionQuery.data.data.competition.olOrganizationId}
-          </OLText>
-          <OLText>
-            Name: {getCompetitionQuery.data.data.competition.name}
-          </OLText>
-          <OLText>
-            Date: {getCompetitionQuery.data.data.competition.date}
-          </OLText>
-          <OLText>
-            Eventor ID:{' '}
-            {getCompetitionQuery.data.data.competition.eventorId || 'N/A'}
-          </OLText>
-          <OLText>
-            Distance:{' '}
-            {getCompetitionQuery.data.data.competition.distance || 'N/A'}
-          </OLText>
-          <OLText>
-            Punch System:{' '}
-            {getCompetitionQuery.data.data.competition.punchSystem || 'N/A'}
-          </OLText>
-          <OLText>
-            Notification:{' '}
-            {getCompetitionQuery.data.data.competition.notification || 'N/A'}
-          </OLText>
-          <OLText>
-            Country Code:{' '}
-            {getCompetitionQuery.data.data.competition.countryCode || 'N/A'}
-          </OLText>
-          <OLText>
-            Has Live Data:{' '}
-            {getCompetitionQuery.data.data.competition.hasLiveData
-              ? 'Yes'
-              : 'No'}
-          </OLText>
-          <OLText>
-            Has Eventor Data:{' '}
-            {getCompetitionQuery.data.data.competition.hasEventorData
-              ? 'Yes'
-              : 'No'}
-          </OLText>
-          <OLText>Links:</OLText>
-          {getCompetitionQuery.data.data.competition.links.map(
-            (link, index) => (
-              <OLText key={index}>
-                {link.text}: {link.href}
-              </OLText>
-            ),
-          )}
-        </>
-      )}
+      <FlatList
+        style={{ flex: 1 }}
+        data={[]}
+        renderItem={() => null}
+        ListHeaderComponent={
+          <View>
+            <View
+              style={{
+                paddingHorizontal: 8,
+                paddingTop: 8,
+                gap: 4,
+                flexDirection: 'row',
+              }}
+            >
+              {getCompetitionQuery.data?.data.competition.hasLiveData && (
+                <OLHomeBadge
+                  text="Live"
+                  background={colors.RED}
+                  color={colors.WHITE}
+                  expanded
+                />
+              )}
+              {getCompetitionQuery.data?.data.competition.hasEventorData && (
+                <OLHomeBadge
+                  text="Eventor"
+                  background={colors.BLUE}
+                  color={colors.WHITE}
+                  expanded
+                />
+              )}
+            </View>
+            <View style={{ padding: 8, gap: 8 }}>
+              <OrganizerText
+                organizer={getCompetitionQuery.data?.data.competition.organizer}
+                organizerId={
+                  getCompetitionQuery.data?.data.competition.olOrganizationId
+                }
+              />
 
-      {/* Add a map view based on lat/lng of competition */}
+              {getCompetitionQuery.data?.data.competition.date && (
+                <OLText size={16}>
+                  {t('competitions.date')}:{' '}
+                  {format(
+                    new Date(getCompetitionQuery.data.data.competition.date),
+                    'PP',
+                  )}
+                  {/* add locale detection to date-fns */}
+                </OLText>
+              )}
+              {getCompetitionQuery.data?.data.competition.distance && (
+                <OLText
+                  size={16}
+                  style={{
+                    textTransform: 'capitalize',
+                  }}
+                >
+                  {t('competitions.distance')}:{' '}
+                  {getCompetitionQuery.data.data.competition.distance}
+                </OLText>
+              )}
+              {getCompetitionQuery.data?.data.competition.punchSystem && (
+                <OLText size={16}>
+                  {t('competitions.punchSystem')}:{' '}
+                  {getCompetitionQuery.data.data.competition.punchSystem}
+                </OLText>
+              )}
+
+              {getCompetitionQuery.data?.data.competition.notification && (
+                <CompetitionInfoBox
+                  infoHtml={
+                    getCompetitionQuery.data.data.competition.notification
+                  }
+                  links={getCompetitionQuery.data.data.competition.links}
+                />
+              )}
+            </View>
+
+            {/* Add a map view based on lat/lng of competition */}
+          </View>
+        }
+      />
     </View>
   );
 };
+
+function OrganizerText({
+  organizer,
+  organizerId,
+}: {
+  organizer: string | null | undefined;
+  organizerId: string | undefined;
+}) {
+  const { t } = useTranslation();
+
+  if (!organizer) {
+    return null;
+  }
+
+  const Text = (
+    <OLText size={16}>
+      {t('competitions.organizedBy')}:{' '}
+      <OLText
+        size={16}
+        style={{ textDecorationLine: organizerId ? 'underline' : 'none' }}
+      >
+        {organizer}
+      </OLText>
+    </OLText>
+  );
+
+  if (organizerId) {
+    return <TouchableOpacity onPress={() => {}}>{Text}</TouchableOpacity>;
+  }
+
+  return Text;
+}

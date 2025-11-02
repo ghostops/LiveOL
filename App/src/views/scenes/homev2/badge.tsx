@@ -6,10 +6,11 @@ type Props = {
   text: string;
   background: string;
   color: string;
+  expanded?: boolean;
 };
 
-export const OLHomeBadge = ({ text, background, color }: Props) => {
-  const [isExpanded, setIsExpanded] = useState(false);
+export const OLHomeBadge = ({ text, background, color, expanded }: Props) => {
+  const [isExpanded, setIsExpanded] = useState(expanded ?? false);
   return (
     <TouchableOpacity
       onPress={() => setIsExpanded(!isExpanded)}

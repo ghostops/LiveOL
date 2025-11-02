@@ -25,6 +25,7 @@ export const competitionSchema = z.object({
   notification: z.string().nullish(),
   links: z.array(
     z.object({
+      // TODO: Add the full eventor link based on country code!!
       href: z.string(),
       text: z.string(),
     }),
