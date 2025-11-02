@@ -1,6 +1,13 @@
-import { endOfMonth, startOfMonth } from 'date-fns';
+import {
+  endOfMonth,
+  startOfMonth,
+  isSameDay,
+  isBefore,
+  isAfter,
+  addDays,
+} from 'date-fns';
+import { toZonedTime } from 'date-fns-tz';
 import _ from 'lodash';
-import moment from 'moment';
 
 const validateDate = (dateString?: string): boolean => {
   if (!dateString) {
@@ -20,15 +27,22 @@ const validateDate = (dateString?: string): boolean => {
   return true;
 };
 
+// Parse a date string in UTC (equivalent to moment.utc(string))
+const parseUTC = (dateString: string): Date => {
+  // For date strings like "2024-01-15", treat them as UTC midnight
+  const date = new Date(dateString + 'T00:00:00Z');
+  return date;
+};
+
 export const isDateToday = (date: string, todaysDate: string): boolean => {
   if (!validateDate(date)) {
     return false;
   }
 
-  const input = moment(date);
-  const today = todaysDate ? moment(todaysDate) : moment.utc();
+  const input = parseUTC(date);
+  const today = todaysDate ? parseUTC(todaysDate) : toZonedTime(new Date(), 'UTC');
 
-  return today.isSame(input, 'date');
+  return isSameDay(today, input);
 };
 
 export const isDateTodayOrFutureWithin7Days = (
@@ -39,12 +53,13 @@ export const isDateTodayOrFutureWithin7Days = (
     return false;
   }
 
-  const input = moment(date);
-  const today = todaysDate ? moment(todaysDate) : moment.utc();
+  const input = parseUTC(date);
+  const today = todaysDate ? parseUTC(todaysDate) : toZonedTime(new Date(), 'UTC');
+  const sevenDaysFromToday = addDays(today, 7);
 
   return (
-    input.isBefore(today.clone().add(7, 'days')) &&
-    (input.isAfter(today) || input.isSame(today, 'date'))
+    isBefore(input, sevenDaysFromToday) &&
+    (isAfter(input, today) || isSameDay(input, today))
   );
 };
 

@@ -1,13 +1,19 @@
 import * as cheerio from 'cheerio';
 import * as _ from 'lodash';
 import { invertKeyValues } from '../helpers/invert';
-import * as moment from 'moment-timezone';
+import { formatISO, getYear } from 'date-fns';
 import {
   EventorCompetitionType,
   EventorCompetitionDistance,
   EventorEventItem,
   EventorListItem,
 } from './types';
+
+// Parse a date string in UTC (equivalent to moment.utc(string))
+const parseUTC = (dateString: string): Date => {
+  // For date strings like "2024-01-15", treat them as UTC midnight
+  return new Date(dateString + 'T00:00:00Z');
+};
 
 const parseClubLogo = (base: string, path: string): string | null => {
   if (!base || !path) return null;
@@ -81,8 +87,8 @@ export class ListResponseParser {
   private currentWeek: string | undefined;
   private currentDay: string | undefined;
 
-  private startDate: moment.Moment | undefined;
-  private endDate: moment.Moment | undefined;
+  private startDate: Date | undefined;
+  private endDate: Date | undefined;
 
   public parse = (): EventorListItem[] => {
     const $ = cheerio.load(this.body);
@@ -111,31 +117,35 @@ export class ListResponseParser {
         endDate = `${endY}-${endM}-${endD}`;
       }
 
-      this.startDate = moment.utc(startDate);
-      this.endDate = moment.utc(endDate);
+      this.startDate = parseUTC(startDate);
+      this.endDate = parseUTC(endDate);
     } catch (err) {
       console.info('No start or end date could be extracted');
-      this.startDate = moment.utc();
-      this.endDate = moment.utc();
+      const now = new Date();
+      this.startDate = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+      this.endDate = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
     }
   };
 
-  private parseDate = (input: string | undefined): moment.Moment | null => {
+  private parseDate = (input: string | undefined): Date | null => {
     if (!input || !this.startDate || !this.endDate) return null;
 
-    // @ts-expect-error nullcheck
-    const [day, month] = input.split(' ')[1].split('/');
+    const parts = input.split(' ')[1]?.split('/');
+    if (!parts || parts.length < 2) return null;
 
-    let year = this.startDate.year();
+    const [day, month] = parts;
+    if (!day || !month) return null;
+
+    let year = getYear(this.startDate);
 
     // If we have an end date for the range, and the year on that date
     // does not match the start, and the month is 1 we can assume
     // it will be January in the end-date
-    if (this.startDate.year() !== this.endDate.year() && month === '1') {
-      year = this.endDate.year();
+    if (getYear(this.startDate) !== getYear(this.endDate) && month === '1') {
+      year = getYear(this.endDate);
     }
 
-    return moment.utc(`${year}-${month}-${day}`, 'YYYY-MM-DD');
+    return parseUTC(`${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`);
   };
 
   private parseRow = (row: CheerioElement): EventorListItem | null => {
@@ -161,7 +171,7 @@ export class ListResponseParser {
         this.currentDay = _.get(row, `children.0.children.0.data`);
       }
 
-      const date = this.parseDate(this.currentDay)?.format();
+      const date = this.parseDate(this.currentDay) ? formatISO(this.parseDate(this.currentDay)!) : undefined;
 
       const canceled = !!(
         row.attribs.class && row.attribs.class.includes('canceled')

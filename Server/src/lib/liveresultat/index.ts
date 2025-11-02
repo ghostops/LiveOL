@@ -1,6 +1,7 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import ms from 'ms';
-import moment from 'moment';
+import { formatISO } from 'date-fns';
+import { formatInTimeZone } from 'date-fns-tz';
 import fs from 'fs';
 import { scrapeAllCompetitions } from './scrape';
 import { LiveresultatReplayer } from './replay';
@@ -183,7 +184,7 @@ export class LiveresultatAPIClient {
       return this.replayer.getCurrentResults();
     }
 
-    console.info(`Read ${file}.json from DEV cache ${moment().format()}`);
+    console.info(`Read ${file}.json from DEV cache ${formatISO(new Date())}`);
 
     const str = fs.readFileSync(`${__dirname}/test/${file}.json`).toString();
 
@@ -195,7 +196,7 @@ export class LiveresultatAPIClient {
           data as LiveresultatApi.getcompetitions
         ).competitions.map(v => ({
           ...v,
-          date: v.date === 'TODAY' ? moment().format('YYYY-MM-DD') : v.date,
+          date: v.date === 'TODAY' ? formatInTimeZone(new Date(), 'UTC', 'yyyy-MM-dd') : v.date,
         })),
       } as LiveresultatApi.getcompetitions;
     }
