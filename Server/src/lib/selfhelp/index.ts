@@ -12,6 +12,10 @@ interface HealthCheck {
 
 export class OLSelfHelper {
   private webhook: IncomingWebhook | undefined;
+  private alertTimestamps: number[] = [];
+  private readonly MAX_ALERTS_PER_HOUR = 4;
+  private readonly ONE_HOUR_MS = 60 * 60 * 1000;
+  private throttleNotificationSent = false;
 
   constructor() {
     if (!process.env.SLACK_WEBHOOK) {
@@ -107,9 +111,55 @@ export class OLSelfHelper {
     }
   };
 
+  private canSendAlert = (): boolean => {
+    const now = Date.now();
+    const oneHourAgo = now - this.ONE_HOUR_MS;
+
+    // Remove timestamps older than 1 hour (sliding window)
+    this.alertTimestamps = this.alertTimestamps.filter(
+      timestamp => timestamp > oneHourAgo,
+    );
+
+    // Check if we're under the limit
+    if (this.alertTimestamps.length < this.MAX_ALERTS_PER_HOUR) {
+      this.alertTimestamps.push(now);
+      this.throttleNotificationSent = false;
+      return true;
+    }
+
+    return false;
+  };
+
   private alert = async (errors: any[]) => {
     if (!this.webhook) {
       console.error(errors);
+      return;
+    }
+
+    // Check if we can send this alert
+    if (!this.canSendAlert()) {
+      if (!this.throttleNotificationSent) {
+        // Send one notification that we're throttling
+        this.throttleNotificationSent = true;
+        console.warn(
+          `Alert throttled: ${errors.length} error(s) suppressed. Max ${this.MAX_ALERTS_PER_HOUR} alerts/hour reached.`,
+        );
+        await this.webhook.send({
+          blocks: [
+            {
+              type: 'section',
+              text: {
+                type: 'mrkdwn',
+                text: `⚠️ *LiveOL Alert Throttling Active*\n\nMax ${this.MAX_ALERTS_PER_HOUR} alerts per hour reached. Further alerts will be suppressed until the rate limit resets.\n\nLast error count: ${errors.length}`,
+              },
+            },
+          ],
+        });
+      } else {
+        console.warn(
+          `Alert suppressed: ${errors.length} error(s). Rate limit active.`,
+        );
+      }
       return;
     }
 
