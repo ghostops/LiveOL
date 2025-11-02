@@ -87,14 +87,12 @@ npx drizzle-kit studio   # Open Drizzle Studio (DB GUI)
 
 ### Server Architecture (Node.js/Express)
 
-**Dual Protocol Server**:
-- **Express + Zod API** on port 3000 (main HTTP API with OpenAPI documentation)
-- **tRPC** on port 3001 (legacy RPC endpoints)
+**HTTP API Server**:
+- **Express + Zod API** on port 3000 (HTTP API with OpenAPI documentation)
 
 **API Structure**:
 - Controllers: `Server/src/controllers/` - Request handlers with Zod validation
 - Express setup: `Server/src/express/setup.ts` - Route definitions
-- tRPC router: `Server/src/trpc/router.ts` - RPC procedures
 - OpenAPI generation: Auto-generated via `express-zod-api`
 
 **Service Layer** (`Server/src/lib/`):
