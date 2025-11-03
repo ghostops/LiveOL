@@ -24,6 +24,7 @@ import {
   getEventorResultsForCompetition,
   getLiveResultsForCompetition,
 } from 'controllers/v2/runners';
+import { getResultByLiveClassId } from 'controllers/v2/results';
 
 export const config = createConfig({
   http: { listen: 3000 },
@@ -51,4 +52,6 @@ export const routing: Routing = {
 
   'v2/organizations/:id': getOrganization,
   'v2/organizations/:id/competitions': getOrganizationCompetitions,
+
+  'v2/results/live/:liveClassId': getResultByLiveClassId,
 };
