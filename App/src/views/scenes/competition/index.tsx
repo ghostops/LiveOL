@@ -60,9 +60,9 @@ export const OLSceneCompetition = () => {
           >
             <TouchableOpacity
               onPress={() => {
-                // navigation.navigate('LiveClassV2', {
-                //   liveClassId: item.liveClassId,
-                // });
+                navigation.navigate('LiveResults', {
+                  liveClassId: item.liveClassId,
+                });
               }}
               style={{
                 padding: 12,
