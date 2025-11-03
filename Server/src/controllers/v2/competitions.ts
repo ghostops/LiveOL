@@ -1,12 +1,13 @@
 import { defaultEndpointsFactory } from 'express-zod-api';
 import {
   EventorCompetitionsTable,
+  LiveClassesTable,
   LiveCompetitionsTable,
   OLCompetitionsTable,
 } from 'lib/db/schema';
 import { apiSingletons } from 'lib/singletons';
 import { z } from 'zod/v4';
-import { sql } from 'drizzle-orm';
+import { eq, sql } from 'drizzle-orm';
 
 const api = apiSingletons.createApiSingletons();
 
@@ -148,6 +149,12 @@ export const getCompetition = defaultEndpointsFactory.build({
   }),
   output: z.object({
     competition: competitionSchema,
+    classes: z.array(
+      z.object({
+        name: z.string(),
+        liveClassId: z.string(),
+      }),
+    ),
   }),
   handler: async ({ input: { id } }) => {
     const result = await api.Drizzle.db.execute<{
@@ -178,12 +185,30 @@ export const getCompetition = defaultEndpointsFactory.build({
       throw new Error('Competition not found');
     }
 
+    let classes: Pick<
+      typeof LiveClassesTable.$inferSelect,
+      'name' | 'liveClassId'
+    >[] = [];
+
+    if (competitionRow.live) {
+      classes = await api.Drizzle.db
+        .select({
+          name: LiveClassesTable.name,
+          liveClassId: LiveClassesTable.liveClassId,
+        })
+        .from(LiveClassesTable)
+        .where(
+          eq(LiveClassesTable.liveClassId, competitionRow.live.id.toString()),
+        );
+    }
+
     return {
       competition: marshalCompetition({
         id: competitionRow.competition.id,
         live: competitionRow.live,
         eventor: competitionRow.eventor,
       }),
+      classes,
     };
   },
 });

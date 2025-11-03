@@ -16,7 +16,7 @@ export const CompetitionInfoBox: React.FC<Props> = ({ infoHtml, links }) => {
     <View
       style={{
         backgroundColor: colors.BLUE,
-        padding: px(16),
+        padding: px(12),
         borderRadius: 4,
       }}
     >
