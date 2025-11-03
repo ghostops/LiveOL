@@ -1,5 +1,4 @@
 import { Job, Queue, Worker } from 'bullmq';
-import Redis from 'ioredis';
 import { EventorDateParser } from 'jobs/eventor/eventor-date-parser';
 import { SyncEventorCompetition } from 'jobs/eventor/sync-eventor-competition';
 import { SyncEventorCompetitions } from 'jobs/eventor/sync-eventor-competitions';
@@ -20,7 +19,6 @@ export class OLQueue {
   public static queueName = 'ol_queue';
 
   private queue: Queue;
-  private connection: Redis;
   private worker: Worker;
 
   constructor(
@@ -28,18 +26,26 @@ export class OLQueue {
     private port: number,
     private password?: string,
   ) {
-    this.connection = new Redis({
+    const connectionOptions = {
       host: this.host,
       port: this.port,
       password: this.password,
       maxRetriesPerRequest: null,
+    };
+
+    // BullMQ will create its own connections from these options
+    this.queue = new Queue(OLQueue.queueName, {
+      connection: connectionOptions,
     });
-    this.queue = new Queue(OLQueue.queueName, { connection: this.connection });
+
     this.worker = new Worker(OLQueue.queueName, this.handleJob, {
       autorun: false,
-      connection: this.connection,
+      connection: connectionOptions,
       concurrency: 1,
       limiter: { duration: 1000, max: 3 },
+      // Skip duplicate jobs - prevents piling up of same scheduled jobs
+      skipStalledCheck: false,
+      skipLockRenewal: false,
     });
   }
 
@@ -53,6 +59,44 @@ export class OLQueue {
         delay: 1000, // initial delay of 1 second
       },
     });
+  }
+
+  public async addRepeatingJob(
+    message: OLQueueMessage,
+    cronPattern: string,
+    jobId: string,
+  ) {
+    // Register the repeatable job - BullMQ handles the scheduling
+    // Skip if running is handled via skipIfExists option
+    await this.queue.add(message.name, message.data, {
+      jobId,
+      repeat: {
+        pattern: cronPattern,
+        // Skip if another job with same key is already scheduled
+        immediately: false,
+      },
+      attempts: 3,
+      removeOnFail: true,
+      removeOnComplete: {
+        count: 0, // Don't keep completed jobs to prevent memory buildup
+      },
+      backoff: {
+        type: 'exponential',
+        delay: 1000,
+      },
+    });
+
+    logger.info(
+      `Registered repeating job: ${message.name} (${cronPattern}) with ID ${jobId}`,
+    );
+  }
+
+  public async removeRepeatingJob(jobId: string) {
+    await this.queue.removeJobScheduler(jobId);
+  }
+
+  public async getRepeatableJobs() {
+    return await this.queue.getJobSchedulers();
   }
 
   public async startWorker() {
@@ -74,7 +118,7 @@ export class OLQueue {
   public async purge() {
     await this.queue.drain();
     await this.queue.close();
-    await this.connection.quit();
+    await this.worker.close();
   }
 
   private async handleJob(job: Job) {

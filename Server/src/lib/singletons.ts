@@ -4,6 +4,7 @@ import { EventorCombiner, CombinedEventorApi } from './eventor/combiner';
 import { getEnv } from './helpers/env';
 import { Drizzle } from './db';
 import { OLQueue } from './queue';
+import { JobScheduler } from './scheduler';
 
 export interface APIResponse {
   Liveresultat: LiveresultatAPIClient;
@@ -12,6 +13,7 @@ export interface APIResponse {
   Redis: Cacher;
   Drizzle: Drizzle;
   Queue: OLQueue;
+  Scheduler: JobScheduler;
 }
 
 export const URLS = {
@@ -70,13 +72,16 @@ class ApiSingletons {
       process.env.REDIS_PASSWORD,
     );
 
+    const drizzle = new Drizzle(getEnv('DATABASE_URL', false));
+
     this.singletons = {
       Liveresultat: liveresultatApi,
       LiveresultatLongCache: liveresultatLongCacheApi,
       Eventor: combinedEventorApi,
       Redis: cache,
-      Drizzle: new Drizzle(getEnv('DATABASE_URL', false)),
+      Drizzle: drizzle,
       Queue: queue,
+      Scheduler: new JobScheduler(drizzle, queue),
     };
 
     return this.singletons;

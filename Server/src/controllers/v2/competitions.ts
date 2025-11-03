@@ -88,6 +88,15 @@ export const getCompetitions = defaultEndpointsFactory.build({
     const page: number = cursor < 1 ? 1 : cursor;
     const PER_PAGE = 10;
 
+    const countRes = await api.Drizzle.db.execute<{ total: string }>(sql`
+      SELECT COUNT(DISTINCT COALESCE(ec.date, lc.date)) as total
+      FROM ol_competitions AS oc
+      LEFT JOIN live_competitions AS lc ON lc."olCompetitionId" = oc.id
+      LEFT JOIN eventor_competitions AS ec ON ec."olCompetitionId" = oc.id
+    `);
+
+    const totalCount = Number(countRes.rows[0]?.total || 0);
+
     const qRes = await api.Drizzle.db.execute<{
       competition_date: string;
       competitions: {
@@ -95,7 +104,6 @@ export const getCompetitions = defaultEndpointsFactory.build({
         live: typeof LiveCompetitionsTable.$inferSelect | null;
         eventor: typeof EventorCompetitionsTable.$inferSelect | null;
       }[];
-      total_count: string;
     }>(sql`
       SELECT 
         DATE(COALESCE(ec.date, lc.date)) AS competition_date,
@@ -105,8 +113,7 @@ export const getCompetitions = defaultEndpointsFactory.build({
             'live', to_jsonb(lc),
             'eventor', to_jsonb(ec)
           )
-        ) AS competitions,
-        COUNT(*) AS total_count
+        ) AS competitions
       FROM ol_competitions AS oc
       LEFT JOIN live_competitions AS lc 
         ON lc."olCompetitionId" = oc.id
@@ -120,7 +127,6 @@ export const getCompetitions = defaultEndpointsFactory.build({
       OFFSET ${(page - 1) * PER_PAGE};
     `);
 
-    const totalCount = Number(qRes.rows[0]?.total_count || 0);
     const lastPage = Math.ceil(totalCount / PER_PAGE);
     const nextPage = page < lastPage ? page + 1 : null;
 
@@ -197,9 +203,7 @@ export const getCompetition = defaultEndpointsFactory.build({
           liveClassId: LiveClassesTable.liveClassId,
         })
         .from(LiveClassesTable)
-        .where(
-          eq(LiveClassesTable.liveClassId, competitionRow.live.id.toString()),
-        );
+        .where(eq(LiveClassesTable.liveCompetitionId, competitionRow.live.id));
     }
 
     return {

@@ -8,7 +8,8 @@
 		"tscheck": "tsc --noEmit",
 		"dev": "nodemon -L -e ts -w ./src -x npm run start | npx pino-pretty",
 		"lint": "eslint ./src",
-		"format": "prettier --config ./.prettierrc.js --write ./src"
+		"format": "prettier --config ./.prettierrc.js --write ./src",
+		"seed:schedules": "ts-node -r tsconfig-paths/register src/scripts/seed-schedules.ts"
 	},
 	"keywords": [],
 	"author": "",

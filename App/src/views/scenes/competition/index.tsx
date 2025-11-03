@@ -1,5 +1,5 @@
 import { RouteProp, useRoute } from '@react-navigation/native';
-import { FlatList, TouchableOpacity, View } from 'react-native';
+import { FlatList, RefreshControl, TouchableOpacity, View } from 'react-native';
 import { useTheme } from '~/hooks/useTheme';
 import { RootStack } from '~/lib/nav/router';
 import { $api } from '~/lib/react-query/api';
@@ -9,11 +9,11 @@ import { useLayoutEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { format } from 'date-fns';
 import { CompetitionInfoBox } from '~/views/components/competition/info';
-import { OLHomeBadge } from '../homev2/badge';
+import { OLHomeBadge } from '../home/badge';
 
-export const OLSceneCompetitionV2 = () => {
+export const OLSceneCompetition = () => {
   const { colors } = useTheme();
-  const { params } = useRoute<RouteProp<RootStack, 'CompetitionV2'>>();
+  const { params } = useRoute<RouteProp<RootStack, 'Competition'>>();
   const navigation = useOLNavigation();
   const { t } = useTranslation();
 
@@ -35,15 +35,41 @@ export const OLSceneCompetitionV2 = () => {
     <View
       style={{
         flex: 1,
-        backgroundColor: colors.WHITE,
+        backgroundColor: colors.BACKGROUND,
       }}
     >
       <FlatList
         style={{ flex: 1 }}
+        contentContainerStyle={{ paddingBottom: 128 }}
+        refreshControl={
+          <RefreshControl
+            refreshing={getCompetitionQuery.isRefetching}
+            onRefresh={() => getCompetitionQuery.refetch()}
+            colors={[colors.MAIN]}
+            tintColor={colors.MAIN}
+          />
+        }
         data={getCompetitionQuery.data?.data.classes || []}
         renderItem={({ item }) => (
-          <View>
-            <OLText>{item.name}</OLText>
+          <View
+            style={{
+              borderTopWidth: 1,
+              borderColor: colors.BORDER,
+              backgroundColor: colors.WHITE,
+            }}
+          >
+            <TouchableOpacity
+              onPress={() => {
+                // navigation.navigate('LiveClassV2', {
+                //   liveClassId: item.liveClassId,
+                // });
+              }}
+              style={{
+                padding: 12,
+              }}
+            >
+              <OLText size={16}>{item.name}</OLText>
+            </TouchableOpacity>
           </View>
         )}
         keyExtractor={item => item.liveClassId}
@@ -121,6 +147,10 @@ export const OLSceneCompetitionV2 = () => {
             </View>
 
             {/* Add a map view based on lat/lng of competition */}
+
+            <OLText size={18} style={{ paddingLeft: 6, marginVertical: 16 }}>
+              {t('competitions.classes')}
+            </OLText>
           </View>
         }
       />

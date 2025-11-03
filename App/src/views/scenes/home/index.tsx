@@ -67,7 +67,7 @@ export const OLSceneHome = () => {
             <TouchableOpacity
               style={style.item}
               onPress={() => {
-                navigate('CompetitionV2', {
+                navigate('Competition', {
                   olCompetitionId: item.olCompetitionId,
                 });
               }}
@@ -127,6 +127,9 @@ export const OLSceneHome = () => {
           ) : null
         }
         onEndReached={() => {
+          if (getCompetitionsQuery.isFetchingNextPage) {
+            return;
+          }
           getCompetitionsQuery.fetchNextPage();
         }}
       />
@@ -137,7 +140,7 @@ export const OLSceneHome = () => {
 const style = StyleSheet.create({
   header: {
     padding: 8,
-    backgroundColor: COLORS.BORDER,
+    backgroundColor: COLORS.BACKGROUND,
   },
   item: {
     padding: 8,
