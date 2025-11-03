@@ -40,8 +40,13 @@ export const OLSceneCompetitionV2 = () => {
     >
       <FlatList
         style={{ flex: 1 }}
-        data={[]}
-        renderItem={() => null}
+        data={getCompetitionQuery.data?.data.classes || []}
+        renderItem={({ item }) => (
+          <View>
+            <OLText>{item.name}</OLText>
+          </View>
+        )}
+        keyExtractor={item => item.liveClassId}
         ListHeaderComponent={
           <View>
             <View
