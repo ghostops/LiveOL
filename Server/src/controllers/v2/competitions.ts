@@ -8,6 +8,8 @@ import {
 import { apiSingletons } from 'lib/singletons';
 import { z } from 'zod/v4';
 import { eq, sql } from 'drizzle-orm';
+import { EventorUrls } from 'lib/eventor/scrapers/urls';
+import { URL } from 'url';
 
 const api = apiSingletons.createApiSingletons();
 
@@ -26,7 +28,6 @@ export const competitionSchema = z.object({
   notification: z.string().nullish(),
   links: z.array(
     z.object({
-      // TODO: Add the full eventor link based on country code!!
       href: z.string(),
       text: z.string(),
     }),
@@ -46,12 +47,21 @@ const marshalCompetition = (competition: {
   const e = competition.eventor;
   const l = competition.live;
 
+  const eventorUrl = e
+    ? EventorUrls[e.countryCode as keyof typeof EventorUrls]
+    : null;
+
   return {
     id: competition.id,
     date: e ? (e.date as unknown as string) : (l?.date as unknown as string),
     lat: e?.lat ? Number(e.lat) : undefined,
     lng: e?.lng ? Number(e.lng) : undefined,
-    links: e?.links ?? [],
+    links: eventorUrl
+      ? e?.links?.map(link => ({
+          href: new URL(link.href, eventorUrl).toString(),
+          text: link.text,
+        })) ?? []
+      : [],
     name: e?.name ?? l?.name ?? 'Unnamed Competition',
     olCompetitionId: e ? e.olCompetitionId : l ? l.olCompetitionId : '',
     olOrganizationId: e ? e.olOrganizationId : l ? l.olOrganizationId : '',

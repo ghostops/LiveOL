@@ -1,5 +1,6 @@
 import { defaultEndpointsFactory } from 'express-zod-api';
 import {
+  LiveClassesTable,
   LiveResultsTable,
   LiveSplitControllsTable,
   LiveSplitResultsTable,
@@ -44,6 +45,7 @@ export const getResultByLiveClassId = defaultEndpointsFactory.build({
     liveClassId: z.string(),
   }),
   output: z.object({
+    className: z.string(),
     results: resultSchema.array(),
     liveSplitControls: z
       .object({
@@ -54,6 +56,14 @@ export const getResultByLiveClassId = defaultEndpointsFactory.build({
       .optional(),
   }),
   handler: async ({ input: { liveClassId } }) => {
+    const classData = await api.Drizzle.db
+      .select()
+      .from(LiveClassesTable)
+      .where(eq(LiveClassesTable.liveClassId, liveClassId))
+      .limit(1);
+
+    const className = classData[0]?.name || 'N/A';
+
     const results = await api.Drizzle.db
       .select()
       .from(LiveResultsTable)
@@ -70,6 +80,7 @@ export const getResultByLiveClassId = defaultEndpointsFactory.build({
       );
 
       return {
+        className,
         results: resultsWithSplits,
         liveSplitControls: liveSplitControls.map(lsc => ({
           name: lsc.name,
@@ -80,6 +91,7 @@ export const getResultByLiveClassId = defaultEndpointsFactory.build({
     }
 
     return {
+      className,
       results,
     };
   },

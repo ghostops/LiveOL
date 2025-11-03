@@ -39,9 +39,25 @@ export const OLRefetcherBar: React.FunctionComponent<Props> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const [windowWidth, setWindowWidth] = useState(
+    Dimensions.get('window').width,
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(Dimensions.get('window').width);
+    };
+
+    const subscription = Dimensions.addEventListener('change', handleResize);
+
+    return () => {
+      subscription?.remove();
+    };
+  }, []);
+
   const width = animatedWidth.interpolate({
     inputRange: [0, 1],
-    outputRange: [-Dimensions.get('window').width, 0],
+    outputRange: [-windowWidth, 0],
   });
 
   return (

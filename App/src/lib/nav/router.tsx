@@ -47,6 +47,7 @@ const OLHomeTabs: React.FC = () => {
           backgroundColor: COLORS.MAIN,
           borderTopColor: COLORS.DARK,
         },
+        title: '...',
       }}
       initialRouteName="Home"
     >
@@ -140,6 +141,7 @@ const Component: React.FC = () => {
           },
           headerShadowVisible: false,
           headerTitleAlign: 'center',
+          title: '...',
         }}
       >
         <Stack.Screen
