@@ -1,17 +1,20 @@
-import { paths } from '~/lib/react-query/schema';
 import { padTime } from './date';
 
-export const startIsAfterNow = (
-  result: paths['/v1/results/{competitionId}/club/{clubName}']['get']['responses']['200']['content']['application/json']['data']['results'][0],
-): boolean => {
-  const diff = result.startTime - nowTimestamp();
+export const startIsAfterNow = (result: { start: number | null }): boolean => {
+  const diff = (result.start || 0) - nowTimestamp();
   return diff < 1;
 };
 
-export const isLiveRunning = (
-  result: paths['/v1/results/{competitionId}/club/{clubName}']['get']['responses']['200']['content']['application/json']['data']['results'][0],
-): boolean => {
-  return !result.result && result.startTime > 0 && startIsAfterNow(result);
+export const isLiveRunning = (result: {
+  result: number | null;
+  start: number | null;
+}): boolean => {
+  return !!(
+    !result.result &&
+    result.start &&
+    result.start > 0 &&
+    startIsAfterNow(result)
+  );
 };
 
 const objectToTimestamp = (dateObj: {

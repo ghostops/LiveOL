@@ -41,7 +41,7 @@ export const OLSceneLiveResults = () => {
         />
       )}
       <ScrollView horizontal>
-        <View style={{ backgroundColor: colors.BACKGROUND, minWidth: '100%' }}>
+        <View style={{ backgroundColor: colors.BACKGROUND }}>
           <OLResultHeader
             liveSplitControls={getResults.data?.data.liveSplitControls}
           />
@@ -52,7 +52,6 @@ export const OLSceneLiveResults = () => {
             renderItem={({ item }) => (
               <View
                 style={{
-                  padding: 16,
                   borderBottomWidth: 1,
                   borderColor: '#ccc',
                 }}

@@ -14,7 +14,7 @@ type Props = {
 
 export const OLResultHeader = (props: Props) => {
   const { t } = useTranslation();
-  const { name, place, splits, start, time } = useRowWidths();
+  const { name, place, splits, time } = useRowWidths();
   return (
     <View
       style={{
@@ -27,22 +27,19 @@ export const OLResultHeader = (props: Props) => {
       <View style={{ width: place, alignItems: 'center' }}>
         <OLText>{t('classes.header.place')}</OLText>
       </View>
-      <View style={{ width: name, alignItems: 'flex-start', paddingLeft: 16 }}>
+      <View style={{ width: name, alignItems: 'flex-start' }}>
         <OLText>{t('classes.header.name')}</OLText>
       </View>
       {props.liveSplitControls?.map(split => (
         <View
           key={split.code}
-          style={{ width: splits, alignItems: 'flex-start', paddingLeft: 16 }}
+          style={{ width: splits, alignItems: 'flex-start' }}
         >
           <OLText>{split.name}</OLText>
         </View>
       ))}
-      <View style={{ width: time, alignItems: 'flex-end' }}>
+      <View style={{ width: time, alignItems: 'flex-end', paddingRight: 8 }}>
         <OLText>{t('classes.header.time')}</OLText>
-      </View>
-      <View style={{ width: start, alignItems: 'flex-end', paddingRight: 16 }}>
-        <OLText>{t('classes.header.start')}</OLText>
       </View>
     </View>
   );
