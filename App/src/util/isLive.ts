@@ -26,6 +26,13 @@ const objectToTimestamp = (dateObj: {
   return timestamp;
 };
 
+export const timestampToString = (time: number) => {
+  const t = timestampToObject(time);
+  return [t.minutes + t.hours * 60, t.seconds]
+    .map(v => padTime(v, 2))
+    .join(':');
+};
+
 const timestampToObject = (time: number) => {
   const hours = Math.floor(time / 360000);
   const minutes = Math.floor((time - hours * 360000) / 6000);

@@ -15,5 +15,6 @@ export const LiveResultsTable = pgTable('live_results', {
   progress: integer().default(0),
   status: integer(),
   place: varchar({ length: 255 }),
+  start: integer(),
   ...commonFields,
 });

@@ -24,6 +24,7 @@ export const resultSchema = z.object({
   progress: z.number().nullable(),
   status: z.number().nullable(),
   place: z.string().nullable(),
+  start: z.number().nullable(),
   splitResults: z
     .array(
       z.object({

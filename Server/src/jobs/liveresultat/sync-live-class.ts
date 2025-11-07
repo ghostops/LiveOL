@@ -92,6 +92,7 @@ export class SyncLiveClassJob {
         progress: !isEmpty(result.progress) ? Math.round(result.progress) : 0,
         place: result.place ? String(result.place) : null,
         status: !isEmpty(result.status) ? result.status : null,
+        start: this.parseResultNumber(result.start),
         updatedAt: new Date(),
 
         olRunnerId: new RunnerId().generateId({

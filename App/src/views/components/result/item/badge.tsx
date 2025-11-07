@@ -5,7 +5,7 @@ import { OLText } from '../../../components/text';
 import { useTextStore } from '~/store/text';
 
 interface Props {
-  place?: string;
+  place: string | null;
   isShared?: boolean;
 }
 

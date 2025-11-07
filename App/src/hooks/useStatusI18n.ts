@@ -14,7 +14,7 @@ import { useTranslation } from 'react-i18next';
 */
 
 export const useStatusI18n = (
-  status: number,
+  status: number | null,
   len: 'short' | 'long' = 'short',
 ) => {
   const { t } = useTranslation();
@@ -22,5 +22,5 @@ export const useStatusI18n = (
     number,
     string
   >;
-  return statuses[status];
+  return status !== null ? statuses[status] : null;
 };

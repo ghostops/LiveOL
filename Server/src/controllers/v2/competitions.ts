@@ -213,7 +213,8 @@ export const getCompetition = defaultEndpointsFactory.build({
           liveClassId: LiveClassesTable.liveClassId,
         })
         .from(LiveClassesTable)
-        .where(eq(LiveClassesTable.liveCompetitionId, competitionRow.live.id));
+        .where(eq(LiveClassesTable.liveCompetitionId, competitionRow.live.id))
+        .orderBy(LiveClassesTable.name);
     }
 
     return {

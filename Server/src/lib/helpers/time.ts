@@ -40,7 +40,9 @@ export const isDateToday = (date: string, todaysDate: string): boolean => {
   }
 
   const input = parseUTC(date);
-  const today = todaysDate ? parseUTC(todaysDate) : toZonedTime(new Date(), 'UTC');
+  const today = todaysDate
+    ? parseUTC(todaysDate)
+    : toZonedTime(new Date(), 'UTC');
 
   return isSameDay(today, input);
 };
@@ -54,7 +56,9 @@ export const isDateTodayOrFutureWithin7Days = (
   }
 
   const input = parseUTC(date);
-  const today = todaysDate ? parseUTC(todaysDate) : toZonedTime(new Date(), 'UTC');
+  const today = todaysDate
+    ? parseUTC(todaysDate)
+    : toZonedTime(new Date(), 'UTC');
   const sevenDaysFromToday = addDays(today, 7);
 
   return (
