@@ -1,9 +1,8 @@
 import { useRef, useState } from 'react';
 import { Animated, ViewStyle } from 'react-native';
-import { paths } from '~/lib/react-query/schema';
 
 interface Props {
-  result: paths['/v1/results/{competitionId}/club/{clubName}']['get']['responses']['200']['content']['application/json']['data']['results'][0];
+  hasUpdated: boolean;
   children: React.ReactNode;
   style?: ViewStyle;
 }
@@ -34,14 +33,14 @@ export const OLResultAnimation: React.FC<Props> = props => {
   });
 
   if (!animationActive.current) {
-    if (props.result.hasUpdated === true) {
+    if (props.hasUpdated === true) {
       animationActive.current = true;
       startAnimation();
     }
   }
 
   if (animationActive.current) {
-    if (props.result.hasUpdated === false) {
+    if (props.hasUpdated === false) {
       animationActive.current = false;
       stopAnimation();
     }

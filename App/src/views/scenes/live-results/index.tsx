@@ -1,6 +1,6 @@
 import { RouteProp, useIsFocused, useRoute } from '@react-navigation/native';
 import { FlashList } from '@shopify/flash-list';
-import { useLayoutEffect } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { View, ScrollView } from 'react-native';
 import { useOLNavigation } from '~/hooks/useNavigation';
@@ -11,6 +11,7 @@ import { OLRefetcherBar } from '~/views/components/refetcher/bar';
 import { OLText } from '~/views/components/text';
 import { OLResultHeader } from './result-header';
 import { OLLiveResultRow } from './row';
+import { useLiveRunningStore } from '~/store/liveRunning';
 
 export const OLSceneLiveResults = () => {
   const { colors } = useTheme();
@@ -18,6 +19,8 @@ export const OLSceneLiveResults = () => {
   const navigation = useOLNavigation();
   const focus = useIsFocused();
   const { t } = useTranslation();
+  const startTicking = useLiveRunningStore(state => state.startTicking);
+  const stopTicking = useLiveRunningStore(state => state.stopTicking);
   const { liveClassId } = params;
 
   const getResults = $api.useQuery('get', '/v2/results/live/{liveClassId}', {
@@ -27,8 +30,18 @@ export const OLSceneLiveResults = () => {
   const title = getResults.data?.data.className;
 
   useLayoutEffect(() => {
-    navigation.setOptions({ title });
+    if (title) {
+      navigation.setOptions({ title });
+    }
   }, [navigation, title]);
+
+  useEffect(() => {
+    startTicking();
+
+    return () => {
+      stopTicking();
+    };
+  }, [startTicking, stopTicking]);
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.BACKGROUND }}>
@@ -40,7 +53,17 @@ export const OLSceneLiveResults = () => {
           }}
         />
       )}
-      <ScrollView horizontal>
+      <ScrollView
+        horizontal
+        ref={scrollView => {
+          // check if it scrolls over OR if we have radio??
+          if (scrollView) {
+            setTimeout(() => {
+              scrollView.scrollTo({ x: 100, animated: true });
+            }, 0);
+          }
+        }}
+      >
         <View style={{ backgroundColor: colors.BACKGROUND }}>
           <OLResultHeader
             liveSplitControls={getResults.data?.data.liveSplitControls}

@@ -159,7 +159,7 @@ const Component: React.FC = () => {
         <Stack.Screen
           name="LiveResults"
           component={OLSceneLiveResults}
-          options={{}}
+          options={{ title: '...' }}
         />
 
         <Stack.Group

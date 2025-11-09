@@ -7,7 +7,8 @@ import {
 } from 'lib/db/schema';
 import { apiSingletons } from 'lib/singletons';
 import { z } from 'zod/v4';
-import { eq } from 'drizzle-orm';
+import { eq, sql } from 'drizzle-orm';
+import { differenceInSeconds } from 'date-fns';
 
 const api = apiSingletons.createApiSingletons();
 
@@ -25,6 +26,8 @@ export const resultSchema = z.object({
   status: z.number().nullable(),
   place: z.string().nullable(),
   start: z.number().nullable(),
+  isLive: z.boolean().optional(),
+  hasRecentlyUpdated: z.boolean().optional(),
   splitResults: z
     .array(
       z.object({
@@ -68,7 +71,27 @@ export const getResultByLiveClassId = defaultEndpointsFactory.build({
     const results = await api.Drizzle.db
       .select()
       .from(LiveResultsTable)
-      .where(eq(LiveResultsTable.liveClassId, liveClassId));
+      .where(eq(LiveResultsTable.liveClassId, liveClassId))
+      .orderBy(
+        sql`CASE WHEN ${LiveResultsTable.status} > 0 THEN 1 ELSE 0 END ASC, ${LiveResultsTable.result} ASC NULLS LAST`,
+      );
+
+    // Add additional options
+    const resultsWithLiveCheck = results.map(result => {
+      return {
+        ...result,
+        isLive: !!(
+          result.start !== null &&
+          result.progress !== null &&
+          result.progress < 100 &&
+          result.status &&
+          result.status < 1
+        ),
+        hasRecentlyUpdated: result.updatedAt
+          ? differenceInSeconds(new Date(), result.updatedAt) <= 60
+          : false,
+      };
+    });
 
     const liveSplitControls = await api.Drizzle.db
       .select()
@@ -77,7 +100,7 @@ export const getResultByLiveClassId = defaultEndpointsFactory.build({
 
     if (liveSplitControls.length !== 0) {
       const resultsWithSplits = await Promise.all(
-        results.map(r => attachSplitControls(r)),
+        resultsWithLiveCheck.map(r => attachSplitControls(r)),
       );
 
       return {
@@ -93,7 +116,7 @@ export const getResultByLiveClassId = defaultEndpointsFactory.build({
 
     return {
       className,
-      results,
+      results: resultsWithLiveCheck,
     };
   },
 });

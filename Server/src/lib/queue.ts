@@ -115,6 +115,10 @@ export class OLQueue {
     });
   }
 
+  public async stopWorker() {
+    await this.worker.close();
+  }
+
   public async purge() {
     await this.queue.drain();
     await this.queue.close();
