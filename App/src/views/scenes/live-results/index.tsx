@@ -48,7 +48,7 @@ export const OLSceneLiveResults = () => {
     },
   );
 
-  useNotifyOnUpdate(getResults.data?.data.latestUpdate);
+  useNotifyOnUpdate(getResults.data?.data.hash);
 
   const title = getResults.data?.data.className;
   const hasSplits = !!getResults.data?.data.liveSplitControls?.length;
@@ -86,16 +86,8 @@ export const OLSceneLiveResults = () => {
             style={{ flex: 1 }}
             data={getResults.data?.data.results || []}
             nestedScrollEnabled
-            renderItem={({ item }) => (
-              <View
-                style={{
-                  borderBottomWidth: 1,
-                  borderColor: '#ccc',
-                }}
-              >
-                <OLLiveResultRow liveResultItem={item} />
-              </View>
-            )}
+            renderItem={({ item }) => <OLLiveResultRow liveResultItem={item} />}
+            ItemSeparatorComponent={Separator}
             contentContainerStyle={{ paddingBottom: 128 }}
             ListEmptyComponent={
               !getResults.isLoading ? (
@@ -121,3 +113,12 @@ export const OLSceneLiveResults = () => {
     </View>
   );
 };
+
+function Separator() {
+  const { colors } = useTheme();
+  return (
+    <View
+      style={{ height: 1, backgroundColor: colors.BORDER, width: '100%' }}
+    />
+  );
+}

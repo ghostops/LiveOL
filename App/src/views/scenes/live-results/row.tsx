@@ -27,7 +27,6 @@ export const OLLiveResultRow = ({ liveResultItem }: Props) => {
           flexDirection: 'row',
           alignItems: 'center',
           paddingVertical: 8,
-          backgroundColor: colors.WHITE,
         }}
       >
         <View

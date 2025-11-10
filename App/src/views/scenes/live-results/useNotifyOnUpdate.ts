@@ -1,12 +1,14 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { Vibration } from 'react-native';
 
-export const useNotifyOnUpdate = (latestUpdate: string | null | undefined) => {
+export const useNotifyOnUpdate = (hash: string | null | undefined) => {
+  const previousHash = useRef<string | null | undefined>(undefined);
+
   useEffect(() => {
-    console.log({ latestUpdate });
-    if (latestUpdate) {
+    if (hash && previousHash.current && hash !== previousHash.current) {
       Vibration.vibrate();
       __DEV__ && console.log('[vibrated]');
+      previousHash.current = hash;
     }
-  }, [latestUpdate]);
+  }, [hash]);
 };

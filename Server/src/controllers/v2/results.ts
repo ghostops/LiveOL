@@ -8,8 +8,9 @@ import {
 import { apiSingletons } from 'lib/singletons';
 import { z } from 'zod/v4';
 import { eq, sql } from 'drizzle-orm';
-import { differenceInSeconds, isAfter } from 'date-fns';
+import { differenceInSeconds } from 'date-fns';
 import { sortOptimalV2 } from 'lib/liveresultat/sorting';
+import crypto from 'crypto';
 
 const api = apiSingletons.createApiSingletons();
 
@@ -53,7 +54,7 @@ export const getResultByLiveClassId = defaultEndpointsFactory.build({
     nowTimestamp: z.coerce.number(),
   }),
   output: z.object({
-    latestUpdate: z.string().nullable(),
+    hash: z.string(),
     className: z.string(),
     results: resultSchema.array(),
     liveSplitControls: z
@@ -100,9 +101,7 @@ export const getResultByLiveClassId = defaultEndpointsFactory.build({
           result.status &&
           result.status < 1
         ),
-        hasRecentlyUpdated: result.updatedAt
-          ? differenceInSeconds(new Date(), result.updatedAt) <= 60
-          : false,
+        hasRecentlyUpdated: checkIfRecentlyUpdated(result),
       };
     });
 
@@ -113,18 +112,10 @@ export const getResultByLiveClassId = defaultEndpointsFactory.build({
       nowTimestamp,
     );
 
-    const latestUpdate = resultsWithOptions.reduce<Date | null>(
-      (latest, result) => {
-        if (!latest) {
-          return result.updatedAt;
-        }
-        if (latest && result.updatedAt && isAfter(result.updatedAt, latest)) {
-          return result.updatedAt;
-        }
-        return latest;
-      },
-      null,
-    );
+    const hash = crypto
+      .createHash('md5')
+      .update(JSON.stringify(sortedResults))
+      .digest('hex');
 
     return {
       className,
@@ -134,7 +125,7 @@ export const getResultByLiveClassId = defaultEndpointsFactory.build({
         // Same here, the code must exist...
         code: lsc.code!,
       })),
-      latestUpdate: latestUpdate ? latestUpdate.toISOString() : null,
+      hash,
     };
   },
 });
@@ -155,4 +146,27 @@ async function attachSplitControls(
       code: lsr.code!,
     })),
   };
+}
+
+function checkIfRecentlyUpdated(result: {
+  updatedAt?: Date | null;
+  splitResults?: { updatedAt?: Date | null }[];
+}) {
+  if (
+    result.updatedAt &&
+    differenceInSeconds(new Date(), result.updatedAt) <= 60
+  ) {
+    return true;
+  }
+  if (result.splitResults) {
+    for (const splitResult of result.splitResults) {
+      if (
+        splitResult.updatedAt &&
+        differenceInSeconds(new Date(), splitResult.updatedAt) <= 60
+      ) {
+        return true;
+      }
+    }
+  }
+  return false;
 }

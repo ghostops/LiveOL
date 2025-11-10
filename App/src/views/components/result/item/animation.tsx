@@ -29,7 +29,7 @@ export const OLResultAnimation: React.FC<Props> = props => {
 
   const backgroundColor = animation.interpolate({
     inputRange: [0, 1],
-    outputRange: ['rgba(0,0,0,0)', 'rgba(255,0,0,.15)'],
+    outputRange: ['rgba(255,255,255,1)', 'rgba(255,0,0,.15)'],
   });
 
   if (!animationActive.current) {
