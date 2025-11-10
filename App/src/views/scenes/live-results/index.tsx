@@ -1,6 +1,6 @@
 import { RouteProp, useIsFocused, useRoute } from '@react-navigation/native';
 import { FlashList } from '@shopify/flash-list';
-import { useEffect, useLayoutEffect } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 import { useOLNavigation } from '~/hooks/useNavigation';
@@ -15,6 +15,8 @@ import { useLiveRunningStore } from '~/store/liveRunning';
 import { OLHorizontalScrollView } from './horizontal-scrollview';
 import { useSortingStore } from '~/store/sorting';
 import { keepPreviousData } from '@tanstack/react-query';
+import { nowTimestamp as nowTimestampFs } from '~/util/isLive';
+import { useNotifyOnUpdate } from './useNotifyOnUpdate';
 
 export const OLSceneLiveResults = () => {
   const { colors } = useTheme();
@@ -25,6 +27,7 @@ export const OLSceneLiveResults = () => {
   const startTicking = useLiveRunningStore(state => state.startTicking);
   const stopTicking = useLiveRunningStore(state => state.stopTicking);
   const { sortingDirection, sortingKey } = useSortingStore();
+  const [nowTimestamp, setNowTimestamp] = useState(nowTimestampFs());
   const { liveClassId } = params;
 
   const getResults = $api.useQuery(
@@ -33,15 +36,22 @@ export const OLSceneLiveResults = () => {
     {
       params: {
         path: { liveClassId },
-        query: { sortingDirection, sortingKey },
+        query: {
+          sortingDirection,
+          sortingKey,
+          nowTimestamp,
+        },
       },
     },
-    { placeholderData: keepPreviousData },
+    {
+      placeholderData: keepPreviousData,
+    },
   );
 
-  const title = getResults.data?.data.className;
+  useNotifyOnUpdate(getResults.data?.data.latestUpdate);
 
-  console.log(getResults.data?.data.results.length ?? -1);
+  const title = getResults.data?.data.className;
+  const hasSplits = !!getResults.data?.data.liveSplitControls?.length;
 
   useLayoutEffect(() => {
     if (title) {
@@ -63,13 +73,11 @@ export const OLSceneLiveResults = () => {
         <OLRefetcherBar
           interval={15_000}
           refetch={async () => {
-            await getResults.refetch();
+            setNowTimestamp(nowTimestampFs());
           }}
         />
       )}
-      <OLHorizontalScrollView
-        hasRadio={!!getResults.data?.data.liveSplitControls}
-      >
+      <OLHorizontalScrollView hasSplits={hasSplits}>
         <View style={{ backgroundColor: colors.BACKGROUND }}>
           <OLResultHeader
             liveSplitControls={getResults.data?.data.liveSplitControls}

@@ -87,12 +87,12 @@ export const OLResultHeader = (props: Props) => {
           { width: time, paddingRight: 16, justifyContent: 'flex-end' },
         ]}
         onPress={() => {
-          setSortingKey('time');
+          setSortingKey('result');
           setSortingDirection(sortingDirection === 'asc' ? 'desc' : 'asc');
         }}
         hitSlop={HIT_SLOP}
       >
-        <SortingIcon name="time" />
+        <SortingIcon name="result" />
         <OLText bold>{t('classes.header.time')}</OLText>
       </TouchableOpacity>
     </View>

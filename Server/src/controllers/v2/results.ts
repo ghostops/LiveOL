@@ -8,7 +8,8 @@ import {
 import { apiSingletons } from 'lib/singletons';
 import { z } from 'zod/v4';
 import { eq, sql } from 'drizzle-orm';
-import { differenceInSeconds } from 'date-fns';
+import { differenceInSeconds, isAfter } from 'date-fns';
+import { sortOptimalV2 } from 'lib/liveresultat/sorting';
 
 const api = apiSingletons.createApiSingletons();
 
@@ -49,8 +50,10 @@ export const getResultByLiveClassId = defaultEndpointsFactory.build({
     liveClassId: z.string(),
     sortingKey: z.string().optional(),
     sortingDirection: z.enum(['asc', 'desc']).optional(),
+    nowTimestamp: z.coerce.number(),
   }),
   output: z.object({
+    latestUpdate: z.string().nullable(),
     className: z.string(),
     results: resultSchema.array(),
     liveSplitControls: z
@@ -58,13 +61,11 @@ export const getResultByLiveClassId = defaultEndpointsFactory.build({
         name: z.string(),
         code: z.string(),
       })
-      .array()
-      .optional(),
+      .array(),
   }),
-  handler: async ({ input: { liveClassId, sortingDirection, sortingKey } }) => {
-    console.log(
-      `Fetching live results for class ID: ${liveClassId} with sorting ${sortingKey} ${sortingDirection}`,
-    );
+  handler: async ({
+    input: { liveClassId, sortingDirection, sortingKey, nowTimestamp },
+  }) => {
     const classData = await api.Drizzle.db
       .select()
       .from(LiveClassesTable)
@@ -73,16 +74,23 @@ export const getResultByLiveClassId = defaultEndpointsFactory.build({
 
     const className = classData[0]?.name || 'N/A';
 
-    const results = await api.Drizzle.db
+    let results = await api.Drizzle.db
       .select()
       .from(LiveResultsTable)
       .where(eq(LiveResultsTable.liveClassId, liveClassId))
-      .orderBy(
-        sql`CASE WHEN ${LiveResultsTable.status} > 0 THEN 1 ELSE 0 END ASC, ${LiveResultsTable.result} ASC NULLS LAST`,
-      );
+      .orderBy(sql`${LiveResultsTable.result} ASC NULLS LAST`);
+
+    const liveSplitControls = await api.Drizzle.db
+      .select()
+      .from(LiveSplitControllsTable)
+      .where(eq(LiveSplitControllsTable.liveClassId, liveClassId));
+
+    if (liveSplitControls.length !== 0) {
+      results = await Promise.all(results.map(r => attachSplitControls(r)));
+    }
 
     // Add additional options
-    const resultsWithLiveCheck = results.map(result => {
+    const resultsWithOptions = results.map(result => {
       return {
         ...result,
         isLive: !!(
@@ -98,30 +106,35 @@ export const getResultByLiveClassId = defaultEndpointsFactory.build({
       };
     });
 
-    const liveSplitControls = await api.Drizzle.db
-      .select()
-      .from(LiveSplitControllsTable)
-      .where(eq(LiveSplitControllsTable.liveClassId, liveClassId));
+    const sortedResults = sortOptimalV2(
+      resultsWithOptions,
+      sortingKey || 'place',
+      sortingDirection || 'asc',
+      nowTimestamp,
+    );
 
-    if (liveSplitControls.length !== 0) {
-      const resultsWithSplits = await Promise.all(
-        resultsWithLiveCheck.map(r => attachSplitControls(r)),
-      );
-
-      return {
-        className,
-        results: resultsWithSplits,
-        liveSplitControls: liveSplitControls.map(lsc => ({
-          name: lsc.name,
-          // Same here, the code must exist...
-          code: lsc.code!,
-        })),
-      };
-    }
+    const latestUpdate = resultsWithOptions.reduce<Date | null>(
+      (latest, result) => {
+        if (!latest) {
+          return result.updatedAt;
+        }
+        if (latest && result.updatedAt && isAfter(result.updatedAt, latest)) {
+          return result.updatedAt;
+        }
+        return latest;
+      },
+      null,
+    );
 
     return {
       className,
-      results: resultsWithLiveCheck,
+      results: sortedResults,
+      liveSplitControls: liveSplitControls.map(lsc => ({
+        name: lsc.name,
+        // Same here, the code must exist...
+        code: lsc.code!,
+      })),
+      latestUpdate: latestUpdate ? latestUpdate.toISOString() : null,
     };
   },
 });

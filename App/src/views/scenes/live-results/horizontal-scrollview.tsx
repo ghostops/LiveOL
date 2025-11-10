@@ -4,8 +4,8 @@ import { useHintsStore } from '~/store/hints';
 
 export const OLHorizontalScrollView = ({
   children,
-  hasRadio,
-}: React.PropsWithChildren<{ hasRadio: boolean }>) => {
+  hasSplits,
+}: React.PropsWithChildren<{ hasSplits: boolean }>) => {
   const { getHint, setHint } = useHintsStore();
   const scrollViewRef = useRef<ScrollView | null>(null);
   const hasTriggeredRef = useRef(false);
@@ -15,7 +15,7 @@ export const OLHorizontalScrollView = ({
     const deviceWidth = Dimensions.get('window').width;
     if (
       showHint &&
-      hasRadio &&
+      hasSplits &&
       scrollViewRef.current &&
       !hasTriggeredRef.current
     ) {
@@ -28,10 +28,15 @@ export const OLHorizontalScrollView = ({
       setHint('horizontalResults', 'dismissed', 24 * 60 * 60 * 1000 * 7); // 7 days
       hasTriggeredRef.current = true;
     }
-  }, [hasRadio, showHint, setHint]);
+  }, [hasSplits, showHint, setHint]);
 
   return (
-    <ScrollView horizontal ref={scrollViewRef}>
+    <ScrollView
+      horizontal
+      ref={scrollViewRef}
+      overScrollMode={hasSplits ? 'always' : 'never'}
+      bounces={hasSplits}
+    >
       {children}
     </ScrollView>
   );

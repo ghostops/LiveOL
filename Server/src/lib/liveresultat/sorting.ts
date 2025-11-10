@@ -1,6 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { LiveResultsTable, LiveSplitResultsTable } from 'lib/db/schema';
 import { LiveresultatApi } from './types';
 
-export type SortedResult = LiveresultatApi.result;
+export type SortedResult = typeof LiveResultsTable.$inferSelect & {
+  splitResults?: (typeof LiveSplitResultsTable.$inferInsert)[];
+};
 
 const sortSplit =
   (sortingKey: string, direction: string) =>
@@ -8,19 +12,22 @@ const sortSplit =
     const desc = direction === 'desc';
     const key = sortingKey.replace('split-', '');
 
-    if (!a.splits[key]) {
+    const aSplit = a.splitResults?.find(s => s.code === key);
+    const bSplit = b.splitResults?.find(s => s.code === key);
+
+    if (!aSplit?.time) {
       return desc ? -1 : 1;
     }
 
-    if (!b.splits[key]) {
+    if (!bSplit?.time) {
       return 0;
     }
 
     if (desc) {
-      return b.splits[key]! - a.splits[key]!;
+      return bSplit.time - aSplit.time;
     }
 
-    return a.splits[key]! - b.splits[key]!;
+    return aSplit.time - bSplit.time;
   };
 
 // Parsing the place is a mess, so just flipping the already sorted list is easier
@@ -32,6 +39,10 @@ const sortPlace = (direction: string) => () => {
 
 const sortStart = (direction: string) => (a: SortedResult, b: SortedResult) => {
   const desc = direction === 'desc';
+
+  if (!a.start || !b.start) {
+    return 0;
+  }
 
   if (a.start > b.start) {
     return desc ? -1 : 1;
@@ -47,7 +58,7 @@ const sortResult =
   (a: SortedResult, b: SortedResult) => {
     const desc = direction === 'desc';
 
-    if (!a.start) {
+    if (!a.start || !b.start) {
       return 0;
     }
 
@@ -87,11 +98,18 @@ const sortName = (direction: string) => (a: SortedResult, b: SortedResult) => {
 
 export const sortOptimal = (
   original: LiveresultatApi.result[],
-  sorting: string,
+  _sorting: string,
+  _nowTimestamp: number,
+) => {
+  return original;
+};
+
+export const sortOptimalV2 = (
+  original: (typeof LiveResultsTable.$inferSelect)[],
+  sortingKey: string,
+  sortingDirection: string,
   nowTimestamp: number,
 ) => {
-  const [sortingKey, sortingDirection] = sorting.split(':');
-
   if (!sortingKey || !sortingDirection) {
     throw new Error('invalid sorting options');
   }
@@ -122,7 +140,7 @@ export const sortOptimal = (
 
   if (sortingKey === 'result' || sortingKey === 'place') {
     sorted = sorted.sort((a, b) => {
-      if (b.status === 0) {
+      if (b.status === null || b.status === 0) {
         return 0;
       }
       if (b.status > 0 && b.status !== 9 && b.status !== 10) {

@@ -3,7 +3,6 @@ import { OLTime } from 'types';
 import * as Helpers from 'lib/helpers/time';
 import _ from 'lodash';
 import { createHash } from 'crypto';
-import { SortedResult } from 'lib/liveresultat/sorting';
 
 export interface IOLSplit {
   id: string;
@@ -27,7 +26,7 @@ const parsePlace = (place: any): number => {
 
 export const marshallSplits =
   (split: LiveresultatApi.split) =>
-  (result: LiveresultatApi.result | SortedResult): IOLSplit => {
+  (result: LiveresultatApi.result): IOLSplit => {
     const keys = Object.keys(result.splits);
     const foundKeys = keys.filter(key => key.includes(String(split.code)));
     const keyValue: Record<string, number | undefined> = {};
