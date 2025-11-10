@@ -1,7 +1,9 @@
 import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 import { OLText } from '~/views/components/text';
-import { useRowWidths } from './row';
+import { useRowWidths } from './useRowWidths';
+import { useOrientation } from '~/hooks/useOrientation';
+import { OrientationType } from 'react-native-orientation-locker';
 
 type Props = {
   liveSplitControls?:
@@ -15,6 +17,8 @@ type Props = {
 export const OLResultHeader = (props: Props) => {
   const { t } = useTranslation();
   const { name, place, splits, time } = useRowWidths();
+  const orientation = useOrientation();
+
   return (
     <View
       style={{
@@ -24,7 +28,13 @@ export const OLResultHeader = (props: Props) => {
         paddingVertical: 8,
       }}
     >
-      <View style={{ width: place, alignItems: 'center' }}>
+      <View
+        style={{
+          width: place,
+          alignItems:
+            orientation === OrientationType.PORTRAIT ? 'center' : 'flex-end',
+        }}
+      >
         <OLText>{t('classes.header.place')}</OLText>
       </View>
       <View style={{ width: name, alignItems: 'flex-start' }}>

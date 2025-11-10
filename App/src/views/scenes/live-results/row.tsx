@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react';
-import { Dimensions, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { useTheme } from '~/hooks/useTheme';
 import { paths } from '~/lib/react-query/schema';
 import { OLResultAnimation } from '~/views/components/result/item/animation';
@@ -8,32 +7,9 @@ import { OLResultLiveRunning } from '~/views/components/result/item/liveRunning'
 import { OLResultTime } from '~/views/components/result/item/time';
 import { OLResultTimeplus } from '~/views/components/result/item/timeplus';
 import { OLText } from '~/views/components/text';
-
-export const useRowWidths = () => {
-  const [deviceWidth, setDeviceWidth] = useState(
-    Dimensions.get('window').width,
-  );
-
-  useEffect(() => {
-    const handleResize = () => {
-      setDeviceWidth(Dimensions.get('window').width);
-    };
-
-    const subscription = Dimensions.addEventListener('change', handleResize);
-
-    return () => {
-      subscription.remove();
-    };
-  }, []);
-
-  return {
-    deviceWidth,
-    place: deviceWidth * 0.15,
-    name: deviceWidth * 0.6,
-    time: deviceWidth * 0.25,
-    splits: deviceWidth * 0.25,
-  };
-};
+import { useRowWidths } from './useRowWidths';
+import { useOrientation } from '~/hooks/useOrientation';
+import { OrientationType } from 'react-native-orientation-locker';
 
 type Props = {
   liveResultItem: paths['/v2/results/live/{liveClassId}']['get']['responses']['200']['content']['application/json']['data']['results'][number];
@@ -42,6 +18,7 @@ type Props = {
 export const OLLiveResultRow = ({ liveResultItem }: Props) => {
   const { colors } = useTheme();
   const { place, name, time, splits } = useRowWidths();
+  const orientation = useOrientation();
 
   return (
     <OLResultAnimation hasUpdated={!!liveResultItem.hasRecentlyUpdated}>
@@ -52,7 +29,13 @@ export const OLLiveResultRow = ({ liveResultItem }: Props) => {
           paddingVertical: 8,
         }}
       >
-        <View style={{ width: place, alignItems: 'center' }}>
+        <View
+          style={{
+            width: place,
+            alignItems:
+              orientation === OrientationType.PORTRAIT ? 'center' : 'flex-end',
+          }}
+        >
           <OLResultBadge place={liveResultItem.place} />
         </View>
         <View style={{ width: name, paddingRight: 4 }}>

@@ -2,23 +2,49 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { zustandAsyncStorage } from './asyncStorage';
 
-type PromoState = {
-  displayPromo: boolean;
-  setDisplayPromo: (value: boolean) => void;
-  displayRotatePromo: boolean;
-  setDisplayRotatePromo: (value: boolean) => void;
+type HintEntry = {
+  value: string;
+  expiresAt?: number; // Unix timestamp in ms
 };
 
-export const useHintsStore = create<PromoState>()(
+type HintsState = {
+  hints: Record<string, HintEntry>;
+  setHint: (key: string, value: string, ttlMs?: number) => void;
+  getHint: (key: string) => string | undefined;
+  removeHint: (key: string) => void;
+};
+
+export const useHintsStore = create<HintsState>()(
   persist(
-    set => ({
-      displayPromo: true,
-      setDisplayPromo(value) {
-        set(() => ({ displayPromo: value }));
+    (set, get) => ({
+      hints: {},
+      setHint(key, value, ttlMs) {
+        const expiresAt = ttlMs ? Date.now() + ttlMs : undefined;
+        set(state => ({
+          hints: { ...state.hints, [key]: { value, expiresAt } },
+        }));
       },
-      displayRotatePromo: true,
-      setDisplayRotatePromo(value) {
-        set({ displayRotatePromo: value });
+      getHint(key) {
+        const entry = get().hints[key];
+        if (!entry) {
+          return undefined;
+        }
+
+        // Check if expired
+        if (entry.expiresAt && Date.now() > entry.expiresAt) {
+          // Remove expired hint
+          get().removeHint(key);
+          return undefined;
+        }
+
+        return entry.value;
+      },
+      removeHint(key) {
+        set(state => {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const { [key]: _, ...rest } = state.hints;
+          return { hints: rest };
+        });
       },
     }),
     { name: '@liveol/hints', storage: zustandAsyncStorage },
