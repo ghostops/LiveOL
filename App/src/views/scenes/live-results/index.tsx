@@ -2,7 +2,7 @@ import { RouteProp, useIsFocused, useRoute } from '@react-navigation/native';
 import { FlashList } from '@shopify/flash-list';
 import { useEffect, useLayoutEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { View, ScrollView } from 'react-native';
+import { View } from 'react-native';
 import { useOLNavigation } from '~/hooks/useNavigation';
 import { useTheme } from '~/hooks/useTheme';
 import { RootStack } from '~/lib/nav/router';
@@ -12,6 +12,7 @@ import { OLText } from '~/views/components/text';
 import { OLResultHeader } from './result-header';
 import { OLLiveResultRow } from './row';
 import { useLiveRunningStore } from '~/store/liveRunning';
+import { OLHorizontalScrollView } from './horizontal-scrollview';
 
 export const OLSceneLiveResults = () => {
   const { colors } = useTheme();
@@ -53,16 +54,8 @@ export const OLSceneLiveResults = () => {
           }}
         />
       )}
-      <ScrollView
-        horizontal
-        ref={scrollView => {
-          // check if it scrolls over OR if we have radio??
-          if (scrollView) {
-            setTimeout(() => {
-              scrollView.scrollTo({ x: 100, animated: true });
-            }, 0);
-          }
-        }}
+      <OLHorizontalScrollView
+        hasRadio={!!getResults.data?.data.liveSplitControls}
       >
         <View style={{ backgroundColor: colors.BACKGROUND }}>
           <OLResultHeader
@@ -103,7 +96,7 @@ export const OLSceneLiveResults = () => {
             }
           />
         </View>
-      </ScrollView>
+      </OLHorizontalScrollView>
     </View>
   );
 };

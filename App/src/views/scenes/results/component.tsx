@@ -5,7 +5,7 @@ import { OLLoading } from '~/views/components/loading';
 import { View } from 'react-native';
 import { OLHint } from '~/views/components/hint';
 import { useTranslation } from 'react-i18next';
-import { usePromoStore } from '~/store/promo';
+import { useHintsStore } from '~/store/hints';
 import { paths } from '~/lib/react-query/schema';
 
 interface Props {
@@ -30,7 +30,7 @@ export const OLResults: React.FC<Props> = ({
   loading,
 }) => {
   const { t } = useTranslation();
-  const { displayRotatePromo, setDisplayRotatePromo } = usePromoStore();
+  const { displayRotatePromo, setDisplayRotatePromo } = useHintsStore();
 
   return (
     <View style={{ flex: 1 }}>

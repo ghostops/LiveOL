@@ -9,7 +9,7 @@ type PromoState = {
   setDisplayRotatePromo: (value: boolean) => void;
 };
 
-export const usePromoStore = create<PromoState>()(
+export const useHintsStore = create<PromoState>()(
   persist(
     set => ({
       displayPromo: true,
@@ -21,6 +21,6 @@ export const usePromoStore = create<PromoState>()(
         set({ displayRotatePromo: value });
       },
     }),
-    { name: '@liveol/promo', storage: zustandAsyncStorage },
+    { name: '@liveol/hints', storage: zustandAsyncStorage },
   ),
 );
