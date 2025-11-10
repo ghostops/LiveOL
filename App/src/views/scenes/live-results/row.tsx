@@ -10,6 +10,7 @@ import { OLText } from '~/views/components/text';
 import { useRowWidths } from './useRowWidths';
 import { useOrientation } from '~/hooks/useOrientation';
 import { OrientationType } from 'react-native-orientation-locker';
+import { useOLNavigation } from '~/hooks/useNavigation';
 
 type Props = {
   liveResultItem: paths['/v2/results/live/{liveClassId}']['get']['responses']['200']['content']['application/json']['data']['results'][number];
@@ -19,6 +20,7 @@ export const OLLiveResultRow = ({ liveResultItem }: Props) => {
   const { colors } = useTheme();
   const { place, name, time, splits } = useRowWidths();
   const orientation = useOrientation();
+  const navigation = useOLNavigation();
 
   return (
     <OLResultAnimation hasUpdated={!!liveResultItem.hasRecentlyUpdated}>
@@ -41,7 +43,16 @@ export const OLLiveResultRow = ({ liveResultItem }: Props) => {
         </View>
         <View style={{ width: name, paddingRight: 4 }}>
           <OLText numberOfLines={1}>{liveResultItem.name || 'N/A'}</OLText>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              if (liveResultItem.olOrganizationId) {
+                navigation.navigate('ClubResults', {
+                  liveCompetitionId: liveResultItem.liveCompetitionId,
+                  olOrganizationId: liveResultItem.olOrganizationId,
+                });
+              }
+            }}
+          >
             <OLText numberOfLines={1} style={{ color: colors.BLUE }}>
               {liveResultItem.organization}
             </OLText>

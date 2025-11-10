@@ -1,11 +1,6 @@
 import { eq } from 'drizzle-orm';
 import { defaultEndpointsFactory } from 'express-zod-api';
-import {
-  EventorCompetitionsTable,
-  EventorResultsTable,
-  LiveCompetitionsTable,
-  LiveResultsTable,
-} from 'lib/db/schema';
+import { EventorCompetitionsTable, EventorResultsTable } from 'lib/db/schema';
 import { apiSingletons } from 'lib/singletons';
 import { z } from 'zod/v4';
 
@@ -48,47 +43,6 @@ export const getEventorResultsForCompetition = defaultEndpointsFactory.build({
       .from(EventorResultsTable)
       // TODO: FIX THIS
       .where(eq(EventorResultsTable.eventorDatabaseId, 1));
-
-    return { results };
-  },
-});
-
-const liveResultSchema = z.object({
-  liveResultId: z.string(),
-  liveClassId: z.string(),
-  liveCompetitionId: z.number(),
-  olRunnerId: z.string(),
-  name: z.string(),
-  organization: z.string().nullish(),
-  olOrganizationId: z.string().nullish(),
-  progress: z.number().nullish(),
-  status: z.number().nullish(),
-  place: z.string().nullish(),
-});
-
-export const getLiveResultsForCompetition = defaultEndpointsFactory.build({
-  method: 'get',
-  input: z.object({
-    id: z.string(),
-  }),
-  output: z.object({
-    results: z.array(liveResultSchema),
-  }),
-  handler: async ({ input: { id } }) => {
-    const [competition] = await api.Drizzle.db
-      .select()
-      .from(LiveCompetitionsTable)
-      .where(eq(LiveCompetitionsTable.olCompetitionId, id))
-      .limit(1);
-
-    if (!competition) {
-      throw new Error('Competition not found');
-    }
-
-    const results = await api.Drizzle.db
-      .select()
-      .from(LiveResultsTable)
-      .where(eq(LiveResultsTable.liveCompetitionId, competition.id));
 
     return { results };
   },

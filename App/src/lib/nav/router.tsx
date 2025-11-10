@@ -17,6 +17,7 @@ import { OLSceneCompetition } from '~/views/scenes/competition';
 import { OLIcon } from '~/views/components/icon';
 import { OLText } from '~/views/components/text';
 import { OLSceneLiveResults } from '~/views/scenes/live-results';
+import { OLSceneClubResults } from '~/views/scenes/club-results';
 
 export type TabStack = {
   Home: undefined;
@@ -31,6 +32,7 @@ export type RootStack = {
   Language: undefined;
   Redeem: undefined;
   LiveResults: { liveClassId: string };
+  ClubResults: { liveCompetitionId: number; olOrganizationId: string };
 };
 
 const Stack = createNativeStackNavigator<RootStack>();
@@ -159,6 +161,11 @@ const Component: React.FC = () => {
         <Stack.Screen
           name="LiveResults"
           component={OLSceneLiveResults}
+          options={{ title: '...' }}
+        />
+        <Stack.Screen
+          name="ClubResults"
+          component={OLSceneClubResults}
           options={{ title: '...' }}
         />
 

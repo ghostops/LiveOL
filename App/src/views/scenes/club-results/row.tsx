@@ -1,0 +1,82 @@
+import { TouchableOpacity, View } from 'react-native';
+import { useTheme } from '~/hooks/useTheme';
+import { paths } from '~/lib/react-query/schema';
+import { OLResultAnimation } from '~/views/components/result/item/animation';
+import { OLResultBadge } from '~/views/components/result/item/badge';
+import { OLResultLiveRunning } from '~/views/components/result/item/liveRunning';
+import { OLResultTime } from '~/views/components/result/item/time';
+import { OLResultTimeplus } from '~/views/components/result/item/timeplus';
+import { OLText } from '~/views/components/text';
+import { useOLNavigation } from '~/hooks/useNavigation';
+
+type Props = {
+  resultItem: paths['/v2/results/live/organizations/{liveCompetitionId}/{olOrganizationId}']['get']['responses']['200']['content']['application/json']['data']['results'][number];
+};
+
+export const OLClubResultRow = ({ resultItem }: Props) => {
+  const { colors } = useTheme();
+  const navigation = useOLNavigation();
+
+  return (
+    <OLResultAnimation hasUpdated={false}>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          paddingVertical: 8,
+          paddingHorizontal: 8,
+        }}
+      >
+        <View
+          style={{
+            width: 60,
+            alignItems: 'center',
+            paddingRight: 8,
+          }}
+        >
+          <OLResultBadge place={resultItem.place} />
+        </View>
+        <View style={{ flex: 1, paddingRight: 8 }}>
+          <OLText numberOfLines={1}>{resultItem.name || 'N/A'}</OLText>
+          <TouchableOpacity
+            onPress={() => {
+              if (resultItem.liveClassId) {
+                // ToDo: Go back and replace previous screen instead of stacking
+                navigation.navigate('LiveResults', {
+                  liveClassId: resultItem.liveClassId,
+                });
+              }
+            }}
+          >
+            <OLText numberOfLines={1} size={12} style={{ color: colors.BLUE }}>
+              {resultItem.liveClassId}
+            </OLText>
+          </TouchableOpacity>
+        </View>
+        <View
+          style={{
+            minWidth: 80,
+            gap: 4,
+            alignItems: 'flex-end',
+            paddingRight: 8,
+          }}
+        >
+          {resultItem.start && resultItem.isLive ? (
+            <OLResultLiveRunning startTime={resultItem.start} />
+          ) : (
+            <>
+              <OLResultTime
+                status={resultItem.status}
+                time={resultItem.result}
+              />
+              <OLResultTimeplus
+                status={resultItem.status}
+                timeplus={resultItem.timeplus}
+              />
+            </>
+          )}
+        </View>
+      </View>
+    </OLResultAnimation>
+  );
+};

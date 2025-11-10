@@ -106,6 +106,7 @@ export const OLSceneCompetition = () => {
                 organizerId={
                   getCompetitionQuery.data?.data.competition.olOrganizationId
                 }
+                olCompetitionId={params.olCompetitionId}
               />
 
               {getCompetitionQuery.data?.data.competition.date && (
@@ -161,11 +162,14 @@ export const OLSceneCompetition = () => {
 function OrganizerText({
   organizer,
   organizerId,
+  olCompetitionId,
 }: {
   organizer: string | null | undefined;
   organizerId: string | undefined;
+  olCompetitionId: string;
 }) {
   const { t } = useTranslation();
+  const navigation = useOLNavigation();
 
   if (!organizer) {
     return null;
@@ -184,7 +188,18 @@ function OrganizerText({
   );
 
   if (organizerId) {
-    return <TouchableOpacity onPress={() => {}}>{Text}</TouchableOpacity>;
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate('ClubResults', {
+            olCompetitionId,
+            olOrganizationId: organizerId,
+          });
+        }}
+      >
+        {Text}
+      </TouchableOpacity>
+    );
   }
 
   return Text;

@@ -1,13 +1,14 @@
 import { defaultEndpointsFactory } from 'express-zod-api';
 import {
   LiveClassesTable,
+  LiveCompetitionsTable,
   LiveResultsTable,
   LiveSplitControllsTable,
   LiveSplitResultsTable,
 } from 'lib/db/schema';
 import { apiSingletons } from 'lib/singletons';
 import { z } from 'zod/v4';
-import { eq, sql } from 'drizzle-orm';
+import { and, eq, sql } from 'drizzle-orm';
 import { differenceInSeconds } from 'date-fns';
 import { sortOptimalV2 } from 'lib/liveresultat/sorting';
 import crypto from 'crypto';
@@ -170,3 +171,37 @@ function checkIfRecentlyUpdated(result: {
   }
   return false;
 }
+
+export const getLiveResultsForOrganisation = defaultEndpointsFactory.build({
+  method: 'get',
+  input: z.object({
+    liveCompetitionId: z.coerce.number(),
+    olOrganizationId: z.string(),
+  }),
+  output: z.object({
+    results: resultSchema.array(),
+  }),
+  handler: async ({ input: { liveCompetitionId, olOrganizationId } }) => {
+    const [competition] = await api.Drizzle.db
+      .select()
+      .from(LiveCompetitionsTable)
+      .where(eq(LiveCompetitionsTable.id, liveCompetitionId))
+      .limit(1);
+
+    if (!competition) {
+      throw new Error('Competition not found');
+    }
+
+    const results = await api.Drizzle.db
+      .select()
+      .from(LiveResultsTable)
+      .where(
+        and(
+          eq(LiveResultsTable.liveCompetitionId, competition.id),
+          eq(LiveResultsTable.olOrganizationId, olOrganizationId),
+        ),
+      );
+
+    return { results };
+  },
+});
