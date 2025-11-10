@@ -1,9 +1,13 @@
 import { useTranslation } from 'react-i18next';
-import { View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { OLText } from '~/views/components/text';
 import { useRowWidths } from './useRowWidths';
 import { useOrientation } from '~/hooks/useOrientation';
 import { OrientationType } from 'react-native-orientation-locker';
+import { useTheme } from '~/hooks/useTheme';
+import { useSortingStore } from '~/store/sorting';
+import { HIT_SLOP } from '~/util/const';
+import { OLIcon } from '~/views/components/icon';
 
 type Props = {
   liveSplitControls?:
@@ -18,39 +22,106 @@ export const OLResultHeader = (props: Props) => {
   const { t } = useTranslation();
   const { name, place, splits, time } = useRowWidths();
   const orientation = useOrientation();
+  const { colors } = useTheme();
+  const { setSortingDirection, setSortingKey, sortingDirection } =
+    useSortingStore();
 
   return (
     <View
       style={{
         flexDirection: 'row',
         borderBottomWidth: 1,
+        borderBottomColor: colors.BORDER,
+        backgroundColor: colors.WHITE,
         alignItems: 'center',
         paddingVertical: 8,
       }}
     >
-      <View
-        style={{
-          width: place,
-          alignItems:
-            orientation === OrientationType.PORTRAIT ? 'center' : 'flex-end',
+      <TouchableOpacity
+        style={[
+          styles.column,
+          {
+            width: place,
+            justifyContent:
+              orientation === OrientationType.PORTRAIT ? 'center' : 'flex-end',
+            paddingRight: 8,
+          },
+        ]}
+        onPress={() => {
+          setSortingKey('place');
+          setSortingDirection(sortingDirection === 'asc' ? 'desc' : 'asc');
         }}
+        hitSlop={HIT_SLOP}
       >
-        <OLText>{t('classes.header.place')}</OLText>
-      </View>
-      <View style={{ width: name, alignItems: 'flex-start' }}>
-        <OLText>{t('classes.header.name')}</OLText>
-      </View>
+        <SortingIcon name="place" />
+        <OLText bold>{t('classes.header.place')}</OLText>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          setSortingKey('name');
+          setSortingDirection(sortingDirection === 'asc' ? 'desc' : 'asc');
+        }}
+        style={[styles.column, { width: name }]}
+        hitSlop={HIT_SLOP}
+      >
+        <SortingIcon name="name" />
+        <OLText bold>{t('classes.header.name')}</OLText>
+      </TouchableOpacity>
       {props.liveSplitControls?.map(split => (
-        <View
+        <TouchableOpacity
           key={split.code}
-          style={{ width: splits, alignItems: 'flex-start' }}
+          style={[styles.column, { width: splits }]}
+          onPress={() => {
+            setSortingKey('split-' + split.code);
+            setSortingDirection(sortingDirection === 'asc' ? 'desc' : 'asc');
+          }}
+          hitSlop={HIT_SLOP}
         >
-          <OLText>{split.name}</OLText>
-        </View>
+          <SortingIcon name={'split-' + split.code} />
+          <OLText bold>{split.name}</OLText>
+        </TouchableOpacity>
       ))}
-      <View style={{ width: time, alignItems: 'flex-end', paddingRight: 8 }}>
-        <OLText>{t('classes.header.time')}</OLText>
-      </View>
+      <TouchableOpacity
+        style={[
+          styles.column,
+          { width: time, paddingRight: 16, justifyContent: 'flex-end' },
+        ]}
+        onPress={() => {
+          setSortingKey('time');
+          setSortingDirection(sortingDirection === 'asc' ? 'desc' : 'asc');
+        }}
+        hitSlop={HIT_SLOP}
+      >
+        <SortingIcon name="time" />
+        <OLText bold>{t('classes.header.time')}</OLText>
+      </TouchableOpacity>
     </View>
   );
 };
+
+const SortingIcon = ({ name }: { name: string }) => {
+  const { sortingKey, sortingDirection } = useSortingStore();
+
+  if (name !== sortingKey) {
+    return null;
+  }
+
+  if (sortingKey === 'place' && sortingDirection === 'asc') {
+    return null;
+  }
+
+  return (
+    <OLIcon
+      size={14}
+      name={sortingDirection === 'asc' ? 'chevron-up' : 'chevron-down'}
+      style={{ marginRight: 2 }}
+    />
+  );
+};
+
+const styles = StyleSheet.create({
+  column: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+});

@@ -6,7 +6,7 @@ import { useOrientation } from '~/hooks/useOrientation';
 
 export const useRowWidths = () => {
   const orientation = useOrientation();
-  const { left } = useSafeAreaInsets();
+  const { left, right } = useSafeAreaInsets();
   const [deviceWidth, setDeviceWidth] = useState(
     Dimensions.get('window').width,
   );
@@ -36,16 +36,16 @@ export const useRowWidths = () => {
       splits: deviceWidth * 0.25,
     },
     [OrientationType['LANDSCAPE-LEFT']]: {
-      place: deviceWidth * 0.15 + left,
+      place: deviceWidth * 0.05 + left,
       name: deviceWidth * 0.3,
-      time: deviceWidth * 0.25,
-      splits: deviceWidth * 0.25,
+      time: deviceWidth * 0.15,
+      splits: deviceWidth * 0.15,
     },
     [OrientationType['LANDSCAPE-RIGHT']]: {
-      place: deviceWidth * 0.15,
-      name: deviceWidth * 0.4,
-      time: deviceWidth * 0.25,
-      splits: deviceWidth * 0.25,
+      place: deviceWidth * 0.05,
+      name: deviceWidth * 0.3,
+      time: deviceWidth * 0.15 + right,
+      splits: deviceWidth * 0.15,
     },
   };
 

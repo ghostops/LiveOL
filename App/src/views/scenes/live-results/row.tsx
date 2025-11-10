@@ -27,6 +27,7 @@ export const OLLiveResultRow = ({ liveResultItem }: Props) => {
           flexDirection: 'row',
           alignItems: 'center',
           paddingVertical: 8,
+          backgroundColor: colors.WHITE,
         }}
       >
         <View
@@ -34,6 +35,7 @@ export const OLLiveResultRow = ({ liveResultItem }: Props) => {
             width: place,
             alignItems:
               orientation === OrientationType.PORTRAIT ? 'center' : 'flex-end',
+            paddingRight: 8,
           }}
         >
           <OLResultBadge place={liveResultItem.place} />

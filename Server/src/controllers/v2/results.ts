@@ -47,6 +47,8 @@ export const getResultByLiveClassId = defaultEndpointsFactory.build({
   method: 'get',
   input: z.object({
     liveClassId: z.string(),
+    sortingKey: z.string().optional(),
+    sortingDirection: z.enum(['asc', 'desc']).optional(),
   }),
   output: z.object({
     className: z.string(),
@@ -59,7 +61,10 @@ export const getResultByLiveClassId = defaultEndpointsFactory.build({
       .array()
       .optional(),
   }),
-  handler: async ({ input: { liveClassId } }) => {
+  handler: async ({ input: { liveClassId, sortingDirection, sortingKey } }) => {
+    console.log(
+      `Fetching live results for class ID: ${liveClassId} with sorting ${sortingKey} ${sortingDirection}`,
+    );
     const classData = await api.Drizzle.db
       .select()
       .from(LiveClassesTable)

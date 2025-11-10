@@ -13,6 +13,8 @@ import { OLResultHeader } from './result-header';
 import { OLLiveResultRow } from './row';
 import { useLiveRunningStore } from '~/store/liveRunning';
 import { OLHorizontalScrollView } from './horizontal-scrollview';
+import { useSortingStore } from '~/store/sorting';
+import { keepPreviousData } from '@tanstack/react-query';
 
 export const OLSceneLiveResults = () => {
   const { colors } = useTheme();
@@ -22,13 +24,24 @@ export const OLSceneLiveResults = () => {
   const { t } = useTranslation();
   const startTicking = useLiveRunningStore(state => state.startTicking);
   const stopTicking = useLiveRunningStore(state => state.stopTicking);
+  const { sortingDirection, sortingKey } = useSortingStore();
   const { liveClassId } = params;
 
-  const getResults = $api.useQuery('get', '/v2/results/live/{liveClassId}', {
-    params: { path: { liveClassId } },
-  });
+  const getResults = $api.useQuery(
+    'get',
+    '/v2/results/live/{liveClassId}',
+    {
+      params: {
+        path: { liveClassId },
+        query: { sortingDirection, sortingKey },
+      },
+    },
+    { placeholderData: keepPreviousData },
+  );
 
   const title = getResults.data?.data.className;
+
+  console.log(getResults.data?.data.results.length ?? -1);
 
   useLayoutEffect(() => {
     if (title) {
