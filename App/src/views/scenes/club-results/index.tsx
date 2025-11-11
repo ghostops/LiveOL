@@ -1,6 +1,6 @@
-import { RouteProp, useRoute } from '@react-navigation/native';
+import { RouteProp, useIsFocused, useRoute } from '@react-navigation/native';
 import { FlashList } from '@shopify/flash-list';
-import { useLayoutEffect } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 import { useOLNavigation } from '~/hooks/useNavigation';
@@ -9,22 +9,41 @@ import { RootStack } from '~/lib/nav/router';
 import { $api } from '~/lib/react-query/api';
 import { OLText } from '~/views/components/text';
 import { OLClubResultRow } from './row';
+import { OLResultHeader } from '../live-results/result-header';
+import { useSortingStore } from '~/store/sorting';
+import { nowTimestamp as nowTimestampFs } from '~/util/isLive';
+import { OLRefetcherBar } from '~/views/components/refetcher/bar';
+import { keepPreviousData } from '@tanstack/react-query';
 
 export const OLSceneClubResults = () => {
   const { colors } = useTheme();
   const { params } = useRoute<RouteProp<RootStack, 'ClubResults'>>();
   const navigation = useOLNavigation();
   const { t } = useTranslation();
-  const { liveCompetitionId, olOrganizationId } = params;
+  const { olCompetitionId, olOrganizationId } = params;
+  const focus = useIsFocused();
+  const { sortingDirection, sortingKey } = useSortingStore();
+  const [nowTimestamp, setNowTimestamp] = useState(nowTimestampFs());
 
   // Fetch filtered results for this organization in this competition
   const getResultsQuery = $api.useQuery(
     'get',
-    '/v2/results/live/organizations/{liveCompetitionId}/{olOrganizationId}',
+    '/v2/results/live/organizations/{olCompetitionId}/{olOrganizationId}',
     {
       params: {
-        path: { liveCompetitionId, olOrganizationId },
+        path: {
+          olCompetitionId,
+          olOrganizationId,
+        },
+        query: {
+          sortingKey,
+          sortingDirection,
+          nowTimestamp,
+        },
       },
+    },
+    {
+      placeholderData: keepPreviousData,
     },
   );
 
@@ -40,10 +59,24 @@ export const OLSceneClubResults = () => {
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.BACKGROUND }}>
+      {focus && (
+        <OLRefetcherBar
+          interval={15_000}
+          refetch={async () => {
+            setNowTimestamp(nowTimestampFs());
+          }}
+        />
+      )}
+      <OLResultHeader />
       <FlashList
         style={{ flex: 1 }}
         data={getResultsQuery.data?.data.results || []}
-        renderItem={({ item }) => <OLClubResultRow resultItem={item} />}
+        renderItem={({ item }) => (
+          <OLClubResultRow
+            resultItem={item}
+            olCompetitionId={params.olCompetitionId}
+          />
+        )}
         ItemSeparatorComponent={Separator}
         contentContainerStyle={{ paddingBottom: 128 }}
         ListEmptyComponent={

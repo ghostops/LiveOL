@@ -31,8 +31,8 @@ export type RootStack = {
   Info: undefined;
   Language: undefined;
   Redeem: undefined;
-  LiveResults: { liveClassId: string };
-  ClubResults: { liveCompetitionId: number; olOrganizationId: string };
+  LiveResults: { olCompetitionId: string; liveClassId: string };
+  ClubResults: { olCompetitionId: string; olOrganizationId: string };
 };
 
 const Stack = createNativeStackNavigator<RootStack>();

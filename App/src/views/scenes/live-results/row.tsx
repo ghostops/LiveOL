@@ -13,10 +13,11 @@ import { OrientationType } from 'react-native-orientation-locker';
 import { useOLNavigation } from '~/hooks/useNavigation';
 
 type Props = {
+  olCompetitionId: string;
   liveResultItem: paths['/v2/results/live/{liveClassId}']['get']['responses']['200']['content']['application/json']['data']['results'][number];
 };
 
-export const OLLiveResultRow = ({ liveResultItem }: Props) => {
+export const OLLiveResultRow = ({ olCompetitionId, liveResultItem }: Props) => {
   const { colors } = useTheme();
   const { place, name, time, splits } = useRowWidths();
   const orientation = useOrientation();
@@ -47,7 +48,7 @@ export const OLLiveResultRow = ({ liveResultItem }: Props) => {
             onPress={() => {
               if (liveResultItem.olOrganizationId) {
                 navigation.navigate('ClubResults', {
-                  liveCompetitionId: liveResultItem.liveCompetitionId,
+                  olCompetitionId,
                   olOrganizationId: liveResultItem.olOrganizationId,
                 });
               }
@@ -85,7 +86,7 @@ export const OLLiveResultRow = ({ liveResultItem }: Props) => {
   );
 };
 
-const OLRowTime = ({ liveResultItem }: Props) => {
+const OLRowTime = ({ liveResultItem }: Pick<Props, 'liveResultItem'>) => {
   if (liveResultItem.start && liveResultItem.isLive) {
     return <OLResultLiveRunning startTime={liveResultItem.start} />;
   }

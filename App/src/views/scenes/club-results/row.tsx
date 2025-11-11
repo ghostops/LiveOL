@@ -10,10 +10,11 @@ import { OLText } from '~/views/components/text';
 import { useOLNavigation } from '~/hooks/useNavigation';
 
 type Props = {
-  resultItem: paths['/v2/results/live/organizations/{liveCompetitionId}/{olOrganizationId}']['get']['responses']['200']['content']['application/json']['data']['results'][number];
+  olCompetitionId: string;
+  resultItem: paths['/v2/results/live/organizations/{olCompetitionId}/{olOrganizationId}']['get']['responses']['200']['content']['application/json']['data']['results'][number];
 };
 
-export const OLClubResultRow = ({ resultItem }: Props) => {
+export const OLClubResultRow = ({ resultItem, olCompetitionId }: Props) => {
   const { colors } = useTheme();
   const navigation = useOLNavigation();
 
@@ -38,20 +39,24 @@ export const OLClubResultRow = ({ resultItem }: Props) => {
         </View>
         <View style={{ flex: 1, paddingRight: 8 }}>
           <OLText numberOfLines={1}>{resultItem.name || 'N/A'}</OLText>
-          <TouchableOpacity
-            onPress={() => {
-              if (resultItem.liveClassId) {
-                // ToDo: Go back and replace previous screen instead of stacking
+          {resultItem.liveClassId && resultItem.className && (
+            <TouchableOpacity
+              onPress={() => {
                 navigation.navigate('LiveResults', {
                   liveClassId: resultItem.liveClassId,
+                  olCompetitionId: olCompetitionId,
                 });
-              }
-            }}
-          >
-            <OLText numberOfLines={1} size={12} style={{ color: colors.BLUE }}>
-              {resultItem.liveClassId}
-            </OLText>
-          </TouchableOpacity>
+              }}
+            >
+              <OLText
+                numberOfLines={1}
+                size={12}
+                style={{ color: colors.BLUE }}
+              >
+                {resultItem.className}
+              </OLText>
+            </TouchableOpacity>
+          )}
         </View>
         <View
           style={{

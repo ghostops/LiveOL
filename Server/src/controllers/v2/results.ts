@@ -8,7 +8,7 @@ import {
 } from 'lib/db/schema';
 import { apiSingletons } from 'lib/singletons';
 import { z } from 'zod/v4';
-import { and, eq, sql } from 'drizzle-orm';
+import { and, eq, getTableColumns, sql } from 'drizzle-orm';
 import { differenceInSeconds } from 'date-fns';
 import { sortOptimalV2 } from 'lib/liveresultat/sorting';
 import crypto from 'crypto';
@@ -175,17 +175,32 @@ function checkIfRecentlyUpdated(result: {
 export const getLiveResultsForOrganisation = defaultEndpointsFactory.build({
   method: 'get',
   input: z.object({
-    liveCompetitionId: z.coerce.number(),
+    olCompetitionId: z.string(),
     olOrganizationId: z.string(),
+    sortingKey: z.string().optional(),
+    sortingDirection: z.enum(['asc', 'desc']).optional(),
+    nowTimestamp: z.coerce.number(),
   }),
   output: z.object({
-    results: resultSchema.array(),
+    results: resultSchema
+      .extend({
+        className: z.string().optional(),
+      })
+      .array(),
   }),
-  handler: async ({ input: { liveCompetitionId, olOrganizationId } }) => {
+  handler: async ({
+    input: {
+      olCompetitionId,
+      olOrganizationId,
+      sortingKey,
+      sortingDirection,
+      nowTimestamp,
+    },
+  }) => {
     const [competition] = await api.Drizzle.db
       .select()
       .from(LiveCompetitionsTable)
-      .where(eq(LiveCompetitionsTable.id, liveCompetitionId))
+      .where(eq(LiveCompetitionsTable.olCompetitionId, olCompetitionId))
       .limit(1);
 
     if (!competition) {
@@ -193,15 +208,30 @@ export const getLiveResultsForOrganisation = defaultEndpointsFactory.build({
     }
 
     const results = await api.Drizzle.db
-      .select()
+      .select({
+        ...getTableColumns(LiveResultsTable),
+        className: LiveClassesTable.name,
+      })
       .from(LiveResultsTable)
+      .leftJoin(
+        LiveClassesTable,
+        eq(LiveResultsTable.liveClassId, LiveClassesTable.liveClassId),
+      )
       .where(
         and(
           eq(LiveResultsTable.liveCompetitionId, competition.id),
           eq(LiveResultsTable.olOrganizationId, olOrganizationId),
         ),
-      );
+      )
+      .orderBy(sql`${LiveResultsTable.result} ASC NULLS LAST`);
 
-    return { results };
+    const sortedResults = sortOptimalV2(
+      results,
+      sortingKey || 'place',
+      sortingDirection || 'asc',
+      nowTimestamp,
+    );
+
+    return { results: sortedResults };
   },
 });

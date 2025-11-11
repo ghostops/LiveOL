@@ -62,6 +62,7 @@ export const OLSceneCompetition = () => {
               onPress={() => {
                 navigation.navigate('LiveResults', {
                   liveClassId: item.liveClassId,
+                  olCompetitionId: params.olCompetitionId,
                 });
               }}
               style={{
@@ -103,10 +104,12 @@ export const OLSceneCompetition = () => {
             <View style={{ padding: 8, gap: 8 }}>
               <OrganizerText
                 organizer={getCompetitionQuery.data?.data.competition.organizer}
-                organizerId={
+                olOrganizationId={
                   getCompetitionQuery.data?.data.competition.olOrganizationId
                 }
-                olCompetitionId={params.olCompetitionId}
+                olCompetitionId={
+                  getCompetitionQuery.data?.data.competition.olCompetitionId
+                }
               />
 
               {getCompetitionQuery.data?.data.competition.date && (
@@ -161,12 +164,12 @@ export const OLSceneCompetition = () => {
 
 function OrganizerText({
   organizer,
-  organizerId,
+  olOrganizationId,
   olCompetitionId,
 }: {
   organizer: string | null | undefined;
-  organizerId: string | undefined;
-  olCompetitionId: string;
+  olOrganizationId: string | undefined;
+  olCompetitionId: string | undefined;
 }) {
   const { t } = useTranslation();
   const navigation = useOLNavigation();
@@ -180,20 +183,20 @@ function OrganizerText({
       {t('competitions.organizedBy')}:{' '}
       <OLText
         size={16}
-        style={{ textDecorationLine: organizerId ? 'underline' : 'none' }}
+        style={{ textDecorationLine: olOrganizationId ? 'underline' : 'none' }}
       >
         {organizer}
       </OLText>
     </OLText>
   );
 
-  if (organizerId) {
+  if (olOrganizationId && olCompetitionId) {
     return (
       <TouchableOpacity
         onPress={() => {
           navigation.navigate('ClubResults', {
             olCompetitionId,
-            olOrganizationId: organizerId,
+            olOrganizationId,
           });
         }}
       >

@@ -53,6 +53,6 @@ export const routing: Routing = {
   'v2/organizations/:id/competitions': getOrganizationCompetitions,
 
   'v2/results/live/:liveClassId': getResultByLiveClassId,
-  'v2/results/live/organizations/:liveCompetitionId/:olOrganizationId':
+  'v2/results/live/organizations/:olCompetitionId/:olOrganizationId':
     getLiveResultsForOrganisation,
 };

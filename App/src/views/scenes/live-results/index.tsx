@@ -86,7 +86,12 @@ export const OLSceneLiveResults = () => {
             style={{ flex: 1 }}
             data={getResults.data?.data.results || []}
             nestedScrollEnabled
-            renderItem={({ item }) => <OLLiveResultRow liveResultItem={item} />}
+            renderItem={({ item }) => (
+              <OLLiveResultRow
+                liveResultItem={item}
+                olCompetitionId={params.olCompetitionId}
+              />
+            )}
             ItemSeparatorComponent={Separator}
             contentContainerStyle={{ paddingBottom: 128 }}
             ListEmptyComponent={
