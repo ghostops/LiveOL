@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Alert } from 'react-native';
 import { getUniqueId } from 'react-native-device-info';
 import { usePlusStore } from '~/store/plus';
-import { useOLNavigation } from './useNavigation';
+import { useOLNavigationRef } from './useNavigation';
 import { useState } from 'react';
 import { $api } from '~/lib/react-query/api';
 
@@ -18,7 +18,7 @@ getUniqueId().then(id => {
 export const usePlusCodes = () => {
   const { setCustomerInfo } = usePlusStore();
   const { t } = useTranslation();
-  const { goBack } = useOLNavigation();
+  const { getNavRef } = useOLNavigationRef();
   const [loadingCode, setLoadingCode] = useState(false);
 
   const enableLiveOLPlus = () =>
@@ -43,7 +43,7 @@ export const usePlusCodes = () => {
             Alert.alert(t('plus.buy.success'));
             AsyncStorage.setItem(PLUS_CODE_KEY, code);
             enableLiveOLPlus();
-            goBack();
+            getNavRef()?.goBack();
           }
         },
         onError: ({ error }) => {

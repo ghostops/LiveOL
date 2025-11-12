@@ -15,6 +15,7 @@ import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import '~/lib/i18n';
 import { useDeviceIdStore } from './store/deviceId';
 import { getUniqueId } from 'react-native-device-info';
+import { UserRegistration } from './components/UserRegistration';
 
 const fallbackErrorBoundary = ({ children }: any) => <>{children}</>;
 let ErrorBoundary: any;
@@ -76,6 +77,7 @@ export default () => {
         <SafeAreaProvider>
           <ActionSheetProvider>
             <QueryClientProvider client={queryClient}>
+              <UserRegistration />
               <View style={{ flex: 1 }}>
                 <BottomSheetModalProvider>
                   <OLRotationWatcher>

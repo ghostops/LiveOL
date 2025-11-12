@@ -25,6 +25,7 @@ import {
   getLiveResultsForOrganisation,
   getResultByLiveClassId,
 } from 'controllers/v2/results';
+import { registerUser } from 'controllers/v2/users';
 
 export const config = createConfig({
   http: { listen: 3000 },
@@ -55,4 +56,6 @@ export const routing: Routing = {
   'v2/results/live/:liveClassId': getResultByLiveClassId,
   'v2/results/live/organizations/:olCompetitionId/:olOrganizationId':
     getLiveResultsForOrganisation,
+
+  'v2/users/register': registerUser,
 };
