@@ -13,6 +13,7 @@ import { OLLanguageModal } from '~/views/scenes/language_modal/component';
 import { useOLNavigationRef } from '~/hooks/useNavigation';
 import { OLSceneHome } from '~/views/scenes/home';
 import { OLSceneTracking } from '~/views/scenes/tracking';
+import { OLSceneEditTrackRunner } from '~/views/scenes/tracking/edit';
 import { OLSceneCompetition } from '~/views/scenes/competition';
 import { OLIcon } from '~/views/components/icon';
 import { OLText } from '~/views/components/text';
@@ -33,6 +34,15 @@ export type RootStack = {
   Redeem: undefined;
   LiveResults: { olCompetitionId: string; liveClassId: string };
   ClubResults: { olCompetitionId: string; olOrganizationId: string };
+  EditTrackRunner: {
+    mode: 'create' | 'edit';
+    trackingId?: number;
+    runner?: {
+      name: string;
+      clubs: string[];
+      classes: string[];
+    };
+  };
 };
 
 const Stack = createNativeStackNavigator<RootStack>();
@@ -167,6 +177,16 @@ const Component: React.FC = () => {
           name="ClubResults"
           component={OLSceneClubResults}
           options={{ title: '...' }}
+        />
+        <Stack.Screen
+          name="EditTrackRunner"
+          component={OLSceneEditTrackRunner}
+          options={({ route }) => ({
+            title:
+              route.params.mode === 'create'
+                ? t('tracking.edit.titleCreate')
+                : t('tracking.edit.titleEdit'),
+          })}
         />
 
         <Stack.Group

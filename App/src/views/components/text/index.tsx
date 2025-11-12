@@ -7,7 +7,7 @@ interface Props {
   size?: number;
   bold?: boolean;
   italics?: boolean;
-  style?: TextStyle;
+  style?: TextStyle | TextStyle[];
   numberOfLines?: number;
   selectable?: boolean;
   uppercase?: boolean;

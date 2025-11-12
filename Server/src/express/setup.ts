@@ -26,6 +26,12 @@ import {
   getResultByLiveClassId,
 } from 'controllers/v2/results';
 import { registerUser } from 'controllers/v2/users';
+import {
+  listTracking,
+  createTracking,
+  updateTracking,
+  deleteTracking,
+} from 'controllers/v2/tracking';
 
 export const config = createConfig({
   http: { listen: 3000 },
@@ -58,4 +64,9 @@ export const routing: Routing = {
     getLiveResultsForOrganisation,
 
   'v2/users/register': registerUser,
+
+  'v2/tracking': listTracking,
+  'v2/tracking/create': createTracking,
+  'v2/tracking/:id': updateTracking,
+  'v2/tracking/:id/delete': deleteTracking,
 };

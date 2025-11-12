@@ -15,7 +15,7 @@ import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import '~/lib/i18n';
 import { useDeviceIdStore } from './store/deviceId';
 import { getUniqueId } from 'react-native-device-info';
-import { UserRegistration } from './components/UserRegistration';
+import { UserRegistration } from './views/components/UserRegistration';
 
 const fallbackErrorBoundary = ({ children }: any) => <>{children}</>;
 let ErrorBoundary: any;

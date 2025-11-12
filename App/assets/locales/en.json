@@ -243,5 +243,42 @@
     "follow": "Following",
     "home": "Competitions",
     "profile": "Me"
+  },
+  "tracking": {
+    "empty": {
+      "title": "No tracked runners",
+      "message": "Tap the + button to start tracking a runner"
+    },
+    "list": {
+      "clubs": "Clubs",
+      "classes": "Classes",
+      "edit": "Edit"
+    },
+    "edit": {
+      "titleCreate": "Add Runner",
+      "titleEdit": "Edit Runner",
+      "name": "Runner Name",
+      "namePlaceholder": "Enter runner name",
+      "clubs": "Clubs",
+      "clubPlaceholder": "Enter club name",
+      "classes": "Classes",
+      "classPlaceholder": "Enter class name (e.g., H21, D18)",
+      "add": "Add",
+      "create": "Create Runner",
+      "update": "Update Runner",
+      "cancel": "Cancel",
+      "error": "Error",
+      "nameRequired": "Runner name is required",
+      "userNotFound": "User not found. Please restart the app.",
+      "saveFailed": "Failed to save runner"
+    },
+    "delete": {
+      "title": "Delete Runner",
+      "message": "Are you sure you want to stop tracking {{name}}?",
+      "confirm": "Delete",
+      "cancel": "Cancel",
+      "action": "Delete",
+      "error": "Failed to delete runner"
+    }
   }
 }
