@@ -2,7 +2,6 @@ import { useState } from 'react';
 import {
   View,
   TextInput,
-  ScrollView,
   KeyboardAvoidingView,
   Platform,
   TouchableOpacity,
@@ -128,185 +127,179 @@ export const OLSceneEditTrackRunner: React.FC<EditTrackRunnerProps> = ({
   return (
     <SafeAreaView
       style={{ flex: 1, backgroundColor: COLORS.BACKGROUND }}
-      edges={['bottom']}
+      edges={['bottom', 'left', 'right']}
     >
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={{ flex: 1 }}
+        style={{ flex: 1, padding: px(16) }}
       >
-        <ScrollView
-          style={{ flex: 1 }}
-          contentContainerStyle={{ padding: px(16) }}
-          keyboardShouldPersistTaps="handled"
-        >
-          {/* Runner Name */}
-          <View style={{ marginBottom: px(24) }}>
-            <OLText size={16} style={{ marginBottom: px(8), color: 'white' }}>
-              {t('tracking.edit.name')} *
-            </OLText>
+        {/* Runner Name */}
+        <View style={{ marginBottom: px(24) }}>
+          <OLText size={16} style={{ marginBottom: px(8) }}>
+            {t('tracking.edit.name')} *
+          </OLText>
+          <TextInput
+            style={{
+              borderWidth: 2,
+              borderColor: COLORS.MAIN,
+              borderRadius: 8,
+              height: 50,
+              paddingHorizontal: px(12),
+              fontSize: 16,
+            }}
+            placeholder={t('tracking.edit.namePlaceholder')}
+            placeholderTextColor="#666"
+            value={name}
+            onChangeText={setName}
+            autoCapitalize="words"
+            autoCorrect={false}
+          />
+        </View>
+
+        {/* Clubs */}
+        <View style={{ marginBottom: px(24) }}>
+          <OLText size={16} style={{ marginBottom: px(8) }}>
+            {t('tracking.edit.clubs')}
+          </OLText>
+          <View style={{ flexDirection: 'row', marginBottom: px(8) }}>
             <TextInput
               style={{
+                flex: 1,
                 borderWidth: 2,
                 borderColor: COLORS.MAIN,
                 borderRadius: 8,
                 height: 50,
                 paddingHorizontal: px(12),
                 fontSize: 16,
+                marginRight: px(8),
               }}
-              placeholder={t('tracking.edit.namePlaceholder')}
+              placeholder={t('tracking.edit.clubPlaceholder')}
               placeholderTextColor="#666"
-              value={name}
-              onChangeText={setName}
+              value={clubInput}
+              onChangeText={setClubInput}
+              onSubmitEditing={addClub}
+              returnKeyType="done"
               autoCapitalize="words"
               autoCorrect={false}
             />
-          </View>
-
-          {/* Clubs */}
-          <View style={{ marginBottom: px(24) }}>
-            <OLText size={16} style={{ marginBottom: px(8), color: 'white' }}>
-              {t('tracking.edit.clubs')}
-            </OLText>
-            <View style={{ flexDirection: 'row', marginBottom: px(8) }}>
-              <TextInput
-                style={{
-                  flex: 1,
-                  borderWidth: 2,
-                  borderColor: COLORS.MAIN,
-                  borderRadius: 8,
-                  height: 50,
-                  paddingHorizontal: px(12),
-                  fontSize: 16,
-                  marginRight: px(8),
-                }}
-                placeholder={t('tracking.edit.clubPlaceholder')}
-                placeholderTextColor="#666"
-                value={clubInput}
-                onChangeText={setClubInput}
-                onSubmitEditing={addClub}
-                returnKeyType="done"
-                autoCapitalize="words"
-                autoCorrect={false}
-              />
-              <TouchableOpacity
-                onPress={addClub}
-                style={{
-                  backgroundColor: COLORS.MAIN,
-                  paddingHorizontal: px(16),
-                  borderRadius: 8,
-                  justifyContent: 'center',
-                }}
-              >
-                <OLText size={16} bold>
-                  {t('tracking.edit.add')}
-                </OLText>
-              </TouchableOpacity>
-            </View>
-            <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-              {clubs.map(club => (
-                <TouchableOpacity
-                  key={club}
-                  onPress={() => removeClub(club)}
-                  style={{
-                    backgroundColor: COLORS.MAIN,
-                    paddingHorizontal: px(12),
-                    paddingVertical: px(6),
-                    borderRadius: 16,
-                    marginRight: px(8),
-                    marginBottom: px(8),
-                  }}
-                >
-                  <OLText size={14}>{club} ×</OLText>
-                </TouchableOpacity>
-              ))}
-            </View>
-          </View>
-
-          {/* Classes */}
-          <View style={{ marginBottom: px(24) }}>
-            <OLText size={16} style={{ marginBottom: px(8), color: 'white' }}>
-              {t('tracking.edit.classes')}
-            </OLText>
-            <View style={{ flexDirection: 'row', marginBottom: px(8) }}>
-              <TextInput
-                style={{
-                  flex: 1,
-                  borderWidth: 2,
-                  borderColor: COLORS.MAIN,
-                  borderRadius: 8,
-                  height: 50,
-                  paddingHorizontal: px(12),
-
-                  fontSize: 16,
-                  marginRight: px(8),
-                }}
-                placeholder={t('tracking.edit.classPlaceholder')}
-                placeholderTextColor="#666"
-                value={classInput}
-                onChangeText={setClassInput}
-                onSubmitEditing={addClass}
-                returnKeyType="done"
-                autoCapitalize="characters"
-                autoCorrect={false}
-              />
-              <TouchableOpacity
-                onPress={addClass}
-                style={{
-                  backgroundColor: COLORS.MAIN,
-                  paddingHorizontal: px(16),
-                  borderRadius: 8,
-                  justifyContent: 'center',
-                }}
-              >
-                <OLText size={16} bold>
-                  {t('tracking.edit.add')}
-                </OLText>
-              </TouchableOpacity>
-            </View>
-            <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-              {classes.map(className => (
-                <TouchableOpacity
-                  key={className}
-                  onPress={() => removeClass(className)}
-                  style={{
-                    backgroundColor: COLORS.MAIN,
-                    paddingHorizontal: px(12),
-                    paddingVertical: px(6),
-                    borderRadius: 16,
-                    marginRight: px(8),
-                    marginBottom: px(8),
-                  }}
-                >
-                  <OLText size={14}>{className} ×</OLText>
-                </TouchableOpacity>
-              ))}
-            </View>
-          </View>
-
-          {/* Save Button */}
-          <View style={{ marginTop: px(16) }}>
-            <OLButton onPress={handleSave} disabled={isLoading}>
-              {mode === 'create'
-                ? t('tracking.edit.create')
-                : t('tracking.edit.update')}
-            </OLButton>
-          </View>
-
-          {/* Cancel Button */}
-          <View style={{ marginTop: px(12) }}>
             <TouchableOpacity
-              onPress={goBack}
+              onPress={addClub}
               style={{
-                padding: px(16),
-                alignItems: 'center',
+                backgroundColor: COLORS.MAIN,
+                paddingHorizontal: px(16),
+                borderRadius: 8,
+                justifyContent: 'center',
               }}
             >
-              <OLText size={16} style={{ color: '#999' }}>
-                {t('tracking.edit.cancel')}
+              <OLText size={16} bold>
+                {t('tracking.edit.add')}
               </OLText>
             </TouchableOpacity>
           </View>
-        </ScrollView>
+          <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+            {clubs.map(club => (
+              <TouchableOpacity
+                key={club}
+                onPress={() => removeClub(club)}
+                style={{
+                  backgroundColor: COLORS.MAIN,
+                  paddingHorizontal: px(12),
+                  paddingVertical: px(6),
+                  borderRadius: 16,
+                  marginRight: px(8),
+                  marginBottom: px(8),
+                }}
+              >
+                <OLText size={14}>{club} ×</OLText>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
+
+        {/* Classes */}
+        <View style={{ marginBottom: px(24) }}>
+          <OLText size={16} style={{ marginBottom: px(8) }}>
+            {t('tracking.edit.classes')}
+          </OLText>
+          <View style={{ flexDirection: 'row', marginBottom: px(8) }}>
+            <TextInput
+              style={{
+                flex: 1,
+                borderWidth: 2,
+                borderColor: COLORS.MAIN,
+                borderRadius: 8,
+                height: 50,
+                paddingHorizontal: px(12),
+
+                fontSize: 16,
+                marginRight: px(8),
+              }}
+              placeholder={t('tracking.edit.classPlaceholder')}
+              placeholderTextColor="#666"
+              value={classInput}
+              onChangeText={setClassInput}
+              onSubmitEditing={addClass}
+              returnKeyType="done"
+              autoCapitalize="characters"
+              autoCorrect={false}
+            />
+            <TouchableOpacity
+              onPress={addClass}
+              style={{
+                backgroundColor: COLORS.MAIN,
+                paddingHorizontal: px(16),
+                borderRadius: 8,
+                justifyContent: 'center',
+              }}
+            >
+              <OLText size={16} bold>
+                {t('tracking.edit.add')}
+              </OLText>
+            </TouchableOpacity>
+          </View>
+          <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+            {classes.map(className => (
+              <TouchableOpacity
+                key={className}
+                onPress={() => removeClass(className)}
+                style={{
+                  backgroundColor: COLORS.MAIN,
+                  paddingHorizontal: px(12),
+                  paddingVertical: px(6),
+                  borderRadius: 16,
+                  marginRight: px(8),
+                  marginBottom: px(8),
+                }}
+              >
+                <OLText size={14}>{className} ×</OLText>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
+
+        {/* Save Button */}
+        <View style={{ marginTop: px(16) }}>
+          <OLButton onPress={handleSave} disabled={isLoading}>
+            {mode === 'create'
+              ? t('tracking.edit.create')
+              : t('tracking.edit.update')}
+          </OLButton>
+        </View>
+
+        {/* Cancel Button */}
+        <View style={{ marginTop: px(12) }}>
+          <TouchableOpacity
+            onPress={goBack}
+            style={{
+              padding: px(16),
+              alignItems: 'center',
+            }}
+          >
+            <OLText size={16} style={{ color: '#999' }}>
+              {t('tracking.edit.cancel')}
+            </OLText>
+          </TouchableOpacity>
+        </View>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
