@@ -5,6 +5,7 @@ import {
   LiveResultsTable,
   LiveSplitControllsTable,
   LiveSplitResultsTable,
+  OLTrackingTable,
 } from 'lib/db/schema';
 import { apiSingletons } from 'lib/singletons';
 import { z } from 'zod/v4';
@@ -12,6 +13,7 @@ import { and, eq, getTableColumns, sql } from 'drizzle-orm';
 import { differenceInSeconds } from 'date-fns';
 import { sortOptimalV2 } from 'lib/liveresultat/sorting';
 import crypto from 'crypto';
+import { RunnerId } from 'lib/match/generateIds';
 
 const api = apiSingletons.createApiSingletons();
 
@@ -233,5 +235,75 @@ export const getLiveResultsForOrganisation = defaultEndpointsFactory.build({
     );
 
     return { results: sortedResults };
+  },
+});
+
+export const getLiveResultsForTrackedRunner = defaultEndpointsFactory.build({
+  method: 'get',
+  input: z.object({
+    trackingId: z.coerce.number(),
+  }),
+  output: z.object({
+    results: resultSchema
+      .extend({
+        className: z.string().nullish(),
+        competitionName: z.string().nullish(),
+        olCompetitionId: z.string().nullish(),
+      })
+      .array(),
+  }),
+  handler: async ({ input: { trackingId } }) => {
+    const [tracking] = await api.Drizzle.db
+      .select()
+      .from(OLTrackingTable)
+      .where(eq(OLTrackingTable.id, trackingId))
+      .limit(1);
+
+    if (!tracking) {
+      throw new Error('Tracking not found');
+    }
+
+    const allPotentialIds = tracking.clubs.reduce<string[]>((acc, club) => {
+      tracking.classes.forEach(className => {
+        const id = new RunnerId().generateId({
+          className,
+          fullName: tracking.name,
+          organizationName: club,
+        });
+        acc.push(id);
+      });
+      return acc;
+    }, []);
+
+    if (allPotentialIds.length === 0) {
+      return { results: [] };
+    }
+
+    const results = await api.Drizzle.db
+      .select({
+        ...getTableColumns(LiveResultsTable),
+        className: LiveClassesTable.name,
+        competitionName: LiveCompetitionsTable.name,
+        olCompetitionId: LiveCompetitionsTable.olCompetitionId,
+      })
+      .from(LiveResultsTable)
+      .leftJoin(
+        LiveClassesTable,
+        eq(LiveResultsTable.liveClassId, LiveClassesTable.liveClassId),
+      )
+      .leftJoin(
+        LiveCompetitionsTable,
+        eq(LiveResultsTable.liveCompetitionId, LiveCompetitionsTable.id),
+      )
+      .where(
+        // Build a safe IN (...) clause from the list of ids
+        sql`${LiveResultsTable.olRunnerId} IN (${sql.join(
+          allPotentialIds.map(id => sql`${id}`),
+          sql`, `,
+        )})`,
+      )
+      .orderBy(sql`${LiveResultsTable.result} ASC NULLS LAST`);
+
+    return { results };
   },
 });

@@ -19,6 +19,7 @@ import { OLIcon } from '~/views/components/icon';
 import { OLText } from '~/views/components/text';
 import { OLSceneLiveResults } from '~/views/scenes/live-results';
 import { OLSceneClubResults } from '~/views/scenes/club-results';
+import { OLSceneTrackingResults } from '~/views/scenes/tracking/results';
 
 export type TabStack = {
   Home: undefined;
@@ -42,6 +43,9 @@ export type RootStack = {
       clubs: string[];
       classes: string[];
     };
+  };
+  TrackingResults: {
+    trackingId: number;
   };
 };
 
@@ -187,6 +191,10 @@ const Component: React.FC = () => {
                 ? t('tracking.edit.titleCreate')
                 : t('tracking.edit.titleEdit'),
           })}
+        />
+        <Stack.Screen
+          name="TrackingResults"
+          component={OLSceneTrackingResults}
         />
 
         <Stack.Group

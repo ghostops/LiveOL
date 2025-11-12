@@ -23,6 +23,7 @@ import {
 import { getEventorResultsForCompetition } from 'controllers/v2/runners';
 import {
   getLiveResultsForOrganisation,
+  getLiveResultsForTrackedRunner,
   getResultByLiveClassId,
 } from 'controllers/v2/results';
 import { registerUser } from 'controllers/v2/users';
@@ -62,6 +63,7 @@ export const routing: Routing = {
   'v2/results/live/:liveClassId': getResultByLiveClassId,
   'v2/results/live/organizations/:olCompetitionId/:olOrganizationId':
     getLiveResultsForOrganisation,
+  'v2/results/live/tracked/:trackingId': getLiveResultsForTrackedRunner,
 
   'v2/users/register': registerUser,
 

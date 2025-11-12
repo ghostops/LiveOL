@@ -5,7 +5,7 @@ const maxIdLength = 255;
 const asciiFold = (s: string) =>
   s.normalize('NFD').replace(/\p{Diacritic}/gu, '') ?? '';
 
-const norm = (s: string, { foldAscii = true } = {}) => {
+export const norm = (s: string, { foldAscii = true } = {}) => {
   let t: string = s
     .toString()
     .trim()

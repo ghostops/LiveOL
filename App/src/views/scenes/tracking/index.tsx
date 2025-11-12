@@ -16,6 +16,7 @@ import { useUserIdStore } from '~/store/userId';
 import { paths } from '~/lib/react-query/schema';
 import { ReanimatedSwipeable } from '~/views/components/ReanimatedSwipeable';
 import { queryClient } from '~/lib/react-query/client';
+import { OLButton } from '~/views/components/button';
 
 type TrackingItem =
   paths['/v2/tracking']['get']['responses']['200']['content']['application/json']['data']['tracking'][0];
@@ -100,7 +101,12 @@ export const OLSceneTracking = () => {
         <View style={[styles.itemContent, { padding: px(16) }]}>
           <View style={styles.itemRow}>
             <View style={styles.itemInfo}>
-              <OLText size={18} bold style={{ marginBottom: px(4) }}>
+              <OLText
+                size={18}
+                bold
+                style={{ marginBottom: px(4) }}
+                numberOfLines={1}
+              >
                 {item.name}
               </OLText>
               {item.clubs.length > 0 && (
@@ -116,6 +122,15 @@ export const OLSceneTracking = () => {
                   {t('tracking.list.classes')}: {item.classes.join(', ')}
                 </OLText>
               )}
+              <OLButton
+                small
+                style={{ alignSelf: 'flex-start', marginTop: px(8) }}
+                onPress={() => {
+                  navigate('TrackingResults', { trackingId: item.id });
+                }}
+              >
+                {t('tracking.results')}
+              </OLButton>
             </View>
             <TouchableOpacity
               onPress={() =>

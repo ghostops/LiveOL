@@ -3,21 +3,21 @@ import { defaultEndpointsFactory } from 'express-zod-api';
 import { apiSingletons } from 'lib/singletons';
 import { OLTrackingTable } from 'lib/db/schema/ol_tracking';
 import { OLUsersTable } from 'lib/db/schema/ol_users';
-import { eq } from 'drizzle-orm';
+import { desc, eq } from 'drizzle-orm';
 
 const api = apiSingletons.createApiSingletons();
 
 // Input schemas
 const createTrackingSchema = z.object({
-  uid: z.string().min(1, 'User UID is required'),
-  name: z.string().min(1, 'Runner name is required').max(255),
+  uid: z.string().min(1),
+  name: z.string().min(1).max(255),
   clubs: z.array(z.string().max(255)).default([]),
   classes: z.array(z.string().max(255)).default([]),
 });
 
 const updateTrackingSchema = z.object({
   id: z.coerce.number(),
-  name: z.string().min(1, 'Runner name is required').max(255),
+  name: z.string().min(1).max(255),
   clubs: z.array(z.string().max(255)).default([]),
   classes: z.array(z.string().max(255)).default([]),
 });
@@ -63,7 +63,8 @@ export const listTracking = defaultEndpointsFactory.build({
     const trackingRecords = await api.Drizzle.db
       .select()
       .from(OLTrackingTable)
-      .where(eq(OLTrackingTable.olUserId, user.id));
+      .where(eq(OLTrackingTable.olUserId, user.id))
+      .orderBy(desc(OLTrackingTable.createdAt));
 
     return { tracking: trackingRecords };
   },
