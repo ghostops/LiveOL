@@ -77,12 +77,46 @@ const marshalCompetition = (competition: {
   };
 };
 
+export const getTodaysCompetitions = defaultEndpointsFactory.build({
+  method: 'get',
+  input: z.object({
+    now: z
+      .string()
+      .regex(/^\d{4}-\d{2}-\d{2}$/, 'now must be in YYYY-MM-DD format'),
+  }),
+  output: z.object({
+    competitions: z.array(competitionSchema),
+  }),
+  handler: async ({ input: { now } }) => {
+    const todayRes = await api.Drizzle.db.execute<
+      typeof OLCompetitionsTable.$inferSelect & {
+        live: typeof LiveCompetitionsTable.$inferSelect | null;
+        eventor: typeof EventorCompetitionsTable.$inferSelect | null;
+      }
+    >(sql`
+      SELECT 
+        oc.*,
+        to_jsonb(lc) AS live,
+        to_jsonb(ec) AS eventor
+      FROM ol_competitions AS oc
+      LEFT JOIN live_competitions AS lc 
+        ON lc."olCompetitionId" = oc.id
+      LEFT JOIN eventor_competitions AS ec 
+        ON ec."olCompetitionId" = oc.id
+      WHERE DATE(COALESCE(ec.date, lc.date)) = ${now};
+    `);
+
+    return {
+      competitions: todayRes.rows.map(marshalCompetition),
+    };
+  },
+});
+
 export const getCompetitions = defaultEndpointsFactory.build({
   method: 'get',
   input: z.object({
     cursor: z.coerce.number().default(1),
     countryCode: z.string().optional(),
-    now: z.string().optional(),
   }),
   output: z.object({
     page: z.number(),

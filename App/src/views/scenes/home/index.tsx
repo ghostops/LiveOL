@@ -14,10 +14,23 @@ import { OLLoading } from '~/views/components/loading';
 import { OLText } from '~/views/components/text';
 import { OLHomeBadge } from './badge';
 import { flagEmoji } from '~/util/flagEmoji';
+import { useTranslation } from 'react-i18next';
 
 export const OLSceneHome = () => {
   const { colors, px } = useTheme();
-  const { navigate } = useOLNavigation();
+  const { t } = useTranslation();
+
+  const getTodaysCompetitionsQuery = $api.useQuery(
+    'get',
+    '/v2/competitions/today',
+    {
+      params: {
+        query: {
+          now: new Date().toISOString().split('T')[0],
+        },
+      },
+    },
+  );
 
   const getCompetitionsQuery = $api.useInfiniteQuery(
     'get',
@@ -42,6 +55,17 @@ export const OLSceneHome = () => {
     },
   );
 
+  const isRefreshing =
+    getTodaysCompetitionsQuery.isRefetching ||
+    getCompetitionsQuery.isRefetching;
+
+  const refetch = async () => {
+    await Promise.all([
+      getTodaysCompetitionsQuery.refetch(),
+      getCompetitionsQuery.refetch(),
+    ]);
+  };
+
   return (
     <View style={{ flex: 1 }}>
       <SectionList
@@ -58,64 +82,19 @@ export const OLSceneHome = () => {
         renderSectionHeader={({ section: { title } }) => {
           return (
             <View style={style.header}>
-              <OLText size={16}>{title}</OLText>
+              <OLText size={12}>{title}</OLText>
             </View>
           );
         }}
         renderItem={({ item }) => {
-          return (
-            <TouchableOpacity
-              style={style.item}
-              onPress={() => {
-                navigate('Competition', {
-                  olCompetitionId: item.olCompetitionId,
-                });
-              }}
-            >
-              <View style={style.row}>
-                <View style={{ flex: 1 }}>
-                  <OLText size={16} numberOfLines={1} style={{ flexShrink: 1 }}>
-                    {item.name}
-                  </OLText>
-                </View>
-              </View>
-              <View style={[style.row, { marginTop: px(2) }]}>
-                <View style={{ flex: 1 }}>
-                  {item.countryCode && flagEmoji[item.countryCode] && (
-                    <OLText>{flagEmoji[item.countryCode]}</OLText>
-                  )}
-                </View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    gap: px(2),
-                  }}
-                >
-                  {item.hasLiveData && (
-                    <OLHomeBadge
-                      text="Live"
-                      background={colors.RED}
-                      color={colors.WHITE}
-                    />
-                  )}
-                  {item.hasEventorData && (
-                    <OLHomeBadge
-                      text="Eventor"
-                      background={colors.BLUE}
-                      color={colors.WHITE}
-                    />
-                  )}
-                </View>
-              </View>
-            </TouchableOpacity>
-          );
+          return <RowItem item={item} />;
         }}
         keyExtractor={item => String(item.id)}
         style={{ flex: 1 }}
         refreshControl={
           <RefreshControl
-            refreshing={getCompetitionsQuery.isLoading}
-            onRefresh={getCompetitionsQuery.refetch}
+            refreshing={isRefreshing}
+            onRefresh={refetch}
             tintColor={colors.MAIN}
           />
         }
@@ -132,8 +111,86 @@ export const OLSceneHome = () => {
           }
           getCompetitionsQuery.fetchNextPage();
         }}
+        ListHeaderComponent={
+          <View
+            style={{
+              backgroundColor: COLORS.MAIN,
+              paddingHorizontal: px(8),
+              paddingBottom: px(16),
+              paddingTop: px(8),
+            }}
+          >
+            <OLText
+              style={{ color: COLORS.WHITE, marginBottom: px(8) }}
+              bold
+              size={16}
+            >
+              {t('home.today')}
+            </OLText>
+            <View style={{ backgroundColor: COLORS.WHITE }}>
+              {getTodaysCompetitionsQuery.data?.data.competitions.map(item => (
+                <RowItem key={item.id} item={item} />
+              ))}
+            </View>
+          </View>
+        }
       />
     </View>
+  );
+};
+
+const RowItem = ({
+  item,
+}: {
+  item: paths['/v2/competitions']['get']['responses']['200']['content']['application/json']['data']['competitions'][number]['competitions'][number];
+}) => {
+  const { colors, px } = useTheme();
+  const { navigate } = useOLNavigation();
+  return (
+    <TouchableOpacity
+      style={style.item}
+      onPress={() => {
+        navigate('Competition', {
+          olCompetitionId: item.olCompetitionId,
+        });
+      }}
+    >
+      <View style={style.row}>
+        <View style={{ flex: 1 }}>
+          <OLText size={16} numberOfLines={1} style={{ flexShrink: 1 }}>
+            {item.name}
+          </OLText>
+        </View>
+      </View>
+      <View style={[style.row, { marginTop: px(2) }]}>
+        <View style={{ flex: 1 }}>
+          {item.countryCode && flagEmoji[item.countryCode] && (
+            <OLText>{flagEmoji[item.countryCode]}</OLText>
+          )}
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            gap: px(2),
+          }}
+        >
+          {item.hasLiveData && (
+            <OLHomeBadge
+              text="Live"
+              background={colors.RED}
+              color={colors.WHITE}
+            />
+          )}
+          {item.hasEventorData && (
+            <OLHomeBadge
+              text="Eventor"
+              background={colors.BLUE}
+              color={colors.WHITE}
+            />
+          )}
+        </View>
+      </View>
+    </TouchableOpacity>
   );
 };
 
