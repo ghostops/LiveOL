@@ -3,6 +3,7 @@ import { defaultEndpointsFactory } from 'express-zod-api';
 import { EventorCompetitionsTable, EventorResultsTable } from 'lib/db/schema';
 import { apiSingletons } from 'lib/singletons';
 import { z } from 'zod/v4';
+import createHttpError from 'http-errors';
 
 const api = apiSingletons.createApiSingletons();
 
@@ -35,7 +36,7 @@ export const getEventorResultsForCompetition = defaultEndpointsFactory.build({
       .limit(1);
 
     if (!competition) {
-      throw new Error('Competition not found');
+      throw createHttpError(404, 'Competition not found');
     }
 
     const results = await api.Drizzle.db

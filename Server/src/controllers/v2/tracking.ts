@@ -4,6 +4,7 @@ import { apiSingletons } from 'lib/singletons';
 import { OLTrackingTable } from 'lib/db/schema/ol_tracking';
 import { OLUsersTable } from 'lib/db/schema/ol_users';
 import { desc, eq } from 'drizzle-orm';
+import createHttpError from 'http-errors';
 
 const api = apiSingletons.createApiSingletons();
 
@@ -56,7 +57,7 @@ export const listTracking = defaultEndpointsFactory.build({
       .limit(1);
 
     if (!user) {
-      throw new Error('User not found');
+      throw createHttpError(404, 'User not found');
     }
 
     // Get tracking records with runner details
@@ -86,7 +87,7 @@ export const createTracking = defaultEndpointsFactory.build({
       .limit(1);
 
     if (!user) {
-      throw new Error('User not found');
+      throw createHttpError(404, 'User not found');
     }
 
     // Create runner
@@ -101,7 +102,7 @@ export const createTracking = defaultEndpointsFactory.build({
       .returning();
 
     if (!tracking) {
-      throw new Error('Failed to create tracking record');
+      throw createHttpError(500, 'Failed to create tracking record');
     }
 
     return tracking;
@@ -124,7 +125,7 @@ export const updateTracking = defaultEndpointsFactory.build({
       .limit(1);
 
     if (!trackingRecord) {
-      throw new Error('Tracking record not found');
+      throw createHttpError(404, 'Tracking record not found');
     }
 
     // Update tracking record timestamp
@@ -140,7 +141,7 @@ export const updateTracking = defaultEndpointsFactory.build({
       .returning();
 
     if (!updatedTracking) {
-      throw new Error('Failed to update tracking record');
+      throw createHttpError(500, 'Failed to update tracking record');
     }
 
     return updatedTracking;

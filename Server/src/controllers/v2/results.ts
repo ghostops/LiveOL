@@ -15,6 +15,7 @@ import crypto from 'crypto';
 import { marshalResult } from 'lib/marshal/results';
 import { userMiddleware } from 'middleware/user';
 import { getTrackedRunnerIds } from 'lib/match/getAllTrackedRunnerIds';
+import createHttpError from 'http-errors';
 
 const api = apiSingletons.createApiSingletons();
 
@@ -184,7 +185,7 @@ export const getLiveResultsForOrganisation = defaultEndpointsFactory
         .limit(1);
 
       if (!competition) {
-        throw new Error('Competition not found');
+        throw createHttpError(404, 'Competition not found');
       }
 
       const results = await api.Drizzle.db
@@ -248,7 +249,7 @@ export const getLiveResultsForTrackedRunner = defaultEndpointsFactory
         .limit(1);
 
       if (!tracking) {
-        throw new Error('Tracking not found');
+        throw createHttpError(404, 'Tracking not found');
       }
 
       const allPotentialIds = getTrackedRunnerIds(tracking);

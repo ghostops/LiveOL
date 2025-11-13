@@ -10,6 +10,7 @@ import { z } from 'zod/v4';
 import { eq, sql } from 'drizzle-orm';
 import { EventorUrls } from 'lib/eventor/scrapers/urls';
 import { URL } from 'url';
+import createHttpError from 'http-errors';
 
 const api = apiSingletons.createApiSingletons();
 
@@ -198,7 +199,7 @@ export const getCompetition = defaultEndpointsFactory.build({
     const competitionRow = result.rows[0]?.competition;
 
     if (!competitionRow) {
-      throw new Error('Competition not found');
+      throw createHttpError(404, 'Competition not found');
     }
 
     let classes: Pick<

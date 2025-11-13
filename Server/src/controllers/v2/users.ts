@@ -4,6 +4,7 @@ import { apiSingletons } from 'lib/singletons';
 import { OLUsersTable } from 'lib/db/schema/ol_users';
 import { eq } from 'drizzle-orm';
 import { nanoid } from 'nanoid';
+import createHttpError from 'http-errors';
 
 const api = apiSingletons.createApiSingletons();
 
@@ -44,7 +45,7 @@ export const registerUser = defaultEndpointsFactory.build({
       // User exists - update if language or hasPlus changed
       const user = existingUser[0];
       if (!user) {
-        throw new Error('User not found');
+        throw createHttpError(404, 'User not found');
       }
 
       const needsUpdate =
@@ -62,7 +63,7 @@ export const registerUser = defaultEndpointsFactory.build({
           .returning();
 
         if (!updatedUser) {
-          throw new Error('Failed to update user');
+          throw createHttpError(500, 'Failed to update user');
         }
 
         return updatedUser;
@@ -90,7 +91,7 @@ export const registerUser = defaultEndpointsFactory.build({
       });
 
     if (!newUser) {
-      throw new Error('Failed to create user');
+      throw createHttpError(500, 'Failed to create user');
     }
 
     return newUser;
