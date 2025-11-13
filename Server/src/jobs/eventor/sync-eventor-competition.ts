@@ -73,6 +73,8 @@ export class SyncEventorCompetition {
       olCompetitionId: new CompetitionId().generateId({
         competitionName: event.name,
         organizationName: event.club,
+        // ToDo: Parse date correctly
+        date: new Date(),
       }),
       dateString: event.date,
       punchSystem: event.punchSystem,

@@ -87,7 +87,7 @@ export const OLSceneHome = () => {
           );
         }}
         renderItem={({ item }) => {
-          return <RowItem item={item} />;
+          return <HomeRowItem item={item} />;
         }}
         keyExtractor={item => String(item.id)}
         style={{ flex: 1 }}
@@ -129,7 +129,7 @@ export const OLSceneHome = () => {
             </OLText>
             <View style={{ backgroundColor: COLORS.WHITE }}>
               {getTodaysCompetitionsQuery.data?.data.competitions.map(item => (
-                <RowItem key={item.id} item={item} />
+                <HomeRowItem key={item.id} item={item} />
               ))}
             </View>
           </View>
@@ -139,21 +139,26 @@ export const OLSceneHome = () => {
   );
 };
 
-const RowItem = ({
+export const HomeRowItem = ({
   item,
+  onPress,
 }: {
   item: paths['/v2/competitions']['get']['responses']['200']['content']['application/json']['data']['competitions'][number]['competitions'][number];
+  onPress?: () => void;
 }) => {
   const { colors, px } = useTheme();
   const { navigate } = useOLNavigation();
   return (
     <TouchableOpacity
       style={style.item}
-      onPress={() => {
-        navigate('Competition', {
-          olCompetitionId: item.olCompetitionId,
-        });
-      }}
+      onPress={
+        onPress ||
+        (() => {
+          navigate('Competition', {
+            olCompetitionId: item.olCompetitionId,
+          });
+        })
+      }
     >
       <View style={style.row}>
         <View style={{ flex: 1 }}>

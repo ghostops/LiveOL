@@ -5,6 +5,7 @@ import { OLText } from '~/views/components/text';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { COLORS } from '~/util/const';
 import { OLIcon } from '~/views/components/icon';
+import { useOLNavigation } from '~/hooks/useNavigation';
 
 const LOGO = require('../../../../assets/images/icon.png');
 
@@ -12,6 +13,7 @@ export const HomeHeader: React.FC = () => {
   const { t } = useTranslation();
   const { px } = useTheme();
   const { top } = useSafeAreaInsets();
+  const { navigate } = useOLNavigation();
 
   return (
     <View
@@ -48,7 +50,7 @@ export const HomeHeader: React.FC = () => {
         </View>
 
         <View style={{ marginRight: px(16) }}>
-          <TouchableOpacity onPress={() => {}} hitSlop={16}>
+          <TouchableOpacity onPress={() => navigate('Search')} hitSlop={16}>
             <OLIcon name="search" color="#fff" style={{ fontSize: 20 }} />
           </TouchableOpacity>
         </View>

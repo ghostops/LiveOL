@@ -73,15 +73,17 @@ export class SyncLiveCompetitionJob {
   private async insertLiveCompetition(
     competition: LiveresultatApi.getcompetitioninfo,
   ) {
+    const date = this.parseDateToUtc(competition.date);
     const body: Omit<typeof LiveCompetitionsTable.$inferInsert, 'id'> = {
       name: competition.name,
       organizer: competition.organizer,
-      date: this.parseDateToUtc(competition.date),
+      date,
       isPublic: true,
       updatedAt: new Date(),
       olCompetitionId: new CompetitionId().generateId({
         competitionName: competition.name,
         organizationName: competition.organizer,
+        date,
       }),
       olOrganizationId: new OrganizationId().generateId({
         organizationName: competition.organizer,

@@ -19,6 +19,7 @@ import { OLText } from '~/views/components/text';
 import { OLSceneLiveResults } from '~/views/scenes/live-results';
 import { OLSceneClubResults } from '~/views/scenes/club-results';
 import { OLSceneTrackingResults } from '~/views/scenes/tracking/results';
+import { OLSceneSearch } from '~/views/scenes/search';
 
 export type TabStack = {
   Home: undefined;
@@ -31,6 +32,7 @@ export type RootStack = {
   Competition: { olCompetitionId: string };
   Info: undefined;
   Language: undefined;
+  Search: undefined;
   Redeem: undefined;
   LiveResults: { olCompetitionId: string; liveClassId: string };
   ClubResults: { olCompetitionId: string; olOrganizationId: string };
@@ -210,6 +212,13 @@ const Component: React.FC = () => {
             component={OLLanguageModal}
             options={{
               title: t('language.pick'),
+            }}
+          />
+          <Stack.Screen
+            name="Search"
+            component={OLSceneSearch}
+            options={{
+              headerShown: false,
             }}
           />
         </Stack.Group>

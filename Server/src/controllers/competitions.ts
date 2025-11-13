@@ -193,6 +193,83 @@ export const getCompetitions = defaultEndpointsFactory.build({
   },
 });
 
+export const searchCompetitions = defaultEndpointsFactory.build({
+  method: 'get',
+  input: z.object({
+    q: z.string().optional(),
+    startDate: z
+      .string()
+      .regex(/^\d{4}-\d{2}-\d{2}$/, 'startDate must be in YYYY-MM-DD format')
+      .optional(),
+    endDate: z
+      .string()
+      .regex(/^\d{4}-\d{2}-\d{2}$/, 'endDate must be in YYYY-MM-DD format')
+      .optional(),
+  }),
+  output: z.object({
+    competitions: z.array(competitionSchema),
+    total: z.number(),
+  }),
+  handler: async ({ input: { q, startDate, endDate } }) => {
+    const LIMIT = 100;
+
+    // Build WHERE conditions dynamically
+    const whereParts: ReturnType<typeof sql>[] = [];
+
+    // Text search condition (name or organizer)
+    if (q && q.trim().length > 0) {
+      const searchTerm = `%${q.trim()}%`;
+      whereParts.push(sql`(
+        LOWER(lc.name) ILIKE ${searchTerm} OR
+        LOWER(ec.name) ILIKE ${searchTerm} OR
+        LOWER(lc.organizer) ILIKE ${searchTerm} OR
+        LOWER(ec.organizer) ILIKE ${searchTerm}
+      )`);
+    }
+
+    // Date range conditions
+    if (startDate) {
+      whereParts.push(sql`DATE(COALESCE(ec.date, lc.date)) >= ${startDate}`);
+    }
+
+    if (endDate) {
+      whereParts.push(sql`DATE(COALESCE(ec.date, lc.date)) <= ${endDate}`);
+    }
+
+    // Combine conditions with AND
+    const whereClause =
+      whereParts.length > 0
+        ? sql`WHERE ${sql.join(whereParts, sql` AND `)}`
+        : sql``;
+
+    const qRes = await api.Drizzle.db.execute<
+      typeof OLCompetitionsTable.$inferSelect & {
+        live: typeof LiveCompetitionsTable.$inferSelect | null;
+        eventor: typeof EventorCompetitionsTable.$inferSelect | null;
+      }
+    >(sql`
+      SELECT
+        oc.*,
+        to_jsonb(lc) AS live,
+        to_jsonb(ec) AS eventor
+      FROM ol_competitions AS oc
+      LEFT JOIN live_competitions AS lc
+        ON lc."olCompetitionId" = oc.id
+      LEFT JOIN eventor_competitions AS ec
+        ON ec."olCompetitionId" = oc.id
+      ${whereClause}
+      ORDER BY
+        DATE(COALESCE(ec.date, lc.date)) DESC
+      LIMIT ${LIMIT}
+    `);
+
+    return {
+      competitions: qRes.rows.map(marshalCompetition),
+      total: qRes.rows.length,
+    };
+  },
+});
+
 export const getCompetition = defaultEndpointsFactory.build({
   method: 'get',
   input: z.object({

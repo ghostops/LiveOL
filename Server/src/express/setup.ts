@@ -3,6 +3,7 @@ import {
   getCompetitions as getCompetitionsV2,
   getCompetition as getCompetitionV2,
   getTodaysCompetitions,
+  searchCompetitions,
 } from 'controllers/competitions';
 import { getEnv } from 'lib/helpers/env';
 import {
@@ -30,6 +31,7 @@ export const config = createConfig({
 
 export const routing: Routing = {
   'v2/competitions': getCompetitionsV2,
+  'v2/competitions/search': searchCompetitions,
   'v2/competitions/today': getTodaysCompetitions,
   'v2/competitions/:id': getCompetitionV2,
 

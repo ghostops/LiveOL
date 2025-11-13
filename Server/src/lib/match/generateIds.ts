@@ -1,3 +1,5 @@
+import { format } from 'date-fns';
+
 const globalSeparator = '~';
 const noOrganizationId = 'noorg';
 const maxIdLength = 255;
@@ -66,12 +68,15 @@ export class CompetitionId {
   public generateId(opts: {
     competitionName: string;
     organizationName: string;
+    date: Date;
   }): string {
     const orgName = opts.organizationName
       ? OrganizationId.tokenize(opts.organizationName)
       : noOrganizationId;
 
-    return norm(`${opts.competitionName}${globalSeparator}${orgName}`);
+    return norm(
+      `${format(opts.date, 'yyyy-MM-dd')}${globalSeparator}${opts.competitionName}${globalSeparator}${orgName}`,
+    );
   }
 }
 
