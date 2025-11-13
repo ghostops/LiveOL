@@ -42,7 +42,7 @@ export class OLQueue {
       autorun: false,
       connection: connectionOptions,
       concurrency: 3,
-      limiter: { duration: 1000, max: 3 },
+      limiter: { duration: 1000, max: 9 },
       // Skip duplicate jobs - prevents piling up of same scheduled jobs
       skipStalledCheck: false,
       skipLockRenewal: false,
