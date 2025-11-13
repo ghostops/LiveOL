@@ -36,6 +36,13 @@ export class SyncLiveClassJob {
         this.className,
       );
 
+      if (!results) {
+        logger.info(
+          `No updates for class ${this.className} (${this.competitionId}).`,
+        );
+        return;
+      }
+
       const id = await this.insertClass(this.competitionId, results);
       await this.insertSplitControls(id, results);
       await this.insertResults(id, results);

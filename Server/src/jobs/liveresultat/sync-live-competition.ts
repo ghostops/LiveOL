@@ -22,7 +22,7 @@ export class SyncLiveCompetitionJob {
 
   async run() {
     try {
-      const competition = await this.api.Liveresultat.getcompetition(
+      const competition = await this.api.Liveresultat.getcompetitioninfo(
         this.competitionId,
       );
 
@@ -32,7 +32,10 @@ export class SyncLiveCompetitionJob {
         this.competitionId,
       );
 
-      await this.dispatchSyncClasses(classes);
+      // TODO: Sync results even if the classes have not changed
+      if (classes) {
+        await this.dispatchSyncClasses(classes);
+      }
 
       logger.info(
         `Competition ${competition.name} (${this.competitionId}) synced successfully.`,
@@ -55,7 +58,7 @@ export class SyncLiveCompetitionJob {
   }
 
   private async insertLiveCompetition(
-    competition: LiveresultatApi.competition,
+    competition: LiveresultatApi.getcompetitioninfo,
   ) {
     const body: Omit<typeof LiveCompetitionsTable.$inferInsert, 'id'> = {
       name: competition.name,

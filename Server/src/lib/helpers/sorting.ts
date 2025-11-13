@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { LiveresultatApi } from './types';
+import { LiveresultatApi } from '../liveresultat/types';
 import { MarshaledResult } from 'lib/marshal/results';
 
 type SortedResult = MarshaledResult;

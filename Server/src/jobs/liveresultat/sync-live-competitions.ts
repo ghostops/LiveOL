@@ -31,7 +31,7 @@ export class SyncLiveCompetitionsJob {
   }
 
   private async dispatchCompetitionSync(
-    competitions: LiveresultatApi.competition[],
+    competitions: LiveresultatApi.getcompetitioninfo[],
   ) {
     const start = this.startDate
       ? parse(this.startDate, 'yyyy-MM-dd', new Date())
