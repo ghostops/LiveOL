@@ -24,7 +24,10 @@ export const OLLiveResultRow = ({ olCompetitionId, liveResultItem }: Props) => {
   const navigation = useOLNavigation();
 
   return (
-    <OLResultAnimation hasUpdated={!!liveResultItem.hasRecentlyUpdated}>
+    <OLResultAnimation
+      isTracking={liveResultItem.isTracking}
+      hasUpdated={!!liveResultItem.hasRecentlyUpdated}
+    >
       <View
         style={{
           flexDirection: 'row',

@@ -4,8 +4,8 @@ import { useStatusI18n } from '~/hooks/useStatusI18n';
 import { timestampToString } from '~/util/isLive';
 
 interface Props {
-  time: number | null;
-  status: number | null;
+  time?: number | null;
+  status?: number | null;
 }
 
 export const OLResultTime: React.FC<Props> = ({ time, status }) => {

@@ -14,6 +14,7 @@ import { useSortingStore } from '~/store/sorting';
 import { nowTimestamp as nowTimestampFs } from '~/util/isLive';
 import { OLRefetcherBar } from '~/views/components/refetcher/bar';
 import { keepPreviousData } from '@tanstack/react-query';
+import { useUserIdStore } from '~/store/userId';
 
 export const OLSceneClubResults = () => {
   const { colors } = useTheme();
@@ -24,6 +25,7 @@ export const OLSceneClubResults = () => {
   const focus = useIsFocused();
   const { sortingDirection, sortingKey } = useSortingStore();
   const [nowTimestamp, setNowTimestamp] = useState(nowTimestampFs());
+  const uid = useUserIdStore(state => state.userId);
 
   // Fetch filtered results for this organization in this competition
   const getResultsQuery = $api.useQuery(
@@ -39,6 +41,7 @@ export const OLSceneClubResults = () => {
           sortingKey,
           sortingDirection,
           nowTimestamp,
+          uid,
         },
       },
     },
@@ -92,7 +95,7 @@ export const OLSceneClubResults = () => {
                   textAlign: 'center',
                 }}
               >
-                {t('classes.empty')}
+                {t('classes.emptyClub')}
               </OLText>
             </View>
           ) : null

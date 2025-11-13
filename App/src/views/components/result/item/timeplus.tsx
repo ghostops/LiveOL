@@ -4,14 +4,20 @@ import { OLText } from '../../text';
 import { timestampToString } from '~/util/isLive';
 
 interface Props {
-  timeplus: number | null;
-  status: number | null;
+  timeplus?: number | null;
+  status?: number | null;
 }
 
 export const OLResultTimeplus: React.FC<Props> = ({ timeplus, status }) => {
   const statusText = useStatusI18n(status, 'long');
 
-  if (status === null || status < 0 || status === 10 || status === 9) {
+  if (
+    status === null ||
+    status === undefined ||
+    status < 0 ||
+    status === 10 ||
+    status === 9
+  ) {
     return null;
   }
 

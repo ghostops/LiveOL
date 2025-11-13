@@ -4,6 +4,7 @@
     "autoUpdate": "Turn on live updating results",
     "autoUpdateEnabled": "Live updating results enabled",
     "empty": "No competitors in this class",
+    "emptyClub": "No competitors from this club",
     "header": {
       "name": "Name",
       "place": "#",

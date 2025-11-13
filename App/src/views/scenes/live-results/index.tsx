@@ -17,6 +17,7 @@ import { useSortingStore } from '~/store/sorting';
 import { keepPreviousData } from '@tanstack/react-query';
 import { nowTimestamp as nowTimestampFs } from '~/util/isLive';
 import { useNotifyOnUpdate } from './useNotifyOnUpdate';
+import { useUserIdStore } from '~/store/userId';
 
 export const OLSceneLiveResults = () => {
   const { colors } = useTheme();
@@ -28,6 +29,7 @@ export const OLSceneLiveResults = () => {
   const stopTicking = useLiveRunningStore(state => state.stopTicking);
   const { sortingDirection, sortingKey } = useSortingStore();
   const [nowTimestamp, setNowTimestamp] = useState(nowTimestampFs());
+  const uid = useUserIdStore(state => state.userId);
   const { liveClassId } = params;
 
   const getResults = $api.useQuery(
@@ -40,6 +42,7 @@ export const OLSceneLiveResults = () => {
           sortingDirection,
           sortingKey,
           nowTimestamp,
+          uid,
         },
       },
     },

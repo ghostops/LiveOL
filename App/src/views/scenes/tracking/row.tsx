@@ -43,6 +43,20 @@ export const OLTrackingResultRow = ({ result }: Props) => {
         </View>
         <View style={{ width: name, paddingRight: 4 }}>
           <OLText numberOfLines={1}>{result.name || 'N/A'}</OLText>
+          <TouchableOpacity
+            onPress={() => {
+              if (result.olCompetitionId) {
+                navigation.navigate('Competition', {
+                  olCompetitionId: result.olCompetitionId,
+                });
+              }
+            }}
+            style={{ marginBottom: 2 }}
+          >
+            <OLText numberOfLines={1} style={{ color: colors.GREEN }}>
+              {result.competitionName || 'N/A'}
+            </OLText>
+          </TouchableOpacity>
           <View style={{ flexDirection: 'row', gap: 4 }}>
             <TouchableOpacity
               onPress={() => {

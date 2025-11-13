@@ -126,7 +126,10 @@ export const OLSceneTracking = () => {
                 small
                 style={{ alignSelf: 'flex-start', marginTop: px(8) }}
                 onPress={() => {
-                  navigate('TrackingResults', { trackingId: item.id });
+                  navigate('TrackingResults', {
+                    trackingId: item.id,
+                    title: item.name,
+                  });
                 }}
               >
                 {t('tracking.results')}
@@ -164,7 +167,10 @@ export const OLSceneTracking = () => {
       <FlatList
         data={tracking}
         renderItem={renderItem}
-        contentContainerStyle={{ paddingVertical: px(8) }}
+        contentContainerStyle={{
+          paddingVertical: px(8),
+          paddingBottom: px(128),
+        }}
         ListEmptyComponent={
           isLoading ? null : (
             <View style={[styles.emptyContainer, { padding: px(32) }]}>

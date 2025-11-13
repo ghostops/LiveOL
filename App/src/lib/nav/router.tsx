@@ -45,6 +45,7 @@ export type RootStack = {
     };
   };
   TrackingResults: {
+    title: string;
     trackingId: number;
   };
 };

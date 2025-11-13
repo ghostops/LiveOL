@@ -1,10 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { LiveResultsTable, LiveSplitResultsTable } from 'lib/db/schema';
 import { LiveresultatApi } from './types';
+import { MarshaledResult } from 'lib/marshal/results';
 
-export type SortedResult = typeof LiveResultsTable.$inferSelect & {
-  splitResults?: (typeof LiveSplitResultsTable.$inferInsert)[];
-};
+type SortedResult = MarshaledResult;
 
 const sortSplit =
   (sortingKey: string, direction: string) =>
@@ -106,7 +104,7 @@ export const sortOptimal = (
 };
 
 export const sortOptimalV2 = (
-  original: (typeof LiveResultsTable.$inferSelect)[],
+  original: MarshaledResult[],
   sortingKey: string,
   sortingDirection: string,
   nowTimestamp: number,
