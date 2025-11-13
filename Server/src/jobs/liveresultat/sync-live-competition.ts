@@ -1,5 +1,6 @@
 import { eq } from 'drizzle-orm';
 import {
+  LiveClassesTable,
   LiveCompetitionsTable,
   OLCompetitionsTable,
   OLOrganizationsTable,
@@ -28,12 +29,24 @@ export class SyncLiveCompetitionJob {
 
       await this.insertLiveCompetition(competition);
 
-      const classes = await this.api.Liveresultat.getclasses(
+      let classes: string[] = [];
+      const classesResponse = await this.api.Liveresultat.getclasses(
         this.competitionId,
       );
 
-      // TODO: Sync results even if the classes have not changed
-      if (classes) {
+      // If classesResponse is null we still want to sync the results of the classes
+      if (classesResponse) {
+        classes = classesResponse.classes.map(c => c.className);
+      } else {
+        const storedClasses = await this.api.Drizzle.db
+          .select()
+          .from(LiveClassesTable)
+          .where(eq(LiveClassesTable.liveCompetitionId, this.competitionId));
+
+        classes = storedClasses.map(c => c.name);
+      }
+
+      if (classes.length > 0) {
         await this.dispatchSyncClasses(classes);
       }
 
@@ -45,13 +58,13 @@ export class SyncLiveCompetitionJob {
     }
   }
 
-  private async dispatchSyncClasses(classes: LiveresultatApi.getclasses) {
-    for (const classResult of classes.classes) {
+  private async dispatchSyncClasses(classes: string[]) {
+    for (const className of classes) {
       await this.api.Queue.addJob({
         name: 'sync-live-class',
         data: {
           competitionId: this.competitionId,
-          className: classResult.className,
+          className,
         },
       });
     }

@@ -41,7 +41,7 @@ export class OLQueue {
     this.worker = new Worker(OLQueue.queueName, this.handleJob, {
       autorun: false,
       connection: connectionOptions,
-      concurrency: 1,
+      concurrency: 3,
       limiter: { duration: 1000, max: 3 },
       // Skip duplicate jobs - prevents piling up of same scheduled jobs
       skipStalledCheck: false,

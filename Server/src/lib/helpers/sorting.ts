@@ -51,7 +51,6 @@ const sortStart = (direction: string) => (a: SortedResult, b: SortedResult) => {
   return 0;
 };
 
-// ToDo: Broken?
 const sortResult =
   (direction: string, nowTimestamp: number) =>
   (a: SortedResult, b: SortedResult) => {
@@ -61,14 +60,16 @@ const sortResult =
       return 0;
     }
 
-    const resA = a.timeplus ? Number(a.result) : undefined;
-    const resB = b.timeplus ? Number(b.result) : undefined;
+    const resA =
+      a.place === '1' ? 0 : a.timeplus ? Number(a.result) : undefined;
+    const resB =
+      b.place === '1' ? 0 : b.timeplus ? Number(b.result) : undefined;
 
     const startDiffA = nowTimestamp - a.start;
     const startDiffB = nowTimestamp - b.start;
 
-    const sortByA = resA ? resA : startDiffA > 0 ? startDiffA : 0;
-    const sortByB = resB ? resB : startDiffB > 0 ? startDiffB : 0;
+    const sortByA = resA !== undefined ? resA : startDiffA > 0 ? startDiffA : 0;
+    const sortByB = resB !== undefined ? resB : startDiffB > 0 ? startDiffB : 0;
 
     if (sortByA === 0 && sortByB === 0) {
       return desc ? a.start - b.start : b.start - a.start;

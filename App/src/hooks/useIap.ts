@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { Alert, Platform } from 'react-native';
 import Purchases from 'react-native-purchases';
 import { usePlusStore } from '~/store/plus';
-import { usePlusCodes } from '~/hooks/usePlusCodes';
 import RevenueCatUI, { PAYWALL_RESULT } from 'react-native-purchases-ui';
 
 let isInitializing = false;
@@ -26,8 +25,6 @@ async function presentPaywall(): Promise<boolean> {
 
 export const useIap = () => {
   const { t } = useTranslation();
-
-  const { loadCode } = usePlusCodes();
 
   const [loading, setLoading] = useState(false);
 
@@ -81,12 +78,7 @@ export const useIap = () => {
           });
         }
 
-        const hasValidCode = await loadCode();
         await loadProducts();
-
-        if (!hasValidCode) {
-          await loadPurchase();
-        }
 
         setInitialized();
       } finally {
@@ -95,13 +87,7 @@ export const useIap = () => {
     };
 
     init();
-  }, [
-    initialized,
-    loadPurchase,
-    setInitialized,
-    setLiveOlPlusProduct,
-    loadCode,
-  ]);
+  }, [initialized, loadPurchase, setInitialized, setLiveOlPlusProduct]);
 
   const buyLiveOLPlus = async () => {
     if (!liveOlPlusProduct) {

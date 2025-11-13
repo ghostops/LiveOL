@@ -47,6 +47,7 @@ export const OLSceneClubResults = () => {
     },
     {
       placeholderData: keepPreviousData,
+      enabled: focus,
     },
   );
 

@@ -1,4 +1,4 @@
-import { addDays, isAfter, parse } from 'date-fns';
+import { addDays, isAfter, isValid, parse } from 'date-fns';
 import type { LiveresultatApi } from 'lib/liveresultat/types';
 import logger from 'lib/logger';
 import { APIResponse, apiSingletons } from 'lib/singletons';
@@ -63,7 +63,8 @@ export class SyncLiveCompetitionsJob {
   private parseDate(dateString: string): Date | null {
     if (!dateString) return null;
     try {
-      return parse(dateString, 'yyyy-MM-dd', new Date());
+      const date = parse(dateString, 'yyyy-MM-dd', new Date());
+      return isValid(date) ? date : null;
     } catch {
       return null;
     }

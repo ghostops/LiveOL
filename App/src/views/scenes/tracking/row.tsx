@@ -42,7 +42,9 @@ export const OLTrackingResultRow = ({ result }: Props) => {
           <OLResultBadge place={result.place} />
         </View>
         <View style={{ width: name, paddingRight: 4 }}>
-          <OLText numberOfLines={1}>{result.name || 'N/A'}</OLText>
+          <OLText numberOfLines={1} style={{ marginBottom: 4 }}>
+            {result.name || 'N/A'}
+          </OLText>
           <TouchableOpacity
             onPress={() => {
               if (result.olCompetitionId) {
@@ -53,41 +55,39 @@ export const OLTrackingResultRow = ({ result }: Props) => {
             }}
             style={{ marginBottom: 2 }}
           >
-            <OLText numberOfLines={1} style={{ color: colors.GREEN }}>
+            <OLText numberOfLines={1} style={{ color: colors.GREEN }} bold>
               {result.competitionName || 'N/A'}
             </OLText>
           </TouchableOpacity>
-          <View style={{ flexDirection: 'row', gap: 4 }}>
-            <TouchableOpacity
-              onPress={() => {
-                if (result.olOrganizationId && result.olCompetitionId) {
-                  navigation.navigate('LiveResults', {
-                    olCompetitionId: result.olCompetitionId,
-                    liveClassId: result.liveClassId,
-                  });
-                }
-              }}
-            >
-              <OLText numberOfLines={1} style={{ color: colors.BLUE }}>
-                {result.className}
-              </OLText>
-            </TouchableOpacity>
-            <OLText>/</OLText>
-            <TouchableOpacity
-              onPress={() => {
-                if (result.olOrganizationId && result.olCompetitionId) {
-                  navigation.navigate('ClubResults', {
-                    olCompetitionId: result.olCompetitionId,
-                    olOrganizationId: result.olOrganizationId,
-                  });
-                }
-              }}
-            >
-              <OLText numberOfLines={1} style={{ color: colors.BLUE }}>
-                {result.organization}
-              </OLText>
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity
+            onPress={() => {
+              if (result.olOrganizationId && result.olCompetitionId) {
+                navigation.navigate('LiveResults', {
+                  olCompetitionId: result.olCompetitionId,
+                  liveClassId: result.liveClassId,
+                });
+              }
+            }}
+          >
+            <OLText numberOfLines={1} style={{ color: colors.BLUE }}>
+              {result.className}
+            </OLText>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              if (result.olOrganizationId && result.olCompetitionId) {
+                navigation.navigate('ClubResults', {
+                  olCompetitionId: result.olCompetitionId,
+                  olOrganizationId: result.olOrganizationId,
+                });
+              }
+            }}
+          >
+            <OLText numberOfLines={1} style={{ color: colors.BLUE }}>
+              {result.organization}
+            </OLText>
+          </TouchableOpacity>
         </View>
         <View
           style={{

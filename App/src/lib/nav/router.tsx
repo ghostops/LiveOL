@@ -8,7 +8,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { COLORS } from '~/util/const';
 import { BackButton } from './backButton';
-import { OLRedeemCode } from '~/views/scenes/redeem_modal/component';
 import { OLLanguageModal } from '~/views/scenes/language_modal/component';
 import { useOLNavigationRef } from '~/hooks/useNavigation';
 import { OLSceneHome } from '~/views/scenes/home';
@@ -206,11 +205,6 @@ const Component: React.FC = () => {
             animation: 'slide_from_bottom',
           }}
         >
-          <Stack.Screen
-            name="Redeem"
-            component={OLRedeemCode}
-            options={{ title: t('plus.code.redeem') }}
-          />
           <Stack.Screen
             name="Language"
             component={OLLanguageModal}

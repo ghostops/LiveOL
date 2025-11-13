@@ -37,9 +37,9 @@ export const OLSceneTrackingResults = () => {
         query: { sortingKey, sortingDirection, nowTimestamp, uid },
       },
     },
-
     {
       placeholderData: keepPreviousData,
+      enabled: focus,
     },
   );
 

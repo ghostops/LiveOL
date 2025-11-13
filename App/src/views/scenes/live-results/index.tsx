@@ -48,6 +48,7 @@ export const OLSceneLiveResults = () => {
     },
     {
       placeholderData: keepPreviousData,
+      enabled: focus,
     },
   );
 
