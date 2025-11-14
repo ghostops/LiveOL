@@ -11,6 +11,7 @@ import { useRowWidths } from './useRowWidths';
 import { useOrientation } from '~/hooks/useOrientation';
 import { OrientationType } from 'react-native-orientation-locker';
 import { useOLNavigation } from '~/hooks/useNavigation';
+import { OLRunnerContextMenu } from '~/views/components/result/contextMenu';
 
 type Props = {
   olCompetitionId: string;
@@ -24,68 +25,72 @@ export const OLLiveResultRow = ({ olCompetitionId, liveResultItem }: Props) => {
   const navigation = useOLNavigation();
 
   return (
-    <OLResultAnimation
-      isTracking={liveResultItem.isTracking}
-      hasUpdated={!!liveResultItem.hasRecentlyUpdated}
-    >
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          paddingVertical: 8,
-        }}
+    <OLRunnerContextMenu result={liveResultItem}>
+      <OLResultAnimation
+        isTracking={liveResultItem.isTracking}
+        hasUpdated={!!liveResultItem.hasRecentlyUpdated}
       >
         <View
           style={{
-            width: place,
-            alignItems:
-              orientation === OrientationType.PORTRAIT ? 'center' : 'flex-end',
-            paddingRight: 8,
+            flexDirection: 'row',
+            alignItems: 'center',
+            paddingVertical: 8,
           }}
         >
-          <OLResultBadge place={liveResultItem.place} />
-        </View>
-        <View style={{ width: name, paddingRight: 4 }}>
-          <OLText numberOfLines={1}>{liveResultItem.name || 'N/A'}</OLText>
-          <TouchableOpacity
-            onPress={() => {
-              if (liveResultItem.olOrganizationId) {
-                navigation.navigate('ClubResults', {
-                  olCompetitionId,
-                  olOrganizationId: liveResultItem.olOrganizationId,
-                });
-              }
+          <View
+            style={{
+              width: place,
+              alignItems:
+                orientation === OrientationType.PORTRAIT
+                  ? 'center'
+                  : 'flex-end',
+              paddingRight: 8,
             }}
           >
-            <OLText numberOfLines={1} style={{ color: colors.BLUE }}>
-              {liveResultItem.organization}
-            </OLText>
-          </TouchableOpacity>
-        </View>
-        {liveResultItem.splitResults?.map(split => (
-          <View key={split.code} style={{ width: splits, gap: 4 }}>
-            <OLResultTime
-              status={split.time ? 0 : split.status}
-              time={split.time}
-            />
-            <OLResultTimeplus
-              status={split.time ? 0 : split.status}
-              timeplus={split.timeplus}
-            />
+            <OLResultBadge place={liveResultItem.place} />
           </View>
-        ))}
-        <View
-          style={{
-            width: time,
-            gap: 4,
-            alignItems: 'flex-end',
-            paddingRight: 8,
-          }}
-        >
-          <OLRowTime liveResultItem={liveResultItem} />
+          <View style={{ width: name, paddingRight: 4 }}>
+            <OLText numberOfLines={1}>{liveResultItem.name || 'N/A'}</OLText>
+            <TouchableOpacity
+              onPress={() => {
+                if (liveResultItem.olOrganizationId) {
+                  navigation.navigate('ClubResults', {
+                    olCompetitionId,
+                    olOrganizationId: liveResultItem.olOrganizationId,
+                  });
+                }
+              }}
+            >
+              <OLText numberOfLines={1} style={{ color: colors.BLUE }}>
+                {liveResultItem.organization}
+              </OLText>
+            </TouchableOpacity>
+          </View>
+          {liveResultItem.splitResults?.map(split => (
+            <View key={split.code} style={{ width: splits, gap: 4 }}>
+              <OLResultTime
+                status={split.time ? 0 : split.status}
+                time={split.time}
+              />
+              <OLResultTimeplus
+                status={split.time ? 0 : split.status}
+                timeplus={split.timeplus}
+              />
+            </View>
+          ))}
+          <View
+            style={{
+              width: time,
+              gap: 4,
+              alignItems: 'flex-end',
+              paddingRight: 8,
+            }}
+          >
+            <OLRowTime liveResultItem={liveResultItem} />
+          </View>
         </View>
-      </View>
-    </OLResultAnimation>
+      </OLResultAnimation>
+    </OLRunnerContextMenu>
   );
 };
 

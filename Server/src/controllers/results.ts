@@ -36,6 +36,7 @@ export const resultSchema = z.object({
   isLive: z.boolean(),
   isTracking: z.boolean(),
   hasRecentlyUpdated: z.boolean().optional(),
+  className: z.string().optional(),
   splitResults: z
     .array(
       z.object({
@@ -104,7 +105,9 @@ export const getResultByLiveClassId = defaultEndpointsFactory
         .from(OLTrackingTable)
         .where(eq(OLTrackingTable.olUserId, user.id));
 
-      const marshaledResults = results.map(marshalResult({ user, tracking }));
+      const marshaledResults = results.map(
+        marshalResult({ user, tracking, className }),
+      );
 
       const sortedResults = sortOptimalV2(
         marshaledResults,
@@ -162,11 +165,7 @@ export const getLiveResultsForOrganisation = defaultEndpointsFactory
       nowTimestamp: z.coerce.number(),
     }),
     output: z.object({
-      results: resultSchema
-        .extend({
-          className: z.string().optional(),
-        })
-        .array(),
+      results: resultSchema.array(),
     }),
     handler: async ({
       input: {
@@ -232,7 +231,6 @@ export const getLiveResultsForTrackedRunner = defaultEndpointsFactory
     output: z.object({
       results: resultSchema
         .extend({
-          className: z.string().nullish(),
           competitionName: z.string().nullish(),
           olCompetitionId: z.string().nullish(),
         })
