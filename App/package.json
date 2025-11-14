@@ -19,7 +19,6 @@
     "@animatereactnative/marquee": "^0.5.2",
     "@bugsnag/react-native": "^8.3.1",
     "@expo/react-native-action-sheet": "^4.1.1",
-    "@gorhom/bottom-sheet": "^5.2.6",
     "@react-native-async-storage/async-storage": "^2.2.0",
     "@react-native-community/cli": "^20.0.0",
     "@react-native-community/cli-platform-android": "20.0.0",

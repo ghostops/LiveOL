@@ -25,13 +25,6 @@ export const UserRegistration = () => {
         const deviceLanguage =
           i18n.resolvedLanguage || locales[0]?.languageCode || 'en';
 
-        __DEV__ &&
-          console.log('[User Registration] Registering user on startup', {
-            deviceId,
-            language: deviceLanguage,
-            plusActive,
-          });
-
         const response = await registerUser({
           deviceId,
           language: deviceLanguage,

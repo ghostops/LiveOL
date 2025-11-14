@@ -3,7 +3,6 @@ import Router from '~/lib/nav/router';
 import { View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { promptStoreReview } from '~/util/storeReview';
-import { OLRotationWatcher } from '~/views/components/watcher/rotation';
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import Bugsnag from '@bugsnag/react-native';
 import { OLText } from '~/views/components/text';
@@ -11,7 +10,6 @@ import { COLORS } from '~/util/const';
 import { queryClient } from '~/lib/react-query/client';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import '~/lib/i18n';
 import { useDeviceIdStore } from './store/deviceId';
 import { getUniqueId } from 'react-native-device-info';
@@ -79,11 +77,7 @@ export default () => {
             <QueryClientProvider client={queryClient}>
               <UserRegistration />
               <View style={{ flex: 1 }}>
-                <BottomSheetModalProvider>
-                  <OLRotationWatcher>
-                    <Router />
-                  </OLRotationWatcher>
-                </BottomSheetModalProvider>
+                <Router />
               </View>
             </QueryClientProvider>
           </ActionSheetProvider>

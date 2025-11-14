@@ -3,7 +3,8 @@ import { $api } from '~/lib/react-query/api';
 
 const RETRY_DELAYS = [1000, 2000, 4000]; // Exponential backoff: 1s, 2s, 4s
 
-const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+const wait = (ms: number) =>
+  new Promise(resolve => setTimeout(() => resolve(null), ms));
 
 interface RegisterUserParams {
   deviceId: string;
@@ -41,8 +42,7 @@ export const useUserRegistration = () => {
             },
           });
 
-          __DEV__ &&
-            console.log('[User Registration] Success:', response.data);
+          __DEV__ && console.log('[User Registration] Success:', response.data);
 
           setIsRegistering(false);
           return response.data;

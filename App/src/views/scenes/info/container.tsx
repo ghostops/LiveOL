@@ -1,7 +1,6 @@
 import { VERSION } from '~/util/const';
 import { OLInfo as Component } from './component';
 import { Alert, Linking } from 'react-native';
-import { useDeviceRotationStore } from '~/store/deviceRotation';
 import { useTextStore } from '~/store/text';
 import { useOLNavigation } from '~/hooks/useNavigation';
 import { useIap } from '~/hooks/useIap';
@@ -46,8 +45,6 @@ export const OLInfo: React.FC = () => {
 
   const { navigate } = useOLNavigation();
 
-  const { isLandscape } = useDeviceRotationStore();
-
   const { setTextSizeMultiplier, textSizeMultiplier } = useTextStore();
 
   const [secretTaps, setSecretTaps] = useState(0);
@@ -90,7 +87,7 @@ export const OLInfo: React.FC = () => {
   return (
     <Component
       contact={contact}
-      landscape={isLandscape}
+      landscape={false}
       translationCredits={translationCredits}
       openPhraseApp={openPhraseApp}
       secretTap={secretTap}
