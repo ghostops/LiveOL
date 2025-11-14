@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unstable-nested-components */
 import { useTranslation } from 'react-i18next';
 import { StatusBar } from 'react-native';
-import { OLInfo } from '~/views/scenes/info/container';
+import { OLProfile } from '~/views/scenes/profile';
 import { NavigationContainer } from '@react-navigation/native';
 import { HomeHeader } from '~/views/scenes/home/header';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -115,7 +115,7 @@ const OLHomeTabs: React.FC = () => {
       />
       <Tabs.Screen
         name="Profile"
-        component={OLInfo}
+        component={OLProfile}
         options={{
           tabBarIcon: ({ focused }) => (
             <OLIcon

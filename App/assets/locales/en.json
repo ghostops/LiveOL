@@ -15,6 +15,11 @@
     "timerHint": "Time until next refresh"
   },
   "close": "Close",
+  "common": {
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "success": "Success"
+  },
   "competitions": {
     "links": "Links",
     "punchSystem": "Punch System",
@@ -139,6 +144,20 @@
     "pick": "Pick language"
   },
   "plus": {
+    "benefits": {
+      "sorting": "Sort results by any column",
+      "tracking": "Follow unlimited runners",
+      "support": "Support LiveOL development"
+    },
+    "perYear": "per year",
+    "restore": "Restore purchases",
+    "status": {
+      "active": "LiveOL Plus",
+      "free": "Free",
+      "expire": "Thanks for having supported LiveOL, you subscription will expire by: {{ date }}",
+      "renew": "Thanks for supporting LiveOL, you subscription will renew by: {{ date }}",
+      "title": "LiveOL+"
+    },
     "buy": {
       "error": "Something went wrong...",
       "feature": {
@@ -184,11 +203,44 @@
         "text": "Get the most out of LiveOL and support its continued development. Check out LiveOL+ today:"
       },
       "get": "Get LiveOL+"
+    }
+  },
+  "profile": {
+    "subscription": {
+      "title": "Subscription"
     },
-    "status": {
-      "expire": "Thanks for having supported LiveOL, you subscription will expire by: {{ date }}",
-      "renew": "Thanks for supporting LiveOL, you subscription will renew by: {{ date }}",
-      "title": "LiveOL+"
+    "settings": {
+      "title": "Settings & Preferences",
+      "appearance": "Appearance",
+      "theme": {
+        "light": "Light",
+        "dark": "Dark",
+        "auto": "Auto"
+      },
+      "themeChanged": "Theme Changed",
+      "language": "Language",
+      "notifications": {
+        "enable": "Enable notifications",
+        "enabled": "Notifications enabled",
+        "disabled": "Notifications disabled"
+      },
+      "results": "Results Display",
+      "autoRefresh": "Auto-refresh interval",
+      "data": "Data & Privacy",
+      "deviceId": "Device ID",
+      "clearCache": "Clear cache",
+      "clearCacheConfirm": "Are you sure you want to clear the cache? This cannot be undone.",
+      "cacheCleared": "Cache cleared successfully"
+    },
+    "about": {
+      "title": "About & Support",
+      "reportBug": "Report a bug"
+    },
+    "legal": {
+      "title": "Legal & Info",
+      "terms": "Terms of Service",
+      "privacy": "Privacy Policy",
+      "licenses": "Open Source Licenses"
     }
   },
   "promotions": {
