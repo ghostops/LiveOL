@@ -10,34 +10,36 @@ import { useTheme } from '~/hooks/useTheme';
 import { $api } from '~/lib/react-query/api';
 import { COLORS } from '~/util/const';
 import { OLText } from '~/views/components/text';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FlatList } from 'react-native';
 import { HomeRowItem } from '../home';
+import DateTimePicker, {
+  DateType,
+  useDefaultStyles,
+} from 'react-native-ui-datepicker';
+import { format } from 'date-fns';
+import { useTranslation } from 'react-i18next';
+import { useDebounce } from 'use-debounce';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+const MIN_SEARCH_LENGTH = 2;
 
 export const OLSceneSearch = () => {
   const { colors, px } = useTheme();
   const { navigate, goBack } = useOLNavigation();
-
+  const { t } = useTranslation();
+  const { bottom } = useSafeAreaInsets();
   const [searchQuery, setSearchQuery] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
-  const [debouncedQuery, setDebouncedQuery] = useState('');
+  const [debouncedSearchQuery] = useDebounce(searchQuery, 500);
+  const [startDate, setStartDate] = useState<string | undefined>(undefined);
+  const [endDate, setEndDate] = useState<string | undefined>(undefined);
   const [showFilters, setShowFilters] = useState(false);
-
-  // Debounce search query
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedQuery(searchQuery);
-    }, 500);
-
-    return () => clearTimeout(timer);
-  }, [searchQuery]);
 
   // Only fetch if we have a search query or date filters
   const shouldFetch =
-    debouncedQuery.trim().length >= 2 ||
-    startDate.trim().length > 0 ||
-    endDate.trim().length > 0;
+    debouncedSearchQuery.trim().length >= MIN_SEARCH_LENGTH ||
+    startDate !== undefined ||
+    endDate !== undefined;
 
   const searchResults = $api.useQuery(
     'get',
@@ -45,9 +47,9 @@ export const OLSceneSearch = () => {
     {
       params: {
         query: {
-          q: debouncedQuery.trim() || undefined,
-          startDate: startDate.trim() || undefined,
-          endDate: endDate.trim() || undefined,
+          q: debouncedSearchQuery.trim() || undefined,
+          startDate: startDate,
+          endDate: endDate,
         },
       },
     },
@@ -60,21 +62,16 @@ export const OLSceneSearch = () => {
 
   return (
     <View style={{ flex: 1, backgroundColor: COLORS.BACKGROUND }}>
-      {/* Header */}
       <View
         style={[
           style.header,
           {
-            paddingTop: px(50),
             paddingHorizontal: px(16),
             paddingBottom: px(12),
           },
         ]}
       >
         <View style={style.searchRow}>
-          <TouchableOpacity onPress={goBack} style={{ marginRight: px(12) }}>
-            <OLText size={18}>✕</OLText>
-          </TouchableOpacity>
           <TextInput
             style={[
               style.searchInput,
@@ -84,8 +81,8 @@ export const OLSceneSearch = () => {
                 paddingVertical: px(8),
               },
             ]}
-            placeholder="Search competitions or organizers..."
-            placeholderTextColor={COLORS.BACKGROUND}
+            placeholder={t('home.searchPlaceholder')}
+            placeholderTextColor={COLORS.GRAY}
             value={searchQuery}
             onChangeText={setSearchQuery}
             autoFocus
@@ -93,56 +90,28 @@ export const OLSceneSearch = () => {
           />
         </View>
 
-        {/* Filter toggle */}
         <TouchableOpacity
           onPress={() => setShowFilters(!showFilters)}
-          style={{ marginTop: px(8) }}
+          style={[
+            {
+              marginTop: px(8),
+            },
+            style.filterButton,
+          ]}
         >
-          <OLText size={14}>{showFilters ? '▼' : '▶'} Date Filters</OLText>
+          <OLText size={14} style={{ color: COLORS.WHITE }}>
+            📅 {t('home.dateFilters')}
+            {showFilters ? ' ▼' : ' ▶'}
+          </OLText>
         </TouchableOpacity>
 
-        {/* Date filters */}
         {showFilters && (
-          <View style={{ marginTop: px(8), gap: px(8) }}>
-            <View>
-              <OLText size={12} style={{ marginBottom: px(4) }}>
-                Start Date (YYYY-MM-DD)
-              </OLText>
-              <TextInput
-                style={[
-                  style.searchInput,
-                  {
-                    paddingHorizontal: px(12),
-                    paddingVertical: px(8),
-                  },
-                ]}
-                placeholder="2024-01-01"
-                placeholderTextColor={COLORS.BACKGROUND}
-                value={startDate}
-                onChangeText={setStartDate}
-                keyboardType="numbers-and-punctuation"
-              />
-            </View>
-            <View>
-              <OLText size={12} style={{ marginBottom: px(4) }}>
-                End Date (YYYY-MM-DD)
-              </OLText>
-              <TextInput
-                style={[
-                  style.searchInput,
-                  {
-                    paddingHorizontal: px(12),
-                    paddingVertical: px(8),
-                  },
-                ]}
-                placeholder="2024-12-31"
-                placeholderTextColor={COLORS.BACKGROUND}
-                value={endDate}
-                onChangeText={setEndDate}
-                keyboardType="numbers-and-punctuation"
-              />
-            </View>
-          </View>
+          <DatePicker
+            onChange={(sD, eD) => {
+              sD && setStartDate(format(sD, 'yyyy-MM-dd'));
+              eD && setEndDate(format(eD, 'yyyy-MM-dd'));
+            }}
+          />
         )}
       </View>
 
@@ -150,15 +119,13 @@ export const OLSceneSearch = () => {
       <View style={{ flex: 1 }}>
         {!shouldFetch ? (
           <View style={style.emptyState}>
-            <OLText size={16}>Enter at least 2 characters to search</OLText>
+            <OLText size={16}>
+              {t('home.searchTooltip', { count: MIN_SEARCH_LENGTH })}
+            </OLText>
           </View>
         ) : searchResults.isLoading ? (
           <View style={style.emptyState}>
             <ActivityIndicator size="large" color={colors.MAIN} />
-          </View>
-        ) : competitions.length === 0 ? (
-          <View style={style.emptyState}>
-            <OLText size={16}>No competitions found</OLText>
           </View>
         ) : (
           <FlatList
@@ -176,9 +143,18 @@ export const OLSceneSearch = () => {
                     });
                   }, 100);
                 }}
+                showDate
+                showOrganizationName
               />
             )}
             ItemSeparatorComponent={ItemSeparator}
+            ListEmptyComponent={
+              searchResults.isLoading ? null : (
+                <View style={style.emptyState}>
+                  <OLText size={16}>{t('home.nothingSearch')}</OLText>
+                </View>
+              )
+            }
           />
         )}
       </View>
@@ -190,6 +166,7 @@ export const OLSceneSearch = () => {
             padding: px(8),
             backgroundColor: COLORS.BACKGROUND,
             alignItems: 'center',
+            paddingBottom: bottom,
           }}
         >
           <OLText size={12}>
@@ -204,6 +181,36 @@ export const OLSceneSearch = () => {
 
 function ItemSeparator() {
   return <View style={{ height: 1, backgroundColor: COLORS.BORDER }} />;
+}
+
+function DatePicker({
+  onChange,
+}: {
+  onChange: (startDate: Date, endDate: Date) => void;
+}) {
+  const defaultStyles = useDefaultStyles();
+  const [startDate, setStartDate] = useState<DateType>(new Date());
+  const [endDate, setEndDate] = useState<DateType>(new Date());
+
+  return (
+    <DateTimePicker
+      mode="range"
+      startDate={startDate}
+      endDate={endDate}
+      onChange={event => {
+        setStartDate(event.startDate);
+        setEndDate(event.endDate);
+        if (event.startDate && event.endDate) {
+          onChange(event.startDate as Date, event.endDate as Date);
+        }
+      }}
+      styles={{
+        ...defaultStyles,
+      }}
+      style={{ backgroundColor: COLORS.WHITE, borderRadius: 16, marginTop: 8 }}
+      firstDayOfWeek={1}
+    />
+  );
 }
 
 const style = StyleSheet.create({
@@ -232,5 +239,11 @@ const style = StyleSheet.create({
   row: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  filterButton: {
+    padding: 4,
+    backgroundColor: COLORS.DARK,
+    borderRadius: 4,
+    alignSelf: 'flex-start',
   },
 });

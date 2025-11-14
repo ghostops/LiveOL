@@ -218,7 +218,7 @@ const Component: React.FC = () => {
             name="Search"
             component={OLSceneSearch}
             options={{
-              headerShown: false,
+              title: t('home.search'),
             }}
           />
         </Stack.Group>

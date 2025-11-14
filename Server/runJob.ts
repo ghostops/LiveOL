@@ -1,7 +1,13 @@
 import 'dotenv/config';
+import Redis from 'ioredis';
 import { OLQueue } from 'lib/queue';
 
 const q = new OLQueue('localhost', 6379, process.env.REDIS_PASSWORD);
+const redis = new Redis({
+  host: 'localhost',
+  port: 6379,
+  password: process.env.REDIS_PASSWORD,
+});
 
 async function runJob() {
   if (process.argv.length < 3) {
@@ -23,6 +29,14 @@ async function runJob() {
 
   if (methodName === 'purge') {
     await q.purge();
+  }
+
+  if (methodName === 'redis-purge') {
+    const keys = await redis.keys('liveresultat:*');
+    if (keys.length > 0) {
+      await redis.del(...keys);
+    }
+    console.log(`Purged ${keys.length} keys from Redis.`);
   }
 
   if (methodName === 'run' && jobName) {

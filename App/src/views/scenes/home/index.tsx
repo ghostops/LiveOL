@@ -15,6 +15,7 @@ import { OLText } from '~/views/components/text';
 import { OLHomeBadge } from './badge';
 import { flagEmoji } from '~/util/flagEmoji';
 import { useTranslation } from 'react-i18next';
+import { format } from 'date-fns';
 
 export const OLSceneHome = () => {
   const { colors, px } = useTheme();
@@ -66,6 +67,9 @@ export const OLSceneHome = () => {
     ]);
   };
 
+  const hasCompetitionsToday =
+    !!getTodaysCompetitionsQuery.data?.data.competitions.length;
+
   return (
     <View style={{ flex: 1 }}>
       <SectionList
@@ -87,7 +91,7 @@ export const OLSceneHome = () => {
           );
         }}
         renderItem={({ item }) => {
-          return <HomeRowItem item={item} />;
+          return <HomeRowItem item={item} showOrganizationName />;
         }}
         keyExtractor={item => String(item.id)}
         style={{ flex: 1 }}
@@ -116,20 +120,24 @@ export const OLSceneHome = () => {
             style={{
               backgroundColor: COLORS.MAIN,
               paddingHorizontal: px(8),
-              paddingBottom: px(16),
+              paddingBottom: hasCompetitionsToday ? px(16) : 0,
               paddingTop: px(8),
             }}
           >
             <OLText
-              style={{ color: COLORS.WHITE, marginBottom: px(8) }}
+              style={{
+                color: COLORS.WHITE,
+                marginBottom: px(8),
+                textAlign: hasCompetitionsToday ? 'left' : 'center',
+              }}
               bold
               size={16}
             >
-              {t('home.today')}
+              {hasCompetitionsToday ? t('home.today') : t('home.nothingToday')}
             </OLText>
             <View style={{ backgroundColor: COLORS.WHITE }}>
               {getTodaysCompetitionsQuery.data?.data.competitions.map(item => (
-                <HomeRowItem key={item.id} item={item} />
+                <HomeRowItem key={item.id} item={item} showOrganizationName />
               ))}
             </View>
           </View>
@@ -142,9 +150,13 @@ export const OLSceneHome = () => {
 export const HomeRowItem = ({
   item,
   onPress,
+  showDate = false,
+  showOrganizationName = false,
 }: {
   item: paths['/v2/competitions']['get']['responses']['200']['content']['application/json']['data']['competitions'][number]['competitions'][number];
   onPress?: () => void;
+  showDate?: boolean;
+  showOrganizationName?: boolean;
 }) => {
   const { colors, px } = useTheme();
   const { navigate } = useOLNavigation();
@@ -165,6 +177,19 @@ export const HomeRowItem = ({
           <OLText size={16} numberOfLines={1} style={{ flexShrink: 1 }}>
             {item.name}
           </OLText>
+          {showOrganizationName && item.organizer && (
+            <OLText
+              size={12}
+              style={{ opacity: 0.9, marginTop: px(2), fontStyle: 'italic' }}
+            >
+              {item.organizer}
+            </OLText>
+          )}
+          {showDate && (
+            <OLText size={12} style={{ opacity: 0.9, marginTop: px(2) }}>
+              {format(new Date(item.date), 'MMMM dd, yyyy')}
+            </OLText>
+          )}
         </View>
       </View>
       <View style={[style.row, { marginTop: px(2) }]}>

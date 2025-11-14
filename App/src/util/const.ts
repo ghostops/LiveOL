@@ -21,6 +21,7 @@ export const COLORS = {
   WHITE: '#FFFFFF',
   RED: '#FF3B30',
   BACKGROUND: '#f6f5f5ff',
+  GRAY: '#8e8e93',
 };
 
 export const HIT_SLOP = { top: 10, left: 10, right: 10, bottom: 10 };
