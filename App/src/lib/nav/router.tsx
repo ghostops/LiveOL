@@ -20,6 +20,8 @@ import { OLSceneLiveResults } from '~/views/scenes/live-results';
 import { OLSceneClubResults } from '~/views/scenes/club-results';
 import { OLSceneTrackingResults } from '~/views/scenes/tracking/results';
 import { OLSceneSearch } from '~/views/scenes/search';
+import { TrackingInfoScreen } from '~/views/scenes/profile/TrackingInfoScreen';
+import { TrackingInfoIcon } from '~/views/components/TrackingInfoIcon';
 
 export type TabStack = {
   Home: undefined;
@@ -49,6 +51,7 @@ export type RootStack = {
     title: string;
     trackingId: number;
   };
+  TrackingInfo: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStack>();
@@ -192,6 +195,7 @@ const Component: React.FC = () => {
               route.params.mode === 'create'
                 ? t('tracking.edit.titleCreate')
                 : t('tracking.edit.titleEdit'),
+            headerRight: () => <TrackingInfoIcon color={COLORS.WHITE} />,
           })}
         />
         <Stack.Screen
@@ -219,6 +223,13 @@ const Component: React.FC = () => {
             component={OLSceneSearch}
             options={{
               title: t('home.search'),
+            }}
+          />
+          <Stack.Screen
+            name="TrackingInfo"
+            component={TrackingInfoScreen}
+            options={{
+              title: t('profile.tracking.info.title'),
             }}
           />
         </Stack.Group>

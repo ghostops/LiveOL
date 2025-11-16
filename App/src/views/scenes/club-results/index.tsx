@@ -15,6 +15,7 @@ import { nowTimestamp as nowTimestampFs } from '~/util/isLive';
 import { OLRefetcherBar } from '~/views/components/refetcher/bar';
 import { keepPreviousData } from '@tanstack/react-query';
 import { useUserIdStore } from '~/store/userId';
+import { useRefreshIntervalStore } from '~/store/refreshInterval';
 
 export const OLSceneClubResults = () => {
   const { colors } = useTheme();
@@ -26,6 +27,9 @@ export const OLSceneClubResults = () => {
   const { sortingDirection, sortingKey } = useSortingStore();
   const [nowTimestamp, setNowTimestamp] = useState(nowTimestampFs());
   const uid = useUserIdStore(state => state.userId);
+  const refreshIntervalMs = useRefreshIntervalStore(
+    state => state.refreshIntervalMs,
+  );
 
   // Fetch filtered results for this organization in this competition
   const getResultsQuery = $api.useQuery(
@@ -65,7 +69,7 @@ export const OLSceneClubResults = () => {
     <View style={{ flex: 1, backgroundColor: colors.BACKGROUND }}>
       {focus && (
         <OLRefetcherBar
-          interval={15_000}
+          interval={refreshIntervalMs}
           refetch={async () => {
             setNowTimestamp(nowTimestampFs());
           }}

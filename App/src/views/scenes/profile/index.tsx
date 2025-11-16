@@ -1,24 +1,16 @@
-import React, { useState } from 'react';
-import {
-  ScrollView,
-  TouchableOpacity,
-  View,
-  Linking,
-  Alert,
-} from 'react-native';
+import { ScrollView, TouchableOpacity, View, Linking } from 'react-native';
 import { OLButton } from '~/views/components/button';
 import { OLCard } from '~/views/components/card';
 import { OLText } from '~/views/components/text';
-import { OLIcon } from '~/views/components/icon';
 import { OLFlag } from '~/views/components/lang/flag';
 import { COLORS, px, VERSION } from '~/util/const';
 import { PickerButton } from '~/views/components/lang/picker';
 import { useTranslation } from 'react-i18next';
-import { useIap } from '~/hooks/useIap';
 import { useTextStore } from '~/store/text';
-import { useDeviceIdStore } from '~/store/deviceId';
-import { format } from 'date-fns';
 import { UserProfileForm } from './UserProfileForm';
+import { SubscriptionManagement } from './SubscriptionManagement';
+import { RefreshInterval } from './RefreshInterval';
+import { useUserIdStore } from '~/store/userId';
 
 const translationCredits: { code: string; name: string }[] = [
   {
@@ -48,36 +40,9 @@ const translationCredits: { code: string; name: string }[] = [
 ];
 
 export const OLProfile: React.FC = () => {
-  const { t } = useTranslation();
-
-  // IAP
-  const {
-    plusActive,
-    plusExpirationDate,
-    plusWillRenew,
-    displayPrice,
-    presentPaywall,
-    restore,
-  } = useIap();
-
-  // Text size
+  const { t, i18n } = useTranslation();
   const { textSizeMultiplier, setTextSizeMultiplier } = useTextStore();
-
-  // Device ID
-  const { deviceId } = useDeviceIdStore();
-
-  // Mocked state for future features
-  const [autoRefreshInterval, setAutoRefreshInterval] = useState(15);
-  const [currentTheme, setCurrentTheme] = useState<'light' | 'dark' | 'auto'>(
-    'light',
-  );
-
-  // Plus benefits
-  const plusBenefits = [
-    t('plus.benefits.sorting'),
-    t('plus.benefits.tracking'),
-    t('plus.benefits.support'),
-  ];
+  const userId = useUserIdStore(state => state.userId);
 
   // Text size handlers
   const increaseTextSize = () => {
@@ -94,74 +59,26 @@ export const OLProfile: React.FC = () => {
     setTextSizeMultiplier(textSizeMultiplier - 0.1);
   };
 
-  // Subscription handlers
-  const handleGetLiveOlPlus = () => {
-    presentPaywall();
-  };
-  const handleRestorePurchases = () => {
-    restore();
-  };
-
-  // Theme handler (mocked - not fully implemented)
-  const handleToggleTheme = () => {
-    const themes: Array<'light' | 'dark' | 'auto'> = ['light', 'dark', 'auto'];
-    const currentIndex = themes.indexOf(currentTheme);
-    const nextTheme = themes[(currentIndex + 1) % themes.length];
-    setCurrentTheme(nextTheme);
-    Alert.alert(t('profile.settings.themeChanged'), `Theme: ${nextTheme}`);
-  };
-
-  // Auto-refresh handler (mocked)
-  const handleChangeAutoRefresh = (interval: number) => {
-    setAutoRefreshInterval(interval);
-  };
-
-  // Clear cache handler (mocked)
-  const handleClearCache = () => {
-    Alert.alert(
-      t('profile.settings.clearCache'),
-      t('profile.settings.clearCacheConfirm'),
-      [
-        {
-          text: t('common.cancel'),
-          style: 'cancel',
-        },
-        {
-          text: t('common.confirm'),
-          onPress: () => {
-            // Mock implementation - in real app would clear AsyncStorage cache
-            Alert.alert(
-              t('common.success'),
-              t('profile.settings.cacheCleared'),
-            );
-          },
-        },
-      ],
-    );
-  };
-
   // External links
   const handleContactPress = () => {
-    Linking.openURL('https://liveol.larsendahl.se/#contact');
+    Linking.openURL('https://orienteeringliveresults.com/contact');
   };
-
   const handleNewsletterPress = () => {
-    Linking.openURL('https://liveol.larsendahl.se/newsletter');
+    Linking.openURL('https://orienteeringliveresults.com/newsletter');
   };
-
   const handleReportBug = () => {
-    Linking.openURL('https://github.com/ludviglarsendahl/liveol/issues');
+    Linking.openURL('https://orienteeringliveresults.com/issues');
   };
-
   const handleGoToWebsite = () => {
-    Linking.openURL('https://larsendahl.com');
+    Linking.openURL('https://orienteeringliveresults.com/ludvig');
   };
-
-  const openTerms = () => Linking.openURL('https://liveol.larsendahl.se/terms');
-  const openPrivacy = () =>
-    Linking.openURL('https://liveol.larsendahl.se/privacy');
-  const openLicenses = () =>
-    Linking.openURL('https://liveol.larsendahl.se/licenses');
+  const handleHelpTranslate = () => {
+    Linking.openURL('https://orienteeringliveresults.com/translate');
+  };
+  const handleOpenTerms = () =>
+    Linking.openURL('https://orienteeringliveresults.com/terms');
+  const handleOpenPrivacy = () =>
+    Linking.openURL('https://orienteeringliveresults.com/privacy');
 
   return (
     <ScrollView
@@ -172,163 +89,25 @@ export const OLProfile: React.FC = () => {
       contentContainerStyle={{
         paddingVertical: px(16),
         paddingHorizontal: px(16),
+        gap: px(8),
       }}
     >
-      {/* HEADER SECTION */}
-      <View
-        style={{
-          marginBottom: px(24),
-        }}
-      >
+      <View>
         <UserProfileForm />
       </View>
 
-      {/* SUBSCRIPTION MANAGEMENT SECTION */}
-      <OLCard style={{ marginBottom: px(16) }}>
-        <OLText bold size={20} style={{ marginBottom: px(12) }}>
-          {t('profile.subscription.title')}
-        </OLText>
-
-        {plusActive ? (
-          <>
-            {/* Active Subscription Card */}
-            <View
-              style={{
-                backgroundColor: COLORS.LIGHT,
-                padding: px(16),
-                borderRadius: px(8),
-                marginBottom: px(16),
-              }}
-            >
-              <OLText
-                size={16}
-                bold
-                style={{ color: COLORS.WHITE, marginBottom: px(8) }}
-              >
-                LiveOL Plus
-              </OLText>
-              <OLText
-                size={14}
-                style={{ color: COLORS.WHITE, marginBottom: px(12) }}
-              >
-                {plusWillRenew
-                  ? t('plus.status.renew', {
-                      date: plusExpirationDate
-                        ? format(plusExpirationDate, 'P')
-                        : '',
-                    })
-                  : t('plus.status.expire', {
-                      date: plusExpirationDate
-                        ? format(plusExpirationDate, 'P')
-                        : '',
-                    })}
-              </OLText>
-
-              <View style={{ marginTop: px(8) }}>
-                {plusBenefits.map((benefit, index) => (
-                  <View
-                    key={index}
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      marginBottom: px(6),
-                    }}
-                  >
-                    <OLIcon
-                      name="checkmark-circle"
-                      size={18}
-                      color={COLORS.WHITE}
-                      style={{ marginRight: px(8) }}
-                    />
-                    <OLText size={14} style={{ color: COLORS.WHITE }}>
-                      {benefit}
-                    </OLText>
-                  </View>
-                ))}
-              </View>
-            </View>
-
-            <TouchableOpacity onPress={handleRestorePurchases}>
-              <OLText
-                size={14}
-                style={{ color: COLORS.BLUE, textAlign: 'center' }}
-              >
-                {t('plus.restore')}
-              </OLText>
-            </TouchableOpacity>
-          </>
-        ) : (
-          <>
-            {/* Free Tier - Upgrade Prompt */}
-            <OLText size={16} style={{ marginBottom: px(16) }}>
-              {t('plus.buy.text')}
-            </OLText>
-
-            <View
-              style={{
-                backgroundColor: COLORS.BACKGROUND,
-                padding: px(16),
-                borderRadius: px(8),
-                marginBottom: px(16),
-              }}
-            >
-              {plusBenefits.map((benefit, index) => (
-                <View
-                  key={index}
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    marginBottom: px(8),
-                  }}
-                >
-                  <OLIcon
-                    name="checkmark-circle"
-                    size={18}
-                    color={COLORS.GREEN}
-                    style={{ marginRight: px(8) }}
-                  />
-                  <OLText size={14}>{benefit}</OLText>
-                </View>
-              ))}
-            </View>
-
-            {displayPrice && (
-              <OLText
-                size={18}
-                bold
-                style={{ textAlign: 'center', marginBottom: px(12) }}
-              >
-                {displayPrice} / {t('plus.perYear')}
-              </OLText>
-            )}
-
-            <OLButton
-              onPress={handleGetLiveOlPlus}
-              style={{ marginBottom: px(12) }}
-            >
-              {t('plus.promo.get')}
-            </OLButton>
-
-            <TouchableOpacity onPress={handleRestorePurchases}>
-              <OLText
-                size={14}
-                style={{ color: COLORS.BLUE, textAlign: 'center' }}
-              >
-                {t('plus.restore')}
-              </OLText>
-            </TouchableOpacity>
-          </>
-        )}
-      </OLCard>
+      <View>
+        <SubscriptionManagement />
+      </View>
 
       {/* SETTINGS & PREFERENCES SECTION */}
-      <OLCard style={{ marginBottom: px(16) }}>
-        <OLText bold size={20} style={{ marginBottom: px(16) }}>
+      <OLCard style={{ gap: px(16) }}>
+        <OLText bold size={20}>
           {t('profile.settings.title')}
         </OLText>
 
         {/* Appearance */}
-        <View style={{ marginBottom: px(20) }}>
+        <View>
           <OLText bold size={16} style={{ marginBottom: px(8) }}>
             {t('profile.settings.appearance')}
           </OLText>
@@ -341,7 +120,6 @@ export const OLProfile: React.FC = () => {
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
-              marginBottom: px(12),
             }}
           >
             <OLButton
@@ -357,95 +135,37 @@ export const OLProfile: React.FC = () => {
               {t('info.changeTextSize.increase')}
             </OLButton>
           </View>
+        </View>
 
-          {/* Theme (mocked - not implemented yet) */}
-          <OLText size={14} style={{ marginBottom: px(8) }}>
-            {t('profile.settings.theme')}
-          </OLText>
+        {/* Language */}
+        <View
+          style={{
+            gap: px(8),
+          }}
+        >
           <View
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
-              marginBottom: px(12),
+              alignItems: 'center',
             }}
           >
-            {(['light', 'dark', 'auto'] as const).map(theme => (
-              <TouchableOpacity
-                key={theme}
-                onPress={handleToggleTheme}
-                style={{
-                  flex: 1,
-                  marginHorizontal: px(4),
-                  padding: px(10),
-                  borderRadius: px(8),
-                  backgroundColor:
-                    currentTheme === theme ? COLORS.MAIN : COLORS.BORDER,
-                  alignItems: 'center',
-                }}
-              >
-                <OLText
-                  size={13}
-                  style={{
-                    color: currentTheme === theme ? COLORS.WHITE : COLORS.BLACK,
-                  }}
-                >
-                  {t(`profile.settings.theme.${theme}`)}
-                </OLText>
-              </TouchableOpacity>
-            ))}
+            <OLText bold size={16}>
+              {t('profile.settings.language')}
+            </OLText>
+            <OLFlag code={i18n.language} size={28} />
           </View>
-        </View>
-
-        {/* Language */}
-        <View style={{ marginBottom: px(20) }}>
-          <OLText bold size={16} style={{ marginBottom: px(8) }}>
-            {t('profile.settings.language')}
-          </OLText>
           <PickerButton />
         </View>
 
-        {/* Results Preferences (mocked) */}
-        <View style={{ marginBottom: px(20) }}>
+        <View>
           <OLText bold size={16} style={{ marginBottom: px(8) }}>
             {t('profile.settings.results')}
           </OLText>
           <OLText size={14} style={{ marginBottom: px(8) }}>
-            {t('profile.settings.autoRefresh')} ({autoRefreshInterval}s)
+            {t('profile.settings.autoRefresh')}
           </OLText>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}
-          >
-            {[10, 15, 30, 60].map(interval => (
-              <TouchableOpacity
-                key={interval}
-                onPress={() => handleChangeAutoRefresh(interval)}
-                style={{
-                  paddingHorizontal: px(16),
-                  paddingVertical: px(8),
-                  borderRadius: px(8),
-                  backgroundColor:
-                    autoRefreshInterval === interval
-                      ? COLORS.MAIN
-                      : COLORS.BORDER,
-                }}
-              >
-                <OLText
-                  size={13}
-                  style={{
-                    color:
-                      autoRefreshInterval === interval
-                        ? COLORS.WHITE
-                        : COLORS.BLACK,
-                  }}
-                >
-                  {interval}s
-                </OLText>
-              </TouchableOpacity>
-            ))}
-          </View>
+          <RefreshInterval />
         </View>
 
         {/* Data & Privacy */}
@@ -454,51 +174,33 @@ export const OLProfile: React.FC = () => {
             {t('profile.settings.data')}
           </OLText>
 
-          {deviceId && (
-            <View style={{ marginBottom: px(12) }}>
-              <OLText size={12} style={{ color: COLORS.GRAY }}>
-                {t('profile.settings.deviceId')}: {deviceId}
+          {userId && (
+            <View>
+              <OLText size={14} style={{ color: COLORS.GRAY }}>
+                {t('profile.settings.userId')}: {userId}
               </OLText>
             </View>
           )}
-
-          <OLButton onPress={handleClearCache}>
-            {t('profile.settings.clearCache')}
-          </OLButton>
         </View>
       </OLCard>
 
-      {/* ABOUT & SUPPORT SECTION */}
-      <OLCard style={{ marginBottom: px(16) }}>
-        <OLText bold size={20} style={{ marginBottom: px(16) }}>
-          {t('profile.about.title')}
-        </OLText>
+      <OLCard style={{ gap: px(16) }}>
+        <View style={{ gap: px(8) }}>
+          <OLText bold size={20}>
+            {t('profile.about.title')}
+          </OLText>
 
-        {/* App Info */}
-        <View style={{ marginBottom: px(16) }}>
-          <OLText size={14} style={{ marginBottom: px(8) }}>
+          <OLText size={14}>
             {t('info.version')}: {VERSION}
           </OLText>
 
-          {/* About Text */}
-          {(t('info.body', { returnObjects: true }) as unknown as string[]).map(
-            (text: string, index: number) => (
-              <OLText
-                size={14}
-                key={index}
-                style={{
-                  marginBottom: px(8),
-                  color: COLORS.GRAY,
-                }}
-              >
-                {text}
-              </OLText>
-            ),
-          )}
+          <OLText size={14} style={{}}>
+            {t('profile.about.text')}
+          </OLText>
         </View>
 
         {/* Support Buttons */}
-        <View style={{ marginBottom: px(16) }}>
+        <View>
           <OLButton
             onPress={handleContactPress}
             style={{ marginBottom: px(12) }}
@@ -515,10 +217,9 @@ export const OLProfile: React.FC = () => {
           </OLButton>
         </View>
 
-        {/* Translation Credits */}
         <View>
-          <OLText bold size={16} style={{ marginBottom: px(8) }}>
-            {t('info.translations.credit')}
+          <OLText bold size={16}>
+            {t('info.translations.credit')}:
           </OLText>
           {translationCredits.map(({ code, name }, index) => (
             <View
@@ -527,6 +228,7 @@ export const OLProfile: React.FC = () => {
                 flexDirection: 'row',
                 alignItems: 'center',
                 marginTop: px(8),
+                marginLeft: px(2),
               }}
             >
               <OLFlag
@@ -539,42 +241,38 @@ export const OLProfile: React.FC = () => {
               </OLText>
             </View>
           ))}
+
+          <OLButton
+            onPress={handleHelpTranslate}
+            small
+            style={{ marginTop: px(8) }}
+          >
+            {t('info.translations.freePlus')}
+          </OLButton>
         </View>
       </OLCard>
 
       {/* LEGAL & INFO SECTION */}
-      <OLCard style={{ marginBottom: px(16) }}>
-        <OLText bold size={20} style={{ marginBottom: px(16) }}>
+      <OLCard style={{ gap: px(8) }}>
+        <OLText bold size={20}>
           {t('profile.legal.title')}
         </OLText>
 
-        <TouchableOpacity onPress={openTerms} style={{ marginBottom: px(12) }}>
+        <TouchableOpacity onPress={handleOpenTerms}>
           <OLText size={14} style={{ color: COLORS.BLUE }}>
             {t('profile.legal.terms')}
           </OLText>
         </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={openPrivacy}
-          style={{ marginBottom: px(12) }}
-        >
+        <TouchableOpacity onPress={handleOpenPrivacy}>
           <OLText size={14} style={{ color: COLORS.BLUE }}>
             {t('profile.legal.privacy')}
           </OLText>
         </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={openLicenses}
-          style={{ marginBottom: px(16) }}
-        >
-          <OLText size={14} style={{ color: COLORS.BLUE }}>
-            {t('profile.legal.licenses')}
-          </OLText>
-        </TouchableOpacity>
-
         <TouchableOpacity onPress={handleGoToWebsite}>
-          <OLText size={14} style={{ color: COLORS.GRAY, textAlign: 'center' }}>
-            LiveOL by Ludvig Larsendahl
+          <OLText size={14} style={{ color: COLORS.BLUE }}>
+            LiveO: Ludvig Larsendahl
           </OLText>
         </TouchableOpacity>
       </OLCard>

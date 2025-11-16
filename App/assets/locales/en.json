@@ -121,8 +121,8 @@
     "rate": "Rate the app",
     "title": "Information",
     "translations": {
-      "credit": "App translated by",
-      "freePlus": "Help out with translating the app and get free LiveOL+",
+      "credit": "Translations with the help from",
+      "freePlus": "Help out translating for free LiveOL+",
       "phraseapp": "Translations powered by"
     },
     "update": {
@@ -209,7 +209,30 @@
     "tracking": {
       "name": "My full name",
       "clubs": "My clubs",
-      "classes": "My classes"
+      "classes": "My classes",
+      "info": {
+        "title": "How Tracking Works",
+        "step1": {
+          "title": "Add Runner Details",
+          "description": "Enter the runner's name, their clubs, and the classes they compete in."
+        },
+        "step2": {
+          "title": "Smart Matching",
+          "description": "The system automatically finds your runners across all competitions, even with different spellings."
+        },
+        "step3": {
+          "title": "Get Highlighted",
+          "description": "See your tracked runners instantly highlighted in competition results."
+        },
+        "step4": {
+          "title": "Track Multiple",
+          "description": "Follow the same runner across different clubs and classes simultaneously."
+        },
+        "example": {
+          "title": "Pro Tip",
+          "description": "Add multiple clubs if your runner competes for different organizations. The system will find them wherever they race!"
+        }
+      }
     },
     "subscription": {
       "title": "Subscription"
@@ -229,17 +252,18 @@
         "enabled": "Notifications enabled",
         "disabled": "Notifications disabled"
       },
-      "results": "Results Display",
-      "autoRefresh": "Auto-refresh interval",
+      "results": "Results",
+      "autoRefresh": "How often results auto-refreshes",
       "data": "Data & Privacy",
-      "deviceId": "Device ID",
+      "userId": "User ID",
       "clearCache": "Clear cache",
       "clearCacheConfirm": "Are you sure you want to clear the cache? This cannot be undone.",
       "cacheCleared": "Cache cleared successfully"
     },
     "about": {
       "title": "About & Support",
-      "reportBug": "Report a bug"
+      "reportBug": "Report a bug",
+      "text": "LiveOL shows live orienteering results right on your phone. Get the latest standings with a clean, easy-to-use interface in multiple languages.\n\nWe pull together results from liveresultat.orientering.se, Eventor, and other orienteering services. Our goal? To be the go-to orienteering app for your phone or tablet."
     },
     "legal": {
       "title": "Legal & Info",

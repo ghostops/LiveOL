@@ -18,6 +18,7 @@ import { keepPreviousData } from '@tanstack/react-query';
 import { nowTimestamp as nowTimestampFs } from '~/util/isLive';
 import { useNotifyOnUpdate } from './useNotifyOnUpdate';
 import { useUserIdStore } from '~/store/userId';
+import { useRefreshIntervalStore } from '~/store/refreshInterval';
 
 export const OLSceneLiveResults = () => {
   const { colors } = useTheme();
@@ -30,6 +31,9 @@ export const OLSceneLiveResults = () => {
   const { sortingDirection, sortingKey } = useSortingStore();
   const [nowTimestamp, setNowTimestamp] = useState(nowTimestampFs());
   const uid = useUserIdStore(state => state.userId);
+  const refreshIntervalMs = useRefreshIntervalStore(
+    state => state.refreshIntervalMs,
+  );
   const { liveClassId } = params;
 
   const getResults = $api.useQuery(
@@ -75,7 +79,7 @@ export const OLSceneLiveResults = () => {
     <View style={{ flex: 1, backgroundColor: colors.BACKGROUND }}>
       {focus && (
         <OLRefetcherBar
-          interval={15_000}
+          interval={refreshIntervalMs}
           refetch={async () => {
             setNowTimestamp(nowTimestampFs());
           }}

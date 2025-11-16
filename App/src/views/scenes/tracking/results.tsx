@@ -11,6 +11,7 @@ import { nowTimestamp as nowTimestampFs } from '~/util/isLive';
 import { useSortingStore } from '~/store/sorting';
 import { useOLNavigation } from '~/hooks/useNavigation';
 import { useUserIdStore } from '~/store/userId';
+import { useRefreshIntervalStore } from '~/store/refreshInterval';
 
 export const OLSceneTrackingResults = () => {
   const {
@@ -21,6 +22,9 @@ export const OLSceneTrackingResults = () => {
   const { sortingDirection, sortingKey } = useSortingStore();
   const navigation = useOLNavigation();
   const uid = useUserIdStore(state => state.userId);
+  const refreshIntervalMs = useRefreshIntervalStore(
+    state => state.refreshIntervalMs,
+  );
 
   useLayoutEffect(() => {
     if (title) {
@@ -47,7 +51,7 @@ export const OLSceneTrackingResults = () => {
     <View>
       {focus && (
         <OLRefetcherBar
-          interval={15_000}
+          interval={refreshIntervalMs}
           refetch={async () => {
             setNowTimestamp(nowTimestampFs());
           }}

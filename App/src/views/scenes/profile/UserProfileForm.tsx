@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { COLORS } from '~/util/const';
 import { OLText } from '~/views/components/text';
 import { useTheme } from '~/hooks/useTheme';
+import { TrackingInfoIcon } from '~/views/components/TrackingInfoIcon';
 
 export const UserProfileForm: React.FC = () => {
   const { t } = useTranslation();
@@ -44,23 +45,29 @@ export const UserProfileForm: React.FC = () => {
         <OLText size={14} bold style={{ marginBottom: px(6) }}>
           {t('profile.tracking.name')}
         </OLText>
-        <TextInput
-          style={{
-            borderWidth: 1,
-            borderColor: COLORS.BORDER,
-            borderRadius: 6,
-            height: 40,
-            paddingHorizontal: px(10),
-            fontSize: 14,
-            backgroundColor: COLORS.WHITE,
-          }}
-          placeholder={t('tracking.edit.namePlaceholder')}
-          placeholderTextColor="#999"
-          value={name}
-          onChangeText={setName}
-          autoCapitalize="words"
-          autoCorrect={false}
-        />
+        <View
+          style={{ flexDirection: 'row', gap: px(6), alignItems: 'center' }}
+        >
+          <TextInput
+            style={{
+              borderWidth: 1,
+              borderColor: COLORS.BORDER,
+              borderRadius: 6,
+              height: 40,
+              paddingHorizontal: px(10),
+              fontSize: 14,
+              backgroundColor: COLORS.WHITE,
+              flex: 1,
+            }}
+            placeholder={t('tracking.edit.namePlaceholder')}
+            placeholderTextColor="#999"
+            value={name}
+            onChangeText={setName}
+            autoCapitalize="words"
+            autoCorrect={false}
+          />
+          <TrackingInfoIcon color={COLORS.MAIN} />
+        </View>
       </View>
 
       {/* Clubs */}
