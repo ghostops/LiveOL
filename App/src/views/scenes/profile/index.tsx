@@ -49,7 +49,6 @@ const translationCredits: { code: string; name: string }[] = [
 
 export const OLProfile: React.FC = () => {
   const { t } = useTranslation();
-  const { navigate } = useOLNavigation();
 
   // IAP
   const {
@@ -68,7 +67,6 @@ export const OLProfile: React.FC = () => {
   const { deviceId } = useDeviceIdStore();
 
   // Mocked state for future features
-  const [notificationsEnabled, setNotificationsEnabled] = useState(false);
   const [autoRefreshInterval, setAutoRefreshInterval] = useState(15);
   const [currentTheme, setCurrentTheme] = useState<'light' | 'dark' | 'auto'>(
     'light',
@@ -100,11 +98,6 @@ export const OLProfile: React.FC = () => {
   const handleGetLiveOlPlus = () => {
     presentPaywall();
   };
-
-  const handleRedeemCode = () => {
-    navigate('Redeem');
-  };
-
   const handleRestorePurchases = () => {
     restore();
   };
@@ -116,17 +109,6 @@ export const OLProfile: React.FC = () => {
     const nextTheme = themes[(currentIndex + 1) % themes.length];
     setCurrentTheme(nextTheme);
     Alert.alert(t('profile.settings.themeChanged'), `Theme: ${nextTheme}`);
-  };
-
-  // Notifications handler (mocked)
-  const handleToggleNotifications = () => {
-    setNotificationsEnabled(!notificationsEnabled);
-    Alert.alert(
-      t('profile.settings.notifications'),
-      notificationsEnabled
-        ? t('profile.settings.notifications.disabled')
-        : t('profile.settings.notifications.enabled'),
-    );
   };
 
   // Auto-refresh handler (mocked)
@@ -292,13 +274,6 @@ export const OLProfile: React.FC = () => {
               </View>
             </View>
 
-            <OLButton
-              onPress={handleRedeemCode}
-              style={{ marginBottom: px(12) }}
-            >
-              {t('plus.code.redeem')}
-            </OLButton>
-
             <TouchableOpacity onPress={handleRestorePurchases}>
               <OLText
                 size={14}
@@ -358,13 +333,6 @@ export const OLProfile: React.FC = () => {
               style={{ marginBottom: px(12) }}
             >
               {t('plus.promo.get')}
-            </OLButton>
-
-            <OLButton
-              onPress={handleRedeemCode}
-              style={{ marginBottom: px(12) }}
-            >
-              {t('plus.code.redeem')}
             </OLButton>
 
             <TouchableOpacity onPress={handleRestorePurchases}>
@@ -460,31 +428,6 @@ export const OLProfile: React.FC = () => {
             {t('profile.settings.language')}
           </OLText>
           <PickerButton />
-        </View>
-
-        {/* Notifications (mocked) */}
-        <View style={{ marginBottom: px(20) }}>
-          <OLText bold size={16} style={{ marginBottom: px(8) }}>
-            {t('profile.settings.notifications')}
-          </OLText>
-          <TouchableOpacity
-            onPress={handleToggleNotifications}
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              paddingVertical: px(8),
-            }}
-          >
-            <OLText size={14}>
-              {t('profile.settings.notifications.enable')}
-            </OLText>
-            <OLIcon
-              name={notificationsEnabled ? 'toggle' : 'toggle-outline'}
-              size={32}
-              color={notificationsEnabled ? COLORS.GREEN : COLORS.GRAY}
-            />
-          </TouchableOpacity>
         </View>
 
         {/* Results Preferences (mocked) */}
