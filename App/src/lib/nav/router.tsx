@@ -67,7 +67,7 @@ const OLHomeTabs: React.FC = () => {
         },
         title: '...',
       }}
-      initialRouteName="Home"
+      initialRouteName="Profile"
     >
       <Tabs.Screen
         name="Tracking"

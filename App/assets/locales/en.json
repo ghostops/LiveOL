@@ -206,6 +206,11 @@
     }
   },
   "profile": {
+    "tracking": {
+      "name": "My full name",
+      "clubs": "My clubs",
+      "classes": "My classes"
+    },
     "subscription": {
       "title": "Subscription"
     },

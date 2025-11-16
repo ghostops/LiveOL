@@ -17,8 +17,8 @@ import { useTranslation } from 'react-i18next';
 import { useIap } from '~/hooks/useIap';
 import { useTextStore } from '~/store/text';
 import { useDeviceIdStore } from '~/store/deviceId';
-import { useOLNavigation } from '~/hooks/useNavigation';
 import { format } from 'date-fns';
+import { UserProfileForm } from './UserProfileForm';
 
 const translationCredits: { code: string; name: string }[] = [
   {
@@ -177,36 +177,10 @@ export const OLProfile: React.FC = () => {
       {/* HEADER SECTION */}
       <View
         style={{
-          alignItems: 'center',
           marginBottom: px(24),
         }}
       >
-        <View
-          style={{
-            width: px(80),
-            height: px(80),
-            borderRadius: px(40),
-            backgroundColor: plusActive ? COLORS.MAIN : COLORS.GRAY,
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginBottom: px(12),
-          }}
-        >
-          <OLIcon name="person" size={40} color={COLORS.WHITE} />
-        </View>
-
-        <View
-          style={{
-            backgroundColor: plusActive ? COLORS.MAIN : COLORS.GRAY,
-            paddingHorizontal: px(16),
-            paddingVertical: px(6),
-            borderRadius: px(16),
-          }}
-        >
-          <OLText size={14} bold style={{ color: COLORS.WHITE }}>
-            {plusActive ? t('plus.status.active') : t('plus.status.free')}
-          </OLText>
-        </View>
+        <UserProfileForm />
       </View>
 
       {/* SUBSCRIPTION MANAGEMENT SECTION */}
