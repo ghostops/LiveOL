@@ -16,6 +16,7 @@ import { OLHomeBadge } from './badge';
 import { flagEmoji } from '~/util/flagEmoji';
 import { useTranslation } from 'react-i18next';
 import { format } from 'date-fns';
+import { OLApiStatus } from '~/views/components/ApiStatus';
 
 export const OLSceneHome = () => {
   const { colors, px } = useTheme();
@@ -72,6 +73,7 @@ export const OLSceneHome = () => {
 
   return (
     <View style={{ flex: 1 }}>
+      <OLApiStatus />
       <SectionList
         sections={
           getCompetitionsQuery.data

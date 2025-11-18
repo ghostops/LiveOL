@@ -22,6 +22,7 @@ import {
   updateTracking,
   deleteTracking,
 } from 'controllers/tracking';
+import { getApiStatus } from 'controllers/status';
 
 export const config = createConfig({
   http: { listen: 3000 },
@@ -30,6 +31,8 @@ export const config = createConfig({
 });
 
 export const routing: Routing = {
+  'v2/status': getApiStatus,
+
   'v2/competitions': getCompetitionsV2,
   'v2/competitions/search': searchCompetitions,
   'v2/competitions/today': getTodaysCompetitions,

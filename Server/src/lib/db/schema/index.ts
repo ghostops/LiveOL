@@ -13,3 +13,4 @@ export * from './live_results';
 export * from './live_split_controlls';
 export * from './live_split_results';
 export * from './scheduled_jobs';
+export * from './service_status';

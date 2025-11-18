@@ -92,9 +92,9 @@ export const OLProfile: React.FC = () => {
         gap: px(8),
       }}
     >
-      <View>
+      <OLCard>
         <UserProfileForm />
-      </View>
+      </OLCard>
 
       <View>
         <SubscriptionManagement />
@@ -176,7 +176,7 @@ export const OLProfile: React.FC = () => {
 
           {userId && (
             <View>
-              <OLText size={14} style={{ color: COLORS.GRAY }}>
+              <OLText size={14} style={{ color: COLORS.GRAY }} mono>
                 {t('profile.settings.userId')}: {userId}
               </OLText>
             </View>

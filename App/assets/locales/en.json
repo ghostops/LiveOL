@@ -1,4 +1,7 @@
 {
+  "apiStatus": {
+    "liveresultat": "liveresultat.orientering.se is currently experiencing issues"
+  },
   "back": "Back",
   "classes": {
     "autoUpdate": "Turn on live updating results",
@@ -211,25 +214,25 @@
       "clubs": "My clubs",
       "classes": "My classes",
       "info": {
-        "title": "How Tracking Works",
+        "title": "How following a runner works",
         "step1": {
-          "title": "Add Runner Details",
+          "title": "Add runner details",
           "description": "Enter the runner's name, their clubs, and the classes they compete in."
         },
         "step2": {
-          "title": "Smart Matching",
-          "description": "The system automatically finds your runners across all competitions, even with different spellings."
+          "title": "Smart matching",
+          "description": "The system finds your runners across all competitions, even with (slightly) different spellings."
         },
         "step3": {
-          "title": "Get Highlighted",
-          "description": "See your tracked runners instantly highlighted in competition results."
+          "title": "Get highlighted",
+          "description": "See your followed runners instantly highlighted in competition results."
         },
         "step4": {
-          "title": "Track Multiple",
-          "description": "Follow the same runner across different clubs and classes simultaneously."
+          "title": "Follow multiple runners",
+          "description": "If you have LiveO+ you can follow as many runners as you like, otherwise you are restricted to following yourself."
         },
         "example": {
-          "title": "Pro Tip",
+          "title": "Pro tip",
           "description": "Add multiple clubs if your runner competes for different organizations. The system will find them wherever they race!"
         }
       }

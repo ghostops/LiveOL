@@ -3,3 +3,5 @@ export const EventorUrls = {
   au: 'https://eventor.orienteering.asn.au',
   no: 'https://eventor.orientering.no',
 };
+
+export const LiveresultatUrl = 'https://liveresultat.orientering.se';

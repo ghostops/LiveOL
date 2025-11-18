@@ -4,6 +4,7 @@ import { Drizzle } from './db';
 import { OLQueue } from './queue';
 import { JobScheduler } from './scheduler';
 import Redis from 'ioredis';
+import { LiveresultatUrl } from './eventor/scrapers/urls';
 
 export interface APIResponse {
   Liveresultat: LiveresultatAPIClient;
@@ -12,12 +13,6 @@ export interface APIResponse {
   Scheduler: JobScheduler;
   Redis: Redis;
 }
-
-export const URLS = {
-  liveresultat: 'https://liveresultat.orientering.se',
-  eventorSweden: 'https://eventor.orientering.se',
-  eventorAustralia: 'https://eventor.orienteering.asn.au',
-};
 
 class ApiSingletons {
   private singletons: APIResponse | undefined;
@@ -31,7 +26,7 @@ class ApiSingletons {
       port: 6379,
     });
 
-    const liveresultatApi = new LiveresultatAPIClient(URLS.liveresultat, cache);
+    const liveresultatApi = new LiveresultatAPIClient(LiveresultatUrl, cache);
 
     const queue = new OLQueue(
       process.env.REDIS_HOST!,
