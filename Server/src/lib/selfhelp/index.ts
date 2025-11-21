@@ -46,7 +46,7 @@ export class OLSelfHelper {
       {
         name: LiveresultatUrl,
         query: async () => {
-          const res = await axios.get(LiveresultatUrl);
+          const res = await axios.get(LiveresultatUrl, { timeout: 8_000 });
           return res.status === 200;
         },
       },
