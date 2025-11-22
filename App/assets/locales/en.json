@@ -53,44 +53,6 @@
     "sprint": "Sprint",
     "ultralong": "Ultra Long"
   },
-  "follow": {
-    "empty": "You are not following any competion, club, or runner.",
-    "openFollowing": "Open following",
-    "title": "Following",
-    "unfollow": {
-      "cta": "Unfollow",
-      "hint": "Long-press to unfollow",
-      "title": "Do you want to stop following?"
-    },
-    "track": {
-      "title": "Tracking runners",
-      "name": "Runner name",
-      "add": "Track new runner",
-      "classes": "Runner classes",
-      "clubs": "Runner clubs",
-      "live": "Live",
-      "disclaimer": "This list only shows upcoming races within 7 days and can be updated every 10 minutes at most. To view the latest results, please press on the list item.",
-      "empty": "No competitions found in the upcoming 7 days",
-      "edit": {
-        "title": "Edit runner",
-        "add": "Add",
-        "clubPlaceholder": "Add new club",
-        "classPlaceholder": "Add new class",
-        "save": "Save",
-        "error": {
-          "nameRequired": "Runner name is required",
-          "clubRequired": "At least one club is required",
-          "classRequired": "At least one class is required",
-          "tooManyClasses": "The amount of classes will slow down the tracking process significantly."
-        },
-        "hints": {
-          "name": "Name of the runner, it must match the name in the results exactly.",
-          "club": "You can add multiple clubs and we will look for a runner that exist in any of the clubs.",
-          "class": "Add all the classes that the runner could be  competing in. If you add multiple classes, we will look for a runner that exist in any of the classes."
-        }
-      }
-    }
-  },
   "home": {
     "goToday": "Scroll to todays events",
     "nothingSearch": "No competitions found",
@@ -209,6 +171,7 @@
     }
   },
   "profile": {
+    "credit": "Made by Ludvig Larsendahl",
     "tracking": {
       "name": "My full name",
       "clubs": "My clubs",
@@ -359,7 +322,8 @@
       "error": "Error",
       "nameRequired": "Runner name is required",
       "userNotFound": "User not found. Please restart the app.",
-      "saveFailed": "Failed to save runner"
+      "saveFailed": "Failed to save runner",
+      "atLeastOneClubAndClass": "Please enter at least one club and one class"
     },
     "delete": {
       "title": "Delete Runner",

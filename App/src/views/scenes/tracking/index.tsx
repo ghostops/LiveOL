@@ -17,6 +17,7 @@ import { paths } from '~/lib/react-query/schema';
 import { ReanimatedSwipeable } from '~/views/components/ReanimatedSwipeable';
 import { queryClient } from '~/lib/react-query/client';
 import { OLButton } from '~/views/components/button';
+import { OLIcon } from '~/views/components/icon';
 
 type TrackingItem =
   paths['/v2/tracking']['get']['responses']['200']['content']['application/json']['data']['tracking'][0];
@@ -199,13 +200,10 @@ export const OLSceneTracking = () => {
             right: px(24),
             width: px(60),
             height: px(60),
-            borderRadius: px(30),
           },
         ]}
       >
-        <OLText size={32} bold>
-          +
-        </OLText>
+        <OLIcon name="person-add" size={24} color={COLORS.WHITE} />
       </TouchableOpacity>
     </View>
   );
@@ -267,5 +265,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 8,
+    borderRadius: 99,
   },
 });

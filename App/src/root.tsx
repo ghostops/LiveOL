@@ -14,6 +14,7 @@ import '~/lib/i18n';
 import { useDeviceIdStore } from './store/deviceId';
 import { getUniqueId } from 'react-native-device-info';
 import { UserRegistration } from './views/components/UserRegistration';
+import { AutocompleteDropdownContextProvider } from 'react-native-autocomplete-dropdown';
 
 const fallbackErrorBoundary = ({ children }: any) => <>{children}</>;
 let ErrorBoundary: any;
@@ -72,16 +73,18 @@ export default () => {
   return (
     <ErrorBoundary FallbackComponent={ErrorView}>
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <SafeAreaProvider>
-          <ActionSheetProvider>
-            <QueryClientProvider client={queryClient}>
-              <UserRegistration />
-              <View style={{ flex: 1 }}>
-                <Router />
-              </View>
-            </QueryClientProvider>
-          </ActionSheetProvider>
-        </SafeAreaProvider>
+        <AutocompleteDropdownContextProvider>
+          <SafeAreaProvider>
+            <ActionSheetProvider>
+              <QueryClientProvider client={queryClient}>
+                <UserRegistration />
+                <View style={{ flex: 1 }}>
+                  <Router />
+                </View>
+              </QueryClientProvider>
+            </ActionSheetProvider>
+          </SafeAreaProvider>
+        </AutocompleteDropdownContextProvider>
       </GestureHandlerRootView>
     </ErrorBoundary>
   );

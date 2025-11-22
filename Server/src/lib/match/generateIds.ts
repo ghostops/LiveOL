@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
 
-const globalSeparator = '~';
-const noOrganizationId = 'noorg';
+export const globalSeparator = '~';
+export const noOrganizationId = 'noorg';
 const maxIdLength = 255;
 
 const asciiFold = (s: string) =>

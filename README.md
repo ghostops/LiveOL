@@ -25,11 +25,10 @@ Please consider sponsoring the project with a one-time donation! I am funding th
 
 # Project structure
 
-The project resides mostly in 2 folders, App and Server. The other folders are used for the website and other
-non-critical aspects of the application.
+The project resides mostly in 2 folders, App and Server. The other folders are used for the website and other non-critical aspects of the application.
 
 # Links
 
 - [Website](https://liveol.larsendahl.se/)
-- [License](https://choosealicense.com/licenses/apache-2.0/)
+- [License](https://choosealicense.com/licenses/gpl-3.0/)
 

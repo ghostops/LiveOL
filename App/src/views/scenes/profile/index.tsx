@@ -272,7 +272,7 @@ export const OLProfile: React.FC = () => {
 
         <TouchableOpacity onPress={handleGoToWebsite}>
           <OLText size={14} style={{ color: COLORS.BLUE }}>
-            LiveO: Ludvig Larsendahl
+            {t('profile.credit')}
           </OLText>
         </TouchableOpacity>
       </OLCard>

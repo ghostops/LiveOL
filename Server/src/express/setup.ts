@@ -7,10 +7,6 @@ import {
 } from 'controllers/competitions';
 import { getEnv } from 'lib/helpers/env';
 import {
-  getOrganization,
-  getOrganizationCompetitions,
-} from 'controllers/organizations';
-import {
   getLiveResultsForOrganisation,
   getLiveResultsForTrackedRunner,
   getResultByLiveClassId,
@@ -23,6 +19,8 @@ import {
   deleteTracking,
 } from 'controllers/tracking';
 import { getApiStatus } from 'controllers/status';
+import { getAllOrganizations } from 'controllers/organizations';
+import { getAllClasses } from 'controllers/classes';
 
 export const config = createConfig({
   http: { listen: 3000 },
@@ -38,9 +36,6 @@ export const routing: Routing = {
   'v2/competitions/today': getTodaysCompetitions,
   'v2/competitions/:id': getCompetitionV2,
 
-  'v2/organizations/:id': getOrganization,
-  'v2/organizations/:id/competitions': getOrganizationCompetitions,
-
   'v2/results/live/:liveClassId': getResultByLiveClassId,
   'v2/results/live/organizations/:olCompetitionId/:olOrganizationId':
     getLiveResultsForOrganisation,
@@ -52,4 +47,7 @@ export const routing: Routing = {
   'v2/tracking/create': createTracking,
   'v2/tracking/:id': updateTracking,
   'v2/tracking/:id/delete': deleteTracking,
+
+  'v2/strings/organizations': getAllOrganizations,
+  'v2/strings/classes': getAllClasses,
 };

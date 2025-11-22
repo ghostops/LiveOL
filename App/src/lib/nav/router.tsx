@@ -22,6 +22,7 @@ import { OLSceneTrackingResults } from '~/views/scenes/tracking/results';
 import { OLSceneSearch } from '~/views/scenes/search';
 import { TrackingInfoScreen } from '~/views/scenes/profile/TrackingInfoScreen';
 import { TrackingInfoIcon } from '~/views/components/TrackingInfoIcon';
+import { OLTrackingFormMode } from '~/views/components/tracking/form';
 
 export type TabStack = {
   Home: undefined;
@@ -39,7 +40,7 @@ export type RootStack = {
   LiveResults: { olCompetitionId: string; liveClassId: string };
   ClubResults: { olCompetitionId: string; olOrganizationId: string };
   EditTrackRunner: {
-    mode: 'create' | 'edit';
+    mode: OLTrackingFormMode;
     trackingId?: number;
     runner?: {
       name: string;
@@ -70,7 +71,7 @@ const OLHomeTabs: React.FC = () => {
         },
         title: '...',
       }}
-      initialRouteName="Profile"
+      initialRouteName="Home"
     >
       <Tabs.Screen
         name="Tracking"
