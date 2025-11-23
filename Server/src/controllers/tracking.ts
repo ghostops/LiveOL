@@ -3,8 +3,9 @@ import { defaultEndpointsFactory } from 'express-zod-api';
 import { apiSingletons } from 'lib/singletons';
 import { OLTrackingTable } from 'lib/db/schema/ol_tracking';
 import { OLUsersTable } from 'lib/db/schema/ol_users';
-import { desc, eq } from 'drizzle-orm';
+import { and, desc, eq } from 'drizzle-orm';
 import createHttpError from 'http-errors';
+import { userMiddleware } from 'middleware/user';
 
 const api = apiSingletons.createApiSingletons();
 
@@ -14,6 +15,7 @@ const createTrackingSchema = z.object({
   name: z.string().min(1).max(255),
   clubs: z.array(z.string().max(255)).default([]),
   classes: z.array(z.string().max(255)).default([]),
+  isMe: z.boolean().default(false),
 });
 
 const updateTrackingSchema = z.object({
@@ -64,7 +66,12 @@ export const listTracking = defaultEndpointsFactory.build({
     const trackingRecords = await api.Drizzle.db
       .select()
       .from(OLTrackingTable)
-      .where(eq(OLTrackingTable.olUserId, user.id))
+      .where(
+        and(
+          eq(OLTrackingTable.olUserId, user.id),
+          eq(OLTrackingTable.isMe, false),
+        ),
+      )
       .orderBy(desc(OLTrackingTable.createdAt));
 
     return { tracking: trackingRecords };
@@ -77,7 +84,7 @@ export const createTracking = defaultEndpointsFactory.build({
   input: createTrackingSchema,
   output: trackingResponseSchema,
   handler: async ({ input }) => {
-    const { uid, name, clubs, classes } = input;
+    const { uid, name, clubs, classes, isMe } = input;
 
     // Get user by uid
     const [user] = await api.Drizzle.db
@@ -98,6 +105,7 @@ export const createTracking = defaultEndpointsFactory.build({
         clubs,
         classes,
         olUserId: user.id,
+        isMe,
       })
       .returning();
 
@@ -165,3 +173,32 @@ export const deleteTracking = defaultEndpointsFactory.build({
     return { success: true };
   },
 });
+
+export const getUserSelfTracking = defaultEndpointsFactory
+  .addMiddleware(userMiddleware)
+  .build({
+    method: 'get',
+    output: z.object({
+      tracking: trackingResponseSchema.nullable(),
+    }),
+    handler: async ({ options: { user } }) => {
+      // Get tracking records with runner details
+      const trackingRecord = await api.Drizzle.db
+        .select()
+        .from(OLTrackingTable)
+        .where(
+          and(
+            eq(OLTrackingTable.olUserId, user.id),
+            eq(OLTrackingTable.isMe, true),
+          ),
+        )
+        .orderBy(desc(OLTrackingTable.createdAt))
+        .limit(1);
+
+      if (!trackingRecord[0]) {
+        return { tracking: null };
+      }
+
+      return { tracking: trackingRecord[0] };
+    },
+  });

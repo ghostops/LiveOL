@@ -15,7 +15,7 @@ import { OLClassesTrackingInput } from '~/views/components/tracking/classes';
 import { OLNameTrackingInput } from '~/views/scenes/tracking/name';
 import { useDebounce } from 'use-debounce';
 
-export type OLTrackingFormMode = 'create' | 'edit' | 'user';
+export type OLTrackingFormMode = 'create' | 'edit';
 
 type Props = {
   mode: OLTrackingFormMode;
@@ -26,6 +26,7 @@ type Props = {
     classes: string[];
   };
   style?: ViewStyle;
+  isUserMode?: boolean;
 };
 
 export const OLTrackingForm = ({
@@ -33,6 +34,7 @@ export const OLTrackingForm = ({
   initialRunner,
   trackingId,
   style,
+  isUserMode,
 }: Props) => {
   const { t } = useTranslation();
   const { px } = useTheme();
@@ -40,6 +42,7 @@ export const OLTrackingForm = ({
   const userId = useUserIdStore(state => state.userId);
 
   const [name, setName] = useState(initialRunner?.name || '');
+  const [debouncedName] = useDebounce(name, 500);
   const [clubs, setClubs] = useState<string[]>(initialRunner?.clubs || []);
   const [classes, setClasses] = useState<string[]>(
     initialRunner?.classes || [],
@@ -73,37 +76,40 @@ export const OLTrackingForm = ({
   };
 
   const handleSave = useCallback(async () => {
-    if (mode === 'user') {
-      Alert.alert('Todo!');
-      return;
+    if (!isUserMode) {
+      if (!debouncedName.trim()) {
+        Alert.alert(t('tracking.edit.error'), t('tracking.edit.nameRequired'));
+        return;
+      }
+
+      if (!userId) {
+        Alert.alert(t('tracking.edit.error'), t('tracking.edit.userNotFound'));
+        return;
+      }
+
+      if (classes.length === 0 || clubs.length === 0) {
+        Alert.alert(
+          t('tracking.edit.error'),
+          t('tracking.edit.atLeastOneClubAndClass'),
+        );
+        return;
+      }
     }
 
-    if (!name.trim()) {
-      Alert.alert(t('tracking.edit.error'), t('tracking.edit.nameRequired'));
-      return;
-    }
-
-    if (!userId) {
-      Alert.alert(t('tracking.edit.error'), t('tracking.edit.userNotFound'));
-      return;
-    }
-
-    if (classes.length === 0 || clubs.length === 0) {
-      Alert.alert(
-        t('tracking.edit.error'),
-        t('tracking.edit.atLeastOneClubAndClass'),
-      );
-      return;
-    }
-
+    // Catch-all validation
     if (
-      name.length > 254 ||
+      clubs.length === 0 ||
+      classes.length === 0 ||
+      debouncedName.trim().length === 0 ||
+      debouncedName.trim().length > 254 ||
       clubs.some(c => c.length > 254) ||
       classes.some(c => c.length > 254) ||
       clubs.length > 29 ||
       classes.length > 29
     ) {
-      Alert.alert(t('tracking.edit.error'));
+      if (!isUserMode) {
+        Alert.alert(t('tracking.edit.error'));
+      }
       return;
     }
 
@@ -112,25 +118,37 @@ export const OLTrackingForm = ({
         await createTracking({
           body: {
             uid: userId,
-            name: name.trim(),
+            name: debouncedName.trim(),
             clubs,
             classes,
+            isMe: isUserMode,
           },
         });
       } else if (mode === 'edit' && trackingId) {
+        console.log('Updating tracking record', {
+          name: debouncedName.trim(),
+          clubs,
+          classes,
+        });
         await updateTracking({
           params: { path: { id: trackingId } },
           body: {
-            name: name.trim(),
+            name: debouncedName.trim(),
             clubs,
             classes,
           },
         });
       }
-      await queryClient.invalidateQueries({
-        queryKey: ['get', '/v2/tracking'],
-      });
-      goBack();
+      if (!isUserMode) {
+        await queryClient.invalidateQueries({
+          queryKey: ['get', '/v2/tracking'],
+        });
+        goBack();
+      } else {
+        await queryClient.invalidateQueries({
+          queryKey: ['get', '/v2/tracking/self'],
+        });
+      }
     } catch (error: any) {
       Alert.alert(
         t('tracking.edit.error'),
@@ -138,7 +156,7 @@ export const OLTrackingForm = ({
       );
     }
   }, [
-    name,
+    debouncedName,
     clubs,
     classes,
     mode,
@@ -148,19 +166,24 @@ export const OLTrackingForm = ({
     userId,
     t,
     goBack,
+    isUserMode,
   ]);
-
-  const [debouncedName] = useDebounce(name, 1000);
 
   useEffect(() => {
     if (
+      isUserMode &&
       debouncedName.trim().length > 0 &&
-      mode === 'user' &&
       debouncedName !== initialRunner?.name
     ) {
       handleSave();
     }
-  }, [debouncedName, handleSave, initialRunner?.name, mode]);
+  }, [debouncedName, handleSave, initialRunner?.name, isUserMode]);
+
+  useEffect(() => {
+    if (isUserMode) {
+      handleSave();
+    }
+  }, [clubs, classes, isUserMode, handleSave]);
 
   return (
     <View style={style ? style : { gap: px(24) }}>
@@ -181,9 +204,10 @@ export const OLTrackingForm = ({
         <View
           style={{ flexDirection: 'row', flexWrap: 'wrap', marginTop: px(4) }}
         >
-          {clubs.map(club => (
+          {clubs.map((club, index, total) => (
             <TouchableOpacity
               key={club}
+              disabled={total.length === 1}
               onPress={() => removeClub(club)}
               style={{
                 backgroundColor: COLORS.MAIN,
@@ -195,7 +219,10 @@ export const OLTrackingForm = ({
               }}
             >
               <OLText size={14} style={{ color: COLORS.WHITE }}>
-                {club} <OLIcon name="close" color={COLORS.WHITE} />
+                {club}{' '}
+                {total.length > 1 && (
+                  <OLIcon name="close" color={COLORS.WHITE} />
+                )}
               </OLText>
             </TouchableOpacity>
           ))}
@@ -211,9 +238,10 @@ export const OLTrackingForm = ({
         <View
           style={{ flexDirection: 'row', flexWrap: 'wrap', marginTop: px(4) }}
         >
-          {classes.map(className => (
+          {classes.map((className, index, total) => (
             <TouchableOpacity
               key={className}
+              disabled={total.length === 1}
               onPress={() => removeClass(className)}
               style={{
                 backgroundColor: COLORS.MAIN,
@@ -225,14 +253,17 @@ export const OLTrackingForm = ({
               }}
             >
               <OLText size={14} style={{ color: COLORS.WHITE }}>
-                {className} <OLIcon name="close" color={COLORS.WHITE} />
+                {className}
+                {total.length > 1 && (
+                  <OLIcon name="close" color={COLORS.WHITE} />
+                )}
               </OLText>
             </TouchableOpacity>
           ))}
         </View>
       </View>
 
-      {mode !== 'user' && (
+      {!isUserMode && (
         <View>
           <OLButton onPress={handleSave} disabled={isLoading}>
             {mode === 'create'

@@ -8,6 +8,5 @@ export const OLUsersTable = pgTable('ol_users', {
   deviceId: varchar({ length: 255 }).notNull().unique(),
   hasPlus: boolean().notNull().default(false),
   language: varchar({ length: 16 }).notNull().default('en'),
-  olRunnerIds: varchar({ length: 255 }).array().notNull().default([]),
   ...commonFields,
 });

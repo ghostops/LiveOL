@@ -24,7 +24,6 @@ const userResponseSchema = z.object({
   uid: z.nanoid(),
   hasPlus: z.boolean(),
   language: z.string(),
-  olRunnerIds: z.array(z.string()),
 });
 
 export const registerUser = defaultEndpointsFactory.build({
@@ -80,12 +79,10 @@ export const registerUser = defaultEndpointsFactory.build({
         deviceId,
         language,
         hasPlus,
-        olRunnerIds: [],
         uid: nanoid(),
       })
       .returning({
         uid: OLUsersTable.uid,
-        olRunnerIds: OLUsersTable.olRunnerIds,
         hasPlus: OLUsersTable.hasPlus,
         language: OLUsersTable.language,
       });

@@ -1,6 +1,7 @@
 import { integer, pgTable, varchar } from 'drizzle-orm/pg-core';
 import { commonFields } from './commonFields';
 import { OLUsersTable } from './ol_users';
+import { boolean } from 'drizzle-orm/pg-core';
 
 export const OLTrackingTable = pgTable('ol_tracking', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -10,5 +11,6 @@ export const OLTrackingTable = pgTable('ol_tracking', {
   name: varchar({ length: 255 }).notNull(),
   clubs: varchar({ length: 255 }).array().notNull().default([]),
   classes: varchar({ length: 255 }).array().notNull().default([]),
+  isMe: boolean().notNull().default(false),
   ...commonFields,
 });

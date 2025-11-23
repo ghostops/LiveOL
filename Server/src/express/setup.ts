@@ -17,6 +17,7 @@ import {
   createTracking,
   updateTracking,
   deleteTracking,
+  getUserSelfTracking,
 } from 'controllers/tracking';
 import { getApiStatus } from 'controllers/status';
 import { getAllOrganizations } from 'controllers/organizations';
@@ -47,6 +48,7 @@ export const routing: Routing = {
   'v2/tracking/create': createTracking,
   'v2/tracking/:id': updateTracking,
   'v2/tracking/:id/delete': deleteTracking,
+  'v2/tracking/self': getUserSelfTracking,
 
   'v2/strings/organizations': getAllOrganizations,
   'v2/strings/classes': getAllClasses,
