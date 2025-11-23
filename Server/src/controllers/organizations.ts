@@ -17,6 +17,13 @@ export const getAllOrganizations = defaultEndpointsFactory.build({
       .array(),
   }),
   handler: async () => {
+    const cacheKey = 'cache:all_organizations';
+    const cached = await api.Redis.get(cacheKey);
+
+    if (cached) {
+      return JSON.parse(cached);
+    }
+
     const organizations = await api.Drizzle.db.execute<{
       olOrganizationId: string;
       organization: string;
@@ -35,12 +42,16 @@ export const getAllOrganizations = defaultEndpointsFactory.build({
         ORDER BY MIN("organization");
       `,
     );
-
-    return {
+    const response = {
       organizations: organizations.rows.map(org => ({
         id: org.olOrganizationId,
         title: org.organization!,
       })),
     };
+
+    api.Redis.set(cacheKey, JSON.stringify(response));
+    api.Redis.expire(cacheKey, 3600);
+
+    return response;
   },
 });

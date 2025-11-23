@@ -16,6 +16,13 @@ export const getAllClasses = defaultEndpointsFactory.build({
       .array(),
   }),
   handler: async () => {
+    const cacheKey = 'cache:all_classes';
+    const cached = await api.Redis.get(cacheKey);
+
+    if (cached) {
+      return JSON.parse(cached);
+    }
+
     const classes = await api.Drizzle.db.execute<{ name: string }>(
       sql`
         SELECT 
@@ -29,11 +36,16 @@ export const getAllClasses = defaultEndpointsFactory.build({
       `,
     );
 
-    return {
+    const response = {
       classes: classes.rows.map(cls => ({
         id: cls.name,
         title: cls.name,
       })),
     };
+
+    api.Redis.set(cacheKey, JSON.stringify(response));
+    api.Redis.expire(cacheKey, 3600);
+
+    return response;
   },
 });
