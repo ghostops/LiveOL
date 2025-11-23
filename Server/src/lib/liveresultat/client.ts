@@ -1,6 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 import { LiveresultatApi } from './types';
 import Redis from 'ioredis';
+import { jsonrepair } from 'jsonrepair';
 
 export class LiveresultatAPIClient {
   private client: AxiosInstance;
@@ -76,15 +77,24 @@ export class LiveresultatAPIClient {
   };
 
   private jsonParse = <T = object>(data: string | object): T => {
-    let parsedData: T = {} as T;
+    try {
+      let parsedData: T = {} as T;
 
-    if (typeof data === 'string') {
-      data = data.replace('\t', '');
-      parsedData = JSON.parse(data) as T;
-    } else if (typeof data === 'object') {
-      parsedData = data as T;
+      if (typeof data === 'string') {
+        data = data.replace('\t', '');
+        parsedData = JSON.parse(data) as T;
+      } else if (typeof data === 'object') {
+        parsedData = data as T;
+      }
+
+      return parsedData;
+    } catch (error) {
+      if (error instanceof SyntaxError) {
+        const repaired = jsonrepair(data as string);
+        const parseAgain = JSON.parse(repaired) as T;
+        return parseAgain;
+      }
+      throw error;
     }
-
-    return parsedData;
   };
 }

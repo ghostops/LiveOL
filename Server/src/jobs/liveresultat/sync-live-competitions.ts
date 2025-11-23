@@ -24,7 +24,9 @@ export class SyncLiveCompetitionsJob {
         batches.map(batch => this.dispatchCompetitionSync(batch)),
       );
 
-      logger.info(`Dispatched live competitions for sync.`);
+      if (batches.length > 0) {
+        logger.info(`Dispatched live competitions for sync.`);
+      }
     } catch (error) {
       logger.error(`Error syncing competitions: ${error}`);
     }
