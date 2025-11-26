@@ -6,7 +6,9 @@ import { SyncEventorSignupsJob } from 'jobs/eventor/sync-eventor-signups';
 import { SyncLiveClassJob } from 'jobs/liveresultat/sync-live-class';
 import { SyncLiveCompetitionJob } from 'jobs/liveresultat/sync-live-competition';
 import { SyncLiveCompetitionsJob } from 'jobs/liveresultat/sync-live-competitions';
+import { SyncActiveLiveCompetitionsJob } from 'jobs/liveresultat/sync-active-live-competitions';
 import { SyncEventorStartsJob } from 'jobs/eventor/sync-eventor-starts';
+import { DateResolver } from './helpers/date-resolver';
 import {
   QueueBase,
   QueueConfig,
@@ -19,12 +21,23 @@ JobRegistry.register('sync-live-class', data =>
   new SyncLiveClassJob(data.competitionId, data.className).run(),
 );
 
-JobRegistry.register('sync-live-competitions', data =>
-  new SyncLiveCompetitionsJob(data.startDate, data.endDate).run(),
-);
+JobRegistry.register('sync-live-competitions', data => {
+  const startDate = data.startDate
+    ? DateResolver.resolve(data.startDate as string)
+    : undefined;
+  const endDate = data.endDate
+    ? DateResolver.resolve(data.endDate as string)
+    : undefined;
+
+  return new SyncLiveCompetitionsJob(startDate, endDate).run();
+});
 
 JobRegistry.register('sync-live-competition', data =>
   new SyncLiveCompetitionJob(data.competitionId).run(),
+);
+
+JobRegistry.register('sync-active-live-competitions', () =>
+  new SyncActiveLiveCompetitionsJob().run(),
 );
 
 JobRegistry.register('sync-eventor-competitions', data =>

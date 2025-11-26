@@ -13,6 +13,7 @@ import crypto from 'crypto';
 import { OrganizationId, RunnerId } from 'lib/match/generateIds';
 import logger from 'lib/logger';
 
+// ToDo: Check if the competition can be marked as live when results are inserted, or maybe base it on start times?
 export class SyncLiveClassJob {
   private api: APIResponse;
 
