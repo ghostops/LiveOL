@@ -53,7 +53,7 @@ export class SyncLiveCompetitionsJob {
         return;
       }
 
-      this.api.Queue.addJob({
+      this.api.Queue.RegularQueue.addJob({
         name: 'sync-live-competition',
         data: {
           competitionId: competition.id,

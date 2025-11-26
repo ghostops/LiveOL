@@ -1,7 +1,7 @@
 import { LiveresultatAPIClient } from 'lib/liveresultat/client';
 import { getEnv } from './helpers/env';
 import { Drizzle } from './db';
-import { OLQueue } from './queue';
+import { FastQueue, RegularQueue, RepeatingQueue } from './queue';
 import { JobScheduler } from './scheduler';
 import Redis from 'ioredis';
 import { LiveresultatUrl } from './eventor/scrapers/urls';
@@ -9,7 +9,11 @@ import { LiveresultatUrl } from './eventor/scrapers/urls';
 export interface APIResponse {
   Liveresultat: LiveresultatAPIClient;
   Drizzle: Drizzle;
-  Queue: OLQueue;
+  Queue: {
+    FastQueue: FastQueue;
+    RegularQueue: RegularQueue;
+    RepeatingQueue: RepeatingQueue;
+  };
   Scheduler: JobScheduler;
   Redis: Redis;
 }
@@ -28,11 +32,12 @@ class ApiSingletons {
 
     const liveresultatApi = new LiveresultatAPIClient(LiveresultatUrl, cache);
 
-    const queue = new OLQueue(
-      process.env.REDIS_HOST!,
-      6379,
-      process.env.REDIS_PASSWORD,
-    );
+    const redisHost = process.env.REDIS_HOST!;
+    const redisPassword = process.env.REDIS_PASSWORD;
+
+    const fastQueue = new FastQueue(redisHost, 6379, redisPassword);
+    const regularQueue = new RegularQueue(redisHost, 6379, redisPassword);
+    const repeatingQueue = new RepeatingQueue(redisHost, 6379, redisPassword);
 
     const drizzle = new Drizzle(getEnv('DATABASE_URL', false));
 
@@ -40,8 +45,12 @@ class ApiSingletons {
       Liveresultat: liveresultatApi,
       Redis: cache,
       Drizzle: drizzle,
-      Queue: queue,
-      Scheduler: new JobScheduler(drizzle, queue),
+      Queue: {
+        FastQueue: fastQueue,
+        RegularQueue: regularQueue,
+        RepeatingQueue: repeatingQueue,
+      },
+      Scheduler: new JobScheduler(drizzle, repeatingQueue),
     };
 
     return this.singletons;

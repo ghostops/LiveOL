@@ -42,7 +42,7 @@ export class SyncEventorCompetitions {
 
   private async dispatchScrapeCompetition(items: EventorCompetitions[]) {
     for (const item of items) {
-      await this.api.Queue.addJob({
+      await this.api.Queue.RegularQueue.addJob({
         name: 'sync-eventor-competition',
         data: {
           eventorId: item.eventorId,

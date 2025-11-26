@@ -15,7 +15,12 @@ const singletons = apiSingletons.createApiSingletons();
     selfHelp.start();
   }
 
-  await singletons.Queue.startWorker();
+  // Start all queue workers
+  await Promise.all([
+    singletons.Queue.FastQueue.startWorker(),
+    singletons.Queue.RegularQueue.startWorker(),
+    singletons.Queue.RepeatingQueue.startWorker(),
+  ]);
 
   // Start the job scheduler
   await singletons.Scheduler.start();
@@ -29,11 +34,19 @@ const singletons = apiSingletons.createApiSingletons();
 process.on('SIGTERM', async () => {
   console.info('SIGTERM received, shutting down gracefully...');
   await singletons.Scheduler.stop();
-  await singletons.Queue.stopWorker();
+  await Promise.all([
+    singletons.Queue.FastQueue.stopWorker(),
+    singletons.Queue.RegularQueue.stopWorker(),
+    singletons.Queue.RepeatingQueue.stopWorker(),
+  ]);
 });
 
 process.on('SIGINT', async () => {
   console.info('SIGINT received, shutting down gracefully...');
   await singletons.Scheduler.stop();
-  await singletons.Queue.stopWorker();
+  await Promise.all([
+    singletons.Queue.FastQueue.stopWorker(),
+    singletons.Queue.RegularQueue.stopWorker(),
+    singletons.Queue.RepeatingQueue.stopWorker(),
+  ]);
 });

@@ -2,14 +2,14 @@ import { eq } from 'drizzle-orm';
 import { ScheduledJobsTable } from './db/schema';
 import logger from './logger';
 import { Drizzle } from './db';
-import { OLQueue } from './queue';
+import { QueueBase } from './queue-base';
 
 export class JobScheduler {
   private registeredJobIds = new Set<string>();
 
   constructor(
     private Drizzle: Drizzle,
-    private Queue: OLQueue,
+    private Queue: QueueBase,
   ) {}
 
   async start() {

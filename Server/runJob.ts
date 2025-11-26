@@ -1,8 +1,8 @@
 import 'dotenv/config';
 import Redis from 'ioredis';
-import { OLQueue } from 'lib/queue';
+import { RegularQueue } from 'lib/queue';
 
-const q = new OLQueue('localhost', 6379, process.env.REDIS_PASSWORD);
+const q = new RegularQueue('localhost', 6379, process.env.REDIS_PASSWORD);
 const redis = new Redis({
   host: 'localhost',
   port: 6379,

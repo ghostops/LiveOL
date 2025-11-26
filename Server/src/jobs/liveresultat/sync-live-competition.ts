@@ -60,7 +60,7 @@ export class SyncLiveCompetitionJob {
 
   private async dispatchSyncClasses(classes: string[]) {
     for (const className of classes) {
-      await this.api.Queue.addJob({
+      await this.api.Queue.FastQueue.addJob({
         name: 'sync-live-class',
         data: {
           competitionId: this.competitionId,

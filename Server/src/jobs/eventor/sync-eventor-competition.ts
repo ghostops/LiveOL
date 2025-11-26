@@ -154,7 +154,7 @@ export class SyncEventorCompetition {
     const syncs = [];
 
     syncs.push(
-      this.api.Queue.addJob({
+      this.api.Queue.RegularQueue.addJob({
         name: 'sync-eventor-signups',
         data: {
           eventorDatabaseId: event.id,
@@ -165,7 +165,7 @@ export class SyncEventorCompetition {
     if ('date' in event && event.date) {
       if (isAfter(new Date(), subDays(event.date, 7))) {
         syncs.push(
-          this.api.Queue.addJob({
+          this.api.Queue.RegularQueue.addJob({
             name: 'sync-eventor-starts',
             data: {
               eventorDatabaseId: event.id,
@@ -176,7 +176,7 @@ export class SyncEventorCompetition {
 
       if (isAfter(new Date(), event.date)) {
         syncs.push(
-          this.api.Queue.addJob({
+          this.api.Queue.RegularQueue.addJob({
             name: 'sync-eventor-results',
             data: {
               eventorDatabaseId: event.id,
