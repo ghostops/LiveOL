@@ -36,6 +36,7 @@ export class SyncActiveLiveCompetitionsJob {
           name: 'sync-live-competition',
           data: {
             competitionId: competition.id,
+            classesOnly: true,
           },
         });
       }

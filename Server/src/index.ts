@@ -9,9 +9,8 @@ const singletons = apiSingletons.createApiSingletons();
 (async () => {
   dotenv.config();
 
-  const selfHelp = new OLSelfHelper();
-
   if (getEnv('NODE_ENV', true) !== 'development') {
+    const selfHelp = new OLSelfHelper();
     selfHelp.start();
   }
 
@@ -24,8 +23,6 @@ const singletons = apiSingletons.createApiSingletons();
 
   // Start the job scheduler
   await singletons.Scheduler.start();
-
-  console.info(`Test responses enabled: "${getEnv('test') || 'false'}"`);
 
   startExpressServer();
 })();

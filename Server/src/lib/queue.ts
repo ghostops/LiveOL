@@ -33,7 +33,7 @@ JobRegistry.register('sync-live-competitions', data => {
 });
 
 JobRegistry.register('sync-live-competition', data =>
-  new SyncLiveCompetitionJob(data.competitionId).run(),
+  new SyncLiveCompetitionJob(data.competitionId, !!data.classesOnly).run(),
 );
 
 JobRegistry.register('sync-active-live-competitions', () =>

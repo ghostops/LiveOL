@@ -25,7 +25,9 @@ export class SyncLiveCompetitionsJob {
       );
 
       if (batches.length > 0) {
-        logger.info(`Dispatched live competitions for sync.`);
+        logger.info(
+          `Dispatched live competitions for sync: ${this.startDate} to ${this.endDate}`,
+        );
       }
     } catch (error) {
       logger.error(`Error syncing competitions: ${error}`);

@@ -55,10 +55,6 @@ export class JobScheduler {
       );
 
       this.registeredJobIds.add(jobId);
-
-      logger.info(
-        `Registered scheduled job: ${scheduledJob.jobName} (${scheduledJob.cronPattern})`,
-      );
     } catch (error) {
       logger.error(
         `Failed to register scheduled job ${scheduledJob.id}: ${error}`,

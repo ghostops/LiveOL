@@ -14,7 +14,10 @@ import logger from 'lib/logger';
 export class SyncLiveCompetitionJob {
   private api: APIResponse;
 
-  constructor(private competitionId: number) {
+  constructor(
+    private competitionId: number,
+    private classesOnly: boolean = false,
+  ) {
     if (!competitionId) {
       throw new Error('Competition ID is required');
     }
@@ -23,11 +26,17 @@ export class SyncLiveCompetitionJob {
 
   async run() {
     try {
-      const competition = await this.api.Liveresultat.getcompetitioninfo(
-        this.competitionId,
-      );
+      if (!this.classesOnly) {
+        const competition = await this.api.Liveresultat.getcompetitioninfo(
+          this.competitionId,
+        );
 
-      await this.insertLiveCompetition(competition);
+        await this.insertLiveCompetition(competition);
+
+        logger.info(
+          `Competition ${competition.name} (${this.competitionId}) synced successfully.`,
+        );
+      }
 
       let classes: string[] = [];
       const classesResponse = await this.api.Liveresultat.getclasses(
@@ -49,10 +58,6 @@ export class SyncLiveCompetitionJob {
       if (classes.length > 0) {
         await this.dispatchSyncClasses(classes);
       }
-
-      logger.info(
-        `Competition ${competition.name} (${this.competitionId}) synced successfully.`,
-      );
     } catch (error) {
       logger.error(`Error syncing competition: ${error} ${this.competitionId}`);
     }
