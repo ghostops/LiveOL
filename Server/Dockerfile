@@ -1,5 +1,7 @@
 FROM node:20-alpine
 
+RUN apk add --no-cache tini
+
 WORKDIR /app
 
 ARG SLACK_WEBHOOK
@@ -25,4 +27,5 @@ ADD ./tsconfig.json ./
 
 RUN npm i
 
-CMD ["npm", "run", "start"]
+ENTRYPOINT ["/sbin/tini", "--"]
+CMD ["npx", "nodemon", "-L", "-e", "ts", "-w", "./src", "-x", "npm", "run", "start", "|", "npx", "pino-pretty"]

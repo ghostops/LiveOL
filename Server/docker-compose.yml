@@ -1,20 +1,21 @@
 services:
     app:
         build:
-            context: ./
-            dockerfile: Dockerfile
-        command: npm run dev
+            context: ../
+            dockerfile: ./Dockerfile.server
+        command: sh -c "npx nodemon -L -e ts -w ./src -x 'ts-node -r tsconfig-paths/register src/index.ts' | npx pino-pretty"
         ports:
             - 3037:3001
             - 3036:3000
         volumes:
             - ./src:/app/src/
-        depends_on:
-            - redis
         env_file:
             - .env
         environment:
             - NODE_ENV=development
+        depends_on:
+            - redis
+            - db
     redis:
         image: redis:latest
         ports:

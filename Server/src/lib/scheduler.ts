@@ -13,7 +13,9 @@ export class JobScheduler {
   ) {}
 
   async start() {
-    logger.info('Starting job scheduler...');
+    await this.clearAllScheduledJobs();
+
+    logger.info(`Starting job scheduler...`);
 
     try {
       // Load all enabled scheduled jobs from the database
@@ -62,9 +64,17 @@ export class JobScheduler {
     }
   }
 
-  async stop() {
-    logger.info('Stopping job scheduler...');
+  async clearAllScheduledJobs() {
+    const runningJobs = await this.Queue.getRepeatableJobs();
 
+    for (const jobId of runningJobs.map(job => job.key)) {
+      await this.Queue.removeRepeatingJob(jobId);
+    }
+
+    this.registeredJobIds.clear();
+  }
+
+  async stop() {
     try {
       // Remove all registered repeating jobs
       for (const jobId of this.registeredJobIds) {
@@ -72,7 +82,6 @@ export class JobScheduler {
       }
 
       this.registeredJobIds.clear();
-      logger.info('Job scheduler stopped successfully');
     } catch (error) {
       logger.error(`Failed to stop job scheduler: ${error}`);
       throw error;

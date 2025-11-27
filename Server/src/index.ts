@@ -27,23 +27,29 @@ const singletons = apiSingletons.createApiSingletons();
   startExpressServer();
 })();
 
-// Graceful shutdown
-process.on('SIGTERM', async () => {
-  console.info('SIGTERM received, shutting down gracefully...');
+async function gracefulShutdown() {
   await singletons.Scheduler.stop();
   await Promise.all([
     singletons.Queue.FastQueue.stopWorker(),
     singletons.Queue.RegularQueue.stopWorker(),
     singletons.Queue.RepeatingQueue.stopWorker(),
   ]);
-});
+}
 
 process.on('SIGINT', async () => {
   console.info('SIGINT received, shutting down gracefully...');
-  await singletons.Scheduler.stop();
-  await Promise.all([
-    singletons.Queue.FastQueue.stopWorker(),
-    singletons.Queue.RegularQueue.stopWorker(),
-    singletons.Queue.RepeatingQueue.stopWorker(),
-  ]);
+  await gracefulShutdown();
+  process.exit(0);
+});
+
+process.once('SIGUSR2', async () => {
+  console.log('SIGUSR2 received (nodemon restart)');
+  await gracefulShutdown();
+  process.kill(process.pid, 'SIGUSR2');
+});
+
+process.on('SIGTERM', async () => {
+  console.log('SIGTERM received');
+  await gracefulShutdown();
+  process.exit(0);
 });

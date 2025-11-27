@@ -1,11 +1,4 @@
-import {
-  boolean,
-  integer,
-  jsonb,
-  pgTable,
-  timestamp,
-  varchar,
-} from 'drizzle-orm/pg-core';
+import { boolean, integer, jsonb, pgTable, varchar } from 'drizzle-orm/pg-core';
 import { commonFields } from './commonFields';
 
 export const ScheduledJobsTable = pgTable('scheduled_jobs', {
@@ -14,7 +7,5 @@ export const ScheduledJobsTable = pgTable('scheduled_jobs', {
   cronPattern: varchar({ length: 255 }).notNull(),
   jobData: jsonb().notNull().default({}),
   enabled: boolean().notNull().default(true),
-  lastRunAt: timestamp(),
-  nextRunAt: timestamp(),
   ...commonFields,
 });

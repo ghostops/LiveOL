@@ -1,6 +1,7 @@
 import { eq, and } from 'drizzle-orm';
 import {
   LiveClassesTable,
+  LiveCompetitionsTable,
   LiveResultsTable,
   LiveSplitControllsTable,
   LiveSplitResultsTable,
@@ -13,7 +14,6 @@ import crypto from 'crypto';
 import { OrganizationId, RunnerId } from 'lib/match/generateIds';
 import logger from 'lib/logger';
 
-// ToDo: Check if the competition can be marked as live when results are inserted, or maybe base it on start times?
 export class SyncLiveClassJob {
   private api: APIResponse;
 
@@ -42,6 +42,32 @@ export class SyncLiveClassJob {
           `No updates for class ${this.className} (${this.competitionId}).`,
         );
         return;
+      }
+
+      const [competition] = await this.api.Drizzle.db
+        .select()
+        .from(LiveCompetitionsTable)
+        .where(eq(LiveCompetitionsTable.id, this.competitionId))
+        .limit(1);
+
+      if (!competition) {
+        logger.error(
+          `Competition with ID ${this.competitionId} not found in database, sync-live-class aborted.`,
+        );
+        return;
+      }
+
+      if (competition.isLive === false) {
+        // Best effort check to see if the results have started coming in
+        const isLive = results.results.some(
+          r => r.start !== null && r.start !== undefined,
+        );
+        if (isLive) {
+          await this.api.Drizzle.db
+            .update(LiveCompetitionsTable)
+            .set({ isLive: true, updatedAt: new Date() })
+            .where(eq(LiveCompetitionsTable.id, this.competitionId));
+        }
       }
 
       const id = await this.insertClass(this.competitionId, results);
