@@ -22,11 +22,13 @@ import {
 import { getApiStatus, getServerStatus } from 'controllers/status';
 import { getAllOrganizations } from 'controllers/organizations';
 import { getAllClasses } from 'controllers/classes';
+import logger from 'lib/logger';
 
 export const config = createConfig({
   http: { listen: 3000 },
   cors: getEnv('NODE_ENV', true) === 'development',
   startupLogo: false,
+  logger: logger,
 });
 
 export const routing: Routing = {
