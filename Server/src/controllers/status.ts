@@ -13,6 +13,23 @@ export const getServerStatus = defaultEndpointsFactory.build({
     status: z.string(),
   }),
   handler: async () => {
+    const isDbHealthy = await api.Drizzle.db
+      .execute('SELECT 1')
+      .then(() => true)
+      .catch(() => false);
+
+    if (!isDbHealthy) {
+      throw new Error('Database is not healthy');
+    }
+
+    const isCacheHealthy = await api.Redis.ping()
+      .then(() => true)
+      .catch(() => false);
+
+    if (!isCacheHealthy) {
+      throw new Error('Cache is not healthy');
+    }
+
     return {
       status: 'healthy',
     };
