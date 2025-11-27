@@ -19,7 +19,7 @@ import {
   deleteTracking,
   getUserSelfTracking,
 } from 'controllers/tracking';
-import { getApiStatus } from 'controllers/status';
+import { getApiStatus, getServerStatus } from 'controllers/status';
 import { getAllOrganizations } from 'controllers/organizations';
 import { getAllClasses } from 'controllers/classes';
 
@@ -30,6 +30,7 @@ export const config = createConfig({
 });
 
 export const routing: Routing = {
+  health: getServerStatus,
   'v2/status': getApiStatus,
 
   'v2/competitions': getCompetitionsV2,

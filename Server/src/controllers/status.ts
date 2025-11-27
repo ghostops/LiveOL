@@ -7,6 +7,18 @@ import { eq } from 'drizzle-orm';
 
 const api = apiSingletons.createApiSingletons();
 
+export const getServerStatus = defaultEndpointsFactory.build({
+  method: 'get',
+  output: z.object({
+    status: z.string(),
+  }),
+  handler: async () => {
+    return {
+      status: 'healthy',
+    };
+  },
+});
+
 export const getApiStatus = defaultEndpointsFactory.build({
   method: 'get',
   output: z.object({
