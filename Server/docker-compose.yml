@@ -1,8 +1,8 @@
 services:
     app:
         build:
-            context: ../
-            dockerfile: ./Dockerfile.server
+            context: ./
+            dockerfile: ./Dockerfile
         command: sh -c "npx nodemon -L -e ts -w ./src -x 'ts-node -r tsconfig-paths/register src/index.ts' | npx pino-pretty"
         ports:
             - 3037:3001
