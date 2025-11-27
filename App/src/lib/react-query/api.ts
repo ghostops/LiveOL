@@ -11,7 +11,7 @@ const getUri = () => {
     });
   }
 
-  return 'https://api-liveol.larsendahl.se';
+  return 'https://api.orienteeringliveresults.com';
 };
 
 const fetchClient = createFetchClient<paths>({
