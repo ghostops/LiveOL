@@ -6,7 +6,8 @@
 	"scripts": {
 		"tscheck": "tsc --noEmit",
 		"lint": "eslint ./src",
-		"format": "prettier --config ./.prettierrc.js --write ./src"
+		"format": "prettier --config ./.prettierrc.js --write ./src",
+		"migrate": "drizzle-kit migrate"
 	},
 	"keywords": [],
 	"author": "",
