@@ -10,6 +10,7 @@ ADD ./package.json package.json
 ADD ./package-lock.json package-lock.json
 ADD ./tsconfig.json tsconfig.json
 ADD ./drizzle.config.ts drizzle.config.ts
+ADD ./drizzle drizzle
 
 RUN npm i
 RUN npm install -g ts-node tsconfig-paths nodemon
