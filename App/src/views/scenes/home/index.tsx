@@ -17,6 +17,8 @@ import { flagEmoji } from '~/util/flagEmoji';
 import { useTranslation } from 'react-i18next';
 import { format } from 'date-fns';
 import { OLApiStatus } from '~/views/components/ApiStatus';
+import { useEffect } from 'react';
+import BootSplash from 'react-native-bootsplash';
 
 export const OLSceneHome = () => {
   const { colors, px } = useTheme();
@@ -72,6 +74,12 @@ export const OLSceneHome = () => {
 
   const hasCompetitionsToday =
     !!getTodaysCompetitionsQuery.data?.data.competitions.length;
+
+  useEffect(() => {
+    if (getCompetitionsQuery.isFetched) {
+      BootSplash.hide({ fade: true });
+    }
+  }, [getCompetitionsQuery.isFetched]);
 
   return (
     <View style={{ flex: 1 }}>
