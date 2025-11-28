@@ -139,6 +139,7 @@ export const getCompetitions = defaultEndpointsFactory.build({
         competitions: z.array(competitionSchema),
       }),
     ),
+    timezone: z.string(),
   }),
   handler: async ({ input: { cursor, timezone } }) => {
     const page: number = cursor < 1 ? 1 : cursor;
@@ -192,6 +193,7 @@ export const getCompetitions = defaultEndpointsFactory.build({
     const nextPage = page < lastPage ? page + 1 : null;
 
     return {
+      timezone,
       page,
       lastPage,
       nextPage,
