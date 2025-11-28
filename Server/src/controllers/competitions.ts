@@ -126,7 +126,7 @@ export const getCompetitions = defaultEndpointsFactory.build({
   method: 'get',
   input: z.object({
     cursor: z.coerce.number().default(1),
-    timezone: z.string(),
+    timezone: z.string().default('UTC'),
     countryCode: z.string().optional(),
   }),
   output: z.object({
