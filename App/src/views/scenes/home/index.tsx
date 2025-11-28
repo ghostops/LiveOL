@@ -22,13 +22,15 @@ export const OLSceneHome = () => {
   const { colors, px } = useTheme();
   const { t } = useTranslation();
 
+  const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
   const getTodaysCompetitionsQuery = $api.useQuery(
     'get',
     '/v2/competitions/today',
     {
       params: {
         query: {
-          now: new Date().toISOString().split('T')[0],
+          timezone,
         },
       },
     },

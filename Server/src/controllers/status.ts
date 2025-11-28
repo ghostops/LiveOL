@@ -52,7 +52,7 @@ export const getApiStatus = defaultEndpointsFactory.build({
 
     return {
       status: {
-        liveresultat: liveresultatStatus?.status || false,
+        liveresultat: liveresultatStatus?.status || true,
       },
     };
   },

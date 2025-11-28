@@ -11,6 +11,8 @@ import { eq, sql } from 'drizzle-orm';
 import { EventorUrls } from 'lib/eventor/scrapers/urls';
 import { URL } from 'url';
 import createHttpError from 'http-errors';
+import { fromZonedTime, toZonedTime } from 'date-fns-tz';
+import { endOfDay, startOfDay } from 'date-fns';
 
 const api = apiSingletons.createApiSingletons();
 
@@ -80,14 +82,22 @@ const marshalCompetition = (competition: {
 export const getTodaysCompetitions = defaultEndpointsFactory.build({
   method: 'get',
   input: z.object({
-    now: z
-      .string()
-      .regex(/^\d{4}-\d{2}-\d{2}$/, 'now must be in YYYY-MM-DD format'),
+    timezone: z.string(),
   }),
   output: z.object({
     competitions: z.array(competitionSchema),
   }),
-  handler: async ({ input: { now } }) => {
+  handler: async ({ input: { timezone } }) => {
+    const nowInUserTz = toZonedTime(new Date(), timezone);
+
+    // Get start and end of "today" in user's timezone
+    const startOfToday = startOfDay(nowInUserTz);
+    const endOfToday = endOfDay(nowInUserTz);
+
+    // Convert back to UTC for DB query
+    const startUTC = fromZonedTime(startOfToday, timezone);
+    const endUTC = fromZonedTime(endOfToday, timezone);
+
     const todayRes = await api.Drizzle.db.execute<
       typeof OLCompetitionsTable.$inferSelect & {
         live: typeof LiveCompetitionsTable.$inferSelect | null;
@@ -103,7 +113,7 @@ export const getTodaysCompetitions = defaultEndpointsFactory.build({
         ON lc."olCompetitionId" = oc.id
       LEFT JOIN eventor_competitions AS ec 
         ON ec."olCompetitionId" = oc.id
-      WHERE DATE(COALESCE(ec.date, lc.date)) = ${now};
+      WHERE DATE(COALESCE(ec.date, lc.date)) >= ${startUTC} AND DATE(COALESCE(ec.date, lc.date)) < ${endUTC};
     `);
 
     return {
@@ -179,16 +189,18 @@ export const getCompetitions = defaultEndpointsFactory.build({
       page,
       lastPage,
       nextPage,
-      competitions: qRes.rows.map(row => ({
-        competition_date: row.competition_date,
-        competitions: row.competitions.map(comp =>
-          marshalCompetition({
-            id: comp.competition.id,
-            live: comp.live,
-            eventor: comp.eventor,
-          }),
-        ),
-      })),
+      competitions: qRes.rows
+        .filter(row => row.competition_date)
+        .map(row => ({
+          competition_date: row.competition_date,
+          competitions: row.competitions.map(comp =>
+            marshalCompetition({
+              id: comp.competition.id,
+              live: comp.live,
+              eventor: comp.eventor,
+            }),
+          ),
+        })),
     };
   },
 });
