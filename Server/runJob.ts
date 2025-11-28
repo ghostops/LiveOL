@@ -1,10 +1,18 @@
-import 'dotenv/config';
+import dotenv from 'dotenv';
 import Redis from 'ioredis';
 import { RegularQueue } from 'lib/queue';
 
-const q = new RegularQueue('localhost', 6379, process.env.REDIS_PASSWORD);
+dotenv.config({ path: '.env.local', override: true });
+dotenv.config({ path: '.env' });
+dotenv.config();
+
+const q = new RegularQueue(
+  process.env.REDIS_HOST || 'localhost',
+  6379,
+  process.env.REDIS_PASSWORD,
+);
 const redis = new Redis({
-  host: 'localhost',
+  host: process.env.REDIS_HOST || 'localhost',
   port: 6379,
   password: process.env.REDIS_PASSWORD,
 });
