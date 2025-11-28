@@ -1,125 +1,55 @@
-import {
-  endOfMonth,
-  startOfMonth,
-  isSameDay,
-  isBefore,
-  isAfter,
-  addDays,
-} from 'date-fns';
-import { toZonedTime } from 'date-fns-tz';
-import _ from 'lodash';
+import { fromZonedTime } from 'date-fns-tz';
+import { parseISO } from 'date-fns';
 
-const validateDate = (dateString?: string): boolean => {
-  if (!dateString) {
-    return false;
-  }
+export function getUtcDate(competitionDate: string, timediff?: number) {
+  timediff = timediff ?? 0;
+  const competitionTz = getTimezoneFromOffset(timediff);
 
-  const [year] = dateString.split('-');
+  // Parse and convert to UTC
+  const localDate = parseISO(`${competitionDate}T00:00:00`);
+  const utcDate = fromZonedTime(localDate, competitionTz);
 
-  if (!year) {
-    return false;
-  }
+  return utcDate;
+}
 
-  if (year.startsWith('-')) {
-    return false;
-  }
+function getTimezoneFromOffset(timediff: number): string {
+  // timediff is offset from CET (UTC+1/+2)
+  const cetBaseOffset = 1; // CET is UTC+1 (CEST is UTC+2, but API uses CET as reference)
+  const utcOffset = cetBaseOffset + timediff;
 
-  return true;
-};
-
-// Parse a date string in UTC (equivalent to moment.utc(string))
-const parseUTC = (dateString: string): Date => {
-  // For date strings like "2024-01-15", treat them as UTC midnight
-  const date = new Date(dateString + 'T00:00:00Z');
-  return date;
-};
-
-export const isDateToday = (date: string, todaysDate: string): boolean => {
-  if (!validateDate(date)) {
-    return false;
-  }
-
-  const input = parseUTC(date);
-  const today = todaysDate
-    ? parseUTC(todaysDate)
-    : toZonedTime(new Date(), 'UTC');
-
-  return isSameDay(today, input);
-};
-
-export const isDateTodayOrFutureWithin7Days = (
-  date: string,
-  todaysDate: string,
-): boolean => {
-  if (!validateDate(date)) {
-    return false;
-  }
-
-  const input = parseUTC(date);
-  const today = todaysDate
-    ? parseUTC(todaysDate)
-    : toZonedTime(new Date(), 'UTC');
-  const sevenDaysFromToday = addDays(today, 7);
-
-  return (
-    isBefore(input, sevenDaysFromToday) &&
-    (isAfter(input, today) || isSameDay(input, today))
-  );
-};
-
-export const timestampToObject = (time: number) => {
-  const hours = Math.floor(time / 360000);
-  const minutes = Math.floor((time - hours * 360000) / 6000);
-  const seconds = Math.floor((time - minutes * 6000 - hours * 360000) / 100);
-  const tenth = Math.floor(
-    (time - minutes * 6000 - hours * 360000 - seconds * 100) / 10,
-  );
-
-  // If hours in NaN then time is falsey
-  if (_.isNaN(hours)) {
-    return {
-      hours: 0,
-      minutes: 0,
-      seconds: 0,
-      tenth: 0,
-    };
-  }
-
-  return {
-    hours,
-    minutes,
-    seconds,
-    tenth,
+  // Map UTC offsets to primary IANA timezones
+  const tzMap: Record<string, string> = {
+    '-12': 'Etc/GMT+12',
+    '-11': 'Pacific/Midway',
+    '-10': 'Pacific/Honolulu',
+    '-9': 'America/Anchorage',
+    '-8': 'America/Los_Angeles',
+    '-7': 'America/Denver',
+    '-6': 'America/Chicago',
+    '-5': 'America/New_York',
+    '-4': 'America/Halifax',
+    '-3': 'America/Sao_Paulo',
+    '-2': 'Atlantic/South_Georgia',
+    '-1': 'Atlantic/Azores',
+    '0': 'Europe/London',
+    '1': 'Europe/Paris',
+    '2': 'Europe/Helsinki',
+    '3': 'Europe/Moscow',
+    '4': 'Asia/Dubai',
+    '5': 'Asia/Karachi',
+    '6': 'Asia/Dhaka',
+    '7': 'Asia/Bangkok',
+    '8': 'Asia/Shanghai',
+    '9': 'Asia/Tokyo',
+    '10': 'Australia/Sydney',
+    '11': 'Pacific/Noumea',
+    '12': 'Pacific/Auckland',
+    '13': 'Pacific/Tongatapu',
+    '14': 'Pacific/Kiritimati',
   };
-};
 
-export const padTime = (time: number, len: number = 2) =>
-  _.padStart(String(time), len, '0');
-
-export const splitTimestampToReadable = (time: number): string => {
-  const { hours, minutes, seconds } = timestampToObject(time);
-
-  const realMinutes = minutes + hours * 60;
-
-  return `${padTime(realMinutes)}:${padTime(seconds)}`;
-};
-
-export const startToReadable = (time: number): string => {
-  const { hours, minutes, seconds } = timestampToObject(time);
-  return `${padTime(hours)}:${padTime(minutes)}:${padTime(seconds)}`;
-};
-
-export const timeplusToReadable = (time: number): string => {
-  const { hours, minutes, seconds } = timestampToObject(time);
-
-  const realMinutes = minutes + hours * 60;
-
-  return `+${padTime(realMinutes)}:${padTime(seconds)}`;
-};
-
-export const getMonthFromDate = (date: Date): [Date, Date] => {
-  const start = startOfMonth(new Date(date.getTime()));
-  const end = endOfMonth(new Date(date.getTime()));
-
-  return [start, end];
-};
+  const key = String(utcOffset);
+  return tzMap[key]
+    ? tzMap[key]
+    : `Etc/GMT${utcOffset > 0 ? '-' : '+'}${Math.abs(utcOffset)}`;
+}

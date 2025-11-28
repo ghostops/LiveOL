@@ -7,9 +7,9 @@ import {
 } from 'lib/db/schema';
 import type { LiveresultatApi } from 'lib/liveresultat/types';
 import { APIResponse, apiSingletons } from 'lib/singletons';
-import { parse } from 'date-fns';
 import { CompetitionId, OrganizationId } from 'lib/match/generateIds';
 import logger from 'lib/logger';
+import { getUtcDate } from 'lib/helpers/time';
 
 export class SyncLiveCompetitionJob {
   private api: APIResponse;
@@ -78,7 +78,7 @@ export class SyncLiveCompetitionJob {
   private async insertLiveCompetition(
     competition: LiveresultatApi.getcompetitioninfo,
   ) {
-    const date = this.parseDateToUtc(competition.date);
+    const date = getUtcDate(competition.date, competition.timediff);
     const body: Omit<typeof LiveCompetitionsTable.$inferInsert, 'id'> = {
       name: competition.name,
       organizer: competition.organizer,
@@ -123,23 +123,5 @@ export class SyncLiveCompetitionJob {
         id: body.olOrganizationId,
       })
       .onConflictDoNothing();
-  }
-
-  parseDateToUtc(dateString: string) {
-    const format = 'yyyy-MM-dd';
-    const parsed = parse(dateString, format, new Date());
-    // Timediff has nothing to do with the date, just the time of the runners!
-    // if (timediff && timediff > 0) {
-    //   parsed.setHours(parsed.getHours() + timediff);
-    // }
-    // if (timediff && timediff < 0) {
-    //   parsed.setHours(parsed.getHours() - timediff);
-    // }
-
-    // Neither do this, it gives wrong results
-    // const utcDate = fromZonedTime(parsed, 'Europe/Stockholm');
-
-    // The date given IS universal, so just return it as is.
-    return parsed;
   }
 }

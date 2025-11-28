@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 // import { OLSelfHelper } from 'lib/selfhelp';
 import { startExpressServer } from 'express/server';
 import { apiSingletons } from 'lib/singletons';
+import logger from 'lib/logger';
 
 const singletons = apiSingletons.createApiSingletons();
 
@@ -26,6 +27,10 @@ const singletons = apiSingletons.createApiSingletons();
   await singletons.Scheduler.start();
 
   startExpressServer();
+
+  logger.info(
+    `Server timezone: ${Intl.DateTimeFormat().resolvedOptions().timeZone}`,
+  );
 })();
 
 async function gracefulShutdown() {

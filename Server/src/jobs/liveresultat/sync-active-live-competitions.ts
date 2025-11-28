@@ -1,4 +1,4 @@
-import { addDays, subDays, startOfDay } from 'date-fns';
+import { startOfDay, endOfDay } from 'date-fns';
 import { and, gte, lte } from 'drizzle-orm';
 import { LiveCompetitionsTable } from 'lib/db/schema';
 import logger from 'lib/logger';
@@ -13,10 +13,8 @@ export class SyncActiveLiveCompetitionsJob {
 
   async run() {
     try {
-      // Calculate date range: yesterday to tomorrow
-      const today = startOfDay(new Date());
-      const yesterday = subDays(today, 1);
-      const tomorrow = addDays(today, 1);
+      const start = startOfDay(new Date());
+      const end = endOfDay(new Date());
 
       // Query for active competitions in the date range
       const activeCompetitions = await this.api.Drizzle.db
@@ -24,8 +22,8 @@ export class SyncActiveLiveCompetitionsJob {
         .from(LiveCompetitionsTable)
         .where(
           and(
-            gte(LiveCompetitionsTable.date, yesterday),
-            lte(LiveCompetitionsTable.date, tomorrow),
+            gte(LiveCompetitionsTable.date, start),
+            lte(LiveCompetitionsTable.date, end),
           ),
         );
 
