@@ -126,6 +126,7 @@ export const getCompetitions = defaultEndpointsFactory.build({
   method: 'get',
   input: z.object({
     cursor: z.coerce.number().default(1),
+    timezone: z.string(),
     countryCode: z.string().optional(),
   }),
   output: z.object({
@@ -139,12 +140,12 @@ export const getCompetitions = defaultEndpointsFactory.build({
       }),
     ),
   }),
-  handler: async ({ input: { cursor } }) => {
+  handler: async ({ input: { cursor, timezone } }) => {
     const page: number = cursor < 1 ? 1 : cursor;
     const PER_PAGE = 10;
 
     const countRes = await api.Drizzle.db.execute<{ total: string }>(sql`
-      SELECT COUNT(DISTINCT COALESCE(ec.date, lc.date)) as total
+      SELECT COUNT(DISTINCT DATE(COALESCE(ec.date, lc.date) AT TIME ZONE 'UTC' AT TIME ZONE ${timezone})) as total
       FROM ol_competitions AS oc
       LEFT JOIN live_competitions AS lc ON lc."olCompetitionId" = oc.id
       LEFT JOIN eventor_competitions AS ec ON ec."olCompetitionId" = oc.id
@@ -161,7 +162,7 @@ export const getCompetitions = defaultEndpointsFactory.build({
       }[];
     }>(sql`
       SELECT 
-        DATE(COALESCE(ec.date, lc.date)) AS competition_date,
+        local_date AS competition_date,
         JSON_AGG(
           JSON_BUILD_OBJECT(
             'competition', oc,
@@ -169,15 +170,20 @@ export const getCompetitions = defaultEndpointsFactory.build({
             'eventor', to_jsonb(ec)
           )
         ) AS competitions
-      FROM ol_competitions AS oc
-      LEFT JOIN live_competitions AS lc 
-        ON lc."olCompetitionId" = oc.id
-      LEFT JOIN eventor_competitions AS ec 
-        ON ec."olCompetitionId" = oc.id
-      GROUP BY 
-        DATE(COALESCE(ec.date, lc.date))
-      ORDER BY 
-        DATE(COALESCE(ec.date, lc.date)) DESC
+      FROM (
+        SELECT 
+          oc,
+          lc,
+          ec,
+          DATE(COALESCE(ec.date, lc.date) AT TIME ZONE 'UTC' AT TIME ZONE ${timezone}) AS local_date
+        FROM ol_competitions AS oc
+        LEFT JOIN live_competitions AS lc 
+          ON lc."olCompetitionId" = oc.id
+        LEFT JOIN eventor_competitions AS ec 
+          ON ec."olCompetitionId" = oc.id
+      ) sub
+      GROUP BY local_date
+      ORDER BY local_date DESC
       LIMIT ${PER_PAGE}
       OFFSET ${(page - 1) * PER_PAGE};
     `);

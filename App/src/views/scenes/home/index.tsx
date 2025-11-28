@@ -45,6 +45,7 @@ export const OLSceneHome = () => {
       params: {
         query: {
           cursor: 1,
+          timezone,
         },
       },
     },
