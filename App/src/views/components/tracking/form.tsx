@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { View, TouchableOpacity, Alert, ViewStyle } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { COLORS } from '~/util/const';
@@ -13,7 +13,7 @@ import { OLIcon } from '~/views/components/icon';
 import { OLClubsTrackingInput } from '~/views/components/tracking/clubs';
 import { OLClassesTrackingInput } from '~/views/components/tracking/classes';
 import { OLNameTrackingInput } from '~/views/scenes/tracking/name';
-import { useDebounce } from 'use-debounce';
+import { useDebounce, useThrottledCallback } from 'use-debounce';
 
 export type OLTrackingFormMode = 'create' | 'edit';
 
@@ -75,99 +75,100 @@ export const OLTrackingForm = ({
     setClasses(classes.filter(c => c !== className));
   };
 
-  const handleSave = useCallback(async () => {
-    if (!isUserMode) {
-      if (!debouncedName.trim()) {
-        Alert.alert(t('tracking.edit.error'), t('tracking.edit.nameRequired'));
+  const handleSave = useThrottledCallback(
+    async () => {
+      if (!isUserMode) {
+        if (!debouncedName.trim()) {
+          Alert.alert(
+            t('tracking.edit.error'),
+            t('tracking.edit.nameRequired'),
+          );
+          return;
+        }
+
+        if (!userId) {
+          Alert.alert(
+            t('tracking.edit.error'),
+            t('tracking.edit.userNotFound'),
+          );
+          return;
+        }
+
+        if (classes.length === 0 || clubs.length === 0) {
+          Alert.alert(
+            t('tracking.edit.error'),
+            t('tracking.edit.atLeastOneClubAndClass'),
+          );
+          return;
+        }
+      }
+
+      // Catch-all validation
+      if (
+        clubs.length === 0 ||
+        classes.length === 0 ||
+        debouncedName.trim().length === 0 ||
+        debouncedName.trim().length > 254 ||
+        clubs.some(c => c.length > 254) ||
+        classes.some(c => c.length > 254) ||
+        clubs.length > 29 ||
+        classes.length > 29
+      ) {
+        if (!isUserMode) {
+          Alert.alert(t('tracking.edit.error'));
+        }
         return;
       }
 
-      if (!userId) {
-        Alert.alert(t('tracking.edit.error'), t('tracking.edit.userNotFound'));
-        return;
-      }
-
-      if (classes.length === 0 || clubs.length === 0) {
+      try {
+        if (mode === 'create') {
+          await createTracking({
+            body: {
+              uid: userId,
+              name: debouncedName.trim(),
+              clubs,
+              classes,
+              isMe: isUserMode,
+            },
+          });
+        } else if (mode === 'edit' && trackingId) {
+          console.log('Updating tracking record', {
+            name: debouncedName.trim(),
+            clubs,
+            classes,
+          });
+          await updateTracking({
+            params: { path: { id: trackingId } },
+            body: {
+              name: debouncedName.trim(),
+              clubs,
+              classes,
+            },
+          });
+        }
+        if (!isUserMode) {
+          await queryClient.invalidateQueries({
+            queryKey: ['get', '/v2/tracking'],
+          });
+          goBack();
+        } else {
+          await queryClient.invalidateQueries({
+            queryKey: ['get', '/v2/tracking/self'],
+          });
+        }
+      } catch (error: any) {
         Alert.alert(
           t('tracking.edit.error'),
-          t('tracking.edit.atLeastOneClubAndClass'),
+          error.message || t('tracking.edit.saveFailed'),
         );
-        return;
       }
-    }
-
-    // Catch-all validation
-    if (
-      clubs.length === 0 ||
-      classes.length === 0 ||
-      debouncedName.trim().length === 0 ||
-      debouncedName.trim().length > 254 ||
-      clubs.some(c => c.length > 254) ||
-      classes.some(c => c.length > 254) ||
-      clubs.length > 29 ||
-      classes.length > 29
-    ) {
-      if (!isUserMode) {
-        Alert.alert(t('tracking.edit.error'));
-      }
-      return;
-    }
-
-    try {
-      if (mode === 'create') {
-        await createTracking({
-          body: {
-            uid: userId,
-            name: debouncedName.trim(),
-            clubs,
-            classes,
-            isMe: isUserMode,
-          },
-        });
-      } else if (mode === 'edit' && trackingId) {
-        console.log('Updating tracking record', {
-          name: debouncedName.trim(),
-          clubs,
-          classes,
-        });
-        await updateTracking({
-          params: { path: { id: trackingId } },
-          body: {
-            name: debouncedName.trim(),
-            clubs,
-            classes,
-          },
-        });
-      }
-      if (!isUserMode) {
-        await queryClient.invalidateQueries({
-          queryKey: ['get', '/v2/tracking'],
-        });
-        goBack();
-      } else {
-        await queryClient.invalidateQueries({
-          queryKey: ['get', '/v2/tracking/self'],
-        });
-      }
-    } catch (error: any) {
-      Alert.alert(
-        t('tracking.edit.error'),
-        error.message || t('tracking.edit.saveFailed'),
-      );
-    }
-  }, [
-    debouncedName,
-    clubs,
-    classes,
-    mode,
-    trackingId,
-    createTracking,
-    updateTracking,
-    userId,
-    t,
-    goBack,
-    isUserMode,
-  ]);
+    },
+    1000,
+    {
+      leading: true,
+      trailing: false,
+    },
+  );
 
   useEffect(() => {
     if (
