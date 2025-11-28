@@ -1,5 +1,5 @@
 import { addDays, subDays, startOfDay } from 'date-fns';
-import { and, eq, gte, lte } from 'drizzle-orm';
+import { and, gte, lte } from 'drizzle-orm';
 import { LiveCompetitionsTable } from 'lib/db/schema';
 import logger from 'lib/logger';
 import { APIResponse, apiSingletons } from 'lib/singletons';
@@ -24,7 +24,6 @@ export class SyncActiveLiveCompetitionsJob {
         .from(LiveCompetitionsTable)
         .where(
           and(
-            eq(LiveCompetitionsTable.isLive, true),
             gte(LiveCompetitionsTable.date, yesterday),
             lte(LiveCompetitionsTable.date, tomorrow),
           ),

@@ -8,6 +8,13 @@
       "when": 1764258612971,
       "tag": "0000_special_hawkeye",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1764335801360,
+      "tag": "0001_silly_gamma_corps",
+      "breakpoints": true
     }
   ]
 }
