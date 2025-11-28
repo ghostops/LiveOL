@@ -3,7 +3,7 @@ import createClient from 'openapi-react-query';
 import type { paths } from './schema';
 import { Platform } from 'react-native';
 
-const getUri = () => {
+export const getApiUri = () => {
   if (__DEV__) {
     return Platform.select({
       default: 'http://localhost:3036',
@@ -15,7 +15,7 @@ const getUri = () => {
 };
 
 const fetchClient = createFetchClient<paths>({
-  baseUrl: getUri(),
+  baseUrl: getApiUri(),
 });
 
 export const $api = createClient(fetchClient);
