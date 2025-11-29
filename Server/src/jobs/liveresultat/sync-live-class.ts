@@ -113,6 +113,7 @@ export class SyncLiveClassJob {
       .set({ deletedAt: new Date() })
       .where(
         and(
+          eq(LiveResultsTable.liveClassId, hashedClassId),
           notInArray(
             LiveResultsTable.liveResultId,
             parsedResults.map(r => r.body.liveResultId),

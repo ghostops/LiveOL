@@ -9,7 +9,7 @@ import {
 } from 'lib/db/schema';
 import { apiSingletons } from 'lib/singletons';
 import { z } from 'zod/v4';
-import { and, eq, getTableColumns, sql } from 'drizzle-orm';
+import { and, eq, getTableColumns, isNull, sql } from 'drizzle-orm';
 import { sortOptimalV2 } from 'lib/helpers/sorting';
 import crypto from 'crypto';
 import { marshalResult } from 'lib/marshal/results';
@@ -88,7 +88,12 @@ export const getResultByLiveClassId = defaultEndpointsFactory
       let results = await api.Drizzle.db
         .select()
         .from(LiveResultsTable)
-        .where(eq(LiveResultsTable.liveClassId, liveClassId))
+        .where(
+          and(
+            eq(LiveResultsTable.liveClassId, liveClassId),
+            isNull(LiveResultsTable.deletedAt),
+          ),
+        )
         .orderBy(sql`${LiveResultsTable.result} ASC NULLS LAST`);
 
       const liveSplitControls = await api.Drizzle.db
@@ -201,6 +206,7 @@ export const getLiveResultsForOrganisation = defaultEndpointsFactory
           and(
             eq(LiveResultsTable.liveCompetitionId, competition.id),
             eq(LiveResultsTable.olOrganizationId, olOrganizationId),
+            isNull(LiveResultsTable.deletedAt),
           ),
         )
         .orderBy(sql`${LiveResultsTable.result} ASC NULLS LAST`);
@@ -273,11 +279,14 @@ export const getLiveResultsForTrackedRunner = defaultEndpointsFactory
           eq(LiveResultsTable.liveCompetitionId, LiveCompetitionsTable.id),
         )
         .where(
-          // Build a safe IN (...) clause from the list of ids
-          sql`${LiveResultsTable.olRunnerId} IN (${sql.join(
-            allPotentialIds.map(id => sql`${id}`),
-            sql`, `,
-          )})`,
+          and(
+            // Build a safe IN (...) clause from the list of ids
+            sql`${LiveResultsTable.olRunnerId} IN (${sql.join(
+              allPotentialIds.map(id => sql`${id}`),
+              sql`, `,
+            )})`,
+            isNull(LiveResultsTable.deletedAt),
+          ),
         )
         .orderBy(sql`${LiveResultsTable.updatedAt} ASC NULLS LAST`);
 

@@ -79,7 +79,8 @@ export class SyncLiveCompetitionJob {
     competition: LiveresultatApi.getcompetitioninfo,
   ) {
     const date = getUtcDate(competition.date, competition.timediff);
-    const body: Omit<typeof LiveCompetitionsTable.$inferInsert, 'id'> = {
+    const body: typeof LiveCompetitionsTable.$inferInsert = {
+      id: competition.id,
       name: competition.name,
       organizer: competition.organizer,
       date,
@@ -95,20 +96,15 @@ export class SyncLiveCompetitionJob {
       }),
     };
 
-    const [existing] = await this.api.Drizzle.db
-      .select()
-      .from(LiveCompetitionsTable)
-      .where(eq(LiveCompetitionsTable.id, competition.id))
-      .limit(1);
-
-    existing
-      ? await this.api.Drizzle.db
-          .update(LiveCompetitionsTable)
-          .set(body)
-          .where(eq(LiveCompetitionsTable.id, competition.id))
-      : await this.api.Drizzle.db
-          .insert(LiveCompetitionsTable)
-          .values({ id: competition.id, ...body });
+    await this.api.Drizzle.db
+      .insert(LiveCompetitionsTable)
+      .values(body)
+      .onConflictDoUpdate({
+        target: [LiveCompetitionsTable.id],
+        set: {
+          updatedAt: new Date(),
+        },
+      });
 
     await this.api.Drizzle.db
       .insert(OLCompetitionsTable)
