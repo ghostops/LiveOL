@@ -21,7 +21,7 @@ export const UserProfileForm: React.FC = () => {
   );
 
   if (isLoading) {
-    return <View style={{ height: px(290) }} />;
+    return null;
   }
 
   return (

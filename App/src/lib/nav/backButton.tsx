@@ -1,6 +1,6 @@
 import { useTheme } from '~/hooks/useTheme';
 import { useTranslation } from 'react-i18next';
-import { Platform, TouchableOpacity } from 'react-native';
+import { Platform, TouchableOpacity, useColorScheme } from 'react-native';
 import { OLIcon } from '~/views/components/icon';
 import { OLText } from '~/views/components/text';
 import { useOLNavigation } from '~/hooks/useNavigation';
@@ -11,6 +11,8 @@ type Props = {
 };
 
 export const BackButton: React.FC<Props> = ({ cross }) => {
+  const colorScheme = useColorScheme();
+  const isDark = colorScheme === 'dark';
   const { t } = useTranslation();
   const { fontPx, colors, px } = useTheme();
   const { goBack, canGoBack } = useOLNavigation();
@@ -30,7 +32,7 @@ export const BackButton: React.FC<Props> = ({ cross }) => {
     >
       <OLIcon
         name={cross ? 'close-outline' : 'chevron-back'}
-        color={HAS_LIQUID_GLASS ? colors.BLACK : colors.WHITE}
+        color={!isDark && HAS_LIQUID_GLASS ? colors.BLACK : colors.WHITE}
         style={{
           fontSize: fontPx(cross ? 32 : 20),
           top: Platform.OS === 'android' ? 1 : 0,
@@ -39,7 +41,9 @@ export const BackButton: React.FC<Props> = ({ cross }) => {
       {!cross && (
         <OLText
           size={18}
-          style={{ color: HAS_LIQUID_GLASS ? colors.BLACK : colors.WHITE }}
+          style={{
+            color: !isDark && HAS_LIQUID_GLASS ? colors.BLACK : colors.WHITE,
+          }}
         >
           {t('back')}
         </OLText>

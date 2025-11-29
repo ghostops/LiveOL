@@ -14,6 +14,7 @@ import { OLClubsTrackingInput } from '~/views/components/tracking/clubs';
 import { OLClassesTrackingInput } from '~/views/components/tracking/classes';
 import { OLNameTrackingInput } from '~/views/scenes/tracking/name';
 import { useDebounce, useThrottledCallback } from 'use-debounce';
+import { TrackingInfoIcon } from '../TrackingInfoIcon';
 
 export type OLTrackingFormMode = 'create' | 'edit';
 
@@ -190,16 +191,25 @@ export const OLTrackingForm = ({
     <View style={style ? style : { gap: px(24) }}>
       {/* Runner Name */}
       <View>
-        <OLText size={16} style={{ marginBottom: px(4) }} bold>
-          {t('tracking.edit.name')}
-        </OLText>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            gap: px(8),
+          }}
+        >
+          <OLText size={16} style={{ marginBottom: px(4) }} bold>
+            {isUserMode ? t('profile.tracking.name') : t('tracking.edit.name')}
+          </OLText>
+          {isUserMode && <TrackingInfoIcon color={COLORS.MAIN} />}
+        </View>
         <OLNameTrackingInput name={name} setName={setName} />
       </View>
 
       {/* Clubs */}
       <View>
         <OLText size={16} style={{ marginBottom: px(4) }} bold>
-          {t('tracking.edit.clubs')}
+          {isUserMode ? t('profile.tracking.clubs') : t('tracking.edit.clubs')}
         </OLText>
         <OLClubsTrackingInput onAddClub={addClub} />
         <View
@@ -233,7 +243,9 @@ export const OLTrackingForm = ({
       {/* Classes */}
       <View>
         <OLText size={16} style={{ marginBottom: px(4) }} bold>
-          {t('tracking.edit.classes')}
+          {isUserMode
+            ? t('profile.tracking.classes')
+            : t('tracking.edit.classes')}
         </OLText>
         <OLClassesTrackingInput onAddClass={addClass} />
         <View

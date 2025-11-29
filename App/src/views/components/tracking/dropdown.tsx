@@ -23,6 +23,9 @@ export const OLTrackingDropdown = ({ dataSet, onAddItem }: Props) => {
       onSelectItem={e => {
         if (e && e.title) {
           onAddItem(e.title);
+          setTimeout(() => {
+            dropdownRef.current?.clear();
+          }, 1);
         }
       }}
       dataSet={dataSet}
@@ -37,6 +40,11 @@ export const OLTrackingDropdown = ({ dataSet, onAddItem }: Props) => {
         borderColor: COLORS.MAIN,
         borderWidth: 2,
         borderRadius: 8,
+      }}
+      textInputProps={{
+        style: {
+          color: COLORS.BLACK,
+        },
       }}
     />
   );

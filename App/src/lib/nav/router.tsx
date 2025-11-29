@@ -101,7 +101,7 @@ const OLHomeTabs: React.FC = () => {
         options={{
           tabBarIcon: ({ focused }) => (
             <OLIcon
-              name={focused ? 'search' : 'search-outline'}
+              name={focused ? 'list' : 'list-outline'}
               size={20}
               color={COLORS.WHITE}
               style={{ opacity: focused ? 1 : 0.8 }}
@@ -196,7 +196,9 @@ const Component: React.FC = () => {
               route.params.mode === 'create'
                 ? t('tracking.edit.titleCreate')
                 : t('tracking.edit.titleEdit'),
-            headerRight: () => <TrackingInfoIcon color={COLORS.WHITE} />,
+            headerRight: () => (
+              <TrackingInfoIcon isHeader color={COLORS.WHITE} />
+            ),
           })}
         />
         <Stack.Screen
