@@ -1,6 +1,7 @@
 import { integer, pgTable, varchar } from 'drizzle-orm/pg-core';
 import { commonFields } from './commonFields';
 import { index } from 'drizzle-orm/pg-core';
+import { timestamp } from 'drizzle-orm/pg-core';
 
 export const LiveResultsTable = pgTable(
   'live_results',
@@ -19,6 +20,7 @@ export const LiveResultsTable = pgTable(
     status: integer(),
     place: varchar({ length: 255 }),
     start: integer(),
+    deletedAt: timestamp(),
     ...commonFields,
   },
   t => [

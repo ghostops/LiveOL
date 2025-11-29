@@ -1,0 +1,1 @@
+ALTER TABLE "live_results" ADD COLUMN "deletedAt" timestamp;

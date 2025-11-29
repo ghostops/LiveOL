@@ -1,4 +1,4 @@
-import { eq, and } from 'drizzle-orm';
+import { eq, and, notInArray, isNull } from 'drizzle-orm';
 import {
   LiveClassesTable,
   LiveResultsTable,
@@ -51,7 +51,9 @@ export class SyncLiveClassJob {
         `Class ${this.className} (${this.competitionId}) synced successfully.`,
       );
     } catch (error) {
-      logger.error(`Error syncing class: ${error}`);
+      logger.error(
+        `Error syncing class ${this.className} (${this.competitionId}): ${error}`,
+      );
     }
   }
 
@@ -60,38 +62,14 @@ export class SyncLiveClassJob {
     hashedClassId: string,
     classResults: LiveresultatApi.getclassresults,
   ) {
-    for (const result of classResults.results) {
+    const parsedResults = classResults.results.map(result => {
       const resultCompositeId = `${hashedClassId}:${result.name.replace(/ /g, '_')}:${result.club?.replace(/ /g, '_')}`;
       const hashedResultId = crypto
         .createHash('md5')
         .update(resultCompositeId)
         .digest('hex');
 
-      const [existing] = await this.api.Drizzle.db
-        .select()
-        .from(LiveResultsTable)
-        .where(
-          and(
-            eq(LiveResultsTable.liveClassId, hashedClassId),
-            eq(LiveResultsTable.liveResultId, hashedResultId),
-          ),
-        )
-        .limit(1);
-
-      const isEmpty = (value: unknown): boolean => {
-        if (value === null || value === undefined) {
-          return true;
-        }
-        if (typeof value === 'string' && value.trim() === '') {
-          return true;
-        }
-        return false;
-      };
-
-      const body: Omit<
-        typeof LiveResultsTable.$inferInsert,
-        'liveClassId' | 'liveResultId' | 'liveCompetitionId'
-      > = {
+      const body: typeof LiveResultsTable.$inferInsert = {
         name: result.name,
         organization: result.club,
         result: this.parseResultNumber(result.result),
@@ -110,42 +88,59 @@ export class SyncLiveClassJob {
         olOrganizationId: new OrganizationId().generateId({
           organizationName: result.club,
         }),
+
+        liveClassId: hashedClassId,
+        liveResultId: hashedResultId,
+        liveCompetitionId: this.competitionId,
       };
 
-      if (!existing) {
-        await this.api.Drizzle.db.insert(LiveResultsTable).values({
-          ...body,
-          liveClassId: hashedClassId,
-          liveResultId: hashedResultId,
-          liveCompetitionId: this.competitionId,
-        });
-      } else {
-        await this.api.Drizzle.db
-          .update(LiveResultsTable)
-          .set(body)
-          .where(
-            and(
-              eq(LiveResultsTable.liveClassId, hashedClassId),
-              eq(LiveResultsTable.liveResultId, hashedResultId),
-            ),
-          );
-      }
+      return { body, splits: result.splits };
+    });
 
-      await this.api.Drizzle.db
-        .insert(OLOrganizationsTable)
-        .values({
-          id: body.olOrganizationId,
-        })
-        .onConflictDoNothing();
+    await this.api.Drizzle.db
+      .insert(LiveResultsTable)
+      .values(parsedResults.map(r => r.body))
+      .onConflictDoUpdate({
+        target: [LiveResultsTable.liveResultId],
+        set: {
+          deletedAt: null,
+          updatedAt: new Date(),
+        },
+      });
 
-      await this.api.Drizzle.db
-        .insert(OLRunnersTable)
-        .values({
-          id: body.olRunnerId,
-        })
-        .onConflictDoNothing();
+    await this.api.Drizzle.db
+      .update(LiveResultsTable)
+      .set({ deletedAt: new Date() })
+      .where(
+        and(
+          notInArray(
+            LiveResultsTable.liveResultId,
+            parsedResults.map(r => r.body.liveResultId),
+          ),
+          isNull(LiveResultsTable.deletedAt),
+        ),
+      );
 
-      await this.insertSplitResults(hashedResultId, result);
+    await this.api.Drizzle.db
+      .insert(OLOrganizationsTable)
+      .values(
+        parsedResults.map(r => ({
+          id: r.body.olOrganizationId,
+        })),
+      )
+      .onConflictDoNothing();
+
+    await this.api.Drizzle.db
+      .insert(OLRunnersTable)
+      .values(
+        parsedResults.map(r => ({
+          id: r.body.olRunnerId,
+        })),
+      )
+      .onConflictDoNothing();
+
+    for (const result of parsedResults) {
+      await this.insertSplitResults(result.body.liveResultId, result.splits);
     }
   }
 
@@ -170,12 +165,11 @@ export class SyncLiveClassJob {
 
   private async insertSplitResults(
     liveResultId: string,
-    result: LiveresultatApi.result,
+    originalSplits: LiveresultatApi.result['splits'] | undefined,
   ) {
-    if (!result.splits) {
-      return;
-    }
-    const splits = Object.entries(result.splits).reduce(
+    if (!originalSplits) return;
+
+    const splits = Object.entries(originalSplits).reduce(
       (root, [key, value]) => {
         const keyWithoutUnderscore = key.includes('_')
           ? key.split('_')[0]!
@@ -333,4 +327,14 @@ type ParsedSplit = {
   time?: number;
   place?: number;
   timeplus?: number;
+};
+
+const isEmpty = (value: unknown): boolean => {
+  if (value === null || value === undefined) {
+    return true;
+  }
+  if (typeof value === 'string' && value.trim() === '') {
+    return true;
+  }
+  return false;
 };

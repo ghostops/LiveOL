@@ -15,6 +15,13 @@
       "when": 1764335801360,
       "tag": "0001_silly_gamma_corps",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1764429088352,
+      "tag": "0002_lying_vulcan",
+      "breakpoints": true
     }
   ]
 }
