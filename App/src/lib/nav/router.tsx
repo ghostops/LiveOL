@@ -159,7 +159,7 @@ const Component: React.FC = () => {
             backgroundColor: COLORS.MAIN,
           },
           headerTitleStyle: {
-            color: '#fff',
+            color: COLORS.WHITE,
           },
           headerShadowVisible: false,
           headerTitleAlign: 'center',

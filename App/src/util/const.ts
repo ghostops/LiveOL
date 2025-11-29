@@ -1,4 +1,5 @@
-import { Dimensions, PixelRatio } from 'react-native';
+import { Dimensions, PixelRatio, Platform } from 'react-native';
+import { getSystemVersion } from 'react-native-device-info';
 import { scale } from 'react-native-size-matters';
 
 export const DeviceOrientationAprox = (): 'landscape' | 'portrait' => {
@@ -32,3 +33,6 @@ const FONT_UNIT = BASE_UNIT * (1 + (1 - PixelRatio.getFontScale()));
 
 export const px = (pixels: number) => scale(pixels);
 export const fontPx = (pixels: number) => FONT_UNIT * (pixels / BASE_UNIT);
+
+export const HAS_LIQUID_GLASS =
+  Platform.OS === 'ios' && parseFloat(getSystemVersion()) >= 26;

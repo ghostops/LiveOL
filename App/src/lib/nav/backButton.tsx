@@ -1,10 +1,10 @@
-import React from 'react';
 import { useTheme } from '~/hooks/useTheme';
 import { useTranslation } from 'react-i18next';
 import { Platform, TouchableOpacity } from 'react-native';
 import { OLIcon } from '~/views/components/icon';
 import { OLText } from '~/views/components/text';
 import { useOLNavigation } from '~/hooks/useNavigation';
+import { HAS_LIQUID_GLASS } from '~/util/const';
 
 type Props = {
   cross?: boolean;
@@ -12,7 +12,7 @@ type Props = {
 
 export const BackButton: React.FC<Props> = ({ cross }) => {
   const { t } = useTranslation();
-  const { fontPx } = useTheme();
+  const { fontPx, colors, px } = useTheme();
   const { goBack, canGoBack } = useOLNavigation();
 
   if (!canGoBack()) {
@@ -24,19 +24,23 @@ export const BackButton: React.FC<Props> = ({ cross }) => {
       style={{
         flexDirection: 'row',
         alignItems: 'center',
+        paddingHorizontal: HAS_LIQUID_GLASS ? px(8) : 0,
       }}
       onPress={() => goBack()}
     >
       <OLIcon
         name={cross ? 'close-outline' : 'chevron-back'}
-        color="#fff"
+        color={HAS_LIQUID_GLASS ? colors.BLACK : colors.WHITE}
         style={{
           fontSize: fontPx(cross ? 32 : 20),
           top: Platform.OS === 'android' ? 1 : 0,
         }}
       />
       {!cross && (
-        <OLText size={18} style={{ color: '#fff' }}>
+        <OLText
+          size={18}
+          style={{ color: HAS_LIQUID_GLASS ? colors.BLACK : colors.WHITE }}
+        >
           {t('back')}
         </OLText>
       )}
