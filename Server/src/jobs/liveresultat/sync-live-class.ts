@@ -87,7 +87,7 @@ export class SyncLiveClassJob {
         start: this.parseResultNumber(result.start),
         updatedAt: new Date(),
         newResultAt:
-          result.DT_RowClass && result.DT_RowClass.includes('new-result')
+          result.DT_RowClass && result.DT_RowClass.includes('new_result')
             ? new Date()
             : null,
 
