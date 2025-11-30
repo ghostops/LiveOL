@@ -146,7 +146,8 @@ async function attachSplitControls(
   const liveSplitResults = await api.Drizzle.db
     .select()
     .from(LiveSplitResultsTable)
-    .where(eq(LiveSplitResultsTable.liveResultId, liveResult.liveResultId));
+    .where(eq(LiveSplitResultsTable.liveResultId, liveResult.liveResultId))
+    .orderBy(LiveSplitResultsTable.code);
 
   return {
     ...liveResult,
