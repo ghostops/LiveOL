@@ -21,6 +21,7 @@ export const LiveResultsTable = pgTable(
     place: varchar({ length: 255 }),
     start: integer(),
     deletedAt: timestamp(),
+    newResultAt: timestamp(),
     ...commonFields,
   },
   t => [
