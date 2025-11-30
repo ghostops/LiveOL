@@ -85,6 +85,10 @@ export class SyncLiveClassJob {
         status: !isEmpty(result.status) ? result.status : null,
         start: this.parseResultNumber(result.start),
         updatedAt: new Date(),
+        newResultAt:
+          result.DT_RowClass && result.DT_RowClass.includes('new-result')
+            ? new Date()
+            : null,
 
         olRunnerId: new RunnerId().generateId({
           className: classResults.className,
@@ -114,6 +118,7 @@ export class SyncLiveClassJob {
         target: [LiveResultsTable.liveResultId],
         set: {
           deletedAt: null,
+          updatedAt: new Date(),
           name: sql`excluded.name`,
           organization: sql`excluded.organization`,
           result: sql`excluded.result`,
@@ -122,17 +127,7 @@ export class SyncLiveClassJob {
           place: sql`excluded.place`,
           status: sql`excluded.status`,
           start: sql`excluded.start`,
-          updatedAt: sql`CASE
-            WHEN ${LiveResultsTable.name} IS DISTINCT FROM excluded.name
-              OR ${LiveResultsTable.organization} IS DISTINCT FROM excluded.organization
-              OR ${LiveResultsTable.timeplus} IS DISTINCT FROM excluded.timeplus
-              OR ${LiveResultsTable.progress} IS DISTINCT FROM excluded.progress
-              OR ${LiveResultsTable.place} IS DISTINCT FROM excluded.place
-              OR ${LiveResultsTable.status} IS DISTINCT FROM excluded.status
-              OR ${LiveResultsTable.start} IS DISTINCT FROM excluded.start
-            THEN NOW()
-            ELSE ${LiveResultsTable.updatedAt}
-          END`,
+          newResultAt: sql`COALESCE(excluded.newResultAt, ${LiveResultsTable.newResultAt})`,
         },
       });
 

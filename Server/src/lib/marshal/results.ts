@@ -57,22 +57,12 @@ const RECENTLY_UPDATED_THRESHOLD_SECONDS = 120;
 
 function checkIfRecentlyUpdated(result: ResultWithMaybeSplits) {
   if (
-    result.updatedAt &&
-    differenceInSeconds(new Date(), result.updatedAt) <=
+    result.newResultAt &&
+    differenceInSeconds(new Date(), result.newResultAt) <=
       RECENTLY_UPDATED_THRESHOLD_SECONDS
   ) {
     return true;
   }
-  if (result.splitResults) {
-    for (const splitResult of result.splitResults) {
-      if (
-        splitResult.updatedAt &&
-        differenceInSeconds(new Date(), splitResult.updatedAt) <=
-          RECENTLY_UPDATED_THRESHOLD_SECONDS
-      ) {
-        return true;
-      }
-    }
-  }
+
   return false;
 }
