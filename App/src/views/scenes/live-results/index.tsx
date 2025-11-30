@@ -1,6 +1,6 @@
 import { RouteProp, useIsFocused, useRoute } from '@react-navigation/native';
 import { FlashList } from '@shopify/flash-list';
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 import { useOLNavigation } from '~/hooks/useNavigation';
@@ -11,7 +11,6 @@ import { OLRefetcherBar } from '~/views/components/refetcher/bar';
 import { OLText } from '~/views/components/text';
 import { OLResultHeader } from './result-header';
 import { OLLiveResultRow } from './row';
-import { useLiveRunningStore } from '~/store/liveRunning';
 import { OLHorizontalScrollView } from './horizontal-scrollview';
 import { useSortingStore } from '~/store/sorting';
 import { keepPreviousData } from '@tanstack/react-query';
@@ -19,6 +18,7 @@ import { nowTimestamp as nowTimestampFs } from '~/util/isLive';
 import { useNotifyOnUpdate } from './useNotifyOnUpdate';
 import { useUserIdStore } from '~/store/userId';
 import { useRefreshIntervalStore } from '~/store/refreshInterval';
+import { useTicker } from '~/hooks/useTicker';
 
 export const OLSceneLiveResults = () => {
   const { colors } = useTheme();
@@ -26,14 +26,15 @@ export const OLSceneLiveResults = () => {
   const navigation = useOLNavigation();
   const focus = useIsFocused();
   const { t } = useTranslation();
-  const startTicking = useLiveRunningStore(state => state.startTicking);
-  const stopTicking = useLiveRunningStore(state => state.stopTicking);
   const { sortingDirection, sortingKey } = useSortingStore();
   const [nowTimestamp, setNowTimestamp] = useState(nowTimestampFs());
   const uid = useUserIdStore(state => state.userId);
   const refreshIntervalMs = useRefreshIntervalStore(
     state => state.refreshIntervalMs,
   );
+  // Ticks for live results
+  useTicker();
+
   const { liveClassId } = params;
 
   const getResults = $api.useQuery(
@@ -66,14 +67,6 @@ export const OLSceneLiveResults = () => {
       navigation.setOptions({ title });
     }
   }, [navigation, title]);
-
-  useEffect(() => {
-    startTicking();
-
-    return () => {
-      stopTicking();
-    };
-  }, [startTicking, stopTicking]);
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.BACKGROUND }}>

@@ -16,6 +16,7 @@ import { OLRefetcherBar } from '~/views/components/refetcher/bar';
 import { keepPreviousData } from '@tanstack/react-query';
 import { useUserIdStore } from '~/store/userId';
 import { useRefreshIntervalStore } from '~/store/refreshInterval';
+import { useTicker } from '~/hooks/useTicker';
 
 export const OLSceneClubResults = () => {
   const { colors } = useTheme();
@@ -30,6 +31,9 @@ export const OLSceneClubResults = () => {
   const refreshIntervalMs = useRefreshIntervalStore(
     state => state.refreshIntervalMs,
   );
+
+  // Ticks for live results
+  useTicker();
 
   // Fetch filtered results for this organization in this competition
   const getResultsQuery = $api.useQuery(

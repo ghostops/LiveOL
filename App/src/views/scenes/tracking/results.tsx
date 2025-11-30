@@ -12,6 +12,7 @@ import { useSortingStore } from '~/store/sorting';
 import { useOLNavigation } from '~/hooks/useNavigation';
 import { useUserIdStore } from '~/store/userId';
 import { useRefreshIntervalStore } from '~/store/refreshInterval';
+import { useTicker } from '~/hooks/useTicker';
 
 export const OLSceneTrackingResults = () => {
   const {
@@ -25,6 +26,8 @@ export const OLSceneTrackingResults = () => {
   const refreshIntervalMs = useRefreshIntervalStore(
     state => state.refreshIntervalMs,
   );
+  // Ticks for live results
+  useTicker();
 
   useLayoutEffect(() => {
     if (title) {
