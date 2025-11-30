@@ -248,6 +248,7 @@
     "followRunner": "Follow runner",
     "goToClass": "See class results",
     "goToClub": "See club results",
+    "goToCompetition": "See competition info",
     "mute": "Mute audio",
     "notFound": "No runner found",
     "searchRunner": {

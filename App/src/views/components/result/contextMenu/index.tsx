@@ -8,11 +8,22 @@ import { paths } from '~/lib/react-query/schema';
 type Props = {
   result: paths['/v2/results/live/{liveClassId}']['get']['responses']['200']['content']['application/json']['data']['results'][number];
   children: React.ReactNode;
+
+  olCompetitionId?: string;
+  olOrganizationId?: string;
+  liveClassId?: string;
+  canTrackRunner?: boolean;
+  canGoToCompetition?: boolean;
 };
 
 export const OLRunnerContextMenu: React.FC<Props> = ({
   children,
   result: { name, className, organization },
+  liveClassId,
+  olCompetitionId,
+  olOrganizationId,
+  canTrackRunner = true,
+  canGoToCompetition = false,
 }) => {
   const { showActionSheetWithOptions } = useActionSheet();
   const { t } = useTranslation();
@@ -20,39 +31,86 @@ export const OLRunnerContextMenu: React.FC<Props> = ({
   const navigation = useOLNavigation();
 
   const onPress = () => {
-    const options = [
-      t('result.followRunner'),
-      t('info.update.hasUpdate.cancel'),
-    ].filter(Boolean) as string[];
+    const actions: Array<{
+      id: string;
+      label: string;
+      handler: () => void;
+    }> = [];
+
+    if (canTrackRunner) {
+      actions.push({
+        id: 'follow',
+        label: t('result.followRunner'),
+        handler: () => {
+          if (!plusActive) {
+            presentPaywall();
+            return;
+          }
+
+          navigation.navigate('EditTrackRunner', {
+            mode: 'create',
+            runner: {
+              name,
+              classes: className ? [className] : [],
+              clubs: organization ? [organization] : [],
+            },
+          });
+        },
+      });
+    }
+
+    if (canGoToCompetition && olCompetitionId) {
+      actions.push({
+        id: 'viewCompetition',
+        label: t('result.goToCompetition'),
+        handler: () => {
+          navigation.navigate('Competition', {
+            olCompetitionId,
+          });
+        },
+      });
+    }
+
+    if (olCompetitionId && liveClassId) {
+      actions.push({
+        id: 'viewLiveResults',
+        label: t('result.goToClass'),
+        handler: () => {
+          navigation.navigate('LiveResults', {
+            olCompetitionId,
+            liveClassId,
+          });
+        },
+      });
+    }
+
+    if (olCompetitionId && olOrganizationId) {
+      actions.push({
+        id: 'viewClubResults',
+        label: t('result.goToClub'),
+        handler: () => {
+          navigation.navigate('ClubResults', {
+            olCompetitionId,
+            olOrganizationId,
+          });
+        },
+      });
+    }
+
+    actions.push({
+      id: 'cancel',
+      label: t('common.cancel'),
+      handler: () => {},
+    });
 
     showActionSheetWithOptions(
       {
-        options,
-        cancelButtonIndex: options.length - 1,
+        options: actions.map(a => a.label),
+        cancelButtonIndex: actions.length - 1,
       },
       selectedIndex => {
-        if (typeof selectedIndex !== 'number') {
-          return;
-        }
-
-        switch (selectedIndex) {
-          case 0:
-            if (!plusActive) {
-              presentPaywall();
-              break;
-            }
-
-            navigation.navigate('EditTrackRunner', {
-              mode: 'create',
-              runner: {
-                name,
-                classes: className ? [className] : [],
-                clubs: organization ? [organization] : [],
-              },
-            });
-            break;
-          default:
-            break;
+        if (typeof selectedIndex === 'number') {
+          actions[selectedIndex]?.handler();
         }
       },
     );

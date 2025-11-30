@@ -1,4 +1,4 @@
-import { TouchableOpacity, View } from 'react-native';
+import { View } from 'react-native';
 import { useTheme } from '~/hooks/useTheme';
 import { paths } from '~/lib/react-query/schema';
 import { OLResultAnimation } from '~/views/components/result/item/animation';
@@ -10,7 +10,6 @@ import { OLText } from '~/views/components/text';
 import { useRowWidths } from './useRowWidths';
 import { useOrientation } from '~/hooks/useOrientation';
 import { OrientationType } from 'react-native-orientation-locker';
-import { useOLNavigation } from '~/hooks/useNavigation';
 import { OLRunnerContextMenu } from '~/views/components/result/contextMenu';
 
 type Props = {
@@ -18,23 +17,29 @@ type Props = {
   liveResultItem: paths['/v2/results/live/{liveClassId}']['get']['responses']['200']['content']['application/json']['data']['results'][number];
 };
 
-export const OLLiveResultRow = ({ olCompetitionId, liveResultItem }: Props) => {
-  const { colors } = useTheme();
+export const OLLiveResultRow = ({
+  liveResultItem: result,
+  olCompetitionId,
+}: Props) => {
+  const { colors, px } = useTheme();
   const { place, name, time, splits } = useRowWidths();
   const orientation = useOrientation();
-  const navigation = useOLNavigation();
 
   return (
-    <OLRunnerContextMenu result={liveResultItem}>
+    <OLRunnerContextMenu
+      result={result}
+      olCompetitionId={olCompetitionId}
+      olOrganizationId={result.olOrganizationId}
+    >
       <OLResultAnimation
-        isTracking={liveResultItem.isTracking}
-        hasUpdated={!!liveResultItem.hasRecentlyUpdated}
+        isTracking={result.isTracking}
+        hasUpdated={!!result.hasRecentlyUpdated}
       >
         <View
           style={{
             flexDirection: 'row',
             alignItems: 'center',
-            paddingVertical: 8,
+            paddingVertical: px(8),
           }}
         >
           <View
@@ -44,30 +49,19 @@ export const OLLiveResultRow = ({ olCompetitionId, liveResultItem }: Props) => {
                 orientation === OrientationType.PORTRAIT
                   ? 'center'
                   : 'flex-end',
-              paddingRight: 8,
+              paddingRight: px(8),
             }}
           >
-            <OLResultBadge place={liveResultItem.place} />
+            <OLResultBadge place={result.place} />
           </View>
-          <View style={{ width: name, paddingRight: 4 }}>
-            <OLText numberOfLines={1}>{liveResultItem.name || 'N/A'}</OLText>
-            <TouchableOpacity
-              onPress={() => {
-                if (liveResultItem.olOrganizationId) {
-                  navigation.navigate('ClubResults', {
-                    olCompetitionId,
-                    olOrganizationId: liveResultItem.olOrganizationId,
-                  });
-                }
-              }}
-            >
-              <OLText numberOfLines={1} style={{ color: colors.BLUE }}>
-                {liveResultItem.organization}
-              </OLText>
-            </TouchableOpacity>
+          <View style={{ width: name, paddingRight: px(4) }}>
+            <OLText numberOfLines={1}>{result.name || 'N/A'}</OLText>
+            <OLText numberOfLines={1} style={{ color: colors.BLUE }}>
+              {result.organization}
+            </OLText>
           </View>
-          {liveResultItem.splitResults?.map(split => (
-            <View key={split.code} style={{ width: splits, gap: 4 }}>
+          {result.splitResults?.map(split => (
+            <View key={split.code} style={{ width: splits, gap: px(4) }}>
               {split.time !== null && (
                 <>
                   <OLResultTime status={0} time={split.time} />
@@ -79,12 +73,12 @@ export const OLLiveResultRow = ({ olCompetitionId, liveResultItem }: Props) => {
           <View
             style={{
               width: time,
-              gap: 4,
+              gap: px(4),
               alignItems: 'flex-end',
-              paddingRight: 8,
+              paddingRight: px(8),
             }}
           >
-            <OLRowTime liveResultItem={liveResultItem} />
+            <OLRowTime liveResultItem={result} />
           </View>
         </View>
       </OLResultAnimation>
@@ -93,12 +87,14 @@ export const OLLiveResultRow = ({ olCompetitionId, liveResultItem }: Props) => {
 };
 
 const OLRowTime = ({ liveResultItem }: Pick<Props, 'liveResultItem'>) => {
+  const { px } = useTheme();
+
   if (liveResultItem.start && liveResultItem.isLive) {
     return <OLResultLiveRunning startTime={liveResultItem.start} />;
   }
 
   return (
-    <View style={{ gap: 4, alignItems: 'flex-end', paddingRight: 8 }}>
+    <View style={{ gap: px(4), alignItems: 'flex-end', paddingRight: px(8) }}>
       <OLResultTime
         status={liveResultItem.status}
         time={liveResultItem.result}

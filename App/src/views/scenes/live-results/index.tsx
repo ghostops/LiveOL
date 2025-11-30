@@ -70,14 +70,13 @@ export const OLSceneLiveResults = () => {
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.BACKGROUND }}>
-      {focus && (
-        <OLRefetcherBar
-          interval={refreshIntervalMs}
-          refetch={async () => {
-            setNowTimestamp(nowTimestampFs());
-          }}
-        />
-      )}
+      <OLRefetcherBar
+        interval={refreshIntervalMs}
+        refetch={async () => {
+          setNowTimestamp(nowTimestampFs());
+        }}
+        enabled={focus}
+      />
       <OLHorizontalScrollView hasSplits={hasSplits}>
         <View style={{ backgroundColor: colors.BACKGROUND }}>
           <OLResultHeader

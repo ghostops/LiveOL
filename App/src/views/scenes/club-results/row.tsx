@@ -1,4 +1,4 @@
-import { TouchableOpacity, View } from 'react-native';
+import { View } from 'react-native';
 import { useTheme } from '~/hooks/useTheme';
 import { paths } from '~/lib/react-query/schema';
 import { OLResultAnimation } from '~/views/components/result/item/animation';
@@ -7,7 +7,6 @@ import { OLResultLiveRunning } from '~/views/components/result/item/liveRunning'
 import { OLResultTime } from '~/views/components/result/item/time';
 import { OLResultTimeplus } from '~/views/components/result/item/timeplus';
 import { OLText } from '~/views/components/text';
-import { useOLNavigation } from '~/hooks/useNavigation';
 import { OLRunnerContextMenu } from '~/views/components/result/contextMenu';
 
 type Props = {
@@ -15,70 +14,62 @@ type Props = {
   resultItem: paths['/v2/results/live/organizations/{olCompetitionId}/{olOrganizationId}']['get']['responses']['200']['content']['application/json']['data']['results'][number];
 };
 
-export const OLClubResultRow = ({ resultItem, olCompetitionId }: Props) => {
-  const { colors } = useTheme();
-  const navigation = useOLNavigation();
+export const OLClubResultRow = ({
+  resultItem: result,
+  olCompetitionId,
+}: Props) => {
+  const { colors, px } = useTheme();
 
   return (
-    <OLRunnerContextMenu result={resultItem}>
-      <OLResultAnimation hasUpdated={false}>
+    <OLRunnerContextMenu
+      result={result}
+      olCompetitionId={olCompetitionId}
+      liveClassId={result.liveClassId}
+    >
+      <OLResultAnimation
+        hasUpdated={!!result.hasRecentlyUpdated}
+        isTracking={result.isTracking}
+      >
         <View
           style={{
             flexDirection: 'row',
             alignItems: 'center',
-            paddingVertical: 8,
-            paddingHorizontal: 8,
+            paddingVertical: px(8),
           }}
         >
           <View
             style={{
-              width: 60,
+              width: px(60),
               alignItems: 'center',
-              paddingRight: 8,
+              paddingRight: px(8),
             }}
           >
-            <OLResultBadge place={resultItem.place} />
+            <OLResultBadge place={result.place} />
           </View>
-          <View style={{ flex: 1, paddingRight: 8 }}>
-            <OLText numberOfLines={1}>{resultItem.name || 'N/A'}</OLText>
-            {resultItem.liveClassId && resultItem.className && (
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate('LiveResults', {
-                    liveClassId: resultItem.liveClassId,
-                    olCompetitionId: olCompetitionId,
-                  });
-                }}
-              >
-                <OLText
-                  numberOfLines={1}
-                  size={12}
-                  style={{ color: colors.BLUE }}
-                >
-                  {resultItem.className}
-                </OLText>
-              </TouchableOpacity>
+          <View style={{ flex: 1, paddingRight: px(4) }}>
+            <OLText numberOfLines={1}>{result.name || 'N/A'}</OLText>
+            {result.liveClassId && result.className && (
+              <OLText numberOfLines={1} style={{ color: colors.BLUE }}>
+                {result.className}
+              </OLText>
             )}
           </View>
           <View
             style={{
-              minWidth: 80,
-              gap: 4,
+              minWidth: px(80),
+              gap: px(4),
               alignItems: 'flex-end',
-              paddingRight: 8,
+              paddingRight: px(8),
             }}
           >
-            {resultItem.start && resultItem.isLive ? (
-              <OLResultLiveRunning startTime={resultItem.start} />
+            {result.start && result.isLive ? (
+              <OLResultLiveRunning startTime={result.start} />
             ) : (
               <>
-                <OLResultTime
-                  status={resultItem.status}
-                  time={resultItem.result}
-                />
+                <OLResultTime status={result.status} time={result.result} />
                 <OLResultTimeplus
-                  status={resultItem.status}
-                  timeplus={resultItem.timeplus}
+                  status={result.status}
+                  timeplus={result.timeplus}
                 />
               </>
             )}

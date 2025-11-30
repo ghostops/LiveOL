@@ -71,14 +71,13 @@ export const OLSceneClubResults = () => {
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.BACKGROUND }}>
-      {focus && (
-        <OLRefetcherBar
-          interval={refreshIntervalMs}
-          refetch={async () => {
-            setNowTimestamp(nowTimestampFs());
-          }}
-        />
-      )}
+      <OLRefetcherBar
+        interval={refreshIntervalMs}
+        refetch={async () => {
+          setNowTimestamp(nowTimestampFs());
+        }}
+        enabled={focus}
+      />
       <OLResultHeader />
       <FlashList
         style={{ flex: 1 }}

@@ -6,11 +6,13 @@ import { COLORS, px } from '~/util/const';
 interface Props {
   interval: number;
   refetch: () => Promise<void>;
+  enabled: boolean;
 }
 
 export const OLRefetcherBar: React.FunctionComponent<Props> = ({
   interval,
   refetch,
+  enabled,
 }) => {
   const [animatedWidth] = useState(new Animated.Value(0));
 
@@ -33,11 +35,16 @@ export const OLRefetcherBar: React.FunctionComponent<Props> = ({
 
     refresh();
 
+    if (!enabled) {
+      animatedWidth.stopAnimation();
+      animatedWidth.setValue(0);
+      return;
+    }
+
     const timer = setInterval(() => refresh(), interval);
 
     return () => clearInterval(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [animatedWidth, interval, refetch, enabled]);
 
   const [windowWidth, setWindowWidth] = useState(
     Dimensions.get('window').width,

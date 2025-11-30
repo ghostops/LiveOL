@@ -52,14 +52,13 @@ export const OLSceneTrackingResults = () => {
 
   return (
     <View>
-      {focus && (
-        <OLRefetcherBar
-          interval={refreshIntervalMs}
-          refetch={async () => {
-            setNowTimestamp(nowTimestampFs());
-          }}
-        />
-      )}
+      <OLRefetcherBar
+        interval={refreshIntervalMs}
+        refetch={async () => {
+          setNowTimestamp(nowTimestampFs());
+        }}
+        enabled={focus}
+      />
       <OLResultHeader />
       <FlatList
         data={data?.data.results}
