@@ -44,7 +44,8 @@ export const OLRefetcherBar: React.FunctionComponent<Props> = ({
     const timer = setInterval(() => refresh(), interval);
 
     return () => clearInterval(timer);
-  }, [animatedWidth, interval, refetch, enabled]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [interval, enabled]);
 
   const [windowWidth, setWindowWidth] = useState(
     Dimensions.get('window').width,

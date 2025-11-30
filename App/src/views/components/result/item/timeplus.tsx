@@ -24,7 +24,7 @@ export const OLResultTimeplus: React.FC<Props> = ({ timeplus, status }) => {
   const t = timestampToString(timeplus || 0);
 
   return (
-    <OLText style={{}} size={status === 0 ? 14 : 12}>
+    <OLText style={{ textAlign: 'left' }} size={status === 0 ? 14 : 10}>
       {status === 0 ? `+${t}` : `(${statusText})`}
     </OLText>
   );
