@@ -151,11 +151,13 @@ async function attachSplitControls(
 
   return {
     ...liveResult,
-    splitResults: liveSplitResults.map(lsr => ({
-      ...lsr,
-      // The code must exist at this point, hopefully.
-      code: lsr.code!,
-    })),
+    splitResults: liveSplitResults
+      .map(lsr => ({
+        ...lsr,
+        // The code must exist at this point, hopefully.
+        code: lsr.code!,
+      }))
+      .sort((a, b) => (a.code < b.code ? -1 : 1)),
   };
 }
 
