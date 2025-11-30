@@ -1,4 +1,4 @@
-import { eq } from 'drizzle-orm';
+import { eq, sql } from 'drizzle-orm';
 import {
   LiveClassesTable,
   LiveCompetitionsTable,
@@ -103,6 +103,9 @@ export class SyncLiveCompetitionJob {
         target: [LiveCompetitionsTable.id],
         set: {
           updatedAt: new Date(),
+          name: sql`excluded.name`,
+          organizer: sql`excluded.organizer`,
+          date: sql`excluded.date`,
         },
       });
 

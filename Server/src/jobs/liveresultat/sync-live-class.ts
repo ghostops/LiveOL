@@ -1,4 +1,4 @@
-import { eq, and, notInArray, isNull } from 'drizzle-orm';
+import { eq, and, notInArray, isNull, sql } from 'drizzle-orm';
 import {
   LiveClassesTable,
   LiveResultsTable,
@@ -63,7 +63,13 @@ export class SyncLiveClassJob {
     classResults: LiveresultatApi.getclassresults,
   ) {
     const parsedResults = classResults.results.map(result => {
-      const resultCompositeId = `${hashedClassId}:${result.name.replace(/ /g, '_')}:${result.club?.replace(/ /g, '_')}`;
+      const resultCompositeId = [
+        hashedClassId,
+        result.name.replace(/ /g, '_'),
+        result.club?.replace(/ /g, '_'),
+        result.place.replace(/ /g, '_') ?? '',
+      ].join(':');
+
       const hashedResultId = crypto
         .createHash('md5')
         .update(resultCompositeId)
@@ -97,6 +103,10 @@ export class SyncLiveClassJob {
       return { body, splits: result.splits };
     });
 
+    if (parsedResults.length === 0) {
+      return;
+    }
+
     await this.api.Drizzle.db
       .insert(LiveResultsTable)
       .values(parsedResults.map(r => r.body))
@@ -104,7 +114,25 @@ export class SyncLiveClassJob {
         target: [LiveResultsTable.liveResultId],
         set: {
           deletedAt: null,
-          updatedAt: new Date(),
+          name: sql`excluded.name`,
+          organization: sql`excluded.organization`,
+          result: sql`excluded.result`,
+          timeplus: sql`excluded.timeplus`,
+          progress: sql`excluded.progress`,
+          place: sql`excluded.place`,
+          status: sql`excluded.status`,
+          start: sql`excluded.start`,
+          updatedAt: sql`CASE
+            WHEN ${LiveResultsTable.name} IS DISTINCT FROM excluded.name
+              OR ${LiveResultsTable.organization} IS DISTINCT FROM excluded.organization
+              OR ${LiveResultsTable.timeplus} IS DISTINCT FROM excluded.timeplus
+              OR ${LiveResultsTable.progress} IS DISTINCT FROM excluded.progress
+              OR ${LiveResultsTable.place} IS DISTINCT FROM excluded.place
+              OR ${LiveResultsTable.status} IS DISTINCT FROM excluded.status
+              OR ${LiveResultsTable.start} IS DISTINCT FROM excluded.start
+            THEN NOW()
+            ELSE ${LiveResultsTable.updatedAt}
+          END`,
         },
       });
 
