@@ -99,7 +99,12 @@ export const getResultByLiveClassId = defaultEndpointsFactory
       const liveSplitControls = await api.Drizzle.db
         .select()
         .from(LiveSplitControllsTable)
-        .where(eq(LiveSplitControllsTable.liveClassId, liveClassId));
+        .where(eq(LiveSplitControllsTable.liveClassId, liveClassId))
+        .orderBy(sql`CASE 
+            WHEN ${LiveSplitControllsTable.code} ~ '^[0-9]+$' 
+            THEN ${LiveSplitControllsTable.code}::integer 
+            ELSE NULL 
+          END`);
 
       if (liveSplitControls.length !== 0) {
         results = await Promise.all(results.map(r => attachSplitControls(r)));
@@ -147,17 +152,19 @@ async function attachSplitControls(
     .select()
     .from(LiveSplitResultsTable)
     .where(eq(LiveSplitResultsTable.liveResultId, liveResult.liveResultId))
-    .orderBy(LiveSplitResultsTable.code);
+    .orderBy(sql`CASE 
+        WHEN ${LiveSplitResultsTable.code} ~ '^[0-9]+$' 
+        THEN ${LiveSplitResultsTable.code}::integer 
+        ELSE NULL 
+      END`);
 
   return {
     ...liveResult,
-    splitResults: liveSplitResults
-      .map(lsr => ({
-        ...lsr,
-        // The code must exist at this point, hopefully.
-        code: lsr.code!,
-      }))
-      .sort((a, b) => (a.code < b.code ? -1 : 1)),
+    splitResults: liveSplitResults.map(lsr => ({
+      ...lsr,
+      // The code must exist at this point, hopefully.
+      code: lsr.code!,
+    })),
   };
 }
 
