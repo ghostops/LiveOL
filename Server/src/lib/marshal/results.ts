@@ -53,7 +53,7 @@ export const marshalResult =
     };
   };
 
-const RECENTLY_UPDATED_THRESHOLD_SECONDS = 120;
+export const RECENTLY_UPDATED_THRESHOLD_SECONDS = 120;
 
 function checkIfRecentlyUpdated(result: ResultWithMaybeSplits) {
   if (

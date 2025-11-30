@@ -12,6 +12,7 @@ import { APIResponse, apiSingletons } from 'lib/singletons';
 import crypto from 'crypto';
 import { OrganizationId, RunnerId } from 'lib/match/generateIds';
 import logger from 'lib/logger';
+import { RECENTLY_UPDATED_THRESHOLD_SECONDS } from 'lib/marshal/results';
 
 export class SyncLiveClassJob {
   private api: APIResponse;
@@ -127,7 +128,13 @@ export class SyncLiveClassJob {
           place: sql`excluded.place`,
           status: sql`excluded.status`,
           start: sql`excluded.start`,
-          newResultAt: sql`COALESCE(excluded.newResultAt, ${LiveResultsTable.newResultAt})`,
+          newResultAt: sql`CASE 
+            WHEN excluded.newResultAt IS NOT NULL 
+              AND (${LiveResultsTable.updatedAt} IS NULL 
+                OR ${LiveResultsTable.updatedAt} < NOW() - INTERVAL '${RECENTLY_UPDATED_THRESHOLD_SECONDS} seconds')
+            THEN excluded.newResultAt 
+            ELSE ${LiveResultsTable.newResultAt} 
+          END`,
         },
       });
 
