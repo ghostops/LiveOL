@@ -127,7 +127,7 @@ export class SyncLiveClassJob {
           place: sql`excluded.place`,
           status: sql`excluded.status`,
           start: sql`excluded.start`,
-          newResultAt: sql`COALESCE(excluded.newResultAt, ${LiveResultsTable.newResultAt})`,
+          newResultAt: sql`COALESCE(excluded."newResultAt", ${LiveResultsTable.newResultAt})`,
         },
       });
 
