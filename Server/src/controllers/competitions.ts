@@ -54,9 +54,21 @@ const marshalCompetition = (competition: {
     ? EventorUrls[e.countryCode as keyof typeof EventorUrls]
     : null;
 
+  const utcDate = e?.date
+    ? new Date(e.date).toISOString()
+    : l?.date
+      ? new Date(l.date).toISOString()
+      : null;
+
+  if (!utcDate) {
+    throw new Error(
+      `Competition ${competition.id} is missing date in both Eventor and Live data`,
+    );
+  }
+
   return {
     id: competition.id,
-    date: e ? (e.date as unknown as string) : (l?.date as unknown as string),
+    date: utcDate!,
     lat: e?.lat ? Number(e.lat) : undefined,
     lng: e?.lng ? Number(e.lng) : undefined,
     links: eventorUrl
@@ -97,6 +109,8 @@ export const getTodaysCompetitions = defaultEndpointsFactory.build({
     // Convert back to UTC for DB query
     const startUTC = fromZonedTime(startOfToday, timezone);
     const endUTC = fromZonedTime(endOfToday, timezone);
+
+    console.log('Fetching competitions between', startUTC, 'and', endUTC);
 
     const todayRes = await api.Drizzle.db.execute<
       typeof OLCompetitionsTable.$inferSelect & {

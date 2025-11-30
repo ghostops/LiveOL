@@ -39,11 +39,10 @@ export const marshalResult =
     return {
       ...result,
       isLive: !!(
+        !result.result &&
         result.start !== null &&
         result.progress !== null &&
-        result.progress < 100 &&
-        result.status &&
-        result.status < 1
+        result.progress < 100
       ),
       hasRecentlyUpdated: checkIfRecentlyUpdated(result),
       isTracking,

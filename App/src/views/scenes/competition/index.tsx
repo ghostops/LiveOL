@@ -5,9 +5,9 @@ import { RootStack } from '~/lib/nav/router';
 import { $api } from '~/lib/react-query/api';
 import { OLText } from '~/views/components/text';
 import { useOLNavigation } from '~/hooks/useNavigation';
-import { useLayoutEffect } from 'react';
+import { useLayoutEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { format } from 'date-fns';
+import { toZonedTime, format } from 'date-fns-tz';
 import { CompetitionInfoBox } from '~/views/components/competition/info';
 import { OLHomeBadge } from '../home/badge';
 
@@ -26,6 +26,17 @@ export const OLSceneCompetition = () => {
   });
 
   const title = getCompetitionQuery.data?.data.competition.name;
+  const date = useMemo(() => {
+    if (!getCompetitionQuery.data?.data.competition.date) {
+      return null;
+    }
+    const raw = getCompetitionQuery.data.data.competition.date;
+    const zoned = toZonedTime(
+      new Date(raw),
+      Intl.DateTimeFormat().resolvedOptions().timeZone,
+    );
+    return format(zoned, 'PP');
+  }, [getCompetitionQuery.data?.data.competition.date]);
 
   useLayoutEffect(() => {
     navigation.setOptions({ title });
@@ -114,12 +125,7 @@ export const OLSceneCompetition = () => {
 
               {getCompetitionQuery.data?.data.competition.date && (
                 <OLText size={16}>
-                  {t('competitions.date')}:{' '}
-                  {format(
-                    new Date(getCompetitionQuery.data.data.competition.date),
-                    'PP',
-                  )}
-                  {/* add locale detection to date-fns */}
+                  {t('competitions.date')}: {date}
                 </OLText>
               )}
               {getCompetitionQuery.data?.data.competition.distance && (

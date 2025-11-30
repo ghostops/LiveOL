@@ -4,8 +4,8 @@ import { OLText } from '../../text';
 import { timestampToString } from '~/util/isLive';
 
 interface Props {
-  timeplus?: number | null;
-  status?: number | null;
+  timeplus: number | null | undefined;
+  status: number | null | undefined;
 }
 
 export const OLResultTimeplus: React.FC<Props> = ({ timeplus, status }) => {

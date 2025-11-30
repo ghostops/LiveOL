@@ -68,14 +68,12 @@ export const OLLiveResultRow = ({ olCompetitionId, liveResultItem }: Props) => {
           </View>
           {liveResultItem.splitResults?.map(split => (
             <View key={split.code} style={{ width: splits, gap: 4 }}>
-              <OLResultTime
-                status={split.time ? 0 : split.status}
-                time={split.time}
-              />
-              <OLResultTimeplus
-                status={split.time ? 0 : split.status}
-                timeplus={split.timeplus}
-              />
+              {split.time !== null && (
+                <>
+                  <OLResultTime status={0} time={split.time} />
+                  <OLResultTimeplus status={0} timeplus={split.timeplus} />
+                </>
+              )}
             </View>
           ))}
           <View
