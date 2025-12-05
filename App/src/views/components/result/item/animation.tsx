@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { Animated, ViewStyle } from 'react-native';
+import { Animated, View, ViewStyle } from 'react-native';
 
 interface Props {
   hasUpdated: boolean;
@@ -9,11 +9,23 @@ interface Props {
 }
 
 export const OLResultAnimation: React.FC<Props> = props => {
-  const color = props.isTracking
-    ? 'rgba(236, 223, 208, 1)'
-    : 'rgba(255,255,255,1)';
   const [animation] = useState(new Animated.Value(0));
   const animationActive = useRef(false);
+
+  if (props.isTracking) {
+    return (
+      <View
+        style={[
+          props.style,
+          {
+            backgroundColor: 'rgba(236, 223, 208, 1)',
+          },
+        ]}
+      >
+        {props.children}
+      </View>
+    );
+  }
 
   const stopAnimation = () => {
     Animated.timing(animation, {
@@ -33,7 +45,7 @@ export const OLResultAnimation: React.FC<Props> = props => {
 
   const backgroundColor = animation.interpolate({
     inputRange: [0, 1],
-    outputRange: [color, 'rgba(255,0,0,.15)'],
+    outputRange: ['rgba(255,255,255,1)', 'rgba(255,0,0,.15)'],
   });
 
   if (!animationActive.current) {
