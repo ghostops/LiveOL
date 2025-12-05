@@ -110,8 +110,6 @@ export const getTodaysCompetitions = defaultEndpointsFactory.build({
     const startUTC = fromZonedTime(startOfToday, timezone);
     const endUTC = fromZonedTime(endOfToday, timezone);
 
-    console.log('Fetching competitions between', startUTC, 'and', endUTC);
-
     const todayRes = await api.Drizzle.db.execute<
       typeof OLCompetitionsTable.$inferSelect & {
         live: typeof LiveCompetitionsTable.$inferSelect | null;
@@ -127,7 +125,7 @@ export const getTodaysCompetitions = defaultEndpointsFactory.build({
         ON lc."olCompetitionId" = oc.id
       LEFT JOIN eventor_competitions AS ec 
         ON ec."olCompetitionId" = oc.id
-      WHERE DATE(COALESCE(ec.date, lc.date)) >= ${startUTC} AND DATE(COALESCE(ec.date, lc.date)) < ${endUTC};
+      WHERE COALESCE(ec.date, lc.date) >= ${startUTC} AND COALESCE(ec.date, lc.date) < ${endUTC};
     `);
 
     return {
