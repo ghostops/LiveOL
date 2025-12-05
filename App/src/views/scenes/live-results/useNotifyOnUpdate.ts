@@ -15,7 +15,7 @@ export const useNotifyOnUpdate = (hash: string | null | undefined) => {
     ) {
       Vibration.vibrate();
       __DEV__ && console.log('[vibrated]');
-      previousHash.current = hash;
     }
+    previousHash.current = hash;
   }, [hash, focus]);
 };

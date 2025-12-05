@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { Easing, Animated, Dimensions } from 'react-native';
 import { COLORS, px } from '~/util/const';
-import { useDebouncedCallback } from 'use-debounce';
 
 interface Props {
   interval: number;
@@ -19,7 +18,6 @@ export const OLRefetcherBar: React.FunctionComponent<Props> = ({
 
   useEffect(() => {
     const refresh = async (): Promise<void> => {
-      console.log(Date.now(), 'Refetching data...');
       await refetch();
       animate();
     };
