@@ -108,6 +108,12 @@ export const getResultByLiveClassId = defaultEndpointsFactory
         );
       }
 
+      // Calculate the hash here to avoid doing it after adding a bunch of custom fields
+      const hash = crypto
+        .createHash('md5')
+        .update(JSON.stringify(results))
+        .digest('hex');
+
       const tracking = await api.Drizzle.db
         .select()
         .from(OLTrackingTable)
@@ -123,11 +129,6 @@ export const getResultByLiveClassId = defaultEndpointsFactory
         sortingDirection || 'asc',
         nowTimestamp,
       );
-
-      const hash = crypto
-        .createHash('md5')
-        .update(JSON.stringify(sortedResults))
-        .digest('hex');
 
       return {
         className,
