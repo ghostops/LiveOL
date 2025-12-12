@@ -204,7 +204,7 @@ export class SyncLiveClassJob {
           key.endsWith('timeplus') ||
           key.endsWith('place');
 
-        const obj: ParsedSplit = root[keyWithoutUnderscore] || {};
+        const obj: Partial<ParsedSplit> = root[keyWithoutUnderscore] || {};
         if (obj.code === undefined) {
           obj.code = keyWithoutUnderscore;
         }
@@ -267,6 +267,7 @@ export class SyncLiveClassJob {
     classId: string,
     classResults: LiveresultatApi.getclassresults,
   ) {
+    let order = 0;
     for (const split of classResults.splitcontrols) {
       const [existing] = await this.api.Drizzle.db
         .select()
@@ -282,6 +283,7 @@ export class SyncLiveClassJob {
       const body = {
         name: split.name,
         code: String(split.code),
+        order,
         updatedAt: new Date(),
       };
 
@@ -291,7 +293,8 @@ export class SyncLiveClassJob {
           liveClassId: classId,
         });
       } else {
-        const hasChanged = existing?.name !== split.name;
+        const hasChanged =
+          existing?.name !== split.name || existing.order !== order;
         if (!hasChanged) continue;
 
         await this.api.Drizzle.db
@@ -304,6 +307,8 @@ export class SyncLiveClassJob {
             ),
           );
       }
+
+      order += 1;
     }
   }
 
@@ -346,7 +351,7 @@ export class SyncLiveClassJob {
 }
 
 type ParsedSplit = {
-  code?: string;
+  code: string;
   status?: number;
   time?: number;
   place?: number;

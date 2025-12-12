@@ -100,14 +100,12 @@ export const getResultByLiveClassId = defaultEndpointsFactory
         .select()
         .from(LiveSplitControllsTable)
         .where(eq(LiveSplitControllsTable.liveClassId, liveClassId))
-        .orderBy(sql`CASE 
-            WHEN ${LiveSplitControllsTable.code} ~ '^[0-9]+$' 
-            THEN ${LiveSplitControllsTable.code}::integer 
-            ELSE NULL 
-          END`);
+        .orderBy(LiveSplitControllsTable.order);
 
       if (liveSplitControls.length !== 0) {
-        results = await Promise.all(results.map(r => attachSplitControls(r)));
+        results = await Promise.all(
+          results.map(attachSplitControls(liveSplitControls)),
+        );
       }
 
       const tracking = await api.Drizzle.db
@@ -134,39 +132,38 @@ export const getResultByLiveClassId = defaultEndpointsFactory
       return {
         className,
         results: sortedResults,
-        liveSplitControls: liveSplitControls.map(lsc => ({
-          name: lsc.name,
-          // Same here, the code must exist...
-          code: lsc.code!,
-        })),
+        liveSplitControls,
         hash,
       };
     },
   });
 
 // This can probably be optimized with a join, but for now this will do.
-async function attachSplitControls(
-  liveResult: typeof LiveResultsTable.$inferSelect,
-) {
-  const liveSplitResults = await api.Drizzle.db
-    .select()
-    .from(LiveSplitResultsTable)
-    .where(eq(LiveSplitResultsTable.liveResultId, liveResult.liveResultId))
-    .orderBy(sql`CASE 
-        WHEN ${LiveSplitResultsTable.code} ~ '^[0-9]+$' 
-        THEN ${LiveSplitResultsTable.code}::integer 
-        ELSE NULL 
-      END`);
+const attachSplitControls =
+  (liveSplitControls: (typeof LiveSplitControllsTable.$inferSelect)[]) =>
+  async (liveResult: typeof LiveResultsTable.$inferSelect) => {
+    const liveSplitResults = await api.Drizzle.db
+      .select()
+      .from(LiveSplitResultsTable)
+      .where(eq(LiveSplitResultsTable.liveResultId, liveResult.liveResultId));
 
-  return {
-    ...liveResult,
-    splitResults: liveSplitResults.map(lsr => ({
-      ...lsr,
-      // The code must exist at this point, hopefully.
-      code: lsr.code!,
-    })),
+    const order = liveSplitControls.reduce<Record<string, number>>(
+      (acc, lsc, index) => {
+        acc[lsc.code!] = lsc.order ?? index;
+        return acc;
+      },
+      {},
+    );
+
+    return {
+      ...liveResult,
+      splitResults: liveSplitResults.sort((a, b) => {
+        const orderA = order[a.code] ?? Number.MAX_SAFE_INTEGER;
+        const orderB = order[b.code] ?? Number.MAX_SAFE_INTEGER;
+        return orderA - orderB;
+      }),
+    };
   };
-}
 
 export const getLiveResultsForOrganisation = defaultEndpointsFactory
   .addMiddleware(userMiddleware)

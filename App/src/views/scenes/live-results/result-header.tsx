@@ -78,7 +78,9 @@ export const OLResultHeader = (props: Props) => {
           hitSlop={HIT_SLOP}
         >
           <SortingIcon name={'split-' + split.code} />
-          <OLText bold>{split.name}</OLText>
+          <OLText bold numberOfLines={1}>
+            {split.name}
+          </OLText>
         </TouchableOpacity>
       ))}
       <TouchableOpacity
@@ -123,5 +125,6 @@ const styles = StyleSheet.create({
   column: {
     flexDirection: 'row',
     alignItems: 'center',
+    padding: 4,
   },
 });

@@ -12,6 +12,7 @@ interface Props {
   selectable?: boolean;
   uppercase?: boolean;
   mono?: boolean;
+  adjustsFontSizeToFit?: boolean;
   children?:
     | string
     | number
