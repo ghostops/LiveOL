@@ -29,6 +29,13 @@
       "when": 1764503983551,
       "tag": "0003_thick_weapon_omega",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1765533123163,
+      "tag": "0004_chubby_morbius",
+      "breakpoints": true
     }
   ]
 }

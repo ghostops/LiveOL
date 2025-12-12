@@ -1,0 +1,1 @@
+ALTER TABLE "live_split_controlls" ADD COLUMN "order" integer;

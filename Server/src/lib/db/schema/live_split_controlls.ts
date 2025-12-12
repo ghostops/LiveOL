@@ -6,5 +6,6 @@ export const LiveSplitControllsTable = pgTable('live_split_controlls', {
   liveClassId: varchar({ length: 255 }).notNull(),
   name: varchar({ length: 255 }).notNull(),
   code: varchar({ length: 255 }),
+  order: integer(),
   ...commonFields,
 });
