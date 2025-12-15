@@ -3,6 +3,7 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  useColorScheme,
   View,
 } from 'react-native';
 import { useOLNavigation } from '~/hooks/useNavigation';
@@ -100,7 +101,7 @@ export const OLSceneSearch = () => {
           ]}
         >
           <OLText size={14} style={{ color: COLORS.WHITE }}>
-            📅 {t('home.dateFilters')}
+            📅 {t('Filter by date')}
             {showFilters ? ' ▼' : ' ▶'}
           </OLText>
         </TouchableOpacity>
@@ -151,7 +152,7 @@ export const OLSceneSearch = () => {
             ListEmptyComponent={
               searchResults.isLoading ? null : (
                 <View style={style.emptyState}>
-                  <OLText size={16}>{t('home.nothingSearch')}</OLText>
+                  <OLText size={16}>{t('No competitions found')}</OLText>
                 </View>
               )
             }
@@ -189,6 +190,7 @@ function DatePicker({
   onChange: (startDate: Date, endDate: Date) => void;
 }) {
   const defaultStyles = useDefaultStyles();
+  const colorScheme = useColorScheme();
   const [startDate, setStartDate] = useState<DateType>(new Date());
   const [endDate, setEndDate] = useState<DateType>(new Date());
 
@@ -206,6 +208,24 @@ function DatePicker({
       }}
       styles={{
         ...defaultStyles,
+        day_label: {
+          ...defaultStyles.day_label,
+          color: COLORS.BLACK,
+        },
+        selected: {
+          ...defaultStyles.selected_label,
+          backgroundColor: COLORS.MAIN,
+        },
+        selected_label: {
+          ...defaultStyles.selected_label,
+          color: COLORS.WHITE,
+        },
+        header: {
+          ...defaultStyles.header,
+          backgroundColor: colorScheme === 'dark' ? COLORS.DARK : COLORS.WHITE,
+          borderTopLeftRadius: 16,
+          borderTopRightRadius: 16,
+        },
       }}
       style={{ backgroundColor: COLORS.WHITE, borderRadius: 16, marginTop: 8 }}
       firstDayOfWeek={1}
