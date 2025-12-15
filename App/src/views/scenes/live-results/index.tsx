@@ -107,7 +107,7 @@ export const OLSceneLiveResults = () => {
                       textAlign: 'center',
                     }}
                   >
-                    {t('classes.empty')}
+                    {t('No competitors in this class')}
                   </OLText>
                 </View>
               ) : null

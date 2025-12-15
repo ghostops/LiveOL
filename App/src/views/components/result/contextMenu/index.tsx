@@ -40,7 +40,7 @@ export const OLRunnerContextMenu: React.FC<Props> = ({
     if (canTrackRunner) {
       actions.push({
         id: 'follow',
-        label: t('result.followRunner'),
+        label: t('Follow runner'),
         handler: () => {
           if (!plusActive) {
             presentPaywall();
@@ -62,7 +62,7 @@ export const OLRunnerContextMenu: React.FC<Props> = ({
     if (canGoToCompetition && olCompetitionId) {
       actions.push({
         id: 'viewCompetition',
-        label: t('result.goToCompetition'),
+        label: t('See competition info'),
         handler: () => {
           navigation.navigate('Competition', {
             olCompetitionId,
@@ -74,7 +74,7 @@ export const OLRunnerContextMenu: React.FC<Props> = ({
     if (olCompetitionId && liveClassId) {
       actions.push({
         id: 'viewLiveResults',
-        label: t('result.goToClass'),
+        label: t('See class results'),
         handler: () => {
           navigation.navigate('LiveResults', {
             olCompetitionId,
@@ -87,7 +87,7 @@ export const OLRunnerContextMenu: React.FC<Props> = ({
     if (olCompetitionId && olOrganizationId) {
       actions.push({
         id: 'viewClubResults',
-        label: t('result.goToClub'),
+        label: t('See club results'),
         handler: () => {
           navigation.navigate('ClubResults', {
             olCompetitionId,
@@ -99,7 +99,7 @@ export const OLRunnerContextMenu: React.FC<Props> = ({
 
     actions.push({
       id: 'cancel',
-      label: t('common.cancel'),
+      label: t('Cancel'),
       handler: () => {},
     });
 

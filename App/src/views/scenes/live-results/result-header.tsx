@@ -54,7 +54,7 @@ export const OLResultHeader = (props: Props) => {
         hitSlop={HIT_SLOP}
       >
         <SortingIcon name="place" />
-        <OLText bold>{t('classes.header.place')}</OLText>
+        <OLText bold>{t('Place')}</OLText>
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => {
@@ -65,7 +65,7 @@ export const OLResultHeader = (props: Props) => {
         hitSlop={HIT_SLOP}
       >
         <SortingIcon name="name" />
-        <OLText bold>{t('classes.header.name')}</OLText>
+        <OLText bold>{t('Name')}</OLText>
       </TouchableOpacity>
       {props.liveSplitControls?.map(split => (
         <TouchableOpacity
@@ -95,7 +95,7 @@ export const OLResultHeader = (props: Props) => {
         hitSlop={HIT_SLOP}
       >
         <SortingIcon name="result" />
-        <OLText bold>{t('classes.header.time')}</OLText>
+        <OLText bold>{t('Time')}</OLText>
       </TouchableOpacity>
     </View>
   );

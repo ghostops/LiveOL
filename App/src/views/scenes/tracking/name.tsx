@@ -24,7 +24,7 @@ export const OLNameTrackingInput = ({
         fontSize: 16,
         backgroundColor: COLORS.WHITE,
       }}
-      placeholder={t('tracking.edit.namePlaceholder')}
+      placeholder={t('Enter runner name')}
       placeholderTextColor="#666"
       value={name}
       onChangeText={setName}

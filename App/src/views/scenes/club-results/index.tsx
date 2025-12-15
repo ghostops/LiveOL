@@ -103,7 +103,7 @@ export const OLSceneClubResults = () => {
                   textAlign: 'center',
                 }}
               >
-                {t('classes.emptyClub')}
+                {t('No competitors from this club')}
               </OLText>
             </View>
           ) : null

@@ -45,7 +45,7 @@ export const HomeHeader: React.FC = () => {
 
         <View style={{ flex: 1, alignItems: 'center' }}>
           <OLText size={18} style={{ color: '#fff' }}>
-            {t('home.title')}
+            {t('LiveOL')}
           </OLText>
         </View>
 

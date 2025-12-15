@@ -125,7 +125,7 @@ export const OLSceneCompetition = () => {
 
               {getCompetitionQuery.data?.data.competition.date && (
                 <OLText size={16}>
-                  {t('competitions.date')}: {date}
+                  {t('Date')}: {date}
                 </OLText>
               )}
               {getCompetitionQuery.data?.data.competition.distance && (
@@ -135,13 +135,13 @@ export const OLSceneCompetition = () => {
                     textTransform: 'capitalize',
                   }}
                 >
-                  {t('competitions.distance')}:{' '}
+                  {t('Distance')}:{' '}
                   {getCompetitionQuery.data.data.competition.distance}
                 </OLText>
               )}
               {getCompetitionQuery.data?.data.competition.punchSystem && (
                 <OLText size={16}>
-                  {t('competitions.punchSystem')}:{' '}
+                  {t('Punch System')}:{' '}
                   {getCompetitionQuery.data.data.competition.punchSystem}
                 </OLText>
               )}
@@ -159,14 +159,14 @@ export const OLSceneCompetition = () => {
             {/* Add a map view based on lat/lng of competition */}
 
             <OLText size={18} style={{ paddingLeft: 6, marginVertical: 16 }}>
-              {t('competitions.classes')}
+              {t('Classes')}
             </OLText>
           </View>
         }
         ListEmptyComponent={
           getCompetitionQuery.isLoading ? null : (
             <OLText style={{ paddingLeft: 8 }}>
-              {t('competitions.noClasses')}
+              {t('No classes')}
             </OLText>
           )
         }
@@ -193,7 +193,7 @@ function OrganizerText({
 
   const Text = (
     <OLText size={16}>
-      {t('competitions.organizedBy')}:{' '}
+      {t('Organized by')}:{' '}
       <OLText
         size={16}
         style={{ textDecorationLine: olOrganizationId ? 'underline' : 'none' }}

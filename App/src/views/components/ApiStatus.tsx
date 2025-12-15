@@ -35,7 +35,7 @@ export const OLApiStatus = () => {
     >
       <OLIcon name="warning" size={px(24)} color={colors.WHITE} />
       <OLText style={{ color: colors.WHITE }}>
-        {t('apiStatus.liveresultat')}
+        {t('liveresultat.orientering.se is currently experiencing issues')}
       </OLText>
     </View>
   );

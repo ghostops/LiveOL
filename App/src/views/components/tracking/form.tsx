@@ -81,24 +81,24 @@ export const OLTrackingForm = ({
       if (!isUserMode) {
         if (!debouncedName.trim()) {
           Alert.alert(
-            t('tracking.edit.error'),
-            t('tracking.edit.nameRequired'),
+            t('Error'),
+            t('Runner name is required'),
           );
           return;
         }
 
         if (!userId) {
           Alert.alert(
-            t('tracking.edit.error'),
-            t('tracking.edit.userNotFound'),
+            t('Error'),
+            t('User not found. Please restart the app.'),
           );
           return;
         }
 
         if (classes.length === 0 || clubs.length === 0) {
           Alert.alert(
-            t('tracking.edit.error'),
-            t('tracking.edit.atLeastOneClubAndClass'),
+            t('Error'),
+            t('Please enter at least one club and one class'),
           );
           return;
         }
@@ -116,7 +116,7 @@ export const OLTrackingForm = ({
         classes.length > 29
       ) {
         if (!isUserMode) {
-          Alert.alert(t('tracking.edit.error'));
+          Alert.alert(t('Error'));
         }
         return;
       }
@@ -159,8 +159,8 @@ export const OLTrackingForm = ({
         }
       } catch (error: any) {
         Alert.alert(
-          t('tracking.edit.error'),
-          error.message || t('tracking.edit.saveFailed'),
+          t('Error'),
+          error.message || t('Failed to save runner'),
         );
       }
     },
@@ -199,7 +199,7 @@ export const OLTrackingForm = ({
           }}
         >
           <OLText size={16} style={{ marginBottom: px(4) }} bold>
-            {isUserMode ? t('profile.tracking.name') : t('tracking.edit.name')}
+            {isUserMode ? t('My full name') : t('Runner Name')}
           </OLText>
           {isUserMode && <TrackingInfoIcon color={COLORS.MAIN} />}
         </View>
@@ -209,7 +209,7 @@ export const OLTrackingForm = ({
       {/* Clubs */}
       <View>
         <OLText size={16} style={{ marginBottom: px(4) }} bold>
-          {isUserMode ? t('profile.tracking.clubs') : t('tracking.edit.clubs')}
+          {isUserMode ? t('My clubs') : t('Clubs')}
         </OLText>
         <OLClubsTrackingInput onAddClub={addClub} />
         <View
@@ -244,8 +244,8 @@ export const OLTrackingForm = ({
       <View>
         <OLText size={16} style={{ marginBottom: px(4) }} bold>
           {isUserMode
-            ? t('profile.tracking.classes')
-            : t('tracking.edit.classes')}
+            ? t('My classes')
+            : t('Classes')}
         </OLText>
         <OLClassesTrackingInput onAddClass={addClass} />
         <View
@@ -280,8 +280,8 @@ export const OLTrackingForm = ({
         <View>
           <OLButton onPress={handleSave} disabled={isLoading}>
             {mode === 'create'
-              ? t('tracking.edit.create')
-              : t('tracking.edit.update')}
+              ? t('Start following')
+              : t('Update following')}
           </OLButton>
         </View>
       )}

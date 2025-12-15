@@ -13,23 +13,23 @@ export const TrackingInfoScreen: React.FC = () => {
   const steps = [
     {
       icon: 'person-add' as const,
-      title: t('profile.tracking.info.step1.title'),
-      description: t('profile.tracking.info.step1.description'),
+      title: t('Add runner details'),
+      description: t("Enter the runner's name, their clubs, and the classes they compete in."),
     },
     {
       icon: 'search' as const,
-      title: t('profile.tracking.info.step2.title'),
-      description: t('profile.tracking.info.step2.description'),
+      title: t('Smart matching'),
+      description: t('The system finds your runners across all competitions, even with (slightly) different spellings.'),
     },
     {
       icon: 'notifications' as const,
-      title: t('profile.tracking.info.step3.title'),
-      description: t('profile.tracking.info.step3.description'),
+      title: t('Get highlighted'),
+      description: t('See your followed runners instantly highlighted in competition results.'),
     },
     {
       icon: 'sparkles' as const,
-      title: t('profile.tracking.info.step4.title'),
-      description: t('profile.tracking.info.step4.description'),
+      title: t('Follow multiple runners'),
+      description: t('If you have LiveO+ you can follow as many runners as you like, otherwise you are restricted to following yourself.'),
     },
   ];
 
@@ -46,7 +46,7 @@ export const TrackingInfoScreen: React.FC = () => {
       >
         <OLCard style={{ marginBottom: px(16) }}>
           <OLText size={20} bold style={{ marginBottom: px(16) }}>
-            {t('profile.tracking.info.title')}
+            {t('How following a runner works')}
           </OLText>
 
           {steps.map((step, index) => (
@@ -106,11 +106,11 @@ export const TrackingInfoScreen: React.FC = () => {
               style={{ marginRight: px(8) }}
             />
             <OLText size={16} bold>
-              {t('profile.tracking.info.example.title')}
+              {t('Pro tip')}
             </OLText>
           </View>
           <OLText size={14} style={{ color: COLORS.GRAY }}>
-            {t('profile.tracking.info.example.description')}
+            {t('Add multiple clubs if your runner competes for different organizations. The system will find them wherever they race!')}
           </OLText>
         </OLCard>
 

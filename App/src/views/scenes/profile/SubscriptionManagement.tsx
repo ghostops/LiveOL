@@ -29,9 +29,9 @@ export const SubscriptionManagement = () => {
   };
 
   const plusBenefits = [
-    t('plus.benefits.sorting'),
-    t('plus.benefits.tracking'),
-    t('plus.benefits.support'),
+    t('Sort results by any column'),
+    t('Follow unlimited runners'),
+    t('Support LiveOL development'),
   ];
 
   const formattedExpirationDate = plusExpirationDate
@@ -63,10 +63,10 @@ export const SubscriptionManagement = () => {
             style={{ color: COLORS.WHITE, marginBottom: px(12) }}
           >
             {plusWillRenew
-              ? t('plus.status.renew', {
+              ? t('Thanks for supporting LiveOL, you subscription will renew by: {{ date }}', {
                   date: formattedExpirationDate,
                 })
-              : t('plus.status.expire', {
+              : t('Thanks for having supported LiveOL, you subscription will expire by: {{ date }}', {
                   date: formattedExpirationDate,
                 })}
           </OLText>
@@ -97,10 +97,10 @@ export const SubscriptionManagement = () => {
       ) : (
         <OLCard>
           <OLText size={16} bold style={{ marginBottom: px(8) }}>
-            {t('profile.subscription.title')}
+            {t('Subscription')}
           </OLText>
           <OLText size={14} style={{ marginBottom: px(16) }}>
-            {t('plus.buy.text')}
+            {t('Unlock exclusive benefits and power the project forward with a budget-friendly annual subscription, ensuring LiveOL thrives.')}
           </OLText>
 
           <View
@@ -137,7 +137,7 @@ export const SubscriptionManagement = () => {
               bold
               style={{ textAlign: 'center', marginBottom: px(12) }}
             >
-              {displayPrice} / {t('plus.perYear')}
+              {displayPrice} / {t('per year')}
             </OLText>
           )}
 
@@ -145,7 +145,7 @@ export const SubscriptionManagement = () => {
             onPress={handleGetLiveOlPlus}
             style={{ marginBottom: px(12) }}
           >
-            {t('plus.promo.get')}
+            {t('Get LiveOL+')}
           </OLButton>
 
           <TouchableOpacity onPress={handleRestorePurchases}>
@@ -153,7 +153,7 @@ export const SubscriptionManagement = () => {
               size={14}
               style={{ color: COLORS.BLUE, textAlign: 'center' }}
             >
-              {t('plus.restore')}
+              {t('Restore purchases')}
             </OLText>
           </TouchableOpacity>
         </OLCard>

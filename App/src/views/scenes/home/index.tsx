@@ -146,7 +146,7 @@ export const OLSceneHome = () => {
               bold
               size={16}
             >
-              {hasCompetitionsToday ? t('home.today') : t('home.nothingToday')}
+              {hasCompetitionsToday ? t('Today') : t('There are no competitions today')}
             </OLText>
             <View style={{ backgroundColor: COLORS.WHITE }}>
               {getTodaysCompetitionsQuery.data?.data.competitions.map(item => (

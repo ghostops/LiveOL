@@ -50,15 +50,15 @@ export const OLSceneTracking = () => {
 
   const handleDelete = async (id: number, name: string) => {
     Alert.alert(
-      t('tracking.delete.title'),
-      t('tracking.delete.message', { name }),
+      t('Delete Runner'),
+      t('Are you sure you want to stop tracking {{name}}?', { name }),
       [
         {
-          text: t('tracking.delete.cancel'),
+          text: t('Cancel'),
           style: 'cancel',
         },
         {
-          text: t('tracking.delete.confirm'),
+          text: t('Delete'),
           style: 'destructive',
           onPress: async () => {
             try {
@@ -69,7 +69,7 @@ export const OLSceneTracking = () => {
                 queryKey: ['get', '/v2/tracking'],
               });
             } catch (error: any) {
-              Alert.alert(t('tracking.delete.error'), error.message);
+              Alert.alert(t('Error'), error.message);
             }
           },
         },
@@ -83,7 +83,7 @@ export const OLSceneTracking = () => {
       style={[styles.deleteButton, { paddingHorizontal: px(20) }]}
     >
       <OLText size={16} bold style={styles.deleteButtonText}>
-        {t('tracking.delete.action')}
+        {t('Delete')}
       </OLText>
     </TouchableOpacity>
   );
@@ -115,12 +115,12 @@ export const OLSceneTracking = () => {
                   size={14}
                   style={[styles.itemMeta, { marginBottom: px(2) }]}
                 >
-                  {t('tracking.list.clubs')}: {item.clubs.join(', ')}
+                  {t('Clubs')}: {item.clubs.join(', ')}
                 </OLText>
               )}
               {item.classes.length > 0 && (
                 <OLText size={14} style={styles.itemMeta}>
-                  {t('tracking.list.classes')}: {item.classes.join(', ')}
+                  {t('Classes')}: {item.classes.join(', ')}
                 </OLText>
               )}
               <OLButton
@@ -133,7 +133,7 @@ export const OLSceneTracking = () => {
                   });
                 }}
               >
-                {t('tracking.results')}
+                {t('Results')}
               </OLButton>
             </View>
             <TouchableOpacity
@@ -151,7 +151,7 @@ export const OLSceneTracking = () => {
               style={{ padding: px(8), marginLeft: px(8) }}
             >
               <OLText size={16} style={styles.editButtonText}>
-                {t('tracking.list.edit')}
+                {t('Edit')}
               </OLText>
             </TouchableOpacity>
           </View>
@@ -180,10 +180,10 @@ export const OLSceneTracking = () => {
                 bold
                 style={[styles.emptyTitle, { marginBottom: px(8) }]}
               >
-                {t('tracking.empty.title')}
+                {t('No tracked runners')}
               </OLText>
               <OLText size={16} style={styles.emptyMessage}>
-                {t('tracking.empty.message')}
+                {t('Tap the + button to start tracking a runner')}
               </OLText>
             </View>
           )

@@ -45,7 +45,7 @@ export const BackButton: React.FC<Props> = ({ cross }) => {
             color: !isDark && HAS_LIQUID_GLASS ? colors.BLACK : colors.WHITE,
           }}
         >
-          {t('back')}
+          {t('Back')}
         </OLText>
       )}
     </TouchableOpacity>

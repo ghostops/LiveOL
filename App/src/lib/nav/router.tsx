@@ -90,7 +90,7 @@ const OLHomeTabs: React.FC = () => {
               size={11}
               style={{ opacity: focused ? 1 : 0.8, color: COLORS.WHITE }}
             >
-              {t('tabs.follow')}
+              {t('Following')}
             </OLText>
           ),
         }}
@@ -112,7 +112,7 @@ const OLHomeTabs: React.FC = () => {
               size={11}
               style={{ opacity: focused ? 1 : 0.8, color: COLORS.WHITE }}
             >
-              {t('tabs.home')}
+              {t('Competitions')}
             </OLText>
           ),
         }}
@@ -134,7 +134,7 @@ const OLHomeTabs: React.FC = () => {
               size={11}
               style={{ opacity: focused ? 1 : 0.8, color: COLORS.WHITE }}
             >
-              {t('tabs.profile')}
+              {t('Me')}
             </OLText>
           ),
         }}
@@ -194,8 +194,8 @@ const Component: React.FC = () => {
           options={({ route }) => ({
             title:
               route.params.mode === 'create'
-                ? t('tracking.edit.titleCreate')
-                : t('tracking.edit.titleEdit'),
+                ? t('Add Runner')
+                : t('Edit Runner'),
             headerRight: () => (
               <TrackingInfoIcon isHeader color={COLORS.WHITE} />
             ),
@@ -218,21 +218,21 @@ const Component: React.FC = () => {
             name="Language"
             component={OLLanguageModal}
             options={{
-              title: t('language.pick'),
+              title: t('Pick language'),
             }}
           />
           <Stack.Screen
             name="Search"
             component={OLSceneSearch}
             options={{
-              title: t('home.search'),
+              title: t('Search'),
             }}
           />
           <Stack.Screen
             name="TrackingInfo"
             component={TrackingInfoScreen}
             options={{
-              title: t('profile.tracking.info.title'),
+              title: t('How following a runner works'),
             }}
           />
         </Stack.Group>

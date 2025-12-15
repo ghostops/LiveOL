@@ -103,18 +103,18 @@ export const OLProfile: React.FC = () => {
       {/* SETTINGS & PREFERENCES SECTION */}
       <OLCard style={{ gap: px(16) }}>
         <OLText bold size={20}>
-          {t('profile.settings.title')}
+          {t('Settings & Preferences')}
         </OLText>
 
         {/* Appearance */}
         <View>
           <OLText bold size={16} style={{ marginBottom: px(8) }}>
-            {t('profile.settings.appearance')}
+            {t('Appearance')}
           </OLText>
 
           {/* Text Size */}
           <OLText size={14} style={{ marginBottom: px(8) }}>
-            {t('info.changeTextSize.title')} ({textSizeMultiplier.toFixed(1)})
+            {t('Change text size')} ({textSizeMultiplier.toFixed(1)})
           </OLText>
           <View
             style={{
@@ -126,13 +126,13 @@ export const OLProfile: React.FC = () => {
               onPress={decreaseTextSize}
               style={{ flex: 1, marginRight: px(8) }}
             >
-              {t('info.changeTextSize.decrease')}
+              {t('Decrease size')}
             </OLButton>
             <OLButton
               onPress={increaseTextSize}
               style={{ flex: 1, marginLeft: px(8) }}
             >
-              {t('info.changeTextSize.increase')}
+              {t('Increase size')}
             </OLButton>
           </View>
         </View>
@@ -151,7 +151,7 @@ export const OLProfile: React.FC = () => {
             }}
           >
             <OLText bold size={16}>
-              {t('profile.settings.language')}
+              {t('Language')}
             </OLText>
             <OLFlag code={i18n.language} size={28} />
           </View>
@@ -160,10 +160,10 @@ export const OLProfile: React.FC = () => {
 
         <View>
           <OLText bold size={16} style={{ marginBottom: px(8) }}>
-            {t('profile.settings.results')}
+            {t('Results')}
           </OLText>
           <OLText size={14} style={{ marginBottom: px(8) }}>
-            {t('profile.settings.autoRefresh')}
+            {t('How often results auto-refreshes')}
           </OLText>
           <RefreshInterval />
         </View>
@@ -171,13 +171,13 @@ export const OLProfile: React.FC = () => {
         {/* Data & Privacy */}
         <View>
           <OLText bold size={16} style={{ marginBottom: px(8) }}>
-            {t('profile.settings.data')}
+            {t('Data & Privacy')}
           </OLText>
 
           {userId && (
             <View>
               <OLText size={14} style={{ color: COLORS.GRAY }} mono>
-                {t('profile.settings.userId')}: {userId}
+                {t('User ID')}: {userId}
               </OLText>
             </View>
           )}
@@ -187,15 +187,17 @@ export const OLProfile: React.FC = () => {
       <OLCard style={{ gap: px(16) }}>
         <View style={{ gap: px(8) }}>
           <OLText bold size={20}>
-            {t('profile.about.title')}
+            {t('About & Support')}
           </OLText>
 
           <OLText size={14}>
-            {t('info.version')}: {VERSION}
+            {t('Current version')}: {VERSION}
           </OLText>
 
           <OLText size={14} style={{}}>
-            {t('profile.about.text')}
+            {t(
+              'LiveOL shows live orienteering results right on your phone. Get the latest standings with a clean, easy-to-use interface in multiple languages.\n\nWe pull together results from liveresultat.orientering.se, Eventor, and other orienteering services. Our goal? To be the go-to orienteering app for your phone or tablet.',
+            )}
           </OLText>
         </View>
 
@@ -205,21 +207,21 @@ export const OLProfile: React.FC = () => {
             onPress={handleContactPress}
             style={{ marginBottom: px(12) }}
           >
-            {t('info.contact')}
+            {t('Contact me')}
           </OLButton>
 
           <OLButton onPress={handleReportBug} style={{ marginBottom: px(12) }}>
-            {t('profile.about.reportBug')}
+            {t('Report a bug')}
           </OLButton>
 
           <OLButton onPress={handleNewsletterPress}>
-            {t('info.newsletter')}
+            {t('Sign up for news')}
           </OLButton>
         </View>
 
         <View>
           <OLText bold size={16}>
-            {t('info.translations.credit')}:
+            {t('Translations with the help from')}:
           </OLText>
           {translationCredits.map(({ code, name }, index) => (
             <View
@@ -247,7 +249,7 @@ export const OLProfile: React.FC = () => {
             small
             style={{ marginTop: px(8) }}
           >
-            {t('info.translations.freePlus')}
+            {t('Help out translating for free LiveOL+')}
           </OLButton>
         </View>
       </OLCard>
@@ -255,24 +257,24 @@ export const OLProfile: React.FC = () => {
       {/* LEGAL & INFO SECTION */}
       <OLCard style={{ gap: px(8) }}>
         <OLText bold size={20}>
-          {t('profile.legal.title')}
+          {t('Legal & Info')}
         </OLText>
 
         <TouchableOpacity onPress={handleOpenTerms}>
           <OLText size={14} style={{ color: COLORS.BLUE }}>
-            {t('profile.legal.terms')}
+            {t('Terms of Service')}
           </OLText>
         </TouchableOpacity>
 
         <TouchableOpacity onPress={handleOpenPrivacy}>
           <OLText size={14} style={{ color: COLORS.BLUE }}>
-            {t('profile.legal.privacy')}
+            {t('Privacy Policy')}
           </OLText>
         </TouchableOpacity>
 
         <TouchableOpacity onPress={handleGoToWebsite}>
           <OLText size={14} style={{ color: COLORS.BLUE }}>
-            {t('profile.credit')}
+            {t('Made by Ludvig Larsendahl')}
           </OLText>
         </TouchableOpacity>
       </OLCard>

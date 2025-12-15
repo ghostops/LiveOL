@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { getStatusKey, StatusLength } from '~/util/statusCodes';
 
 /*
     0 - OK
@@ -15,12 +16,11 @@ import { useTranslation } from 'react-i18next';
 
 export const useStatusI18n = (
   status?: number | null,
-  len: 'short' | 'long' = 'short',
+  len: StatusLength = 'short',
 ) => {
   const { t } = useTranslation();
-  const statuses = t(`status.${len}`, { returnObjects: true }) as Record<
-    number,
-    string
-  >;
-  return status !== null && status !== undefined ? statuses[status] : null;
+  const statusKey = getStatusKey(status, len);
+
+  // Return empty string if key is empty, null if status is null/undefined
+  return statusKey === null ? null : statusKey === '' ? '' : t(statusKey);
 };

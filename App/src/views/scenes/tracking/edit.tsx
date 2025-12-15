@@ -45,7 +45,7 @@ export const OLSceneEditTrackRunner: React.FC<{
             }}
           >
             <OLText size={16} style={{ color: COLORS.GRAY }}>
-              {t('tracking.edit.cancel')}
+              {t('Cancel')}
             </OLText>
           </TouchableOpacity>
         </View>

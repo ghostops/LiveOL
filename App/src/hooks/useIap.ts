@@ -112,11 +112,11 @@ export const useIap = () => {
 
       if (info?.entitlements?.active?.plus !== undefined) {
         await loadPurchase();
-        Alert.alert(t('plus.buy.restoreSuccess'));
+        Alert.alert(t('You have restored LiveOL+'));
       } else {
         Alert.alert(
-          t('plus.buy.restoreError.title'),
-          t('plus.buy.restoreError.text'),
+          t('You cannot restore LiveOL+.'),
+          t('Please reach out if you have previously purchased.'),
         );
       }
 
