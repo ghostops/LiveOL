@@ -3,14 +3,12 @@ import { useTheme } from '~/hooks/useTheme';
 import { paths } from '~/lib/react-query/schema';
 import { OLResultAnimation } from '~/views/components/result/item/animation';
 import { OLResultBadge } from '~/views/components/result/item/badge';
-import { OLResultLiveRunning } from '~/views/components/result/item/liveRunning';
-import { OLResultTime } from '~/views/components/result/item/time';
-import { OLResultTimeplus } from '~/views/components/result/item/timeplus';
 import { OLText } from '~/views/components/text';
 import { useOrientation } from '~/hooks/useOrientation';
 import { OrientationType } from 'react-native-orientation-locker';
 import { useRowWidths } from '../live-results/useRowWidths';
 import { OLRunnerContextMenu } from '~/views/components/result/contextMenu';
+import { OLRowTime } from '../live-results/row-time';
 
 type Props = {
   result: paths['/v2/results/live/tracked/{trackingId}']['get']['responses']['200']['content']['application/json']['data']['results'][number];
@@ -77,21 +75,5 @@ export const OLTrackingResultRow = ({ result }: Props) => {
         </View>
       </OLResultAnimation>
     </OLRunnerContextMenu>
-  );
-};
-
-const OLRowTime = ({ result }: Pick<Props, 'result'>) => {
-  const { px } = useTheme();
-
-  if (result.start && result.isLive) {
-    return <OLResultLiveRunning startTime={result.start} />;
-  }
-
-  return (
-    <View style={{ gap: px(4), alignItems: 'flex-end', paddingRight: px(8) }}>
-      <OLResultTime status={result.status} time={result.result} />
-
-      <OLResultTimeplus status={result.status} timeplus={result.timeplus} />
-    </View>
   );
 };

@@ -7,7 +7,7 @@ import { OLResultHeader } from '../live-results/result-header';
 import { OLRefetcherBar } from '~/views/components/refetcher/bar';
 import { keepPreviousData } from '@tanstack/react-query';
 import { useLayoutEffect, useState } from 'react';
-import { nowTimestamp as nowTimestampFs } from '~/util/isLive';
+import { nowTimestamp as nowTimestampFs } from '~/util/time';
 import { useSortingStore } from '~/store/sorting';
 import { useOLNavigation } from '~/hooks/useNavigation';
 import { useUserIdStore } from '~/store/userId';

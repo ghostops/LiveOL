@@ -165,9 +165,7 @@ export const OLSceneCompetition = () => {
         }
         ListEmptyComponent={
           getCompetitionQuery.isLoading ? null : (
-            <OLText style={{ paddingLeft: 8 }}>
-              {t('No classes')}
-            </OLText>
+            <OLText style={{ paddingLeft: 8 }}>{t('No classes')}</OLText>
           )
         }
       />

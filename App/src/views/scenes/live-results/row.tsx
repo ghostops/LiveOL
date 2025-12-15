@@ -3,7 +3,6 @@ import { useTheme } from '~/hooks/useTheme';
 import { paths } from '~/lib/react-query/schema';
 import { OLResultAnimation } from '~/views/components/result/item/animation';
 import { OLResultBadge } from '~/views/components/result/item/badge';
-import { OLResultLiveRunning } from '~/views/components/result/item/liveRunning';
 import { OLResultTime } from '~/views/components/result/item/time';
 import { OLResultTimeplus } from '~/views/components/result/item/timeplus';
 import { OLText } from '~/views/components/text';
@@ -11,6 +10,7 @@ import { useRowWidths } from './useRowWidths';
 import { useOrientation } from '~/hooks/useOrientation';
 import { OrientationType } from 'react-native-orientation-locker';
 import { OLRunnerContextMenu } from '~/views/components/result/contextMenu';
+import { OLRowTime } from './row-time';
 
 type Props = {
   olCompetitionId: string;
@@ -78,32 +78,10 @@ export const OLLiveResultRow = ({
               paddingRight: px(8),
             }}
           >
-            <OLRowTime liveResultItem={result} />
+            <OLRowTime result={result} />
           </View>
         </View>
       </OLResultAnimation>
     </OLRunnerContextMenu>
-  );
-};
-
-const OLRowTime = ({ liveResultItem }: Pick<Props, 'liveResultItem'>) => {
-  const { px } = useTheme();
-
-  if (liveResultItem.start && liveResultItem.isLive) {
-    return <OLResultLiveRunning startTime={liveResultItem.start} />;
-  }
-
-  return (
-    <View style={{ gap: px(4), alignItems: 'flex-end', paddingRight: px(8) }}>
-      <OLResultTime
-        status={liveResultItem.status}
-        time={liveResultItem.result}
-      />
-
-      <OLResultTimeplus
-        status={liveResultItem.status}
-        timeplus={liveResultItem.timeplus}
-      />
-    </View>
   );
 };

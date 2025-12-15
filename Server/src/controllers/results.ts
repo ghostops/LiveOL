@@ -120,7 +120,7 @@ export const getResultByLiveClassId = defaultEndpointsFactory
         .where(eq(OLTrackingTable.olUserId, user.id));
 
       const marshaledResults = results.map(
-        marshalResult({ user, tracking, className }),
+        marshalResult({ user, tracking, className, nowTimestamp }),
       );
 
       const sortedResults = sortOptimalV2(
@@ -219,7 +219,9 @@ export const getLiveResultsForOrganisation = defaultEndpointsFactory
         )
         .orderBy(sql`${LiveResultsTable.result} ASC NULLS LAST`);
 
-      const marshaledResults = results.map(marshalResult({ user }));
+      const marshaledResults = results.map(
+        marshalResult({ user, nowTimestamp }),
+      );
 
       const sortedResults = sortOptimalV2(
         marshaledResults,
@@ -298,7 +300,9 @@ export const getLiveResultsForTrackedRunner = defaultEndpointsFactory
         )
         .orderBy(sql`${LiveResultsTable.updatedAt} ASC NULLS LAST`);
 
-      const marshaledResults = results.map(marshalResult({ user }));
+      const marshaledResults = results.map(
+        marshalResult({ user, nowTimestamp }),
+      );
 
       const sortedResults = sortOptimalV2(
         marshaledResults,

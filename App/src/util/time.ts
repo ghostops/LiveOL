@@ -1,21 +1,5 @@
-import { padTime } from './date';
-
-export const startIsAfterNow = (result: { start: number | null }): boolean => {
-  const diff = (result.start || 0) - nowTimestamp();
-  return diff < 1;
-};
-
-export const isLiveRunning = (result: {
-  result: number | null;
-  start: number | null;
-}): boolean => {
-  return !!(
-    !result.result &&
-    result.start &&
-    result.start > 0 &&
-    startIsAfterNow(result)
-  );
-};
+export const padTime = (time: number, len = 2) =>
+  String(time).padStart(len, '0');
 
 const objectToTimestamp = (dateObj: {
   hours: number;
@@ -36,7 +20,7 @@ export const timestampToString = (time: number) => {
     .join(':');
 };
 
-const timestampToObject = (time: number) => {
+export const timestampToObject = (time: number) => {
   const hours = Math.floor(time / 360000);
   const minutes = Math.floor((time - hours * 360000) / 6000);
   const seconds = Math.floor((time - minutes * 6000 - hours * 360000) / 100);

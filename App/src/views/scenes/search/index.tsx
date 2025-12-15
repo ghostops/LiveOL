@@ -82,7 +82,7 @@ export const OLSceneSearch = () => {
                 paddingVertical: px(8),
               },
             ]}
-            placeholder={t('home.searchPlaceholder')}
+            placeholder={t('Search competitions or organizers...')}
             placeholderTextColor={COLORS.GRAY}
             value={searchQuery}
             onChangeText={setSearchQuery}
@@ -121,7 +121,9 @@ export const OLSceneSearch = () => {
         {!shouldFetch ? (
           <View style={style.emptyState}>
             <OLText size={16}>
-              {t('home.searchTooltip', { count: MIN_SEARCH_LENGTH })}
+              {t('Enter at least {{ count }} characters to search', {
+                count: MIN_SEARCH_LENGTH,
+              })}
             </OLText>
           </View>
         ) : searchResults.isLoading ? (

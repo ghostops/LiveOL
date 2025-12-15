@@ -25,10 +25,12 @@ export const marshalResult =
     user,
     tracking,
     className,
+    nowTimestamp,
   }: {
     user?: typeof OLUsersTable.$inferSelect;
     tracking?: (typeof OLTrackingTable.$inferSelect)[];
     className?: string | null;
+    nowTimestamp: number;
   }) =>
   (result: ResultWithMaybeSplits) => {
     let isTracking = false;
@@ -42,7 +44,8 @@ export const marshalResult =
         !result.result &&
         result.start !== null &&
         result.progress !== null &&
-        result.progress < 100
+        result.progress < 100 &&
+        result.start <= nowTimestamp
       ),
       hasRecentlyUpdated: checkIfRecentlyUpdated(result),
       isTracking,

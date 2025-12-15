@@ -14,7 +14,7 @@ import { OLLiveResultRow } from './row';
 import { OLHorizontalScrollView } from './horizontal-scrollview';
 import { useSortingStore } from '~/store/sorting';
 import { keepPreviousData } from '@tanstack/react-query';
-import { nowTimestamp as nowTimestampFs } from '~/util/isLive';
+import { nowTimestamp as nowTimestampFs } from '~/util/time';
 import { useNotifyOnUpdate } from './useNotifyOnUpdate';
 import { useUserIdStore } from '~/store/userId';
 import { useRefreshIntervalStore } from '~/store/refreshInterval';

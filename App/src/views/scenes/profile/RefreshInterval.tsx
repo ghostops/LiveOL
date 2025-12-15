@@ -19,7 +19,7 @@ export const RefreshInterval = () => {
         gap: px(8),
       }}
     >
-      {[10_000, 15_000, 30_000, 60_000].map(interval => (
+      {[5_000, 10_000, 15_000, 30_000, 60_000].map(interval => (
         <TouchableOpacity
           key={interval}
           onPress={() => {

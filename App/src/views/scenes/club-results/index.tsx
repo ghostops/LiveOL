@@ -11,7 +11,7 @@ import { OLText } from '~/views/components/text';
 import { OLClubResultRow } from './row';
 import { OLResultHeader } from '../live-results/result-header';
 import { useSortingStore } from '~/store/sorting';
-import { nowTimestamp as nowTimestampFs } from '~/util/isLive';
+import { nowTimestamp as nowTimestampFs } from '~/util/time';
 import { OLRefetcherBar } from '~/views/components/refetcher/bar';
 import { keepPreviousData } from '@tanstack/react-query';
 import { useUserIdStore } from '~/store/userId';

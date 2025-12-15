@@ -31,6 +31,3 @@ export const dateToReadable = (date: string): string => {
     locale: dateFnsLocales[i18next.language as SupportedLocale],
   });
 };
-
-export const padTime = (time: number, len = 2) =>
-  String(time).padStart(len, '0');
