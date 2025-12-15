@@ -93,7 +93,7 @@ android {
         applicationId "se.liveol.rn"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 95
+        versionCode 96
         versionName vname
     }
     signingConfigs {
