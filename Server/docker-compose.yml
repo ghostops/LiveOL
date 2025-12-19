@@ -22,7 +22,7 @@ services:
             - '6379:6379'
 
     db:
-        image: postgres:latest
+        image: postgres:17-alpine
         ports:
             - '5432:5432'
         environment:

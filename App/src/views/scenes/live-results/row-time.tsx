@@ -17,7 +17,12 @@ export const OLRowTime = ({ result }: Props) => {
     return <OLResultLiveRunning startTime={result.start} />;
   }
 
-  if (result.start && !result.result && !result.isLive) {
+  if (
+    result.start &&
+    !result.result &&
+    !result.isLive &&
+    result.progress !== 100
+  ) {
     return <OLStartTime time={result.start} />;
   }
 
