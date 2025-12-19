@@ -1,0 +1,27 @@
+{
+  "name": "@liveol/cli",
+  "version": "1.0.0",
+  "description": "CLI for mocking live orienteering results",
+  "main": "build/index.js",
+  "bin": {
+    "livecli": "./bin/livecli"
+  },
+  "scripts": {
+    "start": "tsx src/index.ts",
+    "lint": "eslint ./src"
+  },
+  "dependencies": {
+    "commander": "^12.0.0",
+    "dotenv": "^16.5.0",
+    "date-fns": "^4.1.0",
+    "drizzle-orm": "^0.44.2",
+    "pg": "^8.16.0",
+    "chalk": "^5.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.8.3",
+    "tsx": "^4.20.3",
+    "eslint": "^8.56.0"
+  }
+}
