@@ -109,7 +109,7 @@
   "Get the most out of LiveOL and support its continued development. Check out LiveOL+ today:": "Få ut mest av LiveOL och stöd appens fortsatta utveckling. Kolla vad LiveOL+ erbjuder idag:",
   "Get LiveOL+": "Skaffa LiveOL+",
   "Made by Ludvig Larsendahl": "Skapad av Ludvig Larsendahl",
-  "My full name": "Mitt fullständiga namn",
+  "My full name": "Mitt namn",
   "My clubs": "Mina klubbar",
   "My classes": "Mina klasser",
   "How following a runner works": "Så fungerar följning av löpare",
@@ -203,5 +203,6 @@
   "Delete Runner": "Ta bort Löpare",
   "Are you sure you want to stop tracking {{name}}?": "Är du säker på att du vill sluta följa {{name}}?",
   "Delete": "Ta bort",
-  "Failed to delete runner": "Misslyckades ta bort löpare"
+  "Failed to delete runner": "Misslyckades ta bort löpare",
+  "See future competitions": "Se framtida tävlingar"
 }

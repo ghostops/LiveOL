@@ -12,7 +12,7 @@ import { EventorUrls } from 'lib/eventor/scrapers/urls';
 import { URL } from 'url';
 import createHttpError from 'http-errors';
 import { fromZonedTime, toZonedTime } from 'date-fns-tz';
-import { endOfDay, startOfDay } from 'date-fns';
+import { endOfDay, nextMonday, startOfDay } from 'date-fns';
 
 const api = apiSingletons.createApiSingletons();
 
@@ -140,6 +140,7 @@ export const getCompetitions = defaultEndpointsFactory.build({
     cursor: z.coerce.number().default(1),
     timezone: z.string().default('UTC'),
     countryCode: z.string().optional(),
+    showFuture: z.string().default('0'),
   }),
   output: z.object({
     page: z.number(),
@@ -153,15 +154,19 @@ export const getCompetitions = defaultEndpointsFactory.build({
     ),
     timezone: z.string(),
   }),
-  handler: async ({ input: { cursor, timezone } }) => {
+  handler: async ({ input: { cursor, timezone, showFuture } }) => {
+    const shouldShowFuture = Number(showFuture) > 0 ? true : false;
     const page: number = cursor < 1 ? 1 : cursor;
     const PER_PAGE = 10;
+
+    const startOfNextWeek = toZonedTime(nextMonday(new Date()), timezone);
 
     const countRes = await api.Drizzle.db.execute<{ total: string }>(sql`
       SELECT COUNT(DISTINCT DATE(COALESCE(ec.date, lc.date) AT TIME ZONE 'UTC' AT TIME ZONE ${timezone})) as total
       FROM ol_competitions AS oc
       LEFT JOIN live_competitions AS lc ON lc."olCompetitionId" = oc.id
       LEFT JOIN eventor_competitions AS ec ON ec."olCompetitionId" = oc.id
+      ${shouldShowFuture ? sql`` : sql`WHERE DATE(COALESCE(ec.date, lc.date) AT TIME ZONE 'UTC' AT TIME ZONE ${timezone}) <= ${startOfNextWeek.toISOString()}`}
     `);
 
     const totalCount = Number(countRes.rows[0]?.total || 0);
@@ -195,6 +200,7 @@ export const getCompetitions = defaultEndpointsFactory.build({
         LEFT JOIN eventor_competitions AS ec 
           ON ec."olCompetitionId" = oc.id
       ) sub
+      ${shouldShowFuture ? sql`` : sql`WHERE local_date <= ${startOfNextWeek.toISOString()}`}
       GROUP BY local_date
       ORDER BY local_date DESC
       LIMIT ${PER_PAGE}

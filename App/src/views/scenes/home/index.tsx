@@ -17,12 +17,14 @@ import { flagEmoji } from '~/util/flagEmoji';
 import { useTranslation } from 'react-i18next';
 import { format } from 'date-fns';
 import { OLApiStatus } from '~/views/components/ApiStatus';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import BootSplash from 'react-native-bootsplash';
+import { OLButton } from '~/views/components/button';
 
 export const OLSceneHome = () => {
   const { colors, px } = useTheme();
   const { t } = useTranslation();
+  const [showFutureCompetitions, setShowFutureCompetitions] = useState(false);
 
   const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
@@ -46,6 +48,7 @@ export const OLSceneHome = () => {
         query: {
           cursor: 1,
           timezone,
+          showFuture: showFutureCompetitions ? '1' : '0',
         },
       },
     },
@@ -53,7 +56,7 @@ export const OLSceneHome = () => {
       getNextPageParam: (
         res: paths['/v2/competitions']['get']['responses']['200']['content']['application/json'],
       ) => {
-        if (!res.data.nextPage || res.data.nextPage >= res.data.lastPage) {
+        if (!res.data.nextPage || res.data.nextPage > res.data.lastPage) {
           return undefined;
         }
         return res.data.nextPage;
@@ -129,29 +132,57 @@ export const OLSceneHome = () => {
           getCompetitionsQuery.fetchNextPage();
         }}
         ListHeaderComponent={
-          <View
-            style={{
-              backgroundColor: COLORS.MAIN,
-              paddingHorizontal: px(8),
-              paddingBottom: hasCompetitionsToday ? px(16) : 0,
-              paddingTop: px(8),
-            }}
-          >
-            <OLText
+          <View>
+            {showFutureCompetitions === false && (
+              <View
+                style={{
+                  alignSelf: 'flex-start',
+                  padding: px(4),
+                }}
+              >
+                <OLButton
+                  small
+                  onPress={() => {
+                    setShowFutureCompetitions(true);
+                  }}
+                >
+                  {t('See future competitions')}
+                </OLButton>
+              </View>
+            )}
+
+            <View
               style={{
-                color: COLORS.WHITE,
-                marginBottom: px(8),
-                textAlign: hasCompetitionsToday ? 'left' : 'center',
+                backgroundColor: COLORS.MAIN,
+                paddingHorizontal: px(8),
+                paddingBottom: hasCompetitionsToday ? px(16) : 0,
+                paddingTop: px(8),
               }}
-              bold
-              size={16}
             >
-              {hasCompetitionsToday ? t('Today') : t('There are no competitions today')}
-            </OLText>
-            <View style={{ backgroundColor: COLORS.WHITE }}>
-              {getTodaysCompetitionsQuery.data?.data.competitions.map(item => (
-                <HomeRowItem key={item.id} item={item} showOrganizationName />
-              ))}
+              <OLText
+                style={{
+                  color: COLORS.WHITE,
+                  marginBottom: px(8),
+                  textAlign: hasCompetitionsToday ? 'left' : 'center',
+                }}
+                bold
+                size={16}
+              >
+                {hasCompetitionsToday
+                  ? t('Today')
+                  : t('There are no competitions today')}
+              </OLText>
+              <View style={{ backgroundColor: COLORS.WHITE }}>
+                {getTodaysCompetitionsQuery.data?.data.competitions.map(
+                  item => (
+                    <HomeRowItem
+                      key={item.id}
+                      item={item}
+                      showOrganizationName
+                    />
+                  ),
+                )}
+              </View>
             </View>
           </View>
         }
