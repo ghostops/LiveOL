@@ -63,12 +63,18 @@ export const SubscriptionManagement = () => {
             style={{ color: COLORS.WHITE, marginBottom: px(12) }}
           >
             {plusWillRenew
-              ? t('Thanks for supporting LiveOL, you subscription will renew by: {{ date }}', {
-                  date: formattedExpirationDate,
-                })
-              : t('Thanks for having supported LiveOL, you subscription will expire by: {{ date }}', {
-                  date: formattedExpirationDate,
-                })}
+              ? t(
+                  'Thanks for supporting LiveOL, you subscription will renew by: {{ date }}',
+                  {
+                    date: formattedExpirationDate,
+                  },
+                )
+              : t(
+                  'Thanks for having supported LiveOL, you subscription will expire by: {{ date }}',
+                  {
+                    date: formattedExpirationDate,
+                  },
+                )}
           </OLText>
 
           <View style={{ marginTop: px(8) }}>
@@ -100,7 +106,9 @@ export const SubscriptionManagement = () => {
             {t('Subscription')}
           </OLText>
           <OLText size={14} style={{ marginBottom: px(16) }}>
-            {t('Unlock exclusive benefits and power the project forward with a budget-friendly annual subscription, ensuring LiveOL thrives.')}
+            {t(
+              'Unlock exclusive benefits and power the project forward with a budget-friendly annual subscription, ensuring LiveOL thrives.',
+            )}
           </OLText>
 
           <View
