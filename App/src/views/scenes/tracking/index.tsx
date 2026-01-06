@@ -18,6 +18,7 @@ import { ReanimatedSwipeable } from '~/views/components/ReanimatedSwipeable';
 import { queryClient } from '~/lib/react-query/client';
 import { OLButton } from '~/views/components/button';
 import { OLIcon } from '~/views/components/icon';
+import { OLTrackingSkeletonList } from './skeleton';
 
 type TrackingItem =
   paths['/v2/tracking']['get']['responses']['200']['content']['application/json']['data']['tracking'][0];
@@ -164,8 +165,10 @@ export const OLSceneTracking = () => {
 
   return (
     <View style={styles.container}>
-      {isLoading && <OLLoading badge />}
-      <FlatList
+      {isLoading ? (
+        <OLTrackingSkeletonList />
+      ) : (
+        <FlatList
         data={tracking}
         renderItem={renderItem}
         contentContainerStyle={{
@@ -189,6 +192,7 @@ export const OLSceneTracking = () => {
           )
         }
       />
+      )}
 
       {/* Floating Action Button */}
       <TouchableOpacity

@@ -6,6 +6,7 @@ import { $api } from '~/lib/react-query/api';
 import { useUserIdStore } from '~/store/userId';
 import { OLButton } from '~/views/components/button';
 import { OLTrackingForm } from '~/views/components/tracking/form';
+import { UserProfileFormSkeleton } from './skeleton';
 
 export const UserProfileForm: React.FC = () => {
   const { t } = useTranslation();
@@ -25,7 +26,11 @@ export const UserProfileForm: React.FC = () => {
     { enabled: !!uid },
   );
 
-  if (isLoading || isError || !data) {
+  if (isLoading) {
+    return <UserProfileFormSkeleton />;
+  }
+
+  if (isError || !data) {
     return null;
   }
 

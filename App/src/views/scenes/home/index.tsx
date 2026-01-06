@@ -20,6 +20,7 @@ import { OLApiStatus } from '~/views/components/ApiStatus';
 import { useEffect, useState } from 'react';
 import BootSplash from 'react-native-bootsplash';
 import { OLButton } from '~/views/components/button';
+import { OLHomeSkeletonList } from './skeleton';
 
 export const OLSceneHome = () => {
   const { colors, px } = useTheme();
@@ -85,108 +86,115 @@ export const OLSceneHome = () => {
     }
   }, [getCompetitionsQuery.isFetched]);
 
+  const isInitialLoading =
+    getCompetitionsQuery.isLoading || getTodaysCompetitionsQuery.isLoading;
+
   return (
     <View style={{ flex: 1 }}>
       <OLApiStatus />
-      <SectionList
-        sections={
-          getCompetitionsQuery.data
-            ? getCompetitionsQuery.data.pages
-                .flatMap(p => p.data.competitions)
-                .map(c => ({
-                  title: c.competition_date,
-                  data: c.competitions,
-                }))
-            : []
-        }
-        renderSectionHeader={({ section: { title } }) => {
-          return (
-            <View style={style.header}>
-              <OLText size={12}>{title}</OLText>
-            </View>
-          );
-        }}
-        renderItem={({ item }) => {
-          return <HomeRowItem item={item} showOrganizationName />;
-        }}
-        keyExtractor={item => String(item.id)}
-        style={{ flex: 1 }}
-        refreshControl={
-          <RefreshControl
-            refreshing={isRefreshing}
-            onRefresh={refetch}
-            tintColor={colors.MAIN}
-          />
-        }
-        ListFooterComponent={
-          getCompetitionsQuery.isFetchingNextPage ? (
-            <View style={{ padding: px(16) }}>
-              <OLLoading />
-            </View>
-          ) : null
-        }
-        onEndReached={() => {
-          if (getCompetitionsQuery.isFetchingNextPage) {
-            return;
+      {isInitialLoading ? (
+        <OLHomeSkeletonList />
+      ) : (
+        <SectionList
+          sections={
+            getCompetitionsQuery.data
+              ? getCompetitionsQuery.data.pages
+                  .flatMap(p => p.data.competitions)
+                  .map(c => ({
+                    title: c.competition_date,
+                    data: c.competitions,
+                  }))
+              : []
           }
-          getCompetitionsQuery.fetchNextPage();
-        }}
-        ListHeaderComponent={
-          <View>
-            {showFutureCompetitions === false && (
-              <View
-                style={{
-                  alignSelf: 'flex-start',
-                  padding: px(4),
-                }}
-              >
-                <OLButton
-                  small
-                  onPress={() => {
-                    setShowFutureCompetitions(true);
+          renderSectionHeader={({ section: { title } }) => {
+            return (
+              <View style={style.header}>
+                <OLText size={12}>{title}</OLText>
+              </View>
+            );
+          }}
+          renderItem={({ item }) => {
+            return <HomeRowItem item={item} showOrganizationName />;
+          }}
+          keyExtractor={item => String(item.id)}
+          style={{ flex: 1 }}
+          refreshControl={
+            <RefreshControl
+              refreshing={isRefreshing}
+              onRefresh={refetch}
+              tintColor={colors.MAIN}
+            />
+          }
+          ListFooterComponent={
+            getCompetitionsQuery.isFetchingNextPage ? (
+              <View style={{ padding: px(16) }}>
+                <OLLoading />
+              </View>
+            ) : null
+          }
+          onEndReached={() => {
+            if (getCompetitionsQuery.isFetchingNextPage) {
+              return;
+            }
+            getCompetitionsQuery.fetchNextPage();
+          }}
+          ListHeaderComponent={
+            <View>
+              {showFutureCompetitions === false && (
+                <View
+                  style={{
+                    alignSelf: 'flex-start',
+                    padding: px(4),
                   }}
                 >
-                  {t('See future competitions')}
-                </OLButton>
-              </View>
-            )}
+                  <OLButton
+                    small
+                    onPress={() => {
+                      setShowFutureCompetitions(true);
+                    }}
+                  >
+                    {t('See future competitions')}
+                  </OLButton>
+                </View>
+              )}
 
-            <View
-              style={{
-                backgroundColor: COLORS.MAIN,
-                paddingHorizontal: px(8),
-                paddingBottom: hasCompetitionsToday ? px(16) : 0,
-                paddingTop: px(8),
-              }}
-            >
-              <OLText
+              <View
                 style={{
-                  color: COLORS.WHITE,
-                  marginBottom: px(8),
-                  textAlign: hasCompetitionsToday ? 'left' : 'center',
+                  backgroundColor: COLORS.MAIN,
+                  paddingHorizontal: px(8),
+                  paddingBottom: hasCompetitionsToday ? px(16) : 0,
+                  paddingTop: px(8),
                 }}
-                bold
-                size={16}
               >
-                {hasCompetitionsToday
-                  ? t('Today')
-                  : t('There are no competitions today')}
-              </OLText>
-              <View style={{ backgroundColor: COLORS.WHITE }}>
-                {getTodaysCompetitionsQuery.data?.data.competitions.map(
-                  item => (
-                    <HomeRowItem
-                      key={item.id}
-                      item={item}
-                      showOrganizationName
-                    />
-                  ),
-                )}
+                <OLText
+                  style={{
+                    color: COLORS.WHITE,
+                    marginBottom: px(8),
+                    textAlign: hasCompetitionsToday ? 'left' : 'center',
+                  }}
+                  bold
+                  size={16}
+                >
+                  {hasCompetitionsToday
+                    ? t('Today')
+                    : t('There are no competitions today')}
+                </OLText>
+                <View style={{ backgroundColor: COLORS.WHITE }}>
+                  {getTodaysCompetitionsQuery.data?.data.competitions.map(
+                    item => (
+                      <HomeRowItem
+                        key={item.id}
+                        item={item}
+                        showOrganizationName
+                      />
+                    ),
+                  )}
+                </View>
               </View>
             </View>
-          </View>
-        }
-      />
+          }
+        />
+      )}
     </View>
   );
 };

@@ -7,6 +7,7 @@ import { OLCard } from '~/views/components/card';
 import { OLText } from '~/views/components/text';
 import { useFocusEffect } from '@react-navigation/native';
 import { useCallback } from 'react';
+import { RunningStatsSkeleton } from './skeleton';
 
 export const RunningStats: React.FC = () => {
   const { t } = useTranslation();
@@ -29,7 +30,11 @@ export const RunningStats: React.FC = () => {
     }, [refetch]),
   );
 
-  if (isLoading || isError || !data?.data.stats) {
+  if (isLoading) {
+    return <RunningStatsSkeleton />;
+  }
+
+  if (isError || !data?.data.stats) {
     return null;
   }
 
