@@ -17,7 +17,7 @@ import { flagEmoji } from '~/util/flagEmoji';
 import { useTranslation } from 'react-i18next';
 import { format } from 'date-fns';
 import { OLApiStatus } from '~/views/components/ApiStatus';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState, memo } from 'react';
 import BootSplash from 'react-native-bootsplash';
 import { OLButton } from '~/views/components/button';
 import { OLHomeSkeletonList } from './skeleton';
@@ -89,6 +89,51 @@ export const OLSceneHome = () => {
   const isInitialLoading =
     getCompetitionsQuery.isLoading || getTodaysCompetitionsQuery.isLoading;
 
+  // Memoize sections to prevent recalculation on every render
+  const sections = useMemo(() => {
+    if (!getCompetitionsQuery.data) return [];
+    return getCompetitionsQuery.data.pages
+      .flatMap(p => p.data.competitions)
+      .map(c => ({
+        title: c.competition_date,
+        data: c.competitions,
+      }));
+  }, [getCompetitionsQuery.data]);
+
+  // Memoize render functions to prevent recreation
+  const renderSectionHeader = useCallback(
+    ({ section: { title } }: { section: { title: string } }) => (
+      <View style={style.header}>
+        <OLText size={12}>{title}</OLText>
+      </View>
+    ),
+    [],
+  );
+
+  const renderItem = useCallback(
+    ({ item }: { item: any }) => (
+      <HomeRowItem item={item} showOrganizationName />
+    ),
+    [],
+  );
+
+  const keyExtractor = useCallback((item: any) => String(item.id), []);
+
+  // Improved onEndReached with proper guards
+  const handleEndReached = useCallback(() => {
+    if (
+      getCompetitionsQuery.isFetchingNextPage ||
+      !getCompetitionsQuery.hasNextPage
+    ) {
+      return;
+    }
+    getCompetitionsQuery.fetchNextPage();
+  }, [
+    getCompetitionsQuery.isFetchingNextPage,
+    getCompetitionsQuery.hasNextPage,
+    getCompetitionsQuery.fetchNextPage,
+  ]);
+
   return (
     <View style={{ flex: 1 }}>
       <OLApiStatus />
@@ -96,27 +141,17 @@ export const OLSceneHome = () => {
         <OLHomeSkeletonList />
       ) : (
         <SectionList
-          sections={
-            getCompetitionsQuery.data
-              ? getCompetitionsQuery.data.pages
-                  .flatMap(p => p.data.competitions)
-                  .map(c => ({
-                    title: c.competition_date,
-                    data: c.competitions,
-                  }))
-              : []
-          }
-          renderSectionHeader={({ section: { title } }) => {
-            return (
-              <View style={style.header}>
-                <OLText size={12}>{title}</OLText>
-              </View>
-            );
-          }}
-          renderItem={({ item }) => {
-            return <HomeRowItem item={item} showOrganizationName />;
-          }}
-          keyExtractor={item => String(item.id)}
+          sections={sections}
+          renderSectionHeader={renderSectionHeader}
+          renderItem={renderItem}
+          keyExtractor={keyExtractor}
+          stickySectionHeadersEnabled={true}
+          onEndReached={handleEndReached}
+          onEndReachedThreshold={0.3}
+          removeClippedSubviews={true}
+          maxToRenderPerBatch={10}
+          updateCellsBatchingPeriod={50}
+          windowSize={21}
           style={{ flex: 1 }}
           refreshControl={
             <RefreshControl
@@ -132,12 +167,6 @@ export const OLSceneHome = () => {
               </View>
             ) : null
           }
-          onEndReached={() => {
-            if (getCompetitionsQuery.isFetchingNextPage) {
-              return;
-            }
-            getCompetitionsQuery.fetchNextPage();
-          }}
           ListHeaderComponent={
             <View>
               {showFutureCompetitions === false && (
@@ -199,7 +228,7 @@ export const OLSceneHome = () => {
   );
 };
 
-export const HomeRowItem = ({
+export const HomeRowItem = memo(({
   item,
   onPress,
   showDate = false,
@@ -274,7 +303,7 @@ export const HomeRowItem = ({
       </View>
     </TouchableOpacity>
   );
-};
+});
 
 const style = StyleSheet.create({
   header: {
