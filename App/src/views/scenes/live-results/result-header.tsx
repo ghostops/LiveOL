@@ -54,7 +54,7 @@ export const OLResultHeader = (props: Props) => {
         hitSlop={HIT_SLOP}
       >
         <SortingIcon name="place" />
-        <OLText bold>{t('Place')}</OLText>
+        <OLText bold>#</OLText>
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => {

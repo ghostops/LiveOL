@@ -28,13 +28,6 @@ const sortSplit =
     return aSplit.time - bSplit.time;
   };
 
-// Parsing the place is a mess, so just flipping the already sorted list is easier
-const sortPlace = (direction: string) => () => {
-  const desc = direction === 'desc';
-
-  return desc ? -1 : 1;
-};
-
 const sortStart = (direction: string) => (a: SortedResult, b: SortedResult) => {
   const desc = direction === 'desc';
 
@@ -84,6 +77,9 @@ const sortResult =
     return 0;
   };
 
+// Parsing the place is a mess, so maybe just sort by result for place
+const sortPlace = sortResult;
+
 const sortName = (direction: string) => (a: SortedResult, b: SortedResult) => {
   const desc = direction === 'desc';
 
@@ -123,7 +119,7 @@ export const sortOptimalV2 = (
   if (sortingKey.includes('split-')) {
     sortingFunction = sortSplitFunction;
   } else if (sortingKey === 'place') {
-    sortingFunction = sortPlace(sortingDirection);
+    sortingFunction = sortPlace(sortingDirection, nowTimestamp);
   } else if (sortingKey === 'result') {
     sortingFunction = sortResult(sortingDirection, nowTimestamp);
   } else if (sortingKey === 'name') {

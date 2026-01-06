@@ -11,7 +11,6 @@ import { apiSingletons } from 'lib/singletons';
 import { z } from 'zod/v4';
 import { and, eq, getTableColumns, isNull, sql } from 'drizzle-orm';
 import { sortOptimalV2 } from 'lib/helpers/sorting';
-import crypto from 'crypto';
 import { marshalResult } from 'lib/marshal/results';
 import { userMiddleware } from 'middleware/user';
 import { getTrackedRunnerIds } from 'lib/match/getAllTrackedRunnerIds';
@@ -77,13 +76,13 @@ export const getResultByLiveClassId = defaultEndpointsFactory
       input: { liveClassId, sortingDirection, sortingKey, nowTimestamp },
       options: { user },
     }) => {
-      const classData = await api.Drizzle.db
+      const [classData] = await api.Drizzle.db
         .select()
         .from(LiveClassesTable)
         .where(eq(LiveClassesTable.liveClassId, liveClassId))
         .limit(1);
 
-      const className = classData[0]?.name || 'N/A';
+      const className = classData?.name || 'N/A';
 
       let results = await api.Drizzle.db
         .select()
@@ -108,11 +107,8 @@ export const getResultByLiveClassId = defaultEndpointsFactory
         );
       }
 
-      // Calculate the hash here to avoid doing it after adding a bunch of custom fields
-      const hash = crypto
-        .createHash('md5')
-        .update(JSON.stringify(results))
-        .digest('hex');
+      const hashKey = `liveresultat:lastHash:class:${className}:results:${classData?.liveCompetitionId}`;
+      const hashData = await api.Redis.get(hashKey);
 
       const tracking = await api.Drizzle.db
         .select()
@@ -134,7 +130,7 @@ export const getResultByLiveClassId = defaultEndpointsFactory
         className,
         results: sortedResults,
         liveSplitControls,
-        hash,
+        hash: hashData ?? 'none',
       };
     },
   });
