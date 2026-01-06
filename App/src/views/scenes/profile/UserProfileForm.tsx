@@ -1,13 +1,18 @@
+import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
+import { useOLNavigation } from '~/hooks/useNavigation';
 import { useTheme } from '~/hooks/useTheme';
 import { $api } from '~/lib/react-query/api';
 import { useUserIdStore } from '~/store/userId';
+import { OLButton } from '~/views/components/button';
 import { OLTrackingForm } from '~/views/components/tracking/form';
 
 export const UserProfileForm: React.FC = () => {
+  const { t } = useTranslation();
   const { px } = useTheme();
+  const { navigate } = useOLNavigation();
   const uid = useUserIdStore(state => state.userId);
-  const { data, isLoading } = $api.useQuery(
+  const { data, isLoading, isError } = $api.useQuery(
     'get',
     '/v2/tracking/self',
     {
@@ -20,7 +25,7 @@ export const UserProfileForm: React.FC = () => {
     { enabled: !!uid },
   );
 
-  if (isLoading) {
+  if (isLoading || isError || !data) {
     return null;
   }
 
@@ -33,6 +38,21 @@ export const UserProfileForm: React.FC = () => {
         trackingId={data?.data.tracking?.id}
         style={{ gap: px(8) }}
       />
+
+      {Boolean(data.data.tracking?.id && data.data.tracking?.name) && (
+        <View style={{ marginTop: px(8) }}>
+          <OLButton
+            onPress={() => {
+              navigate('TrackingResults', {
+                trackingId: data.data.tracking!.id,
+                title: data.data.tracking!.name,
+              });
+            }}
+          >
+            {t('View my races')}
+          </OLButton>
+        </View>
+      )}
     </View>
   );
 };

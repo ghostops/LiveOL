@@ -50,9 +50,21 @@ export const OLTrackingForm = ({
   );
 
   const { mutateAsync: createTracking, isPending: isCreating } =
-    $api.useMutation('post', '/v2/tracking/create');
+    $api.useMutation('post', '/v2/tracking/create', {
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: ['get', '/v2/tracking/stats'],
+        });
+      },
+    });
   const { mutateAsync: updateTracking, isPending: isUpdating } =
-    $api.useMutation('put', '/v2/tracking/{id}');
+    $api.useMutation('put', '/v2/tracking/{id}', {
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: ['get', '/v2/tracking/stats'],
+        });
+      },
+    });
 
   const isLoading = isCreating || isUpdating;
 
@@ -80,18 +92,12 @@ export const OLTrackingForm = ({
     async () => {
       if (!isUserMode) {
         if (!debouncedName.trim()) {
-          Alert.alert(
-            t('Error'),
-            t('Runner name is required'),
-          );
+          Alert.alert(t('Error'), t('Runner name is required'));
           return;
         }
 
         if (!userId) {
-          Alert.alert(
-            t('Error'),
-            t('User not found. Please restart the app.'),
-          );
+          Alert.alert(t('Error'), t('User not found. Please restart the app.'));
           return;
         }
 
@@ -158,10 +164,7 @@ export const OLTrackingForm = ({
           });
         }
       } catch (error: any) {
-        Alert.alert(
-          t('Error'),
-          error.message || t('Failed to save runner'),
-        );
+        Alert.alert(t('Error'), error.message || t('Failed to save runner'));
       }
     },
     1000,
@@ -243,9 +246,7 @@ export const OLTrackingForm = ({
       {/* Classes */}
       <View>
         <OLText size={16} style={{ marginBottom: px(4) }} bold>
-          {isUserMode
-            ? t('My classes')
-            : t('Classes')}
+          {isUserMode ? t('My classes') : t('Classes')}
         </OLText>
         <OLClassesTrackingInput onAddClass={addClass} />
         <View
@@ -279,9 +280,7 @@ export const OLTrackingForm = ({
       {!isUserMode && (
         <View>
           <OLButton onPress={handleSave} disabled={isLoading}>
-            {mode === 'create'
-              ? t('Start following')
-              : t('Update following')}
+            {mode === 'create' ? t('Start following') : t('Update following')}
           </OLButton>
         </View>
       )}

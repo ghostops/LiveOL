@@ -4,6 +4,7 @@ import { COLORS, px } from '~/util/const';
 import { useTranslation } from 'react-i18next';
 import { UserProfileForm } from './UserProfileForm';
 import { SubscriptionManagement } from './SubscriptionManagement';
+import { RunningStats } from './RunningStats';
 import { useOLNavigation } from '~/hooks/useNavigation';
 import { OLButton } from '~/views/components/button';
 import { OLIcon } from '~/views/components/icon';
@@ -48,6 +49,8 @@ export const OLProfile: React.FC = () => {
       <OLCard>
         <UserProfileForm />
       </OLCard>
+
+      <RunningStats />
 
       {plusActive && (
         <View>

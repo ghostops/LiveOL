@@ -190,7 +190,7 @@ export const OLSceneSettings = () => {
 
         <TouchableOpacity style={styles.item} onPress={handleHelpTranslate}>
           <OLText size={16}>
-            {t('Help out translating for free LiveOL+')}
+            {t('Help out translating - Get free LiveOL+')}
           </OLText>
         </TouchableOpacity>
 
