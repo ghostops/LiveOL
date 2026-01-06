@@ -591,6 +591,10 @@ code {
 }
 ```
 
+### 11. Style guide
+
+We use the style guide specified in STYLE_GUIDE.md!
+
 ---
 
 ## Backend Implementation
