@@ -89,9 +89,10 @@ export const OLSceneHome = () => {
   const isInitialLoading =
     getCompetitionsQuery.isLoading || getTodaysCompetitionsQuery.isLoading;
 
-  // Memoize sections to prevent recalculation on every render
   const sections = useMemo(() => {
-    if (!getCompetitionsQuery.data) return [];
+    if (!getCompetitionsQuery.data) {
+      return [];
+    }
     return getCompetitionsQuery.data.pages
       .flatMap(p => p.data.competitions)
       .map(c => ({
@@ -119,7 +120,6 @@ export const OLSceneHome = () => {
 
   const keyExtractor = useCallback((item: any) => String(item.id), []);
 
-  // Improved onEndReached with proper guards
   const handleEndReached = useCallback(() => {
     if (
       getCompetitionsQuery.isFetchingNextPage ||
@@ -128,6 +128,7 @@ export const OLSceneHome = () => {
       return;
     }
     getCompetitionsQuery.fetchNextPage();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     getCompetitionsQuery.isFetchingNextPage,
     getCompetitionsQuery.hasNextPage,
@@ -228,82 +229,84 @@ export const OLSceneHome = () => {
   );
 };
 
-export const HomeRowItem = memo(({
-  item,
-  onPress,
-  showDate = false,
-  showOrganizationName = false,
-}: {
-  item: paths['/v2/competitions']['get']['responses']['200']['content']['application/json']['data']['competitions'][number]['competitions'][number];
-  onPress?: () => void;
-  showDate?: boolean;
-  showOrganizationName?: boolean;
-}) => {
-  const { colors, px } = useTheme();
-  const { navigate } = useOLNavigation();
-  return (
-    <TouchableOpacity
-      style={style.item}
-      onPress={
-        onPress ||
-        (() => {
-          navigate('Competition', {
-            olCompetitionId: item.olCompetitionId,
-          });
-        })
-      }
-    >
-      <View style={style.row}>
-        <View style={{ flex: 1 }}>
-          <OLText size={16} numberOfLines={1} style={{ flexShrink: 1 }}>
-            {item.name}
-          </OLText>
-          {showOrganizationName && item.organizer && (
-            <OLText
-              size={12}
-              style={{ opacity: 0.9, marginTop: px(2), fontStyle: 'italic' }}
-            >
-              {item.organizer}
+export const HomeRowItem = memo(
+  ({
+    item,
+    onPress,
+    showDate = false,
+    showOrganizationName = false,
+  }: {
+    item: paths['/v2/competitions']['get']['responses']['200']['content']['application/json']['data']['competitions'][number]['competitions'][number];
+    onPress?: () => void;
+    showDate?: boolean;
+    showOrganizationName?: boolean;
+  }) => {
+    const { colors, px } = useTheme();
+    const { navigate } = useOLNavigation();
+    return (
+      <TouchableOpacity
+        style={style.item}
+        onPress={
+          onPress ||
+          (() => {
+            navigate('Competition', {
+              olCompetitionId: item.olCompetitionId,
+            });
+          })
+        }
+      >
+        <View style={style.row}>
+          <View style={{ flex: 1 }}>
+            <OLText size={16} numberOfLines={1} style={{ flexShrink: 1 }}>
+              {item.name}
             </OLText>
-          )}
-          {showDate && (
-            <OLText size={12} style={{ opacity: 0.9, marginTop: px(2) }}>
-              {format(new Date(item.date), 'MMMM dd, yyyy')}
-            </OLText>
-          )}
+            {showOrganizationName && item.organizer && (
+              <OLText
+                size={12}
+                style={{ opacity: 0.9, marginTop: px(2), fontStyle: 'italic' }}
+              >
+                {item.organizer}
+              </OLText>
+            )}
+            {showDate && (
+              <OLText size={12} style={{ opacity: 0.9, marginTop: px(2) }}>
+                {format(new Date(item.date), 'MMMM dd, yyyy')}
+              </OLText>
+            )}
+          </View>
         </View>
-      </View>
-      <View style={[style.row, { marginTop: px(2) }]}>
-        <View style={{ flex: 1 }}>
-          {item.countryCode && flagEmoji[item.countryCode] && (
-            <OLText>{flagEmoji[item.countryCode]}</OLText>
-          )}
+        <View style={[style.row, { marginTop: px(2) }]}>
+          <View style={{ flex: 1 }}>
+            {item.countryCode && flagEmoji[item.countryCode] && (
+              <OLText>{flagEmoji[item.countryCode]}</OLText>
+            )}
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              gap: px(2),
+            }}
+          >
+            {item.hasLiveData && (
+              <OLHomeBadge
+                text="Live"
+                background={colors.RED}
+                color={colors.WHITE}
+              />
+            )}
+            {item.hasEventorData && (
+              <OLHomeBadge
+                text="Eventor"
+                background={colors.BLUE}
+                color={colors.WHITE}
+              />
+            )}
+          </View>
         </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            gap: px(2),
-          }}
-        >
-          {item.hasLiveData && (
-            <OLHomeBadge
-              text="Live"
-              background={colors.RED}
-              color={colors.WHITE}
-            />
-          )}
-          {item.hasEventorData && (
-            <OLHomeBadge
-              text="Eventor"
-              background={colors.BLUE}
-              color={colors.WHITE}
-            />
-          )}
-        </View>
-      </View>
-    </TouchableOpacity>
-  );
-});
+      </TouchableOpacity>
+    );
+  },
+);
 
 const style = StyleSheet.create({
   header: {
