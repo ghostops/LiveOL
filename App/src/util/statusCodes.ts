@@ -36,7 +36,7 @@ const STATUS_MAP_LONG: Record<number, string> = {
 
 export const getStatusKey = (
   status: number | null | undefined,
-  length: StatusLength = 'short'
+  length: StatusLength = 'short',
 ): string | null => {
   if (status === null || status === undefined) {
     return null;

@@ -117,12 +117,15 @@ export const OLCompetitionHeader: React.FC<Props> = props => {
                 {t('Distance')}:{' '}
                 {(() => {
                   const distanceKeys: Record<string, string> = {
-                    'long': 'Long',
-                    'middle': 'Middle',
-                    'sprint': 'Sprint',
-                    'ultralong': 'Ultra Long',
+                    long: 'Long',
+                    middle: 'Middle',
+                    sprint: 'Sprint',
+                    ultralong: 'Ultra Long',
                   };
-                  return t(distanceKeys[props.competition.distance] || props.competition.distance);
+                  return t(
+                    distanceKeys[props.competition.distance] ||
+                      props.competition.distance,
+                  );
                 })()}
               </OLText>
 

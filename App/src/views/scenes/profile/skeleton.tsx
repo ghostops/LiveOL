@@ -78,15 +78,21 @@ export const SubscriptionManagementSkeleton = () => {
           gap: px(8),
         }}
       >
-        <View style={{ flexDirection: 'row', alignItems: 'center', gap: px(8) }}>
+        <View
+          style={{ flexDirection: 'row', alignItems: 'center', gap: px(8) }}
+        >
           <OLSkeleton width={18} height={18} borderRadius={9} />
           <OLSkeleton width="80%" height={16} />
         </View>
-        <View style={{ flexDirection: 'row', alignItems: 'center', gap: px(8) }}>
+        <View
+          style={{ flexDirection: 'row', alignItems: 'center', gap: px(8) }}
+        >
           <OLSkeleton width={18} height={18} borderRadius={9} />
           <OLSkeleton width="70%" height={16} />
         </View>
-        <View style={{ flexDirection: 'row', alignItems: 'center', gap: px(8) }}>
+        <View
+          style={{ flexDirection: 'row', alignItems: 'center', gap: px(8) }}
+        >
           <OLSkeleton width={18} height={18} borderRadius={9} />
           <OLSkeleton width="75%" height={16} />
         </View>
@@ -114,11 +120,7 @@ export const RunningStatsSkeleton = () => {
   return (
     <OLCard>
       {/* Title */}
-      <OLSkeleton
-        width={180}
-        height={20}
-        style={{ marginBottom: px(12) }}
-      />
+      <OLSkeleton width={180} height={20} style={{ marginBottom: px(12) }} />
 
       {/* Stat rows */}
       <View style={{ gap: px(10) }}>

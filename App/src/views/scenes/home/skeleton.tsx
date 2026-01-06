@@ -43,11 +43,7 @@ export const OLHomeSkeletonList = () => {
           paddingTop: px(8),
         }}
       >
-        <OLSkeleton
-          width={100}
-          height={20}
-          style={{ marginBottom: px(8) }}
-        />
+        <OLSkeleton width={100} height={20} style={{ marginBottom: px(8) }} />
         <View style={{ backgroundColor: COLORS.WHITE }}>
           <OLHomeRowSkeleton />
           <OLHomeRowSkeleton />

@@ -11,7 +11,6 @@ import { useOLNavigation } from '~/hooks/useNavigation';
 import { useTheme } from '~/hooks/useTheme';
 import { $api } from '~/lib/react-query/api';
 import { COLORS } from '~/util/const';
-import { OLLoading } from '~/views/components/loading';
 import { useUserIdStore } from '~/store/userId';
 import { paths } from '~/lib/react-query/schema';
 import { ReanimatedSwipeable } from '~/views/components/ReanimatedSwipeable';
@@ -169,29 +168,29 @@ export const OLSceneTracking = () => {
         <OLTrackingSkeletonList />
       ) : (
         <FlatList
-        data={tracking}
-        renderItem={renderItem}
-        contentContainerStyle={{
-          paddingVertical: px(8),
-          paddingBottom: px(128),
-        }}
-        ListEmptyComponent={
-          isLoading ? null : (
-            <View style={[styles.emptyContainer, { padding: px(32) }]}>
-              <OLText
-                size={20}
-                bold
-                style={[styles.emptyTitle, { marginBottom: px(8) }]}
-              >
-                {t('No tracked runners')}
-              </OLText>
-              <OLText size={16} style={styles.emptyMessage}>
-                {t('Tap the + button to start tracking a runner')}
-              </OLText>
-            </View>
-          )
-        }
-      />
+          data={tracking}
+          renderItem={renderItem}
+          contentContainerStyle={{
+            paddingVertical: px(8),
+            paddingBottom: px(128),
+          }}
+          ListEmptyComponent={
+            isLoading ? null : (
+              <View style={[styles.emptyContainer, { padding: px(32) }]}>
+                <OLText
+                  size={20}
+                  bold
+                  style={[styles.emptyTitle, { marginBottom: px(8) }]}
+                >
+                  {t('No tracked runners')}
+                </OLText>
+                <OLText size={16} style={styles.emptyMessage}>
+                  {t('Tap the + button to start tracking a runner')}
+                </OLText>
+              </View>
+            )
+          }
+        />
       )}
 
       {/* Floating Action Button */}

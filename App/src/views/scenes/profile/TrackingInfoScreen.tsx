@@ -14,22 +14,30 @@ export const TrackingInfoScreen: React.FC = () => {
     {
       icon: 'person-add' as const,
       title: t('Add runner details'),
-      description: t("Enter the runner's name, their clubs, and the classes they compete in."),
+      description: t(
+        "Enter the runner's name, their clubs, and the classes they compete in.",
+      ),
     },
     {
       icon: 'search' as const,
       title: t('Smart matching'),
-      description: t('The system finds your runners across all competitions, even with (slightly) different spellings.'),
+      description: t(
+        'The system finds your runners across all competitions, even with (slightly) different spellings.',
+      ),
     },
     {
       icon: 'notifications' as const,
       title: t('Get highlighted'),
-      description: t('See your followed runners instantly highlighted in competition results.'),
+      description: t(
+        'See your followed runners instantly highlighted in competition results.',
+      ),
     },
     {
       icon: 'sparkles' as const,
       title: t('Follow multiple runners'),
-      description: t('If you have LiveO+ you can follow as many runners as you like, otherwise you are restricted to following yourself.'),
+      description: t(
+        'If you have LiveO+ you can follow as many runners as you like, otherwise you are restricted to following yourself.',
+      ),
     },
   ];
 
@@ -110,7 +118,9 @@ export const TrackingInfoScreen: React.FC = () => {
             </OLText>
           </View>
           <OLText size={14} style={{ color: COLORS.GRAY }}>
-            {t('Add multiple clubs if your runner competes for different organizations. The system will find them wherever they race!')}
+            {t(
+              'Add multiple clubs if your runner competes for different organizations. The system will find them wherever they race!',
+            )}
           </OLText>
         </OLCard>
 

@@ -1,4 +1,3 @@
-import { View } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -25,12 +24,8 @@ export const OLSkeleton = ({
   const shimmer = useSharedValue(0);
 
   useEffect(() => {
-    shimmer.value = withRepeat(
-      withTiming(1, { duration: 1500 }),
-      -1,
-      false,
-    );
-  }, []);
+    shimmer.value = withRepeat(withTiming(1, { duration: 1500 }), -1, false);
+  }, [shimmer]);
 
   const animatedStyle = useAnimatedStyle(() => {
     const opacity = interpolate(shimmer.value, [0, 0.5, 1], [0.3, 0.5, 0.3]);
