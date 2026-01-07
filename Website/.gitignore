@@ -1,0 +1,31 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+package-lock.json
+yarn.lock
+
+# Build outputs
+client/dist/
+server/dist/
+*.tsbuildinfo
+
+# Environment variables
+.env
+.env.local
+
+# Logs
+logs/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# PM2
+.pm2/

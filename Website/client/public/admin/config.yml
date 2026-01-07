@@ -1,0 +1,73 @@
+backend:
+  name: git-gateway
+  branch: master
+
+media_folder: "client/public/images"
+public_folder: "/images"
+
+collections:
+  - name: "pages"
+    label: "Pages"
+    files:
+      - label: "Contact"
+        name: "contact"
+        file: "content/contact.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Description", name: "description", widget: "string" }
+          - { label: "Body", name: "body", widget: "markdown" }
+          - { label: "Updated", name: "date", widget: "datetime" }
+
+      - label: "Newsletter"
+        name: "newsletter"
+        file: "content/newsletter.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Description", name: "description", widget: "string" }
+          - { label: "Body", name: "body", widget: "markdown" }
+          - { label: "Updated", name: "date", widget: "datetime" }
+
+      - label: "Issues"
+        name: "issues"
+        file: "content/issues.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Description", name: "description", widget: "string" }
+          - { label: "Body", name: "body", widget: "markdown" }
+          - { label: "Updated", name: "date", widget: "datetime" }
+
+      - label: "About Ludvig"
+        name: "ludvig"
+        file: "content/ludvig.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Description", name: "description", widget: "string" }
+          - { label: "Body", name: "body", widget: "markdown" }
+          - { label: "Updated", name: "date", widget: "datetime" }
+
+      - label: "Terms of Service"
+        name: "terms"
+        file: "content/terms.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Description", name: "description", widget: "string" }
+          - { label: "Body", name: "body", widget: "markdown" }
+          - { label: "Updated", name: "date", widget: "datetime" }
+
+      - label: "Privacy Policy"
+        name: "privacy"
+        file: "content/privacy.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Description", name: "description", widget: "string" }
+          - { label: "Body", name: "body", widget: "markdown" }
+          - { label: "Updated", name: "date", widget: "datetime" }
+
+      - label: "Open Source Licenses"
+        name: "licenses"
+        file: "content/licenses.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Description", name: "description", widget: "string" }
+          - { label: "Body", name: "body", widget: "markdown" }
+          - { label: "Updated", name: "date", widget: "datetime" }
