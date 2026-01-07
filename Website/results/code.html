@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LiveOL Results</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Inter and JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f95f06",
+                        "background-light": "#F9F9F9", /* Updated to match prompt */
+                        "background-dark": "#111827",
+                        "border-gray": "#D1D5DB",
+                        "table-header": "#1F2937",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem", 
+                        "lg": "0.25rem", 
+                        "xl": "0.5rem", 
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for engineering feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D1D5DB; 
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #9CA3AF; 
+        }
+        
+        /* Sticky header fix for borders */
+        th {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light text-gray-900 font-display antialiased min-h-screen flex flex-col overflow-x-hidden">
+<!-- Global Navigation Bar -->
+<nav class="sticky top-0 z-50 flex h-16 w-full items-center justify-between border-b border-border-gray bg-white px-4 shadow-sm">
+<div class="flex items-center gap-4">
+<!-- Mobile Menu Icon -->
+<button class="flex items-center justify-center text-gray-700 hover:text-primary transition-colors">
+<span class="material-symbols-outlined" style="font-size: 24px;">menu</span>
+</button>
+<!-- Logo -->
+<div class="flex items-center gap-1">
+<div class="h-6 w-6 bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-white" style="font-size: 18px;">share_location</span>
+</div>
+<h1 class="text-xl font-bold tracking-tight text-gray-900">LiveOL</h1>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center justify-center text-gray-700 hover:text-primary transition-colors">
+<span class="material-symbols-outlined" style="font-size: 24px;">settings</span>
+</button>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col w-full max-w-3xl mx-auto md:px-0">
+<!-- Breadcrumbs & Meta -->
+<div class="px-4 pt-4 pb-2">
+<p class="text-xs font-medium text-gray-500 font-mono uppercase tracking-wide">
+                Home <span class="mx-1 text-gray-300">/</span> Men's Elite <span class="mx-1 text-gray-300">/</span> Finals
+            </p>
+<h2 class="mt-1 text-2xl font-bold text-gray-900 uppercase tracking-tight">Men's Elite Final</h2>
+</div>
+<!-- Control Bar: Live Status & Search -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-4 py-3 border-b border-border-gray bg-background-light">
+<!-- Live Indicator -->
+<div class="flex items-center gap-2.5">
+<div class="relative flex h-3 w-3">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
+</div>
+<span class="text-sm font-bold text-primary tracking-widest uppercase font-mono">LIVE RESULTS</span>
+</div>
+<!-- Search Field -->
+<div class="relative w-full sm:w-64">
+<div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+<span class="material-symbols-outlined text-gray-400" style="font-size: 20px;">search</span>
+</div>
+<input class="block w-full rounded border border-border-gray bg-white py-2 pl-10 pr-3 text-sm placeholder-gray-500 focus:border-primary focus:ring-1 focus:ring-primary font-mono" placeholder="FILTER ATHLETES..." type="text"/>
+</div>
+</div>
+<!-- Results Table Container -->
+<!-- Added a wrapping div with relative positioning for sticky headers to work perfectly within the flow -->
+<div class="w-full overflow-x-auto border-y sm:border border-border-gray bg-white shadow-sm">
+<table class="min-w-full text-left border-collapse">
+<thead class="bg-table-header text-white font-mono text-xs uppercase tracking-wider">
+<tr>
+<th class="px-3 py-3 font-medium text-right w-12 border-b border-border-gray bg-table-header" scope="col">#</th>
+<th class="px-3 py-3 font-medium w-auto border-b border-border-gray bg-table-header" scope="col">Athlete / Club</th>
+<th class="px-3 py-3 font-medium text-right border-b border-border-gray bg-table-header" scope="col">Time</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-gray bg-white">
+<!-- Row 1: Leader -->
+<tr class="hover:bg-gray-50 transition-colors group">
+<td class="px-3 py-3 text-right font-mono font-bold text-gray-900 align-top">1</td>
+<td class="px-3 py-3 align-top">
+<div class="flex flex-col">
+<span class="font-bold text-gray-900 text-base leading-tight">Olav Lundanes</span>
+<span class="text-xs text-gray-500 font-medium mt-1">Halden SK</span>
+</div>
+</td>
+<td class="px-3 py-3 text-right whitespace-nowrap align-top">
+<div class="flex flex-col items-end">
+<span class="font-mono font-bold text-primary text-base">34:12</span>
+<span class="text-[10px] font-mono text-gray-400 mt-1">FINISH</span>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-gray-50 transition-colors">
+<td class="px-3 py-3 text-right font-mono text-gray-600 align-top">2</td>
+<td class="px-3 py-3 align-top">
+<div class="flex flex-col">
+<span class="font-bold text-gray-900 text-base leading-tight">Kasper Fosser</span>
+<span class="text-xs text-gray-500 font-medium mt-1">IFK Göteborg</span>
+</div>
+</td>
+<td class="px-3 py-3 text-right whitespace-nowrap align-top">
+<div class="flex flex-col items-end">
+<span class="font-mono font-bold text-primary text-base">+00:45</span>
+<span class="text-[10px] font-mono text-gray-400 mt-1">FINISH</span>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-gray-50 transition-colors">
+<td class="px-3 py-3 text-right font-mono text-gray-600 align-top">3</td>
+<td class="px-3 py-3 align-top">
+<div class="flex flex-col">
+<span class="font-bold text-gray-900 text-base leading-tight">Matthias Kyburz</span>
+<span class="text-xs text-gray-500 font-medium mt-1">IL Tyrving</span>
+</div>
+</td>
+<td class="px-3 py-3 text-right whitespace-nowrap align-top">
+<div class="flex flex-col items-end">
+<span class="font-mono font-bold text-primary text-base">+01:12</span>
+<span class="text-[10px] font-mono text-gray-400 mt-1">FINISH</span>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-gray-50 transition-colors">
+<td class="px-3 py-3 text-right font-mono text-gray-600 align-top">4</td>
+<td class="px-3 py-3 align-top">
+<div class="flex flex-col">
+<span class="font-bold text-gray-900 text-base leading-tight">Gustav Bergman</span>
+<span class="text-xs text-gray-500 font-medium mt-1">OK Ravinen</span>
+</div>
+</td>
+<td class="px-3 py-3 text-right whitespace-nowrap align-top">
+<div class="flex flex-col items-end">
+<span class="font-mono font-bold text-primary text-base">+01:28</span>
+<span class="text-[10px] font-mono text-gray-400 mt-1">FINISH</span>
+</div>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-gray-50 transition-colors">
+<td class="px-3 py-3 text-right font-mono text-gray-600 align-top">5</td>
+<td class="px-3 py-3 align-top">
+<div class="flex flex-col">
+<span class="font-bold text-gray-900 text-base leading-tight">Emil Svensk</span>
+<span class="text-xs text-gray-500 font-medium mt-1">Stora Tuna OK</span>
+</div>
+</td>
+<td class="px-3 py-3 text-right whitespace-nowrap align-top">
+<div class="flex flex-col items-end">
+<span class="font-mono font-bold text-primary text-base">+01:45</span>
+<span class="text-[10px] font-mono text-gray-400 mt-1">FINISH</span>
+</div>
+</td>
+</tr>
+<!-- Row 6 -->
+<tr class="hover:bg-gray-50 transition-colors">
+<td class="px-3 py-3 text-right font-mono text-gray-600 align-top">6</td>
+<td class="px-3 py-3 align-top">
+<div class="flex flex-col">
+<span class="font-bold text-gray-900 text-base leading-tight">Daniel Hubmann</span>
+<span class="text-xs text-gray-500 font-medium mt-1">Koovee</span>
+</div>
+</td>
+<td class="px-3 py-3 text-right whitespace-nowrap align-top">
+<div class="flex flex-col items-end">
+<span class="font-mono font-medium text-gray-600 text-base">+02:03</span>
+<span class="text-[10px] font-mono text-gray-400 mt-1">FINISH</span>
+</div>
+</td>
+</tr>
+<!-- Row 7: Active runner -->
+<tr class="hover:bg-gray-50 transition-colors bg-primary/5">
+<td class="px-3 py-3 text-right font-mono text-gray-600 align-top">7</td>
+<td class="px-3 py-3 align-top">
+<div class="flex flex-col">
+<span class="font-bold text-gray-900 text-base leading-tight">Ruslan Glebov</span>
+<span class="text-xs text-gray-500 font-medium mt-1">OK Ravinen</span>
+</div>
+</td>
+<td class="px-3 py-3 text-right whitespace-nowrap align-top">
+<div class="flex flex-col items-end">
+<div class="flex items-center gap-1.5">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+</span>
+<span class="font-mono font-bold text-primary text-base">33:10</span>
+</div>
+<span class="text-[10px] font-mono text-gray-500 mt-1">@ CP 14</span>
+</div>
+</td>
+</tr>
+<!-- Row 8 -->
+<tr class="hover:bg-gray-50 transition-colors">
+<td class="px-3 py-3 text-right font-mono text-gray-600 align-top">8</td>
+<td class="px-3 py-3 align-top">
+<div class="flex flex-col">
+<span class="font-bold text-gray-900 text-base leading-tight">Magne Dæhli</span>
+<span class="text-xs text-gray-500 font-medium mt-1">Halden SK</span>
+</div>
+</td>
+<td class="px-3 py-3 text-right whitespace-nowrap align-top">
+<div class="flex flex-col items-end">
+<span class="font-mono font-medium text-gray-600 text-base">+02:45</span>
+<span class="text-[10px] font-mono text-gray-400 mt-1">FINISH</span>
+</div>
+</td>
+</tr>
+<!-- Row 9: DNS/Status -->
+<tr class="hover:bg-gray-50 transition-colors">
+<td class="px-3 py-3 text-right font-mono text-gray-400 align-top">-</td>
+<td class="px-3 py-3 align-top">
+<div class="flex flex-col">
+<span class="font-bold text-gray-400 text-base leading-tight">Yannick Michiels</span>
+<span class="text-xs text-gray-400 font-medium mt-1">Turun Metsänkävijät</span>
+</div>
+</td>
+<td class="px-3 py-3 text-right whitespace-nowrap align-top">
+<div class="flex flex-col items-end">
+<span class="font-mono font-bold text-gray-400 text-base">DNS</span>
+</div>
+</td>
+</tr>
+<!-- Row 10: MP -->
+<tr class="hover:bg-gray-50 transition-colors">
+<td class="px-3 py-3 text-right font-mono text-gray-400 align-top">-</td>
+<td class="px-3 py-3 align-top">
+<div class="flex flex-col">
+<span class="font-bold text-gray-400 text-base leading-tight">Lucas Basset</span>
+<span class="text-xs text-gray-400 font-medium mt-1">OK Denseln</span>
+</div>
+</td>
+<td class="px-3 py-3 text-right whitespace-nowrap align-top">
+<div class="flex flex-col items-end">
+<span class="font-mono font-bold text-red-500 text-base">MP</span>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination / Footer Info -->
+<div class="p-4 flex justify-between items-center text-xs text-gray-500 font-mono border-t border-gray-200">
+<span>SHOWING 1-10 OF 142</span>
+<div class="flex gap-2">
+<button class="px-2 py-1 border border-border-gray rounded hover:bg-white hover:text-primary transition-colors disabled:opacity-50" disabled="">&lt;</button>
+<button class="px-2 py-1 border border-border-gray rounded hover:bg-white hover:text-primary transition-colors">&gt;</button>
+</div>
+</div>
+<!-- Mobile Bottom Map Preview (Optional Context) -->
+<div class="mt-4 px-4 pb-8">
+<h3 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2 font-mono">Live Map Preview</h3>
+<div class="relative w-full h-48 bg-gray-200 rounded overflow-hidden border border-border-gray">
+<!-- Abstract map representation -->
+<div class="absolute inset-0 bg-[#e8f1df]" data-alt="Abstract orienteering map showing contour lines and green forest areas" data-location="Forest Terrain" style="https://placeholder.pics/svg/300">
+<!-- Contour lines pattern simulated with repeated SVG or gradient -->
+<div class="absolute inset-0 opacity-20" style="background-image: repeating-radial-gradient(#a3b18a 0 1px, transparent 1px 10px);"></div>
+<!-- Course line -->
+<svg class="absolute inset-0 h-full w-full" preserveaspectratio="none" viewbox="0 0 100 100">
+<path d="M10,90 Q40,40 90,10" fill="none" stroke="#f95f06" stroke-dasharray="4" stroke-width="2"></path>
+<circle cx="10" cy="90" fill="none" r="3" stroke="#f95f06" stroke-width="2"></circle>
+<circle cx="90" cy="10" fill="none" r="3" stroke="#f95f06" stroke-width="2"></circle>
+</svg>
+</div>
+<div class="absolute bottom-2 right-2 bg-white/90 backdrop-blur px-2 py-1 text-[10px] font-bold font-mono border border-border-gray rounded">
+                    LIVE TRACKING
+                </div>
+</div>
+</div>
+</main>
+</body></html>
