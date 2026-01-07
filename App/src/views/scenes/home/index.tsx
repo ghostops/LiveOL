@@ -17,7 +17,7 @@ import { flagEmoji } from '~/util/flagEmoji';
 import { useTranslation } from 'react-i18next';
 import { format } from 'date-fns';
 import { OLApiStatus } from '~/views/components/ApiStatus';
-import { useCallback, useEffect, useMemo, useState, memo } from 'react';
+import { useCallback, useEffect, useMemo, useState, memo, useRef } from 'react';
 import BootSplash from 'react-native-bootsplash';
 import { OLButton } from '~/views/components/button';
 import { OLHomeSkeletonList } from './skeleton';
@@ -25,6 +25,8 @@ import { OLHomeSkeletonList } from './skeleton';
 export const OLSceneHome = () => {
   const { colors, px } = useTheme();
   const { t } = useTranslation();
+  const navigation = useOLNavigation();
+  const sectionListRef = useRef<SectionList>(null);
   const [showFutureCompetitions, setShowFutureCompetitions] = useState(false);
 
   const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -86,6 +88,22 @@ export const OLSceneHome = () => {
     }
   }, [getCompetitionsQuery.isFetched]);
 
+  // Scroll to top when Home tab is pressed
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('tabPress', () => {
+      // Only scroll if already on this screen
+      if (navigation.isFocused()) {
+        sectionListRef.current?.scrollToLocation({
+          sectionIndex: 0,
+          itemIndex: 0,
+          animated: true,
+        });
+      }
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+
   const isInitialLoading =
     getCompetitionsQuery.isLoading || getTodaysCompetitionsQuery.isLoading;
 
@@ -142,6 +160,7 @@ export const OLSceneHome = () => {
         <OLHomeSkeletonList />
       ) : (
         <SectionList
+          ref={sectionListRef}
           sections={sections}
           renderSectionHeader={renderSectionHeader}
           renderItem={renderItem}
