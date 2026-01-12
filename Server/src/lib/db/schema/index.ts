@@ -1,3 +1,4 @@
+export * from './ol_changelog_entries';
 export * from './ol_competitions';
 export * from './ol_users';
 export * from './ol_tracking';

@@ -204,5 +204,6 @@
   "Are you sure you want to stop tracking {{name}}?": "Är du säker på att du vill sluta följa {{name}}?",
   "Delete": "Ta bort",
   "Failed to delete runner": "Misslyckades ta bort löpare",
-  "See future competitions": "Se framtida tävlingar"
+  "See future competitions": "Se framtida tävlingar",
+  "What's New": "Nyheter"
 }

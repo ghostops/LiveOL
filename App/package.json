@@ -51,6 +51,7 @@
     "react-native-hyperlink": "^0.0.22",
     "react-native-in-app-review": "^4.3.3",
     "react-native-localize": "^3.6.0",
+    "react-native-markdown-display": "^7.0.2",
     "react-native-orientation-locker": "^1.7.0",
     "react-native-purchases": "^9.5.4",
     "react-native-purchases-ui": "^9.5.4",

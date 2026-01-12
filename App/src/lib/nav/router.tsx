@@ -24,6 +24,7 @@ import { TrackingInfoScreen } from '~/views/scenes/profile/TrackingInfoScreen';
 import { TrackingInfoIcon } from '~/views/components/TrackingInfoIcon';
 import { OLTrackingFormMode } from '~/views/components/tracking/form';
 import { OLSceneSettings } from '~/views/scenes/settings';
+import { OLSceneChangelog } from '~/views/scenes/changelog';
 
 export type TabStack = {
   Home: undefined;
@@ -39,6 +40,7 @@ export type RootStack = {
   Search: undefined;
   Redeem: undefined;
   Settings: undefined;
+  Changelog: undefined;
   LiveResults: { olCompetitionId: string; liveClassId: string };
   ClubResults: { olCompetitionId: string; olOrganizationId: string };
   EditTrackRunner: {
@@ -242,6 +244,13 @@ const Component: React.FC = () => {
             component={TrackingInfoScreen}
             options={{
               title: t('How following a runner works'),
+            }}
+          />
+          <Stack.Screen
+            name="Changelog"
+            component={OLSceneChangelog}
+            options={{
+              title: t("What's New"),
             }}
           />
         </Stack.Group>

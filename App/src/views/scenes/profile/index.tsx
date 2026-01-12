@@ -27,7 +27,29 @@ export const OLProfile: React.FC = () => {
         gap: px(8),
       }}
     >
-      <View style={{ alignItems: 'flex-end' }}>
+      <View
+        style={{
+          justifyContent: 'flex-end',
+          flexDirection: 'row',
+          gap: px(8),
+          flex: 1,
+        }}
+      >
+        <OLButton
+          small
+          onPress={() => navigate('Changelog')}
+          afterText={
+            <OLIcon
+              name="newspaper-outline"
+              size={px(14)}
+              color={COLORS.WHITE}
+            />
+          }
+          style={{ flexDirection: 'row', gap: px(4) }}
+        >
+          {t("What's New")}
+        </OLButton>
+
         <OLButton
           small
           onPress={() => navigate('Settings')}

@@ -14,6 +14,7 @@ import '~/lib/i18n';
 import { useDeviceIdStore } from './store/deviceId';
 import { getUniqueId } from 'react-native-device-info';
 import { UserRegistration } from './views/components/UserRegistration';
+import { ChangelogChecker } from './views/components/ChangelogChecker';
 import { AutocompleteDropdownContextProvider } from 'react-native-autocomplete-dropdown';
 
 const fallbackErrorBoundary = ({ children }: any) => <>{children}</>;
@@ -78,6 +79,7 @@ export default () => {
             <ActionSheetProvider>
               <QueryClientProvider client={queryClient}>
                 <UserRegistration />
+                <ChangelogChecker />
                 <View style={{ flex: 1 }}>
                   <Router />
                 </View>

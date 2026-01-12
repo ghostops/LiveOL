@@ -23,6 +23,7 @@ import { getUserStats } from 'controllers/stats';
 import { getApiStatus, getServerStatus } from 'controllers/status';
 import { getAllOrganizations } from 'controllers/organizations';
 import { getAllClasses } from 'controllers/classes';
+import { getChangelogEntries } from 'controllers/changelog';
 import logger from 'lib/logger';
 
 export const config = createConfig({
@@ -35,6 +36,8 @@ export const config = createConfig({
 export const routing: Routing = {
   health: getServerStatus,
   'v2/status': getApiStatus,
+
+  'v2/changelog': getChangelogEntries,
 
   'v2/competitions': getCompetitionsV2,
   'v2/competitions/search': searchCompetitions,
