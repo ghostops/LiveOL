@@ -43,6 +43,8 @@ WORKDIR /app
 COPY package*.json ./
 COPY server/package*.json ./server/
 
+RUN node --version && npm --version
+
 RUN npm ci --workspace=server
 
 # Copy built artifacts from build stage
