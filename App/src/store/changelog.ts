@@ -8,6 +8,7 @@ type ChangelogState = {
   markAsSeen: (entryIds: number[]) => void;
   hasSeenEntry: (entryId: number) => boolean;
   updateLastChecked: () => void;
+  reset: () => void;
 };
 
 export const useChangelogStore = create<ChangelogState>()(
@@ -25,6 +26,9 @@ export const useChangelogStore = create<ChangelogState>()(
       },
       updateLastChecked() {
         set({ lastCheckedAt: Date.now() });
+      },
+      reset() {
+        set({ seenEntryIds: [], lastCheckedAt: 0 });
       },
     }),
     { name: '@liveol/changelog', storage: zustandAsyncStorage },

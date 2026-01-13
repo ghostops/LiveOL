@@ -30,6 +30,7 @@ app.get('/api/content/:page', (req, res) => {
     'terms',
     'privacy',
     'licenses',
+    'changelog',
   ];
 
   if (!allowedPages.includes(page)) {

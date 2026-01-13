@@ -1,4 +1,4 @@
-import { ScrollView, View } from 'react-native';
+import { Alert, ScrollView, View } from 'react-native';
 import { OLCard } from '~/views/components/card';
 import { COLORS, px } from '~/util/const';
 import { useTranslation } from 'react-i18next';
@@ -9,11 +9,13 @@ import { useOLNavigation } from '~/hooks/useNavigation';
 import { OLButton } from '~/views/components/button';
 import { OLIcon } from '~/views/components/icon';
 import { useIap } from '~/hooks/useIap';
+import { useChangelogStore } from '~/store/changelog';
 
 export const OLProfile: React.FC = () => {
   const { t } = useTranslation();
   const { navigate } = useOLNavigation();
   const { plusActive } = useIap();
+  const { reset } = useChangelogStore();
 
   return (
     <ScrollView
@@ -38,6 +40,10 @@ export const OLProfile: React.FC = () => {
         <OLButton
           small
           onPress={() => navigate('Changelog')}
+          onLongPress={() => {
+            reset();
+            Alert.alert('ChangeLogReset');
+          }}
           afterText={
             <OLIcon
               name="newspaper-outline"

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { View, ActivityIndicator, FlatList } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import Markdown from 'react-native-markdown-display';
@@ -8,68 +8,78 @@ import { useChangelogStore } from '~/store/changelog';
 import { OLText } from '~/views/components/text';
 import { OLButton } from '~/views/components/button';
 import { COLORS, px } from '~/util/const';
+import { paths } from '~/lib/react-query/schema';
+import { StyleSheet } from 'react-native';
+
+type Entry =
+  paths['/v2/changelog']['get']['responses']['200']['content']['application/json']['data']['entries'][0];
 
 export const OLSceneChangelog: React.FC = () => {
   const { t } = useTranslation();
-  const { goBack } = useOLNavigation();
-  const { markAsSeen } = useChangelogStore();
+  const { goBack, setOptions } = useOLNavigation();
+  const { markAsSeen, seenEntryIds } = useChangelogStore();
+  const [entries, setEntries] = useState<Entry[]>([]);
 
   const { data, isLoading } = $api.useQuery('get', '/v2/changelog', {
     params: { query: { limit: 50, offset: 0 } },
   });
 
   useEffect(() => {
-    if (data?.data.entries) {
+    if (!entries.length && data?.data.entries) {
       const entryIds = data.data.entries.map(e => e.id);
       markAsSeen(entryIds);
-    }
-  }, [data, markAsSeen]);
 
+      let parsedEntries = data.data.entries;
+
+      if (seenEntryIds.length === 0) {
+        setOptions({ title: t('Welcome to LiveOL') });
+        parsedEntries = [...data.data.entries].sort((a, b) => {
+          if (a.displayOrder === 0) {
+            return -1;
+          }
+          if (b.displayOrder === 0) {
+            return 1;
+          }
+          return 0;
+        });
+      }
+
+      setEntries(parsedEntries);
+    }
+  }, [
+    data,
+    markAsSeen,
+    setEntries,
+    entries,
+    seenEntryIds.length,
+    setOptions,
+    t,
+  ]);
   if (isLoading) {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color={COLORS.MAIN} />
       </View>
     );
   }
 
   return (
-    <View style={{ flex: 1, backgroundColor: COLORS.BACKGROUND }}>
+    <View style={styles.container}>
       <FlatList
-        data={data?.data.entries || []}
+        data={entries}
         keyExtractor={item => item.id.toString()}
-        contentContainerStyle={{
-          paddingVertical: px(16),
-          paddingHorizontal: px(16),
-          gap: px(24),
-        }}
+        contentContainerStyle={styles.listContent}
         renderItem={({ item: entry }) => (
-          <View
-            style={{
-              backgroundColor: COLORS.WHITE,
-              borderRadius: px(8),
-              padding: px(16),
-              gap: px(12),
-              marginBottom: px(24),
-            }}
-          >
-            {/* Version Badge */}
-            <View
-              style={{ flexDirection: 'row', alignItems: 'center', gap: px(8) }}
-            >
-              <View
-                style={{
-                  backgroundColor: COLORS.MAIN,
-                  paddingHorizontal: px(8),
-                  paddingVertical: px(4),
-                  borderRadius: px(4),
-                }}
-              >
-                <OLText size={12} style={{ color: COLORS.WHITE }} bold>
-                  {new Date(entry.publishedAt).toLocaleDateString()}
-                </OLText>
+          <View style={styles.entryCard}>
+            {entry.displayOrder !== 0 && (
+              <View style={styles.dateContainer}>
+                <View style={styles.dateBadge}>
+                  <OLText size={12} style={styles.dateText} bold>
+                    {new Date(entry.publishedAt).toLocaleDateString()}
+                  </OLText>
+                </View>
               </View>
-            </View>
+            )}
 
             <OLText size={20} bold>
               {entry.title}
@@ -78,7 +88,11 @@ export const OLSceneChangelog: React.FC = () => {
             <Markdown
               style={{
                 body: { fontSize: px(16), color: COLORS.BLACK },
-                heading2: { fontSize: px(16), fontWeight: 'bold' },
+                heading2: {
+                  fontSize: px(16),
+                  fontWeight: 'bold',
+                  marginTop: px(12),
+                },
                 bullet_list: { marginLeft: px(16) },
                 link: { color: COLORS.MAIN },
               }}
@@ -87,19 +101,60 @@ export const OLSceneChangelog: React.FC = () => {
             </Markdown>
           </View>
         )}
-        ListFooterComponent={<View style={{ height: px(32) }} />}
+        ListFooterComponent={<View style={styles.listFooter} />}
       />
 
-      <View
-        style={{
-          padding: px(16),
-          backgroundColor: COLORS.WHITE,
-          borderTopWidth: 1,
-          borderTopColor: COLORS.BORDER,
-        }}
-      >
+      <View style={styles.footer}>
         <OLButton onPress={goBack}>{t('Close')}</OLButton>
       </View>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  container: {
+    flex: 1,
+    backgroundColor: COLORS.BACKGROUND,
+  },
+  listContent: {
+    paddingVertical: px(16),
+    paddingHorizontal: px(16),
+    gap: px(24),
+  },
+  entryCard: {
+    backgroundColor: COLORS.WHITE,
+    borderRadius: px(8),
+    padding: px(16),
+    gap: px(12),
+    marginBottom: px(24),
+  },
+  dateContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: px(8),
+  },
+  dateBadge: {
+    backgroundColor: COLORS.MAIN,
+    paddingHorizontal: px(8),
+    paddingVertical: px(4),
+    borderRadius: px(4),
+  },
+  dateText: {
+    color: COLORS.WHITE,
+  },
+  listFooter: {
+    height: px(32),
+  },
+  footer: {
+    padding: px(16),
+    paddingBottom: px(32),
+    backgroundColor: COLORS.WHITE,
+    borderTopWidth: 1,
+    borderTopColor: COLORS.BORDER,
+  },
+});
