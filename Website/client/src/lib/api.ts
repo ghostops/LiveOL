@@ -1,6 +1,4 @@
-const API_BASE = import.meta.env.DEV
-  ? 'http://localhost:3000/api'
-  : '/api';
+const API_BASE = '/api';
 
 export async function fetchContent(page: string) {
   const response = await fetch(`${API_BASE}/content/${page}`);
