@@ -41,6 +41,7 @@ FROM node:22-alpine AS production
 WORKDIR /app
 
 COPY package*.json ./
+COPY package-lock.json ./
 COPY server/package*.json ./server/
 COPY client/package*.json ./client/
 
