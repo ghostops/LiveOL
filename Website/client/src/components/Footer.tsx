@@ -12,7 +12,7 @@ export default function Footer() {
               <div>
                 <img src="/assets/images/icon.png" alt="LiveOL Logo" className="size-6 rounded" />
               </div>
-              <span className="text-xl font-bold text-text-main mono !normal-case">LiveOL</span>
+              <span className="text-xl font-bold text-text-main font-mono">LiveOL</span>
             </div>
             <p className="text-text-muted text-sm">
               Real-time orienteering results and competition analysis

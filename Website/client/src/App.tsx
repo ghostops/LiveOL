@@ -6,12 +6,13 @@ import Issues from './pages/Issues';
 import Ludvig from './pages/Ludvig';
 import Terms from './pages/Terms';
 import Privacy from './pages/Privacy';
-import Licenses from './pages/Licenses';
 import Changelog from './pages/Changelog';
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Contact />} />
@@ -21,7 +22,6 @@ function App() {
           <Route path="ludvig" element={<Ludvig />} />
           <Route path="terms" element={<Terms />} />
           <Route path="privacy" element={<Privacy />} />
-          <Route path="licenses" element={<Licenses />} />
           <Route path="changelog" element={<Changelog />} />
         </Route>
       </Routes>

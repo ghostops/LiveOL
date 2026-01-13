@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import MarkdownContent from '../components/MarkdownContent';
 import { fetchContent } from '../lib/api';
+import Loading from '@/components/Loading';
 
 export default function Contact() {
   const [content, setContent] = useState('');
@@ -20,9 +21,7 @@ export default function Contact() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center py-12">
-        <div className="text-text-muted font-mono">Loading...</div>
-      </div>
+      <Loading />
     );
   }
 

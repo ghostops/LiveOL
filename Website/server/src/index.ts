@@ -30,7 +30,7 @@ app.use((req, res, next) => {
 });
 
 // API: Fetch markdown content
-app.get('/api/content/:page', (req, res) => {
+app.get('/api/content/:page', async (req, res) => {
   const { page } = req.params;
   const allowedPages = [
     'contact',
@@ -39,7 +39,6 @@ app.get('/api/content/:page', (req, res) => {
     'ludvig',
     'terms',
     'privacy',
-    'licenses',
     'changelog',
   ];
 
