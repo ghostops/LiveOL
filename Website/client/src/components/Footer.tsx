@@ -9,10 +9,10 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 bg-brand-primary rounded flex items-center justify-center">
-                <span className="text-white font-bold text-lg">L</span>
+              <div>
+                <img src="/assets/images/icon.png" alt="LiveOL Logo" className="size-6 rounded" />
               </div>
-              <span className="text-xl font-bold text-text-main">LiveOL</span>
+              <span className="text-xl font-bold text-text-main mono !normal-case">LiveOL</span>
             </div>
             <p className="text-text-muted text-sm">
               Real-time orienteering results and competition analysis

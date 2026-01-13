@@ -14,9 +14,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
+h1, h2, h3, .mono {
   font-family: 'JetBrains Mono', 'Source Code Pro', source-code-pro, Menlo, Monaco,
     Consolas, 'Courier New', monospace;
+  text-transform: uppercase;
 }
 
 /* LiveOL Design System Utilities */

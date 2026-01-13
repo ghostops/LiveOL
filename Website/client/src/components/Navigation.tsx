@@ -16,10 +16,8 @@ export default function Navigation() {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <Link to="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-brand-primary rounded flex items-center justify-center">
-              <span className="text-white font-bold text-lg">L</span>
-            </div>
-            <span className="text-xl font-bold text-text-main">LiveOL</span>
+            <img src="/assets/images/icon.png" alt="LiveOL Logo" className="size-6 rounded" />
+            <span className="text-xl font-bold text-text-main mono !normal-case">LiveOL</span>
           </Link>
           <div className="hidden md:flex space-x-6">
             {links.map((link) => (
