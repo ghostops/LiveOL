@@ -15,14 +15,28 @@ export const OLClubsTrackingInput = ({
   const [debouncedSearchText] = useDebounce(searchText, 300);
 
   // Fetch organizations with server-side search
-  const { data } = $api.useQuery('get', '/v2/strings/organizations', {
-    params: {
-      query: {
-        search: debouncedSearchText || undefined,
-        limit: 100,
+  const { data } = $api.useQuery(
+    'get',
+    '/v2/strings/organizations',
+    {
+      params: {
+        query: {
+          search: debouncedSearchText || undefined,
+          limit: 100,
+        },
       },
     },
-  });
+    {
+      // Prevent refetching on window focus/mount to keep list stable
+      staleTime: 5 * 60 * 1000, // 5 minutes
+      gcTime: 10 * 60 * 1000, // 10 minutes (formerly cacheTime)
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      // Keep previous data while fetching new data to prevent flickering
+      placeholderData: previousData => previousData,
+    },
+  );
 
   // Memoize the organizations array to prevent re-creating on every render
   const organizations = useMemo(

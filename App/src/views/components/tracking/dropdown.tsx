@@ -1,5 +1,8 @@
-import { useCallback, useMemo, useRef } from 'react';
-import { AutocompleteDropdown } from 'react-native-autocomplete-dropdown';
+import { useCallback, useMemo, useRef, memo } from 'react';
+import {
+  AutocompleteDropdown,
+  AutocompleteDropdownItem,
+} from 'react-native-autocomplete-dropdown';
 import { TextInput } from 'react-native-gesture-handler';
 import { COLORS } from '~/util/const';
 
@@ -9,7 +12,7 @@ type Props = {
   onChangeText?: (text: string) => void;
 };
 
-export const OLTrackingDropdown = ({
+const OLTrackingDropdownComponent = ({
   dataSet,
   onAddItem,
   onChangeText,
@@ -21,9 +24,9 @@ export const OLTrackingDropdown = ({
 
   // Memoize the select handler
   const handleSelectItem = useCallback(
-    (e: { id: string; title: string } | null) => {
-      if (e && e.title) {
-        onAddItem(e.title);
+    (item: AutocompleteDropdownItem | null) => {
+      if (item && item.title) {
+        onAddItem(item.title);
         setTimeout(() => {
           dropdownRef.current?.clear();
           onChangeText?.('');
@@ -47,6 +50,28 @@ export const OLTrackingDropdown = ({
     [onChangeText],
   );
 
+  // Memoize container style
+  const containerStyle = useMemo(() => ({ flex: 1 }), []);
+
+  // Memoize input container style
+  const inputContainerStyle = useMemo(
+    () => ({
+      backgroundColor: COLORS.WHITE,
+      borderColor: COLORS.MAIN,
+      borderWidth: 2,
+      borderRadius: 8,
+    }),
+    [],
+  );
+
+  // Memoize text input style
+  const textInputStyle = useMemo(
+    () => ({
+      color: COLORS.BLACK,
+    }),
+    [],
+  );
+
   return (
     <AutocompleteDropdown
       ref={dropdownRef}
@@ -63,21 +88,26 @@ export const OLTrackingDropdown = ({
       suggestionsListMaxHeight={300}
       debounce={0} // We handle debouncing in parent
       useFilter={false} // Disable client-side filtering (we do server-side)
-      containerStyle={{
-        flex: 1,
-      }}
+      emptyResultText="No results"
+      containerStyle={containerStyle}
       onBlur={handleBlur}
-      inputContainerStyle={{
-        backgroundColor: COLORS.WHITE,
-        borderColor: COLORS.MAIN,
-        borderWidth: 2,
-        borderRadius: 8,
-      }}
+      inputContainerStyle={inputContainerStyle}
       textInputProps={{
-        style: {
-          color: COLORS.BLACK,
-        },
+        style: textInputStyle,
+        autoCorrect: false,
+        autoCapitalize: 'none',
+        keyboardType: 'default',
+      }}
+      flatListProps={{
+        keyboardShouldPersistTaps: 'handled',
+        removeClippedSubviews: true,
+        maxToRenderPerBatch: 10,
+        windowSize: 5,
+        initialNumToRender: 10,
       }}
     />
   );
 };
+
+// Memo the component to prevent unnecessary re-renders
+export const OLTrackingDropdown = memo(OLTrackingDropdownComponent);

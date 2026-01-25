@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { View, TouchableOpacity, Alert, ViewStyle } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { COLORS } from '~/util/const';
@@ -63,15 +63,21 @@ export const OLTrackingForm = ({
 
   const isLoading = isCreating || isUpdating;
 
-  const addClub = (clubInput: string) => {
-    if (clubInput.trim() && !clubs.includes(clubInput.trim())) {
-      setClubs([...clubs, clubInput.trim()]);
-    }
-  };
+  const addClub = useCallback(
+    (clubInput: string) => {
+      if (clubInput.trim() && !clubs.includes(clubInput.trim())) {
+        setClubs(prev => [...prev, clubInput.trim()]);
+      }
+    },
+    [clubs],
+  );
 
-  const removeClub = (club: string) => {
-    setClubs(clubs.filter(c => c !== club));
-  };
+  const removeClub = useCallback(
+    (club: string) => {
+      setClubs(prev => prev.filter(c => c !== club));
+    },
+    [],
+  );
 
   const handleSave = useThrottledCallback(
     async () => {
