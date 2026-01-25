@@ -38,7 +38,7 @@ export const useIap = () => {
   } = usePlusStore();
 
   const plusActive = __DEV__
-    ? false
+    ? true
     : customerInfo?.entitlements?.active?.plus !== undefined;
 
   const loadPurchase = useCallback(async () => {

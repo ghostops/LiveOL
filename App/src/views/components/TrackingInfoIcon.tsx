@@ -21,6 +21,7 @@ export const TrackingInfoIcon = ({
     <View
       style={{
         left: isHeader && HAS_LIQUID_GLASS ? 6 : 0,
+        top: !isHeader ? -2 : 0,
       }}
     >
       <TouchableOpacity onPress={() => navigate('TrackingInfo')}>
