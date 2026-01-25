@@ -1,3 +1,0 @@
-files:
-  - source: /App/assets/locales/source.json
-    translation: /App/assets/locales/%two_letters_code%.json
