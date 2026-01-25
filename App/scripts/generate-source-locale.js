@@ -2,17 +2,17 @@
 
 /**
  * Script to extract all translation keys from the codebase and generate a source locale file.
- * 
+ *
  * This script:
  * 1. Scans all TypeScript/JavaScript files in the App/src directory
  * 2. Extracts translation keys from t('key') calls
  * 3. Generates a JSON file with all unique keys (values are the keys themselves)
- * 
+ *
  * Note: This app uses FLAT translation keys only (no nested structures).
  * All keys are simple strings like "My Key" or "key.with.dots" (where dots are part of the string).
- * 
+ *
  * Usage: node scripts/generate-source-locale.js [output-file]
- * Default output: App/assets/locales/source.json
+ * Default output: App/assets/locales/en.json
  */
 
 const fs = require('fs');
@@ -20,7 +20,7 @@ const path = require('path');
 
 // Configuration
 const SOURCE_DIR = path.join(__dirname, '../src');
-const DEFAULT_OUTPUT = path.join(__dirname, '../assets/locales/source.json');
+const DEFAULT_OUTPUT = path.join(__dirname, '../assets/locales/en.json');
 const FILE_EXTENSIONS = ['.ts', '.tsx', '.js', '.jsx'];
 
 // Regex patterns to match translation calls
@@ -58,12 +58,13 @@ function getAllFiles(dir, fileList = []) {
 function extractKeysFromContent(content) {
   const keys = new Set();
 
+  keys.add('CURRENT_LANGUAGE'); // Manually add this key as it's used in the code
+
   PATTERNS.forEach(pattern => {
     let match;
     while ((match = pattern.exec(content)) !== null) {
       const key = match[1];
       // Include all keys as-is (flat structure)
-      // Keys like "competitions.info" are treated as single flat keys
       if (key) {
         keys.add(key);
       }
@@ -94,11 +95,13 @@ function main() {
     try {
       const content = fs.readFileSync(file, 'utf-8');
       const keys = extractKeysFromContent(content);
-      
+
       if (keys.length > 0) {
         keys.forEach(key => allKeys.add(key));
         processedFiles++;
-        console.log(`  ✓ ${path.relative(SOURCE_DIR, file)}: ${keys.length} keys`);
+        console.log(
+          `  ✓ ${path.relative(SOURCE_DIR, file)}: ${keys.length} keys`,
+        );
       }
     } catch (error) {
       console.error(`  ✗ Error reading ${file}: ${error.message}`);
@@ -113,7 +116,11 @@ function main() {
   Array.from(allKeys)
     .sort()
     .forEach(key => {
-      output[key] = key;
+      if (key === 'CURRENT_LANGUAGE') {
+        output[key] = 'English'; // Default value for CURRENT_LANGUAGE
+      } else {
+        output[key] = key;
+      }
     });
 
   // Ensure output directory exists
