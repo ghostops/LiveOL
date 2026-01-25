@@ -1,212 +1,102 @@
 {
-  "back": "Zpět",
-  "classes": {
-    "autoUpdate": "Zapnutí průběžně aktualizovaných výsledků",
-    "autoUpdateEnabled": "Průběžná aktualizace výsledků povolena",
-    "empty": "Bez závodníků v této kategorii",
-    "header": {
-      "name": "Jméno",
-      "place": "#",
-      "start": "Start",
-      "time": "Čas"
-    },
-    "resultsFor": "Výsledky pro",
-    "timerHint": "Čas do příštího obnovení"
-  },
-  "close": "Zavřít",
-  "competitions": {
-    "canceled": "Závody byly zrušeny",
-    "classes": "Kategorie",
-    "date": "Datum",
-    "distance": "Vzdálenost",
-    "info": "Info",
-    "lastPassings": "Poslední průběhy",
-    "noClasses": "Žádné kategorie",
-    "organizedBy": "Organizuje",
-    "passings": {
-      "class": "Katergorie",
-      "empty": "Žádné nedávné průběhy",
-      "info": "Tažením obrazovky dolů obnovte",
-      "name": "Jméno",
-      "passTime": "Čas průběhu",
-      "title": "Poslední průběhy"
-    },
-    "readMore": "Další informace",
-    "signups": "Přihlášen",
-    "visitEventor": "Shlédni Eventor"
-  },
-  "currentLanguage": "Česky",
-  "distances": {
-    "long": "Klasika",
-    "middle": "Střední",
-    "sprint": "Sprint",
-    "ultralong": "Dlouhá"
-  },
-  "follow": {
-    "empty": "Nesledujete žádnou soutěž, klub ani běžce.",
-    "openFollowing": "Otevřít sledování",
-    "title": "Sledování",
-    "unfollow": {
-      "cta": "Přestat sledovat.",
-      "hint": "Dlouhým stisknutím zrušíte sledování",
-      "title": "Chcete přestat sledovat?"
-    }
-  },
-  "home": {
-    "goToday": "Přesunout k dnešním událostem",
-    "nothingSearch": "Žádné závody nenalezeny",
-    "nothingToday": "Dnes se nekonají žádné závody",
-    "page": "Strana",
-    "search": "Hledat",
-    "title": "LiveOL",
-    "today": "Dnes"
-  },
-  "info": {
-    "appStore": "Otevři obchod aplikací",
-    "body": [
-      "LiveOL je aplikace, která naživo zobrazuje výsledky orientačního běhu.",
-      "Nejčerstvější výsledky získáte na svém telefonu nebo tabletu s praktickým rozhraním ve více jazycích.",
-      "LiveOL integruje mnoho služeb souvisejících s orientačním závodem, jako například Liveresultat.orientering.se a Eventor Sweden.",
-      "Naší vizí je být nejlepší platformou orientačního běhu pro mobilní zařízení."
-    ],
-    "changeTextSize": {
-      "decrease": "Snižte velikost",
-      "increase": "Zvětšit velikost",
-      "text": "Změň velikost písma pomocí tlačítek níže",
-      "title": "Změň velikost písma"
-    },
-    "contact": "Kontaktuj mě",
-    "newsletter": "Přihlaste se k odběru novinek",
-    "purgeCache": "Vymazat výsledky uložené v mezipaměti",
-    "purged": "uložené události byly odstraněny",
-    "rate": "Ohodnoť aplikaci",
-    "title": "Informace",
-    "translations": {
-      "credit": "Aplikaci přeložil",
-      "freePlus": "Pomozte s překladem aplikace a získejte zdarma LiveOL+",
-      "phraseapp": "Překlady provedl"
-    },
-    "update": {
-      "check": "Zkontrolovat aktualizace",
-      "hasUpdate": {
-        "cancel": "Zrušit",
-        "cta": "Aktualizovat nyní",
-        "text": "Byla nalezena nová verze.",
-        "title": "Nalezena aktualizace"
-      },
-      "noUpdate": {
-        "text": "Novější verze nenalezena",
-        "title": "Žádná aktualizace"
-      }
-    },
-    "version": "Současná verze"
-  },
-  "language": {
-    "pick": "Vyberte jazyk"
-  },
-  "plus": {
-    "buy": {
-      "error": "Něco se pokazilo...",
-      "feature": {
-        "classes": {
-          "text": "Sledujte kategorie, které vás nejvíce zajímají.",
-          "title": "Sledovat katergorie"
-        },
-        "clubs": {
-          "text": "Rychlý přístup k výsledkům jakéhokoli klubu v soutěži.",
-          "title": "Sledujte kluby"
-        },
-        "follow": {
-          "text": "Získejte rychlý přístup k výsledkům vybraných běžců.",
-          "title": "Sledujte běžce"
-        },
-        "sorting": {
-          "text": "Seřaďte výsledky podle sloupců výsledků.",
-          "title": "Řazení výsledků"
-        }
-      },
-      "privacy": "Zásady ochrany osobních údajů",
-      "restore": "Obnovení zakoupených položek",
-      "restoreError": {
-        "text": "Obraťte se na nás, pokud jste již dříve zakoupili.",
-        "title": "Službu LiveOL+ nelze obnovit."
-      },
-      "restoreSuccess": "Obnovili jste službu LiveOL+",
-      "success": "LiveOL+ zpřístupněno.",
-      "terms": "Podmínky použití",
-      "text": "Získejte exkluzivní výhody a posuňte projekt vpřed skrze příznivé roční předplatné, které zajistí vývoj služby LiveOL.",
-      "title": "Se službou LiveOL+ toho zvládnete víc",
-      "yearly": "Ročně"
-    },
-    "code": {
-      "claimed": "Kód již uplatněn",
-      "enter": "Zde zadejte kód",
-      "invalid": "Neplatný kód",
-      "redeem": "Uplatnit kód"
-    },
-    "promo": {
-      "box": {
-        "cta": "Podívejte se na to",
-        "text": "Využijte LiveOL na maximum a podpořte jeho další vývoj. Získejte LiveOL+ ještě dnes:"
-      },
-      "get": "Získat LiveOL+"
-    },
-    "status": {
-      "expire": "Děkujeme, že jste podpořili službu LiveOL, platnost vašeho předplatného vyprší: {{ date }}",
-      "renew": "Děkujeme, že podporujete službu LiveOL, Vaše předplatné bude obnoveno k: {{ date }}",
-      "title": "LiveOL+"
-    }
-  },
-  "promotions": {
-    "didYouKnow": "Věděl jsi?",
-    "rotate": "Otoč svým telefonem k zobrazení radiokontrol"
-  },
-  "result": {
-    "followClass": "Sledovat kategorii",
-    "followClub": "Sledujte klub",
-    "followRunner": "Sledovat běžce",
-    "goToClass": "Zobrazení výsledků kategorií",
-    "goToClub": "Zobrazit klubové výsledky",
-    "mute": "Vypnout zvuk",
-    "notFound": "Nebyl nalezen žádný běžec",
-    "searchRunner": {
-      "text": "Vyhledávání podle názvu",
-      "title": "Vyhledat běžce"
-    },
-    "unmute": "Obnovit zvuk"
-  },
-  "status": {
-    "long": [
-      "V pořádku",
-      "Nestartoval",
-      "Nedokončil",
-      "Špatně oražená kontrola",
-      "Diskvalifikován",
-      "Přesáhl časový limit",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "Vzdal",
-      "Přeřazen do jiné kategorie",
-      "Dokončil"
-    ],
-    "short": [
-      "OK",
-      "DNS",
-      "DNF",
-      "MP",
-      "DSQ",
-      "OT",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "WO",
-      "MU",
-      "FIN"
-    ]
-  }
+  "About & Support": "About & Support",
+  "Add Runner": "Add Runner",
+  "Add runner details": "Add runner details",
+  "App settings": "App settings",
+  "Appearance": "Appearance",
+  "Average position": "Average position",
+  "Back": "Back",
+  "Cancel": "Cancel",
+  "Classes": "Classes",
+  "Close": "Close",
+  "Clubs": "Clubs",
+  "Competition information": "Competition information",
+  "Competitions": "Competitions",
+  "Contact me": "Contact me",
+  "Current version": "Current version",
+  "Data & Privacy": "Data & Privacy",
+  "Date": "Date",
+  "Delete": "Delete",
+  "Delete Runner": "Delete Runner",
+  "Distance": "Distance",
+  "Edit": "Edit",
+  "Edit Runner": "Edit Runner",
+  "Enter runner name": "Enter runner name",
+  "Error": "Error",
+  "Failed to save runner": "Failed to save runner",
+  "Filter by date": "Filter by date",
+  "Follow multiple runners": "Follow multiple runners",
+  "Follow runner": "Follow runner",
+  "Follow unlimited runners": "Follow unlimited runners",
+  "Following": "Following",
+  "Get LiveOL+": "Get LiveOL+",
+  "Get highlighted": "Get highlighted",
+  "Help out translating - Get free LiveOL+": "Help out translating - Get free LiveOL+",
+  "How following a runner works": "How following a runner works",
+  "How often results auto-refreshes": "How often results auto-refreshes",
+  "Language": "Language",
+  "Links": "Links",
+  "LiveOL": "LiveOL",
+  "Made by Ludvig Larsendahl": "Made by Ludvig Larsendahl",
+  "Me": "Me",
+  "My classes": "My classes",
+  "My clubs": "My clubs",
+  "My full name": "My full name",
+  "Name": "Name",
+  "No classes": "No classes",
+  "No competitions found": "No competitions found",
+  "No competitors from this club": "No competitors from this club",
+  "No competitors in this class": "No competitors in this class",
+  "No tracked runners": "No tracked runners",
+  "Organized by": "Organized by",
+  "Pick language": "Pick language",
+  "Please enter at least one club and one class": "Please enter at least one club and one class",
+  "Please reach out if you have previously purchased.": "Please reach out if you have previously purchased.",
+  "Privacy Policy": "Privacy Policy",
+  "Pro tip": "Pro tip",
+  "Punch System": "Punch System",
+  "Races entered": "Races entered",
+  "Read more": "Read more",
+  "Report a bug": "Report a bug",
+  "Restore purchases": "Restore purchases",
+  "Results": "Results",
+  "Runner Name": "Runner Name",
+  "Runner name is required": "Runner name is required",
+  "Search": "Search",
+  "Search competitions or organizers...": "Search competitions or organizers...",
+  "See class results": "See class results",
+  "See club results": "See club results",
+  "See competition info": "See competition info",
+  "See future competitions": "See future competitions",
+  "See on Eventor": "See on Eventor",
+  "Settings": "Settings",
+  "Sign up for news": "Sign up for news",
+  "Signed up": "Signed up",
+  "Smart matching": "Smart matching",
+  "Sort results by any column": "Sort results by any column",
+  "Split controls taken": "Split controls taken",
+  "Start following": "Start following",
+  "Subscription": "Subscription",
+  "Support LiveOL development": "Support LiveOL development",
+  "Tap the + button to start tracking a runner": "Tap the + button to start tracking a runner",
+  "Terms of Service": "Terms of Service",
+  "Text size": "Text size",
+  "The competition has been canceled": "The competition has been canceled",
+  "There are no competitions today": "There are no competitions today",
+  "Time": "Time",
+  "Time spent running": "Time spent running",
+  "Today": "Today",
+  "Translations": "Translations",
+  "Translations with the help from": "Translations with the help from",
+  "Update following": "Update following",
+  "User ID": "User ID",
+  "User not found. Please restart the app.": "User not found. Please restart the app.",
+  "View my races": "View my races",
+  "Welcome to LiveOL": "Welcome to LiveOL",
+  "You cannot restore LiveOL+.": "You cannot restore LiveOL+.",
+  "You have restored LiveOL+": "You have restored LiveOL+",
+  "Your race statistics": "Your race statistics",
+  "hours": "hours",
+  "liveresultat.orientering.se is currently experiencing issues": "liveresultat.orientering.se is currently experiencing issues",
+  "per year": "per year"
 }
