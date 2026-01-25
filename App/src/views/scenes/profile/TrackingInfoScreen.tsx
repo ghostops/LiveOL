@@ -36,7 +36,7 @@ export const TrackingInfoScreen: React.FC = () => {
       icon: 'sparkles' as const,
       title: t('Follow multiple runners'),
       description: t(
-        'If you have LiveO+ you can follow as many runners as you like, otherwise you are restricted to following yourself.',
+        'If you have LiveOL+ you can follow as many runners as you like, otherwise you are restricted to following yourself.',
       ),
     },
   ];
