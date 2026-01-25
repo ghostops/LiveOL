@@ -264,9 +264,18 @@ export const getLiveResultsForTrackedRunner = defaultEndpointsFactory
 
       const allPotentialIds = getTrackedRunnerIds(tracking);
 
+      console.log(allPotentialIds);
+
       if (allPotentialIds.length === 0) {
         return { results: [] };
       }
+
+      // Convert IDs like "name~~club" to LIKE patterns "name~%~club"
+      const likePatterns = allPotentialIds.map(id => {
+        const parts = id.split('~');
+        // parts should be [name, '', club] - replace empty class with wildcard
+        return parts.length === 3 ? `${parts[0]}~%~${parts[2]}` : id;
+      });
 
       const results = await api.Drizzle.db
         .select({
@@ -286,10 +295,10 @@ export const getLiveResultsForTrackedRunner = defaultEndpointsFactory
         )
         .where(
           and(
-            // Build a safe IN (...) clause from the list of ids
-            sql`${LiveResultsTable.olRunnerId} IN (${sql.join(
-              allPotentialIds.map(id => sql`${id}`),
-              sql`, `,
+            // Match olRunnerId against patterns like "name~%~club"
+            sql`(${sql.join(
+              likePatterns.map(pattern => sql`${LiveResultsTable.olRunnerId} LIKE ${pattern}`),
+              sql` OR `,
             )})`,
             isNull(LiveResultsTable.deletedAt),
           ),
