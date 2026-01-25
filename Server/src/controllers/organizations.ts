@@ -32,8 +32,8 @@ export const getAllOrganizations = defaultEndpointsFactory.build({
       ? sql`
         ORDER BY 
           CASE 
-            WHEN LOWER("organization") = LOWER(${search}) THEN 0
-            WHEN LOWER("organization") LIKE LOWER(${search}) || '%' THEN 1
+            WHEN LOWER(MIN("organization")) = LOWER(${search}) THEN 0
+            WHEN LOWER(MIN("organization")) LIKE LOWER(${search}) || '%' THEN 1
             ELSE 2
           END,
           MIN("organization") COLLATE "C"
