@@ -13,7 +13,9 @@
     "archive:android": "cd android; bundle exec fastlane deploy && cd ../; ./upload-sourcemaps.sh",
     "archive": "npm run archive:ios && npm run archive:android",
     "postinstall": "patch-package && npm run schema",
-    "schema": "node schema.js"
+    "schema": "node schema.js",
+    "generate-source-locale": "node scripts/generate-source-locale.js",
+    "analyze-locales": "node scripts/analyze-locales.js"
   },
   "dependencies": {
     "@animatereactnative/marquee": "^0.5.2",

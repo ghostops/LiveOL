@@ -205,5 +205,18 @@
   "Delete": "Ta bort",
   "Failed to delete runner": "Misslyckades ta bort löpare",
   "See future competitions": "Se framtida tävlingar",
-  "What's New": "Nyheter"
+  "What's New": "Nyheter",
+  "Settings": "Inställningar",
+  "Competition information": "Tävlingsinformation",
+  "Welcome to LiveOL": "Välkommen till LiveOL",
+  "Your race statistics": "Din tävlingsstatistik",
+  "Races entered": "Antal tävlingar",
+  "Split controls taken": "Radio-kontroller tagna",
+  "Time spent running": "Tid spenderad på att springa",
+  "hours": "timmar",
+  "Average position": "Genomsnittlig placering",
+  "View my races": "Visa mina tävlingar",
+  "App settings": "Appinställningar",
+  "Text size": "Textstorlek",
+  "Translations": "Översättningar"
 }
