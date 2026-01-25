@@ -14,7 +14,6 @@ const createTrackingSchema = z.object({
   uid: z.string().min(1),
   name: z.string().min(1).max(255),
   clubs: z.array(z.string().max(255)).default([]),
-  classes: z.array(z.string().max(255)).default([]),
   isMe: z.boolean().default(false),
 });
 
@@ -22,7 +21,6 @@ const updateTrackingSchema = z.object({
   id: z.coerce.number(),
   name: z.string().min(1).max(255),
   clubs: z.array(z.string().max(255)).default([]),
-  classes: z.array(z.string().max(255)).default([]),
 });
 
 const deleteTrackingSchema = z.object({
@@ -38,7 +36,6 @@ const trackingResponseSchema = z.object({
   id: z.number(),
   name: z.string(),
   clubs: z.array(z.string()),
-  classes: z.array(z.string()),
 });
 
 // List tracked runners for a user
@@ -84,7 +81,7 @@ export const createTracking = defaultEndpointsFactory.build({
   input: createTrackingSchema,
   output: trackingResponseSchema,
   handler: async ({ input }) => {
-    const { uid, name, clubs, classes, isMe } = input;
+    const { uid, name, clubs, isMe } = input;
 
     // Get user by uid
     const [user] = await api.Drizzle.db
@@ -103,7 +100,6 @@ export const createTracking = defaultEndpointsFactory.build({
       .values({
         name,
         clubs,
-        classes,
         olUserId: user.id,
         isMe,
       })
@@ -123,7 +119,7 @@ export const updateTracking = defaultEndpointsFactory.build({
   input: updateTrackingSchema,
   output: trackingResponseSchema,
   handler: async ({ input }) => {
-    const { id, name, clubs, classes } = input;
+    const { id, name, clubs } = input;
 
     // Get tracking record to find runner ID
     const [trackingRecord] = await api.Drizzle.db
@@ -142,7 +138,6 @@ export const updateTracking = defaultEndpointsFactory.build({
       .set({
         name,
         clubs,
-        classes,
         updatedAt: new Date(),
       })
       .where(eq(OLTrackingTable.id, id))

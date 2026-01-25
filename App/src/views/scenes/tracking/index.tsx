@@ -120,11 +120,6 @@ export const OLSceneTracking = () => {
                   {t('Clubs')}: {item.clubs.join(', ')}
                 </OLText>
               )}
-              {item.classes.length > 0 && (
-                <OLText size={14} style={styles.itemMeta}>
-                  {t('Classes')}: {item.classes.join(', ')}
-                </OLText>
-              )}
               <OLButton
                 small
                 style={{ alignSelf: 'flex-start', marginTop: px(8) }}
@@ -146,7 +141,6 @@ export const OLSceneTracking = () => {
                   runner: {
                     name: item.name,
                     clubs: item.clubs,
-                    classes: item.classes,
                   },
                 })
               }

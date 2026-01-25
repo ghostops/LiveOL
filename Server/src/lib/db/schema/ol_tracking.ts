@@ -10,7 +10,6 @@ export const OLTrackingTable = pgTable('ol_tracking', {
     .references(() => OLUsersTable.id, { onDelete: 'cascade' }),
   name: varchar({ length: 255 }).notNull(),
   clubs: varchar({ length: 255 }).array().notNull().default([]),
-  classes: varchar({ length: 255 }).array().notNull().default([]),
   isMe: boolean().notNull().default(false),
   ...commonFields,
 });

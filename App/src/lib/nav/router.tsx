@@ -49,7 +49,6 @@ export type RootStack = {
     runner?: {
       name: string;
       clubs: string[];
-      classes: string[];
     };
   };
   TrackingResults: {

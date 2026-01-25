@@ -297,7 +297,9 @@ export const getLiveResultsForTrackedRunner = defaultEndpointsFactory
           and(
             // Match olRunnerId against patterns like "name~%~club"
             sql`(${sql.join(
-              likePatterns.map(pattern => sql`${LiveResultsTable.olRunnerId} LIKE ${pattern}`),
+              likePatterns.map(
+                pattern => sql`${LiveResultsTable.olRunnerId} LIKE ${pattern}`,
+              ),
               sql` OR `,
             )})`,
             isNull(LiveResultsTable.deletedAt),

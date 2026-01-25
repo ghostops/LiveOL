@@ -1,0 +1,1 @@
+ALTER TABLE "ol_tracking" DROP COLUMN "classes";

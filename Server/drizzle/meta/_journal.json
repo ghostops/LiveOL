@@ -50,6 +50,13 @@
       "when": 1768245614804,
       "tag": "0006_cute_changeling",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1769354367731,
+      "tag": "0007_strong_talkback",
+      "breakpoints": true
     }
   ]
 }

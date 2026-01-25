@@ -51,7 +51,6 @@ export const OLRunnerContextMenu: React.FC<Props> = ({
             mode: 'create',
             runner: {
               name,
-              classes: className ? [className] : [],
               clubs: organization ? [organization] : [],
             },
           });
