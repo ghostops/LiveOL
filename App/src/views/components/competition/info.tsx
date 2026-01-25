@@ -28,7 +28,7 @@ export const CompetitionInfoBox: React.FC<Props> = ({ infoHtml, links }) => {
           paddingBottom: px(6),
         }}
       >
-        {t('competitions.info')}
+        {t('Competition information')}
       </OLText>
 
       <InfoHtml html={infoHtml} />
@@ -44,7 +44,7 @@ export const CompetitionInfoBox: React.FC<Props> = ({ infoHtml, links }) => {
               paddingBottom: px(6),
             }}
           >
-            {t('competitions.links')}
+            {t('Links')}
           </OLText>
           {links?.map(link => (
             <TouchableOpacity
@@ -122,7 +122,7 @@ const InfoHtml: React.FC<{ html: string }> = ({ html }) => {
             size={12}
             style={{ color: 'white', textDecorationLine: 'underline' }}
           >
-            {t('competitions.readMore')}
+            {t('Read more')}
           </OLText>
         </TouchableOpacity>
       )}
