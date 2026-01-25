@@ -31,8 +31,9 @@ export const getAllOrganizations = defaultEndpointsFactory.build({
       return JSON.parse(cached);
     }
 
+    // Use ILIKE for case-insensitive search that works with åäö
     const searchCondition = search
-      ? sql`AND LOWER("organization") LIKE ${`%${search.toLowerCase()}%`}`
+      ? sql`AND "organization" ILIKE ${`%${search}%`}`
       : sql``;
 
     const organizations = await api.Drizzle.db.execute<{
@@ -51,7 +52,7 @@ export const getAllOrganizations = defaultEndpointsFactory.build({
           AND "organization" != ''
           ${searchCondition}
         GROUP BY "olOrganizationId"
-        ORDER BY MIN("organization")
+        ORDER BY MIN("organization") COLLATE "C"
         LIMIT ${limit};
       `,
     );
