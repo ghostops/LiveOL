@@ -38,7 +38,7 @@ export const PickerIcon = () => {
         <OLIcon name="earth-outline" size={24} color="black" />
         <OLFlag
           code={i18n.resolvedLanguage}
-          size={24}
+          size={16}
           style={{ borderColor: 'black', borderWidth: 1, marginLeft: 6 }}
         />
       </TouchableOpacity>

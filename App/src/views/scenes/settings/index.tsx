@@ -115,7 +115,7 @@ export const OLSceneSettings = () => {
           <OLText size={16}>{t('Language')}</OLText>
 
           <View>
-            <OLFlag code={i18n.language} size={28} />
+            <OLFlag code={i18n.language} size={16} />
           </View>
         </TouchableOpacity>
 
@@ -216,7 +216,7 @@ export const OLSceneSettings = () => {
 
               <OLFlag
                 code={code}
-                size={24}
+                size={16}
                 style={{ borderColor: COLORS.GRAY, borderWidth: 1 }}
               />
             </View>

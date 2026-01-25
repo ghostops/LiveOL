@@ -45,6 +45,7 @@
     "react-native": "^0.82.1",
     "react-native-autocomplete-dropdown": "^5.0.0",
     "react-native-bootsplash": "^6.3.8",
+    "react-native-country-flag": "^2.0.2",
     "react-native-device-info": "^10.7.0",
     "react-native-easy-grid": "^0.2.2",
     "react-native-gesture-handler": "^2.28.0",

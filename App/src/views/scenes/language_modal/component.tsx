@@ -39,7 +39,7 @@ export const OLLanguageModal = () => {
             >
               <OLFlag
                 code={lang}
-                size={32}
+                size={16}
                 style={{
                   borderColor: 'black',
                   borderWidth: 1,
