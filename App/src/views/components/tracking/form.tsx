@@ -87,10 +87,7 @@ export const OLTrackingForm = ({
         }
 
         if (clubs.length === 0) {
-          Alert.alert(
-            t('Error'),
-            t('Please enter at least one club'),
-          );
+          Alert.alert(t('Error'), t('Please enter at least one club'));
           return;
         }
       }

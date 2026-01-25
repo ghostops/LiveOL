@@ -8,6 +8,10 @@ const api = apiSingletons.createApiSingletons();
 
 export const getAllOrganizations = defaultEndpointsFactory.build({
   method: 'get',
+  input: z.object({
+    search: z.string().optional(),
+    limit: z.coerce.number().min(1).max(500).optional().default(100),
+  }),
   output: z.object({
     organizations: z
       .object({
@@ -16,13 +20,20 @@ export const getAllOrganizations = defaultEndpointsFactory.build({
       })
       .array(),
   }),
-  handler: async () => {
-    const cacheKey = 'cache:all_organizations';
+  handler: async ({ input }) => {
+    const { search, limit } = input;
+    const cacheKey = search
+      ? `cache:organizations:search:${search}:${limit}`
+      : `cache:all_organizations:${limit}`;
     const cached = await api.Redis.get(cacheKey);
 
     if (cached) {
       return JSON.parse(cached);
     }
+
+    const searchCondition = search
+      ? sql`AND LOWER("organization") LIKE ${`%${search.toLowerCase()}%`}`
+      : sql``;
 
     const organizations = await api.Drizzle.db.execute<{
       olOrganizationId: string;
@@ -38,8 +49,10 @@ export const getAllOrganizations = defaultEndpointsFactory.build({
           AND "olOrganizationId" != ''
           AND "olOrganizationId" != ${noOrganizationId}
           AND "organization" != ''
+          ${searchCondition}
         GROUP BY "olOrganizationId"
-        ORDER BY MIN("organization");
+        ORDER BY MIN("organization")
+        LIMIT ${limit};
       `,
     );
     const response = {

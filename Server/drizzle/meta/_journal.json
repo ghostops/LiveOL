@@ -57,6 +57,13 @@
       "when": 1769354367731,
       "tag": "0007_strong_talkback",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1769354769729,
+      "tag": "0008_tidy_nebula",
+      "breakpoints": true
     }
   ]
 }

@@ -22,7 +22,6 @@ import {
 import { getUserStats } from 'controllers/stats';
 import { getApiStatus, getServerStatus } from 'controllers/status';
 import { getAllOrganizations } from 'controllers/organizations';
-import { getAllClasses } from 'controllers/classes';
 import { getChangelogEntries } from 'controllers/changelog';
 import logger from 'lib/logger';
 
@@ -59,5 +58,5 @@ export const routing: Routing = {
   'v2/tracking/stats': getUserStats,
 
   'v2/strings/organizations': getAllOrganizations,
-  'v2/strings/classes': getAllClasses,
+  // 'v2/strings/classes': getAllClasses,
 };
