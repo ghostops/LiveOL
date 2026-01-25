@@ -8,6 +8,7 @@ import { useTheme } from '~/hooks/useTheme';
 import { useSortingStore } from '~/store/sorting';
 import { HIT_SLOP } from '~/util/const';
 import { OLIcon } from '~/views/components/icon';
+import { useIap } from '~/hooks/useIap';
 
 type Props = {
   liveSplitControls?:
@@ -25,6 +26,16 @@ export const OLResultHeader = (props: Props) => {
   const { colors } = useTheme();
   const { setSortingDirection, setSortingKey, sortingDirection } =
     useSortingStore();
+  const { plusActive, presentPaywall } = useIap();
+
+  const sortCol = (sort: () => void) => {
+    if (!plusActive) {
+      presentPaywall();
+      return;
+    }
+
+    sort();
+  };
 
   return (
     <View
@@ -58,8 +69,10 @@ export const OLResultHeader = (props: Props) => {
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => {
-          setSortingKey('name');
-          setSortingDirection(sortingDirection === 'asc' ? 'desc' : 'asc');
+          sortCol(() => {
+            setSortingKey('name');
+            setSortingDirection(sortingDirection === 'asc' ? 'desc' : 'asc');
+          });
         }}
         style={[styles.column, { width: name }]}
         hitSlop={HIT_SLOP}
@@ -72,8 +85,10 @@ export const OLResultHeader = (props: Props) => {
           key={split.code}
           style={[styles.column, { width: splits }]}
           onPress={() => {
-            setSortingKey('split-' + split.code);
-            setSortingDirection(sortingDirection === 'asc' ? 'desc' : 'asc');
+            sortCol(() => {
+              setSortingKey('split-' + split.code);
+              setSortingDirection(sortingDirection === 'asc' ? 'desc' : 'asc');
+            });
           }}
           hitSlop={HIT_SLOP}
         >
@@ -89,8 +104,10 @@ export const OLResultHeader = (props: Props) => {
           { width: time, paddingRight: 16, justifyContent: 'flex-end' },
         ]}
         onPress={() => {
-          setSortingKey('result');
-          setSortingDirection(sortingDirection === 'asc' ? 'desc' : 'asc');
+          sortCol(() => {
+            setSortingKey('result');
+            setSortingDirection(sortingDirection === 'asc' ? 'desc' : 'asc');
+          });
         }}
         hitSlop={HIT_SLOP}
       >

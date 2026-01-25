@@ -18,6 +18,7 @@ import { queryClient } from '~/lib/react-query/client';
 import { OLButton } from '~/views/components/button';
 import { OLIcon } from '~/views/components/icon';
 import { OLTrackingSkeletonList } from './skeleton';
+import { useIap } from '~/hooks/useIap';
 
 type TrackingItem =
   paths['/v2/tracking']['get']['responses']['200']['content']['application/json']['data']['tracking'][0];
@@ -27,6 +28,7 @@ export const OLSceneTracking = () => {
   const { navigate } = useOLNavigation();
   const { px } = useTheme();
   const userId = useUserIdStore(state => state.userId);
+  const { plusActive, presentPaywall } = useIap();
 
   const { data: trackingData, isLoading } = $api.useQuery(
     'get',
@@ -195,7 +197,13 @@ export const OLSceneTracking = () => {
 
       {/* Floating Action Button */}
       <TouchableOpacity
-        onPress={() => navigate('EditTrackRunner', { mode: 'create' })}
+        onPress={() => {
+          if (!plusActive) {
+            presentPaywall();
+            return;
+          }
+          navigate('EditTrackRunner', { mode: 'create' });
+        }}
         style={[
           styles.fab,
           {
