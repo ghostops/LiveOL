@@ -1,211 +1,102 @@
 {
-  "back": "Indietro",
-  "classes": {
-    "autoUpdate": "Attiva aggiornamento in tempo reale",
-    "autoUpdateEnabled": "Abilitato aggiornamento in tempo reale",
-    "empty": "Nessun concorrente in questa categoria",
-    "header": {
-      "name": "Nome",
-      "place": "Pos.",
-      "start": "Partenza",
-      "time": "Tempo"
-    },
-    "resultsFor": "Risultati per",
-    "timerHint": "Tempo al prossimo aggiornamento"
-  },
-  "close": "Chiudi",
-  "competitions": {
-    "canceled": "La gara è stata annullata",
-    "classes": "Categorie",
-    "date": "Data",
-    "distance": "Distanza",
-    "lastPassings": "Ultimi passaggi",
-    "noClasses": "Nessuna categoria",
-    "organizedBy": "Organizzata da",
-    "passings": {
-      "class": "Categoria",
-      "empty": "Nessun passaggio",
-      "info": "Trascina per aggiornare",
-      "name": "Nome",
-      "passTime": "Tempo passaggio",
-      "title": "Ultimi passaggi"
-    },
-    "readMore": "Per saperne di più",
-    "signups": "Iscritti",
-    "visitEventor": "Vedi su Eventor"
-  },
-  "currentLanguage": "Italiano",
-  "distances": {
-    "long": "Long",
-    "middle": "Middle",
-    "sprint": "Sprint",
-    "ultralong": "Ultra Long"
-  },
-  "follow": {
-    "empty": "Non stai seguendo alcuna competizione, club o corridore.",
-    "openFollowing": "Aprire a seguire",
-    "title": "Seguendo",
-    "unfollow": {
-      "cta": "Non seguire",
-      "hint": "Premi a lungo per smettere di seguire",
-      "title": "Vuoi smettere di seguire?"
-    }
-  },
-  "home": {
-    "goToday": "Trascina per vedere gli eventi odierni",
-    "nothingSearch": "Nessuna gara trovata",
-    "nothingToday": "Non ci sono gare oggi",
-    "page": "Pagina",
-    "search": "Cerca",
-    "title": "LiveOL",
-    "today": "Oggi"
-  },
-  "info": {
-    "appStore": "Apri l'App Store",
-    "body": [
-      "LiveOL è un'app che visualizza i risultati di orienteering in tempo reale.",
-      "Ottieni gli ultimi risultati sul tuo telefono o tablet con una comoda interfaccia in più lingue.",
-      "LiveOL integra molti servizi relativi all'Orienteering, come liveresultat.orientering.se e Eventor Svezia.",
-      "La nostra visione è quella di essere la migliore piattaforma di orienteering per dispositivi mobili."
-    ],
-    "changeTextSize": {
-      "decrease": "Riduci dimensione",
-      "increase": "Aumenta dimensione",
-      "text": "Modificare la dimensione del testo usando i pulsanti sottostanti:",
-      "title": "Modifica dimensione del testo"
-    },
-    "contact": "Contattami",
-    "newsletter": "Iscriviti per ricevere notizie",
-    "purgeCache": "Cancella la cache risultati",
-    "purged": "gli eventi salvati sono stati rimossi",
-    "rate": "Vota la app",
-    "title": "Informazioni",
-    "translations": {
-      "credit": "App tradotta da",
-      "freePlus": "Aiutaci a tradurre l'app e ricevi gratuitamente LiveOL+",
-      "phraseapp": "Traduzioni tramite"
-    },
-    "update": {
-      "check": "Controlla presenza di aggiornamenti",
-      "hasUpdate": {
-        "cancel": "Annulla",
-        "cta": "Aggiorna adesso",
-        "text": "Trovata una nuova versione",
-        "title": "Aggiornamento disponibile"
-      },
-      "noUpdate": {
-        "text": "Non è stata trovata una versione più recente",
-        "title": "Nessun aggiornamento"
-      }
-    },
-    "version": "Versione attuale"
-  },
-  "language": {
-    "pick": "Scegli la lingua"
-  },
-  "plus": {
-    "buy": {
-      "error": "Qualcosa è andato storto...",
-      "feature": {
-        "classes": {
-          "text": "Segui le categorie che ti interessano di più.",
-          "title": "Seguire categorie"
-        },
-        "clubs": {
-          "text": "Accedi rapidamente ai risultati di una società in una gara.",
-          "title": "Segui società"
-        },
-        "follow": {
-          "text": "Accedi rapidamente ai risultati dei concorrenti selezionati.",
-          "title": "Segui i concorrenti"
-        },
-        "sorting": {
-          "text": "Ordinare i risultati in base alle colonne dei risultati.",
-          "title": "Ordinamento dei risultati"
-        }
-      },
-      "privacy": "Informativa sulla privacy",
-      "restore": "Ripristinare gli acquisti",
-      "restoreError": {
-        "text": "Si prega di contattarci se hai già acquistato.",
-        "title": "Non puoi ripristinare LiveOL+."
-      },
-      "restoreSuccess": "Hai ripristinato LiveOL+",
-      "success": "LiveOL+ sbloccato",
-      "terms": "Condizioni d'uso",
-      "text": "Sblocca vantaggi esclusivi e porta avanti il progetto con un abbonamento annuale economico, assicurando che LiveOL prosperi.",
-      "title": "Fai di più con LiveOL+",
-      "yearly": "all'anno"
-    },
-    "code": {
-      "claimed": "Codice già richiesto",
-      "enter": "Inserire il codice qui",
-      "invalid": "Codice non valido",
-      "redeem": "Riscatta codice"
-    },
-    "promo": {
-      "box": {
-        "cta": "Dai un'occhiata",
-        "text": "Ottieni il massimo da LiveOL e sostieni il suo continuo sviluppo. Dai un'occhiata a LiveOL+ oggi:"
-      },
-      "get": "Ottieni LiveOL+"
-    },
-    "status": {
-      "expire": "Grazie per aver supportato LiveOL, il tuo abbonamento scadrà il: {{ date }}",
-      "renew": "Grazie per aver supportato LiveOL, l'abbonamento si rinnoverà il: {{ date }}",
-      "title": "LiveOL+"
-    }
-  },
-  "promotions": {
-    "didYouKnow": "Sapevate che ?",
-    "rotate": "Ruotare il telefono per vedere i punti di controllo radio"
-  },
-  "result": {
-    "followClass": "Seguire categoria",
-    "followClub": "Segui società",
-    "followRunner": "Segui concorrente",
-    "goToClass": "Vedi i risultati della categoria",
-    "goToClub": "Vedi i risultati della società",
-    "mute": "Disattiva audio",
-    "notFound": "Nessun corridore trovato",
-    "searchRunner": {
-      "text": "Ricerca per nome",
-      "title": "Cerca runner"
-    },
-    "unmute": "Riattivare l'audio"
-  },
-  "status": {
-    "long": [
-      "OK",
-      "Non Partito",
-      "Ritirato",
-      "Punz.Errata",
-      "Squalificato",
-      "Oltre Tempo Max",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "Ritirato",
-      "Cambio Cat.",
-      "Completato"
-    ],
-    "short": [
-      "OK",
-      "NP",
-      "RIT",
-      "PE",
-      "SQ",
-      "OTM",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "RIT",
-      "CC",
-      "COM"
-    ]
-  }
+  "About & Support": "About & Support",
+  "Add Runner": "Add Runner",
+  "Add runner details": "Add runner details",
+  "App settings": "App settings",
+  "Appearance": "Appearance",
+  "Average position": "Average position",
+  "Back": "Back",
+  "Cancel": "Cancel",
+  "Classes": "Classes",
+  "Close": "Close",
+  "Clubs": "Clubs",
+  "Competition information": "Competition information",
+  "Competitions": "Competitions",
+  "Contact me": "Contact me",
+  "Current version": "Current version",
+  "Data & Privacy": "Data & Privacy",
+  "Date": "Date",
+  "Delete": "Delete",
+  "Delete Runner": "Delete Runner",
+  "Distance": "Distance",
+  "Edit": "Edit",
+  "Edit Runner": "Edit Runner",
+  "Enter runner name": "Enter runner name",
+  "Error": "Error",
+  "Failed to save runner": "Failed to save runner",
+  "Filter by date": "Filter by date",
+  "Follow multiple runners": "Follow multiple runners",
+  "Follow runner": "Follow runner",
+  "Follow unlimited runners": "Follow unlimited runners",
+  "Following": "Following",
+  "Get LiveOL+": "Get LiveOL+",
+  "Get highlighted": "Get highlighted",
+  "Help out translating - Get free LiveOL+": "Help out translating - Get free LiveOL+",
+  "How following a runner works": "How following a runner works",
+  "How often results auto-refreshes": "How often results auto-refreshes",
+  "Language": "Language",
+  "Links": "Links",
+  "LiveOL": "LiveOL",
+  "Made by Ludvig Larsendahl": "Made by Ludvig Larsendahl",
+  "Me": "Me",
+  "My classes": "My classes",
+  "My clubs": "My clubs",
+  "My full name": "My full name",
+  "Name": "Name",
+  "No classes": "No classes",
+  "No competitions found": "No competitions found",
+  "No competitors from this club": "No competitors from this club",
+  "No competitors in this class": "No competitors in this class",
+  "No tracked runners": "No tracked runners",
+  "Organized by": "Organized by",
+  "Pick language": "Pick language",
+  "Please enter at least one club and one class": "Please enter at least one club and one class",
+  "Please reach out if you have previously purchased.": "Please reach out if you have previously purchased.",
+  "Privacy Policy": "Privacy Policy",
+  "Pro tip": "Pro tip",
+  "Punch System": "Punch System",
+  "Races entered": "Races entered",
+  "Read more": "Read more",
+  "Report a bug": "Report a bug",
+  "Restore purchases": "Restore purchases",
+  "Results": "Results",
+  "Runner Name": "Runner Name",
+  "Runner name is required": "Runner name is required",
+  "Search": "Search",
+  "Search competitions or organizers...": "Search competitions or organizers...",
+  "See class results": "See class results",
+  "See club results": "See club results",
+  "See competition info": "See competition info",
+  "See future competitions": "See future competitions",
+  "See on Eventor": "See on Eventor",
+  "Settings": "Settings",
+  "Sign up for news": "Sign up for news",
+  "Signed up": "Signed up",
+  "Smart matching": "Smart matching",
+  "Sort results by any column": "Sort results by any column",
+  "Split controls taken": "Split controls taken",
+  "Start following": "Start following",
+  "Subscription": "Subscription",
+  "Support LiveOL development": "Support LiveOL development",
+  "Tap the + button to start tracking a runner": "Tap the + button to start tracking a runner",
+  "Terms of Service": "Terms of Service",
+  "Text size": "Text size",
+  "The competition has been canceled": "The competition has been canceled",
+  "There are no competitions today": "There are no competitions today",
+  "Time": "Time",
+  "Time spent running": "Time spent running",
+  "Today": "Today",
+  "Translations": "Translations",
+  "Translations with the help from": "Translations with the help from",
+  "Update following": "Update following",
+  "User ID": "User ID",
+  "User not found. Please restart the app.": "User not found. Please restart the app.",
+  "View my races": "View my races",
+  "Welcome to LiveOL": "Welcome to LiveOL",
+  "You cannot restore LiveOL+.": "You cannot restore LiveOL+.",
+  "You have restored LiveOL+": "You have restored LiveOL+",
+  "Your race statistics": "Your race statistics",
+  "hours": "hours",
+  "liveresultat.orientering.se is currently experiencing issues": "liveresultat.orientering.se is currently experiencing issues",
+  "per year": "per year"
 }
