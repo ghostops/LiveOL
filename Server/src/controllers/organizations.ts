@@ -22,19 +22,23 @@ export const getAllOrganizations = defaultEndpointsFactory.build({
   }),
   handler: async ({ input }) => {
     const { search, limit } = input;
-    const cacheKey = search
-      ? `cache:organizations:search:${search}:${limit}`
-      : `cache:all_organizations:${limit}`;
-    const cached = await api.Redis.get(cacheKey);
 
-    if (cached) {
-      return JSON.parse(cached);
-    }
-
-    // Use ILIKE for case-insensitive search that works with åäö
     const searchCondition = search
       ? sql`AND "organization" ILIKE ${`%${search}%`}`
       : sql``;
+
+    // Prioritize exact matches in ORDER BY when searching
+    const orderByClause = search
+      ? sql`
+        ORDER BY 
+          CASE 
+            WHEN LOWER("organization") = LOWER(${search}) THEN 0
+            WHEN LOWER("organization") LIKE LOWER(${search}) || '%' THEN 1
+            ELSE 2
+          END,
+          MIN("organization") COLLATE "C"
+        `
+      : sql`ORDER BY MIN("organization") COLLATE "C"`;
 
     const organizations = await api.Drizzle.db.execute<{
       olOrganizationId: string;
@@ -52,20 +56,16 @@ export const getAllOrganizations = defaultEndpointsFactory.build({
           AND "organization" != ''
           ${searchCondition}
         GROUP BY "olOrganizationId"
-        ORDER BY MIN("organization") COLLATE "C"
+        ${orderByClause}
         LIMIT ${limit};
       `,
     );
-    const response = {
+
+    return {
       organizations: organizations.rows.map(org => ({
         id: org.olOrganizationId,
         title: org.organization!,
       })),
     };
-
-    api.Redis.set(cacheKey, JSON.stringify(response));
-    api.Redis.expire(cacheKey, 3600);
-
-    return response;
   },
 });

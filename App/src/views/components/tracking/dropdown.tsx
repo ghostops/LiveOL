@@ -36,11 +36,11 @@ const OLTrackingDropdownComponent = ({
     [onAddItem, onChangeText],
   );
 
-  // Memoize the blur handler
+  // Don't clear on blur - let the user scroll the list without resetting
   const handleBlur = useCallback(() => {
-    dropdownRef.current?.clear();
-    onChangeText?.('');
-  }, [onChangeText]);
+    // Only clear if no text is entered (user dismissed without selecting)
+    // The dropdown library handles closing the suggestions list
+  }, []);
 
   // Memoize the change text handler
   const handleChangeText = useCallback(
@@ -75,10 +75,11 @@ const OLTrackingDropdownComponent = ({
   return (
     <AutocompleteDropdown
       ref={dropdownRef}
-      closeOnBlur={true}
+      closeOnBlur={false} // Don't close when scrolling the list
       closeOnSubmit={true}
       showChevron={true}
-      showClear={false}
+      showClear={true} // Enable clear button so users can manually clear
+      clearOnFocus={false} // Don't clear when focusing input
       trimSearchText={true}
       enableLoadingIndicator={false}
       onSelectItem={handleSelectItem}
@@ -104,6 +105,7 @@ const OLTrackingDropdownComponent = ({
         maxToRenderPerBatch: 10,
         windowSize: 5,
         initialNumToRender: 10,
+        nestedScrollEnabled: true, // Allow nested scrolling
       }}
     />
   );
