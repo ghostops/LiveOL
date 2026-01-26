@@ -13,6 +13,7 @@ import { useOLNavigation } from '~/hooks/useNavigation';
 import { useUserIdStore } from '~/store/userId';
 import { useRefreshIntervalStore } from '~/store/refreshInterval';
 import { useTicker } from '~/hooks/useTicker';
+import { px } from '~/util/const';
 
 export const OLSceneTrackingResults = () => {
   const {
@@ -51,7 +52,7 @@ export const OLSceneTrackingResults = () => {
   );
 
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <OLRefetcherBar
         interval={refreshIntervalMs}
         refetch={async () => {
@@ -64,6 +65,7 @@ export const OLSceneTrackingResults = () => {
         data={data?.data.results}
         keyExtractor={item => item.liveResultId}
         renderItem={({ item }) => <OLTrackingResultRow result={item} />}
+        contentContainerStyle={{ paddingBottom: px(128) }}
       />
     </View>
   );

@@ -38,6 +38,12 @@ export const marshalResult =
       const trackedIds = getAllTrackedRunnerIds(tracking);
       isTracking = trackedIds.includes(result.olRunnerId);
     }
+
+    // If the result has not been updated for more than 3 days the runner MUST be done
+    const isOutdated =
+      result.updatedAt &&
+      differenceInSeconds(new Date(), result.updatedAt) > 3 * 24 * 60 * 60;
+
     return {
       ...result,
       isLive: !!(
@@ -45,7 +51,9 @@ export const marshalResult =
         result.start !== null &&
         result.progress !== null &&
         result.progress < 100 &&
-        result.start <= nowTimestamp
+        result.start <= nowTimestamp &&
+        result.updatedAt &&
+        !isOutdated
       ),
       hasRecentlyUpdated: checkIfRecentlyUpdated(result),
       isTracking,

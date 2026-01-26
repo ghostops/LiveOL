@@ -14,9 +14,7 @@ export const TrackingInfoScreen: React.FC = () => {
     {
       icon: 'person-add' as const,
       title: t('Add runner details'),
-      description: t(
-        "Enter the runner's name, their clubs, and the classes they compete in.",
-      ),
+      description: t("Enter the runner's name and their clubs."),
     },
     {
       icon: 'search' as const,
