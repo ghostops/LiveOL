@@ -1,0 +1,21 @@
+import { createFileRoute } from '@tanstack/react-router'
+import MarkdownContent from '../components/MarkdownContent'
+import { getContent } from '../utils/content'
+
+export const Route = createFileRoute('/privacy')({
+  head: () => ({
+    title: 'Privacy Policy | LiveOL',
+    meta: [
+      {
+        name: 'description',
+        content:
+          'Read LiveOL privacy policy and learn how we protect your data.',
+      },
+    ],
+  }),
+  loader: async () => await getContent('privacy'),
+  component: () => {
+    const data = Route.useLoaderData()
+    return <MarkdownContent content={data.content} />
+  },
+})

@@ -1,24 +1,17 @@
 import {
   HeadContent,
   Scripts,
-  createRootRouteWithContext,
+  Outlet,
+  ScrollRestoration,
+  createRootRoute,
 } from '@tanstack/react-router'
-import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
-import { TanStackDevtools } from '@tanstack/react-devtools'
 
-import Header from '../components/Header'
-
-import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
+import Navigation from '../components/Navigation'
+import Footer from '../components/Footer'
 
 import appCss from '../styles.css?url'
 
-import type { QueryClient } from '@tanstack/react-query'
-
-interface MyRouterContext {
-  queryClient: QueryClient
-}
-
-export const Route = createRootRouteWithContext<MyRouterContext>()({
+export const Route = createRootRoute({
   head: () => ({
     meta: [
       {
@@ -29,19 +22,62 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
         content: 'width=device-width, initial-scale=1',
       },
       {
-        title: 'TanStack Start Starter',
+        name: 'description',
+        content:
+          'Real-time orienteering competition tracking and analysis. Follow live results, track your favorite athletes, and stay updated with the latest orienteering events.',
       },
     ],
+    title: 'LiveOL - Orienteering Live Results',
     links: [
       {
         rel: 'stylesheet',
         href: appCss,
       },
+      {
+        rel: 'icon',
+        type: 'image/x-icon',
+        href: '/favicon.ico',
+      },
+      {
+        rel: 'apple-touch-icon',
+        sizes: '180x180',
+        href: '/assets/favicon/apple-touch-icon.png',
+      },
+      {
+        rel: 'icon',
+        type: 'image/png',
+        sizes: '32x32',
+        href: '/assets/favicon/favicon-32x32.png',
+      },
+      {
+        rel: 'icon',
+        type: 'image/png',
+        sizes: '16x16',
+        href: '/assets/favicon/favicon-16x16.png',
+      },
+      {
+        rel: 'manifest',
+        href: '/assets/favicon/site.webmanifest',
+      },
     ],
   }),
 
+  component: RootComponent,
   shellComponent: RootDocument,
 })
+
+function RootComponent() {
+  return (
+    <>
+      <Navigation />
+      <main className="flex-1 container mx-auto px-4 py-8 max-w-4xl">
+        <Outlet />
+      </main>
+      <Footer />
+      <ScrollRestoration />
+    </>
+  )
+}
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
@@ -49,21 +85,8 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <head>
         <HeadContent />
       </head>
-      <body>
-        <Header />
+      <body className="min-h-screen flex flex-col bg-gray-950 text-white">
         {children}
-        <TanStackDevtools
-          config={{
-            position: 'bottom-right',
-          }}
-          plugins={[
-            {
-              name: 'Tanstack Router',
-              render: <TanStackRouterDevtoolsPanel />,
-            },
-            TanStackQueryDevtools,
-          ]}
-        />
         <Scripts />
       </body>
     </html>
