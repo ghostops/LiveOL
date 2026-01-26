@@ -8,20 +8,20 @@ export default function Navigation() {
     { path: '/ludvig', label: 'About' },
     { path: '/terms', label: 'Terms' },
     { path: '/privacy', label: 'Privacy' },
-    { path: '/changelog', label: 'Changelog' },
+    { path: '/licenses', label: 'Licenses' },
   ]
 
   return (
-    <nav className="bg-gray-900 shadow-sm border-b border-gray-800">
+    <nav className="bg-base-surface shadow-sm border-b border">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <Link to="/" className="flex items-center gap-2">
             <img
               src="/assets/images/icon.png"
               alt="LiveOL Logo"
-              className="w-6 h-6 rounded"
+              className="size-6 rounded"
             />
-            <span className="text-xl font-bold text-white font-mono">
+            <span className="text-xl font-bold text-text-main font-mono">
               LiveOL
             </span>
           </Link>
@@ -30,12 +30,27 @@ export default function Navigation() {
               <Link
                 key={link.path}
                 to={link.path}
-                className="text-gray-300 hover:text-blue-400 transition-colors font-medium"
+                className="text-text-main hover:text-brand-primary transition-colors font-medium"
               >
                 {link.label}
               </Link>
             ))}
           </div>
+          <button className="md:hidden text-text-main">
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </button>
         </div>
       </div>
     </nav>

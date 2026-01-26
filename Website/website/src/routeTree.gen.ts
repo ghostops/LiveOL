@@ -13,6 +13,7 @@ import { Route as TermsRouteImport } from './routes/terms'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as NewsletterRouteImport } from './routes/newsletter'
 import { Route as LudvigRouteImport } from './routes/ludvig'
+import { Route as LicensesRouteImport } from './routes/licenses'
 import { Route as IssuesRouteImport } from './routes/issues'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as ChangelogRouteImport } from './routes/changelog'
@@ -36,6 +37,11 @@ const NewsletterRoute = NewsletterRouteImport.update({
 const LudvigRoute = LudvigRouteImport.update({
   id: '/ludvig',
   path: '/ludvig',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LicensesRoute = LicensesRouteImport.update({
+  id: '/licenses',
+  path: '/licenses',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IssuesRoute = IssuesRouteImport.update({
@@ -64,6 +70,7 @@ export interface FileRoutesByFullPath {
   '/changelog': typeof ChangelogRoute
   '/contact': typeof ContactRoute
   '/issues': typeof IssuesRoute
+  '/licenses': typeof LicensesRoute
   '/ludvig': typeof LudvigRoute
   '/newsletter': typeof NewsletterRoute
   '/privacy': typeof PrivacyRoute
@@ -74,6 +81,7 @@ export interface FileRoutesByTo {
   '/changelog': typeof ChangelogRoute
   '/contact': typeof ContactRoute
   '/issues': typeof IssuesRoute
+  '/licenses': typeof LicensesRoute
   '/ludvig': typeof LudvigRoute
   '/newsletter': typeof NewsletterRoute
   '/privacy': typeof PrivacyRoute
@@ -85,6 +93,7 @@ export interface FileRoutesById {
   '/changelog': typeof ChangelogRoute
   '/contact': typeof ContactRoute
   '/issues': typeof IssuesRoute
+  '/licenses': typeof LicensesRoute
   '/ludvig': typeof LudvigRoute
   '/newsletter': typeof NewsletterRoute
   '/privacy': typeof PrivacyRoute
@@ -97,6 +106,7 @@ export interface FileRouteTypes {
     | '/changelog'
     | '/contact'
     | '/issues'
+    | '/licenses'
     | '/ludvig'
     | '/newsletter'
     | '/privacy'
@@ -107,6 +117,7 @@ export interface FileRouteTypes {
     | '/changelog'
     | '/contact'
     | '/issues'
+    | '/licenses'
     | '/ludvig'
     | '/newsletter'
     | '/privacy'
@@ -117,6 +128,7 @@ export interface FileRouteTypes {
     | '/changelog'
     | '/contact'
     | '/issues'
+    | '/licenses'
     | '/ludvig'
     | '/newsletter'
     | '/privacy'
@@ -128,6 +140,7 @@ export interface RootRouteChildren {
   ChangelogRoute: typeof ChangelogRoute
   ContactRoute: typeof ContactRoute
   IssuesRoute: typeof IssuesRoute
+  LicensesRoute: typeof LicensesRoute
   LudvigRoute: typeof LudvigRoute
   NewsletterRoute: typeof NewsletterRoute
   PrivacyRoute: typeof PrivacyRoute
@@ -162,6 +175,13 @@ declare module '@tanstack/react-router' {
       path: '/ludvig'
       fullPath: '/ludvig'
       preLoaderRoute: typeof LudvigRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/licenses': {
+      id: '/licenses'
+      path: '/licenses'
+      fullPath: '/licenses'
+      preLoaderRoute: typeof LicensesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/issues': {
@@ -200,6 +220,7 @@ const rootRouteChildren: RootRouteChildren = {
   ChangelogRoute: ChangelogRoute,
   ContactRoute: ContactRoute,
   IssuesRoute: IssuesRoute,
+  LicensesRoute: LicensesRoute,
   LudvigRoute: LudvigRoute,
   NewsletterRoute: NewsletterRoute,
   PrivacyRoute: PrivacyRoute,

@@ -4,8 +4,8 @@ import { getContent } from '../utils/content'
 
 export const Route = createFileRoute('/changelog')({
   head: () => ({
-    title: 'Changelog | LiveOL',
     meta: [
+      { title: 'Changelog | LiveOL' },
       {
         name: 'description',
         content: 'View the latest updates and changes to the LiveOL platform.',
