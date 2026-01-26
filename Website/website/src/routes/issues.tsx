@@ -4,10 +4,8 @@ import { getContent } from '../utils/content'
 
 export const Route = createFileRoute('/issues')({
   head: () => ({
+    title: 'Report Issues | LiveOL',
     meta: [
-      {
-        title: 'Report Issues | LiveOL',
-      },
       {
         name: 'description',
         content: 'Report bugs or issues with the LiveOL platform.',
