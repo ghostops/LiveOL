@@ -4,8 +4,8 @@ import { getContent } from '../utils/content'
 
 export const Route = createFileRoute('/privacy')({
   head: () => ({
-    title: 'Privacy Policy | LiveOL',
     meta: [
+      { title: 'Privacy Policy | LiveOL' },
       {
         name: 'description',
         content:

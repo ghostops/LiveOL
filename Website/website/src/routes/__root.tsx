@@ -4,6 +4,7 @@ import {
   Outlet,
   ScrollRestoration,
   createRootRoute,
+  useMatches,
 } from '@tanstack/react-router'
 
 import Navigation from '../components/Navigation'
@@ -14,6 +15,7 @@ import appCss from '../styles.css?url'
 export const Route = createRootRoute({
   head: () => ({
     meta: [
+      { title: 'LiveOL - Orienteering Live Results' },
       {
         charSet: 'utf-8',
       },
@@ -27,7 +29,6 @@ export const Route = createRootRoute({
           'Real-time orienteering competition tracking and analysis. Follow live results, track your favorite athletes, and stay updated with the latest orienteering events.',
       },
     ],
-    title: 'LiveOL - Orienteering Live Results',
     links: [
       {
         rel: 'stylesheet',
@@ -67,6 +68,21 @@ export const Route = createRootRoute({
 })
 
 function RootComponent() {
+  const matches = useMatches()
+  // Check if we're on the exact landing page route (not just including root)
+  const isLandingPage = matches.some((match) => match.id === '//')
+
+  // Landing page has its own layout
+  if (isLandingPage) {
+    return (
+      <>
+        <Outlet />
+        <ScrollRestoration />
+      </>
+    )
+  }
+
+  // Other pages use the standard layout
   return (
     <>
       <Navigation />
@@ -85,7 +101,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <head>
         <HeadContent />
       </head>
-      <body className="min-h-screen flex flex-col bg-gray-950 text-white">
+      <body className="min-h-screen flex flex-col bg-base-background">
         {children}
         <Scripts />
       </body>

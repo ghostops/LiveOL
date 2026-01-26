@@ -4,8 +4,10 @@ import { getContent } from '../utils/content'
 
 export const Route = createFileRoute('/newsletter')({
   head: () => ({
-    title: 'Newsletter | LiveOL',
     meta: [
+      {
+        title: 'Newsletter | LiveOL',
+      },
       {
         name: 'description',
         content:

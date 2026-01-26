@@ -1,27 +1,19 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       colors: {
-        brand: {
-          primary: '#FF5F00',
-          success: '#2D5A27',
-        },
-        base: {
-          background: '#F9F9F9',
-          surface: '#FFFFFF',
-        },
-        border: {
-          DEFAULT: '#D1D5DB',
-        },
-        text: {
-          main: '#1A202C',
-          muted: '#718096',
-        },
+        'brand-primary': '#FF5F00',
+        'brand-success': '#2D5A27',
+        'base-background': '#F9F9F9',
+        'base-surface': '#FFFFFF',
+        'border-default': '#D1D5DB',
+        'text-main': '#1A202C',
+        'text-muted': '#718096',
+      },
+      borderColor: {
+        DEFAULT: '#D1D5DB',
       },
       fontFamily: {
         sans: ['Inter', 'Roboto', 'system-ui', 'sans-serif'],
@@ -99,7 +91,5 @@ export default {
       },
     },
   },
-  plugins: [
-    require('@tailwindcss/typography'),
-  ],
+  plugins: [require('@tailwindcss/typography')],
 }
