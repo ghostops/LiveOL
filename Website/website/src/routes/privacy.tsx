@@ -13,7 +13,7 @@ export const Route = createFileRoute('/privacy')({
       },
     ],
   }),
-  loader: async () => await getContent('privacy'),
+  loader: async () => await getContent({data: 'privacy'}),
   component: () => {
     const data = Route.useLoaderData()
     return <MarkdownContent content={data.content} />

@@ -14,7 +14,7 @@ export const Route = createFileRoute('/ludvig')({
       },
     ],
   }),
-  loader: async () => await getContent('ludvig'),
+  loader: async () => await getContent({data: 'ludvig'}),
   component: () => {
     const data = Route.useLoaderData()
     return <MarkdownContent content={data.content} />

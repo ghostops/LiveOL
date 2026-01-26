@@ -25,7 +25,7 @@ export const Route = createFileRoute('/contact')({
     ],
   }),
   loader: async () => {
-    const data = await getContent('contact')
+    const data = await getContent({data: 'contact'})
     return data
   },
   component: ContactPage,

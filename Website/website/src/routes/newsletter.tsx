@@ -15,7 +15,7 @@ export const Route = createFileRoute('/newsletter')({
       },
     ],
   }),
-  loader: async () => await getContent('newsletter'),
+  loader: async () => await getContent({data: 'newsletter'}),
   component: () => {
     const data = Route.useLoaderData()
     return <MarkdownContent content={data.content} />

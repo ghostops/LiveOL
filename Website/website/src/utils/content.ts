@@ -1,9 +1,11 @@
-import fs from 'node:fs/promises'
-import path from 'node:path'
-import { fileURLToPath } from 'node:url'
-import matter from 'gray-matter'
+import { createServerFn } from '@tanstack/react-start'
 
-export async function getContent(page: string) {
+export const getContent = createServerFn().inputValidator((page: string) => page).handler(async ({ data: page }) => {
+  const fs = await import('node:fs/promises')
+  const path = await import('node:path')
+  const { fileURLToPath } = await import('node:url')
+  const matter = (await import('gray-matter')).default
+
   const currentDir = path.dirname(fileURLToPath(import.meta.url))
   const contentDir = path.resolve(currentDir, '../../content')
   const filePath = path.join(contentDir, `${page}.md`)
@@ -19,4 +21,4 @@ export async function getContent(page: string) {
   } catch (error) {
     throw new Error(`Content not found: ${page}`)
   }
-}
+});
