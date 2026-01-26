@@ -1,6 +1,6 @@
 ---
 title: Changelog
-description: Cool beans
+description: This is the changelog for LiveOL.
 date: 2026-01-13T10:00:00.000Z
 ---
 
@@ -24,17 +24,17 @@ Want to keep tabs on specific people? Head to the **Following** tab. Here's how 
 
 **From results:** When you're viewing any competition results, tap the star icon next to a competitor's name to start following them.
 
-**Manually:** Tap the "+" button in the Following tab and enter their details: Name, clubs, and classes they usually compete in. This helps LiveOL find them across different events.
+**Manually:** Tap the "+" button in the Following tab and enter their details: Name, and clubs they usually compete in. This helps LiveOL find them across different events.
 
 ## Track Your Own Progress
 
-The **You** tab is your personal hub. Setup is like following someone else: Add your name, clubs, and classes. Now you've got a dedicated space to track your own results without searching through full result lists.
+The **You** tab is your personal hub. Setup is like following someone else: Add your name and clubs. Now you've got a dedicated space to track your own results without searching through full result lists.
 
 ## Tips for Getting Started
 
 **Check out the Following tab:** It aggregates results from all events, so you can see everyone you follow in one place instead of jumping between competitions.
 
-**Add multiple clubs and classes:** Most orienteers compete with different clubs or in various classes throughout the season. Add all relevant ones to make sure you never miss a result.
+**Add multiple clubs:** If you compete in a relay, or maybe even competing for your country you must add the specific organisations you are competing for as clubs to show up in the app.
 
 **Set up "You" early:** Even if you're mainly following others, having your own tab ready means you can instantly check your results when you compete.
 
