@@ -22,14 +22,14 @@ export const OLClubsTrackingInput = ({
       params: {
         query: {
           search: debouncedSearchText || undefined,
-          limit: 100,
+          limit: 5,
         },
       },
     },
     {
       // Prevent refetching on window focus/mount to keep list stable
       staleTime: 5 * 60 * 1000, // 5 minutes
-      gcTime: 10 * 60 * 1000, // 10 minutes (formerly cacheTime)
+      gcTime: 10 * 60 * 1000, // 10 minutes
       refetchOnWindowFocus: false,
       refetchOnMount: false,
       refetchOnReconnect: false,

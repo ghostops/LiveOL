@@ -264,8 +264,6 @@ export const getLiveResultsForTrackedRunner = defaultEndpointsFactory
 
       const allPotentialIds = getTrackedRunnerIds(tracking);
 
-      console.log(allPotentialIds);
-
       if (allPotentialIds.length === 0) {
         return { results: [] };
       }

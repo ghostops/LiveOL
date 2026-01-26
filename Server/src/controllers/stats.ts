@@ -49,6 +49,24 @@ export const getUserStats = defaultEndpointsFactory
 
       const runnerIds = getTrackedRunnerIds(tracking);
 
+      if (runnerIds.length === 0) {
+        return {
+          stats: {
+            racesEntered: 0,
+            splitControlsTaken: 0,
+            totalTimeMs: 0,
+            averagePosition: null,
+          },
+        };
+      }
+
+      // Convert IDs like "name~~club" to LIKE patterns "name~%~club"
+      const likePatterns = runnerIds.map(id => {
+        const parts = id.split('~');
+        // parts should be [name, '', club] - replace empty class with wildcard
+        return parts.length === 3 ? `${parts[0]}~%~${parts[2]}` : id;
+      });
+
       const results = await api.Drizzle.db
         .select({
           liveResultId: LiveResultsTable.liveResultId,
@@ -59,7 +77,12 @@ export const getUserStats = defaultEndpointsFactory
         .from(LiveResultsTable)
         .where(
           and(
-            inArray(LiveResultsTable.olRunnerId, runnerIds),
+            sql`(${sql.join(
+              likePatterns.map(
+                pattern => sql`${LiveResultsTable.olRunnerId} LIKE ${pattern}`,
+              ),
+              sql` OR `,
+            )})`,
             isNull(LiveResultsTable.deletedAt),
           ),
         );
