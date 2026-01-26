@@ -1,0 +1,20 @@
+services:
+  # Development service only
+  website:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    ports:
+      - "3009:3000"
+    volumes:
+      # Mount source code for hot-reload
+      - .:/app
+      # Use named volume for node_modules to persist dependencies
+      - node_modules:/app/node_modules
+    environment:
+      - NODE_ENV=development
+
+volumes:
+  # Named volume to persist node_modules in development
+  node_modules:
