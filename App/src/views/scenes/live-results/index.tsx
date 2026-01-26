@@ -90,6 +90,7 @@ export const OLSceneLiveResults = () => {
               <OLLiveResultRow
                 liveResultItem={item}
                 olCompetitionId={params.olCompetitionId}
+                liveSplitControls={getResults.data?.data.liveSplitControls}
               />
             )}
             ItemSeparatorComponent={Separator}

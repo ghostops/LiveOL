@@ -134,6 +134,15 @@ export const sortOptimalV2 = (
 
   let sorted = original.sort(sortingFunction);
 
+  console.log(
+    'Sorted:',
+    sorted.map(s => [
+      s.name,
+      s.splitResults?.find(sp => sp.code === sortingKey.replace('split-', ''))
+        ?.place,
+    ]),
+  );
+
   if (sortingKey === 'result' || sortingKey === 'place') {
     sorted = sorted.sort((a, b) => {
       if (b.status === null || b.status === 0) {

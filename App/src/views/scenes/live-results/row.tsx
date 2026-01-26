@@ -15,11 +15,18 @@ import { OLRowTime } from './row-time';
 type Props = {
   olCompetitionId: string;
   liveResultItem: paths['/v2/results/live/{liveClassId}']['get']['responses']['200']['content']['application/json']['data']['results'][number];
+  liveSplitControls?:
+    | {
+        name: string;
+        code: string;
+      }[]
+    | undefined;
 };
 
 export const OLLiveResultRow = ({
   liveResultItem: result,
   olCompetitionId,
+  liveSplitControls,
 }: Props) => {
   const { colors, px } = useTheme();
   const { place, name, time, splits } = useRowWidths();
@@ -60,16 +67,21 @@ export const OLLiveResultRow = ({
               {result.organization}
             </OLText>
           </View>
-          {result.splitResults?.map(split => (
-            <View key={split.code} style={{ width: splits, gap: px(4) }}>
-              {split.time !== null && (
-                <>
-                  <OLResultTime status={0} time={split.time} />
-                  <OLResultTimeplus status={0} timeplus={split.timeplus} />
-                </>
-              )}
-            </View>
-          ))}
+          {liveSplitControls?.map(control => {
+            const split = result.splitResults?.find(
+              s => s.code === control.code,
+            );
+            return (
+              <View key={control.code} style={{ width: splits, gap: px(4) }}>
+                {split?.time && (
+                  <>
+                    <OLResultTime status={0} time={split.time} />
+                    <OLResultTimeplus status={0} timeplus={split.timeplus} />
+                  </>
+                )}
+              </View>
+            );
+          })}
           <View
             style={{
               width: time,
