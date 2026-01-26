@@ -1,7 +1,7 @@
 import {
   HeadContent,
-  Scripts,
   Outlet,
+  Scripts,
   ScrollRestoration,
   createRootRoute,
   useMatches,

@@ -3,11 +3,9 @@ import { createServerFn } from '@tanstack/react-start'
 export const getContent = createServerFn().inputValidator((page: string) => page).handler(async ({ data: page }) => {
   const fs = await import('node:fs/promises')
   const path = await import('node:path')
-  const { fileURLToPath } = await import('node:url')
   const matter = (await import('gray-matter')).default
 
-  const currentDir = path.dirname(fileURLToPath(import.meta.url))
-  const contentDir = path.resolve(currentDir, '../../content')
+  const contentDir = path.resolve(process.cwd(), 'content')
   const filePath = path.join(contentDir, `${page}.md`)
 
   try {
