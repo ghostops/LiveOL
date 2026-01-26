@@ -50,7 +50,7 @@ WORKDIR /app
 ENV NODE_ENV=production
 
 # Install only production dependencies
-RUN npm ci --omit=dev
+RUN npm ci
 
 # Copy built application from builder stage
 COPY --from=builder /app/.output ./.output
