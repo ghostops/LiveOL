@@ -19,47 +19,50 @@ export default function Hero() {
       <div className="absolute top-0 left-0 w-24 h-24 border-l border-t border-brand-primary/20 m-4 pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-24 h-24 border-r border-b border-brand-primary/20 m-4 pointer-events-none" />
 
-      <div className="max-w-[1440px] mx-auto px-8 py-32 md:py-48 flex flex-col items-start relative">
+      <div className="max-w-[1440px] mx-auto px-8 py-32 flex flex-col items-start relative">
         <div className="flex flex-col gap-6 max-w-3xl">
           {/* Main heading */}
           <h1 className="text-brand-primary text-xl md:text-4xl font-black leading-[0.9] tracking-[-0.04em] uppercase italic">
             Live orienteering results with
           </h1>
           <h2 className="text-brand-primary text-5xl md:text-8xl font-black leading-[0.9] tracking-[-0.04em] uppercase">
-             LiveOL
+            LiveOL
           </h2>
 
           {/* Description */}
           <p className="text-text-muted text-lg md:text-xl font-normal leading-relaxed max-w-xl">
-            LiveOL is an app that displays orienteering-results live. You get the latest results on your phone or tablet with a convenient interface in multiple languages.
+            LiveOL is an app that displays orienteering-results live. You get
+            the latest results on your phone or tablet with a convenient
+            interface in multiple languages.
           </p>
 
-          {/* CTA buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 mt-8 w-full sm:w-auto">
+          {/* Download buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 mt-8 w-full sm:w-auto items-center">
             <a
-              href="https://liveol.ludviglarsendahl.se"
-              className="flex cursor-pointer items-center justify-center border-2 border-brand-primary bg-brand-primary text-white h-14 px-10 text-sm font-black uppercase tracking-[0.2em] hover:bg-white hover:text-brand-primary transition-all"
+              href="https://itunes.apple.com/us/app/liveol/id1450106846"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:opacity-80 transition-opacity inline-block h-14 w-[168px]"
             >
-              View Live Events
+              <img
+                src="/assets/images/appstore.png"
+                alt="Download on the App Store"
+                className="w-full h-full object-contain"
+              />
             </a>
             <a
-              href="/contact"
-              className="flex cursor-pointer items-center justify-center border-2 border bg-white text-text-main h-14 px-10 text-sm font-black uppercase tracking-[0.2em] hover:border-brand-primary transition-all"
+              href="https://play.google.com/store/apps/details?id=se.liveol.rn"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:opacity-80 transition-opacity inline-block h-14 w-[168px]"
             >
-              Documentation
+              <img
+                src="/assets/images/playstore.png"
+                alt="Get it on Google Play"
+                className="w-full h-full object-contain block"
+              />
             </a>
           </div>
-        </div>
-
-        {/* Technical reference */}
-        <div className="absolute right-8 bottom-8 hidden lg:block text-right">
-          <p className="font-mono text-[10px] text-text-muted uppercase leading-relaxed">
-            Ref_ID: 100-293-OL
-            <br />
-            Drafting_Sheet: A1-METRIC
-            <br />
-            Scale: 1:15,000 / 5m
-          </p>
         </div>
       </div>
     </section>

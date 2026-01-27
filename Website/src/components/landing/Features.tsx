@@ -1,35 +1,34 @@
 export default function Features() {
   const features = [
     {
-      id: 'MOD_01',
-      title: 'Live Tracking',
+      id: '#1',
+      title: 'Cross platform',
       description:
-        'High-frequency GPS integration with 10Hz sampling. Sub-meter precision mapping for real-time route analysis and athlete pacing.',
-      icon: '📍',
+        'Download the app on both iOS and Android.',
+      icon: '📱',
     },
     {
-      id: 'MOD_02',
-      title: 'Expert Editorials',
-      description:
-        'Strategic breakdown by international technical delegates. Post-race analysis covering choice execution and terrain complexity.',
-      icon: '📝',
+      id: '#2',
+      title: 'As live as it gets',
+      description: 'We serve the latest results with no delay.',
+      icon: '⚡',
     },
     {
-      id: 'MOD_03',
-      title: 'Global Events',
+      id: '#3',
+      title: 'Great usability',
       description:
-        'Unified database for WOC, EOC, and IOF World Cup. Real-time synchronization with local timekeeping EMIT/SI systems.',
-      icon: '🌍',
+        'Skip websites that looks messy on mobile devices.',
+      icon: '👌',
     },
   ]
 
   return (
-    <section className="bg-base-background py-24 border-b border">
+    <section className="bg-base-background py-24">
       <div className="max-w-[1440px] mx-auto px-8">
         {/* Section header */}
         <div className="flex flex-col mb-16">
-          <h4 className="font-mono text-brand-primary text-xs font-bold leading-normal tracking-[0.3em] uppercase">
-            System Architecture
+          <h4 className="font-mono text-brand-primary text-lg font-bold leading-normal tracking-[0.3em] uppercase">
+            What makes LiveOL special?
           </h4>
           <div className="w-12 h-1 bg-brand-primary mt-2" />
         </div>

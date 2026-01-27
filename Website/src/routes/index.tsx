@@ -2,9 +2,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import Navigation from '../components/Navigation'
 import Footer from '../components/Footer'
 import Hero from '../components/landing/Hero'
-import StatsBar from '../components/landing/StatsBar'
 import Features from '../components/landing/Features'
-import TechnicalSpecs from '../components/landing/TechnicalSpecs'
 
 export const Route = createFileRoute('/')({
   head: () => ({
@@ -27,9 +25,7 @@ function LandingPage() {
     <div className="min-h-screen flex flex-col">
       <Navigation />
       <Hero />
-      <StatsBar />
       <Features />
-      <TechnicalSpecs />
       <Footer />
     </div>
   )

@@ -12,14 +12,14 @@ export default function Navigation() {
   ]
 
   return (
-    <nav className="bg-base-surface shadow-sm border-b border">
+    <nav className="bg-base-surface shadow-sm border-b border-b-border">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <Link to="/" className="flex items-center gap-2">
             <img
               src="/assets/images/icon.png"
               alt="LiveOL Logo"
-              className="size-6 rounded"
+              className="size-10 rounded"
             />
             <span className="text-xl font-bold text-text-main font-mono">
               LiveOL
