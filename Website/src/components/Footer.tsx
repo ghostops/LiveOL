@@ -30,6 +30,14 @@ export default function Footer() {
             <ul className="space-y-2">
               <li>
                 <Link
+                  to="/about"
+                  className="text-text-muted hover:text-brand-primary text-sm"
+                >
+                  About LiveOL
+                </Link>
+              </li>
+              <li>
+                <Link
                   to="/contact"
                   className="text-text-muted hover:text-brand-primary text-sm"
                 >

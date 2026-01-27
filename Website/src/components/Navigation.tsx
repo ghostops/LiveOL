@@ -5,7 +5,7 @@ export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const links = [
-    { path: '/ludvig-larsendahl', label: 'About' },
+    { path: '/about', label: 'About' },
     { path: '/newsletter', label: 'Newsletter' },
     { path: '/issues', label: 'Report Bug' },
     { path: '/translate', label: 'Translate the app' },
