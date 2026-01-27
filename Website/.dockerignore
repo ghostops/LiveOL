@@ -4,7 +4,7 @@ npm-debug.log
 # Note: package-lock.json is needed for npm ci in production builds
 
 # Build outputs
-.output
+# .output
 .vinxi
 dist
 build
