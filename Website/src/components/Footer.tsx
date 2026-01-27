@@ -57,7 +57,7 @@ export default function Footer() {
                   to="/issues"
                   className="text-text-muted hover:text-brand-primary text-sm"
                 >
-                  Report Bug
+                  Report a bug
                 </Link>
               </li>
               <li>
