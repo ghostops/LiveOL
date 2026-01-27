@@ -1,20 +1,17 @@
 export default function Features() {
   const features = [
     {
-      id: '#1',
       title: 'Cross platform',
       description:
         'Download the app on both iOS and Android.',
       icon: '📱',
     },
     {
-      id: '#2',
       title: 'As live as it gets',
       description: 'We serve the latest results with no delay.',
       icon: '⚡',
     },
     {
-      id: '#3',
       title: 'Great usability',
       description:
         'Skip websites that looks messy on mobile devices.',
@@ -35,9 +32,9 @@ export default function Features() {
 
         {/* Feature cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {features.map((feature) => (
+          {features.map((feature, index) => (
             <div
-              key={feature.id}
+              key={index}
               className="flex flex-col bg-white border border-border p-8 gap-6 group hover:border-brand-primary transition-colors"
             >
               <div className="flex justify-between items-start">
@@ -45,7 +42,7 @@ export default function Features() {
                   <span className="text-4xl">{feature.icon}</span>
                 </div>
                 <span className="font-mono text-[10px] text-text-muted">
-                  {feature.id}
+                  #{(index + 1).toString().padStart(2, '0')}
                 </span>
               </div>
               <div>
