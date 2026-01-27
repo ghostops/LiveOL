@@ -2,13 +2,10 @@ import { Link } from '@tanstack/react-router'
 
 export default function Navigation() {
   const links = [
-    { path: '/contact', label: 'Contact' },
+    { path: '/ludvig', label: 'About' },
     { path: '/newsletter', label: 'Newsletter' },
     { path: '/issues', label: 'Report Bug' },
-    { path: '/ludvig', label: 'About' },
-    { path: '/terms', label: 'Terms' },
-    { path: '/privacy', label: 'Privacy' },
-    { path: '/licenses', label: 'Licenses' },
+    { path: '/translate', label: 'Translate the app' },
   ]
 
   return (

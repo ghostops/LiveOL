@@ -82,14 +82,6 @@ export default function Footer() {
                   Privacy Policy
                 </Link>
               </li>
-              <li>
-                <Link
-                  to="/licenses"
-                  className="text-text-muted hover:text-brand-primary text-sm"
-                >
-                  Open Source Licenses
-                </Link>
-              </li>
             </ul>
           </div>
         </div>

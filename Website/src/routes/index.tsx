@@ -3,6 +3,7 @@ import Navigation from '../components/Navigation'
 import Footer from '../components/Footer'
 import Hero from '../components/landing/Hero'
 import Features from '../components/landing/Features'
+import Newsletter from '../components/landing/Newsletter'
 
 export const Route = createFileRoute('/')({
   head: () => ({
@@ -26,6 +27,7 @@ function LandingPage() {
       <Navigation />
       <Hero />
       <Features />
+      <Newsletter />
       <Footer />
     </div>
   )
