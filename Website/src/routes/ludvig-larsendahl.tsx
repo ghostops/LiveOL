@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import MarkdownContent from '../components/MarkdownContent'
 import { getContent } from '../utils/content'
 
-export const Route = createFileRoute('/ludvig')({
+export const Route = createFileRoute('/ludvig-larsendahl')({
   head: () => ({
     meta: [
       {

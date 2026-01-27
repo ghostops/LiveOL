@@ -54,10 +54,10 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  to="/ludvig"
+                  to="/ludvig-larsendahl"
                   className="text-text-muted hover:text-brand-primary text-sm"
                 >
-                  About Ludvig
+                  About the creator
                 </Link>
               </li>
             </ul>
