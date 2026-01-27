@@ -1,30 +1,13 @@
-# Dependencies
-node_modules/
-npm-debug.log*
-yarn.lock
-
-# Build outputs
-client/dist/
-server/dist/
-*.tsbuildinfo
-
-# Environment variables
-.env
-.env.local
-
-# Logs
-logs/
-*.log
-
-# OS files
+node_modules
 .DS_Store
-Thumbs.db
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# PM2
-.pm2/
+dist
+dist-ssr
+*.local
+count.txt
+.env
+.nitro
+.tanstack
+.wrangler
+.output
+.vinxi
+todos.json

@@ -54,6 +54,7 @@ RUN npm ci
 
 # Copy built application from builder stage
 COPY --from=builder /app/.output ./.output
+COPY --from=builder /app/public ./public
 COPY --from=builder /app/content ./content
 
 # Expose the port the app runs on
