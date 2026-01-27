@@ -2,7 +2,6 @@ import {
   HeadContent,
   Outlet,
   Scripts,
-  ScrollRestoration,
   createRootRoute,
   useMatches,
 } from '@tanstack/react-router'
@@ -77,7 +76,6 @@ function RootComponent() {
     return (
       <>
         <Outlet />
-        <ScrollRestoration />
       </>
     )
   }
@@ -90,7 +88,6 @@ function RootComponent() {
         <Outlet />
       </main>
       <Footer />
-      <ScrollRestoration />
     </>
   )
 }
@@ -101,7 +98,10 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <head>
         <HeadContent />
       </head>
-      <body className="min-h-screen flex flex-col bg-base-background">
+      <body
+        className="min-h-screen flex flex-col bg-base-background"
+        suppressHydrationWarning
+      >
         {children}
         <Scripts />
       </body>

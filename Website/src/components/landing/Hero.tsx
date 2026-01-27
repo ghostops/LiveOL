@@ -21,29 +21,17 @@ export default function Hero() {
 
       <div className="max-w-[1440px] mx-auto px-8 py-32 md:py-48 flex flex-col items-start relative">
         <div className="flex flex-col gap-6 max-w-3xl">
-          {/* Status badge */}
-          <div className="inline-flex items-center gap-3 self-start px-3 py-1 bg-white border border-brand-primary/30">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-primary opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-primary" />
-            </span>
-            <span className="font-mono text-[11px] font-bold text-brand-primary uppercase">
-              v2.4.0 Stable Build // System Ready
-            </span>
-          </div>
-
           {/* Main heading */}
-          <h2 className="text-brand-primary text-5xl md:text-8xl font-black leading-[0.9] tracking-[-0.04em] uppercase italic">
-            High-Precision
-            <br />
-            Live Results
+          <h1 className="text-brand-primary text-xl md:text-4xl font-black leading-[0.9] tracking-[-0.04em] uppercase italic">
+            Live orienteering results with
+          </h1>
+          <h2 className="text-brand-primary text-5xl md:text-8xl font-black leading-[0.9] tracking-[-0.04em] uppercase">
+             LiveOL
           </h2>
 
           {/* Description */}
           <p className="text-text-muted text-lg md:text-xl font-normal leading-relaxed max-w-xl">
-            The digital blueprint for global orienteering performance.
-            Engineered for sub-second synchronization across elite
-            championships.
+            LiveOL is an app that displays orienteering-results live. You get the latest results on your phone or tablet with a convenient interface in multiple languages.
           </p>
 
           {/* CTA buttons */}
