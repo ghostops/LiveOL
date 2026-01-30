@@ -9,7 +9,7 @@ import {
 import Navigation from '../components/Navigation'
 import Footer from '../components/Footer'
 
-import appCss from '../styles.css?url'
+import '../styles.css'
 
 export const Route = createRootRoute({
   head: () => ({
@@ -25,14 +25,10 @@ export const Route = createRootRoute({
       {
         name: 'description',
         content:
-          'Real-time orienteering competition tracking and analysis. Follow live results, track your favorite athletes, and stay updated with the latest orienteering events.',
+          'Real-time orienteering competition tracking and analysis. Follow live results, track your favorite runners, and stay updated with the latest orienteering events.',
       },
     ],
     links: [
-      {
-        rel: 'stylesheet',
-        href: appCss,
-      },
       {
         rel: 'icon',
         type: 'image/x-icon',
