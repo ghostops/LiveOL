@@ -2,10 +2,13 @@ import ReactMarkdown from 'react-markdown'
 
 interface Props {
   content: string
-  children?: React.ReactNode;
+  children?: React.ReactNode
 }
 
-export default function MarkdownContent({ content, children }: Props) {
+export default function MarkdownContent({
+  content,
+  children: reactChildren,
+}: Props) {
   return (
     <article className="max-w-4xl mx-auto">
       <div className="bg-white border border-border rounded-sm shadow-sm p-8 md:p-12">
@@ -82,7 +85,7 @@ export default function MarkdownContent({ content, children }: Props) {
             {content}
           </ReactMarkdown>
         </div>
-        {children}
+        {reactChildren}
       </div>
     </article>
   )

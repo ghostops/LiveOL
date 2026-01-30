@@ -1,86 +1,53 @@
----
-title: Privacy Policy
-description: LiveOL Privacy Policy
-date: 2026-01-07T10:00:00.000Z
----
-
 # Privacy Policy
 
-**Last Updated: January 7, 2026**
+Welcome! This is the privacy policy for the LiveOL app, built and maintained by Ludvig Larsendahl. We care about your privacy, and to keep it simple: we don't collect any personal data through the app that you have not consented to.
 
-## 1. Introduction
+## What This Policy Covers
 
-LiveOL ("we", "our", or "us") respects your privacy. This Privacy Policy explains how we collect, use, and protect your information when you use our Service.
+This page explains what information the app handles, and how it's used. By using LiveOL, you agree to this policy.
 
-## 2. Information We Collect
+---
 
-### Information You Provide
+## 📊 User Data We Store
 
-- Email address (for newsletters or account creation)
-- Name and contact information (if provided)
-- Feedback and communications
+If you track yourself or any other runner in the app, we will store that information securely on our servers. You can delete it in the app or reach out to us to have it removed at any time. We do not use this data to track you outside of the LiveOL app.
 
-### Automatically Collected Information
+---
 
-- Device and browser information
-- Usage data (pages visited, features used)
-- IP address and general location
-- Performance and error logs
+## ⚙️ Third party tools
 
-## 3. How We Use Your Information
+LiveOL uses a third-party tool called Bugsnag to help us fix crashes and bugs. Bugsnag may collect basic info about your device (like OS version or app version) to help us understand what went wrong.
 
-We use collected information to:
+We don't use this information to identify you — it's just for app improvement.
 
-- Provide and improve the Service
-- Send newsletters (if subscribed)
-- Respond to inquiries and support requests
-- Analyze usage patterns and optimize performance
-- Detect and prevent security issues
+You can learn more about Bugsnag's privacy practices here: https://www.bugsnag.com/
 
-## 4. Data Sharing
+---
 
-We do not sell your personal information. We may share data with:
+## 🗂 Cookies
 
-- **Service Providers**: Third-party services that help us operate (hosting, analytics)
-- **Legal Requirements**: When required by law or to protect our rights
+LiveOL itself doesn't use cookies, but third-party tools (like Bugsnag) might use technology similar to cookies behind the scenes. These are outside our control but help keep the app stable.
 
-## 5. Cookies and Tracking
+---
 
-We use cookies and similar technologies to:
-- Remember your preferences
-- Analyze site usage
-- Improve user experience
+## 🔗 External Links
 
-You can control cookies through your browser settings.
+LiveOL may contain links to websites we don't operate. If you follow a link to an external site (like our homepage), their privacy policies apply.
 
-## 6. Data Security
+---
 
-We implement reasonable security measures to protect your information. However, no method of transmission over the Internet is 100% secure.
+## 👶 Children's Privacy
 
-## 7. Third-Party Services
+LiveOL is not intended for children under 13.
 
-The Service may contain links to external websites. We are not responsible for their privacy practices.
+---
 
-## 8. Children's Privacy
+## 🔁 Updates to This Policy
 
-LiveOL is not intended for children under 13. We do not knowingly collect information from children.
+We may update this page if anything changes. The latest version will always be available here.
 
-## 9. Your Rights
+---
 
-You have the right to:
-- Access your personal information
-- Request correction or deletion
-- Opt out of communications
-- Withdraw consent
+## 📬 Contact
 
-## 10. International Users
-
-If you access LiveOL from outside Sweden, your information may be transferred to and processed in Sweden.
-
-## 11. Changes to This Policy
-
-We may update this Privacy Policy. We will notify users of significant changes.
-
-## 12. Contact Us
-
-For privacy questions or requests, contact: **privacy@orienteeringliveresults.com**
+If you have questions, please use the contact form on our website.

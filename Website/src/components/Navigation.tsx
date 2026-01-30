@@ -6,8 +6,9 @@ export default function Navigation() {
 
   const links = [
     { path: '/about', label: 'About' },
+    { path: '/changelog', label: 'News' },
     { path: '/newsletter', label: 'Newsletter' },
-    { path: '/issues', label: 'Report Bug' },
+    { path: '/issues', label: 'Report issues' },
     { path: '/translate', label: 'Translate the app' },
   ]
 

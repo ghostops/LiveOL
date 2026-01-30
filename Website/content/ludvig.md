@@ -1,9 +1,3 @@
----
-title: About Ludvig Larsendahl
-description: Meet the creator of LiveOL
-date: 2026-01-07T10:00:00.000Z
----
-
 # About Ludvig Larsendahl
 
 Ludvig started coding at the age of 6 and picked up orienteering at 11, so building LiveOL was perhaps inevitable. He is currently a member of Västerås Skid- och Orienteringsklubb, but lives in Stockholm.

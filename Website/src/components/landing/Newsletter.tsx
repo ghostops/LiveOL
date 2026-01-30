@@ -2,7 +2,7 @@ import { Link } from '@tanstack/react-router'
 
 export default function Newsletter() {
   return (
-    <section className="relative bg-gradient-to-br from-base-background via-orange-50 to-white border-y border-border py-24 overflow-hidden">
+    <section className="relative bg-linear-to-br from-base-background via-orange-50 to-white border-y border-border py-24 overflow-hidden">
       {/* Technical grid pattern overlay */}
       <div
         className="absolute inset-0 opacity-30"
@@ -19,7 +19,7 @@ export default function Newsletter() {
       <div className="absolute top-0 right-0 w-32 h-32 border-r border-t border-brand-primary/20 m-8 pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-32 h-32 border-l border-b border-brand-primary/20 m-8 pointer-events-none" />
 
-      <div className="max-w-[1440px] mx-auto px-8 relative">
+      <div className="max-w-360 mx-auto px-8 relative">
         <div className="max-w-3xl mx-auto text-center">
           {/* Section label */}
           <div className="inline-block mb-6">
@@ -35,7 +35,8 @@ export default function Newsletter() {
 
           {/* Description */}
           <p className="text-text-muted text-lg md:text-xl font-normal leading-relaxed mb-10 max-w-2xl mx-auto">
-            Get early access to new features, behind-the-scenes development updates, and be the first to know what we're building next.
+            Get early access to new features, behind-the-scenes development
+            updates, and be the first to know what we're building next.
           </p>
 
           {/* CTA Button */}

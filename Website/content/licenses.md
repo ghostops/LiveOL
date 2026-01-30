@@ -1,9 +1,3 @@
----
-title: Open Source Licenses
-description: Third-party software licenses used in LiveOL
-date: 2026-01-07T10:00:00.000Z
----
-
 # Open Source Licenses
 
 LiveOL is built with and grateful for the following open source software:

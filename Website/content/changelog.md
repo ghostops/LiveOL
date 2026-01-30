@@ -1,9 +1,3 @@
----
-title: Changelog
-description: This is the changelog for LiveOL.
-date: 2026-01-13T10:00:00.000Z
----
-
 # Get started
 
 ![Header](https://i.ibb.co/84Yt9Mmt/onboarding-1.jpg)

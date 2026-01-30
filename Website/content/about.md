@@ -1,9 +1,3 @@
----
-title: About LiveOL
-description: Learn more about the LiveOL project and our vision
-date: 2026-01-30T10:00:00.000Z
----
-
 # About LiveOL
 
 LiveOL brings real-time orienteering results straight to your phone. Follow competitions as they unfold, track your favorite runners and clubs, compare split times, and never miss a moment from the forest.
