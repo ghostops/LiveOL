@@ -1,6 +1,6 @@
 # Get started
 
-![Header](https://i.ibb.co/84Yt9Mmt/onboarding-1.jpg)
+![Header](/assets/images/onboarding_1.jpg)
 
 First time here? You're about to discover the easiest way to follow orienteering results live, right from your phone.
 
