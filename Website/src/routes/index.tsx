@@ -10,7 +10,7 @@ export const Route = createFileRoute('/')({
   head: () => ({
     meta: [
       {
-        title: 'LiveOL - High-Precision Live Orienteering Results',
+        title: 'LiveOL - Live Orienteering Results',
       },
       {
         name: 'description',

@@ -22,7 +22,7 @@ export default function Hero() {
       <div className="max-w-360 mx-auto px-8 py-32 flex flex-col items-start relative">
         <div className="flex flex-col gap-6 max-w-3xl">
           {/* Main heading */}
-          <h1 className="text-brand-primary text-xl md:text-4xl font-black leading-[0.9] tracking-[-0.04em] uppercase italic">
+          <h1 className="text-brand-primary text-xl md:text-4xl font-black leading-[0.9] tracking-[-0.04em] italic">
             Live orienteering results with
           </h1>
           <h2 className="text-brand-primary text-5xl md:text-8xl font-black leading-[0.9] tracking-[-0.04em]">
@@ -31,7 +31,7 @@ export default function Hero() {
 
           {/* Description */}
           <p className="text-text-muted text-lg md:text-xl font-normal leading-relaxed max-w-xl">
-            LiveOL is an app that displays orienteering-results live. You get
+            LiveOL is an app that displays orienteering results live. You get
             the latest results on your phone or tablet with a convenient
             interface in multiple languages.
           </p>
