@@ -19,13 +19,13 @@ export default function Hero() {
       <div className="absolute top-0 left-0 w-24 h-24 border-l border-t border-brand-primary/20 m-4 pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-24 h-24 border-r border-b border-brand-primary/20 m-4 pointer-events-none" />
 
-      <div className="max-w-[1440px] mx-auto px-8 py-32 flex flex-col items-start relative">
+      <div className="max-w-360 mx-auto px-8 py-32 flex flex-col items-start relative">
         <div className="flex flex-col gap-6 max-w-3xl">
           {/* Main heading */}
           <h1 className="text-brand-primary text-xl md:text-4xl font-black leading-[0.9] tracking-[-0.04em] uppercase italic">
             Live orienteering results with
           </h1>
-          <h2 className="text-brand-primary text-5xl md:text-8xl font-black leading-[0.9] tracking-[-0.04em] uppercase">
+          <h2 className="text-brand-primary text-5xl md:text-8xl font-black leading-[0.9] tracking-[-0.04em]">
             LiveOL
           </h2>
 
