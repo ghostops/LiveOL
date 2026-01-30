@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TranslateRouteImport } from './routes/translate'
 import { Route as TermsRouteImport } from './routes/terms'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as NewsletterRouteImport } from './routes/newsletter'
 import { Route as LudvigLarsendahlRouteImport } from './routes/ludvig-larsendahl'
@@ -29,6 +30,11 @@ const TranslateRoute = TranslateRouteImport.update({
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrivacyRoute = PrivacyRouteImport.update({
@@ -87,6 +93,7 @@ export interface FileRoutesByFullPath {
   '/ludvig-larsendahl': typeof LudvigLarsendahlRoute
   '/newsletter': typeof NewsletterRoute
   '/privacy': typeof PrivacyRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/translate': typeof TranslateRoute
 }
@@ -100,6 +107,7 @@ export interface FileRoutesByTo {
   '/ludvig-larsendahl': typeof LudvigLarsendahlRoute
   '/newsletter': typeof NewsletterRoute
   '/privacy': typeof PrivacyRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/translate': typeof TranslateRoute
 }
@@ -114,6 +122,7 @@ export interface FileRoutesById {
   '/ludvig-larsendahl': typeof LudvigLarsendahlRoute
   '/newsletter': typeof NewsletterRoute
   '/privacy': typeof PrivacyRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/translate': typeof TranslateRoute
 }
@@ -129,6 +138,7 @@ export interface FileRouteTypes {
     | '/ludvig-larsendahl'
     | '/newsletter'
     | '/privacy'
+    | '/sitemap.xml'
     | '/terms'
     | '/translate'
   fileRoutesByTo: FileRoutesByTo
@@ -142,6 +152,7 @@ export interface FileRouteTypes {
     | '/ludvig-larsendahl'
     | '/newsletter'
     | '/privacy'
+    | '/sitemap.xml'
     | '/terms'
     | '/translate'
   id:
@@ -155,6 +166,7 @@ export interface FileRouteTypes {
     | '/ludvig-larsendahl'
     | '/newsletter'
     | '/privacy'
+    | '/sitemap.xml'
     | '/terms'
     | '/translate'
   fileRoutesById: FileRoutesById
@@ -169,6 +181,7 @@ export interface RootRouteChildren {
   LudvigLarsendahlRoute: typeof LudvigLarsendahlRoute
   NewsletterRoute: typeof NewsletterRoute
   PrivacyRoute: typeof PrivacyRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TermsRoute: typeof TermsRoute
   TranslateRoute: typeof TranslateRoute
 }
@@ -187,6 +200,13 @@ declare module '@tanstack/react-router' {
       path: '/terms'
       fullPath: '/terms'
       preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/privacy': {
@@ -265,6 +285,7 @@ const rootRouteChildren: RootRouteChildren = {
   LudvigLarsendahlRoute: LudvigLarsendahlRoute,
   NewsletterRoute: NewsletterRoute,
   PrivacyRoute: PrivacyRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   TermsRoute: TermsRoute,
   TranslateRoute: TranslateRoute,
 }
