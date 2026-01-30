@@ -2,8 +2,7 @@ export default function Features() {
   const features = [
     {
       title: 'Cross platform',
-      description:
-        'Download the app on both iOS and Android.',
+      description: 'Download the app on both iOS and Android.',
       icon: '📱',
     },
     {
@@ -13,8 +12,7 @@ export default function Features() {
     },
     {
       title: 'Great usability',
-      description:
-        'Skip websites that looks messy on mobile devices.',
+      description: 'Skip websites that looks messy on mobile devices.',
       icon: '👌',
     },
   ]
@@ -35,7 +33,7 @@ export default function Features() {
           {features.map((feature, index) => (
             <div
               key={index}
-              className="flex flex-col bg-white border border-border p-8 gap-6 group hover:border-brand-primary transition-colors"
+              className="flex flex-col bg-white border border-border p-8 gap-6"
             >
               <div className="flex justify-between items-start">
                 <div className="p-4 bg-base-background border border-border">

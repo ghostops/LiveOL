@@ -64,7 +64,7 @@ export default function PlusFeatures() {
           {features.map((feature, index) => (
             <div
               key={index}
-              className="bg-base-background border-2 border-border p-8 relative group hover:border-brand-primary transition-all"
+              className="bg-base-background border-2 border-border p-8 relative"
             >
               {/* Feature number */}
               <div className="absolute top-4 right-4 font-mono text-xs text-text-muted">
@@ -73,7 +73,7 @@ export default function PlusFeatures() {
 
               {/* Icon */}
               <div className="mb-6">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-white border-2 border-border group-hover:border-brand-primary transition-colors">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-white border-2 border-border">
                   <span className="text-4xl">{feature.icon}</span>
                 </div>
               </div>

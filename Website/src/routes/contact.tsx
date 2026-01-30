@@ -33,5 +33,22 @@ export const Route = createFileRoute('/contact')({
 
 function ContactPage() {
   const data = Route.useLoaderData()
-  return <MarkdownContent content={data.content} />
+  return (<div>
+    <MarkdownContent content={data.content}>
+      <form
+  action="https://formspree.io/f/xqkyzjaq"
+  method="POST"
+>
+  <label>
+    Your email:
+    <input type="email" name="email" />
+  </label>
+  <label>
+    Your message:
+    <textarea name="message"></textarea>
+  </label>
+  <button type="submit">Send</button>
+</form>
+      </MarkdownContent>
+  </div>)
 }
