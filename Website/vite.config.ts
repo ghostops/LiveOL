@@ -26,17 +26,7 @@ const config = defineConfig({
       projects: ['./tsconfig.json'],
     }),
     tailwindcss(),
-    tanstackStart({
-      prerender: {
-        enabled: true,
-        crawlLinks: true,
-        failOnError: false,
-      },
-      sitemap: {
-        enabled: true,
-        host: 'https://orienteeringliveresults.com',
-      },
-    }),
+    tanstackStart(),
     viteReact(),
   ],
   build: { ssrEmitAssets: true },
