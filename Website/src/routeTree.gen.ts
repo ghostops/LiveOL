@@ -15,7 +15,6 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as NewsletterRouteImport } from './routes/newsletter'
 import { Route as LudvigLarsendahlRouteImport } from './routes/ludvig-larsendahl'
-import { Route as LicensesRouteImport } from './routes/licenses'
 import { Route as IssuesRouteImport } from './routes/issues'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as ChangelogRouteImport } from './routes/changelog'
@@ -52,11 +51,6 @@ const LudvigLarsendahlRoute = LudvigLarsendahlRouteImport.update({
   path: '/ludvig-larsendahl',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LicensesRoute = LicensesRouteImport.update({
-  id: '/licenses',
-  path: '/licenses',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IssuesRoute = IssuesRouteImport.update({
   id: '/issues',
   path: '/issues',
@@ -89,7 +83,6 @@ export interface FileRoutesByFullPath {
   '/changelog': typeof ChangelogRoute
   '/contact': typeof ContactRoute
   '/issues': typeof IssuesRoute
-  '/licenses': typeof LicensesRoute
   '/ludvig-larsendahl': typeof LudvigLarsendahlRoute
   '/newsletter': typeof NewsletterRoute
   '/privacy': typeof PrivacyRoute
@@ -103,7 +96,6 @@ export interface FileRoutesByTo {
   '/changelog': typeof ChangelogRoute
   '/contact': typeof ContactRoute
   '/issues': typeof IssuesRoute
-  '/licenses': typeof LicensesRoute
   '/ludvig-larsendahl': typeof LudvigLarsendahlRoute
   '/newsletter': typeof NewsletterRoute
   '/privacy': typeof PrivacyRoute
@@ -118,7 +110,6 @@ export interface FileRoutesById {
   '/changelog': typeof ChangelogRoute
   '/contact': typeof ContactRoute
   '/issues': typeof IssuesRoute
-  '/licenses': typeof LicensesRoute
   '/ludvig-larsendahl': typeof LudvigLarsendahlRoute
   '/newsletter': typeof NewsletterRoute
   '/privacy': typeof PrivacyRoute
@@ -134,7 +125,6 @@ export interface FileRouteTypes {
     | '/changelog'
     | '/contact'
     | '/issues'
-    | '/licenses'
     | '/ludvig-larsendahl'
     | '/newsletter'
     | '/privacy'
@@ -148,7 +138,6 @@ export interface FileRouteTypes {
     | '/changelog'
     | '/contact'
     | '/issues'
-    | '/licenses'
     | '/ludvig-larsendahl'
     | '/newsletter'
     | '/privacy'
@@ -162,7 +151,6 @@ export interface FileRouteTypes {
     | '/changelog'
     | '/contact'
     | '/issues'
-    | '/licenses'
     | '/ludvig-larsendahl'
     | '/newsletter'
     | '/privacy'
@@ -177,7 +165,6 @@ export interface RootRouteChildren {
   ChangelogRoute: typeof ChangelogRoute
   ContactRoute: typeof ContactRoute
   IssuesRoute: typeof IssuesRoute
-  LicensesRoute: typeof LicensesRoute
   LudvigLarsendahlRoute: typeof LudvigLarsendahlRoute
   NewsletterRoute: typeof NewsletterRoute
   PrivacyRoute: typeof PrivacyRoute
@@ -230,13 +217,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LudvigLarsendahlRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/licenses': {
-      id: '/licenses'
-      path: '/licenses'
-      fullPath: '/licenses'
-      preLoaderRoute: typeof LicensesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/issues': {
       id: '/issues'
       path: '/issues'
@@ -281,7 +261,6 @@ const rootRouteChildren: RootRouteChildren = {
   ChangelogRoute: ChangelogRoute,
   ContactRoute: ContactRoute,
   IssuesRoute: IssuesRoute,
-  LicensesRoute: LicensesRoute,
   LudvigLarsendahlRoute: LudvigLarsendahlRoute,
   NewsletterRoute: NewsletterRoute,
   PrivacyRoute: PrivacyRoute,
