@@ -49,7 +49,7 @@ export const OLSceneSettings = () => {
     Linking.openURL('https://orienteeringliveresults.com/issues');
   };
   const handleGoToWebsite = () => {
-    Linking.openURL('https://orienteeringliveresults.com/ludvig');
+    Linking.openURL('https://orienteeringliveresults.com/ludvig-larsendahl');
   };
   const handleHelpTranslate = () => {
     Linking.openURL('https://orienteeringliveresults.com/translate');
