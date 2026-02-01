@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import DownloadButtons from './DownloadButtons'
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
@@ -20,9 +21,10 @@ export default function Footer() {
                 LiveOL
               </span>
             </div>
-            <p className="text-text-muted text-sm">
+            <p className="text-text-muted text-sm mb-6">
               Real-time orienteering results and competition analysis
             </p>
+            <DownloadButtons size="small" />
           </div>
 
           <div>
