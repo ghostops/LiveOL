@@ -5,6 +5,7 @@ import {
   OLTrackingTable,
   OLUsersTable,
 } from 'lib/db/schema';
+import { globalSeparator } from 'lib/match/generateIds';
 import { getAllTrackedRunnerIds } from 'lib/match/getAllTrackedRunnerIds';
 
 export type ResultWithMaybeSplits = typeof LiveResultsTable.$inferSelect & {
@@ -36,7 +37,18 @@ export const marshalResult =
     let isTracking = false;
     if (user?.hasPlus && tracking?.length) {
       const trackedIds = getAllTrackedRunnerIds(tracking);
-      isTracking = trackedIds.includes(result.olRunnerId);
+      for (const id of trackedIds) {
+        const [name, club] = id.split(globalSeparator);
+        if (name && club) {
+          if (
+            result.olRunnerId.startsWith(name) &&
+            result.olRunnerId.endsWith(club)
+          ) {
+            isTracking = true;
+            break;
+          }
+        }
+      }
     }
 
     // If the result has not been updated for more than 3 days the runner MUST be done

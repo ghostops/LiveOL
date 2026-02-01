@@ -1,5 +1,5 @@
 import { OLTrackingTable } from 'lib/db/schema';
-import { RunnerId } from './generateIds';
+import { globalSeparator, norm } from './generateIds';
 
 export const getAllTrackedRunnerIds = (
   tracking: (typeof OLTrackingTable.$inferSelect)[],
@@ -11,12 +11,7 @@ export const getTrackedRunnerIds = (
   tracking: typeof OLTrackingTable.$inferSelect,
 ) => {
   return tracking.clubs.reduce<string[]>((acc, club) => {
-    const id = new RunnerId().generateId({
-      className: '',
-      fullName: tracking.name,
-      organizationName: club,
-    });
-    acc.push(id);
+    acc.push(norm(`${tracking.name}${globalSeparator}${club}`));
     return acc;
   }, []);
 };

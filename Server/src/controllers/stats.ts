@@ -9,6 +9,7 @@ import {
 } from 'lib/db/schema';
 import { and, eq, isNull, inArray, sql } from 'drizzle-orm';
 import { getTrackedRunnerIds } from 'lib/match/getAllTrackedRunnerIds';
+import { globalSeparator } from 'lib/match/generateIds';
 
 const api = apiSingletons.createApiSingletons();
 
@@ -62,9 +63,8 @@ export const getUserStats = defaultEndpointsFactory
 
       // Convert IDs like "name~~club" to LIKE patterns "name~%~club"
       const likePatterns = runnerIds.map(id => {
-        const parts = id.split('~');
-        // parts should be [name, '', club] - replace empty class with wildcard
-        return parts.length === 3 ? `${parts[0]}~%~${parts[2]}` : id;
+        const [name, club] = id.split(globalSeparator);
+        return `${name}${globalSeparator}%${globalSeparator}${club}`;
       });
 
       const results = await api.Drizzle.db

@@ -15,6 +15,7 @@ import { marshalResult } from 'lib/marshal/results';
 import { userMiddleware } from 'middleware/user';
 import { getTrackedRunnerIds } from 'lib/match/getAllTrackedRunnerIds';
 import createHttpError from 'http-errors';
+import { globalSeparator } from 'lib/match/generateIds';
 
 const api = apiSingletons.createApiSingletons();
 
@@ -270,10 +271,11 @@ export const getLiveResultsForTrackedRunner = defaultEndpointsFactory
 
       // Convert IDs like "name~~club" to LIKE patterns "name~%~club"
       const likePatterns = allPotentialIds.map(id => {
-        const parts = id.split('~');
-        // parts should be [name, '', club] - replace empty class with wildcard
-        return parts.length === 3 ? `${parts[0]}~%~${parts[2]}` : id;
+        const [name, club] = id.split(globalSeparator);
+        return `${name}${globalSeparator}%${globalSeparator}${club}`;
       });
+
+      console.log('likePatterns', likePatterns);
 
       const results = await api.Drizzle.db
         .select({
