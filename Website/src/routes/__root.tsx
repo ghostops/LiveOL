@@ -27,6 +27,10 @@ export const Route = createRootRoute({
         content:
           'Real-time orienteering competition tracking and analysis. Follow live results, track your favorite runners, and stay updated with the latest orienteering events.',
       },
+      {
+        name: 'apple-itunes-app',
+        content: 'app-id=1450106846',
+      },
     ],
     links: [
       {
@@ -93,6 +97,39 @@ function RootDocument({ children }: { children: React.ReactNode }) {
     <html lang="en">
       <head>
         <HeadContent />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'SoftwareApplication',
+            name: 'LiveOL',
+            operatingSystem: 'iOS, Android',
+            applicationCategory: 'SportsApplication',
+            offers: [
+              {
+                '@type': 'Offer',
+                price: '0',
+                priceCurrency: 'USD',
+              },
+              {
+                '@type': 'Offer',
+                name: 'LiveOL+',
+                price: '10.00',
+                priceCurrency: 'USD',
+                priceValidUntil: '2026-12-31',
+                billingDuration: 'P1Y',
+              },
+            ],
+            aggregateRating: {
+              '@type': 'AggregateRating',
+              ratingValue: '4.5',
+              ratingCount: '350',
+            },
+            downloadUrl: [
+              'https://itunes.apple.com/app/liveol/id1450106846',
+              'https://play.google.com/store/apps/details?id=se.liveol.rn',
+            ],
+          })}
+        </script>
       </head>
       <body
         className="min-h-screen flex flex-col bg-base-background"

@@ -39,7 +39,7 @@ export default function Hero() {
           {/* Download buttons */}
           <div className="flex flex-col sm:flex-row gap-4 mt-8 w-full sm:w-auto items-center">
             <a
-              href="https://itunes.apple.com/us/app/liveol/id1450106846"
+              href="https://itunes.apple.com/app/liveol/id1450106846"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:opacity-80 transition-opacity inline-block h-14 w-[168px]"

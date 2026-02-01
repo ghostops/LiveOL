@@ -1,1 +1,25 @@
-{"name":"LiveOL - Orienteering Live Results","short_name":"LiveOL","icons":[{"src":"/android-chrome-192x192.png","sizes":"192x192","type":"image/png"},{"src":"/android-chrome-512x512.png","sizes":"512x512","type":"image/png"}],"theme_color":"#E86A1E","background_color":"#E86A1E","display":"standalone"}
+{
+  "name": "LiveOL - Orienteering Live Results",
+  "short_name": "LiveOL",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#E86A1E",
+  "background_color": "#E86A1E",
+  "display": "standalone",
+  "related_applications": [{
+    "platform": "play",
+    "id": "se.liveol.rn",
+    "url": "https://play.google.com/store/apps/details?id=se.liveol.rn"
+  }],
+  "prefer_related_applications": true
+}
