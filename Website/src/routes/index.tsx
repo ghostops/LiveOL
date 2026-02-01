@@ -2,6 +2,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import Navigation from '../components/Navigation'
 import Footer from '../components/Footer'
 import Hero from '../components/landing/Hero'
+import ScreenshotGallery from '../components/landing/ScreenshotGallery'
 import Features from '../components/landing/Features'
 import PlusFeatures from '../components/landing/PlusFeatures'
 import Newsletter from '../components/landing/Newsletter'
@@ -28,6 +29,7 @@ function LandingPage() {
       <Navigation />
       <Hero />
       <Features />
+      <ScreenshotGallery />
       <PlusFeatures />
       <Newsletter />
       <Footer />
