@@ -34,22 +34,19 @@ export const marshalResult =
     nowTimestamp: number;
   }) =>
   (result: ResultWithMaybeSplits) => {
-    let isTracking = false;
-    if (user?.hasPlus && tracking?.length) {
-      const trackedIds = getAllTrackedRunnerIds(tracking);
-      for (const id of trackedIds) {
-        const [name, club] = id.split(globalSeparator);
-        if (name && club) {
-          if (
+    const isTracking = Boolean(
+      user?.hasPlus &&
+        tracking?.length &&
+        getAllTrackedRunnerIds(tracking).some(id => {
+          const [name, club] = id.split(globalSeparator);
+          return (
+            name &&
+            club &&
             result.olRunnerId.startsWith(name) &&
             result.olRunnerId.endsWith(club)
-          ) {
-            isTracking = true;
-            break;
-          }
-        }
-      }
-    }
+          );
+        }),
+    );
 
     // If the result has not been updated for more than 3 days the runner MUST be done
     const isOutdated =
