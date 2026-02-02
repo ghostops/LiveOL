@@ -72,12 +72,9 @@ export const OLTrackingForm = ({
     [clubs],
   );
 
-  const removeClub = useCallback(
-    (club: string) => {
-      setClubs(prev => prev.filter(c => c !== club));
-    },
-    [],
-  );
+  const removeClub = useCallback((club: string) => {
+    setClubs(prev => prev.filter(c => c !== club));
+  }, []);
 
   const handleSave = useThrottledCallback(
     async () => {

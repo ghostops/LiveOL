@@ -18,7 +18,7 @@ type Props = {
 
 export const OLRunnerContextMenu: React.FC<Props> = ({
   children,
-  result: { name, className, organization },
+  result: { name, organization },
   liveClassId,
   olCompetitionId,
   olOrganizationId,
