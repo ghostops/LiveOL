@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { TextStyle, View } from 'react-native';
 import { useTheme } from '~/hooks/useTheme';
 import { paths } from '~/lib/react-query/schema';
 import { OLResultAnimation } from '~/views/components/result/item/animation';
@@ -11,6 +11,7 @@ import { useOrientation } from '~/hooks/useOrientation';
 import { OrientationType } from 'react-native-orientation-locker';
 import { OLRunnerContextMenu } from '~/views/components/result/contextMenu';
 import { OLRowTime } from './row-time';
+import { COLORS } from '~/util/const';
 
 type Props = {
   olCompetitionId: string;
@@ -71,12 +72,32 @@ export const OLLiveResultRow = ({
             const split = result.splitResults?.find(
               s => s.code === control.code,
             );
+            const style: TextStyle =
+              split?.place === 1
+                ? { color: COLORS.RED, fontWeight: 600 }
+                : { color: COLORS.BLACK };
             return (
               <View key={control.code} style={{ width: splits, gap: px(4) }}>
                 {split?.time && (
                   <>
-                    <OLResultTime status={0} time={split.time} />
-                    <OLResultTimeplus status={0} timeplus={split.timeplus} />
+                    <OLText>
+                      <OLResultTime
+                        status={0}
+                        time={split.time}
+                        style={style}
+                      />
+                      {!!split.place && (
+                        <OLText style={style} size={14}>
+                          {' '}
+                          ({split.place})
+                        </OLText>
+                      )}
+                    </OLText>
+                    <OLResultTimeplus
+                      style={style}
+                      status={0}
+                      timeplus={split.timeplus}
+                    />
                   </>
                 )}
               </View>
