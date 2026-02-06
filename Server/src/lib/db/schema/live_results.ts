@@ -28,5 +28,6 @@ export const LiveResultsTable = pgTable(
     index('results_olRunnerId_idx').on(t.olRunnerId),
     index('results_olOrganizationId_idx').on(t.olOrganizationId),
     index('results_organization_idx').on(t.organization),
+    index('results_liveClassId_idx').on(t.liveClassId),
   ],
 );

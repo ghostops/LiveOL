@@ -275,8 +275,6 @@ export const getLiveResultsForTrackedRunner = defaultEndpointsFactory
         return `${name}${globalSeparator}%${globalSeparator}${club}`;
       });
 
-      console.log('likePatterns', likePatterns);
-
       const results = await api.Drizzle.db
         .select({
           ...getTableColumns(LiveResultsTable),
