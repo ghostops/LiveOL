@@ -7,10 +7,10 @@ export declare namespace LiveresultatApi {
   }
 
   export interface getcompetitions {
-    competitions: competition[];
+    competitions: getcompetitioninfo[];
   }
 
-  export interface competition {
+  export interface getcompetitioninfo {
     date: string;
     id: number;
     name: string;

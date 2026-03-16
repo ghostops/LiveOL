@@ -1,16 +1,17 @@
 import * as cheerio from 'cheerio';
-import ms from 'ms';
 import { LiveresultatApi } from './types';
-import { Cacher } from 'lib/redis';
 import { AxiosInstance } from 'axios';
+import Redis from 'ioredis';
 
 export const scrapeAllCompetitions = async (
   client: AxiosInstance,
-  cache: Cacher,
+  cache: Redis,
 ): Promise<LiveresultatApi.getcompetitions> => {
-  let data: LiveresultatApi.competition[] = await cache.get(
-    'getcompetitionsScrape',
-  );
+  const jsonData = await cache.get('getcompetitionsScrape');
+
+  let data: LiveresultatApi.getcompetitioninfo[] = jsonData
+    ? JSON.parse(jsonData)
+    : [];
 
   if (!data) {
     data = [];
@@ -37,7 +38,8 @@ export const scrapeAllCompetitions = async (
       data.push({ date, name, id, organizer, timediff: 0 });
     });
 
-    cache.set('getcompetitionsScrape', data, { ttlMs: ms('1 minute') });
+    cache.set('getcompetitionsScrape', JSON.stringify(data));
+    cache.expire('getcompetitionsScrape', 60);
   }
 
   return { competitions: data };

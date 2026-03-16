@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>baseLanguage</key>
+	<string>en-US</string>
+	<key>localizations</key>
+	<array>
+		<string>en-US</string>
+		<string>sv</string>
+	</array>
+	<key>selectedAppleWatchSpecification</key>
+	<string>appleWatchUltra</string>
+	<key>selectedPlatforms</key>
+	<array>
+		<string>iPhone</string>
+		<string>androidPhone</string>
+	</array>
+</dict>
+</plist>

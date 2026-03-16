@@ -11,6 +11,7 @@ export enum SupportedLocale {
   de = 'de',
   cs = 'cs',
   es = 'es',
+  fr = 'fr',
 }
 
 const locales: Record<SupportedLocale, any> = {
@@ -22,6 +23,7 @@ const locales: Record<SupportedLocale, any> = {
   de: require('../../assets/locales/de.json'),
   cs: require('../../assets/locales/cs.json'),
   es: require('../../assets/locales/es.json'),
+  fr: require('../../assets/locales/fr.json'),
 };
 
 const resources = Object.keys(locales).reduce((root, locale) => {

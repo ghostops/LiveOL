@@ -2,31 +2,18 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-ARG EVENTOR_API_KEY_SE
-ARG EVENTOR_API_KEY_AU
-ARG SLACK_WEBHOOK
-ARG REDIS_HOST
-ARG REDIS_PASSWORD
-ARG BASEROW_KEY
-ARG BASEROW_TABLE
-
-ENV EVENTOR_API_KEY_SE $EVENTOR_API_KEY_SE
-ENV EVENTOR_API_KEY_SE $EVENTOR_API_KEY_AU
-ENV SLACK_WEBHOOK $SLACK_WEBHOOK
-ENV REDIS_HOST $REDIS_HOST
-ENV REDIS_PASSWORD $REDIS_PASSWORD
-ENV BASEROW_KEY $BASEROW_KEY
-ENV BASEROW_TABLE $BASEROW_TABLE
-ENV ENV DEV
-
 # Build folders
-ADD ./src ./src
+ADD ./src /app/src
 
 # Build files
-ADD ./package.json ./
-ADD ./package-lock.json ./
-ADD ./tsconfig.json ./
+ADD ./package.json package.json
+ADD ./package-lock.json package-lock.json
+ADD ./tsconfig.json tsconfig.json
+ADD ./drizzle.config.ts drizzle.config.ts
+ADD ./drizzle drizzle
+ADD ./runJob.ts runJob.ts
 
 RUN npm i
+RUN npm install -g ts-node tsconfig-paths nodemon tsx
 
-CMD ["npm", "run", "start"]
+CMD ["sh", "-c", "exec ts-node -r tsconfig-paths/register src/index.ts"]

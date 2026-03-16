@@ -3,6 +3,7 @@ import {
   NodePgClient,
   NodePgDatabase,
 } from 'drizzle-orm/node-postgres';
+import { Pool } from 'pg';
 
 type DrizzlePostgresDb = NodePgDatabase<Record<string, never>> & {
   $client: NodePgClient;
@@ -16,6 +17,13 @@ export class Drizzle {
       throw new Error('DATABASE_URL is not defined');
     }
 
-    this.db = drizzle(url);
+    // Create a Pool with explicit UTF-8 encoding
+    const pool = new Pool({
+      connectionString: url,
+      // Ensure UTF-8 encoding for Swedish characters (åäö)
+      client_encoding: 'UTF8',
+    });
+
+    this.db = drizzle(pool);
   }
 }

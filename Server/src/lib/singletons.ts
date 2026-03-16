@@ -1,24 +1,22 @@
-import { Cacher } from 'lib/redis';
-import { LiveresultatAPIClient } from 'lib/liveresultat';
-import { EventorCombiner, CombinedEventorApi } from './eventor/combiner';
+import { LiveresultatAPIClient } from 'lib/liveresultat/client';
 import { getEnv } from './helpers/env';
 import { Drizzle } from './db';
-import { OLQueue } from './queue';
+import { FastQueue, RegularQueue, RepeatingQueue } from './queue';
+import { JobScheduler } from './scheduler';
+import Redis from 'ioredis';
+import { LiveresultatUrl } from './eventor/scrapers/urls';
 
 export interface APIResponse {
   Liveresultat: LiveresultatAPIClient;
-  LiveresultatLongCache: LiveresultatAPIClient;
-  Eventor: CombinedEventorApi;
-  Redis: Cacher;
   Drizzle: Drizzle;
-  Queue: OLQueue;
+  Queue: {
+    FastQueue: FastQueue;
+    RegularQueue: RegularQueue;
+    RepeatingQueue: RepeatingQueue;
+  };
+  Scheduler: JobScheduler;
+  Redis: Redis;
 }
-
-const URLS = {
-  liveresultat: 'https://liveresultat.orientering.se',
-  eventorSweden: 'https://eventor.orientering.se',
-  eventorAustralia: 'https://eventor.orienteering.asn.au',
-};
 
 class ApiSingletons {
   private singletons: APIResponse | undefined;
@@ -26,57 +24,33 @@ class ApiSingletons {
   public createApiSingletons = (): APIResponse => {
     if (this.singletons) return this.singletons;
 
-    const cache = new Cacher({
+    const cache = new Redis({
       host: process.env.REDIS_HOST,
-      port: 6379,
       password: process.env.REDIS_PASSWORD,
+      port: 6379,
     });
 
-    const eventorCombiner = new EventorCombiner({
-      cache,
-      endpoints: [
-        {
-          url: URLS.eventorSweden,
-          apiKey: getEnv('EVENTOR_API_KEY_SE', false),
-        },
-        {
-          url: URLS.eventorAustralia,
-          apiKey: getEnv('EVENTOR_API_KEY_AU', false),
-        },
-      ],
-    });
+    const liveresultatApi = new LiveresultatAPIClient(LiveresultatUrl, cache);
 
-    const combinedEventorApi = eventorCombiner.getCombinedApi();
+    const redisHost = process.env.REDIS_HOST!;
+    const redisPassword = process.env.REDIS_PASSWORD;
 
-    const liveresultatApi = new LiveresultatAPIClient(URLS.liveresultat, cache);
+    const fastQueue = new FastQueue(redisHost, 6379, redisPassword);
+    const regularQueue = new RegularQueue(redisHost, 6379, redisPassword);
+    const repeatingQueue = new RepeatingQueue(redisHost, 6379, redisPassword);
 
-    const liveresultatLongCacheApi = new LiveresultatAPIClient(
-      URLS.liveresultat,
-      cache,
-      {
-        getcompetitions: '1 hour',
-        getcompetition: '10 minutes',
-        getclasses: '10 minutes',
-        getclassresults: '1 minute',
-        getlastpassings: '10 minutes',
-        getclubresults: '10 minutes',
-      },
-      'liveresultat-long-cache:',
-    );
-
-    const queue = new OLQueue(
-      process.env.REDIS_HOST!,
-      6379,
-      process.env.REDIS_PASSWORD,
-    );
+    const drizzle = new Drizzle(getEnv('DATABASE_URL', false));
 
     this.singletons = {
       Liveresultat: liveresultatApi,
-      LiveresultatLongCache: liveresultatLongCacheApi,
-      Eventor: combinedEventorApi,
       Redis: cache,
-      Drizzle: new Drizzle(getEnv('DATABASE_URL', false)),
-      Queue: queue,
+      Drizzle: drizzle,
+      Queue: {
+        FastQueue: fastQueue,
+        RegularQueue: regularQueue,
+        RepeatingQueue: repeatingQueue,
+      },
+      Scheduler: new JobScheduler(drizzle, repeatingQueue),
     };
 
     return this.singletons;

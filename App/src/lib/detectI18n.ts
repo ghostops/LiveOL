@@ -1,27 +1,18 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LanguageDetectorAsyncModule } from 'i18next';
-import { i18nMap } from './i18nmap';
+import { getLocales } from 'react-native-localize';
 
 const languageKey = 'language';
 
-const getCountryLang = async (): Promise<string> => {
-  const data = await fetch('https://api.country.is/').then(response =>
-    response.json(),
-  );
+const getCountryLang = () => {
+  const locales = getLocales();
+  const locale = locales[0];
 
-  const lang = data?.country;
-
-  if (!lang) {
+  if (!locale) {
     return 'en';
   }
 
-  const langStr = i18nMap[lang];
-
-  if (!langStr) {
-    return 'en';
-  }
-
-  return langStr.slice(0, 2).toLowerCase();
+  return locale.languageCode;
 };
 
 export const languageDetectorPlugin: LanguageDetectorAsyncModule = {
@@ -35,11 +26,11 @@ export const languageDetectorPlugin: LanguageDetectorAsyncModule = {
       if (selectedLang) {
         return selectedLang;
       } else {
-        const deviceLang = await getCountryLang();
+        const deviceLang = getCountryLang();
         return deviceLang;
       }
     } catch (error) {
-      const deviceLang = await getCountryLang();
+      const deviceLang = getCountryLang();
       return deviceLang;
     }
   },

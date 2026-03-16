@@ -70,7 +70,7 @@ export const OLCompetitionHeader: React.FC<Props> = props => {
               color: 'white',
             }}
           >
-            {t('competitions.canceled')}
+            {t('The competition has been canceled')}
           </OLText>
         </View>
       )}
@@ -104,22 +104,33 @@ export const OLCompetitionHeader: React.FC<Props> = props => {
           )}
 
           <OLText size={16} style={{ marginBottom: px(15) }}>
-            {t('competitions.date')}: {dateToReadable(props.competition.date)}
+            {t('Date')}: {dateToReadable(props.competition.date)}
           </OLText>
 
           <OLText size={16} style={{ marginBottom: px(15) }}>
-            {t('competitions.organizedBy')}: {props.competition.organizer}
+            {t('Organized by')}: {props.competition.organizer}
           </OLText>
 
           {props.competition.eventorAvailable && (
             <>
               <OLText size={16} style={{ marginBottom: px(15) }}>
-                {t('competitions.distance')}:{' '}
-                {t(`distances.${props.competition.distance}`)}
+                {t('Distance')}:{' '}
+                {(() => {
+                  const distanceKeys: Record<string, string> = {
+                    long: 'Long',
+                    middle: 'Middle',
+                    sprint: 'Sprint',
+                    ultralong: 'Ultra Long',
+                  };
+                  return t(
+                    distanceKeys[props.competition.distance] ||
+                      props.competition.distance,
+                  );
+                })()}
               </OLText>
 
               <OLText style={{ marginBottom: px(15) }} size={16}>
-                {t('competitions.signups')}: {props.competition.signups}
+                {t('Signed up')}: {props.competition.signups}
               </OLText>
 
               <OLButton
@@ -134,7 +145,7 @@ export const OLCompetitionHeader: React.FC<Props> = props => {
                   backgroundColor: colors.BLACK,
                 }}
               >
-                {t('competitions.visitEventor')}
+                {t('See on Eventor')}
               </OLButton>
             </>
           )}
@@ -154,7 +165,7 @@ export const OLCompetitionHeader: React.FC<Props> = props => {
           marginVertical: px(16),
         }}
       >
-        {t('competitions.classes')}
+        {t('Classes')}
       </OLText>
     </View>
   );

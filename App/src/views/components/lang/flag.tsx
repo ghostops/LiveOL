@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { Image, ImageStyle } from 'react-native';
+import { ImageStyle } from 'react-native';
+import CountryFlag from 'react-native-country-flag';
 
 interface Props {
   code: string | undefined;
@@ -16,37 +16,12 @@ const remapCode: Record<string, string> = {
   cs: 'cz',
   de: 'de',
   es: 'es',
-};
-
-const FLAGS: Record<string, any> = {
-  se: require('../../../../assets/images/flags/se.png'),
-  no: require('../../../../assets/images/flags/no.png'),
-  gb: require('../../../../assets/images/flags/gb.png'),
-  rs: require('../../../../assets/images/flags/rs.png'),
-  it: require('../../../../assets/images/flags/it.png'),
-  cz: require('../../../../assets/images/flags/cz.png'),
-  de: require('../../../../assets/images/flags/de.png'),
-  es: require('../../../../assets/images/flags/es.png'),
+  fr: 'fr',
 };
 
 export const OLFlag: React.FC<Props> = ({ code, size, style }) => {
   if (!code) {
     return null;
   }
-
-  const flag = FLAGS[remapCode[code]];
-
-  if (!flag) {
-    return null;
-  }
-  return (
-    <Image
-      source={flag}
-      style={{
-        height: size * 0.65,
-        width: size,
-        ...style,
-      }}
-    />
-  );
+  return <CountryFlag isoCode={remapCode[code]} size={size} style={style} />;
 };

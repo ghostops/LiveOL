@@ -6,11 +6,13 @@ import { COLORS, px } from '~/util/const';
 interface Props {
   interval: number;
   refetch: () => Promise<void>;
+  enabled: boolean;
 }
 
 export const OLRefetcherBar: React.FunctionComponent<Props> = ({
   interval,
   refetch,
+  enabled,
 }) => {
   const [animatedWidth] = useState(new Animated.Value(0));
 
@@ -21,6 +23,10 @@ export const OLRefetcherBar: React.FunctionComponent<Props> = ({
     };
 
     const animate = () => {
+      if (!enabled) {
+        return;
+      }
+
       animatedWidth.setValue(0);
 
       Animated.timing(animatedWidth, {
@@ -31,17 +37,39 @@ export const OLRefetcherBar: React.FunctionComponent<Props> = ({
       }).start();
     };
 
-    refresh();
+    if (!enabled) {
+      animatedWidth.stopAnimation();
+      animatedWidth.setValue(0);
+      return;
+    } else {
+      refresh();
+    }
 
     const timer = setInterval(() => refresh(), interval);
 
     return () => clearInterval(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [interval, enabled]);
+
+  const [windowWidth, setWindowWidth] = useState(
+    Dimensions.get('window').width,
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(Dimensions.get('window').width);
+    };
+
+    const subscription = Dimensions.addEventListener('change', handleResize);
+
+    return () => {
+      subscription?.remove();
+    };
   }, []);
 
   const width = animatedWidth.interpolate({
     inputRange: [0, 1],
-    outputRange: [-Dimensions.get('window').width, 0],
+    outputRange: [-windowWidth, 0],
   });
 
   return (

@@ -49,8 +49,8 @@ platform :android do
     )
 
     upload_to_play_store(
-      track: 'production',
-      release_status: 'draft',
+      track: 'internal',
+      release_status: 'completed',
       version_name: getPackageVersion,
       apk: './app/build/outputs/apk/release/app-release.apk'
     )

@@ -1,19 +1,19 @@
-import { TouchableOpacity, Image, View } from 'react-native';
+import { Image, TouchableOpacity, View } from 'react-native';
 import { useTheme } from '~/hooks/useTheme';
-import { OLIcon } from '~/views/components/icon';
 import { useTranslation } from 'react-i18next';
 import { OLText } from '~/views/components/text';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { COLORS } from '~/util/const';
+import { OLIcon } from '~/views/components/icon';
 import { useOLNavigation } from '~/hooks/useNavigation';
 
 const LOGO = require('../../../../assets/images/icon.png');
 
 export const HomeHeader: React.FC = () => {
   const { t } = useTranslation();
-  const { hitSlop, px } = useTheme();
-  const { navigate } = useOLNavigation();
+  const { px } = useTheme();
   const { top } = useSafeAreaInsets();
+  const { navigate } = useOLNavigation();
 
   return (
     <View
@@ -43,19 +43,15 @@ export const HomeHeader: React.FC = () => {
           />
         </View>
 
-        <View>
+        <View style={{ flex: 1, alignItems: 'center' }}>
           <OLText size={18} style={{ color: '#fff' }}>
-            {t('home.title')}
+            {t('LiveOL')}
           </OLText>
         </View>
 
-        <View>
-          <TouchableOpacity
-            onPress={() => navigate('Info')}
-            style={{ marginRight: px(16) }}
-            hitSlop={hitSlop}
-          >
-            <OLIcon name="information-circle" size={24} color="white" />
+        <View style={{ marginRight: px(16) }}>
+          <TouchableOpacity onPress={() => navigate('Search')} hitSlop={16}>
+            <OLIcon name="search" color="#fff" style={{ fontSize: 20 }} />
           </TouchableOpacity>
         </View>
       </View>

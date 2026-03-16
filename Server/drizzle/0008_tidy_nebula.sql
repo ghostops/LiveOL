@@ -1,0 +1,1 @@
+CREATE INDEX "results_organization_idx" ON "live_results" USING btree ("organization");

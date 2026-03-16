@@ -1,48 +1,62 @@
+import { createConfig, Routing } from 'express-zod-api';
 import {
-  getCompetitions,
-  getCompetitionsToday,
-  getCompetition,
-  getCompetitionLastPassings,
+  getCompetitions as getCompetitionsV2,
+  getCompetition as getCompetitionV2,
+  getTodaysCompetitions,
+  searchCompetitions,
 } from 'controllers/competitions';
-import { redeemPlusCode, validatePlusCode } from 'controllers/plus';
+import { getEnv } from 'lib/helpers/env';
 import {
-  getResultsForClass,
-  getResultsForClub,
-  getSplitControls,
+  getLiveResultsForOrganisation,
+  getLiveResultsForTrackedRunner,
+  getResultByLiveClassId,
 } from 'controllers/results';
+import { registerUser } from 'controllers/users';
 import {
-  getTrackedRunners,
-  removeTrackedRunner,
-  trackNewRunner,
-  getTrackedRunner,
-  updateTrackedRunner,
-} from 'controllers/track';
-import { createConfig, DependsOnMethod, Routing } from 'express-zod-api';
+  listTracking,
+  createTracking,
+  updateTracking,
+  deleteTracking,
+  getUserSelfTracking,
+} from 'controllers/tracking';
+import { getUserStats } from 'controllers/stats';
+import { getApiStatus, getServerStatus } from 'controllers/status';
+import { getAllOrganizations } from 'controllers/organizations';
+import { getChangelogEntries } from 'controllers/changelog';
+import logger from 'lib/logger';
 
 export const config = createConfig({
   http: { listen: 3000 },
-  cors: false,
+  cors: getEnv('NODE_ENV', true) === 'development',
   startupLogo: false,
+  logger: logger,
 });
 
 export const routing: Routing = {
-  'v1/competitions': getCompetitions,
-  'v1/competitions/today': getCompetitionsToday,
-  'v1/competitions/:competitionId': getCompetition,
-  'v1/competitions/:competitionId/last-passings': getCompetitionLastPassings,
+  health: getServerStatus,
+  'v2/status': getApiStatus,
 
-  'v1/results/:competitionId/class/:className': getResultsForClass,
-  'v1/results/:competitionId/club/:clubName': getResultsForClub,
-  'v1/results/:competitionId/class/:className/splits': getSplitControls,
+  'v2/changelog': getChangelogEntries,
 
-  'v1/plus/validate': validatePlusCode,
-  'v1/plus/redeem': redeemPlusCode,
+  'v2/competitions': getCompetitionsV2,
+  'v2/competitions/search': searchCompetitions,
+  'v2/competitions/today': getTodaysCompetitions,
+  'v2/competitions/:id': getCompetitionV2,
 
-  'v1/track/add': trackNewRunner,
-  'v1/track': getTrackedRunners,
-  'v1/track/:id': new DependsOnMethod({
-    delete: removeTrackedRunner,
-    get: getTrackedRunner,
-    put: updateTrackedRunner,
-  }),
+  'v2/results/live/:liveClassId': getResultByLiveClassId,
+  'v2/results/live/organizations/:olCompetitionId/:olOrganizationId':
+    getLiveResultsForOrganisation,
+  'v2/results/live/tracked/:trackingId': getLiveResultsForTrackedRunner,
+
+  'v2/users/register': registerUser,
+
+  'v2/tracking': listTracking,
+  'v2/tracking/create': createTracking,
+  'v2/tracking/:id': updateTracking,
+  'v2/tracking/:id/delete': deleteTracking,
+  'v2/tracking/self': getUserSelfTracking,
+  'v2/tracking/stats': getUserStats,
+
+  'v2/strings/organizations': getAllOrganizations,
+  // 'v2/strings/classes': getAllClasses,
 };

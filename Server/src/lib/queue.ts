@@ -1,86 +1,164 @@
-import { Job, Queue, Worker } from 'bullmq';
-import Redis from 'ioredis';
-import { SyncClassJob } from 'jobs/liveresultat/sync-class';
-import { SyncCompetitionJob } from 'jobs/liveresultat/sync-competition';
-import { SyncCompetitionsJob } from 'jobs/liveresultat/sync-competitions';
+import { EventorDateParser } from 'jobs/eventor/eventor-date-parser';
+import { SyncEventorCompetition } from 'jobs/eventor/sync-eventor-competition';
+import { SyncEventorCompetitions } from 'jobs/eventor/sync-eventor-competitions';
+import { SyncEventorResultsJob } from 'jobs/eventor/sync-eventor-results';
+import { SyncEventorSignupsJob } from 'jobs/eventor/sync-eventor-signups';
+import { SyncLiveClassJob } from 'jobs/liveresultat/sync-live-class';
+import { SyncLiveCompetitionJob } from 'jobs/liveresultat/sync-live-competition';
+import { SyncLiveCompetitionsJob } from 'jobs/liveresultat/sync-live-competitions';
+import { SyncActiveLiveCompetitionsJob } from 'jobs/liveresultat/sync-active-live-competitions';
+import { SyncEventorStartsJob } from 'jobs/eventor/sync-eventor-starts';
+import { DateResolver } from './helpers/date-resolver';
+import {
+  QueueBase,
+  QueueConfig,
+  WorkerConfig,
+  JobRegistry,
+} from './queue-base';
 
-type OLQueueMessage = {
-  name: string;
-  data: Record<string, string | number | boolean>;
-};
+// Register all job handlers in the centralized registry
+JobRegistry.register('sync-live-class', data =>
+  new SyncLiveClassJob(data.competitionId, data.className).run(),
+);
 
-export class OLQueue {
-  public static queueName = 'ol_queue';
+JobRegistry.register('sync-live-competitions', data => {
+  const startDate = data.startDate
+    ? DateResolver.resolve(data.startDate as string)
+    : undefined;
+  const endDate = data.endDate
+    ? DateResolver.resolve(data.endDate as string)
+    : undefined;
 
-  private queue: Queue;
-  private connection: Redis;
-  private worker: Worker;
+  return new SyncLiveCompetitionsJob(startDate, endDate).run();
+});
 
-  constructor(
-    private host: string,
-    private port: number,
-    private password?: string,
-  ) {
-    this.connection = new Redis({
-      host: this.host,
-      port: this.port,
-      password: this.password,
-      maxRetriesPerRequest: null,
-    });
-    this.queue = new Queue(OLQueue.queueName, { connection: this.connection });
-    this.worker = new Worker(OLQueue.queueName, this.handleJob, {
-      autorun: false,
-      connection: this.connection,
-      concurrency: 1,
-      limiter: { duration: 1000, max: 3 },
-    });
+JobRegistry.register('sync-live-competition', data =>
+  new SyncLiveCompetitionJob(data.competitionId, !!data.classesOnly).run(),
+);
+
+JobRegistry.register('sync-active-live-competitions', () =>
+  new SyncActiveLiveCompetitionsJob().run(),
+);
+
+JobRegistry.register('sync-eventor-competitions', data =>
+  new SyncEventorCompetitions(
+    data.countryCode,
+    data.startDate,
+    data.endDate,
+  ).run(),
+);
+
+JobRegistry.register('sync-eventor-competition', data =>
+  new SyncEventorCompetition(data.eventorId, data.countryCode).run(),
+);
+
+JobRegistry.register('sync-eventor-signups', data =>
+  new SyncEventorSignupsJob(data.eventorDatabaseId).run(),
+);
+
+JobRegistry.register('sync-eventor-results', data =>
+  new SyncEventorResultsJob(data.eventorDatabaseId).run(),
+);
+
+JobRegistry.register('sync-eventor-starts', data =>
+  new SyncEventorStartsJob(data.eventorDatabaseId).run(),
+);
+
+JobRegistry.register('parse-eventor-dates', () =>
+  new EventorDateParser().run(),
+);
+
+/**
+ * Fast Queue - High throughput, minimal retries
+ * Best for: Leaf jobs with quick database operations (e.g., sync-live-class)
+ * Can handle: ANY job type from the JobRegistry
+ */
+export class FastQueue extends QueueBase {
+  public static queueName = 'ol_queue_fast';
+
+  constructor(host: string, port: number, password?: string) {
+    super(FastQueue.queueName, host, port, password);
   }
 
-  public async addJob(message: OLQueueMessage) {
-    await this.queue.add(message.name, message.data, {
-      attempts: 3,
-      removeOnFail: false,
+  protected getQueueConfig(): QueueConfig {
+    return {
+      attempts: 1,
+      removeOnFail: true,
       removeOnComplete: true,
-    });
+      backoff: {
+        type: 'exponential',
+        delay: 1000,
+      },
+    };
   }
 
-  public async startWorker() {
-    if (this.worker.isRunning()) {
-      await this.worker.close();
-    }
-    this.worker.run();
-    this.worker.on('ready', () => {
-      console.log('Worker is ready');
-    });
-    this.worker.on('error', e => {
-      console.error('Queue error:', e.stack || e);
-    });
-    this.worker.on('failed', e => {
-      console.error('Queue failed:', e?.stacktrace || e);
-    });
+  protected getWorkerConfig(): WorkerConfig {
+    return {
+      concurrency: 10,
+    };
+  }
+}
+
+/**
+ * Regular Queue - Standard settings for most jobs
+ * Best for: Parent jobs, API calls with moderate throughput needs
+ * Can handle: ANY job type from the JobRegistry
+ */
+export class RegularQueue extends QueueBase {
+  public static queueName = 'ol_queue_regular';
+
+  constructor(host: string, port: number, password?: string) {
+    super(RegularQueue.queueName, host, port, password);
   }
 
-  public async purge() {
-    await this.queue.drain();
-    await this.queue.close();
-    await this.connection.quit();
+  protected getQueueConfig(): QueueConfig {
+    return {
+      attempts: 3,
+      removeOnFail: true,
+      removeOnComplete: true,
+      backoff: {
+        type: 'exponential',
+        delay: 1000,
+      },
+    };
   }
 
-  private async handleJob(job: Job) {
-    switch (job.name) {
-      case 'sync-competitions':
-        new SyncCompetitionsJob().run();
-        break;
-      case 'sync-competition':
-        new SyncCompetitionJob(job.data.competitionId).run();
-        break;
-      case 'sync-class':
-        new SyncClassJob(job.data.competitionId, job.data.className).run();
-        break;
-      default:
-        console.warn(`Unknown job type: ${job.name}`);
-        break;
-    }
-    return true;
+  protected getWorkerConfig(): WorkerConfig {
+    return {
+      concurrency: 3,
+      limiter: { duration: 1000, max: 9 },
+    };
+  }
+}
+
+/**
+ * Repeating Queue - Maximum reliability for scheduled jobs
+ * Best for: Cron-scheduled jobs that need guaranteed execution
+ * Can handle: ANY job type from the JobRegistry
+ */
+export class RepeatingQueue extends QueueBase {
+  public static queueName = 'ol_queue_repeating';
+
+  constructor(host: string, port: number, password?: string) {
+    super(RepeatingQueue.queueName, host, port, password);
+  }
+
+  protected getQueueConfig(): QueueConfig {
+    return {
+      attempts: 7,
+      removeOnFail: false,
+      removeOnComplete: { count: 20 },
+      backoff: {
+        type: 'exponential',
+        delay: 5000, // 5 second initial delay
+      },
+    };
+  }
+
+  protected getWorkerConfig(): WorkerConfig {
+    return {
+      concurrency: 1,
+      limiter: { duration: 1000, max: 2 },
+    };
   }
 }

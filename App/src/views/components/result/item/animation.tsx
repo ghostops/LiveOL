@@ -1,9 +1,9 @@
 import { useRef, useState } from 'react';
-import { Animated, ViewStyle } from 'react-native';
-import { paths } from '~/lib/react-query/schema';
+import { Animated, View, ViewStyle } from 'react-native';
 
 interface Props {
-  result: paths['/v1/results/{competitionId}/club/{clubName}']['get']['responses']['200']['content']['application/json']['data']['results'][0];
+  hasUpdated: boolean;
+  isTracking?: boolean;
   children: React.ReactNode;
   style?: ViewStyle;
 }
@@ -11,6 +11,21 @@ interface Props {
 export const OLResultAnimation: React.FC<Props> = props => {
   const [animation] = useState(new Animated.Value(0));
   const animationActive = useRef(false);
+
+  if (props.isTracking) {
+    return (
+      <View
+        style={[
+          props.style,
+          {
+            backgroundColor: 'rgba(236, 223, 208, 1)',
+          },
+        ]}
+      >
+        {props.children}
+      </View>
+    );
+  }
 
   const stopAnimation = () => {
     Animated.timing(animation, {
@@ -30,18 +45,18 @@ export const OLResultAnimation: React.FC<Props> = props => {
 
   const backgroundColor = animation.interpolate({
     inputRange: [0, 1],
-    outputRange: ['rgba(0,0,0,0)', 'rgba(255,0,0,.15)'],
+    outputRange: ['rgba(255,255,255,1)', 'rgba(255,0,0,.15)'],
   });
 
   if (!animationActive.current) {
-    if (props.result.hasUpdated === true) {
+    if (props.hasUpdated === true) {
       animationActive.current = true;
       startAnimation();
     }
   }
 
   if (animationActive.current) {
-    if (props.result.hasUpdated === false) {
+    if (props.hasUpdated === false) {
       animationActive.current = false;
       stopAnimation();
     }

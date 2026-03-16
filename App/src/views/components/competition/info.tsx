@@ -1,4 +1,4 @@
-import { TouchableOpacity, View } from 'react-native';
+import { Linking, TouchableOpacity, View } from 'react-native';
 import { OLText } from '../text';
 import Hyperlink from 'react-native-hyperlink';
 import { useTranslation } from 'react-i18next';
@@ -7,31 +7,67 @@ import { useTheme } from '~/hooks/useTheme';
 
 interface Props {
   infoHtml: string;
+  links?: { href: string; text: string }[];
 }
-export const CompetitionInfoBox: React.FC<Props> = ({ infoHtml }) => {
+export const CompetitionInfoBox: React.FC<Props> = ({ infoHtml, links }) => {
   const { t } = useTranslation();
   const { px, colors } = useTheme();
   return (
     <View
       style={{
         backgroundColor: colors.BLUE,
-        padding: px(20),
+        padding: px(12),
         borderRadius: 4,
-        marginTop: px(5),
       }}
     >
       <OLText
-        size={22}
+        size={16}
         bold
         style={{
           color: 'white',
-          paddingBottom: px(10),
+          paddingBottom: px(6),
         }}
       >
-        {t('competitions.info')}
+        {t('Competition information')}
       </OLText>
 
       <InfoHtml html={infoHtml} />
+
+      {links && links.length > 0 && (
+        <>
+          <OLText
+            size={16}
+            bold
+            style={{
+              color: 'white',
+              paddingTop: px(8),
+              paddingBottom: px(6),
+            }}
+          >
+            {t('Links')}
+          </OLText>
+          {links?.map(link => (
+            <TouchableOpacity
+              key={link.href}
+              onPress={() => {
+                Linking.openURL(link.href);
+              }}
+            >
+              <OLText
+                size={14}
+                style={{
+                  color: 'white',
+                  paddingBottom: px(2),
+                  textDecorationLine: 'underline',
+                }}
+                numberOfLines={1}
+              >
+                {link.text}
+              </OLText>
+            </TouchableOpacity>
+          ))}
+        </>
+      )}
     </View>
   );
 };
@@ -86,7 +122,7 @@ const InfoHtml: React.FC<{ html: string }> = ({ html }) => {
             size={12}
             style={{ color: 'white', textDecorationLine: 'underline' }}
           >
-            {t('competitions.readMore')}
+            {t('Read more')}
           </OLText>
         </TouchableOpacity>
       )}

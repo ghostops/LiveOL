@@ -32,7 +32,8 @@ platform :ios do
 
     increment_build_number(xcodeproj: xcodeproj)
 
-    clear_derived_data
+    # We don't *have* to do this every time..?
+    # clear_derived_data
 
     build_app(
       workspace: "LiveOL.xcworkspace",

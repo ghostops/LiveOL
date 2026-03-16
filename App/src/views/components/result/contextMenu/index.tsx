@@ -1,100 +1,115 @@
-import React from 'react';
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import { useTranslation } from 'react-i18next';
 import { TouchableOpacity } from 'react-native';
 import { useIap } from '~/hooks/useIap';
 import { useOLNavigation } from '~/hooks/useNavigation';
-import { RouteProp, useRoute } from '@react-navigation/native';
-import { RootStack } from '~/lib/nav/router';
-import { useFollowingStore } from '~/store/following';
-import { useFollowBottomSheetStore } from '~/store/followBottomSheet';
 import { paths } from '~/lib/react-query/schema';
 
 type Props = {
-  result: paths['/v1/results/{competitionId}/club/{clubName}']['get']['responses']['200']['content']['application/json']['data']['results'][0];
+  result: paths['/v2/results/live/{liveClassId}']['get']['responses']['200']['content']['application/json']['data']['results'][number];
   children: React.ReactNode;
-  club: boolean;
+
+  olCompetitionId?: string;
+  olOrganizationId?: string;
+  liveClassId?: string;
+  canTrackRunner?: boolean;
+  canGoToCompetition?: boolean;
 };
 
 export const OLRunnerContextMenu: React.FC<Props> = ({
   children,
-  result,
-  club,
+  result: { name, organization },
+  liveClassId,
+  olCompetitionId,
+  olOrganizationId,
+  canTrackRunner = true,
+  canGoToCompetition = false,
 }) => {
   const { showActionSheetWithOptions } = useActionSheet();
   const { t } = useTranslation();
   const { plusActive, presentPaywall } = useIap();
-  const { navigate } = useOLNavigation();
-  const {
-    params: { competitionId },
-  } = useRoute<RouteProp<RootStack, 'Results'>>();
-  const followRunner = useFollowingStore(state => state.follow);
-  const openSheet = useFollowBottomSheetStore(state => state.open);
+  const navigation = useOLNavigation();
 
   const onPress = () => {
-    const options = [
-      t('result.followRunner'),
-      club ? t('result.goToClass') : t('result.goToClub'),
-      t('result.followRunner'),
-      t('info.update.hasUpdate.cancel'),
-    ];
+    const actions: Array<{
+      id: string;
+      label: string;
+      handler: () => void;
+    }> = [];
+
+    if (canTrackRunner) {
+      actions.push({
+        id: 'follow',
+        label: t('Follow runner'),
+        handler: () => {
+          if (!plusActive) {
+            presentPaywall();
+            return;
+          }
+
+          navigation.navigate('EditTrackRunner', {
+            mode: 'create',
+            runner: {
+              name,
+              clubs: organization ? [organization] : [],
+            },
+          });
+        },
+      });
+    }
+
+    if (canGoToCompetition && olCompetitionId) {
+      actions.push({
+        id: 'viewCompetition',
+        label: t('See competition info'),
+        handler: () => {
+          navigation.navigate('Competition', {
+            olCompetitionId,
+          });
+        },
+      });
+    }
+
+    if (olCompetitionId && liveClassId) {
+      actions.push({
+        id: 'viewLiveResults',
+        label: t('See class results'),
+        handler: () => {
+          navigation.navigate('LiveResults', {
+            olCompetitionId,
+            liveClassId,
+          });
+        },
+      });
+    }
+
+    if (olCompetitionId && olOrganizationId) {
+      actions.push({
+        id: 'viewClubResults',
+        label: t('See club results'),
+        handler: () => {
+          navigation.navigate('ClubResults', {
+            olCompetitionId,
+            olOrganizationId,
+          });
+        },
+      });
+    }
+
+    actions.push({
+      id: 'cancel',
+      label: t('Cancel'),
+      handler: () => {},
+    });
 
     showActionSheetWithOptions(
       {
-        options,
-        cancelButtonIndex: options.length - 1,
+        options: actions.map(a => a.label),
+        cancelButtonIndex: actions.length - 1,
       },
       selectedIndex => {
-        if (typeof selectedIndex !== 'number') {
-          return;
-        }
-
-        switch (selectedIndex) {
-          case 0:
-            if (!plusActive) {
-              presentPaywall();
-              break;
-            }
-
-            followRunner({
-              id: result.id,
-              name: result.name,
-              type: 'runner',
-              className: result.class!,
-              competitionId,
-            });
-            openSheet();
-            break;
-          case 1:
-            if (club) {
-              navigate('Results', {
-                competitionId,
-                className: result.class!,
-              });
-              break;
-            }
-
-            navigate('Club', {
-              competitionId,
-              clubName: result.club!,
-              title: result.club!,
-            });
-            break;
-          case 2:
-            if (!plusActive) {
-              presentPaywall();
-              break;
-            }
-
-            navigate('EditTrackRunner', {
-              status: 'create-from',
-              runner: {
-                runnerName: result.name,
-                runnerClasses: result.class ? [result.class] : [],
-                runnerClubs: result.club ? [result.club] : [],
-              },
-            });
-            break;
+        if (typeof selectedIndex === 'number') {
+          actions[selectedIndex]?.handler();
         }
       },
     );

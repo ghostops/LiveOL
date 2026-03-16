@@ -2,7 +2,7 @@ import { View } from 'react-native';
 import { OLText } from '~/views/components/text';
 import { useLiveRunningStore } from '~/store/liveRunning';
 import { useEffect, useState } from 'react';
-import { getLiveRunningTime } from '~/util/isLive';
+import { getLiveRunningTime } from '~/util/time';
 
 interface Props {
   startTime: number;

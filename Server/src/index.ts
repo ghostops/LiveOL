@@ -1,37 +1,61 @@
 import { getEnv } from 'lib/helpers/env';
 import dotenv from 'dotenv';
-import { createHTTPServer } from '@trpc/server/adapters/standalone';
-import { appRouter, createContext } from 'trpc';
-import { OLSelfHelper } from 'lib/selfhelp';
+// import { OLSelfHelper } from 'lib/selfhelp';
 import { startExpressServer } from 'express/server';
 import { apiSingletons } from 'lib/singletons';
+import logger from 'lib/logger';
 
-apiSingletons.createApiSingletons().Queue.startWorker();
+const singletons = apiSingletons.createApiSingletons();
 
 (async () => {
   dotenv.config();
 
-  const selfHelp = new OLSelfHelper();
-
   if (getEnv('NODE_ENV', true) !== 'development') {
-    selfHelp.start();
+    // Todo: Turn this on at some point
+    // const selfHelp = new OLSelfHelper();
+    // selfHelp.start();
   }
 
-  const trpcServer = createHTTPServer({
-    router: appRouter,
-    createContext,
-    batching: {
-      enabled: false,
-    },
-  });
+  // Start all queue workers
+  await Promise.all([
+    singletons.Queue.FastQueue.startWorker(),
+    singletons.Queue.RegularQueue.startWorker(),
+    singletons.Queue.RepeatingQueue.startWorker(),
+  ]);
 
-  const port = 3001;
-  trpcServer.listen(port);
-  console.info(
-    `🚀  TRPC Server ready on port "${port}" with env "${getEnv('env') || 'dev'}"`,
-  );
-
-  console.info(`Test responses enabled: "${getEnv('test') || 'false'}"`);
+  // Start the job scheduler
+  await singletons.Scheduler.start();
 
   startExpressServer();
+
+  logger.info(
+    `Server timezone: ${Intl.DateTimeFormat().resolvedOptions().timeZone}`,
+  );
 })();
+
+async function gracefulShutdown() {
+  await singletons.Scheduler.stop();
+  await Promise.all([
+    singletons.Queue.FastQueue.stopWorker(),
+    singletons.Queue.RegularQueue.stopWorker(),
+    singletons.Queue.RepeatingQueue.stopWorker(),
+  ]);
+}
+
+process.on('SIGINT', async () => {
+  console.info('SIGINT received, shutting down gracefully...');
+  await gracefulShutdown();
+  process.exit(0);
+});
+
+process.once('SIGUSR2', async () => {
+  console.log('SIGUSR2 received (nodemon restart)');
+  await gracefulShutdown();
+  process.kill(process.pid, 'SIGUSR2');
+});
+
+process.on('SIGTERM', async () => {
+  console.log('SIGTERM received');
+  await gracefulShutdown();
+  process.exit(0);
+});

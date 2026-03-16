@@ -11,12 +11,14 @@ export const OLLanguageModal = () => {
   const { i18n } = useTranslation();
 
   const getCurrentLanguage = (key: string) =>
-    (i18n.options.resources as any)[key].translation.currentLanguage;
+    i18n.t('CURRENT_LANGUAGE', { lng: key });
+
+  const languages = Object.keys(i18n.options.resources ?? {});
 
   return (
     <View>
       <FlatList
-        data={Object.keys(i18n.options.resources as any)}
+        data={languages}
         renderItem={({ item: lang }) => {
           return (
             <TouchableOpacity
@@ -37,7 +39,7 @@ export const OLLanguageModal = () => {
             >
               <OLFlag
                 code={lang}
-                size={32}
+                size={16}
                 style={{
                   borderColor: 'black',
                   borderWidth: 1,
