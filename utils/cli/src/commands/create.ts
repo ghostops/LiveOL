@@ -21,7 +21,7 @@ import {
   OLCompetitionsTable,
   OLOrganizationsTable,
   OLRunnersTable,
-} from '../../../../Server/src/lib/db/schema';
+} from '../../../../server/src/lib/db/schema';
 import { nowInCentisecondsFromMidnight } from '../lib/utils';
 
 export const createCommand = new Command('create')

@@ -17,10 +17,10 @@ jobs:
           node-version: 20
 
       - name: npm install
-        run: cd ./App && npm install
+        run: cd ./app && npm install
 
       - name: npm lint
-        run: cd ./App && npm run lint
+        run: cd ./app && npm run lint
   lint-api:
     name: lint-api
     runs-on: ubuntu-latest
@@ -34,10 +34,10 @@ jobs:
           node-version: 20
 
       - name: npm install
-        run: cd ./Server && npm install
+        run: cd ./server && npm install
 
       - name: npm tsc
-        run: cd ./Server && npm run tscheck
+        run: cd ./server && npm run tscheck
 
       - name: npm lint
-        run: cd ./Server && npm run lint
+        run: cd ./server && npm run lint

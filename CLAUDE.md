@@ -5,8 +5,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Project Overview
 
 LiveOL is a mobile app for displaying live orienteering results. The project consists of two main components:
-- **App/** - React Native mobile app (iOS/Android)
-- **Server/** - Node.js backend with Express/tRPC API
+- **app/** - React Native mobile app (iOS/Android)
+- **server/** - Node.js backend with Express/tRPC API
 
 ## Development Commands
 
@@ -70,20 +70,20 @@ npx drizzle-kit studio   # Open Drizzle Studio (DB GUI)
 **Navigation**: Nested stack/tab pattern using React Navigation
 - Bottom tabs: `Tracking`, `Home`, `Profile`
 - Stack screens: `CompetitionV2`, `Results`, `Club`, `TrackRunner`, etc.
-- Main router: `App/src/lib/nav/router.tsx`
+- Main router: `app/src/lib/nav/router.tsx`
 
 **State Management**: Zustand with AsyncStorage persistence
-- Store files in `App/src/store/`
+- Store files in `app/src/store/`
 - Pattern: Each store uses `persist()` middleware with `zustandAsyncStorage` adapter
 - Key stores: `following.ts` (tracked runners), `plus.ts` (subscriptions), `liveRunning.ts`
 
 **API Client**: Type-safe OpenAPI client with React Query
-- Client setup: `App/src/lib/react-query/api.ts`
-- Auto-generated types: `App/src/lib/react-query/schema.d.ts` (from `schema.js` postinstall)
+- Client setup: `app/src/lib/react-query/api.ts`
+- Auto-generated types: `app/src/lib/react-query/schema.d.ts` (from `schema.js` postinstall)
 - Usage pattern: `$api.useQuery('get', '/v2/competitions/{id}', {...})`
 - Base URL: `https://api-liveol.larsendahl.se` (production)
 
-**Path Aliases**: `~/` maps to `App/src/` (configured in `tsconfig.json` and `babel.config.js`)
+**Path Aliases**: `~/` maps to `app/src/` (configured in `tsconfig.json` and `babel.config.js`)
 
 ### Server Architecture (Node.js/Express)
 
@@ -91,11 +91,11 @@ npx drizzle-kit studio   # Open Drizzle Studio (DB GUI)
 - **Express + Zod API** on port 3000 (HTTP API with OpenAPI documentation)
 
 **API Structure**:
-- Controllers: `Server/src/controllers/` - Request handlers with Zod validation
-- Express setup: `Server/src/express/setup.ts` - Route definitions
+- Controllers: `server/src/controllers/` - Request handlers with Zod validation
+- Express setup: `server/src/express/setup.ts` - Route definitions
 - OpenAPI generation: Auto-generated via `express-zod-api`
 
-**Service Layer** (`Server/src/lib/`):
+**Service Layer** (`server/src/lib/`):
 - `singletons.ts` - Single instances of API clients, DB, Queue, Cache
 - `liveresultat/` - Swedish live results API client with Redis caching
 - `eventor/` - Multi-endpoint Eventor API combiner (Sweden + Australia)
@@ -104,7 +104,7 @@ npx drizzle-kit studio   # Open Drizzle Studio (DB GUI)
 - `redis.ts` - Caching layer (TTL-based)
 
 **Database** (PostgreSQL + Drizzle ORM):
-- Schema: `Server/src/lib/db/schema/`
+- Schema: `server/src/lib/db/schema/`
   - `live_*.ts` - Liveresultat competition/class/result data
   - `eventor_*.ts` - Eventor competition/result data
   - `ol_*.ts` - App-specific data (users, tracking, runners)
@@ -113,7 +113,7 @@ npx drizzle-kit studio   # Open Drizzle Studio (DB GUI)
 
 **Background Jobs** (BullMQ + Redis):
 - Queue: `ol_queue` with concurrency=1, rate limit 3/second
-- Job types in `Server/src/jobs/`:
+- Job types in `server/src/jobs/`:
   - `liveresultat/` - Sync competitions/classes/results (15s-1h intervals)
   - `eventor/` - Sync competitions/signups/results/starts
 - Pattern: Parent jobs dispatch child jobs (batch processing)
@@ -168,7 +168,7 @@ App → OpenAPI Fetch Client ($api) → Express/Zod API (Port 3000)
 - App: Run `npm run schema` to update TypeScript types after server changes
 
 ### Database Workflow
-1. Modify schema files in `Server/src/lib/db/schema/`
+1. Modify schema files in `server/src/lib/db/schema/`
 2. Run `npx drizzle-kit generate` to create migration
 3. Run `npx drizzle-kit migrate` to apply migration
 4. Use Drizzle Studio (`npx drizzle-kit studio`) for debugging
@@ -183,15 +183,15 @@ App → OpenAPI Fetch Client ($api) → Express/Zod API (Port 3000)
 
 | Purpose | Location |
 |---------|----------|
-| App navigation | `App/src/lib/nav/router.tsx` |
-| App API client | `App/src/lib/react-query/api.ts` |
-| App stores | `App/src/store/` |
-| Server entry | `Server/src/index.ts` |
-| API routes | `Server/src/express/setup.ts` |
-| Controllers | `Server/src/controllers/` |
-| DB schema | `Server/src/lib/db/schema/` |
-| Jobs | `Server/src/jobs/` |
-| Service singletons | `Server/src/lib/singletons.ts` |
+| App navigation | `app/src/lib/nav/router.tsx` |
+| App API client | `app/src/lib/react-query/api.ts` |
+| App stores | `app/src/store/` |
+| Server entry | `server/src/index.ts` |
+| API routes | `server/src/express/setup.ts` |
+| Controllers | `server/src/controllers/` |
+| DB schema | `server/src/lib/db/schema/` |
+| Jobs | `server/src/jobs/` |
+| Service singletons | `server/src/lib/singletons.ts` |
 
 ## Release Process
 
@@ -213,7 +213,7 @@ npm run archive:android
 
 ## Testing
 
-**App**: Jest tests in `App/__tests__/`
+**App**: Jest tests in `app/__tests__/`
 ```bash
 cd App && npm test
 ```

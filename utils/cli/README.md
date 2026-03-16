@@ -13,7 +13,7 @@ The CLI runs directly from TypeScript source using `tsx`, so no build step is re
 
 ## Configuration
 
-The CLI uses the Server's database connection. Ensure `Server/.env` exists with:
+The CLI uses the Server's database connection. Ensure `server/.env` exists with:
 
 ```
 DATABASE_URL=postgresql://user:password@localhost:5432/liveol

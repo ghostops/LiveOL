@@ -1,5 +1,5 @@
 import { Command } from 'commander';
-import { eq } from '../../../../Server/node_modules/drizzle-orm';
+import { eq } from '../../../../server/node_modules/drizzle-orm';
 import { getDatabase } from '../lib/db';
 import { TimeGenerator, DEFAULT_TIME_CONFIG } from '../lib/time-generator';
 import {
@@ -7,7 +7,7 @@ import {
   LiveResultsTable,
   LiveSplitResultsTable,
   LiveSplitControllsTable,
-} from '../../../../Server/src/lib/db/schema';
+} from '../../../../server/src/lib/db/schema';
 import { MOCK_COMPETITION_PREFIX } from '../lib/mock-data';
 
 interface RunnerProgress {

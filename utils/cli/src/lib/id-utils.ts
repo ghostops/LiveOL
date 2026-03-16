@@ -4,7 +4,7 @@ export {
   OrganizationId,
   CompetitionId,
   norm,
-} from '../../../../Server/src/lib/match/generateIds';
+} from '../../../../server/src/lib/match/generateIds';
 
 import crypto from 'crypto';
 

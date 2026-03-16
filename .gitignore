@@ -1,5 +1,5 @@
 node_modules
-App/.expo
+app/.expo
 app/.expo
 npm-debug.*
 *.jks
@@ -7,31 +7,31 @@ npm-debug.*
 *.key
 *.mobileprovision
 .DS_Store
-Website/.ci/cred.json
+website/.ci/cred.json
 app/build
 .secret
 server/build
 yarn-error.log
 
-/Server/.env
+/server/.env
 .terraform
 Scripts/record-liveresultat/out
 Scripts/record-liveresultat/outold
 Scripts/devops/terraform.tfvars
 
-App/android/app/build
-App/android/build
-App/android/.gradle
-App/ios/rn.ipa
-App/ios/rn.app.dSYM.zip
-App/ios/fastlane/report.xml
-App/ios/Pods
+app/android/app/build
+app/android/build
+app/android/.gradle
+app/ios/rn.ipa
+app/ios/rn.app.dSYM.zip
+app/ios/fastlane/report.xml
+app/ios/Pods
 
 google-key.json
-App/android/fastlane/report.xml
-App/ios/LiveOL.xcworkspace/xcuserdata/*
+app/android/fastlane/report.xml
+app/ios/LiveOL.xcworkspace/xcuserdata/*
 
 *.p8
 
 .phrase.yml
-/Server/tsconfig.tsbuildinfo
+/server/tsconfig.tsbuildinfo
