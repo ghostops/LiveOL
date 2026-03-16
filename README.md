@@ -29,6 +29,6 @@ The project resides mostly in 2 folders, App and Server. The other folders are u
 
 # Links
 
-- [Website](https://liveol.larsendahl.se/)
+- [Website](https://orienteeringliveresults.com/)
 - [License](https://choosealicense.com/licenses/gpl-3.0/)
 
