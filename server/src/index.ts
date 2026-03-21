@@ -11,8 +11,9 @@ const singletons = apiSingletons.createApiSingletons();
   dotenv.config();
 
   if (getEnv('NODE_ENV', true) !== 'development') {
-    const selfHelp = new OLSelfHelper();
-    selfHelp.start();
+    // Todo: Turn this on at some point
+    // const selfHelp = new OLSelfHelper();
+    // selfHelp.start();
   }
 
   // Start all queue workers
