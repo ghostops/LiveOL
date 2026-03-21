@@ -1,6 +1,6 @@
 import { getEnv } from 'lib/helpers/env';
 import dotenv from 'dotenv';
-import { OLSelfHelper } from 'lib/selfhelp';
+// import { OLSelfHelper } from 'lib/selfhelp';
 import { startExpressServer } from 'express/server';
 import { apiSingletons } from 'lib/singletons';
 import logger from 'lib/logger';
