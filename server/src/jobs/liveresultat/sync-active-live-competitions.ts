@@ -27,16 +27,17 @@ export class SyncActiveLiveCompetitionsJob {
           ),
         );
 
-      // Dispatch sync jobs for each active competition
-      for (const competition of activeCompetitions) {
-        await this.api.Queue.RegularQueue.addJob({
-          name: 'sync-live-competition',
-          data: {
-            competitionId: competition.id,
-            classesOnly: true,
-          },
-        });
-      }
+      await Promise.all(
+        activeCompetitions.map(competition =>
+          this.api.Queue.RegularQueue.addJob({
+            name: 'sync-live-competition',
+            data: {
+              competitionId: competition.id,
+              classesOnly: true,
+            },
+          }),
+        ),
+      );
 
       if (activeCompetitions.length > 0) {
         logger.info(

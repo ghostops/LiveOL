@@ -1,6 +1,6 @@
 import { getEnv } from 'lib/helpers/env';
 import dotenv from 'dotenv';
-// import { OLSelfHelper } from 'lib/selfhelp';
+import { OLSelfHelper } from 'lib/selfhelp';
 import { startExpressServer } from 'express/server';
 import { apiSingletons } from 'lib/singletons';
 import logger from 'lib/logger';
@@ -11,9 +11,8 @@ const singletons = apiSingletons.createApiSingletons();
   dotenv.config();
 
   if (getEnv('NODE_ENV', true) !== 'development') {
-    // Todo: Turn this on at some point
-    // const selfHelp = new OLSelfHelper();
-    // selfHelp.start();
+    const selfHelp = new OLSelfHelper();
+    selfHelp.start();
   }
 
   // Start all queue workers
