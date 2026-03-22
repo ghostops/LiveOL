@@ -3,7 +3,7 @@ import { commonFields } from './commonFields';
 import { boolean } from 'drizzle-orm/pg-core';
 
 export const OLUsersTable = pgTable('ol_users', {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  id: integer().primaryKey().generatedByDefaultAsIdentity(),
   uid: varchar({ length: 128 }).notNull().unique(),
   deviceId: varchar({ length: 255 }).notNull().unique(),
   hasPlus: boolean().notNull().default(false),

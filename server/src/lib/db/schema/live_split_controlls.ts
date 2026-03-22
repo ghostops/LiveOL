@@ -4,7 +4,7 @@ import { commonFields } from './commonFields';
 export const LiveSplitControllsTable = pgTable(
   'live_split_controlls',
   {
-    id: integer().primaryKey().generatedAlwaysAsIdentity(),
+    id: integer().primaryKey().generatedByDefaultAsIdentity(),
     liveClassId: varchar({ length: 255 }).notNull(),
     name: varchar({ length: 255 }).notNull(),
     code: varchar({ length: 255 }).notNull(),

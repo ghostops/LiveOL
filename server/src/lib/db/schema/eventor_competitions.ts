@@ -13,7 +13,7 @@ import { uniqueIndex } from 'drizzle-orm/pg-core';
 export const EventorCompetitionsTable = pgTable(
   'eventor_competitions',
   {
-    id: integer().primaryKey().generatedAlwaysAsIdentity(),
+    id: integer().primaryKey().generatedByDefaultAsIdentity(),
     eventorId: varchar({ length: 255 }).notNull(),
     name: varchar({ length: 255 }).notNull(),
     organizer: varchar({ length: 255 }),

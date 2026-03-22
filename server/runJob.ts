@@ -48,6 +48,7 @@ async function runJob() {
   }
 
   if (methodName === 'run' && jobName) {
+    console.log(`Adding job ${jobName} with data:`, jobData);
     await q.addJob({
       name: jobName,
       data: jobData,

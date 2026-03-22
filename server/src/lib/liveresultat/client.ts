@@ -22,14 +22,18 @@ export class LiveresultatAPIClient {
     const res = await this.client.get<string>(
       `/api.php?method=getcompetitions`,
     );
-    return this.jsonParse<LiveresultatApi.getcompetitions>(res.data);
+    return LiveresultatAPIClient.jsonParse<LiveresultatApi.getcompetitions>(
+      res.data,
+    );
   };
 
   public getcompetitioninfo = async (id: number | string) => {
     const res = await this.client.get<string>(
       `/api.php?method=getcompetitioninfo&comp=${id}`,
     );
-    return this.jsonParse<LiveresultatApi.getcompetitioninfo>(res.data);
+    return LiveresultatAPIClient.jsonParse<LiveresultatApi.getcompetitioninfo>(
+      res.data,
+    );
   };
 
   public getclasses = async (id: number) => {
@@ -39,7 +43,7 @@ export class LiveresultatAPIClient {
       `/api.php?method=getclasses&comp=${id}&last_hash=${lastHash}`,
     );
 
-    const data = this.jsonParse<
+    const data = LiveresultatAPIClient.jsonParse<
       LiveresultatApi.getclasses | { status: 'NOT MODIFIED' }
     >(res.data);
 
@@ -61,7 +65,7 @@ export class LiveresultatAPIClient {
       `/api.php?method=getclassresults&comp=${id}&class=${encodeURIComponent(className)}&unformattedTimes=true&last_hash=${lastHash}`,
     );
 
-    const data = this.jsonParse<
+    const data = LiveresultatAPIClient.jsonParse<
       LiveresultatApi.getclassresults | { status: 'NOT MODIFIED' }
     >(res.data);
 
@@ -76,7 +80,7 @@ export class LiveresultatAPIClient {
     return data;
   };
 
-  private jsonParse = <T = object>(data: string | object): T => {
+  public static jsonParse = <T = object>(data: string | object): T => {
     try {
       let parsedData: T = {} as T;
 

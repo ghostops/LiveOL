@@ -4,7 +4,7 @@ import { OLUsersTable } from './ol_users';
 import { boolean } from 'drizzle-orm/pg-core';
 
 export const OLTrackingTable = pgTable('ol_tracking', {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  id: integer().primaryKey().generatedByDefaultAsIdentity(),
   olUserId: integer()
     .notNull()
     .references(() => OLUsersTable.id, { onDelete: 'cascade' }),

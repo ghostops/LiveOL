@@ -8,7 +8,7 @@ import {
 import { commonFields } from './commonFields';
 
 export const OLChangelogEntriesTable = pgTable('ol_changelog_entries', {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  id: integer().primaryKey().generatedByDefaultAsIdentity(),
   displayOrder: integer().notNull(), // Lower = older (1 = onboarding)
   title: varchar({ length: 255 }).notNull(),
   content: text().notNull(), // Markdown content

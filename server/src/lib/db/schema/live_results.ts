@@ -6,7 +6,7 @@ import { timestamp } from 'drizzle-orm/pg-core';
 export const LiveResultsTable = pgTable(
   'live_results',
   {
-    id: integer().primaryKey().generatedAlwaysAsIdentity(),
+    id: integer().primaryKey().generatedByDefaultAsIdentity(),
     liveResultId: varchar({ length: 255 }).notNull().unique(),
     liveClassId: varchar({ length: 255 }).notNull(),
     liveCompetitionId: integer().notNull(),

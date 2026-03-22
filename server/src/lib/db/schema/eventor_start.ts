@@ -2,7 +2,7 @@ import { integer, pgTable, varchar } from 'drizzle-orm/pg-core';
 import { commonFields } from './commonFields';
 
 export const EventorStartTable = pgTable('eventor_start', {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  id: integer().primaryKey().generatedByDefaultAsIdentity(),
   startId: varchar({ length: 255 }).notNull(),
   olClassId: varchar({ length: 255 }).notNull(),
   eventorDatabaseId: integer().notNull(),
