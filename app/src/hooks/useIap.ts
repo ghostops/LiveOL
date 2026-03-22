@@ -4,6 +4,7 @@ import { Alert, Platform } from 'react-native';
 import Purchases from 'react-native-purchases';
 import { usePlusStore } from '~/store/plus';
 import RevenueCatUI, { PAYWALL_RESULT } from 'react-native-purchases-ui';
+import { useUserIdStore } from '~/store/userId';
 
 let isInitializing = false;
 
@@ -27,6 +28,7 @@ export const useIap = () => {
   const { t } = useTranslation();
 
   const [loading, setLoading] = useState(false);
+  const localUserId = useUserIdStore(state => state.userId);
 
   const {
     initialized,
@@ -80,6 +82,12 @@ export const useIap = () => {
 
         await loadProducts();
 
+        await loadPurchase();
+
+        Purchases.setAttributes({
+          liveol_uid: localUserId,
+        });
+
         setInitialized();
       } finally {
         isInitializing = false;
@@ -87,7 +95,13 @@ export const useIap = () => {
     };
 
     init();
-  }, [initialized, loadPurchase, setInitialized, setLiveOlPlusProduct]);
+  }, [
+    initialized,
+    loadPurchase,
+    setInitialized,
+    setLiveOlPlusProduct,
+    localUserId,
+  ]);
 
   const buyLiveOLPlus = async () => {
     if (!liveOlPlusProduct) {
