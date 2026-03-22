@@ -77,8 +77,43 @@ const sortResult =
     return 0;
   };
 
-// Parsing the place is a mess, so maybe just sort by result for place
-const sortPlace = sortResult;
+const sortPlace =
+  (direction: string, nowTimestamp: number) =>
+  (a: SortedResult, b: SortedResult) => {
+    const desc = direction === 'desc';
+
+    const placeA = a.place !== null ? parseInt(a.place, 10) : NaN;
+    const placeB = b.place !== null ? parseInt(b.place, 10) : NaN;
+
+    const aHasNumericPlace = !isNaN(placeA);
+    const bHasNumericPlace = !isNaN(placeB);
+
+    // Both have a numeric place — rank by it
+    if (aHasNumericPlace && bHasNumericPlace) {
+      if (placeA !== placeB) {
+        return desc ? placeB - placeA : placeA - placeB;
+      }
+      // Same numeric place — tiebreak by result time
+      const resA = a.result ?? 0;
+      const resB = b.result ?? 0;
+      return desc ? resB - resA : resA - resB;
+    }
+
+    // Only one has a numeric place — that one wins
+    if (aHasNumericPlace) return -1;
+    if (bHasNumericPlace) return 1;
+
+    // Neither has a numeric place — both are non-finishers or tied
+    // Runners still on course: sort by elapsed time descending (furthest along first)
+    const elapsedA = a.start ? nowTimestamp - a.start : 0;
+    const elapsedB = b.start ? nowTimestamp - b.start : 0;
+
+    if (elapsedA !== elapsedB) {
+      return elapsedB - elapsedA;
+    }
+
+    return 0;
+  };
 
 const sortName = (direction: string) => (a: SortedResult, b: SortedResult) => {
   const desc = direction === 'desc';
