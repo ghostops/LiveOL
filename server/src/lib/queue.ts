@@ -8,6 +8,7 @@ import { SyncLiveCompetitionJob } from 'jobs/liveresultat/sync-live-competition'
 import { SyncLiveCompetitionsJob } from 'jobs/liveresultat/sync-live-competitions';
 import { SyncActiveLiveCompetitionsJob } from 'jobs/liveresultat/sync-active-live-competitions';
 import { SyncEventorStartsJob } from 'jobs/eventor/sync-eventor-starts';
+import { PurgeOldLiveResultsJob } from 'jobs/liveresultat/purge-old-live-results';
 import { DateResolver } from './helpers/date-resolver';
 import {
   QueueBase,
@@ -66,6 +67,10 @@ JobRegistry.register('sync-eventor-starts', data =>
 
 JobRegistry.register('parse-eventor-dates', () =>
   new EventorDateParser().run(),
+);
+
+JobRegistry.register('purge-old-live-results', () =>
+  new PurgeOldLiveResultsJob().run(),
 );
 
 /**

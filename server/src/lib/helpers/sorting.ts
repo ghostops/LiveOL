@@ -88,7 +88,6 @@ const sortPlace =
     const aHasNumericPlace = !isNaN(placeA);
     const bHasNumericPlace = !isNaN(placeB);
 
-    // Both have a numeric place — rank by it
     if (aHasNumericPlace && bHasNumericPlace) {
       if (placeA !== placeB) {
         return desc ? placeB - placeA : placeA - placeB;
