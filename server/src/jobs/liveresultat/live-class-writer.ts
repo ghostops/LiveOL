@@ -124,29 +124,25 @@ export class LiveClassWriter {
     competitionId: number,
     classResults: LiveresultatApi.getclassresults,
   ): Promise<void> {
-    // First pass: compute hashes without start time (stable IDs for the common case)
-    const firstPass = classResults.results.map(result => {
+    const firstPass = classResults.results.map((result, index) => {
       const compositeId = [
         hashedClassId,
         result.name.replace(/ /g, '_'),
         result.club?.replace(/ /g, '_'),
-        result.place.replace(/ /g, '_') ?? '',
       ].join(':');
-      return { result, compositeId };
+      return { result, compositeId, index };
     });
 
-    // Detect which base compositeIds are shared by more than one runner
-    const idCounts = new Map<string, number>();
-    for (const { compositeId } of firstPass) {
-      idCounts.set(compositeId, (idCounts.get(compositeId) ?? 0) + 1);
-    }
+    const seenCounts = new Map<string, number>();
 
     const parsedResults = firstPass.map(({ result, compositeId }) => {
-      // If this compositeId is a collision, disambiguate using start time
+      const seen = seenCounts.get(compositeId) ?? 0;
+      seenCounts.set(compositeId, seen + 1);
+
       const finalCompositeId =
-        (idCounts.get(compositeId) ?? 1) > 1
-          ? `${compositeId}:${result.start ?? ''}`
-          : compositeId;
+        seen === 0
+          ? compositeId
+          : `${compositeId}:${result.start ?? ''}:${seen}`;
 
       const hashedResultId = crypto
         .createHash('md5')
