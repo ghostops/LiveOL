@@ -127,8 +127,8 @@ export class LiveClassWriter {
     const firstPass = classResults.results.map((result, index) => {
       const compositeId = [
         hashedClassId,
-        result.name.replace(/ /g, '_'),
-        result.club?.replace(/ /g, '_'),
+        (result.name ?? '').trim().replace(/ /g, '_'),
+        (result.club ?? '').trim().replace(/ /g, '_'),
       ].join(':');
       return { result, compositeId, index };
     });
