@@ -31,10 +31,6 @@ export class SyncActiveLiveCompetitionsJob {
       const start = subHours(startOfDay(new Date()), 12);
       const end = addHours(endOfDay(new Date()), 12);
 
-      logger.info(
-        `Syncing active live competitions between ${start.toISOString()} and ${end.toISOString()}.`,
-      );
-
       const activeCompetitions = await this.api.Drizzle.db
         .select()
         .from(LiveCompetitionsTable)

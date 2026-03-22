@@ -124,14 +124,16 @@ export class LiveClassWriter {
     competitionId: number,
     classResults: LiveresultatApi.getclassresults,
   ): Promise<void> {
-    const firstPass = classResults.results.map((result, index) => {
-      const compositeId = [
-        hashedClassId,
-        (result.name ?? '').trim().replace(/ /g, '_'),
-        (result.club ?? '').trim().replace(/ /g, '_'),
-      ].join(':');
-      return { result, compositeId, index };
-    });
+    const firstPass = classResults.results
+      .map(result => {
+        const compositeId = [
+          hashedClassId,
+          (result.name ?? '').trim().replace(/ /g, '_'),
+          (result.club ?? '').trim().replace(/ /g, '_'),
+        ].join(':');
+        return { result, compositeId };
+      })
+      .sort((a, b) => (a.result.start ?? 0) - (b.result.start ?? 0));
 
     const seenCounts = new Map<string, number>();
 
