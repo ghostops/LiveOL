@@ -28,7 +28,7 @@ export class SyncLiveClassJob {
       );
 
       if (!results) {
-        logger.info(
+        logger.debug(
           `No updates for class ${this.className} (${this.competitionId}).`,
         );
         return;
