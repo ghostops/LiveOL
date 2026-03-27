@@ -92,7 +92,9 @@ export class LiveresultatHttp2Client {
 
     const typed = data as LiveresultatApi.getclasses;
     if (typed.hash) {
-      await this.redis.set(hashKey, typed.hash);
+      // If the data is corrupted or wrong and the hash makes it stale
+      // we force a refresh by setting an expiration time
+      await this.redis.set(hashKey, typed.hash, 'EX', 60 * 10);
     }
 
     return typed;
@@ -119,7 +121,9 @@ export class LiveresultatHttp2Client {
 
     const typed = data as LiveresultatApi.getclassresults;
     if (typed.hash) {
-      await this.redis.set(hashKey, typed.hash);
+      // If the data is corrupted or wrong and the hash makes it stale
+      // we force a refresh by setting an expiration time
+      await this.redis.set(hashKey, typed.hash, 'EX', 60 * 10);
     }
 
     return typed;

@@ -52,7 +52,9 @@ export class LiveresultatAPIClient {
     }
 
     if (data.hash) {
-      await this.redis.set(hashKey, data.hash);
+      // If the data is corrupted or wrong and the hash makes it stale
+      // we force a refresh by setting an expiration time
+      await this.redis.set(hashKey, data.hash, 'EX', 60 * 10);
     }
 
     return data;
@@ -74,7 +76,9 @@ export class LiveresultatAPIClient {
     }
 
     if (data.hash) {
-      await this.redis.set(hashKey, data.hash);
+      // If the data is corrupted or wrong and the hash makes it stale
+      // we force a refresh by setting an expiration time
+      await this.redis.set(hashKey, data.hash, 'EX', 60 * 10);
     }
 
     return data;
