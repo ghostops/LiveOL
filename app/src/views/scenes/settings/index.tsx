@@ -1,5 +1,6 @@
 import {
   Linking,
+  Platform,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
@@ -58,6 +59,14 @@ export const OLSceneSettings = () => {
     Linking.openURL('https://orienteeringliveresults.com/terms');
   const handleOpenPrivacy = () =>
     Linking.openURL('https://orienteeringliveresults.com/privacy');
+
+  const handleRedeemCode = () => {
+    const link = Platform.select({
+      ios: 'https://apps.apple.com/redeem?ctx=offercodes&id=1450106846',
+      default: 'https://play.google.com/redeem',
+    });
+    Linking.openURL(link);
+  };
 
   return (
     <View
@@ -155,6 +164,10 @@ export const OLSceneSettings = () => {
 
         <TouchableOpacity style={styles.item} onPress={handleNewsletterPress}>
           <OLText size={16}>{t('Sign up for news')}</OLText>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.item} onPress={handleRedeemCode}>
+          <OLText size={16}>{t('Redeem code')}</OLText>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.item} onPress={handleGoToWebsite}>
