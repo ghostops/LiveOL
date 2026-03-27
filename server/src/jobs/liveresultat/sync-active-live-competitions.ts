@@ -12,7 +12,7 @@ import { LiveClassWriter } from './live-class-writer';
 import pLimit from 'p-limit';
 
 const LIMIT_FETCH_CLASSES = pLimit(10);
-const LIMIT_FETCH_RESULTS = pLimit(30);
+const LIMIT_FETCH_RESULTS = pLimit(10);
 const LIMIT_DB_WRITES = pLimit(15);
 
 export class SyncActiveLiveCompetitionsJob {
