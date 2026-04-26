@@ -82,6 +82,8 @@ export const useIap = () => {
 
         await loadProducts();
 
+        await Purchases.syncPurchases();
+
         await loadPurchase();
 
         Purchases.setAttributes({
