@@ -98,23 +98,24 @@ export class OLSelfHelper {
       }
 
       try {
+        console.info(`External check: running ${check.name}`);
         const res = await check.query();
         if (!res) {
           throw new Error(`Query succeded but response data was invalid.`);
         }
         if (current?.status === false) {
+          console.info(`External check: success ${check.name}`);
           await api.Drizzle.db
             .update(ServiceStatusTable)
             .set({ status: true })
             .where(eq(ServiceStatusTable.id, check.name));
         }
       } catch {
-        if (current?.status === true) {
-          api.Drizzle.db
-            .update(ServiceStatusTable)
-            .set({ status: false })
-            .where(eq(ServiceStatusTable.id, check.name));
-        }
+        console.error(`External check: failed ${check.name}`);
+        await api.Drizzle.db
+          .update(ServiceStatusTable)
+          .set({ status: false })
+          .where(eq(ServiceStatusTable.id, check.name));
       }
     }
   };
@@ -124,7 +125,7 @@ export class OLSelfHelper {
       {
         name: 'GetCompetitions',
         query: async () => {
-          const res = await axios.get('http://localhost:3000/v2/competitions');
+          const res = await axios.get('http://127.0.0.1:3000/v2/competitions');
           return res.data.status === 'success';
         },
       },
@@ -132,7 +133,7 @@ export class OLSelfHelper {
         name: 'GetSingleCompetition',
         query: async () => {
           const res = await axios.get(
-            'http://localhost:3000/v2/competitions/2025-11-02~hostlunken2025~snattringesk',
+            'http://127.0.0.1:3000/v2/competitions/2025-11-02~hostlunken2025~snattringesk',
           );
           return res.data.status === 'success';
         },
@@ -141,14 +142,14 @@ export class OLSelfHelper {
         name: 'GetResults',
         query: async () => {
           const res = await axios.get(
-            `http://localhost:3000/v2/results/live/a0836661d2dbafc0e8e0140d8c401328?sortingKey=place&sortingDirection=asc&nowTimestamp=1&uid=3wy9kewRdMt8VPfPaZUZ6`,
+            `http://127.0.0.1:3000/v2/results/live/50033b0a378c436479939b2a9632a0d3?sortingKey=place&sortingDirection=asc&nowTimestamp=1&uid=3wy9kewRdMt8VPfPaZUZ6`,
           );
 
           if (res.data.status !== 'success') {
             return false;
           }
 
-          if (res.data.data.className !== 'Herrar 10 km') {
+          if (res.data.data.className !== 'W21') {
             return false;
           }
 
@@ -235,7 +236,7 @@ export class OLSelfHelper {
           type: 'section',
           text: {
             type: 'mrkdwn',
-            text: `${errors.length} LiveOL error(s):`,
+            text: `🚨 ${errors.length} LiveOL error(s):`,
           },
         },
         ...errors.map(err => {

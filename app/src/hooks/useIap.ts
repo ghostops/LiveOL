@@ -82,7 +82,9 @@ export const useIap = () => {
 
         await loadProducts();
 
-        await Purchases.syncPurchases();
+        if (!__DEV__) {
+          await Purchases.syncPurchases();
+        }
 
         await loadPurchase();
 

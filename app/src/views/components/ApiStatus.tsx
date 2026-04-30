@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { Linking, TouchableOpacity } from 'react-native';
 import { $api } from '~/lib/react-query/api';
 import { OLText } from './text';
 import { useTheme } from '~/hooks/useTheme';
@@ -24,7 +24,10 @@ export const OLApiStatus = () => {
   }
 
   return (
-    <View
+    <TouchableOpacity
+      onPress={() => {
+        Linking.openURL('https://liveresultat.orientering.se/');
+      }}
       style={{
         padding: px(8),
         alignItems: 'center',
@@ -37,6 +40,6 @@ export const OLApiStatus = () => {
       <OLText style={{ color: colors.WHITE }}>
         {t('liveresultat.orientering.se is currently experiencing issues')}
       </OLText>
-    </View>
+    </TouchableOpacity>
   );
 };
