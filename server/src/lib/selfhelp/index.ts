@@ -133,7 +133,7 @@ export class OLSelfHelper {
         name: 'GetSingleCompetition',
         query: async () => {
           const res = await axios.get(
-            'http://127.0.0.1:3000/v2/competitions/2025-11-02~hostlunken2025~snattringesk',
+            'http://127.0.0.1:3000/v2/competitions/2025-08-09~arostraffen~vasterassok',
           );
           return res.data.status === 'success';
         },
