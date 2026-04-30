@@ -142,14 +142,14 @@ export class OLSelfHelper {
         name: 'GetResults',
         query: async () => {
           const res = await axios.get(
-            `http://127.0.0.1:3000/v2/results/live/50033b0a378c436479939b2a9632a0d3?sortingKey=place&sortingDirection=asc&nowTimestamp=1&uid=3wy9kewRdMt8VPfPaZUZ6`,
+            `http://127.0.0.1:3000/v2/results/live/4b0146ca00f96d593c3d4597b6fa75a2?sortingKey=place&sortingDirection=asc&nowTimestamp=1&uid=3wy9kewRdMt8VPfPaZUZ6`,
           );
 
           if (res.data.status !== 'success') {
             return false;
           }
 
-          if (res.data.data.className !== 'W21') {
+          if (res.data.data.className !== 'W21E') {
             return false;
           }
 
