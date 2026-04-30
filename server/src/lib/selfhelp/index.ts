@@ -46,8 +46,18 @@ export class OLSelfHelper {
       {
         name: LiveresultatUrl,
         query: async () => {
-          const res = await axios.get(LiveresultatUrl, { timeout: 8_000 });
-          return res.status === 200;
+          const url = `${LiveresultatUrl}/api.php?method=getcompetitions`;
+          const res = await axios.get(url, { timeout: 8_000 });
+          if (res.status !== 200) {
+            return false;
+          }
+          if (typeof res.data !== 'string') {
+            return false;
+          }
+          if (!res.data.startsWith('{')) {
+            return false;
+          }
+          return true;
         },
       },
       // Enable these when Eventor will be supported
