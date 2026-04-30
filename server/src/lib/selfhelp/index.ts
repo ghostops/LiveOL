@@ -1,5 +1,4 @@
 import * as cron from 'node-cron';
-import { IncomingWebhook } from '@slack/webhook';
 import { getEnv } from 'lib/helpers/env';
 import axios from 'axios';
 import { LiveresultatUrl } from 'lib/eventor/scrapers/urls';
@@ -17,19 +16,21 @@ interface HealthCheck {
 }
 
 export class OLSelfHelper {
-  private webhook: IncomingWebhook | undefined;
+  private botToken: string | undefined;
+  private chatId: string | undefined;
   private alertTimestamps: number[] = [];
   private readonly MAX_ALERTS_PER_HOUR = 4;
   private readonly ONE_HOUR_MS = 60 * 60 * 1000;
   private throttleNotificationSent = false;
 
   constructor() {
-    if (!process.env.SLACK_WEBHOOK) {
-      console.warn('No SLACK_WEBHOOK defined for self helper!');
+    if (!process.env.TELEGRAM_BOT_TOKEN || !process.env.TELEGRAM_CHAT_ID) {
+      console.warn(
+        'No TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID defined for self helper!',
+      );
     } else {
-      this.webhook = new IncomingWebhook(process.env.SLACK_WEBHOOK, {
-        icon_emoji: ':interrobang:',
-      });
+      this.botToken = process.env.TELEGRAM_BOT_TOKEN;
+      this.chatId = process.env.TELEGRAM_CHAT_ID;
     }
   }
 
@@ -182,12 +183,10 @@ export class OLSelfHelper {
     const now = Date.now();
     const oneHourAgo = now - this.ONE_HOUR_MS;
 
-    // Remove timestamps older than 1 hour (sliding window)
     this.alertTimestamps = this.alertTimestamps.filter(
       timestamp => timestamp > oneHourAgo,
     );
 
-    // Check if we're under the limit
     if (this.alertTimestamps.length < this.MAX_ALERTS_PER_HOUR) {
       this.alertTimestamps.push(now);
       this.throttleNotificationSent = false;
@@ -197,31 +196,28 @@ export class OLSelfHelper {
     return false;
   };
 
+  private sendTelegram = async (text: string) => {
+    await axios.post(
+      `https://api.telegram.org/bot${this.botToken}/sendMessage`,
+      { chat_id: this.chatId, text, parse_mode: 'HTML' },
+    );
+  };
+
   private alert = async (errors: any[]) => {
-    if (!this.webhook) {
+    if (!this.botToken || !this.chatId) {
       console.error(errors);
       return;
     }
 
-    // Check if we can send this alert
     if (!this.canSendAlert()) {
       if (!this.throttleNotificationSent) {
-        // Send one notification that we're throttling
         this.throttleNotificationSent = true;
         console.warn(
           `Alert throttled: ${errors.length} error(s) suppressed. Max ${this.MAX_ALERTS_PER_HOUR} alerts/hour reached.`,
         );
-        await this.webhook.send({
-          blocks: [
-            {
-              type: 'section',
-              text: {
-                type: 'mrkdwn',
-                text: `⚠️ *LiveOL Alert Throttling Active*\n\nMax ${this.MAX_ALERTS_PER_HOUR} alerts per hour reached. Further alerts will be suppressed until the rate limit resets.\n\nLast error count: ${errors.length}`,
-              },
-            },
-          ],
-        });
+        await this.sendTelegram(
+          `⚠️ <b>LiveOL Alert Throttling Active</b>\n\nMax ${this.MAX_ALERTS_PER_HOUR} alerts per hour reached. Further alerts will be suppressed until the rate limit resets.\n\nLast error count: ${errors.length}`,
+        );
       } else {
         console.warn(
           `Alert suppressed: ${errors.length} error(s). Rate limit active.`,
@@ -230,26 +226,16 @@ export class OLSelfHelper {
       return;
     }
 
-    await this.webhook.send({
-      blocks: [
-        {
-          type: 'section',
-          text: {
-            type: 'mrkdwn',
-            text: `🚨 ${errors.length} LiveOL error(s):`,
-          },
-        },
-        ...errors.map(err => {
-          return {
-            type: 'section',
-            text: {
-              type: 'mrkdwn',
-              text: '```' + this.forceStringify(err) + '```',
-            },
-          };
-        }),
-      ],
-    });
+    const errorLines = errors
+      .map(
+        err =>
+          `• <b>${err.name}</b>: <code>${this.forceStringify(err.error)}</code>`,
+      )
+      .join('\n');
+
+    await this.sendTelegram(
+      `🚨 <b>${errors.length} LiveOL error(s):</b>\n\n${errorLines}`,
+    );
   };
 
   private forceStringify = (error: any): string => {
