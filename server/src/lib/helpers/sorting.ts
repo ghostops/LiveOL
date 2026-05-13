@@ -96,10 +96,15 @@ const sortPlace =
       if (aHasNumericPlace && bHasNumericPlace && placeA !== placeB) {
         return desc ? placeB - placeA : placeA - placeB;
       }
-      // Same numeric place or at least one "=" — tiebreak by result time
       const resA = a.result ?? 0;
       const resB = b.result ?? 0;
-      return desc ? resB - resA : resA - resB;
+      if (resA !== resB) {
+        return desc ? resB - resA : resA - resB;
+      }
+      // Same result time — numeric place must appear before "=" regardless of direction
+      if (aHasNumericPlace && !bHasNumericPlace) return -1;
+      if (!aHasNumericPlace && bHasNumericPlace) return 1;
+      return 0;
     }
 
     // Only one is a finisher — that one wins
