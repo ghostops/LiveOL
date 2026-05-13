@@ -50,10 +50,6 @@ export const getApiStatus = defaultEndpointsFactory.build({
       .where(eq(ServiceStatusTable.id, LiveresultatUrl))
       .limit(1);
 
-    console.info(
-      `API status checked: liveresultat ${JSON.stringify(liveresultatStatus)}`,
-    );
-
     return {
       status: {
         liveresultat: liveresultatStatus?.status ?? true,
