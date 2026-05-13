@@ -88,30 +88,29 @@ const sortPlace =
     const aHasNumericPlace = !isNaN(placeA);
     const bHasNumericPlace = !isNaN(placeB);
 
-    if (aHasNumericPlace && bHasNumericPlace) {
-      if (placeA !== placeB) {
+    // "=" means tied with the previous finisher — treat as a finisher, sort by result time
+    const aIsFinisher = aHasNumericPlace || a.place === '=';
+    const bIsFinisher = bHasNumericPlace || b.place === '=';
+
+    if (aIsFinisher && bIsFinisher) {
+      if (aHasNumericPlace && bHasNumericPlace && placeA !== placeB) {
         return desc ? placeB - placeA : placeA - placeB;
       }
-      // Same numeric place — tiebreak by result time
+      // Same numeric place or at least one "=" — tiebreak by result time
       const resA = a.result ?? 0;
       const resB = b.result ?? 0;
       return desc ? resB - resA : resA - resB;
     }
 
-    // Only one has a numeric place — that one wins
-    if (aHasNumericPlace) return -1;
-    if (bHasNumericPlace) return 1;
+    // Only one is a finisher — that one wins
+    if (aIsFinisher) return -1;
+    if (bIsFinisher) return 1;
 
-    // Neither has a numeric place — both are non-finishers or tied
-    // Runners still on course: sort by elapsed time descending (furthest along first)
+    // Neither is a finisher — runners still on course: sort by elapsed time descending
     const elapsedA = a.start ? nowTimestamp - a.start : 0;
     const elapsedB = b.start ? nowTimestamp - b.start : 0;
 
-    if (elapsedA !== elapsedB) {
-      return elapsedB - elapsedA;
-    }
-
-    return 0;
+    return elapsedB - elapsedA;
   };
 
 const sortName = (direction: string) => (a: SortedResult, b: SortedResult) => {

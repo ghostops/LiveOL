@@ -250,7 +250,7 @@ export const getLiveResultsForTrackedRunner = defaultEndpointsFactory
         .array(),
     }),
     handler: async ({
-      input: { trackingId, nowTimestamp, sortingDirection, sortingKey },
+      input: { trackingId, nowTimestamp, sortingKey, sortingDirection },
       options: { user },
     }) => {
       const [tracking] = await api.Drizzle.db
@@ -303,18 +303,21 @@ export const getLiveResultsForTrackedRunner = defaultEndpointsFactory
             isNull(LiveResultsTable.deletedAt),
           ),
         )
-        .orderBy(sql`${LiveResultsTable.updatedAt} ASC NULLS LAST`);
+        .orderBy(sql`${LiveResultsTable.updatedAt} DESC NULLS LAST`);
 
       const marshaledResults = results.map(
         marshalResult({ user, nowTimestamp }),
       );
 
-      const sortedResults = sortOptimalV2(
-        marshaledResults,
-        sortingKey || 'place',
-        sortingDirection || 'asc',
-        nowTimestamp,
-      );
+      // ToDo: Check implmentation in the app to verify this works
+      const sortedResults = sortingKey
+        ? sortOptimalV2(
+            marshaledResults,
+            sortingKey,
+            sortingDirection || 'asc',
+            nowTimestamp,
+          )
+        : marshaledResults;
 
       return { results: sortedResults };
     },
