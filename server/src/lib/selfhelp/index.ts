@@ -5,6 +5,7 @@ import { LiveresultatUrl } from 'lib/eventor/scrapers/urls';
 import { ServiceStatusTable } from 'lib/db/schema';
 import { apiSingletons } from 'lib/singletons';
 import { eq } from 'drizzle-orm/sql/expressions/conditions';
+import logger from 'lib/logger';
 
 const api = apiSingletons.createApiSingletons();
 
@@ -25,7 +26,7 @@ export class OLSelfHelper {
 
   constructor() {
     if (!process.env.TELEGRAM_BOT_TOKEN || !process.env.TELEGRAM_CHAT_ID) {
-      console.warn(
+      logger.warn(
         'No TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID defined for self helper!',
       );
     } else {
@@ -48,7 +49,11 @@ export class OLSelfHelper {
         name: LiveresultatUrl,
         query: async () => {
           const url = `${LiveresultatUrl}/api.php?method=getcompetitions`;
-          const res = await axios.get(url, { timeout: 8_000 });
+          const res = await axios.get(url, {
+            timeout: 8_000,
+            // Just return the string data, it may not always be valid JSON.
+            transformResponse: r => r,
+          });
           if (res.status !== 200) {
             return false;
           }
@@ -99,20 +104,20 @@ export class OLSelfHelper {
       }
 
       try {
-        console.info(`External check: running ${check.name}`);
+        logger.info(`Test: External check ${check.name} running`);
         const res = await check.query();
         if (!res) {
           throw new Error(`Query succeded but response data was invalid.`);
         }
         if (current?.status === false) {
-          console.info(`External check: success ${check.name}`);
           await api.Drizzle.db
             .update(ServiceStatusTable)
             .set({ status: true })
             .where(eq(ServiceStatusTable.id, check.name));
         }
+        logger.info(`Test: External check success ${check.name}`);
       } catch {
-        console.error(`External check: failed ${check.name}`);
+        logger.error(`Test: External check failed ${check.name}`);
         await api.Drizzle.db
           .update(ServiceStatusTable)
           .set({ status: false })
@@ -163,12 +168,12 @@ export class OLSelfHelper {
 
     for (const check of checks) {
       try {
-        console.info(`Test: running ${check.name}`);
+        logger.info(`Test: running ${check.name}`);
         const res = await check.query();
         if (!res) {
           throw new Error(`Query succeded but response data was invalid.`);
         }
-        console.info(`Test: success ${check.name}`);
+        logger.info(`Test: success ${check.name}`);
       } catch (err: any) {
         errors.push({ name: check.name, error: err?.message || err });
       }
@@ -205,21 +210,21 @@ export class OLSelfHelper {
 
   private alert = async (errors: any[]) => {
     if (!this.botToken || !this.chatId) {
-      console.error(errors);
+      logger.error(errors);
       return;
     }
 
     if (!this.canSendAlert()) {
       if (!this.throttleNotificationSent) {
         this.throttleNotificationSent = true;
-        console.warn(
+        logger.warn(
           `Alert throttled: ${errors.length} error(s) suppressed. Max ${this.MAX_ALERTS_PER_HOUR} alerts/hour reached.`,
         );
         await this.sendTelegram(
           `⚠️ <b>LiveOL Alert Throttling Active</b>\n\nMax ${this.MAX_ALERTS_PER_HOUR} alerts per hour reached. Further alerts will be suppressed until the rate limit resets.\n\nLast error count: ${errors.length}`,
         );
       } else {
-        console.warn(
+        logger.warn(
           `Alert suppressed: ${errors.length} error(s). Rate limit active.`,
         );
       }
