@@ -6,7 +6,7 @@ import { OLTrackingResultRow } from './row';
 import { OLResultHeader } from '../live-results/result-header';
 import { OLRefetcherBar } from '~/views/components/refetcher/bar';
 import { keepPreviousData } from '@tanstack/react-query';
-import { useLayoutEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { nowTimestamp as nowTimestampFs } from '~/util/time';
 import { useSortingStore } from '~/store/sorting';
 import { useOLNavigation } from '~/hooks/useNavigation';
@@ -35,6 +35,14 @@ export const OLSceneTrackingResults = () => {
       navigation.setOptions({ title });
     }
   }, [navigation, title]);
+
+  useEffect(() => {
+    // Reset sorting when entering screen
+    useSortingStore.setState({
+      sortingKey: '',
+      sortingDirection: 'asc',
+    });
+  }, []);
 
   const { data } = $api.useQuery(
     'get',
