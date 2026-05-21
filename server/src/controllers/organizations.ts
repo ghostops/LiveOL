@@ -30,12 +30,14 @@ export const getAllOrganizations = defaultEndpointsFactory.build({
     // Prioritize exact matches in ORDER BY when searching
     const orderByClause = search
       ? sql`
-        ORDER BY 
-          CASE 
+        ORDER BY
+          CASE
             WHEN LOWER(MIN("organization")) = LOWER(${search}) THEN 0
-            WHEN LOWER(MIN("organization")) LIKE LOWER(${search}) || '%' THEN 1
-            ELSE 2
+            WHEN LOWER(MIN("organization")) LIKE LOWER(${search}) || ' %' THEN 1
+            WHEN LOWER(MIN("organization")) LIKE LOWER(${search}) || '%' THEN 2
+            ELSE 3
           END,
+          LENGTH(MIN("organization")),
           MIN("organization") COLLATE "C"
         `
       : sql`ORDER BY MIN("organization") COLLATE "C"`;
