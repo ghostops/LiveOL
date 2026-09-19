@@ -3,15 +3,16 @@
 Status: proposal. Verified against the live API on 2026-09-19 (every claim below was
 probed with real requests; raw samples in the appendix).
 
-**This is a clean-slate rewrite of the Liveresultat integration.** No adapter layer, no
-dual-source flag, no preservation of the legacy response shapes. Internal types are modelled
+**This is a clean-slate rewrite of the Liveresultat *fetch layer*.** No adapter layer, no
+dual-source flag, no preservation of the legacy response shapes: internal types are modelled
 on the new API directly and the legacy `api.php` code is deleted rather than kept alive.
 
-> **One boundary that is not ours to break:** `/v2/*` is consumed by App Store / Play Store
-> builds already on users' phones, which cannot be forced to update. This plan therefore
-> rewrites everything *behind* `/v2` freely and only **adds** fields to `/v2` responses.
-> If breaking `/v2` for old clients is also acceptable, say so — §5 gets considerably
-> simpler and the `olRunnerId` name-matching can go entirely.
+**The internal data model does not change** — every existing table, column and key stays as
+it is, `olRunnerId` included (§5). The rewrite stops at the writer's door.
+
+> **`/v2/*` stays compatible too**, for a different reason: it is consumed by App Store /
+> Play Store builds already on users' phones, which cannot be forced to update. With the data
+> model fixed this mostly follows for free — `/v2` responses only ever gain fields.
 
 ## 1. Where we are today
 
@@ -23,7 +24,7 @@ on the new API directly and the legacy `api.php` code is deleted rather than kep
 | Class results | legacy `getclassresults&unformattedTimes=true` + `last_hash` |
 | Transport | `axios` (`lib/liveresultat/client.ts`) **and** a hand-rolled HTTP/2 client (`lib/liveresultat/http2-client.ts`) with duplicated hash logic, both on `liveresultat.orientering.se` |
 | Change detection | `last_hash` → `status: "NOT MODIFIED"`; "new result" inferred from `DT_RowClass` |
-| Result identity | `md5(classId + name + club)`, plus a `:start:seq` suffix to break collisions |
+| Result identity | `md5(classId + name + club)`, plus a `:start:seq` suffix to break collisions — **stays** (§5) |
 | Sync shape | `sync-live-competitions` → `sync-live-competition` → `sync-live-class`, **one request per class** |
 | Dead code | `lib/liveresultat/scrape.ts` — exported, referenced nowhere |
 
@@ -114,7 +115,13 @@ One job, `sync-live-competition`, replaces the
    "active" competitions are idle most of the time, so this is the dominant saving.
 3. 200 → compare each result's `changed` against the stored high-water mark, and fetch
    `?class=` **only for classes that actually moved** — typically 1–3 of 32 per tick.
-4. Write, using `changed` both to set `newResultAt` and to advance the mark.
+   Export's `runnerId` is resolved to a class in memory (`results[].runnerId` →
+   `runners[].class`) purely to decide which classes to refetch; nothing about it is stored.
+4. Write via the existing `LiveClassWriter` from the `classresults` payload, using `changed`
+   both to set `newResultAt` and to advance the mark.
+
+So export acts only as a change-detection oracle in front of the current write path — which
+is what lets it land without touching the schema (§5).
 
 `place` / `timeplus` / `progress` stay sourced from `classresults`. Export omits them and
 deriving them for mass-start, relay and multi-day classes is a correctness risk for no gain.
@@ -130,22 +137,25 @@ deriving them for mass-start, relay and multi-day classes is a correctness risk 
 Peak Swedish Saturday (~30 competitions) goes from `30 × ~25 classes` ≈ 750 requests per
 tick to ~30.
 
-## 5. Result identity
+## 5. The internal data model is unchanged
 
-Today a result row is keyed by `md5(classId + name + club)` with a `:start:seq` suffix to
-break duplicate-name collisions. `/export` gives `runners[].id`, stable within a
-competition, so `live_results` is keyed on `(liveCompetitionId, liveRunnerId)` instead.
-Renames and club corrections stop creating orphan rows.
+Every existing table, column, key and constraint stays exactly as it is. `live_results` keeps
+`md5(classId + name + club)` as `liveResultId`, including the `:start:seq` suffix that breaks
+duplicate-name collisions. The new API's per-competition `runners[].id` is **not** persisted.
 
-`olRunnerId` (the normalised `name~class~club` id from `lib/match/generateIds`) **stays** —
-tracking is user-entered `name` + `clubs[]` (`ol_tracking`), matched by string in
-`getAllTrackedRunnerIds`, so there is no stable id to migrate it to. The change is that
-`olRunnerId` becomes a *lookup* key only, not the row's identity.
+`olRunnerId` stays as-is. It is not a Liveresultat-shaped id at all — it is the project's own
+cross-source runner key, generated identically from Liveresultat and from Eventor
+(`sync-eventor-signups`, `-results`, `-starts`), returned in the `/v2` results payload, and
+matched with `LIKE 'name~%~club'` for tracking and user stats
+(`controllers/results.ts`, `controllers/stats.ts`, `marshal/results.ts`). Replacing it would
+break the Eventor join and the tracking match, which the Liveresultat ids cannot serve.
 
-Migration: add `liveRunnerId integer`, backfill from export for competitions in the
-retention window, then swap the unique constraint. `live_results` holds ≤3 days of data
-(`purge-old-live-results`), so this drains on its own rather than needing a backfill of the
-archive.
+The consequence, accepted: duplicate-name and renamed-runner handling stays as good (or as
+bad) as it is today. The migration buys nothing there, and risks nothing either.
+
+This also keeps the migration's blast radius to the fetch layer — `live-class-writer.ts`
+changes only where §6 says so (the delete-sweep guard and the split-suffix parser), both
+correctness fixes against the new payload rather than model changes.
 
 ## 6. Implementation phases
 
@@ -189,35 +199,36 @@ archive.
     `1049_changed` (verified in Node). Parse the suffix explicitly, and drop the copy-paste
     `obj.timeplus === undefined` guards on the `status` / `place` branches.
 
-### Phase 4 — identity
-13. `liveRunnerId` migration per §5; remove the md5 hashing and the `:start:seq` collision
-    workaround from `live-class-writer.ts`.
+### Phase 4 — new capabilities
 
-### Phase 5 — new capabilities (additive to `/v2`, each independently shippable)
-14. **Last passings.** `/passings` (50 newest, with `place`, `timeplus` at the control and
+Additive only, and none of it is required by the migration — each item is an independent
+follow-up that adds a column or table beside the existing model rather than altering it.
+Ship Phases 1–3 first; treat these as a menu.
+
+13. **Last passings.** `/passings` (50 newest, with `place`, `timeplus` at the control and
     `wallClock`). The app still carries a dangling type reference to
     `/v1/competitions/{competitionId}/last-passings`
     (`app/src/views/components/competition/header.tsx`, `lastPassing.tsx`) with no server
     route behind it. New `live_passings` table + `GET /v2/competitions/:id/passings`.
-15. **Still out on course.** `/remaining` — a genuinely new screen, and the cheapest
+14. **Still out on course.** `/remaining` — a genuinely new screen, and the cheapest
     is-this-live signal for the poll tiers.
-16. **Radio controls up front.** `classes[].radioControls` in `/export` gives
+15. **Radio controls up front.** `classes[].radioControls` in `/export` gives
     `{ code, name }` before anyone has punched, so split columns render on an empty result
     list instead of appearing mid-race.
-17. **Class metadata.** `isMassStart`, `qualificationLimits`, `isMultiDay` on
+16. **Class metadata.** `isMassStart`, `qualificationLimits`, `isMultiDay` on
     `live_classes` → chase-start and qualification-heat rendering.
-18. **Relay grouping.** `relayLeg` + `relayClassName` group `Ungdom-1..4` into one relay
+17. **Relay grouping.** `relayLeg` + `relayClassName` group `Ungdom-1..4` into one relay
     view instead of four unrelated classes.
-19. **Country + multi-day.** `country` (today `countryCode` only ever comes from Eventor,
+18. **Country + multi-day.** `country` (today `countryCode` only ever comes from Eventor,
     so non-Swedish live competitions show no flag), `multiDayStage` / `multiDayFirstDay`
     for linking the `CompetitionId` matcher cannot infer.
-20. **`serverTime`** gives clock-skew correction for the `isLive` / `start <= nowTimestamp`
+19. **`serverTime`** gives clock-skew correction for the `isLive` / `start <= nowTimestamp`
     logic in `marshal/results.ts`.
-21. **Eventor cross-linking.** `country` + `organizer` + `date` improve the
+20. **Eventor cross-linking.** `country` + `organizer` + `date` improve the
     `lib/match/generateIds` join rate against Eventor competitions.
 
-### Phase 6 — cleanup
-22. `selfhelp/index.ts` health-checks `api.php?method=getcompetitions`; repoint it at the
+### Phase 5 — cleanup
+21. `selfhelp/index.ts` health-checks `api.php?method=getcompetitions`; repoint it at the
     new base URL and update the `ServiceStatusTable` id (`/v2/status` reads it by
     `LiveresultatUrl`).
 
@@ -243,7 +254,7 @@ With no compat layer there is no legacy/new diff to assert, so correctness rests
 | No rollback path once the legacy client is deleted | Phase 1 ships behind a staging deploy first; legacy `api.php` stays available upstream, so a revert commit is the rollback |
 | ETag varying with `accept-encoding` → permanent cache misses | Fixed `accept-encoding` header |
 | `changed`-derived `newResultAt` changes the app's "new result" highlight | High-water mark per class; fixture tests on `checkIfRecentlyUpdated` |
-| Identity swap breaking tracking | `olRunnerId` retained for tracking lookup (§5); only the row key changes |
+| Export-first sync drifting from the unchanged write path | Export is change detection only; all writes still go through `classresults` + `LiveClassWriter` (§4, §5) |
 
 ## 9. Appendix — verified samples
 
