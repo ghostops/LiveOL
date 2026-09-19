@@ -1,0 +1,49 @@
+headers {
+  User-Agent: LiveOL Bruno
+  Accept-Encoding: gzip, br
+}
+
+docs {
+  # LiveOL - Liveresultat
+
+  Two folders over the same competition, so the new REST API and the legacy
+  `api.php` endpoints can be compared request for request:
+
+  - **new-api/**    `https://api.orienteering.services`
+  - **legacy-api/** `https://liveresultat.orientering.se/api.php`
+  - **quirks/**     the behaviours the migration plan depends on, each clickable
+
+  Matching pairs (same `seq` in both folders):
+
+  | seq | legacy | new |
+  | --- | --- | --- |
+  | 1 | `getcompetitions` | `GET /competitions` |
+  | 2 | `getcompetitioninfo` | `GET /competitions/{id}` |
+  | 3 | `getclasses` | `GET /competitions/{id}/classes` |
+  | 4 | `getclassresults` | `GET /competitions/{id}/classresults?class=` |
+  | 5 | `getclubresults` | `GET /competitions/{id}/clubresults?club=` |
+  | 6 | `getlastpassings` | `GET /competitions/{id}/passings` |
+  | - | none | `GET /competitions/{id}/remaining` |
+  | - | none | `GET /competitions/{id}/export` |
+
+  ## Things to look at when comparing
+
+  - **Change detection.** Legacy uses `last_hash` in the query and answers
+    `status: "NOT MODIFIED"`. The new API uses `ETag` / `If-None-Match` and answers
+    **304**. Run "Class results", then "Class results (conditional)".
+  - **Casing.** `splitcontrols` became `splitControls`.
+  - **Class list.** `[{ className }]` became a plain `string[]`.
+  - **New result flag.** `DT_RowClass: "new_result"` is gone; rows carry `changed`
+    and `startChanged` as UNIX seconds instead.
+  - **Formatting.** Legacy needs `unformattedTimes=true` for integers, and
+    `getclubresults` has no such switch, so it returns `"19:03"` / `"+02:51"`.
+    The new API always returns hundredths of a second as integers.
+  - **`/export` is not a superset.** It has runner ids that `classresults` lacks,
+    but no `place`, `timeplus` or `progress`.
+
+  The write endpoints (`POST /competitions`, `PUT /competitions/{id}`, `/mop`,
+  `/upload`) are deliberately absent: they create or mutate real competitions on a
+  live shared service, and LiveOL is a read-only consumer.
+
+  Base URLs and the competition under test live in `environments/production.bru`.
+}

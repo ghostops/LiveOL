@@ -1,0 +1,32 @@
+meta {
+  name: Unknown class - 200 with empty results
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{newBase}}/competitions/{{compId}}/classresults?class=NoSuchClass
+  body: none
+  auth: none
+}
+
+params:query {
+  class: NoSuchClass
+}
+
+assert {
+  res.status: eq 200
+}
+
+docs {
+  **The most dangerous behaviour in the migration.** A class that does not exist
+  returns `200` with `results: []` rather than an error.
+
+  `insertResults` ends with a `notInArray` sweep that soft-deletes every stored row
+  for the class that is not in the incoming set. Fed an empty set, it would wipe the
+  class — so a renamed or mistyped class silently deletes its results.
+
+  The plan handles it in the client: an empty result set returns `null` (i.e. "not
+  modified"), so the sweep never runs. The trade is deliberate — a class legitimately
+  emptied by the organiser keeps stale rows, which is the safer failure.
+}

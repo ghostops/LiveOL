@@ -1,0 +1,34 @@
+meta {
+  name: Competitions (date / year / pastDays / search)
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{newBase}}/competitions?date=2026-09-13
+  body: none
+  auth: none
+}
+
+params:query {
+  date: 2026-09-13
+  ~year: 2025
+  ~pastDays: 3
+  ~search: Vargylet
+}
+
+assert {
+  res.status: eq 200
+}
+
+docs {
+  One request covering all four filters — enable whichever you want in the Query tab
+  and disable the rest.
+
+  `?date=` and `?year=` are what the date-ranged sync path would use
+  (`SyncLiveCompetitionsJob` already takes `startDate` / `endDate`).
+
+  `hasResults` appears to be meaningful only for live/current competitions; on past
+  dates it comes back `false` even for competitions that clearly have results, so do
+  not use it to decide whether to backfill.
+}

@@ -1,0 +1,36 @@
+meta {
+  name: Class results (conditional, expect 304)
+  type: http
+  seq: 8
+}
+
+get {
+  url: {{newBase}}/competitions/{{compId}}/classresults?class={{className}}
+  body: none
+  auth: none
+}
+
+params:query {
+  class: {{className}}
+}
+
+headers {
+  If-None-Match: {{resultsEtag}}
+}
+
+assert {
+  res.status: eq 304
+}
+
+docs {
+  Run "Class results" first. This is the per-class poll in steady state.
+
+  Measured on this competition (32 classes), 32 such conditional requests all
+  returning 304 take ~16.1 s serial (~490 ms each) or ~2.5 s at concurrency 10 —
+  against 0.64 s for a single conditional `/export`. That is the whole case for the
+  optional export phase.
+
+  In the plan the ETag is stored in the *existing* `liveresultat:lastHash:*` Redis
+  keys, because `getResultByLiveClassId` returns that value as `hash` in `/v2` and the
+  app vibrates when it changes.
+}

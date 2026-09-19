@@ -1,0 +1,31 @@
+meta {
+  name: Export (conditional, expect 304)
+  type: http
+  seq: 13
+}
+
+get {
+  url: {{newBase}}/competitions/{{compId}}/export
+  body: none
+  auth: none
+}
+
+headers {
+  If-None-Match: {{exportEtag}}
+}
+
+assert {
+  res.status: eq 304
+}
+
+docs {
+  Run "Export" first. This single 304 is the optional phase's whole argument: it says
+  "nothing in this competition changed", replacing N conditional per-class requests.
+
+  ~0.64 s here against ~2.5 s for 32 conditional class requests at concurrency 10.
+  Requests drop 32 → 1, where 32 is simply the class count.
+
+  The saving decays as `N / (1 + M)` with M classes changed, and on a tick where
+  everything moved export is pure overhead — it wins because most competitions are
+  idle on most ticks.
+}

@@ -1,0 +1,39 @@
+meta {
+  name: Export
+  type: http
+  seq: 12
+}
+
+get {
+  url: {{newBase}}/competitions/{{compId}}/export
+  body: none
+  auth: none
+}
+
+vars:post-response {
+  exportEtag: res.headers.etag
+}
+
+assert {
+  res.status: eq 200
+}
+
+docs {
+  The whole competition in one request: `classes`, `runners`, `results`.
+
+  **What only this endpoint has:**
+
+  - `runners[].id` — stable per-competition runner ids. `classresults` has no id
+    field at all, which is why the plan ties the result-identity change to adopting
+    export.
+  - `classes[].radioControls` — `{ code, name }` before anyone has punched.
+  - `relayLeg` + `relayClassName` — relay legs grouped, with the team name as club.
+
+  **What it lacks:** `place`, `timeplus`, `progress`, and per-split `place` /
+  `timeplus`. Result rows are just
+  `{ runnerId, control, time, status, changed }`. So it is a change-detection oracle,
+  not a replacement for `classresults`.
+
+  Try it with and without `Accept-Encoding: gzip, br` (see quirks/Brotli): 343 KB
+  raw against 35 KB compressed on this competition.
+}

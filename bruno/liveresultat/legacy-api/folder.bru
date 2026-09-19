@@ -1,0 +1,15 @@
+meta {
+  name: legacy-api
+  seq: 2
+}
+
+docs {
+  `https://liveresultat.orientering.se/api.php` — what LiveOL calls today.
+
+  Still live, which is what makes a field-by-field comparison against the new API
+  possible. Change detection is `last_hash` in the query, answered with
+  `status: "NOT MODIFIED"` and a fresh `hash` in the body.
+
+  `getclassresults` is sent with `unformattedTimes=true`, as the server does today;
+  drop it to see the formatted-string variant.
+}
