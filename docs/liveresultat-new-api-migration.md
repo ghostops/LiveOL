@@ -116,9 +116,9 @@ now; only the change-detection mechanism and the transport change.
    `newResultAt` in place of `DT_RowClass`.
 
 A 304 is cheap but not free: measured on `SM, lång, Final` (32 classes), 32 conditional
-requests all returning 304 took **15.7 s serial, ~490 ms each** — about 1.6 s at
-`p-limit(10)`. That is the cost we already pay, so the core migration is strictly better than
-today (brotli, keep-alive, ETag) without being cleverer than today.
+requests all returning 304 took **16.1 s serial** (~490 ms each) and **2.5 s at concurrency
+10**. That is the cost we already pay, so the core migration is strictly better than today
+(brotli, keep-alive, ETag) without being cleverer than today.
 
 **Poll tiers**, driven by `hasResults` and `/remaining`:
 
@@ -155,10 +155,27 @@ additive.
 
 Measured on `SM, lång, Final` (1048 runners, 32 classes):
 
-| Strategy | Requests | Bytes (raw) | Bytes (br) | Idle tick (all 304) |
+| Strategy | Requests | Idle tick, serial | Idle tick, concurrency 10 | Full fetch (br) |
 | --- | --- | --- | --- | --- |
-| per-class `classresults` (§4) | 32 | 388 328 | ~40 K | 15.7 s serial / ~1.6 s at limit 10 |
-| single `/export` | **1** | 343 072 | **35 137** | **0.75 s** |
+| per-class `classresults` (§4) | 32 | 16.1 s | 2.5 s | ~40 K |
+| single `/export` | **1** | **0.64 s** | **0.64 s** | 35 137 |
+
+Read that carefully — the three axes do not move together:
+
+- **Requests: 32 → 1**, and the 32 is just the class count, so the ratio is `N → 1`. This is
+  the figure that matters, because the API's contract is a poll interval *per endpoint*, so
+  request count is the budget being spent.
+- **Latency: ~4×**, not 32×. Concurrency already hides most of the serial cost.
+- **Bytes: no steady-state saving at all.** On a 304 tick both are headers only; on a tick
+  that writes, export's 35 KB is *additional* to the `classresults` still being fetched. The
+  388 KB / 343 KB full-payload comparison describes an initial sync, not a poll.
+
+The saving also decays with activity: with M classes changed it is `1 + M` against `N`, so
+`N / (1 + M)` — 32× when nothing moved, ~5× at M=5, a net loss when everything moved. Export
+wins because most competitions are idle on most ticks, not because it is faster.
+
+At fleet scale that is the real argument: a peak Saturday of ~30 competitions × ~25 classes is
+~750 requests per tick against ~30.
 
 ### What it would look like
 
@@ -173,10 +190,6 @@ Measured on `SM, lång, Final` (1048 runners, 32 classes):
 Export stays a change-detection oracle; displayed values still come from `classresults`,
 because export omits `place` / `timeplus` / `progress` and deriving them for mass-start,
 relay, multi-day and qualification classes is a correctness risk for no gain.
-
-Note export is not free in the worst case: when every class has moved, its ~35 KB is paid on
-top of the `classresults` requests you would have made anyway. It wins only when some classes
-are idle.
 
 ### The identity change rides on this
 
