@@ -3,20 +3,18 @@
 Status: proposal. Verified against the live API on 2026-09-19 (every claim below was
 probed with real requests; raw samples in the appendix).
 
-**This is a clean-slate rewrite of the Liveresultat *fetch layer*.** No adapter layer, no
-dual-source flag, no preservation of the legacy response shapes: internal types are modelled
-on the new API directly and the legacy `api.php` code is deleted rather than kept alive.
+**This is a drop-in replacement.** `LiveresultatAPIClient` keeps its method names and return
+types; the new endpoints are adapted to the existing `LiveresultatApi` shapes inside
+`lib/liveresultat/` (§3). The legacy `api.php` code is deleted — this is the new API wearing
+the old contract, not the old client kept on life support.
 
-**The core migration changes no tables.** It keeps today's per-class sync shape and swaps
-`last_hash` for `ETag`, so Phases 1–3 are a fetch-layer replacement and nothing else.
+**Phase 1 changes no files outside `lib/liveresultat/`.** No table changes, no `/v2` changes,
+no changes in the jobs, the writer or the controllers. The behaviour improvements that do
+reach outside it — filtered competition list, IANA `timezone`, poll tiers — ship alongside in
+Phases 2–4 and are listed separately so they can be backed out on their own.
 
-**`/export` is deliberately deferred** to an optional later phase (§5). It cuts requests
-~32× and is the only source of stable runner ids — but neither is needed to get off
-`api.php`, and the per-class path with ETag is already strictly better than today.
-
-> **`/v2/*` stays compatible**, because it is consumed by App Store / Play Store builds
-> already on users' phones, which cannot be forced to update. `/v2` responses only ever gain
-> fields — see §5 for the one place the identity change touches the payload.
+**`/export` and the stable runner ids stay optional** (§5). Neither is needed to get off
+`api.php`.
 
 ## 1. Where we are today
 
@@ -29,6 +27,7 @@ on the new API directly and the legacy `api.php` code is deleted rather than kep
 | Transport | `axios` (`lib/liveresultat/client.ts`) **and** a hand-rolled HTTP/2 client (`lib/liveresultat/http2-client.ts`) with duplicated hash logic, both on `liveresultat.orientering.se` |
 | Change detection | `last_hash` → `status: "NOT MODIFIED"`; "new result" inferred from `DT_RowClass` |
 | Result identity | `md5(classId + name + club)`, plus a `:start:seq` suffix to break collisions — **kept** unless §5 is adopted |
+| `/v2` leak | `getResultByLiveClassId` returns the `last_hash` value as `hash`; the app vibrates on it changing (§3) |
 | Sync shape | `sync-live-competitions` → `sync-live-competition` → `sync-live-class`, **one request per class** |
 | Dead code | `lib/liveresultat/scrape.ts` — exported, referenced nowhere |
 
@@ -50,7 +49,8 @@ on the new API directly and the legacy `api.php` code is deleted rather than kep
 - **Class names containing `/` must use the query form.** `?class=K20%2F21` → 200;
   `/classes/K20%2F21/results` → **404**. Only ever use `?class=`.
 - **Unknown class returns 200 with empty `results`**, not an error. A renamed class would
-  otherwise soft-delete every row in it via the `notInArray` sweep in `insertResults`.
+  otherwise soft-delete every row in it via the `notInArray` sweep in `insertResults` —
+  handled in the adapter, see §3.
 - **Brotli is a 10× win we currently don't ask for.** `SM, lång` export: 343 072 B raw →
   **35 137 B** with `accept-encoding: gzip, br`. The HTTP/2 client sends no
   `accept-encoding` at all; axios negotiates gzip but not br.
@@ -66,41 +66,56 @@ on the new API directly and the legacy `api.php` code is deleted rather than kep
   (`Ungdom-1`, `relayLeg: 1`, `relayClassName: "Ungdom"`), club = team name.
 - **`hasResults`** only appears on the filtered list endpoints.
 
-## 3. New internal types
+## 3. The client surface does not change
 
-`lib/liveresultat/types.ts` is rewritten to mirror the API — no `hashed` base interface, no
-`DT_RowClass`, no legacy casing:
+`LiveresultatApi` in `lib/liveresultat/types.ts` stays exactly as it is, and
+`LiveresultatAPIClient` keeps its method names and return types. The new endpoints are
+adapted to the existing shapes **inside** `lib/liveresultat/`, so the swap itself changes
+nothing in the jobs, the writer or the controllers.
 
-```ts
-export namespace Liveresultat {
-  interface CompetitionListEntry {
-    id: number; name: string; organizer: string; date: string;
-    timediff: number;
-    country?: string; hasResults?: boolean;
-    multiDayStage?: number; multiDayFirstDay?: number;
-  }
-  interface Competition extends CompetitionListEntry {
-    timezone?: string; isPublic: boolean; serverTime: number;
-  }
-  interface ClassResults {
-    className: string;
-    splitControls: { code: number; name: string }[];
-    results: Result[];
-    isMultiDay: boolean; isMassStart: boolean; qualificationLimits: string[];
-  }
-  interface Result {
-    place: string; name: string; club?: string; bib?: string;
-    result: number | ''; timeplus: number | ''; status: number;
-    progress: number; start: number;
-    changed?: number; startChanged?: number;
-    splits?: Record<string, number>;
-  }
-  interface Export { /* eventid, competition, classes, runners, results */ }
-}
-```
+This is not the legacy code kept alive — `api.php` is gone and the legacy clients are
+deleted. It is the new API presented through the contract the codebase already speaks.
 
-Note `result` / `timeplus` arrive as `''` for non-finishers — the existing
-`parseResultNumber` already handles that and stays.
+| Existing contract | How the adapter satisfies it |
+| --- | --- |
+| `getclasses()` → `{ classes: [{ className }], hash, status }` | map `string[]` → `[{ className }]`; `hash` = the ETag |
+| `getclassresults()` → `{ className, splitcontrols, results, hash, status }` | rename `splitControls` → `splitcontrols`; `hash` = the ETag |
+| `null` return for "not modified" | HTTP **304** instead of `status: "NOT MODIFIED"` |
+| `result.DT_RowClass === 'new_result'` | synthesised when the row's `changed` is newer than the stored high-water mark |
+| `result.splits` keyed `1065`, `1065_status`, … | pass through, **stripping the new `<code>_changed` keys** |
+| `getcompetitions()` / `getcompetitioninfo()` | already legacy-shaped; `timezone`, `country`, `hasResults` etc. are additive |
+
+### The ETag goes in the existing Redis key
+
+The current hash keys — `liveresultat:lastHash:classes:{id}` and
+`liveresultat:lastHash:class:{class}:results:{id}` — become the ETag store, same names, same
+10-minute expiry. That is not just tidiness: **`getResultByLiveClassId` reads that key
+directly and returns it as `hash` in the `/v2` response**, and the app feeds it to
+`useNotifyOnUpdate` (`app/src/views/scenes/live-results/`) to vibrate the phone when results
+change. Deleting those keys would pin `hash` to `'none'`, so `hash !== previousHash.current`
+never fires and vibrate-on-update dies silently on every shipped build. An ETag changes
+exactly when the content changes, so storing it there preserves the feature with no
+controller or app change.
+
+### Two correctness fixes land in the adapter, not the writer
+
+Both risks the new API introduces are handled before the writer sees the data, which is what
+keeps `live-class-writer.ts` untouched:
+
+- **Empty `results` on an unknown class.** A renamed or mistyped class returns 200 with
+  `results: []`, which would drive the `notInArray` sweep in `insertResults` to soft-delete
+  every row in the class. The adapter returns `null` (i.e. "not modified") for an empty
+  result set, so the sweep never runs. The trade is deliberate: a class legitimately emptied
+  by the organiser keeps stale rows, which is the safer failure than mass-deleting on a typo.
+- **The `<code>_changed` split key.** `insertSplitResults` treats any split key not ending in
+  `status|timeplus|place` as the *time*, so `_changed` lands in the time bucket. It survives
+  today only because integer-like JS object keys iterate numerically, putting bare `1049`
+  before `1049_changed` (verified in Node) — luck, not correctness. Stripping `_changed` in
+  the adapter removes the hazard without touching the parser.
+
+Hardening `insertSplitResults` itself (explicit suffix parsing, dropping the copy-paste
+`obj.timeplus === undefined` guards on the `status` / `place` branches) stays worth doing, but
+it becomes optional hygiene rather than part of the migration.
 
 ## 4. Sync architecture: per-class conditional GET
 
@@ -112,8 +127,8 @@ now; only the change-detection mechanism and the transport change.
    stored classes on 304, exactly as today.
 2. `GET /competitions/{id}/classresults?class=` per class, conditional.
 3. **304 → skip the write.** Same as today's `status: "NOT MODIFIED"`.
-4. 200 → write via the existing `LiveClassWriter`, using each row's `changed` to set
-   `newResultAt` in place of `DT_RowClass`.
+4. 200 → write via the existing `LiveClassWriter`, unchanged: the adapter has already turned
+   `changed` into the `DT_RowClass` flag the writer looks for (§3).
 
 A 304 is cheap but not free: measured on `SM, lång, Final` (32 classes), 32 conditional
 requests all returning 304 took **16.1 s serial** (~490 ms each) and **2.5 s at concurrency
@@ -243,54 +258,50 @@ holds ≤3 days (`purge-old-live-results`), so this drains on its own — no arc
 
 ## 6. Implementation phases
 
-### Phase 1 — transport + types
+### Phase 1 — the swap (nothing outside `lib/liveresultat/`)
 1. `lib/liveresultat/http.ts`: one `undici`-based client with keep-alive,
    `accept-encoding: gzip, br` (constant — CloudFront varies on it, so a varying header
    would invalidate ETags), `If-None-Match`, timeout, and retry on 5xx/network only
    (304 and 404 are terminal).
-2. `lib/liveresultat/etag-store.ts`: Redis ETag cache (`lr:etag:{path}`), keeping the
-   10-minute expiry trick so corrupted state self-heals, plus the per-class `changed`
-   high-water mark.
+2. ETag storage in the **existing** `liveresultat:lastHash:*` Redis keys, same names and
+   10-minute expiry, so `getResultByLiveClassId`'s `hash` field and the app's
+   vibrate-on-update keep working untouched (§3). Add the per-class `changed` high-water mark
+   alongside, for synthesising `DT_RowClass`.
 3. `lib/liveresultat/poll-guard.ts`: per-path minimum interval (10 s default) with jitter,
    enforced in Redis so compliance doesn't depend on how the schedulers are tuned.
-4. Rewrite `types.ts` per §3.
-5. **Delete** `client.ts`, `http2-client.ts`, `scrape.ts` (already dead), the `last_hash`
-   Redis keys, and the `jsonrepair` dependency — its only purpose was repairing malformed
-   legacy responses; the new API returns valid JSON.
+4. Re-point `LiveresultatAPIClient` at the new endpoints behind its existing method
+   signatures, with the field mapping and the two adapter-level correctness fixes in §3.
+   `types.ts` is **not** changed.
+5. **Delete** `http2-client.ts` (superseded — `sync-active-live-competitions` goes back to the
+   one client), `scrape.ts` (already dead code), and the `jsonrepair` dependency — its only
+   purpose was repairing malformed legacy responses; the new API returns valid JSON.
+6. Verify against the comparison harness in §7 before the behaviour phases land, so any
+   regression is attributable to the swap alone.
 
-### Phase 2 — competition list
-6. `?today=true` for the hot path, `?date=` / `?pastDays=` for the date-ranged path
+### Phase 2 — competition list *(reaches outside `lib/liveresultat/`)*
+7. `?today=true` for the hot path, `?date=` / `?pastDays=` for the date-ranged path
    `SyncLiveCompetitionsJob` already accepts via `startDate`/`endDate`.
-7. **Move `purgeStaleCompetitions` out.** It deletes every `live_competitions` row absent
+8. **Move `purgeStaleCompetitions` out.** It deletes every `live_competitions` row absent
    from the response — against a filtered list that wipes the archive. It becomes its own
    nightly job doing one unfiltered, ETag'd, brotli'd `GET /competitions`.
-8. Use the IANA `timezone` from `GET /competitions/{id}` and **delete
+9. Use the IANA `timezone` from `GET /competitions/{id}` and **delete
    `getTimezoneFromOffset`** in `lib/helpers/time.ts` — a 27-entry CET-offset→zone table
    that is DST-lossy. Keep `timediff` only as the fallback when `timezone` is absent.
 
-### Phase 3 — sync loop
-9. Point `sync-live-competition` / `sync-live-class` at the new client per §4, and collapse
-   the `sync-active-live-competitions` / `sync-live-competition` duplication — the two
-   currently reimplement the same fetch-and-write loop against different HTTP clients. The
-   fan-out shape itself does not change.
-10. Poll tiers per §4, replacing the `p-limit(10)` constants with a budget derived from the
+### Phase 3 — sync loop *(reaches outside `lib/liveresultat/`)*
+10. Collapse the `sync-active-live-competitions` / `sync-live-competition` duplication — the
+    two currently reimplement the same fetch-and-write loop against different HTTP clients.
+    The fan-out shape itself does not change.
+11. Poll tiers per §4, replacing the `p-limit(10)` constants with a budget derived from the
     10 s floor.
-11. Guard the delete sweep: skip `notInArray` when `results` is empty but the class
-    previously had rows.
-12. Rewrite `insertSplitResults`. It currently strips everything after `_` and treats any
-    key not ending in `status|timeplus|place` as the split *time*, so the new
-    `<code>_changed` key lands in the time bucket — it survives today only because
-    integer-like JS object keys iterate numerically, putting bare `1049` before
-    `1049_changed` (verified in Node). Parse the suffix explicitly, and drop the copy-paste
-    `obj.timeplus === undefined` guards on the `status` / `place` branches.
 
-**Phases 1–3 are the migration.** Everything below is optional and independently
-shippable; stop here and the integration is fully off `api.php`.
+**Phase 1 is the migration.** It is fully off `api.php` on its own; Phases 2–3 are the
+operational wins riding along, and everything below is optional.
 
 ### Phase 4 (optional) — export-first sync and stable runner ids
-13. Add the conditional `/export` step in front of the class fan-out per §5, refetching only
+12. Add the conditional `/export` step in front of the class fan-out per §5, refetching only
     the classes whose `changed` advanced.
-14. Only with step 13: the `liveRunnerId` migration per §5 — add the column, implement the
+13. Only with step 12: the `liveRunnerId` migration per §5 — add the column, implement the
     export→classresults join with its tie-breaks, dual-write for one retention window, then
     swap the unique constraint and remove the md5 hashing and the `:start:seq` workaround
     from `live-class-writer.ts`. Keep emitting `/v2`'s `liveResultId` string.
@@ -305,58 +316,64 @@ Two items (radio-control names, relay grouping) read fields only `/export` carri
 **not** require Phase 4: export can be fetched once per competition per day for metadata,
 which is a fixed 1 request and unrelated to adopting it as the per-tick change oracle.
 
-15. **Last passings.** `/passings` (50 newest, with `place`, `timeplus` at the control and
+14. **Last passings.** `/passings` (50 newest, with `place`, `timeplus` at the control and
     `wallClock`). The app still carries a dangling type reference to
     `/v1/competitions/{competitionId}/last-passings`
     (`app/src/views/components/competition/header.tsx`, `lastPassing.tsx`) with no server
     route behind it. New `live_passings` table + `GET /v2/competitions/:id/passings`.
-16. **Still out on course.** `/remaining` — a genuinely new screen, and the cheapest
+15. **Still out on course.** `/remaining` — a genuinely new screen, and the cheapest
     is-this-live signal for the poll tiers.
-17. **Radio controls up front.** `classes[].radioControls` in `/export` gives
+16. **Radio controls up front.** `classes[].radioControls` in `/export` gives
     `{ code, name }` before anyone has punched, so split columns render on an empty result
     list instead of appearing mid-race.
-18. **Class metadata.** `isMassStart`, `qualificationLimits`, `isMultiDay` on
+17. **Class metadata.** `isMassStart`, `qualificationLimits`, `isMultiDay` on
     `live_classes` → chase-start and qualification-heat rendering.
-19. **Relay grouping.** `relayLeg` + `relayClassName` group `Ungdom-1..4` into one relay
+18. **Relay grouping.** `relayLeg` + `relayClassName` group `Ungdom-1..4` into one relay
     view instead of four unrelated classes.
-20. **Country + multi-day.** `country` (today `countryCode` only ever comes from Eventor,
+19. **Country + multi-day.** `country` (today `countryCode` only ever comes from Eventor,
     so non-Swedish live competitions show no flag), `multiDayStage` / `multiDayFirstDay`
     for linking the `CompetitionId` matcher cannot infer.
-21. **`serverTime`** gives clock-skew correction for the `isLive` / `start <= nowTimestamp`
+20. **`serverTime`** gives clock-skew correction for the `isLive` / `start <= nowTimestamp`
     logic in `marshal/results.ts`.
-22. **Eventor cross-linking.** `country` + `organizer` + `date` improve the
+21. **Eventor cross-linking.** `country` + `organizer` + `date` improve the
     `lib/match/generateIds` join rate against Eventor competitions.
 
 ### Phase 6 — cleanup
-23. `selfhelp/index.ts` health-checks `api.php?method=getcompetitions`; repoint it at the
+22. `selfhelp/index.ts` health-checks `api.php?method=getcompetitions`; repoint it at the
     new base URL and update the `ServiceStatusTable` id (`/v2/status` reads it by
     `LiveresultatUrl`).
 
 ## 7. Validation
 
-With no compat layer there is no legacy/new diff to assert, so correctness rests on:
+Preserving the client surface buys the strongest check available: the old and new clients
+return the *same type*, so they can be diffed directly.
 
-- `server/scripts/verify-liveresultat.ts` — fetch a fixed set of competitions
-  (individual, relay, mass-start, multi-day, non-Swedish, zero-results) through the new
-  client and assert the parsed shape, then diff two consecutive polls to confirm 304
-  handling and `changed` high-water behaviour.
-- Golden fixtures for `live-class-writer` covering the split-suffix parsing and the
-  empty-class sweep guard. If Phase 4 is adopted, add fixtures for the export→classresults
-  identity join — including competition 40467's duplicate-upload shape and a rename across
-  two polls.
-- A staging run across one competition weekend, comparing `live_results` row counts and
-  `place`/`result` values against liveresultat.orientering.se by eye before production.
+- `server/scripts/compare-liveresultat.ts` — for a list of competition ids, call the legacy
+  `api.php` client and the new one, and diff the resulting `LiveresultatApi.getclasses` /
+  `getclassresults` objects field by field. Upstream `api.php` is still live, so this runs for
+  real against both. A clean diff across a mixed set — individual, relay, mass-start,
+  multi-day, non-Swedish, zero-results, and 40467's duplicate-upload shape — is the actual
+  evidence that Phase 1 is a drop-in. Keep it as a CI smoke test for as long as `api.php`
+  answers.
+- Fixtures for the adapter specifically: the `<code>_changed` strip, the empty-`results` →
+  `null` guard, ETag → `hash` passthrough, and `DT_RowClass` synthesis across two polls
+  (unchanged row must **not** be flagged).
+- One manual check the harness cannot cover: confirm the app still vibrates on update, since
+  that path runs through the `hash` field end to end (§3).
+- A staging run across one competition weekend before production, comparing `live_results`
+  row counts and `place` / `result` values against liveresultat.orientering.se.
 
 ## 8. Risks
 
 | Risk | Mitigation |
 | --- | --- |
-| Unknown/renamed class → 200 + empty results → mass soft-delete | Skip the sweep when `results` is empty and the class had rows (step 11) |
-| Filtered list + existing `purgeStaleCompetitions` → archive wiped | Own nightly job on the unfiltered list (step 7) |
+| Unknown/renamed class → 200 + empty results → mass soft-delete | Adapter returns `null` for an empty result set, so the sweep never runs (§3) |
+| Filtered list + existing `purgeStaleCompetitions` → archive wiped | Own nightly job on the unfiltered list (step 8) |
 | Per-class ticks stay request-heavy without export | Poll tiers (§4) keep idle competitions off a hot poll; Phase 4 cuts it ~32× if the volume becomes a problem |
-| No rollback path once the legacy client is deleted | Phase 1 ships behind a staging deploy first; legacy `api.php` stays available upstream, so a revert commit is the rollback |
+| No rollback path once the legacy client is deleted | `api.php` stays live upstream, so a revert commit is the rollback; the §7 diff harness gates the deploy in the first place |
+| Deleting the `last_hash` keys silently kills the app's vibrate-on-update | ETag stored in those same keys; `hash` keeps changing exactly when content does (§3) |
 | ETag varying with `accept-encoding` → permanent cache misses | Fixed `accept-encoding` header |
-| `changed`-derived `newResultAt` changes the app's "new result" highlight | High-water mark per class; fixture tests on `checkIfRecentlyUpdated` |
+| `changed`-derived `DT_RowClass` changes the app's "new result" highlight | High-water mark per class, synthesised in the adapter; fixtures assert an unchanged row is not flagged |
 | *(Phase 4 only)* Duplicate-upload competitions mint two ids for one runner, where the md5 merged them | Tie-break on finish result then a stable sequence (§5); measured residual 2 of 23 groups on the worst class found |
 | *(Phase 4 only)* `classresults` has no runner id, so identity depends on an in-memory join | Join is `(class, name, club)` + tie-breaks; export is already fetched on every writing tick, so no extra requests (§5) |
 | *(Phase 4 only)* Dropping the `liveResultId` column breaks old app builds' list keys | The `/v2` field is retained, derived from the new key (§5) |
