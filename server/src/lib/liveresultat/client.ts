@@ -24,7 +24,7 @@ export class LiveresultatAPIClient {
         'User-Agent': 'LiveOL Server',
       },
     });
-    const res = await this.client.get<string>(
+    const res = await fetchAllClient.get<string>(
       `https://api.orienteering.services/competitions`,
     );
     return LiveresultatAPIClient.jsonParse<LiveresultatApi.getcompetitions>(
