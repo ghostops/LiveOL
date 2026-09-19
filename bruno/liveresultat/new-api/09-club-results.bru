@@ -1,0 +1,29 @@
+meta {
+  name: Club results
+  type: http
+  seq: 9
+}
+
+get {
+  url: {{newBase}}/competitions/{{compId}}/clubresults?club={{clubName}}
+  body: none
+  auth: none
+}
+
+params:query {
+  club: {{clubName}}
+}
+
+assert {
+  res.status: eq 200
+}
+
+docs {
+  One club across all classes; rows carry `class`.
+
+  Compare against the legacy pair: legacy `getclubresults` has no
+  `unformattedTimes` switch, so it returns `"19:03"` and `"+02:51"` strings. This one
+  returns hundredths of a second as integers like every other new endpoint.
+
+  An empty `club` is a **400**, so the parameter is required.
+}

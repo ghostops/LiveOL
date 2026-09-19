@@ -1,0 +1,22 @@
+meta {
+  name: Unknown competition - 404
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{newBase}}/competitions/999999999
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 404
+}
+
+docs {
+  A real 404, where legacy `getcompetitioninfo` returned a body for an unknown id.
+
+  So the client must treat 404 as terminal rather than retryable — along with 304,
+  which is the other non-retryable non-200.
+}

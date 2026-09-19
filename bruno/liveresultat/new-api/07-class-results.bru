@@ -1,0 +1,47 @@
+meta {
+  name: Class results
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{newBase}}/competitions/{{compId}}/classresults?class={{className}}
+  body: none
+  auth: none
+}
+
+params:query {
+  class: {{className}}
+}
+
+vars:post-response {
+  resultsEtag: res.headers.etag
+}
+
+assert {
+  res.status: eq 200
+  res.body.className: isDefined
+}
+
+docs {
+  The endpoint that matters most — the only source of `place`, `timeplus`, `progress`
+  and the per-split `place` / `timeplus`, which is why `/export` cannot replace it.
+
+  Differences from legacy `getclassresults`:
+
+  - `splitcontrols` → **`splitControls`**
+  - no `hash`, no `status` — use the `ETag`
+  - no `DT_RowClass`; each row carries **`changed`** and `startChanged` (UNIX seconds)
+  - new per row: `bib`
+  - new on the envelope: `isMultiDay`, `isMassStart`, `qualificationLimits`
+  - split maps gain a `<code>_changed` key alongside `_status` / `_place` / `_timeplus`
+
+  That last one is a trap: `insertSplitResults` treats any split key not ending in
+  `status|timeplus|place` as the *time*, so `_changed` lands in the time bucket. The
+  plan strips it in the client.
+
+  `result` and `timeplus` come back as `""` for non-finishers, which the existing
+  `parseResultNumber` already handles.
+
+  `start` is present on 100% of rows here, against ~82.5% in `/export`.
+}

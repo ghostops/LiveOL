@@ -1,0 +1,29 @@
+meta {
+  name: getlastpassings
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{legacyBase}}/api.php?method=getlastpassings&comp={{compId}}
+  body: none
+  auth: none
+}
+
+params:query {
+  method: getlastpassings
+  comp: {{compId}}
+  ~last_hash: paste-a-hash-here
+}
+
+assert {
+  res.status: eq 200
+}
+
+docs {
+  Pairs with new-api/Passings.
+
+  `{ passtime, runnerName, class, control, controlName, time }` with formatted
+  strings. The new endpoint reshapes all of it and adds `place`, `timeplus`, `bib`,
+  `club` and `changed` — see the mapping table there.
+}

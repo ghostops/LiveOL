@@ -363,6 +363,11 @@ return the *same type*, so they can be diffed directly.
 - A staging run across one competition weekend before production, comparing `live_results`
   row counts and `place` / `result` values against liveresultat.orientering.se.
 
+For poking at either API by hand, `bruno/liveresultat/` has both sets of endpoints as a
+Bruno collection with matching `seq` numbers for pairing, plus a `quirks/` folder holding one
+request per verified behaviour below. Every request asserts its status, so
+`bru run --env production` also works as a smoke test against upstream drift.
+
 ## 8. Risks
 
 | Risk | Mitigation |

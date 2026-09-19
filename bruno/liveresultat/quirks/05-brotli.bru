@@ -1,0 +1,31 @@
+meta {
+  name: Brotli off - compare transfer size
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{newBase}}/competitions/{{compId}}/export
+  body: none
+  auth: none
+}
+
+headers {
+  Accept-Encoding: identity
+}
+
+assert {
+  res.status: eq 200
+}
+
+docs {
+  The collection sets `Accept-Encoding: gzip, br` for every request; this one
+  overrides it with `identity`. Compare the size against new-api/Export.
+
+  On this competition: **343 072 B raw against 35 137 B** with brotli — a ~10× win we
+  do not currently take. The HTTP/2 client sends no `Accept-Encoding` at all, and
+  axios negotiates gzip but not br.
+
+  One catch the plan calls out: CloudFront varies on `Accept-Encoding`, so the header
+  must be held **constant** across requests or the cached ETags stop matching.
+}

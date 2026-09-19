@@ -1,0 +1,30 @@
+meta {
+  name: getcompetitions
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{legacyBase}}/api.php?method=getcompetitions
+  body: none
+  auth: none
+}
+
+params:query {
+  method: getcompetitions
+}
+
+assert {
+  res.status: eq 200
+}
+
+docs {
+  Pairs with new-api/Competitions (all).
+
+  Note the server already bypasses this one: `LiveresultatAPIClient.getcompetitions()`
+  hits `https://api.orienteering.services/competitions` directly today. This request
+  exists to compare the two payloads.
+
+  There are no filter parameters here — the full archive is the only option, which is
+  why the new `?today=true` / `?date=` variants matter.
+}

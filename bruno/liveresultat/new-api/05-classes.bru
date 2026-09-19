@@ -1,0 +1,27 @@
+meta {
+  name: Classes
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{newBase}}/competitions/{{compId}}/classes
+  body: none
+  auth: none
+}
+
+vars:post-response {
+  classesEtag: res.headers.etag
+}
+
+assert {
+  res.status: eq 200
+}
+
+docs {
+  **Breaking shape change**: `{ "classes": ["K10", "K12", ...] }` — a plain string
+  array, where the legacy endpoint returned `[{ "className": "K10" }, ...]`.
+
+  There is no `hash` and no `status` field; change detection is the `ETag` header.
+  The response ETag is captured into `classesEtag` for the conditional request below.
+}
