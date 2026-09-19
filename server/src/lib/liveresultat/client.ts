@@ -19,8 +19,13 @@ export class LiveresultatAPIClient {
   }
 
   public getcompetitions = async () => {
+    const fetchAllClient = axios.create({
+      headers: {
+        'User-Agent': 'LiveOL Server',
+      },
+    });
     const res = await this.client.get<string>(
-      `/api.php?method=getcompetitions`,
+      `https://api.orienteering.services/competitions`,
     );
     return LiveresultatAPIClient.jsonParse<LiveresultatApi.getcompetitions>(
       res.data,
