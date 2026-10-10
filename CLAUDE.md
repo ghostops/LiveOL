@@ -125,6 +125,7 @@ npx drizzle-kit studio   # Open Drizzle Studio (DB GUI)
 - `LiveClassWriter` diffs tracked runners only (Redis index in `lib/notifications/tracked-index.ts`) and hands deduped events to `PushQueue` (`send-push` job), which re-checks entitlements and sends via FCM
 - Call `invalidateTrackedIndex()` whenever tracking, notification prefs, push tokens or Plus status change
 - App: `src/lib/push/` (permission + token), `PushRegistration` (token sync + notification taps), `NotificationSettings` screen. Firebase stays disabled until `GoogleService-Info.plist` / `google-services.json` are added
+- **Experimental, may be reverted:** Android foreground notifications are posted by a custom native module (`android/.../ForegroundNotificationModule.kt`, wrapped by `src/lib/push/foreground.ts`); taps reopen the app via a `liveol-push://open?...` URI read through `Linking`. To revert, delete the Kotlin file and its `add(ForegroundNotificationPackage())` line; the JS falls back to a toast
 
 ### External Service Integrations
 

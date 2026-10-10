@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { AppState, Platform, ToastAndroid } from 'react-native';
+import { AppState, Linking } from 'react-native';
 import {
   getInitialNotification,
   onMessage,
@@ -8,11 +8,14 @@ import {
 } from '@react-native-firebase/messaging';
 import { getNavigationRef } from '~/hooks/useNavigation';
 import { getMessagingSafe } from '~/lib/push';
+import {
+  parsePushLink,
+  showForegroundNotification,
+  toPushData,
+} from '~/lib/push/foreground';
 import { syncPushRegistration } from '~/lib/push/registration';
 import { queryClient } from '~/lib/react-query/client';
 import { useUserIdStore } from '~/store/userId';
-
-type RemoteMessage = Parameters<Parameters<typeof onMessage>[1]>[0];
 
 const NAV_READY_RETRIES = 20;
 
@@ -54,8 +57,11 @@ export const PushRegistration = () => {
       return;
     }
 
-    const openResults = (message: RemoteMessage | null, attempt = 0) => {
-      const data = message?.data;
+    const openResults = (
+      data: Record<string, string> | null,
+      title = '',
+      attempt = 0,
+    ) => {
       if (!data) {
         return;
       }
@@ -64,32 +70,40 @@ export const PushRegistration = () => {
       if (!navRef?.isReady()) {
         // Cold start: the navigator mounts after the notification is read
         if (attempt < NAV_READY_RETRIES) {
-          setTimeout(() => openResults(message, attempt + 1), 250);
+          setTimeout(() => openResults(data, title, attempt + 1), 250);
         }
         return;
       }
 
       const { olCompetitionId, liveClassId, trackingId } = data;
-      if (
-        typeof olCompetitionId === 'string' &&
-        olCompetitionId &&
-        typeof liveClassId === 'string'
-      ) {
+      if (olCompetitionId && liveClassId) {
         navRef.navigate('LiveResults', { olCompetitionId, liveClassId });
       } else if (trackingId) {
         navRef.navigate('TrackingResults', {
           trackingId: Number(trackingId),
-          title: message?.notification?.title ?? '',
+          title,
         });
       }
     };
 
-    getInitialNotification(messaging).then(message => openResults(message));
-    const unsubscribeOpened = onNotificationOpenedApp(messaging, message =>
-      openResults(message),
+    const openMessage = (
+      message: {
+        data?: Record<string, unknown>;
+        notification?: { title?: string };
+      } | null,
+    ) =>
+      message &&
+      openResults(toPushData(message.data), message.notification?.title);
+
+    getInitialNotification(messaging).then(openMessage);
+    const unsubscribeOpened = onNotificationOpenedApp(messaging, openMessage);
+
+    // Taps on Android foreground notifications (see lib/push/foreground.ts)
+    Linking.getInitialURL().then(url => openResults(parsePushLink(url)));
+    const linkSubscription = Linking.addEventListener('url', ({ url }) =>
+      openResults(parsePushLink(url)),
     );
 
-    // iOS shows foreground notifications itself (see firebase.json)
     const unsubscribeMessage = onMessage(messaging, message => {
       queryClient.invalidateQueries({
         predicate: query =>
@@ -97,18 +111,17 @@ export const PushRegistration = () => {
           query.queryKey[1].startsWith('/v2/results/'),
       });
 
-      const { title, body } = message.notification ?? {};
-      if (Platform.OS === 'android' && title) {
-        ToastAndroid.show(
-          body ? `${title}: ${body}` : title,
-          ToastAndroid.LONG,
-        );
-      }
+      showForegroundNotification(
+        message.notification?.title,
+        message.notification?.body,
+        toPushData(message.data),
+      );
     });
 
     return () => {
       unsubscribeOpened();
       unsubscribeMessage();
+      linkSubscription.remove();
     };
   }, []);
 
