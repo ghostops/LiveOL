@@ -100,6 +100,7 @@ export class FastQueue extends QueueBase {
   protected getWorkerConfig(): WorkerConfig {
     return {
       concurrency: 10,
+      jobTimeoutMs: 2 * 60 * 1000,
     };
   }
 }
@@ -132,6 +133,7 @@ export class RegularQueue extends QueueBase {
     return {
       concurrency: 3,
       limiter: { duration: 1000, max: 9 },
+      jobTimeoutMs: 10 * 60 * 1000,
     };
   }
 }
@@ -164,6 +166,7 @@ export class RepeatingQueue extends QueueBase {
     return {
       concurrency: 1,
       limiter: { duration: 1000, max: 2 },
+      jobTimeoutMs: 5 * 60 * 1000,
     };
   }
 }
