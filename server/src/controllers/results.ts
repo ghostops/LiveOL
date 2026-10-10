@@ -16,6 +16,7 @@ import { userMiddleware } from 'middleware/user';
 import { getTrackedRunnerIds } from 'lib/match/getAllTrackedRunnerIds';
 import createHttpError from 'http-errors';
 import { globalSeparator } from 'lib/match/generateIds';
+import { getActiveTracking, plusRequired } from 'lib/entitlements';
 
 const api = apiSingletons.createApiSingletons();
 
@@ -111,10 +112,7 @@ export const getResultByLiveClassId = defaultEndpointsFactory
       const hashKey = `liveresultat:lastHash:class:${className}:results:${classData?.liveCompetitionId}`;
       const hashData = await api.Redis.get(hashKey);
 
-      const tracking = await api.Drizzle.db
-        .select()
-        .from(OLTrackingTable)
-        .where(eq(OLTrackingTable.olUserId, user.id));
+      const tracking = await getActiveTracking(api.Drizzle.db, user);
 
       const marshaledResults = results.map(
         marshalResult({ user, tracking, className, nowTimestamp }),
@@ -261,6 +259,13 @@ export const getLiveResultsForTrackedRunner = defaultEndpointsFactory
 
       if (!tracking) {
         throw createHttpError(404, 'Tracking not found');
+      }
+
+      if (tracking.olUserId === user.id) {
+        const active = await getActiveTracking(api.Drizzle.db, user);
+        if (!active.some(t => t.id === tracking.id)) {
+          throw plusRequired();
+        }
       }
 
       const allPotentialIds = getTrackedRunnerIds(tracking);

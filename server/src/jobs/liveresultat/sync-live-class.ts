@@ -17,7 +17,7 @@ export class SyncLiveClassJob {
       throw new Error('Class name is required');
     }
     this.api = apiSingletons.createApiSingletons();
-    this.writer = new LiveClassWriter(this.api.Drizzle.db);
+    this.writer = new LiveClassWriter(this.api.Drizzle.db, this.api.Notifier);
   }
 
   async run() {
