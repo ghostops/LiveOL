@@ -47,13 +47,6 @@ target 'LiveOL' do
     patch_pod_file(installer, 'fmt/include/fmt/base.h',
       "#if !defined(__cpp_lib_is_constant_evaluated)\n",
       "#if 1  // Patched in Podfile: consteval broken with Xcode 27 clang\n#  define FMT_USE_CONSTEVAL 0\n#elif !defined(__cpp_lib_is_constant_evaluated)\n")
-
-    # RevenueCat: Xcode 27 synthesizes a memberwise init(stringRepresentation:)
-    # that clashes with the public throwing one. Declaring any init in the
-    # struct body suppresses the synthesized one.
-    patch_pod_file(installer, 'RevenueCat/Sources/Paywalls/PaywallColor.swift',
-      "    fileprivate var _underlyingColor: (any Sendable)?\n",
-      "    fileprivate var _underlyingColor: (any Sendable)?\n\n    // Patched in Podfile: suppress memberwise init (Xcode 27)\n    private init(_suppressMemberwise: Never) { switch _suppressMemberwise {} }\n")
   end
 end
 

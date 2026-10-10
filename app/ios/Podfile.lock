@@ -96,11 +96,11 @@ PODS:
   - nanopb/decode (3.30910.0)
   - nanopb/encode (3.30910.0)
   - PromisesObjC (2.4.1)
-  - PurchasesHybridCommon (17.10.0):
-    - RevenueCat (= 5.43.0)
-  - PurchasesHybridCommonUI (17.10.0):
-    - PurchasesHybridCommon (= 17.10.0)
-    - RevenueCatUI (= 5.43.0)
+  - PurchasesHybridCommon (19.10.0):
+    - RevenueCat (= 5.94.0)
+  - PurchasesHybridCommonUI (19.10.0):
+    - PurchasesHybridCommon (= 19.10.0)
+    - RevenueCatUI (= 5.94.0)
   - RCT-Folly (2024.11.18.00):
     - boost
     - DoubleConversion
@@ -2506,9 +2506,9 @@ PODS:
     - React-perflogger (= 0.82.1)
     - React-utils (= 0.82.1)
     - SocketRocket
-  - RevenueCat (5.43.0)
-  - RevenueCatUI (5.43.0):
-    - RevenueCat (= 5.43.0)
+  - RevenueCat (5.94.0)
+  - RevenueCatUI (5.94.0):
+    - RevenueCat (= 5.94.0)
   - RNBootSplash (6.3.8):
     - boost
     - DoubleConversion
@@ -2684,11 +2684,11 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - RNPaywalls (9.5.4):
-    - PurchasesHybridCommonUI (= 17.10.0)
+  - RNPaywalls (10.12.2):
+    - PurchasesHybridCommonUI (= 19.10.0)
     - React-Core
-  - RNPurchases (9.5.4):
-    - PurchasesHybridCommon (= 17.10.0)
+  - RNPurchases (10.12.2):
+    - PurchasesHybridCommon (= 19.10.0)
     - React-Core
   - RNReanimated (4.1.3):
     - boost
@@ -3307,8 +3307,8 @@ SPEC CHECKSUMS:
   hermes-engine: 273e30e7fb618279934b0b95ffab60ecedb7acf5
   nanopb: fad817b59e0457d11a5dfbde799381cd727c1275
   PromisesObjC: 752c3227f599e3467650e47ea36f433eeb10c273
-  PurchasesHybridCommon: b7b4eafb55fbaaac19b4c36d4082657a3f0d8490
-  PurchasesHybridCommonUI: fe9a666c1b768dcb630a7bd32bf490ebab08cce4
+  PurchasesHybridCommon: 4ea84285a799df27db9e4a0cc180d9129e6e9cf2
+  PurchasesHybridCommonUI: 64533f29a16a47437a194a1dec89e5fcc73a3732
   RCT-Folly: 846fda9475e61ec7bcbf8a3fe81edfcaeb090669
   RCTDeprecation: f17e2ebc07876ca9ab8eb6e4b0a4e4647497ae3a
   RCTRequired: e2c574c1b45231f7efb0834936bd609d75072b63
@@ -3378,8 +3378,8 @@ SPEC CHECKSUMS:
   ReactAppDependencyProvider: a45ef34bb22dc1c9b2ac1f74167d9a28af961176
   ReactCodegen: 0bce2d209e2e802589f4c5ff76d21618200e74cb
   ReactCommon: 801eff8cb9c940c04d3a89ce399c343ee3eff654
-  RevenueCat: a51003d4cb33820cc504cf177c627832b462a98e
-  RevenueCatUI: 1dfe9f8a07654203419efa211c3ec368ae34e5e4
+  RevenueCat: f381deba42a93e5194104b17a1f653a389d2e215
+  RevenueCatUI: 7f972d3c8cff4d64d5eb26e25b5aace659024260
   RNBootSplash: 936fabfc64028c5f02729389622c9e25b764637c
   RNCAsyncStorage: fd44f4b03e007e642e98df6726737bc66e9ba609
   RNDeviceInfo: 6e13b48c9fe3894d1b927ffaaf0456cc692e9ebd
@@ -3387,8 +3387,8 @@ SPEC CHECKSUMS:
   RNFBMessaging: f1dec696005efb4c2a1863381ce3861cb9530972
   RNGestureHandler: e1cc4de7646eb557ad62d1271d8eac73c304a896
   RNLocalize: a0bf70cf27f116db4e32be09a6f549715db0686d
-  RNPaywalls: a8147b538b69b6b04bd18a65038befe1c881ac5f
-  RNPurchases: 2569675abdc1dbc739f2eec0fa564a112cf860de
+  RNPaywalls: 4bd13cb3085e5d642849c8f2627b0d4e60116c3a
+  RNPurchases: 5c8606bc3715d6eb35502ab65d3b167ca33ed1d2
   RNReanimated: 8f0185df21f0dea34ee8c9611ba88c17a290ed9a
   RNScreens: ccfcc2f7d9c0d458b7fc41b3f4f0bea054602b3a
   RNSVG: 6765c72b6cc74f8e475fabcdc3040b934c786d9d
@@ -3396,6 +3396,6 @@ SPEC CHECKSUMS:
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   Yoga: 526f25666395d30c297d53154398ffd249eaf9e1
 
-PODFILE CHECKSUM: abfe354b7161d671bbf4b53caf100e34eadad69c
+PODFILE CHECKSUM: f064a55448984ffb96edded8cae86b4ac4380365
 
 COCOAPODS: 1.17.0
