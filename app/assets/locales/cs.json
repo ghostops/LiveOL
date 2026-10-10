@@ -64,8 +64,6 @@
   "saved events were removed": "uložené události byly odstraněny",
   "Rate the app": "Ohodnoť aplikaci",
   "Information": "Informace",
-  "Translations with the help from": "Aplikaci přeložil",
-  "Help out translating - Get free LiveOL+": "Pomozte s překladem aplikace a získejte zdarma LiveOL+",
   "Translations powered by": "Překlady provedl",
   "Check for updates": "Zkontrolovat aktualizace",
   "Update now": "Aktualizovat nyní",
@@ -217,6 +215,5 @@
   "Average position": "Průměrná pozice",
   "View my races": "Zobrazit moje závody",
   "App settings": "Nastavení aplikace",
-  "Text size": "Velikost textu",
-  "Translations": "Překlady"
+  "Text size": "Velikost textu"
 }
