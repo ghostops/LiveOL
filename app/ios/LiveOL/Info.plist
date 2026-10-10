@@ -60,5 +60,9 @@
 		<key>apiKey</key>
 		<string>dd68451d76a306898875a881677469b8</string>
 	</dict>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
 </dict>
 </plist>

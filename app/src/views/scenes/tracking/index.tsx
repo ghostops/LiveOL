@@ -19,6 +19,7 @@ import { OLButton } from '~/views/components/button';
 import { OLIcon } from '~/views/components/icon';
 import { OLTrackingSkeletonList } from './skeleton';
 import { useIap } from '~/hooks/useIap';
+import { useFollowLimit } from '~/hooks/useFollowLimit';
 
 type TrackingItem =
   paths['/v2/tracking']['get']['responses']['200']['content']['application/json']['data']['tracking'][0];
@@ -28,7 +29,8 @@ export const OLSceneTracking = () => {
   const { navigate } = useOLNavigation();
   const { px } = useTheme();
   const userId = useUserIdStore(state => state.userId);
-  const { plusActive, presentPaywall } = useIap();
+  const { presentPaywall } = useIap();
+  const { canFollowMore } = useFollowLimit();
 
   const { data: trackingData, isLoading } = $api.useQuery(
     'get',
@@ -103,7 +105,7 @@ export const OLSceneTracking = () => {
       >
         <View style={[styles.itemContent, { padding: px(16) }]}>
           <View style={styles.itemRow}>
-            <View style={styles.itemInfo}>
+            <View style={[styles.itemInfo, { opacity: item.locked ? 0.5 : 1 }]}>
               <OLText
                 size={18}
                 bold
@@ -124,13 +126,18 @@ export const OLSceneTracking = () => {
                 small
                 style={{ alignSelf: 'flex-start', marginTop: px(8) }}
                 onPress={() => {
+                  // Over the free limit after LiveOL+ ended
+                  if (item.locked) {
+                    presentPaywall();
+                    return;
+                  }
                   navigate('TrackingResults', {
                     trackingId: item.id,
                     title: item.name,
                   });
                 }}
               >
-                {t('Results')}
+                {item.locked ? t('Unlock with LiveOL+') : t('Results')}
               </OLButton>
             </View>
             <TouchableOpacity
@@ -192,7 +199,7 @@ export const OLSceneTracking = () => {
       {/* Floating Action Button */}
       <TouchableOpacity
         onPress={() => {
-          if (!plusActive) {
+          if (!canFollowMore) {
             presentPaywall();
             return;
           }

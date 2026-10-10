@@ -15,6 +15,7 @@ import { OLFlag } from '~/views/components/lang/flag';
 import { useOLNavigation } from '~/hooks/useNavigation';
 import { RefreshInterval } from '../profile/RefreshInterval';
 import { useUserIdStore } from '~/store/userId';
+import { OLIcon } from '~/views/components/icon';
 
 const ITEM_TEXT_SIZE = 14;
 
@@ -79,6 +80,20 @@ export const OLSceneSettings = () => {
         style={{ flex: 1 }}
         contentContainerStyle={{ paddingBottom: px(64) }}
       >
+        <View style={{ margin: px(8) }}>
+          <OLText bold size={14}>
+            {t('Notifications')}
+          </OLText>
+        </View>
+
+        <TouchableOpacity
+          style={styles.item}
+          onPress={() => navigate('NotificationSettings')}
+        >
+          <OLText size={16}>{t('Notifications')}</OLText>
+          <OLIcon name="chevron-forward" size={18} color={COLORS.GRAY} />
+        </TouchableOpacity>
+
         <View style={{ margin: px(8) }}>
           <OLText bold size={14}>
             {t('Appearance')}

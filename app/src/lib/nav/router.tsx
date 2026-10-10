@@ -25,6 +25,7 @@ import { TrackingInfoIcon } from '~/views/components/TrackingInfoIcon';
 import { OLTrackingFormMode } from '~/views/components/tracking/form';
 import { OLSceneSettings } from '~/views/scenes/settings';
 import { OLSceneChangelog } from '~/views/scenes/changelog';
+import { OLSceneNotificationSettings } from '~/views/scenes/notifications';
 
 export type TabStack = {
   Home: undefined;
@@ -40,6 +41,7 @@ export type RootStack = {
   Search: undefined;
   Redeem: undefined;
   Settings: undefined;
+  NotificationSettings: undefined;
   Changelog: undefined;
   LiveResults: { olCompetitionId: string; liveClassId: string };
   ClubResults: { olCompetitionId: string; olOrganizationId: string };
@@ -213,6 +215,13 @@ const Component: React.FC = () => {
           component={OLSceneSettings}
           options={{
             title: t('Settings'),
+          }}
+        />
+        <Stack.Screen
+          name="NotificationSettings"
+          component={OLSceneNotificationSettings}
+          options={{
+            title: t('Notifications'),
           }}
         />
 

@@ -1,6 +1,7 @@
 #import <Bugsnag/Bugsnag.h>
 #import "AppDelegate.h"
 #import "RNBootSplash.h"
+#import <Firebase.h>
 
 #import <React/RCTBundleURLProvider.h>
 #import <ReactAppDependencyProvider/RCTAppDependencyProvider.h>
@@ -11,6 +12,11 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [Bugsnag start];
+
+  // Push notifications are disabled until GoogleService-Info.plist is added
+  if ([[NSBundle mainBundle] pathForResource:@"GoogleService-Info" ofType:@"plist"] != nil) {
+    [FIRApp configure];
+  }
 
   self.moduleName = @"LiveOL";
   self.dependencyProvider = [RCTAppDependencyProvider new];

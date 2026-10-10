@@ -8,6 +8,7 @@ import { RootStack } from '~/lib/nav/router';
 import { OLTrackingForm } from '~/views/components/tracking/form';
 import { useTheme } from '~/hooks/useTheme';
 import { useTranslation } from 'react-i18next';
+import { OLTrackingNotifySettings } from '~/views/components/tracking/notify';
 
 export const OLSceneEditTrackRunner: React.FC<{
   route: RouteProp<RootStack, 'EditTrackRunner'>;
@@ -34,6 +35,12 @@ export const OLSceneEditTrackRunner: React.FC<{
           trackingId={trackingId}
           initialRunner={initialRunner}
         />
+
+        {mode === 'edit' && trackingId !== undefined && (
+          <View style={{ marginTop: px(24) }}>
+            <OLTrackingNotifySettings trackingId={trackingId} />
+          </View>
+        )}
 
         {/* Cancel Button */}
         <View style={{ marginTop: px(12) }}>
