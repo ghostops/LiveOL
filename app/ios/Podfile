@@ -34,31 +34,17 @@ target 'LiveOL' do
       # :ccache_enabled => true
     )
 
-    # Xcode 27 only supports deployment targets >= 15.0.
+    # Xcode 27 rejects deployment targets below iOS 15
     installer.pods_project.targets.each do |target|
       target.build_configurations.each do |build_config|
         if build_config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'].to_f < 15.1
           build_config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.1'
         end
+        # fmt 11's consteval format strings don't compile with Xcode 27's clang
+        if target.name == 'fmt'
+          build_config.build_settings['CLANG_CXX_LANGUAGE_STANDARD'] = 'c++17'
+        end
       end
     end
-
-    # fmt: consteval format strings fail to compile with Xcode 27 clang.
-    patch_pod_file(installer, 'fmt/include/fmt/base.h',
-      "#if !defined(__cpp_lib_is_constant_evaluated)\n",
-      "#if 1  // Patched in Podfile: consteval broken with Xcode 27 clang\n#  define FMT_USE_CONSTEVAL 0\n#elif !defined(__cpp_lib_is_constant_evaluated)\n")
   end
-end
-
-def patch_pod_file(installer, relative_path, find, replace)
-  path = File.join(installer.sandbox.root, relative_path)
-  return unless File.exist?(path)
-  contents = File.read(path)
-  return if contents.include?(replace)
-  unless contents.include?(find)
-    Pod::UI.warn "patch_pod_file: pattern not found in #{relative_path}, skipping"
-    return
-  end
-  File.chmod(0644, path)
-  File.write(path, contents.sub(find, replace))
 end
