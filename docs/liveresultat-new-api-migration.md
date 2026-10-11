@@ -100,9 +100,8 @@ than cosmetic. Without it that column goes null and the warning logs `undefined`
 
 - **Class names containing `/` must use the query form.** `?class=K20%2F21` → 200;
   `/classes/K20%2F21/results` → **404**. Only ever use `?class=`.
-- **Unknown class returns 200 with empty `results`**, not an error. A renamed class would
-  otherwise soft-delete every row in it via the `notInArray` sweep in `insertResults` —
-  handled in the adapter, see §3.
+- **Unknown class returns 200 with empty `results`**, not an error. Harmless as it turns out:
+  `insertResults` returns early on an empty list, ahead of the `notInArray` sweep (§3).
 - **Brotli is a 10× win we currently don't ask for.** `SM, lång` export: 343 072 B raw →
   **35 137 B** with `accept-encoding: gzip, br`. The HTTP/2 client sends no
   `accept-encoding` at all; axios negotiates gzip but not br.
@@ -149,16 +148,8 @@ never fires and vibrate-on-update dies silently on every shipped build. An ETag 
 exactly when the content changes, so storing it there preserves the feature with no
 controller or app change.
 
-### Two correctness fixes land in the adapter, not the writer
+### One correctness fix lands in the adapter, not the writer
 
-Both risks the new API introduces are handled before the writer sees the data, which is what
-keeps `live-class-writer.ts` untouched:
-
-- **Empty `results` on an unknown class.** A renamed or mistyped class returns 200 with
-  `results: []`, which would drive the `notInArray` sweep in `insertResults` to soft-delete
-  every row in the class. The adapter returns `null` (i.e. "not modified") for an empty
-  result set, so the sweep never runs. The trade is deliberate: a class legitimately emptied
-  by the organiser keeps stale rows, which is the safer failure than mass-deleting on a typo.
 - **The `<code>_changed` split key.** `insertSplitResults` treats any split key not ending in
   `status|timeplus|place` as the *time*, so `_changed` lands in the time bucket. It survives
   today only because integer-like JS object keys iterate numerically, putting bare `1049`
@@ -168,6 +159,25 @@ keeps `live-class-writer.ts` untouched:
 Hardening `insertSplitResults` itself (explicit suffix parsing, dropping the copy-paste
 `obj.timeplus === undefined` guards on the `status` / `place` branches) stays worth doing, but
 it becomes optional hygiene rather than part of the migration.
+
+### Correction: the empty-results hazard does not exist
+
+Earlier revisions of this plan called the unknown-class `200` with `results: []` "the most
+dangerous behaviour in the migration" and prescribed an adapter guard returning `null` for it.
+**That was wrong, and the integration tests disproved it.** `insertResults` already returns
+early when the parsed result list is empty — before the `notInArray` sweep — so an empty
+payload is a no-op, not a mass soft-delete:
+
+```ts
+if (parsedResults.length === 0) {
+  return [];          // live-class-writer.ts, ahead of the sweep
+}
+```
+
+`live-class-writer.test.ts` pins this ("an empty result list is a no-op, not a mass
+soft-delete"). No client-side guard is needed, and adding one would have introduced the
+behaviour change it was meant to prevent — a class legitimately emptied by the organiser
+would have kept stale rows forever.
 
 ## 4. Sync architecture: per-class conditional GET
 
@@ -408,28 +418,39 @@ which is a fixed 1 request and unrelated to adopting it as the per-tick change o
 
 ## 7. Validation
 
-Preserving the client surface buys the strongest check available: the old and new clients
-return the *same type*, so they can be diffed directly.
+`server/tests/` is the harness, built for exactly this migration — 47 tests over the real
+pieces with no services required (PGlite for Postgres with the project's own migrations,
+`ioredis-mock` for Redis, and a local HTTP/1.1 + h2c server replaying recorded responses so
+the client's hash handling, `jsonParse` and URL construction really execute). `npm test` in
+`server/`.
 
-- `server/scripts/compare-liveresultat.ts` — for a list of competition ids, call the legacy
-  `api.php` client and the new one, and diff the resulting `LiveresultatApi.getclasses` /
-  `getclassresults` objects field by field. Upstream `api.php` is still live, so this runs for
-  real against both. A clean diff across a mixed set — individual, relay, mass-start,
-  multi-day, non-Swedish, zero-results, and 40467's duplicate-upload shape — is the actual
-  evidence that Phase 1 is a drop-in. Keep it as a CI smoke test for as long as `api.php`
-  answers.
-- Fixtures for the adapter specifically: the `<code>_changed` strip, the empty-`results` →
-  `null` guard, ETag → `hash` passthrough, and `DT_RowClass` synthesis across two polls
-  (unchanged row must **not** be flagged).
+**The regression guard is the snapshot.** `flow.test.ts` drives
+HTTP → client → writer → Postgres → marshal and projects the resulting database into
+`tests/snapshots/flow.json` (serial ids and wall-clock columns excluded). When the client is
+repointed at the new API, that projection must come out identical. A diff there *is* the
+migration changing stored data.
+
+`tests/fixtures/legacy/` holds recordings from `api.php`, which this migration retires —
+**once it is switched off they cannot be made again.** `tests/fixtures/new/` holds the same
+data from the new API, ready for the adapter's own tests, so the adapter can be driven
+fixture-to-fixture and diffed against the same snapshot.
+
+Already covered, and therefore already pinned as contracts the new client must honour:
+hash store/replay, `NOT MODIFIED` → `null`, `unformattedTimes=true`, slash-encoded class
+names, `jsonrepair`, the HTTP/2 client's recovery after a dropped session, every writer
+semantic (identity, dedupe, the soft-delete sweep, `newResultAt` persistence, split parsing),
+the push events, and `isLive` / `hasRecentlyUpdated`.
+
+Still to add when the new client lands:
+
+- Run the adapter against `tests/fixtures/new/` and assert the same `flow.json` snapshot.
 - A stalled-connection case, to prove the new client has not regressed the HTTP/2 hang that
   `9ec25e3` fixed (§1.1): hold a response open past the request timeout and assert the call
   rejects rather than hanging the job.
-- Push-path fixtures, since `LiveClassWriter` now dispatches notifications (§1.1): a
-  `finish`, a `placeChange`, a `status` transition and a `start` (which needs `progress`
-  crossing zero) all still fire across two polls through the new client.
 - Two manual checks the harness cannot cover: the app still vibrates on update, since that
   path runs through the `hash` field end to end (§3); and `live_classes.status` is still
-  populated rather than null, which depends on the adapter synthesising `status: 'OK'`.
+  populated rather than null, which depends on the adapter synthesising `status: 'OK'`
+  (asserted for the legacy path by `live-class-writer.test.ts`).
 - A staging run across one competition weekend before production, comparing `live_results`
   row counts and `place` / `result` values against liveresultat.orientering.se.
 
@@ -438,11 +459,27 @@ Bruno collection with matching `seq` numbers for pairing, plus a `quirks/` folde
 request per verified behaviour below. Every request asserts its status, so
 `bru run --env production` also works as a smoke test against upstream drift.
 
+### Two findings the tests turned up
+
+- **`olCompetitionId` depends on the process timezone.** `getUtcDate` stores midnight *local
+  to the competition*, so a 2026-09-13 Swedish event is `2026-09-12T22:00:00Z`. `CompetitionId`
+  then formats that with date-fns `format`, which uses the **process** zone — so the slug's
+  date is the competition day under `TZ=Europe/Stockholm` and a day early under `TZ=UTC`.
+  Since `olCompetitionId` is the Liveresultat↔Eventor join key, a server-timezone change
+  silently re-slugs every competition. Pinned by `flow.test.ts`; worth fixing independently of
+  this migration, and worth fixing *before* the IANA-timezone step in Phase 2 moves the same
+  derivation.
+- **`LiveresultatApi.result` has never matched the wire.** `result` and `timeplus` are declared
+  `number`, but legacy sends them as strings (`"338300"`) even with
+  `unformattedTimes=true`, and as `""` when absent — which is why `parseResultNumber` exists.
+  The new API sends real integers. So the adapter does not need to convert anything, and the
+  declared types become *more* accurate after the migration, not less.
+
 ## 8. Risks
 
 | Risk | Mitigation |
 | --- | --- |
-| Unknown/renamed class → 200 + empty results → mass soft-delete | Adapter returns `null` for an empty result set, so the sweep never runs (§3) |
+| ~~Unknown/renamed class → 200 + empty results → mass soft-delete~~ | **Not a risk.** `insertResults` returns early on an empty list, ahead of the sweep — proved by `live-class-writer.test.ts` (§3) |
 | Filtered list + existing `purgeStaleCompetitions` → archive wiped | Own nightly job on the unfiltered list (step 8) |
 | Per-class ticks stay request-heavy without export | Poll tiers (§4) keep idle competitions off a hot poll; Phase 4 cuts it ~32× if the volume becomes a problem |
 | No rollback path once the legacy client is deleted | `api.php` stays live upstream, so a revert commit is the rollback; the §7 diff harness gates the deploy in the first place |

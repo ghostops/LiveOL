@@ -1,0 +1,13 @@
+{
+  "recordedAt": "2026-10-11T17:37:09.714Z",
+  "main": {
+    "comp": 40488,
+    "className": "D18A",
+    "club": "IFK Göteborg Orientering"
+  },
+  "duplicates": {
+    "comp": 40467,
+    "className": "M21E-1"
+  },
+  "note": "Recorded from the live APIs. legacy/* is what the current client consumes; new/* is what the migration must adapt to the same internal shape."
+}

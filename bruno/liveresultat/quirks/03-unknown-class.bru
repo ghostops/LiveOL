@@ -19,14 +19,15 @@ assert {
 }
 
 docs {
-  **The most dangerous behaviour in the migration.** A class that does not exist
-  returns `200` with `results: []` rather than an error.
+A class that does not exist returns `200` with `results: []` rather than an error.
 
-  `insertResults` ends with a `notInArray` sweep that soft-deletes every stored row
-  for the class that is not in the incoming set. Fed an empty set, it would wipe the
-  class — so a renamed or mistyped class silently deletes its results.
+  This looked dangerous — `insertResults` ends with a `notInArray` sweep that
+  soft-deletes stored rows missing from the incoming set, so an empty set reads like
+  it would wipe the class.
 
-  The plan handles it in the client: an empty result set returns `null` (i.e. "not
-  modified"), so the sweep never runs. The trade is deliberate — a class legitimately
-  emptied by the organiser keeps stale rows, which is the safer failure.
+  It does not. `insertResults` returns early when the parsed list is empty, ahead of
+  the sweep, so an empty payload is a no-op. Proved by
+  `server/tests/live-class-writer.test.ts` ("an empty result list is a no-op, not a
+  mass soft-delete"), and the plan was corrected accordingly — no client-side guard
+  is needed.
 }

@@ -1,0 +1,2195 @@
+{
+ "eventid": 40488,
+ "competition": {
+  "name": "SM, lång (Swedish League, #7), Final",
+  "date": "2026-09-13",
+  "organizer": "FK Göingarna",
+  "timezone": null,
+  "country": "SE",
+  "timediff": 0
+ },
+ "classes": [
+  {
+   "name": "D18A",
+   "isMassStart": false,
+   "qualificationLimits": "",
+   "radioControls": [
+    {
+     "code": 1102,
+     "name": "102"
+    },
+    {
+     "code": 1101,
+     "name": "101"
+    },
+    {
+     "code": 1119,
+     "name": "119"
+    },
+    {
+     "code": 1112,
+     "name": "112"
+    },
+    {
+     "code": 1100,
+     "name": "100"
+    }
+   ]
+  }
+ ],
+ "runners": [
+  {
+   "id": 1169,
+   "name": "Alice Hellberg",
+   "club": "Sundbybergs IK",
+   "class": "D18A",
+   "bib": "443",
+   "start": 4548000
+  },
+  {
+   "id": 1170,
+   "name": "Elvira Lindsten",
+   "club": "Nyköpings OK",
+   "class": "D18A",
+   "bib": "442",
+   "start": 4530000
+  },
+  {
+   "id": 1171,
+   "name": "Elsie Hördegårdh",
+   "club": "IFK Göteborg Orientering",
+   "class": "D18A",
+   "bib": "441",
+   "start": 4512000
+  },
+  {
+   "id": 1172,
+   "name": "Ellen Westman",
+   "club": "Sundbybergs IK",
+   "class": "D18A",
+   "bib": "440",
+   "start": 4494000
+  },
+  {
+   "id": 1173,
+   "name": "Elvira Karmstig",
+   "club": "OK Tisaren",
+   "class": "D18A",
+   "bib": "439",
+   "start": 4476000
+  },
+  {
+   "id": 1174,
+   "name": "Felicia Persson",
+   "club": "Helsingborgs SOK",
+   "class": "D18A",
+   "bib": "438",
+   "start": 4458000
+  },
+  {
+   "id": 1175,
+   "name": "Alice Slars Paulsson",
+   "club": "Sundbybergs IK",
+   "class": "D18A",
+   "bib": "437",
+   "start": 4440000
+  },
+  {
+   "id": 1176,
+   "name": "Wilma Rosén",
+   "club": "Göteborg-Majorna OK",
+   "class": "D18A",
+   "bib": "436",
+   "start": 4422000
+  },
+  {
+   "id": 1177,
+   "name": "Molly Boman",
+   "club": "Sundbybergs IK",
+   "class": "D18A",
+   "bib": "435",
+   "start": 4404000
+  },
+  {
+   "id": 1178,
+   "name": "Elsa Ehrenborg",
+   "club": "Lunds OK",
+   "class": "D18A",
+   "bib": "434",
+   "start": 4386000
+  },
+  {
+   "id": 1179,
+   "name": "Ida Pauler",
+   "club": "Skogslöparna",
+   "class": "D18A",
+   "bib": "433",
+   "start": 4368000
+  },
+  {
+   "id": 1180,
+   "name": "Maja Maxén",
+   "club": "Stora Tuna OK",
+   "class": "D18A",
+   "bib": "432",
+   "start": 4350000
+  },
+  {
+   "id": 1181,
+   "name": "Sigrid Ohlsson",
+   "club": "OK Storsjön",
+   "class": "D18A",
+   "bib": "431",
+   "start": 4332000
+  },
+  {
+   "id": 1182,
+   "name": "Vera Dahlberg",
+   "club": "Jönköpings OK",
+   "class": "D18A",
+   "bib": "430",
+   "start": 4314000
+  },
+  {
+   "id": 1183,
+   "name": "Elsa Fallgren",
+   "club": "Ulricehamns OK",
+   "class": "D18A",
+   "bib": "429",
+   "start": 4296000
+  },
+  {
+   "id": 1184,
+   "name": "Eira Olsson",
+   "club": "Åmåls OK",
+   "class": "D18A",
+   "bib": "428",
+   "start": 4278000
+  },
+  {
+   "id": 1185,
+   "name": "Wilma Jonsson",
+   "club": "OK Tyr",
+   "class": "D18A",
+   "bib": "427",
+   "start": 4260000
+  },
+  {
+   "id": 1186,
+   "name": "Iris Bergkvist",
+   "club": "OK Renen",
+   "class": "D18A",
+   "bib": "426",
+   "start": 4242000
+  },
+  {
+   "id": 1187,
+   "name": "Elina Karlsson",
+   "club": "FK Herkules",
+   "class": "D18A",
+   "bib": "425",
+   "start": 4224000
+  },
+  {
+   "id": 1188,
+   "name": "Linda Mononen",
+   "club": "Eksjö SOK",
+   "class": "D18A",
+   "bib": "424",
+   "start": 4206000
+  },
+  {
+   "id": 1189,
+   "name": "Hilma Dalin",
+   "club": "OK Kåre",
+   "class": "D18A",
+   "bib": "423",
+   "start": 4188000
+  },
+  {
+   "id": 1190,
+   "name": "Jonna Jensen Åhl",
+   "club": "Åmåls OK",
+   "class": "D18A",
+   "bib": "422",
+   "start": 4170000
+  },
+  {
+   "id": 1191,
+   "name": "Sofia Dell'Orto",
+   "club": "Sundbybergs IK",
+   "class": "D18A",
+   "bib": "421",
+   "start": 4152000
+  },
+  {
+   "id": 1192,
+   "name": "Katja Smitt",
+   "club": "Södertälje-Nykvarn OF",
+   "class": "D18A",
+   "bib": "420",
+   "start": 4134000
+  },
+  {
+   "id": 1193,
+   "name": "Elin Anzelius",
+   "club": "Hästveda OK",
+   "class": "D18A",
+   "bib": "419",
+   "start": 4116000
+  },
+  {
+   "id": 1194,
+   "name": "Tess Rylander",
+   "club": "Snättringe SK",
+   "class": "D18A",
+   "bib": "418",
+   "start": 4098000
+  },
+  {
+   "id": 1195,
+   "name": "Bodil Johansson",
+   "club": "Sundbybergs IK",
+   "class": "D18A",
+   "bib": "417",
+   "start": 4080000
+  },
+  {
+   "id": 1196,
+   "name": "Alva Mattsson",
+   "club": "Skogslöparna",
+   "class": "D18A",
+   "bib": "416",
+   "start": 4062000
+  },
+  {
+   "id": 1197,
+   "name": "Moa Jäderberg",
+   "club": "Leksands OK",
+   "class": "D18A",
+   "bib": "415",
+   "start": 4044000
+  },
+  {
+   "id": 1198,
+   "name": "Gerda Medin",
+   "club": "OK Orion",
+   "class": "D18A",
+   "bib": "414",
+   "start": 4026000
+  },
+  {
+   "id": 1199,
+   "name": "Elin Almgren",
+   "club": "Söders-Tyresö",
+   "class": "D18A",
+   "bib": "413",
+   "start": 4008000
+  },
+  {
+   "id": 1200,
+   "name": "Agnes Åberg",
+   "club": "Tolered-Utby Ol-klubb",
+   "class": "D18A",
+   "bib": "412",
+   "start": 3990000
+  },
+  {
+   "id": 1201,
+   "name": "Emma Lindkvist",
+   "club": "Almby IK",
+   "class": "D18A",
+   "bib": "411",
+   "start": 3972000
+  },
+  {
+   "id": 1202,
+   "name": "Mira Vejedal",
+   "club": "Snättringe SK",
+   "class": "D18A",
+   "bib": "410",
+   "start": 3954000
+  },
+  {
+   "id": 1203,
+   "name": "Sanna Grendelmeier",
+   "club": "Göteborg-Majorna OK",
+   "class": "D18A",
+   "bib": "409",
+   "start": 3936000
+  },
+  {
+   "id": 1204,
+   "name": "Elsa Reuter",
+   "club": "Åmåls OK",
+   "class": "D18A",
+   "bib": "408",
+   "start": 3918000
+  },
+  {
+   "id": 1205,
+   "name": "Tova Borggren",
+   "club": "Lunds OK",
+   "class": "D18A",
+   "bib": "407",
+   "start": 3900000
+  },
+  {
+   "id": 1206,
+   "name": "Hannalina Haraldsson",
+   "club": "Strängnäs-Malmby OL",
+   "class": "D18A",
+   "bib": "406",
+   "start": 3882000
+  },
+  {
+   "id": 1207,
+   "name": "Hilma Ödman",
+   "club": "Tumba-Mälarhöjden OK",
+   "class": "D18A",
+   "bib": "405",
+   "start": 3864000
+  },
+  {
+   "id": 1208,
+   "name": "Lovisa Thybeck",
+   "club": "Lindebygdens OK",
+   "class": "D18A",
+   "bib": "404",
+   "start": 3846000
+  },
+  {
+   "id": 1209,
+   "name": "Ebba Sahlstedt",
+   "club": "Söders-Tyresö",
+   "class": "D18A",
+   "bib": "403",
+   "start": 3828000
+  },
+  {
+   "id": 1210,
+   "name": "Tuva Karlsson Sandberg",
+   "club": "Nyköpings OK",
+   "class": "D18A",
+   "bib": "402",
+   "start": 3810000
+  },
+  {
+   "id": 1211,
+   "name": "Hanna Hässler",
+   "club": "Sundsvalls OK",
+   "class": "D18A",
+   "bib": "401",
+   "start": 3792000
+  }
+ ],
+ "results": [
+  {
+   "runnerId": 1169,
+   "control": 1000,
+   "time": 339000,
+   "status": 0,
+   "changed": 1789299271
+  },
+  {
+   "runnerId": 1169,
+   "control": 1100,
+   "time": 335200,
+   "status": 0,
+   "changed": 1789299233
+  },
+  {
+   "runnerId": 1169,
+   "control": 1101,
+   "time": 141400,
+   "status": 0,
+   "changed": 1789297297
+  },
+  {
+   "runnerId": 1169,
+   "control": 1102,
+   "time": 135400,
+   "status": 0,
+   "changed": 1789297234
+  },
+  {
+   "runnerId": 1169,
+   "control": 1112,
+   "time": 317500,
+   "status": 0,
+   "changed": 1789299056
+  },
+  {
+   "runnerId": 1169,
+   "control": 1119,
+   "time": 238300,
+   "status": 0,
+   "changed": 1789298263
+  },
+  {
+   "runnerId": 1170,
+   "control": 1000,
+   "time": 348700,
+   "status": 0,
+   "changed": 1789299188
+  },
+  {
+   "runnerId": 1170,
+   "control": 1100,
+   "time": 344800,
+   "status": 0,
+   "changed": 1789299151
+  },
+  {
+   "runnerId": 1170,
+   "control": 1101,
+   "time": 149900,
+   "status": 0,
+   "changed": 1789297199
+  },
+  {
+   "runnerId": 1170,
+   "control": 1102,
+   "time": 144100,
+   "status": 0,
+   "changed": 1789297141
+  },
+  {
+   "runnerId": 1170,
+   "control": 1112,
+   "time": 312000,
+   "status": 0,
+   "changed": 1789298820
+  },
+  {
+   "runnerId": 1170,
+   "control": 1119,
+   "time": 235700,
+   "status": 0,
+   "changed": 1789298057
+  },
+  {
+   "runnerId": 1171,
+   "control": 1000,
+   "time": 338300,
+   "status": 0,
+   "changed": 1789298904
+  },
+  {
+   "runnerId": 1171,
+   "control": 1100,
+   "time": 334600,
+   "status": 0,
+   "changed": 1789298866
+  },
+  {
+   "runnerId": 1171,
+   "control": 1101,
+   "time": 145600,
+   "status": 0,
+   "changed": 1789296975
+  },
+  {
+   "runnerId": 1171,
+   "control": 1102,
+   "time": 139100,
+   "status": 0,
+   "changed": 1789296911
+  },
+  {
+   "runnerId": 1171,
+   "control": 1112,
+   "time": 316400,
+   "status": 0,
+   "changed": 1789298685
+  },
+  {
+   "runnerId": 1171,
+   "control": 1119,
+   "time": 236200,
+   "status": 0,
+   "changed": 1789297882
+  },
+  {
+   "runnerId": 1172,
+   "control": 1000,
+   "time": 355800,
+   "status": 0,
+   "changed": 1789298899
+  },
+  {
+   "runnerId": 1172,
+   "control": 1100,
+   "time": 351900,
+   "status": 0,
+   "changed": 1789298860
+  },
+  {
+   "runnerId": 1172,
+   "control": 1101,
+   "time": 160600,
+   "status": 0,
+   "changed": 1789296946
+  },
+  {
+   "runnerId": 1172,
+   "control": 1102,
+   "time": 153900,
+   "status": 0,
+   "changed": 1789296879
+  },
+  {
+   "runnerId": 1172,
+   "control": 1112,
+   "time": 331100,
+   "status": 0,
+   "changed": 1789298652
+  },
+  {
+   "runnerId": 1172,
+   "control": 1119,
+   "time": 246100,
+   "status": 0,
+   "changed": 1789297801
+  },
+  {
+   "runnerId": 1173,
+   "control": 1000,
+   "time": 380300,
+   "status": 0,
+   "changed": 1789298966
+  },
+  {
+   "runnerId": 1173,
+   "control": 1100,
+   "time": 376300,
+   "status": 0,
+   "changed": 1789298923
+  },
+  {
+   "runnerId": 1173,
+   "control": 1101,
+   "time": 170500,
+   "status": 0,
+   "changed": 1789296864
+  },
+  {
+   "runnerId": 1173,
+   "control": 1102,
+   "time": 164800,
+   "status": 0,
+   "changed": 1789296808
+  },
+  {
+   "runnerId": 1173,
+   "control": 1112,
+   "time": 358000,
+   "status": 0,
+   "changed": 1789298741
+  },
+  {
+   "runnerId": 1173,
+   "control": 1119,
+   "time": 271200,
+   "status": 0,
+   "changed": 1789297873
+  },
+  {
+   "runnerId": 1174,
+   "control": 1000,
+   "time": 343000,
+   "status": 0,
+   "changed": 1789298412
+  },
+  {
+   "runnerId": 1174,
+   "control": 1100,
+   "time": 339200,
+   "status": 0,
+   "changed": 1789298373
+  },
+  {
+   "runnerId": 1174,
+   "control": 1101,
+   "time": 138200,
+   "status": 0,
+   "changed": 1789296362
+  },
+  {
+   "runnerId": 1174,
+   "control": 1102,
+   "time": 133200,
+   "status": 0,
+   "changed": 1789296312
+  },
+  {
+   "runnerId": 1174,
+   "control": 1112,
+   "time": 310900,
+   "status": 0,
+   "changed": 1789298089
+  },
+  {
+   "runnerId": 1174,
+   "control": 1119,
+   "time": 223400,
+   "status": 0,
+   "changed": 1789297214
+  },
+  {
+   "runnerId": 1175,
+   "control": 1000,
+   "time": 368400,
+   "status": 0,
+   "changed": 1789298486
+  },
+  {
+   "runnerId": 1175,
+   "control": 1100,
+   "time": 364600,
+   "status": 0,
+   "changed": 1789298446
+  },
+  {
+   "runnerId": 1175,
+   "control": 1101,
+   "time": 152700,
+   "status": 0,
+   "changed": 1789296327
+  },
+  {
+   "runnerId": 1175,
+   "control": 1102,
+   "time": 143700,
+   "status": 0,
+   "changed": 1789296237
+  },
+  {
+   "runnerId": 1175,
+   "control": 1112,
+   "time": 343100,
+   "status": 0,
+   "changed": 1789298231
+  },
+  {
+   "runnerId": 1175,
+   "control": 1119,
+   "time": 247900,
+   "status": 0,
+   "changed": 1789297279
+  },
+  {
+   "runnerId": 1176,
+   "control": 1000,
+   "time": 381700,
+   "status": 0,
+   "changed": 1789298438
+  },
+  {
+   "runnerId": 1176,
+   "control": 1100,
+   "time": 377300,
+   "status": 0,
+   "changed": 1789298393
+  },
+  {
+   "runnerId": 1176,
+   "control": 1101,
+   "time": 154200,
+   "status": 0,
+   "changed": 1789296162
+  },
+  {
+   "runnerId": 1176,
+   "control": 1102,
+   "time": 147800,
+   "status": 0,
+   "changed": 1789296098
+  },
+  {
+   "runnerId": 1176,
+   "control": 1112,
+   "time": 334400,
+   "status": 0,
+   "changed": 1789297965
+  },
+  {
+   "runnerId": 1176,
+   "control": 1119,
+   "time": 247700,
+   "status": 0,
+   "changed": 1789297097
+  },
+  {
+   "runnerId": 1177,
+   "control": 1000,
+   "time": 398300,
+   "status": 0,
+   "changed": 1789298423
+  },
+  {
+   "runnerId": 1177,
+   "control": 1100,
+   "time": 394500,
+   "status": 0,
+   "changed": 1789298385
+  },
+  {
+   "runnerId": 1177,
+   "control": 1101,
+   "time": 155400,
+   "status": 0,
+   "changed": 1789295994
+  },
+  {
+   "runnerId": 1177,
+   "control": 1102,
+   "time": 148500,
+   "status": 0,
+   "changed": 1789295924
+  },
+  {
+   "runnerId": 1177,
+   "control": 1112,
+   "time": 357400,
+   "status": 0,
+   "changed": 1789298015
+  },
+  {
+   "runnerId": 1177,
+   "control": 1119,
+   "time": 252200,
+   "status": 0,
+   "changed": 1789296963
+  },
+  {
+   "runnerId": 1178,
+   "control": 1000,
+   "time": 355800,
+   "status": 0,
+   "changed": 1789297819
+  },
+  {
+   "runnerId": 1178,
+   "control": 1100,
+   "time": 351900,
+   "status": 0,
+   "changed": 1789297779
+  },
+  {
+   "runnerId": 1178,
+   "control": 1101,
+   "time": 142100,
+   "status": 0,
+   "changed": 1789295681
+  },
+  {
+   "runnerId": 1178,
+   "control": 1102,
+   "time": 136200,
+   "status": 0,
+   "changed": 1789295622
+  },
+  {
+   "runnerId": 1178,
+   "control": 1112,
+   "time": 311400,
+   "status": 0,
+   "changed": 1789297374
+  },
+  {
+   "runnerId": 1178,
+   "control": 1119,
+   "time": 233300,
+   "status": 0,
+   "changed": 1789296593
+  },
+  {
+   "runnerId": 1179,
+   "control": 1000,
+   "time": 492200,
+   "status": 0,
+   "changed": 1789299004
+  },
+  {
+   "runnerId": 1179,
+   "control": 1100,
+   "time": 487100,
+   "status": 0,
+   "changed": 1789298955
+  },
+  {
+   "runnerId": 1179,
+   "control": 1101,
+   "time": 199800,
+   "status": 0,
+   "changed": 1789296078
+  },
+  {
+   "runnerId": 1179,
+   "control": 1102,
+   "time": 194300,
+   "status": 0,
+   "changed": 1789296023
+  },
+  {
+   "runnerId": 1179,
+   "control": 1112,
+   "time": 456900,
+   "status": 0,
+   "changed": 1789298649
+  },
+  {
+   "runnerId": 1179,
+   "control": 1119,
+   "time": 313500,
+   "status": 0,
+   "changed": 1789297215
+  },
+  {
+   "runnerId": 1180,
+   "control": 1000,
+   "time": 362200,
+   "status": 0,
+   "changed": 1789297524
+  },
+  {
+   "runnerId": 1180,
+   "control": 1100,
+   "time": 358200,
+   "status": 0,
+   "changed": 1789297487
+  },
+  {
+   "runnerId": 1180,
+   "control": 1101,
+   "time": 151200,
+   "status": 0,
+   "changed": 1789295412
+  },
+  {
+   "runnerId": 1180,
+   "control": 1102,
+   "time": 144600,
+   "status": 0,
+   "changed": 1789295346
+  },
+  {
+   "runnerId": 1180,
+   "control": 1112,
+   "time": 337300,
+   "status": 0,
+   "changed": 1789297274
+  },
+  {
+   "runnerId": 1180,
+   "control": 1119,
+   "time": 251000,
+   "status": 0,
+   "changed": 1789296411
+  },
+  {
+   "runnerId": 1181,
+   "control": 1000,
+   "time": 416000,
+   "status": 0,
+   "changed": 1789297881
+  },
+  {
+   "runnerId": 1181,
+   "control": 1100,
+   "time": 412300,
+   "status": 0,
+   "changed": 1789297843
+  },
+  {
+   "runnerId": 1181,
+   "control": 1101,
+   "time": 195200,
+   "status": 0,
+   "changed": 1789295673
+  },
+  {
+   "runnerId": 1181,
+   "control": 1102,
+   "time": 189200,
+   "status": 0,
+   "changed": 1789295612
+  },
+  {
+   "runnerId": 1181,
+   "control": 1112,
+   "time": 368100,
+   "status": 0,
+   "changed": 1789297402
+  },
+  {
+   "runnerId": 1181,
+   "control": 1119,
+   "time": 286000,
+   "status": 0,
+   "changed": 1789296581
+  },
+  {
+   "runnerId": 1182,
+   "control": 1000,
+   "time": 369000,
+   "status": 0,
+   "changed": 1789297232
+  },
+  {
+   "runnerId": 1182,
+   "control": 1100,
+   "time": 365200,
+   "status": 0,
+   "changed": 1789297252
+  },
+  {
+   "runnerId": 1182,
+   "control": 1101,
+   "time": 156800,
+   "status": 0,
+   "changed": 1789295110
+  },
+  {
+   "runnerId": 1182,
+   "control": 1102,
+   "time": 150500,
+   "status": 0,
+   "changed": 1789295045
+  },
+  {
+   "runnerId": 1182,
+   "control": 1112,
+   "time": 342400,
+   "status": 0,
+   "changed": 1789296965
+  },
+  {
+   "runnerId": 1182,
+   "control": 1119,
+   "time": 256500,
+   "status": 0,
+   "changed": 1789296105
+  },
+  {
+   "runnerId": 1183,
+   "control": 1000,
+   "time": 411400,
+   "status": 0,
+   "changed": 1789297475
+  },
+  {
+   "runnerId": 1183,
+   "control": 1100,
+   "time": 407000,
+   "status": 0,
+   "changed": 1789297431
+  },
+  {
+   "runnerId": 1183,
+   "control": 1101,
+   "time": 175500,
+   "status": 0,
+   "changed": 1789295115
+  },
+  {
+   "runnerId": 1183,
+   "control": 1102,
+   "time": 169500,
+   "status": 0,
+   "changed": 1789295055
+  },
+  {
+   "runnerId": 1183,
+   "control": 1112,
+   "time": 385700,
+   "status": 0,
+   "changed": 1789297218
+  },
+  {
+   "runnerId": 1183,
+   "control": 1119,
+   "time": 284100,
+   "status": 0,
+   "changed": 1789296201
+  },
+  {
+   "runnerId": 1184,
+   "control": 1000,
+   "time": 472300,
+   "status": 0,
+   "changed": 1789297904
+  },
+  {
+   "runnerId": 1184,
+   "control": 1100,
+   "time": 468100,
+   "status": 0,
+   "changed": 1789297861
+  },
+  {
+   "runnerId": 1184,
+   "control": 1101,
+   "time": 181500,
+   "status": 0,
+   "changed": 1789294996
+  },
+  {
+   "runnerId": 1184,
+   "control": 1102,
+   "time": 175700,
+   "status": 0,
+   "changed": 1789294937
+  },
+  {
+   "runnerId": 1184,
+   "control": 1112,
+   "time": 391800,
+   "status": 0,
+   "changed": 1789297099
+  },
+  {
+   "runnerId": 1184,
+   "control": 1119,
+   "time": 276600,
+   "status": 0,
+   "changed": 1789295946
+  },
+  {
+   "runnerId": 1185,
+   "control": 1000,
+   "time": 393000,
+   "status": 0,
+   "changed": 1789296931
+  },
+  {
+   "runnerId": 1185,
+   "control": 1100,
+   "time": 389200,
+   "status": 0,
+   "changed": 1789296893
+  },
+  {
+   "runnerId": 1185,
+   "control": 1101,
+   "time": 182200,
+   "status": 0,
+   "changed": 1789294821
+  },
+  {
+   "runnerId": 1185,
+   "control": 1102,
+   "time": 175800,
+   "status": 0,
+   "changed": 1789294758
+  },
+  {
+   "runnerId": 1185,
+   "control": 1112,
+   "time": 370400,
+   "status": 0,
+   "changed": 1789296705
+  },
+  {
+   "runnerId": 1185,
+   "control": 1119,
+   "time": 288000,
+   "status": 0,
+   "changed": 1789295881
+  },
+  {
+   "runnerId": 1186,
+   "control": 1000,
+   "time": 410300,
+   "status": 0,
+   "changed": 1789296925
+  },
+  {
+   "runnerId": 1186,
+   "control": 1100,
+   "time": 406200,
+   "status": 0,
+   "changed": 1789296882
+  },
+  {
+   "runnerId": 1186,
+   "control": 1101,
+   "time": 180600,
+   "status": 0,
+   "changed": 1789294625
+  },
+  {
+   "runnerId": 1186,
+   "control": 1102,
+   "time": 173700,
+   "status": 0,
+   "changed": 1789294557
+  },
+  {
+   "runnerId": 1186,
+   "control": 1112,
+   "time": 385600,
+   "status": 0,
+   "changed": 1789296677
+  },
+  {
+   "runnerId": 1186,
+   "control": 1119,
+   "time": 292800,
+   "status": 0,
+   "changed": 1789295749
+  },
+  {
+   "runnerId": 1187,
+   "control": 1000,
+   "time": 428900,
+   "status": 0,
+   "changed": 1789296930
+  },
+  {
+   "runnerId": 1187,
+   "control": 1100,
+   "time": 424800,
+   "status": 0,
+   "changed": 1789296950
+  },
+  {
+   "runnerId": 1187,
+   "control": 1101,
+   "time": 185800,
+   "status": 0,
+   "changed": 1789294497
+  },
+  {
+   "runnerId": 1187,
+   "control": 1102,
+   "time": 179400,
+   "status": 0,
+   "changed": 1789294434
+  },
+  {
+   "runnerId": 1187,
+   "control": 1112,
+   "time": 377700,
+   "status": 0,
+   "changed": 1789296418
+  },
+  {
+   "runnerId": 1187,
+   "control": 1119,
+   "time": 290200,
+   "status": 0,
+   "changed": 1789295542
+  },
+  {
+   "runnerId": 1188,
+   "control": 1000,
+   "time": 408400,
+   "status": 0,
+   "changed": 1789296546
+  },
+  {
+   "runnerId": 1188,
+   "control": 1100,
+   "time": 404300,
+   "status": 0,
+   "changed": 1789296503
+  },
+  {
+   "runnerId": 1188,
+   "control": 1101,
+   "time": 176100,
+   "status": 0,
+   "changed": 1789294221
+  },
+  {
+   "runnerId": 1188,
+   "control": 1102,
+   "time": 169000,
+   "status": 0,
+   "changed": 1789294149
+  },
+  {
+   "runnerId": 1188,
+   "control": 1112,
+   "time": 368600,
+   "status": 0,
+   "changed": 1789296146
+  },
+  {
+   "runnerId": 1188,
+   "control": 1119,
+   "time": 276700,
+   "status": 0,
+   "changed": 1789295227
+  },
+  {
+   "runnerId": 1189,
+   "control": 1000,
+   "time": 372400,
+   "status": 0,
+   "changed": 1789296005
+  },
+  {
+   "runnerId": 1189,
+   "control": 1100,
+   "time": 368800,
+   "status": 0,
+   "changed": 1789295969
+  },
+  {
+   "runnerId": 1189,
+   "control": 1101,
+   "time": 159200,
+   "status": 0,
+   "changed": 1789293872
+  },
+  {
+   "runnerId": 1189,
+   "control": 1102,
+   "time": 152600,
+   "status": 0,
+   "changed": 1789293806
+  },
+  {
+   "runnerId": 1189,
+   "control": 1112,
+   "time": 345500,
+   "status": 0,
+   "changed": 1789295736
+  },
+  {
+   "runnerId": 1189,
+   "control": 1119,
+   "time": 258400,
+   "status": 0,
+   "changed": 1789294864
+  },
+  {
+   "runnerId": 1190,
+   "control": 1000,
+   "time": 391000,
+   "status": 0,
+   "changed": 1789296011
+  },
+  {
+   "runnerId": 1190,
+   "control": 1100,
+   "time": 387300,
+   "status": 0,
+   "changed": 1789295976
+  },
+  {
+   "runnerId": 1190,
+   "control": 1101,
+   "time": 176300,
+   "status": 0,
+   "changed": 1789293863
+  },
+  {
+   "runnerId": 1190,
+   "control": 1102,
+   "time": 170200,
+   "status": 0,
+   "changed": 1789293802
+  },
+  {
+   "runnerId": 1190,
+   "control": 1112,
+   "time": 367700,
+   "status": 0,
+   "changed": 1789295777
+  },
+  {
+   "runnerId": 1190,
+   "control": 1119,
+   "time": 273700,
+   "status": 0,
+   "changed": 1789294837
+  },
+  {
+   "runnerId": 1191,
+   "control": 1000,
+   "time": 433200,
+   "status": 0,
+   "changed": 1789296254
+  },
+  {
+   "runnerId": 1191,
+   "control": 1100,
+   "time": 429400,
+   "status": 0,
+   "changed": 1789296215
+  },
+  {
+   "runnerId": 1191,
+   "control": 1101,
+   "time": 187100,
+   "status": 0,
+   "changed": 1789293793
+  },
+  {
+   "runnerId": 1191,
+   "control": 1102,
+   "time": 180300,
+   "status": 0,
+   "changed": 1789293723
+  },
+  {
+   "runnerId": 1191,
+   "control": 1112,
+   "time": 389300,
+   "status": 0,
+   "changed": 1789295813
+  },
+  {
+   "runnerId": 1191,
+   "control": 1119,
+   "time": 290300,
+   "status": 0,
+   "changed": 1789294824
+  },
+  {
+   "runnerId": 1192,
+   "control": 1000,
+   "time": 451000,
+   "status": 0,
+   "changed": 1789296251
+  },
+  {
+   "runnerId": 1192,
+   "control": 1100,
+   "time": 447000,
+   "status": 0,
+   "changed": 1789296211
+  },
+  {
+   "runnerId": 1192,
+   "control": 1101,
+   "time": 178400,
+   "status": 0,
+   "changed": 1789293528
+  },
+  {
+   "runnerId": 1192,
+   "control": 1102,
+   "time": 169500,
+   "status": 0,
+   "changed": 1789293435
+  },
+  {
+   "runnerId": 1192,
+   "control": 1112,
+   "time": 394300,
+   "status": 0,
+   "changed": 1789295684
+  },
+  {
+   "runnerId": 1192,
+   "control": 1119,
+   "time": 289700,
+   "status": 0,
+   "changed": 1789294637
+  },
+  {
+   "runnerId": 1193,
+   "control": 1000,
+   "time": 389400,
+   "status": 0,
+   "changed": 1789295454
+  },
+  {
+   "runnerId": 1193,
+   "control": 1100,
+   "time": 386100,
+   "status": 0,
+   "changed": 1789295425
+  },
+  {
+   "runnerId": 1193,
+   "control": 1101,
+   "time": 161100,
+   "status": 0,
+   "changed": 1789293171
+  },
+  {
+   "runnerId": 1193,
+   "control": 1102,
+   "time": 154100,
+   "status": 0,
+   "changed": 1789293101
+  },
+  {
+   "runnerId": 1193,
+   "control": 1112,
+   "time": 361700,
+   "status": 0,
+   "changed": 1789295178
+  },
+  {
+   "runnerId": 1193,
+   "control": 1119,
+   "time": 271600,
+   "status": 0,
+   "changed": 1789294276
+  },
+  {
+   "runnerId": 1194,
+   "control": 1000,
+   "time": 409600,
+   "status": 0,
+   "changed": 1789295477
+  },
+  {
+   "runnerId": 1194,
+   "control": 1100,
+   "time": 405500,
+   "status": 0,
+   "changed": 1789295526
+  },
+  {
+   "runnerId": 1194,
+   "control": 1101,
+   "time": 173400,
+   "status": 0,
+   "changed": 1789293114
+  },
+  {
+   "runnerId": 1194,
+   "control": 1102,
+   "time": 166300,
+   "status": 0,
+   "changed": 1789293043
+  },
+  {
+   "runnerId": 1194,
+   "control": 1112,
+   "time": 380800,
+   "status": 0,
+   "changed": 1789295188
+  },
+  {
+   "runnerId": 1194,
+   "control": 1119,
+   "time": 272900,
+   "status": 0,
+   "changed": 1789294109
+  },
+  {
+   "runnerId": 1195,
+   "control": 1000,
+   "time": 425900,
+   "status": 0,
+   "changed": 1789295461
+  },
+  {
+   "runnerId": 1195,
+   "control": 1100,
+   "time": 421700,
+   "status": 0,
+   "changed": 1789295419
+  },
+  {
+   "runnerId": 1195,
+   "control": 1101,
+   "time": 169000,
+   "status": 0,
+   "changed": 1789292890
+  },
+  {
+   "runnerId": 1195,
+   "control": 1102,
+   "time": 162400,
+   "status": 0,
+   "changed": 1789292824
+  },
+  {
+   "runnerId": 1195,
+   "control": 1112,
+   "time": 391400,
+   "status": 0,
+   "changed": 1789295115
+  },
+  {
+   "runnerId": 1195,
+   "control": 1119,
+   "time": 289700,
+   "status": 0,
+   "changed": 1789294097
+  },
+  {
+   "runnerId": 1196,
+   "control": 1000,
+   "time": 474700,
+   "status": 0,
+   "changed": 1789295768
+  },
+  {
+   "runnerId": 1196,
+   "control": 1100,
+   "time": 470000,
+   "status": 0,
+   "changed": 1789295724
+  },
+  {
+   "runnerId": 1196,
+   "control": 1101,
+   "time": 211600,
+   "status": 0,
+   "changed": 1789293135
+  },
+  {
+   "runnerId": 1196,
+   "control": 1102,
+   "time": 204000,
+   "status": 0,
+   "changed": 1789293060
+  },
+  {
+   "runnerId": 1196,
+   "control": 1112,
+   "time": 430900,
+   "status": 0,
+   "changed": 1789295329
+  },
+  {
+   "runnerId": 1196,
+   "control": 1119,
+   "time": 323000,
+   "status": 0,
+   "changed": 1789294250
+  },
+  {
+   "runnerId": 1197,
+   "control": 1000,
+   "time": 432800,
+   "status": 0,
+   "changed": 1789295169
+  },
+  {
+   "runnerId": 1197,
+   "control": 1100,
+   "time": 428500,
+   "status": 0,
+   "changed": 1789295124
+  },
+  {
+   "runnerId": 1197,
+   "control": 1101,
+   "time": 172100,
+   "status": 0,
+   "changed": 1789292561
+  },
+  {
+   "runnerId": 1197,
+   "control": 1102,
+   "time": 165200,
+   "status": 0,
+   "changed": 1789292492
+  },
+  {
+   "runnerId": 1197,
+   "control": 1112,
+   "time": 398200,
+   "status": 0,
+   "changed": 1789294822
+  },
+  {
+   "runnerId": 1197,
+   "control": 1119,
+   "time": 292100,
+   "status": 0,
+   "changed": 1789293761
+  },
+  {
+   "runnerId": 1198,
+   "control": 1000,
+   "time": 414400,
+   "status": 0,
+   "changed": 1789294805
+  },
+  {
+   "runnerId": 1198,
+   "control": 1100,
+   "time": 410500,
+   "status": 0,
+   "changed": 1789294770
+  },
+  {
+   "runnerId": 1198,
+   "control": 1101,
+   "time": 179400,
+   "status": 0,
+   "changed": 1789292453
+  },
+  {
+   "runnerId": 1198,
+   "control": 1102,
+   "time": 172700,
+   "status": 0,
+   "changed": 1789292387
+  },
+  {
+   "runnerId": 1198,
+   "control": 1112,
+   "time": 380300,
+   "status": 0,
+   "changed": 1789294464
+  },
+  {
+   "runnerId": 1198,
+   "control": 1119,
+   "time": 288300,
+   "status": 0,
+   "changed": 1789293544
+  },
+  {
+   "runnerId": 1199,
+   "control": 1000,
+   "time": 431200,
+   "status": 0,
+   "changed": 1789294794
+  },
+  {
+   "runnerId": 1199,
+   "control": 1100,
+   "time": 426500,
+   "status": 0,
+   "changed": 1789294745
+  },
+  {
+   "runnerId": 1199,
+   "control": 1101,
+   "time": 187700,
+   "status": 0,
+   "changed": 1789292357
+  },
+  {
+   "runnerId": 1199,
+   "control": 1102,
+   "time": 180200,
+   "status": 0,
+   "changed": 1789292282
+  },
+  {
+   "runnerId": 1199,
+   "control": 1112,
+   "time": 397500,
+   "status": 0,
+   "changed": 1789294456
+  },
+  {
+   "runnerId": 1199,
+   "control": 1119,
+   "time": 291000,
+   "status": 0,
+   "changed": 1789293390
+  },
+  {
+   "runnerId": 1200,
+   "control": 1000,
+   "time": 486600,
+   "status": 0,
+   "changed": 1789295168
+  },
+  {
+   "runnerId": 1200,
+   "control": 1100,
+   "time": 482100,
+   "status": 0,
+   "changed": 1789295183
+  },
+  {
+   "runnerId": 1200,
+   "control": 1101,
+   "time": 214300,
+   "status": 0,
+   "changed": 1789292443
+  },
+  {
+   "runnerId": 1200,
+   "control": 1102,
+   "time": 206100,
+   "status": 0,
+   "changed": 1789292361
+  },
+  {
+   "runnerId": 1200,
+   "control": 1112,
+   "time": 451900,
+   "status": 0,
+   "changed": 1789294819
+  },
+  {
+   "runnerId": 1200,
+   "control": 1119,
+   "time": 359100,
+   "status": 0,
+   "changed": 1789293892
+  },
+  {
+   "runnerId": 1201,
+   "control": 1000,
+   "time": 400200,
+   "status": 0,
+   "changed": 1789294123
+  },
+  {
+   "runnerId": 1201,
+   "control": 1100,
+   "time": 396300,
+   "status": 0,
+   "changed": 1789294083
+  },
+  {
+   "runnerId": 1201,
+   "control": 1101,
+   "time": 180100,
+   "status": 0,
+   "changed": 1789291920
+  },
+  {
+   "runnerId": 1201,
+   "control": 1102,
+   "time": 173300,
+   "status": 0,
+   "changed": 1789291853
+  },
+  {
+   "runnerId": 1201,
+   "control": 1112,
+   "time": 376100,
+   "status": 0,
+   "changed": 1789293881
+  },
+  {
+   "runnerId": 1201,
+   "control": 1119,
+   "time": 277800,
+   "status": 0,
+   "changed": 1789292898
+  },
+  {
+   "runnerId": 1202,
+   "control": 1000,
+   "time": 439600,
+   "status": 0,
+   "changed": 1789294337
+  },
+  {
+   "runnerId": 1202,
+   "control": 1100,
+   "time": 435100,
+   "status": 0,
+   "changed": 1789294293
+  },
+  {
+   "runnerId": 1202,
+   "control": 1101,
+   "time": 183500,
+   "status": 0,
+   "changed": 1789291775
+  },
+  {
+   "runnerId": 1202,
+   "control": 1102,
+   "time": 176100,
+   "status": 0,
+   "changed": 1789291700
+  },
+  {
+   "runnerId": 1202,
+   "control": 1112,
+   "time": 387600,
+   "status": 0,
+   "changed": 1789293816
+  },
+  {
+   "runnerId": 1202,
+   "control": 1119,
+   "time": 288100,
+   "status": 0,
+   "changed": 1789292820
+  },
+  {
+   "runnerId": 1203,
+   "control": 1000,
+   "time": 462200,
+   "status": 0,
+   "changed": 1789294384
+  },
+  {
+   "runnerId": 1203,
+   "control": 1100,
+   "time": 456900,
+   "status": 0,
+   "changed": 1789294329
+  },
+  {
+   "runnerId": 1203,
+   "control": 1101,
+   "time": 185300,
+   "status": 0,
+   "changed": 1789291613
+  },
+  {
+   "runnerId": 1203,
+   "control": 1102,
+   "time": 177000,
+   "status": 0,
+   "changed": 1789291530
+  },
+  {
+   "runnerId": 1203,
+   "control": 1112,
+   "time": 416300,
+   "status": 0,
+   "changed": 1789293923
+  },
+  {
+   "runnerId": 1203,
+   "control": 1119,
+   "time": 298800,
+   "status": 0,
+   "changed": 1789292749
+  },
+  {
+   "runnerId": 1204,
+   "control": 1000,
+   "time": 477500,
+   "status": 0,
+   "changed": 1789294356
+  },
+  {
+   "runnerId": 1204,
+   "control": 1100,
+   "time": 473300,
+   "status": 0,
+   "changed": 1789294313
+  },
+  {
+   "runnerId": 1204,
+   "control": 1101,
+   "time": 181500,
+   "status": 0,
+   "changed": 1789291413
+  },
+  {
+   "runnerId": 1204,
+   "control": 1102,
+   "time": 173900,
+   "status": 0,
+   "changed": 1789291413
+  },
+  {
+   "runnerId": 1204,
+   "control": 1112,
+   "time": 423100,
+   "status": 0,
+   "changed": 1789293811
+  },
+  {
+   "runnerId": 1204,
+   "control": 1119,
+   "time": 290300,
+   "status": 0,
+   "changed": 1789292484
+  },
+  {
+   "runnerId": 1205,
+   "control": 1000,
+   "time": 496600,
+   "status": 0,
+   "changed": 1789294366
+  },
+  {
+   "runnerId": 1205,
+   "control": 1100,
+   "time": 492200,
+   "status": 0,
+   "changed": 1789294322
+  },
+  {
+   "runnerId": 1205,
+   "control": 1101,
+   "time": 221900,
+   "status": 0,
+   "changed": 1789291619
+  },
+  {
+   "runnerId": 1205,
+   "control": 1102,
+   "time": 214400,
+   "status": 0,
+   "changed": 1789291545
+  },
+  {
+   "runnerId": 1205,
+   "control": 1112,
+   "time": 463900,
+   "status": 0,
+   "changed": 1789294040
+  },
+  {
+   "runnerId": 1205,
+   "control": 1119,
+   "time": 353400,
+   "status": 0,
+   "changed": 1789292935
+  },
+  {
+   "runnerId": 1206,
+   "control": 1000,
+   "time": 452200,
+   "status": 0,
+   "changed": 1789293743
+  },
+  {
+   "runnerId": 1206,
+   "control": 1100,
+   "time": 447800,
+   "status": 0,
+   "changed": 1789293699
+  },
+  {
+   "runnerId": 1206,
+   "control": 1101,
+   "time": 213300,
+   "status": 0,
+   "changed": 1789291413
+  },
+  {
+   "runnerId": 1206,
+   "control": 1102,
+   "time": 206000,
+   "status": 0,
+   "changed": 1789291413
+  },
+  {
+   "runnerId": 1206,
+   "control": 1112,
+   "time": 419000,
+   "status": 0,
+   "changed": 1789293412
+  },
+  {
+   "runnerId": 1206,
+   "control": 1119,
+   "time": 326100,
+   "status": 0,
+   "changed": 1789292482
+  },
+  {
+   "runnerId": 1207,
+   "control": 1000,
+   "time": 454900,
+   "status": 0,
+   "changed": 1789293591
+  },
+  {
+   "runnerId": 1207,
+   "control": 1100,
+   "time": 451100,
+   "status": 0,
+   "changed": 1789293554
+  },
+  {
+   "runnerId": 1207,
+   "control": 1101,
+   "time": 188500,
+   "status": 0,
+   "changed": 1789291413
+  },
+  {
+   "runnerId": 1207,
+   "control": 1102,
+   "time": 178900,
+   "status": 0,
+   "changed": 1789291413
+  },
+  {
+   "runnerId": 1207,
+   "control": 1112,
+   "time": 399600,
+   "status": 0,
+   "changed": 1789293036
+  },
+  {
+   "runnerId": 1207,
+   "control": 1119,
+   "time": 290800,
+   "status": 0,
+   "changed": 1789291948
+  },
+  {
+   "runnerId": 1208,
+   "control": 1000,
+   "time": 421100,
+   "status": 0,
+   "changed": 1789293073
+  },
+  {
+   "runnerId": 1208,
+   "control": 1100,
+   "time": 416600,
+   "status": 0,
+   "changed": 1789293026
+  },
+  {
+   "runnerId": 1208,
+   "control": 1101,
+   "time": 178800,
+   "status": 0,
+   "changed": 1789291413
+  },
+  {
+   "runnerId": 1208,
+   "control": 1102,
+   "time": 171200,
+   "status": 0,
+   "changed": 1789291413
+  },
+  {
+   "runnerId": 1208,
+   "control": 1112,
+   "time": 386900,
+   "status": 0,
+   "changed": 1789292729
+  },
+  {
+   "runnerId": 1208,
+   "control": 1119,
+   "time": 297300,
+   "status": 0,
+   "changed": 1789291833
+  },
+  {
+   "runnerId": 1209,
+   "control": 1000,
+   "time": 411300,
+   "status": 0,
+   "changed": 1789292794
+  },
+  {
+   "runnerId": 1209,
+   "control": 1100,
+   "time": 407100,
+   "status": 0,
+   "changed": 1789292754
+  },
+  {
+   "runnerId": 1209,
+   "control": 1101,
+   "time": 181300,
+   "status": 0,
+   "changed": 1789291413
+  },
+  {
+   "runnerId": 1209,
+   "control": 1102,
+   "time": 174400,
+   "status": 0,
+   "changed": 1789291413
+  },
+  {
+   "runnerId": 1209,
+   "control": 1112,
+   "time": 385400,
+   "status": 0,
+   "changed": 1789292535
+  },
+  {
+   "runnerId": 1209,
+   "control": 1119,
+   "time": 297300,
+   "status": 0,
+   "changed": 1789291653
+  },
+  {
+   "runnerId": 1210,
+   "control": 1000,
+   "time": 474900,
+   "status": 0,
+   "changed": 1789293250
+  },
+  {
+   "runnerId": 1210,
+   "control": 1100,
+   "time": 469900,
+   "status": 0,
+   "changed": 1789293198
+  },
+  {
+   "runnerId": 1210,
+   "control": 1101,
+   "time": 202300,
+   "status": 0,
+   "changed": 1789291413
+  },
+  {
+   "runnerId": 1210,
+   "control": 1102,
+   "time": 194200,
+   "status": 0,
+   "changed": 1789291413
+  },
+  {
+   "runnerId": 1210,
+   "control": 1112,
+   "time": 438600,
+   "status": 0,
+   "changed": 1789292887
+  },
+  {
+   "runnerId": 1210,
+   "control": 1119,
+   "time": 314300,
+   "status": 0,
+   "changed": 1789291643
+  },
+  {
+   "runnerId": 1211,
+   "control": 1000,
+   "time": 454100,
+   "status": 0,
+   "changed": 1789292862
+  },
+  {
+   "runnerId": 1211,
+   "control": 1100,
+   "time": 449700,
+   "status": 0,
+   "changed": 1789292817
+  },
+  {
+   "runnerId": 1211,
+   "control": 1101,
+   "time": 201100,
+   "status": 0,
+   "changed": 1789291413
+  },
+  {
+   "runnerId": 1211,
+   "control": 1102,
+   "time": 193200,
+   "status": 0,
+   "changed": 1789291413
+  },
+  {
+   "runnerId": 1211,
+   "control": 1112,
+   "time": 414200,
+   "status": 0,
+   "changed": 1789292463
+  },
+  {
+   "runnerId": 1211,
+   "control": 1119,
+   "time": 312700,
+   "status": 0,
+   "changed": 1789291447
+  }
+ ],
+ "_trimmed": "Trimmed to class D18A to keep the fixture small; re-record with tests/record-fixtures.ts for the full payload."
+}
