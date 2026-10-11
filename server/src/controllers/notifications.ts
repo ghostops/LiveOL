@@ -166,6 +166,7 @@ export const unregisterPushToken = defaultEndpointsFactory
   });
 
 const TEST_PUSH_COOLDOWN_SECONDS = 30;
+export const TEST_PUSH_COOLDOWN = 'test_push_cooldown';
 
 /** Sends a test notification to every device registered to the user. */
 export const sendTestPush = defaultEndpointsFactory
@@ -186,7 +187,7 @@ export const sendTestPush = defaultEndpointsFactory
         'NX',
       );
       if (!cooldown) {
-        throw createHttpError(429, 'Wait a moment before sending another test');
+        throw createHttpError(429, TEST_PUSH_COOLDOWN);
       }
 
       const tokens = (

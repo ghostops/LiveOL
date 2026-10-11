@@ -1,5 +1,4 @@
 import { useActionSheet } from '@expo/react-native-action-sheet';
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   ActivityIndicator,
@@ -20,7 +19,8 @@ import {
 } from '~/hooks/useNotificationSettings';
 import { canReceivePush } from '~/lib/push';
 import { syncPushRegistration } from '~/lib/push/registration';
-import { $fetch } from '~/lib/react-query/api';
+import { $api } from '~/lib/react-query/api';
+import { isTestPushCooldownError } from '~/lib/react-query/errors';
 import { useUserIdStore } from '~/store/userId';
 import { usePushStore } from '~/store/push';
 import { COLORS, px } from '~/util/const';
@@ -54,7 +54,8 @@ export const OLSceneNotificationSettings = () => {
   const permissionStatus = usePushStore(state => state.permissionStatus);
   const eventLabels = useEventLabels();
   const userId = useUserIdStore(state => state.userId);
-  const [isSendingTest, setIsSendingTest] = useState(false);
+  const { mutateAsync: sendTestPush, isPending: isSendingTest } =
+    $api.useMutation('post', '/v2/notifications/push/test');
 
   if (isLoading || !settings) {
     return (
@@ -77,17 +78,11 @@ export const OLSceneNotificationSettings = () => {
   };
 
   const sendTestNotification = async () => {
-    setIsSendingTest(true);
     try {
       // Make sure the server has this device's current token first
       await syncPushRegistration(userId);
-      const { data, response } = await $fetch.POST(
-        '/v2/notifications/push/test',
-        { body: { uid: userId } },
-      );
-      if (response.status === 429) {
-        Alert.alert(t('Wait a moment before sending another test'));
-      } else if (!data || data.data.sent === 0) {
+      const { data } = await sendTestPush({ body: { uid: userId } });
+      if (data.sent === 0) {
         Alert.alert(
           t('No notification sent'),
           t('This device is not registered for notifications yet.'),
@@ -98,10 +93,12 @@ export const OLSceneNotificationSettings = () => {
           t('It should arrive within a few seconds.'),
         );
       }
-    } catch {
-      Alert.alert(t('Could not send a test notification'));
-    } finally {
-      setIsSendingTest(false);
+    } catch (error) {
+      Alert.alert(
+        isTestPushCooldownError(error)
+          ? t('Wait a moment before sending another test')
+          : t('Could not send a test notification'),
+      );
     }
   };
 
