@@ -205,7 +205,9 @@ export const sendTestPush = defaultEndpointsFactory
             ? 'Notiser fungerar på den här enheten.'
             : 'Notifications are working on this device.',
         },
-        data: { type: 'test' },
+        // No `type`: the Android app derives its channel from it, and only
+        // results_* channels for real events exist (MainApplication.kt)
+        data: {},
         android: {
           notification: {
             channelId: androidChannelId('finish'),
