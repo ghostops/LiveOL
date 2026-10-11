@@ -45,6 +45,14 @@ export class LiveClassWriter {
     competitionId: number,
     classResults: LiveresultatApi.getclassresults,
   ): Promise<void> {
+    // Liveresultat sometimes answers without a class name; there is nothing to store
+    if (!classResults.className) {
+      logger.warn(
+        `Skipping class results without className (${competitionId}, status ${classResults.status})`,
+      );
+      return;
+    }
+
     const hashedClassId = await this.insertClass(competitionId, classResults);
     await this.insertSplitControls(hashedClassId, classResults);
     const events = await this.insertResults(
