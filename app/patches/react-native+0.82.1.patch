@@ -14,7 +14,7 @@ index d2ddf3c..6f8d791 100755
  fi
  
 +# HARDCODE
-+NODE_BINARY="/Users/ghost/.nvm/versions/node/v22.18.0/bin/node"
++NODE_BINARY="/Users/ghost/.nvm/versions/node/v24.19.0/bin/node"
 +
  # Execute argument, if present
  if [ -n "$1" ]; then
