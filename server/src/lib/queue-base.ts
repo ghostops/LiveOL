@@ -37,6 +37,11 @@ export interface QueueConfig {
 
 export interface WorkerConfig {
   concurrency: number;
+  /**
+   * Fail a job that runs longer than this. BullMQ keeps renewing the lock of a
+   * hung job forever, so without it one stuck job can block the worker.
+   */
+  jobTimeoutMs?: number;
   limiter?: {
     max: number;
     duration: number;
@@ -86,7 +91,31 @@ export abstract class QueueBase {
       logger.warn(`Unknown job type in ${this.queueName}: ${job.name}`);
       return false;
     }
-    await handler(job.data);
+    const { jobTimeoutMs } = this.getWorkerConfig();
+    if (!jobTimeoutMs) {
+      await handler(job.data);
+      return true;
+    }
+
+    let timer: NodeJS.Timeout | undefined;
+    try {
+      await Promise.race([
+        handler(job.data),
+        new Promise((_, reject) => {
+          timer = setTimeout(
+            () =>
+              reject(
+                new Error(
+                  `Job ${job.name} (${job.id}) timed out after ${jobTimeoutMs}ms`,
+                ),
+              ),
+            jobTimeoutMs,
+          );
+        }),
+      ]);
+    } finally {
+      if (timer) clearTimeout(timer);
+    }
     return true;
   }
 
