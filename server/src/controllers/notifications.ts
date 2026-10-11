@@ -1,6 +1,7 @@
 import { z } from 'zod/v4';
 import { defaultEndpointsFactory } from 'express-zod-api';
-import { and, eq } from 'drizzle-orm';
+import { and, eq, inArray } from 'drizzle-orm';
+import createHttpError from 'http-errors';
 import { apiSingletons } from 'lib/singletons';
 import { OLPushTokensTable, OLUsersTable } from 'lib/db/schema';
 import { userMiddleware } from 'middleware/user';
@@ -14,6 +15,8 @@ import {
   PERMISSION_STATUSES,
 } from 'lib/notifications/types';
 import { invalidateTrackedIndex } from 'lib/notifications/tracked-index';
+import { sendToTokens } from 'lib/notifications/fcm';
+import { androidChannelId } from 'jobs/push/send-push';
 
 const api = apiSingletons.createApiSingletons();
 
@@ -159,5 +162,66 @@ export const unregisterPushToken = defaultEndpointsFactory
       await invalidateTrackedIndex(api.Redis);
 
       return { success: true };
+    },
+  });
+
+const TEST_PUSH_COOLDOWN_SECONDS = 30;
+export const TEST_PUSH_COOLDOWN = 'test_push_cooldown';
+
+/** Sends a test notification to every device registered to the user. */
+export const sendTestPush = defaultEndpointsFactory
+  .addMiddleware(userMiddleware)
+  .build({
+    method: 'post',
+    input: z.object({}),
+    output: z.object({
+      devices: z.number(),
+      sent: z.number(),
+    }),
+    handler: async ({ options: { user } }) => {
+      const cooldown = await api.Redis.set(
+        `push:test:${user.id}`,
+        '1',
+        'EX',
+        TEST_PUSH_COOLDOWN_SECONDS,
+        'NX',
+      );
+      if (!cooldown) {
+        throw createHttpError(429, TEST_PUSH_COOLDOWN);
+      }
+
+      const tokens = (
+        await api.Drizzle.db
+          .select({ token: OLPushTokensTable.token })
+          .from(OLPushTokensTable)
+          .where(eq(OLPushTokensTable.olUserId, user.id))
+      ).map(row => row.token);
+
+      const sv = user.language === 'sv';
+      const result = await sendToTokens(tokens, {
+        notification: {
+          title: sv ? 'Testnotis från LiveOL' : 'LiveOL test notification',
+          body: sv
+            ? 'Notiser fungerar på den här enheten.'
+            : 'Notifications are working on this device.',
+        },
+        data: { type: 'test' },
+        android: {
+          notification: {
+            channelId: androidChannelId('finish'),
+            icon: 'ic_notification',
+          },
+        },
+        apns: { payload: { aps: { sound: 'default' } } },
+      });
+
+      if (result.deadTokens.length > 0) {
+        await api.Drizzle.db
+          .delete(OLPushTokensTable)
+          .where(inArray(OLPushTokensTable.token, result.deadTokens));
+        await invalidateTrackedIndex(api.Redis);
+      }
+
+      return { devices: tokens.length, sent: result.sent };
     },
   });

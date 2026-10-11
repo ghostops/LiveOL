@@ -215,5 +215,12 @@
   "Average position": "Prosečna pozicija",
   "View my races": "Pogledaj moje trke",
   "App settings": "Podešavanja aplikacije",
-  "Text size": "Veličina teksta"
+  "Text size": "Veličina teksta",
+  "Send test notification": "Pošalji test obaveštenje",
+  "Wait a moment before sending another test": "Sačekaj trenutak pre slanja novog testa",
+  "No notification sent": "Nijedno obaveštenje nije poslato",
+  "This device is not registered for notifications yet.": "Ovaj uređaj još nije registrovan za obaveštenja.",
+  "Test notification sent": "Test obaveštenje poslato",
+  "It should arrive within a few seconds.": "Trebalo bi da stigne za nekoliko sekundi.",
+  "Could not send a test notification": "Slanje test obaveštenja nije uspelo"
 }

@@ -2,6 +2,7 @@ import { useActionSheet } from '@expo/react-native-action-sheet';
 import { useTranslation } from 'react-i18next';
 import {
   ActivityIndicator,
+  Alert,
   ScrollView,
   StyleSheet,
   Switch,
@@ -17,6 +18,10 @@ import {
   useNotificationSettings,
 } from '~/hooks/useNotificationSettings';
 import { canReceivePush } from '~/lib/push';
+import { syncPushRegistration } from '~/lib/push/registration';
+import { $api } from '~/lib/react-query/api';
+import { isTestPushCooldownError } from '~/lib/react-query/errors';
+import { useUserIdStore } from '~/store/userId';
 import { usePushStore } from '~/store/push';
 import { COLORS, px } from '~/util/const';
 import { OLButton } from '~/views/components/button';
@@ -48,6 +53,9 @@ export const OLSceneNotificationSettings = () => {
   const { enable, openSystemSettings } = useEnableNotifications();
   const permissionStatus = usePushStore(state => state.permissionStatus);
   const eventLabels = useEventLabels();
+  const userId = useUserIdStore(state => state.userId);
+  const { mutateAsync: sendTestPush, isPending: isSendingTest } =
+    $api.useMutation('post', '/v2/notifications/push/test');
 
   if (isLoading || !settings) {
     return (
@@ -66,6 +74,31 @@ export const OLSceneNotificationSettings = () => {
       await enable();
     } else {
       await update({ enabled: false });
+    }
+  };
+
+  const sendTestNotification = async () => {
+    try {
+      // Make sure the server has this device's current token first
+      await syncPushRegistration(userId);
+      const { data } = await sendTestPush({ body: { uid: userId } });
+      if (data.sent === 0) {
+        Alert.alert(
+          t('No notification sent'),
+          t('This device is not registered for notifications yet.'),
+        );
+      } else {
+        Alert.alert(
+          t('Test notification sent'),
+          t('It should arrive within a few seconds.'),
+        );
+      }
+    } catch (error) {
+      Alert.alert(
+        isTestPushCooldownError(error)
+          ? t('Wait a moment before sending another test')
+          : t('Could not send a test notification'),
+      );
     }
   };
 
@@ -118,6 +151,19 @@ export const OLSceneNotificationSettings = () => {
           trackColor={{ true: COLORS.MAIN }}
         />
       </View>
+
+      {enabled && !permissionBlocked && (
+        <TouchableOpacity
+          style={styles.item}
+          onPress={sendTestNotification}
+          disabled={isSendingTest}
+        >
+          <OLText size={16} style={{ color: COLORS.MAIN }}>
+            {t('Send test notification')}
+          </OLText>
+          {isSendingTest && <ActivityIndicator color={COLORS.MAIN} />}
+        </TouchableOpacity>
+      )}
 
       <View style={styles.header}>
         <OLText bold size={14}>

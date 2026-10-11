@@ -244,5 +244,12 @@
   "Turn on": "Slå på",
   "Unlock with LiveOL+": "Lås upp med LiveOL+",
   "Use my notification settings": "Använd mina notisinställningar",
-  "You can turn notifications off for a single runner when editing them.": "Du kan stänga av notiser för en enskild löpare när du redigerar den."
+  "You can turn notifications off for a single runner when editing them.": "Du kan stänga av notiser för en enskild löpare när du redigerar den.",
+  "Send test notification": "Skicka testnotis",
+  "Wait a moment before sending another test": "Vänta en stund innan du skickar ett nytt test",
+  "No notification sent": "Ingen notis skickades",
+  "This device is not registered for notifications yet.": "Den här enheten är inte registrerad för notiser än.",
+  "Test notification sent": "Testnotis skickad",
+  "It should arrive within a few seconds.": "Den bör komma fram inom några sekunder.",
+  "Could not send a test notification": "Kunde inte skicka en testnotis"
 }

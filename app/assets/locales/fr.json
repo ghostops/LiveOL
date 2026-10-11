@@ -215,5 +215,12 @@
   "Average position": "Position moyenne",
   "View my races": "Voir mes courses",
   "App settings": "Paramètres de l'application",
-  "Text size": "Taille du texte"
+  "Text size": "Taille du texte",
+  "Send test notification": "Envoyer une notification de test",
+  "Wait a moment before sending another test": "Patientez un instant avant d’envoyer un autre test",
+  "No notification sent": "Aucune notification envoyée",
+  "This device is not registered for notifications yet.": "Cet appareil n’est pas encore enregistré pour les notifications.",
+  "Test notification sent": "Notification de test envoyée",
+  "It should arrive within a few seconds.": "Elle devrait arriver dans quelques secondes.",
+  "Could not send a test notification": "Impossible d’envoyer une notification de test"
 }
