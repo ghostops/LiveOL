@@ -13,5 +13,7 @@ export const OLChangelogEntriesTable = pgTable('ol_changelog_entries', {
   title: varchar({ length: 255 }).notNull(),
   content: text().notNull(), // Markdown content
   publishedAt: timestamp().notNull(),
+  // Only shown to apps at or above this version, e.g. "4.1.0". Null = everyone
+  minAppVersion: varchar({ length: 32 }),
   ...commonFields,
 });

@@ -92,6 +92,13 @@
       "when": 1791658158800,
       "tag": "0012_push_notifications",
       "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "7",
+      "when": 1791719668849,
+      "tag": "0013_changelog_min_app_version",
+      "breakpoints": true
     }
   ]
 }
