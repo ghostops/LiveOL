@@ -20,6 +20,7 @@ const singletons = apiSingletons.createApiSingletons();
     singletons.Queue.FastQueue.startWorker(),
     singletons.Queue.RegularQueue.startWorker(),
     singletons.Queue.RepeatingQueue.startWorker(),
+    singletons.Queue.PushQueue.startWorker(),
   ]);
 
   // Start the job scheduler
@@ -38,6 +39,7 @@ async function gracefulShutdown() {
     singletons.Queue.FastQueue.stopWorker(),
     singletons.Queue.RegularQueue.stopWorker(),
     singletons.Queue.RepeatingQueue.stopWorker(),
+    singletons.Queue.PushQueue.stopWorker(),
   ]);
 }
 

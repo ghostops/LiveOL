@@ -64,8 +64,6 @@
   "saved events were removed": "los eventos guardados fueron eliminados",
   "Rate the app": "Valora la app",
   "Information": "Información",
-  "Translations with the help from": "App traducida por",
-  "Help out translating - Get free LiveOL+": "Ayuda a traducir la aplicación y obtén LiveOL+ gratis",
   "Translations powered by": "Traducciones desarrolladas por",
   "Check for updates": "Comprobar actualizaciones",
   "Update now": "Actualiza ahora",
@@ -217,6 +215,5 @@
   "Average position": "Posición promedio",
   "View my races": "Ver mis carreras",
   "App settings": "Ajustes de la aplicación",
-  "Text size": "Tamaño del texto",
-  "Translations": "Traducciones"
+  "Text size": "Tamaño del texto"
 }

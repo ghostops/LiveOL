@@ -80,3 +80,6 @@ buck-out/
 
 # Schema
 schema.d.ts
+# Firebase config (kept local, see AppDelegate.mm / build.gradle)
+ios/LiveOL/GoogleService-Info.plist
+android/app/google-services.json

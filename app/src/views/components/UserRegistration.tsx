@@ -5,6 +5,7 @@ import { useIap } from '~/hooks/useIap';
 import { useUserRegistration } from '~/hooks/useUserRegistration';
 import { useDeviceIdStore } from '~/store/deviceId';
 import { useUserIdStore } from '~/store/userId';
+import { queryClient } from '~/lib/react-query/client';
 
 export const UserRegistration = () => {
   const deviceId = useDeviceIdStore(state => state.deviceId);
@@ -33,6 +34,11 @@ export const UserRegistration = () => {
 
         if (response?.uid) {
           setUserId(response.uid);
+          // Plus status decides follow limits and which notifications are allowed
+          queryClient.invalidateQueries({
+            queryKey: ['get', '/v2/notifications/settings'],
+          });
+          queryClient.invalidateQueries({ queryKey: ['get', '/v2/tracking'] });
         }
       } catch (error) {
         __DEV__ &&

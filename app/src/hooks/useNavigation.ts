@@ -19,3 +19,5 @@ export const useOLNavigationRef = () => {
     getNavRef: () => navRef,
   };
 };
+
+export const getNavigationRef = () => navRef;

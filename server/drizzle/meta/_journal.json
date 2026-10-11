@@ -85,6 +85,13 @@
       "when": 1742601600000,
       "tag": "0011_purge_old_live_results",
       "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1791658158800,
+      "tag": "0012_push_notifications",
+      "breakpoints": true
     }
   ]
 }

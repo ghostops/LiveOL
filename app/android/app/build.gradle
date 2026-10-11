@@ -128,3 +128,8 @@ dependencies {
         implementation jscFlavor
     }
 }
+
+// Push notifications are disabled until google-services.json is added
+if (file("google-services.json").exists()) {
+    apply plugin: "com.google.gms.google-services"
+}

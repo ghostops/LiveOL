@@ -1,0 +1,7 @@
+<resources>
+    <string name="notification_channel_finish">Målgång</string>
+    <string name="notification_channel_split">Mellantider</string>
+    <string name="notification_channel_start">Start</string>
+    <string name="notification_channel_status">Utgått, felstämplat och diskvalificerad</string>
+    <string name="notification_channel_place">Ändrad placering</string>
+</resources>
