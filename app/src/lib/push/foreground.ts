@@ -20,6 +20,9 @@ type ForegroundNotificationModule = {
 const native: ForegroundNotificationModule | undefined =
   NativeModules.LiveOLForegroundNotification;
 
+/** Event types with a notification channel (created in MainApplication.kt). */
+const CHANNEL_TYPES = ['finish', 'split', 'start', 'status', 'placeChange'];
+
 /** Taps on foreground notifications open the app with this URI prefix. */
 const PUSH_LINK_PREFIX = 'liveol-push://open';
 
@@ -45,8 +48,12 @@ export const showForegroundNotification = (
     return;
   }
 
-  // Channel ids match androidChannelId() in server/src/jobs/push/send-push.ts
-  const channelId = data.type ? `results_${data.type}` : 'results_finish';
+  // Channel ids match androidChannelId() in server/src/jobs/push/send-push.ts.
+  // Android silently drops notifications posted to a channel that doesn't exist.
+  const channelId =
+    data.type && CHANNEL_TYPES.includes(data.type)
+      ? `results_${data.type}`
+      : 'results_finish';
   native.show(title, body ?? null, channelId, data.liveResultId ?? null, data);
 };
 
