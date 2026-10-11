@@ -1,7 +1,8 @@
 # Migration plan: Liveresultat REST API (`api.orienteering.services`)
 
 Status: proposal. Verified against the live API on 2026-09-19 (every claim below was
-probed with real requests; raw samples in the appendix).
+probed with real requests; raw samples in the appendix), and re-checked against `master`
+on 2026-10-11 — see §1.1 for what shipped since and what it changes here.
 
 **This is a drop-in replacement.** `LiveresultatAPIClient` keeps its method names and return
 types; the new endpoints are adapted to the existing `LiveresultatApi` shapes inside
@@ -24,12 +25,63 @@ Phases 2–4 and are listed separately so they can be backed out on their own.
 | Competition info | legacy `GET /api.php?method=getcompetitioninfo&comp=` |
 | Classes | legacy `getclasses` + `last_hash` (Redis `liveresultat:lastHash:classes:{id}`) |
 | Class results | legacy `getclassresults&unformattedTimes=true` + `last_hash` |
-| Transport | `axios` (`lib/liveresultat/client.ts`) **and** a hand-rolled HTTP/2 client (`lib/liveresultat/http2-client.ts`) with duplicated hash logic, both on `liveresultat.orientering.se` |
+| Transport | `axios` (`lib/liveresultat/client.ts`) **and** a hand-rolled HTTP/2 client (`lib/liveresultat/http2-client.ts`) with duplicated hash logic, both on `liveresultat.orientering.se`. The HTTP/2 one is now production-hardened — see §1.1 |
 | Change detection | `last_hash` → `status: "NOT MODIFIED"`; "new result" inferred from `DT_RowClass` |
-| Result identity | `md5(classId + name + club)`, plus a `:start:seq` suffix to break collisions — **kept** unless §5 is adopted |
+| Push notifications | `LiveClassWriter` diffs the **previous DB row** against the incoming one (`lib/notifications/detect.ts`) and dispatches events — a second change-detection consumer (§1.1) |
+| Result identity | `md5(classId + name + club)`, plus a `:start:seq` suffix to break collisions — **kept** unless §5 is adopted. Now also the push path's join key (§1.1) |
 | `/v2` leak | `getResultByLiveClassId` returns the `last_hash` value as `hash`; the app vibrates on it changing (§3) |
 | Sync shape | `sync-live-competitions` → `sync-live-competition` → `sync-live-class`, **one request per class** |
 | Dead code | `lib/liveresultat/scrape.ts` — exported, referenced nowhere |
+
+## 1.1 What shipped on `master` since this plan was written
+
+Nine commits landed, and they touched exactly the files this plan is about. Three of them
+change what the plan should do.
+
+### `http2-client.ts` is no longer dead weight — don't just delete it
+
+`9ec25e3` ("Fix HTTP/2 polling and repeating queue hanging after days in production")
+hardened it against a real outage:
+
+| Hardening | Why it exists |
+| --- | --- |
+| `REQUEST_TIMEOUT_MS = 15_000` via `req.setTimeout` | a stalled stream never settled and blocked the job forever |
+| `PING_INTERVAL_MS = 30_000` / `PING_TIMEOUT_MS = 10_000` keepalive | a silently dropped TCP connection (NAT/LB idle timeout, half-open socket) hung the next request |
+| `session.on('goaway', reset)` + teardown before replace | half-closed sessions were being reused |
+| `on` rather than `once` for `error` | a second `error` with no listener crashed the process |
+| settle-once guard around resolve/reject | a stream could settle twice |
+| late-`close` guard (`if (this.session === session)`) | an old session's close event dropped a newer one |
+
+The original plan said "delete `http2-client.ts` (superseded)". Deleting it now throws away
+production bug fixes bought with an outage. **The `undici` client in Phase 1 must
+demonstrably cover every row above** — request timeout, idle/half-open detection, GOAWAY,
+never-settling streams — and the §7 harness should include a stalled-connection case.
+`undici` gives most of this (`headersTimeout`, `bodyTimeout`, connection pooling with
+keep-alive probing) but it has to be configured for it, not assumed.
+
+### The writer now drives push notifications
+
+`3a0c8ad` gave `LiveClassWriter` an optional `PushNotifier`. It diffs the **previous
+`live_results` row** against the incoming one via `detectResultChanges` /
+`detectSplitChange` and dispatches `finish`, `placeChange`, `status`, `start` and split
+events.
+
+Two consequences:
+
+- **Good news for the adapter.** `detect.ts` compares DB state, *not* `DT_RowClass`. So the
+  adapter's `DT_RowClass` synthesis (§3) affects only `newResultAt` → `hasRecentlyUpdated`
+  in `marshal/results.ts`, i.e. the UI highlight. Push is insulated from it.
+- **`progress` is now load-bearing for a notification.** The `start` event fires on
+  `!prev.progress && next.progress > 0`. `progress` comes only from `/classresults`, which
+  is one more reason export cannot replace it (§5).
+
+### `classResults.status` became load-bearing
+
+`092a02d` added a guard that returns early when `className` is missing, logging
+`classResults.status`, and `insertClass` writes `status: classResults.status` into
+`live_classes.status`. The new API has **no envelope `status` field**, so the adapter must
+synthesise `status: 'OK'` — already in §3's contract table, but now it is required rather
+than cosmetic. Without it that column goes null and the warning logs `undefined`.
 
 ## 2. Endpoint mapping and field differences
 
@@ -245,6 +297,14 @@ tie-break — **10.7 %** of export runners omit it. Residual ambiguity is no wor
 `:start:seq`, and the common case is strictly better: the id survives a rename or a club
 correction, where the md5 does not.
 
+**The push path keys on `liveResultId` too.** Since `3a0c8ad`, `findTrackedResults` builds
+its map with `tracked.set(body.liveResultId, …)` and loads prior state with
+`inArray(LiveResultsTable.liveResultId, …)` (`live-class-writer.ts`). So swapping the key
+touches notifications, not just rows. The failure mode is benign but should be expected:
+during the dual-write window every tracked runner briefly has no matching previous row, and
+`detect.ts` deliberately skips results without one — so a tick yields *no* notifications
+rather than wrong ones. Cut over between competition days and it is invisible.
+
 **`/v2` keeps its `liveResultId` field.** `resultSchema` in `controllers/results.ts` exposes
 `liveResultId: z.string()`, and shipped app builds use it — in
 `app/src/views/scenes/tracking/results.tsx` it is the FlashList `keyExtractor`, its only use.
@@ -272,9 +332,12 @@ holds ≤3 days (`purge-old-live-results`), so this drains on its own — no arc
 4. Re-point `LiveresultatAPIClient` at the new endpoints behind its existing method
    signatures, with the field mapping and the two adapter-level correctness fixes in §3.
    `types.ts` is **not** changed.
-5. **Delete** `http2-client.ts` (superseded — `sync-active-live-competitions` goes back to the
-   one client), `scrape.ts` (already dead code), and the `jsonrepair` dependency — its only
+5. **Delete** `scrape.ts` (already dead code) and the `jsonrepair` dependency — its only
    purpose was repairing malformed legacy responses; the new API returns valid JSON.
+   `http2-client.ts` is replaced **only once** the new client provably covers the hardening
+   in §1.1 (request timeout, ping keepalive, GOAWAY, settle-once, late-close guard);
+   until then keep it. Re-introducing that production hang would cost far more than the
+   duplicate client does.
 6. Verify against the comparison harness in §7 before the behaviour phases land, so any
    regression is attributable to the swap alone.
 
@@ -358,8 +421,15 @@ return the *same type*, so they can be diffed directly.
 - Fixtures for the adapter specifically: the `<code>_changed` strip, the empty-`results` →
   `null` guard, ETag → `hash` passthrough, and `DT_RowClass` synthesis across two polls
   (unchanged row must **not** be flagged).
-- One manual check the harness cannot cover: confirm the app still vibrates on update, since
-  that path runs through the `hash` field end to end (§3).
+- A stalled-connection case, to prove the new client has not regressed the HTTP/2 hang that
+  `9ec25e3` fixed (§1.1): hold a response open past the request timeout and assert the call
+  rejects rather than hanging the job.
+- Push-path fixtures, since `LiveClassWriter` now dispatches notifications (§1.1): a
+  `finish`, a `placeChange`, a `status` transition and a `start` (which needs `progress`
+  crossing zero) all still fire across two polls through the new client.
+- Two manual checks the harness cannot cover: the app still vibrates on update, since that
+  path runs through the `hash` field end to end (§3); and `live_classes.status` is still
+  populated rather than null, which depends on the adapter synthesising `status: 'OK'`.
 - A staging run across one competition weekend before production, comparing `live_results`
   row counts and `place` / `result` values against liveresultat.orientering.se.
 
@@ -378,10 +448,13 @@ request per verified behaviour below. Every request asserts its status, so
 | No rollback path once the legacy client is deleted | `api.php` stays live upstream, so a revert commit is the rollback; the §7 diff harness gates the deploy in the first place |
 | Deleting the `last_hash` keys silently kills the app's vibrate-on-update | ETag stored in those same keys; `hash` keeps changing exactly when content does (§3) |
 | ETag varying with `accept-encoding` → permanent cache misses | Fixed `accept-encoding` header |
+| Replacing `http2-client.ts` loses the hardening behind a past production hang | Keep it until the new client covers every row in §1.1, with a stalled-connection test (§7) |
+| Adapter omits the envelope `status`, nulling `live_classes.status` | Synthesise `status: 'OK'` (§3); asserted by a manual check (§7) |
 | `changed`-derived `DT_RowClass` changes the app's "new result" highlight | High-water mark per class, synthesised in the adapter; fixtures assert an unchanged row is not flagged |
 | *(Phase 4 only)* Duplicate-upload competitions mint two ids for one runner, where the md5 merged them | Tie-break on finish result then a stable sequence (§5); measured residual 2 of 23 groups on the worst class found |
 | *(Phase 4 only)* `classresults` has no runner id, so identity depends on an in-memory join | Join is `(class, name, club)` + tie-breaks; export is already fetched on every writing tick, so no extra requests (§5) |
 | *(Phase 4 only)* Dropping the `liveResultId` column breaks old app builds' list keys | The `/v2` field is retained, derived from the new key (§5) |
+| *(Phase 4 only)* Re-keying rows makes the push path see every tracked runner as new | `detect.ts` skips results with no previous row, so a tick yields no notifications rather than wrong ones; cut over between competition days (§5) |
 
 ## 9. Appendix — verified samples
 
