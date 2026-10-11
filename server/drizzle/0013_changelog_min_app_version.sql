@@ -1,0 +1,1 @@
+ALTER TABLE "ol_changelog_entries" ADD COLUMN "minAppVersion" varchar(32);

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { $api } from '~/lib/react-query/api';
 import { useChangelogStore } from '~/store/changelog';
 import { useOLNavigationRef } from '~/hooks/useNavigation';
+import { VERSION } from '~/util/const';
 
 export const ChangelogChecker: React.FC = () => {
   const { getNavRef } = useOLNavigationRef();
@@ -9,7 +10,7 @@ export const ChangelogChecker: React.FC = () => {
   const [hasChecked, setHasChecked] = useState(false);
 
   const { data } = $api.useQuery('get', '/v2/changelog', {
-    params: { query: { limit: 10, offset: 0 } },
+    params: { query: { limit: 10, offset: 0, appVersion: VERSION } },
   });
 
   useEffect(() => {
