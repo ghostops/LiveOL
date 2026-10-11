@@ -64,8 +64,6 @@
   "saved events were removed": "sačuvani događaji su uklonjeni",
   "Rate the app": "Oceni aplikaciju",
   "Information": "Informacije",
-  "Translations with the help from": "Aplikaciju preveo",
-  "Help out translating - Get free LiveOL+": "Pomozi sa prevodom aplikacije i dobij besplatan LiveOL+",
   "Translations powered by": "Prevedeno uz pomoć",
   "Check for updates": "Proveri ažuriranja",
   "Update now": "Ažuriraj sada",
@@ -120,7 +118,7 @@
   "Get highlighted": "Budi istaknut",
   "See your followed runners instantly highlighted in competition results.": "Vidi svoje praćene trkače odmah istaknute u rezultatima takmičenja.",
   "Follow multiple runners": "Prati više trkača",
-  "If you have LiveOL+ you can follow as many runners as you like, otherwise you are restricted to following yourself.": "Ako imaš LiveOL+ možeš pratiti koliko god trkača želiš, inače si ograničen na praćenje sebe.",
+  "Without LiveOL+ you can follow yourself and one other runner. With LiveOL+ you can follow as many runners as you like.": "Bez LiveOL+ možeš pratiti sebe i još jednog trkača. Sa LiveOL+ možeš pratiti koliko god trkača želiš.",
   "Pro tip": "Profesionalni savet",
   "Add multiple clubs if your runner competes for different organizations. The system will find them wherever they race!": "Dodaj više klubova ako tvoj trkač se takmiči za različite organizacije. Sistem će ih pronaći gde god da trče!",
   "Subscription": "Pretplata",
@@ -218,5 +216,11 @@
   "View my races": "Pogledaj moje trke",
   "App settings": "Podešavanja aplikacije",
   "Text size": "Veličina teksta",
-  "Translations": "Prevodi"
+  "Send test notification": "Pošalji test obaveštenje",
+  "Wait a moment before sending another test": "Sačekaj trenutak pre slanja novog testa",
+  "No notification sent": "Nijedno obaveštenje nije poslato",
+  "This device is not registered for notifications yet.": "Ovaj uređaj još nije registrovan za obaveštenja.",
+  "Test notification sent": "Test obaveštenje poslato",
+  "It should arrive within a few seconds.": "Trebalo bi da stigne za nekoliko sekundi.",
+  "Could not send a test notification": "Slanje test obaveštenja nije uspelo"
 }

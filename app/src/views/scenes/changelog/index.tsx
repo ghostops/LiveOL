@@ -7,7 +7,7 @@ import { useOLNavigation } from '~/hooks/useNavigation';
 import { useChangelogStore } from '~/store/changelog';
 import { OLText } from '~/views/components/text';
 import { OLButton } from '~/views/components/button';
-import { COLORS, px } from '~/util/const';
+import { COLORS, px, VERSION } from '~/util/const';
 import { paths } from '~/lib/react-query/schema';
 import { StyleSheet } from 'react-native';
 
@@ -21,7 +21,7 @@ export const OLSceneChangelog: React.FC = () => {
   const [entries, setEntries] = useState<Entry[]>([]);
 
   const { data, isLoading } = $api.useQuery('get', '/v2/changelog', {
-    params: { query: { limit: 50, offset: 0 } },
+    params: { query: { limit: 50, offset: 0, appVersion: VERSION } },
   });
 
   useEffect(() => {

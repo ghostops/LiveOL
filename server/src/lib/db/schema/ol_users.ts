@@ -1,6 +1,7 @@
-import { integer, pgTable, varchar } from 'drizzle-orm/pg-core';
+import { integer, jsonb, pgTable, varchar } from 'drizzle-orm/pg-core';
 import { commonFields } from './commonFields';
 import { boolean } from 'drizzle-orm/pg-core';
+import type { NotificationPrefs } from '../../notifications/types';
 
 export const OLUsersTable = pgTable('ol_users', {
   id: integer().primaryKey().generatedByDefaultAsIdentity(),
@@ -8,5 +9,6 @@ export const OLUsersTable = pgTable('ol_users', {
   deviceId: varchar({ length: 255 }).notNull().unique(),
   hasPlus: boolean().notNull().default(false),
   language: varchar({ length: 16 }).notNull().default('en'),
+  notificationPrefs: jsonb().$type<NotificationPrefs>(),
   ...commonFields,
 });

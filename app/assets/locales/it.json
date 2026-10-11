@@ -64,8 +64,6 @@
   "saved events were removed": "gli eventi salvati sono stati rimossi",
   "Rate the app": "Vota la app",
   "Information": "Informazioni",
-  "Translations with the help from": "App tradotta da",
-  "Help out translating - Get free LiveOL+": "Aiutaci a tradurre l'app e ricevi gratuitamente LiveOL+",
   "Translations powered by": "Traduzioni tramite",
   "Check for updates": "Controlla presenza di aggiornamenti",
   "Update now": "Aggiorna adesso",
@@ -120,7 +118,7 @@
   "Get highlighted": "Evidenziazione",
   "See your followed runners instantly highlighted in competition results.": "Vedi i tuoi concorrenti seguiti immediatamente evidenziati nei risultati della gara.",
   "Follow multiple runners": "Segui più concorrenti",
-  "If you have LiveOL+ you can follow as many runners as you like, otherwise you are restricted to following yourself.": "Se hai LiveOL+ puoi seguire tutti i concorrenti che desideri, altrimenti sei limitato a seguire solo te stesso.",
+  "Without LiveOL+ you can follow yourself and one other runner. With LiveOL+ you can follow as many runners as you like.": "Senza LiveOL+ puoi seguire te stesso e un altro concorrente. Con LiveOL+ puoi seguire tutti i concorrenti che vuoi.",
   "Pro tip": "Suggerimento",
   "Add multiple clubs if your runner competes for different organizations. The system will find them wherever they race!": "Aggiungi più società se il tuo concorrente gareggia per diverse organizzazioni. Il sistema li troverà ovunque gareggino!",
   "Subscription": "Abbonamento",
@@ -218,5 +216,11 @@
   "View my races": "Vedi le mie gare",
   "App settings": "Impostazioni app",
   "Text size": "Dimensione testo",
-  "Translations": "Traduzioni"
+  "Send test notification": "Invia notifica di prova",
+  "Wait a moment before sending another test": "Attendi un momento prima di inviare un’altra prova",
+  "No notification sent": "Nessuna notifica inviata",
+  "This device is not registered for notifications yet.": "Questo dispositivo non è ancora registrato per le notifiche.",
+  "Test notification sent": "Notifica di prova inviata",
+  "It should arrive within a few seconds.": "Dovrebbe arrivare entro pochi secondi.",
+  "Could not send a test notification": "Impossibile inviare la notifica di prova"
 }

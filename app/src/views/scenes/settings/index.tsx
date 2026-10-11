@@ -15,6 +15,7 @@ import { OLFlag } from '~/views/components/lang/flag';
 import { useOLNavigation } from '~/hooks/useNavigation';
 import { RefreshInterval } from '../profile/RefreshInterval';
 import { useUserIdStore } from '~/store/userId';
+import { OLIcon } from '~/views/components/icon';
 
 const ITEM_TEXT_SIZE = 14;
 
@@ -52,9 +53,6 @@ export const OLSceneSettings = () => {
   const handleGoToWebsite = () => {
     Linking.openURL('https://orienteeringliveresults.com/ludvig-larsendahl');
   };
-  const handleHelpTranslate = () => {
-    Linking.openURL('https://orienteeringliveresults.com/translate');
-  };
   const handleOpenTerms = () =>
     Linking.openURL('https://orienteeringliveresults.com/terms');
   const handleOpenPrivacy = () =>
@@ -79,6 +77,20 @@ export const OLSceneSettings = () => {
         style={{ flex: 1 }}
         contentContainerStyle={{ paddingBottom: px(64) }}
       >
+        <View style={{ margin: px(8) }}>
+          <OLText bold size={14}>
+            {t('Notifications')}
+          </OLText>
+        </View>
+
+        <TouchableOpacity
+          style={styles.item}
+          onPress={() => navigate('NotificationSettings')}
+        >
+          <OLText size={16}>{t('Notifications')}</OLText>
+          <OLIcon name="chevron-forward" size={18} color={COLORS.GRAY} />
+        </TouchableOpacity>
+
         <View style={{ margin: px(8) }}>
           <OLText bold size={14}>
             {t('Appearance')}
@@ -194,47 +206,6 @@ export const OLSceneSettings = () => {
         <TouchableOpacity style={styles.item} onPress={handleOpenPrivacy}>
           <OLText size={16}>{t('Privacy Policy')}</OLText>
         </TouchableOpacity>
-
-        <View style={{ margin: px(8) }}>
-          <OLText bold size={14}>
-            {t('Translations')}
-          </OLText>
-        </View>
-
-        <TouchableOpacity style={styles.item} onPress={handleHelpTranslate}>
-          <OLText size={16}>
-            {t('Help out translating - Get free LiveOL+')}
-          </OLText>
-        </TouchableOpacity>
-
-        <View
-          style={[
-            styles.item,
-            { flexDirection: 'column', alignItems: 'flex-start', gap: px(8) },
-          ]}
-        >
-          <OLText bold size={14}>
-            {t('Translations with the help from')}:
-          </OLText>
-          {translationCredits.map(({ code, name }, index) => (
-            <View
-              key={`${code}:${index}`}
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                width: '100%',
-              }}
-            >
-              <OLText size={16}>{name}</OLText>
-
-              <OLFlag
-                code={code}
-                size={16}
-                style={{ borderColor: COLORS.GRAY, borderWidth: 1 }}
-              />
-            </View>
-          ))}
-        </View>
       </ScrollView>
     </View>
   );
@@ -252,30 +223,3 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-
-const translationCredits: { code: string; name: string }[] = [
-  {
-    code: 'no',
-    name: 'Pål Kittilsen',
-  },
-  {
-    code: 'sr',
-    name: 'Nikola Spaskovic',
-  },
-  {
-    code: 'it',
-    name: 'Paolo Gallerani',
-  },
-  {
-    code: 'cs',
-    name: 'Petr Havliček',
-  },
-  {
-    code: 'de',
-    name: 'Petr Havliček',
-  },
-  {
-    code: 'es',
-    name: 'Adrian Perez',
-  },
-];

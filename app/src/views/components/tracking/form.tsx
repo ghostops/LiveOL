@@ -14,6 +14,11 @@ import { OLClubsTrackingInput } from '~/views/components/tracking/clubs';
 import { OLNameTrackingInput } from '~/views/scenes/tracking/name';
 import { useDebounce, useThrottledCallback } from 'use-debounce';
 import { TrackingInfoIcon } from '../TrackingInfoIcon';
+import { useIap } from '~/hooks/useIap';
+import { isPlusRequiredError } from '~/lib/react-query/errors';
+import { usePushStore } from '~/store/push';
+import { useEnableNotifications } from '~/hooks/useEnableNotifications';
+import { useNotificationSettings } from '~/hooks/useNotificationSettings';
 
 export type OLTrackingFormMode = 'create' | 'edit';
 
@@ -39,6 +44,13 @@ export const OLTrackingForm = ({
   const { px } = useTheme();
   const { goBack } = useOLNavigation();
   const userId = useUserIdStore(state => state.userId);
+  const { presentPaywall } = useIap();
+  const { enable } = useEnableNotifications();
+  const { settings: notificationSettings } = useNotificationSettings();
+  const hasPromptedOnFollow = usePushStore(state => state.hasPromptedOnFollow);
+  const setHasPromptedOnFollow = usePushStore(
+    state => state.setHasPromptedOnFollow,
+  );
 
   const [name, setName] = useState(initialRunner?.name || '');
   const [debouncedName] = useDebounce(name, 500);
@@ -137,12 +149,31 @@ export const OLTrackingForm = ({
             queryKey: ['get', '/v2/tracking'],
           });
           goBack();
+
+          // Ask once, right when it's relevant, instead of on app launch
+          if (
+            mode === 'create' &&
+            !hasPromptedOnFollow &&
+            notificationSettings &&
+            !notificationSettings.prefs.enabled
+          ) {
+            setHasPromptedOnFollow();
+            enable({
+              reason: t('Get a notification when {{name}} finishes?', {
+                name: debouncedName.trim(),
+              }),
+            });
+          }
         } else {
           await queryClient.invalidateQueries({
             queryKey: ['get', '/v2/tracking/self'],
           });
         }
       } catch (error: any) {
+        if (isPlusRequiredError(error)) {
+          presentPaywall();
+          return;
+        }
         Alert.alert(t('Error'), error.message || t('Failed to save runner'));
       }
     },

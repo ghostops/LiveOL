@@ -6,6 +6,14 @@ import { OLUsersTable } from 'lib/db/schema/ol_users';
 import { and, desc, eq } from 'drizzle-orm';
 import createHttpError from 'http-errors';
 import { userMiddleware } from 'middleware/user';
+import {
+  countFollowedRunners,
+  FREE_FOLLOW_LIMIT,
+  partitionTracking,
+  plusRequired,
+} from 'lib/entitlements';
+import { NOTIFICATION_EVENTS } from 'lib/notifications/types';
+import { invalidateTrackedIndex } from 'lib/notifications/tracked-index';
 
 const api = apiSingletons.createApiSingletons();
 
@@ -21,6 +29,9 @@ const updateTrackingSchema = z.object({
   id: z.coerce.number(),
   name: z.string().min(1).max(255),
   clubs: z.array(z.string().max(255)).default([]),
+  notify: z.boolean().optional(),
+  // Per-runner event override, Plus only. null resets to the global settings.
+  notifyEvents: z.array(z.enum(NOTIFICATION_EVENTS)).nullable().optional(),
 });
 
 const deleteTrackingSchema = z.object({
@@ -36,6 +47,13 @@ const trackingResponseSchema = z.object({
   id: z.number(),
   name: z.string(),
   clubs: z.array(z.string()),
+  notify: z.boolean(),
+  notifyEvents: z.array(z.enum(NOTIFICATION_EVENTS)).nullable(),
+});
+
+const listedTrackingSchema = trackingResponseSchema.extend({
+  // Followed beyond the free limit by a user without Plus
+  locked: z.boolean(),
 });
 
 // List tracked runners for a user
@@ -43,7 +61,11 @@ export const listTracking = defaultEndpointsFactory.build({
   method: 'get',
   input: listTrackingSchema,
   output: z.object({
-    tracking: z.array(trackingResponseSchema),
+    tracking: z.array(listedTrackingSchema),
+    limits: z.object({
+      maxFollowed: z.number().nullable(),
+      followedCount: z.number(),
+    }),
   }),
   handler: async ({ input }) => {
     const { uid } = input;
@@ -71,7 +93,19 @@ export const listTracking = defaultEndpointsFactory.build({
       )
       .orderBy(desc(OLTrackingTable.createdAt));
 
-    return { tracking: trackingRecords };
+    const { locked } = partitionTracking(user, trackingRecords);
+    const lockedIds = new Set(locked.map(t => t.id));
+
+    return {
+      tracking: trackingRecords.map(t => ({
+        ...t,
+        locked: lockedIds.has(t.id),
+      })),
+      limits: {
+        maxFollowed: user.hasPlus ? null : FREE_FOLLOW_LIMIT,
+        followedCount: trackingRecords.length,
+      },
+    };
   },
 });
 
@@ -94,6 +128,14 @@ export const createTracking = defaultEndpointsFactory.build({
       throw createHttpError(404, 'User not found');
     }
 
+    if (
+      !isMe &&
+      !user.hasPlus &&
+      (await countFollowedRunners(api.Drizzle.db, user.id)) >= FREE_FOLLOW_LIMIT
+    ) {
+      throw plusRequired();
+    }
+
     // Create runner
     const [tracking] = await api.Drizzle.db
       .insert(OLTrackingTable)
@@ -109,6 +151,8 @@ export const createTracking = defaultEndpointsFactory.build({
       throw createHttpError(500, 'Failed to create tracking record');
     }
 
+    await invalidateTrackedIndex(api.Redis);
+
     return tracking;
   },
 });
@@ -119,7 +163,7 @@ export const updateTracking = defaultEndpointsFactory.build({
   input: updateTrackingSchema,
   output: trackingResponseSchema,
   handler: async ({ input }) => {
-    const { id, name, clubs } = input;
+    const { id, name, clubs, notify, notifyEvents } = input;
 
     // Get tracking record to find runner ID
     const [trackingRecord] = await api.Drizzle.db
@@ -132,12 +176,25 @@ export const updateTracking = defaultEndpointsFactory.build({
       throw createHttpError(404, 'Tracking record not found');
     }
 
+    if (notifyEvents) {
+      const [owner] = await api.Drizzle.db
+        .select({ hasPlus: OLUsersTable.hasPlus })
+        .from(OLUsersTable)
+        .where(eq(OLUsersTable.id, trackingRecord.olUserId))
+        .limit(1);
+      if (!owner?.hasPlus) {
+        throw plusRequired();
+      }
+    }
+
     // Update tracking record timestamp
     const [updatedTracking] = await api.Drizzle.db
       .update(OLTrackingTable)
       .set({
         name,
         clubs,
+        notify,
+        notifyEvents,
         updatedAt: new Date(),
       })
       .where(eq(OLTrackingTable.id, id))
@@ -146,6 +203,8 @@ export const updateTracking = defaultEndpointsFactory.build({
     if (!updatedTracking) {
       throw createHttpError(500, 'Failed to update tracking record');
     }
+
+    await invalidateTrackedIndex(api.Redis);
 
     return updatedTracking;
   },
@@ -164,6 +223,8 @@ export const deleteTracking = defaultEndpointsFactory.build({
     await api.Drizzle.db
       .delete(OLTrackingTable)
       .where(eq(OLTrackingTable.id, id));
+
+    await invalidateTrackedIndex(api.Redis);
 
     return { success: true };
   },

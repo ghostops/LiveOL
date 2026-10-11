@@ -1,4 +1,4 @@
-import { and, eq, isNull, notInArray, sql } from 'drizzle-orm';
+import { and, eq, inArray, isNull, notInArray, sql } from 'drizzle-orm';
 import {
   LiveClassesTable,
   LiveResultsTable,
@@ -11,8 +11,24 @@ import type { NodePgDatabase } from 'drizzle-orm/node-postgres';
 import type { LiveresultatApi } from 'lib/liveresultat/types';
 import { OrganizationId, RunnerId } from 'lib/match/generateIds';
 import crypto from 'crypto';
+import logger from 'lib/logger';
+import type { PushEvent, PushNotifier } from 'lib/notifications/notifier';
+import type { TrackedSubscriber } from 'lib/notifications/tracked-index';
+import {
+  DetectedChange,
+  detectResultChanges,
+  detectSplitChange,
+} from 'lib/notifications/detect';
 
 type Db = NodePgDatabase<Record<string, never>>;
+
+type ResultBody = Omit<typeof LiveResultsTable.$inferInsert, 'id'>;
+
+type TrackedResult = {
+  subscribers: TrackedSubscriber[];
+  /** Absent for results seen for the first time; those never notify */
+  hasPrevious: boolean;
+};
 
 /**
  * Encapsulates all DB write logic for a single live class sync.
@@ -20,15 +36,98 @@ type Db = NodePgDatabase<Record<string, never>>;
  * SyncActiveLiveCompetitionsJob (bulk in-process sync).
  */
 export class LiveClassWriter {
-  constructor(private readonly db: Db) {}
+  constructor(
+    private readonly db: Db,
+    private readonly notifier?: PushNotifier,
+  ) {}
 
   async write(
     competitionId: number,
     classResults: LiveresultatApi.getclassresults,
   ): Promise<void> {
+    // Liveresultat sometimes answers without a class name; there is nothing to store
+    if (!classResults.className) {
+      logger.warn(
+        `Skipping class results without className (${competitionId}, status ${classResults.status})`,
+      );
+      return;
+    }
+
     const hashedClassId = await this.insertClass(competitionId, classResults);
     await this.insertSplitControls(hashedClassId, classResults);
-    await this.insertResults(hashedClassId, competitionId, classResults);
+    const events = await this.insertResults(
+      hashedClassId,
+      competitionId,
+      classResults,
+    );
+
+    if (this.notifier && events.length > 0) {
+      // Notifications must never break result syncing
+      await this.notifier.dispatch(events).catch(error => {
+        logger.error(`Push: failed to dispatch events: ${error}`);
+      });
+    }
+  }
+
+  /**
+   * Finds the results in this class that someone wants notifications for, and
+   * whether we have seen them before. Only these get diffed.
+   */
+  private async findTrackedResults(
+    parsedResults: { body: ResultBody }[],
+  ): Promise<Map<string, TrackedResult & { previous?: ResultBody }>> {
+    const tracked = new Map<
+      string,
+      TrackedResult & { previous?: ResultBody }
+    >();
+    if (!this.notifier) return tracked;
+
+    const index = await this.notifier.getIndex();
+    for (const { body } of parsedResults) {
+      const subscribers = this.notifier.subscribersFor(index, body.olRunnerId);
+      if (subscribers?.length) {
+        tracked.set(body.liveResultId, { subscribers, hasPrevious: false });
+      }
+    }
+
+    if (tracked.size === 0) return tracked;
+
+    const previousRows = await this.db
+      .select()
+      .from(LiveResultsTable)
+      .where(inArray(LiveResultsTable.liveResultId, [...tracked.keys()]));
+
+    for (const row of previousRows) {
+      const entry = tracked.get(row.liveResultId);
+      if (entry) {
+        entry.hasPrevious = true;
+        entry.previous = row;
+      }
+    }
+
+    return tracked;
+  }
+
+  private toEvent(
+    change: DetectedChange,
+    body: ResultBody,
+    className: string,
+    subscribers: TrackedSubscriber[],
+  ): PushEvent {
+    return {
+      type: change.type,
+      key: change.key,
+      liveResultId: body.liveResultId,
+      liveCompetitionId: body.liveCompetitionId,
+      liveClassId: body.liveClassId,
+      className,
+      runnerName: body.name,
+      club: body.organization ?? null,
+      result: body.result ?? null,
+      place: body.place ?? null,
+      status: body.status ?? null,
+      subscribers,
+    };
   }
 
   private async insertClass(
@@ -123,7 +222,7 @@ export class LiveClassWriter {
     hashedClassId: string,
     competitionId: number,
     classResults: LiveresultatApi.getclassresults,
-  ): Promise<void> {
+  ): Promise<PushEvent[]> {
     const firstPass = classResults.results
       .map(result => {
         const compositeId = [
@@ -151,7 +250,7 @@ export class LiveClassWriter {
         .update(finalCompositeId)
         .digest('hex');
 
-      const body: Omit<typeof LiveResultsTable.$inferInsert, 'id'> = {
+      const body: ResultBody = {
         name: result.name,
         organization: result.club,
         result: parseResultNumber(result.result),
@@ -184,7 +283,40 @@ export class LiveClassWriter {
     });
 
     if (parsedResults.length === 0) {
-      return;
+      return [];
+    }
+
+    const events: PushEvent[] = [];
+    const tracked = await this.findTrackedResults(parsedResults).catch(
+      error => {
+        logger.error(`Push: failed to load tracked results: ${error}`);
+        return new Map<string, TrackedResult & { previous?: ResultBody }>();
+      },
+    );
+
+    for (const { body } of parsedResults) {
+      const entry = tracked.get(body.liveResultId);
+      if (!entry?.previous) continue;
+      const prev = entry.previous;
+      const changes = detectResultChanges(
+        {
+          result: prev.result ?? null,
+          status: prev.status ?? null,
+          place: prev.place ?? null,
+          progress: prev.progress ?? null,
+        },
+        {
+          result: body.result ?? null,
+          status: body.status ?? null,
+          place: body.place ?? null,
+          progress: body.progress ?? null,
+        },
+      );
+      for (const change of changes) {
+        events.push(
+          this.toEvent(change, body, classResults.className, entry.subscribers),
+        );
+      }
     }
 
     await this.db
@@ -231,16 +363,43 @@ export class LiveClassWriter {
       .values(parsedResults.map(r => ({ id: r.body.olRunnerId })))
       .onConflictDoNothing();
 
+    const splitNames = new Map(
+      classResults.splitcontrols.map(s => [String(s.code), s.name]),
+    );
+
     for (const result of parsedResults) {
-      await this.insertSplitResults(result.body.liveResultId, result.splits);
+      const entry = tracked.get(result.body.liveResultId);
+      const splitChanges = await this.insertSplitResults(
+        result.body.liveResultId,
+        result.splits,
+        Boolean(entry?.hasPrevious),
+      );
+      if (!entry) continue;
+      for (const { change, split } of splitChanges) {
+        events.push({
+          ...this.toEvent(
+            change,
+            result.body,
+            classResults.className,
+            entry.subscribers,
+          ),
+          splitName: splitNames.get(split.code) ?? split.code,
+          splitTime: split.time ?? null,
+          splitPlace: split.place ?? null,
+        });
+      }
     }
+
+    return events;
   }
 
   private async insertSplitResults(
     liveResultId: string,
     originalSplits: LiveresultatApi.result['splits'] | undefined,
-  ): Promise<void> {
-    if (!originalSplits) return;
+    detectChanges: boolean,
+  ): Promise<{ change: DetectedChange; split: ParsedSplit }[]> {
+    const changes: { change: DetectedChange; split: ParsedSplit }[] = [];
+    if (!originalSplits) return changes;
 
     const splits = Object.entries(originalSplits).reduce(
       (root, [key, value]) => {
@@ -287,6 +446,11 @@ export class LiveClassWriter {
         )
         .limit(1);
 
+      if (detectChanges) {
+        const change = detectSplitChange(split.code, existing, split);
+        if (change) changes.push({ change, split });
+      }
+
       const body = { ...split, updatedAt: new Date() };
 
       if (!existing) {
@@ -305,6 +469,8 @@ export class LiveClassWriter {
           );
       }
     }
+
+    return changes;
   }
 }
 

@@ -23,7 +23,6 @@ export type MarshaledResult = ResultWithMaybeSplits & {
 
 export const marshalResult =
   ({
-    user,
     tracking,
     className,
     nowTimestamp,
@@ -34,9 +33,9 @@ export const marshalResult =
     nowTimestamp: number;
   }) =>
   (result: ResultWithMaybeSplits) => {
+    // `tracking` must already be limited to the user's active (unlocked) rows
     const isTracking = Boolean(
-      user?.hasPlus &&
-        tracking?.length &&
+      tracking?.length &&
         getAllTrackedRunnerIds(tracking).some(id => {
           const [name, club] = id.split(globalSeparator);
           return (

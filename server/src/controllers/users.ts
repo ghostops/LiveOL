@@ -5,6 +5,7 @@ import { OLUsersTable } from 'lib/db/schema/ol_users';
 import { eq } from 'drizzle-orm';
 import { nanoid } from 'nanoid';
 import createHttpError from 'http-errors';
+import { invalidateTrackedIndex } from 'lib/notifications/tracked-index';
 
 const api = apiSingletons.createApiSingletons();
 
@@ -63,6 +64,10 @@ export const registerUser = defaultEndpointsFactory.build({
 
         if (!updatedUser) {
           throw createHttpError(500, 'Failed to update user');
+        }
+
+        if (user.hasPlus !== hasPlus) {
+          await invalidateTrackedIndex(api.Redis);
         }
 
         return updatedUser;

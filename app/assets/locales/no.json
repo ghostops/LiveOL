@@ -64,8 +64,6 @@
   "saved events were removed": "lagrede løp ble slettet",
   "Rate the app": "Sett karakter på appen",
   "Information": "Informasjon",
-  "Translations with the help from": "Appen oversatt av",
-  "Help out translating - Get free LiveOL+": "Hjelp med å oversette appen og få gratis LiveOL+",
   "Translations powered by": "Oversettelser med",
   "Check for updates": "Se etter oppdateringer",
   "Update now": "Oppdatere nå",
@@ -120,7 +118,7 @@
   "Get highlighted": "Bli uthevet",
   "See your followed runners instantly highlighted in competition results.": "Se dine fulgte løpere umiddelbart uthevet i konkurranseresultater.",
   "Follow multiple runners": "Følg flere løpere",
-  "If you have LiveOL+ you can follow as many runners as you like, otherwise you are restricted to following yourself.": "Hvis du har LiveOL+ kan du følge så mange løpere du vil, ellers er du begrenset til å følge deg selv.",
+  "Without LiveOL+ you can follow yourself and one other runner. With LiveOL+ you can follow as many runners as you like.": "Uten LiveOL+ kan du følge deg selv og én løper til. Med LiveOL+ kan du følge så mange løpere du vil.",
   "Pro tip": "Proff-tips",
   "Add multiple clubs if your runner competes for different organizations. The system will find them wherever they race!": "Legg til flere klubber hvis løperen din konkurrerer for forskjellige organisasjoner. Systemet finner dem uansett hvor de løper!",
   "Subscription": "Abonnement",
@@ -218,5 +216,11 @@
   "View my races": "Se mine løp",
   "App settings": "Appinnstillinger",
   "Text size": "Tekststørrelse",
-  "Translations": "Oversettelser"
+  "Send test notification": "Send testvarsel",
+  "Wait a moment before sending another test": "Vent litt før du sender en ny test",
+  "No notification sent": "Ingen varsel ble sendt",
+  "This device is not registered for notifications yet.": "Denne enheten er ikke registrert for varsler ennå.",
+  "Test notification sent": "Testvarsel sendt",
+  "It should arrive within a few seconds.": "Det bør komme frem i løpet av noen sekunder.",
+  "Could not send a test notification": "Kunne ikke sende et testvarsel"
 }
