@@ -27,6 +27,7 @@ import {
   getNotificationSettings,
   registerPushToken,
   unregisterPushToken,
+  sendTestPush,
   updateNotificationSettings,
 } from 'controllers/notifications';
 import logger from 'lib/logger';
@@ -67,6 +68,7 @@ export const routing: Routing = {
   'v2/notifications/settings/update': updateNotificationSettings,
   'v2/notifications/push/register': registerPushToken,
   'v2/notifications/push/unregister': unregisterPushToken,
+  'v2/notifications/push/test': sendTestPush,
 
   'v2/strings/organizations': getAllOrganizations,
   // 'v2/strings/classes': getAllClasses,

@@ -215,5 +215,12 @@
   "Average position": "Průměrná pozice",
   "View my races": "Zobrazit moje závody",
   "App settings": "Nastavení aplikace",
-  "Text size": "Velikost textu"
+  "Text size": "Velikost textu",
+  "Send test notification": "Odeslat testovací oznámení",
+  "Wait a moment before sending another test": "Chvíli počkejte, než odešlete další test",
+  "No notification sent": "Žádné oznámení nebylo odesláno",
+  "This device is not registered for notifications yet.": "Toto zařízení zatím není registrováno pro oznámení.",
+  "Test notification sent": "Testovací oznámení odesláno",
+  "It should arrive within a few seconds.": "Mělo by dorazit během několika sekund.",
+  "Could not send a test notification": "Testovací oznámení se nepodařilo odeslat"
 }

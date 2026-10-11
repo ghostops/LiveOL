@@ -215,5 +215,12 @@
   "Average position": "Gjennomsnittlig plassering",
   "View my races": "Se mine løp",
   "App settings": "Appinnstillinger",
-  "Text size": "Tekststørrelse"
+  "Text size": "Tekststørrelse",
+  "Send test notification": "Send testvarsel",
+  "Wait a moment before sending another test": "Vent litt før du sender en ny test",
+  "No notification sent": "Ingen varsel ble sendt",
+  "This device is not registered for notifications yet.": "Denne enheten er ikke registrert for varsler ennå.",
+  "Test notification sent": "Testvarsel sendt",
+  "It should arrive within a few seconds.": "Det bør komme frem i løpet av noen sekunder.",
+  "Could not send a test notification": "Kunne ikke sende et testvarsel"
 }
