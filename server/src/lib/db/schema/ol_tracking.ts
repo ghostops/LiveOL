@@ -1,7 +1,8 @@
-import { integer, pgTable, varchar } from 'drizzle-orm/pg-core';
+import { integer, jsonb, pgTable, varchar } from 'drizzle-orm/pg-core';
 import { commonFields } from './commonFields';
 import { OLUsersTable } from './ol_users';
 import { boolean } from 'drizzle-orm/pg-core';
+import type { NotificationEvent } from '../../notifications/types';
 
 export const OLTrackingTable = pgTable('ol_tracking', {
   id: integer().primaryKey().generatedByDefaultAsIdentity(),
@@ -11,5 +12,8 @@ export const OLTrackingTable = pgTable('ol_tracking', {
   name: varchar({ length: 255 }).notNull(),
   clubs: varchar({ length: 255 }).array().notNull().default([]),
   isMe: boolean().notNull().default(false),
+  notify: boolean().notNull().default(true),
+  // null = use the user's global notification settings (Plus only override)
+  notifyEvents: jsonb().$type<NotificationEvent[]>(),
   ...commonFields,
 });

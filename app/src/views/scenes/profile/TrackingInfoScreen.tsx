@@ -34,7 +34,7 @@ export const TrackingInfoScreen: React.FC = () => {
       icon: 'sparkles' as const,
       title: t('Follow multiple runners'),
       description: t(
-        'If you have LiveOL+ you can follow as many runners as you like, otherwise you are restricted to following yourself.',
+        'Without LiveOL+ you can follow yourself and one other runner. With LiveOL+ you can follow as many runners as you like.',
       ),
     },
   ];
@@ -59,39 +59,34 @@ export const TrackingInfoScreen: React.FC = () => {
             <View
               key={index}
               style={{
-                marginBottom: index < steps.length - 1 ? px(24) : 0,
+                flexDirection: 'row',
+                alignItems: 'flex-start',
+                marginBottom: index < steps.length - 1 ? px(20) : 0,
               }}
             >
               <View
                 style={{
-                  flexDirection: 'row',
+                  width: px(40),
+                  height: px(40),
+                  borderRadius: px(20),
+                  backgroundColor: COLORS.MAIN,
                   alignItems: 'center',
-                  marginBottom: px(8),
+                  justifyContent: 'center',
+                  marginRight: px(12),
                 }}
               >
-                <View
-                  style={{
-                    width: px(40),
-                    height: px(40),
-                    borderRadius: px(20),
-                    backgroundColor: COLORS.MAIN,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    marginRight: px(12),
-                  }}
-                >
-                  <OLIcon name={step.icon} size={22} color={COLORS.WHITE} />
-                </View>
-                <OLText size={16} bold style={{ flex: 1 }}>
+                <OLIcon name={step.icon} size={22} color={COLORS.WHITE} />
+              </View>
+              <View
+                style={{ flex: 1, minHeight: px(40), justifyContent: 'center' }}
+              >
+                <OLText size={16} bold style={{ marginBottom: px(4) }}>
                   {step.title}
                 </OLText>
+                <OLText size={14} style={{ color: COLORS.GRAY }}>
+                  {step.description}
+                </OLText>
               </View>
-              <OLText
-                size={14}
-                style={{ color: COLORS.GRAY, marginLeft: px(52) }}
-              >
-                {step.description}
-              </OLText>
             </View>
           ))}
         </OLCard>

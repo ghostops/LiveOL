@@ -1,0 +1,6 @@
+{
+  "react-native": {
+    "messaging_ios_foreground_presentation_options": ["badge", "sound", "list", "banner"],
+    "messaging_android_notification_channel_id": "results_finish"
+  }
+}

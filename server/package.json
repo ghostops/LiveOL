@@ -25,6 +25,7 @@
 		"drizzle-orm": "^0.44.7",
 		"express": "^5.1.0",
 		"express-zod-api": "^24.4.0",
+		"firebase-admin": "^13.10.0",
 		"graphql": "^14.6.0",
 		"http-errors": "^2.0.0",
 		"ioredis": "^5.6.1",

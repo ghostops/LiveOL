@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">LiveOL</string>
+    <string name="notification_channel_finish">Finish</string>
+    <string name="notification_channel_split">Split times</string>
+    <string name="notification_channel_start">Start</string>
+    <string name="notification_channel_status">DNF, MP and DSQ</string>
+    <string name="notification_channel_place">Place changes</string>
 </resources>

@@ -23,6 +23,13 @@ import { getUserStats } from 'controllers/stats';
 import { getApiStatus, getServerStatus } from 'controllers/status';
 import { getAllOrganizations } from 'controllers/organizations';
 import { getChangelogEntries } from 'controllers/changelog';
+import {
+  getNotificationSettings,
+  registerPushToken,
+  unregisterPushToken,
+  sendTestPush,
+  updateNotificationSettings,
+} from 'controllers/notifications';
 import logger from 'lib/logger';
 
 export const config = createConfig({
@@ -56,6 +63,12 @@ export const routing: Routing = {
   'v2/tracking/:id/delete': deleteTracking,
   'v2/tracking/self': getUserSelfTracking,
   'v2/tracking/stats': getUserStats,
+
+  'v2/notifications/settings': getNotificationSettings,
+  'v2/notifications/settings/update': updateNotificationSettings,
+  'v2/notifications/push/register': registerPushToken,
+  'v2/notifications/push/unregister': unregisterPushToken,
+  'v2/notifications/push/test': sendTestPush,
 
   'v2/strings/organizations': getAllOrganizations,
   // 'v2/strings/classes': getAllClasses,

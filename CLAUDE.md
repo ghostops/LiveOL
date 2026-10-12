@@ -62,6 +62,7 @@ npx drizzle-kit studio   # Open Drizzle Studio (DB GUI)
 - `EVENTOR_API_KEY_SE`, `EVENTOR_API_KEY_AU` - Eventor API credentials
 - `SLACK_WEBHOOK` - Notifications (optional)
 - `GOOGLE_GENAI_API_KEY` - Google GenAI integration (optional)
+- `FIREBASE_SERVICE_ACCOUNT` - Firebase service account JSON (raw or base64) for push notifications (optional, pushes are skipped when unset)
 
 ## Architecture
 
@@ -117,6 +118,14 @@ npx drizzle-kit studio   # Open Drizzle Studio (DB GUI)
   - `liveresultat/` - Sync competitions/classes/results (15s-1h intervals)
   - `eventor/` - Sync competitions/signups/results/starts
 - Pattern: Parent jobs dispatch child jobs (batch processing)
+
+### Push Notifications & LiveOL+ Limits
+
+- Free tier: follow one runner besides yourself (`isMe`), finish notifications only. LiveOL+: unlimited runners and all event types. Rules live in `server/src/lib/entitlements.ts`; when Plus lapses the oldest followed runner stays active and the rest are `locked`
+- `LiveClassWriter` diffs tracked runners only (Redis index in `lib/notifications/tracked-index.ts`) and hands deduped events to `PushQueue` (`send-push` job), which re-checks entitlements and sends via FCM
+- Call `invalidateTrackedIndex()` whenever tracking, notification prefs, push tokens or Plus status change
+- App: `src/lib/push/` (permission + token), `PushRegistration` (token sync + notification taps), `NotificationSettings` screen. Firebase stays disabled until `GoogleService-Info.plist` / `google-services.json` are added
+- **Experimental, may be reverted:** Android foreground notifications are posted by a custom native module (`android/.../ForegroundNotificationModule.kt`, wrapped by `src/lib/push/foreground.ts`); taps reopen the app via a `liveol-push://open?...` URI read through `Linking`. To revert, delete the Kotlin file and its `add(ForegroundNotificationPackage())` line; the JS falls back to a toast
 
 ### External Service Integrations
 

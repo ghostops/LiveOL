@@ -23,7 +23,7 @@ export class SyncActiveLiveCompetitionsJob {
   constructor() {
     this.api = apiSingletons.createApiSingletons();
     this.http2 = getHttp2Client(this.api.Redis);
-    this.writer = new LiveClassWriter(this.api.Drizzle.db);
+    this.writer = new LiveClassWriter(this.api.Drizzle.db, this.api.Notifier);
   }
 
   async run() {

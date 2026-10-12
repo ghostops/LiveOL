@@ -64,8 +64,6 @@
   "saved events were removed": "les événements enregistrés ont été supprimés",
   "Rate the app": "Noter l'application",
   "Information": "Information",
-  "Translations with the help from": "Application traduite par",
-  "Help out translating - Get free LiveOL+": "Aidez à traduire l'application et obtenez LiveOL+ gratuitement",
   "Translations powered by": "Traductions par",
   "Check for updates": "Vérifier les mises à jour",
   "Update now": "Mettre à jour maintenant",
@@ -120,7 +118,7 @@
   "Get highlighted": "Être mis en évidence",
   "See your followed runners instantly highlighted in competition results.": "Voyez vos coureurs suivis instantanément mis en évidence dans les résultats de la compétition.",
   "Follow multiple runners": "Suivre plusieurs coureurs",
-  "If you have LiveOL+ you can follow as many runners as you like, otherwise you are restricted to following yourself.": "Si vous avez LiveOL+, vous pouvez suivre autant de coureurs que vous le souhaitez, sinon vous êtes limité à vous suivre vous-même.",
+  "Without LiveOL+ you can follow yourself and one other runner. With LiveOL+ you can follow as many runners as you like.": "Sans LiveOL+, vous pouvez suivre vous-même et un autre coureur. Avec LiveOL+, vous pouvez suivre autant de coureurs que vous le souhaitez.",
   "Pro tip": "Conseil de pro",
   "Add multiple clubs if your runner competes for different organizations. The system will find them wherever they race!": "Ajoutez plusieurs clubs si votre coureur concourt pour différentes organisations. Le système les trouvera où qu'ils courent !",
   "Subscription": "Abonnement",
@@ -218,5 +216,11 @@
   "View my races": "Voir mes courses",
   "App settings": "Paramètres de l'application",
   "Text size": "Taille du texte",
-  "Translations": "Traductions"
+  "Send test notification": "Envoyer une notification de test",
+  "Wait a moment before sending another test": "Patientez un instant avant d’envoyer un autre test",
+  "No notification sent": "Aucune notification envoyée",
+  "This device is not registered for notifications yet.": "Cet appareil n’est pas encore enregistré pour les notifications.",
+  "Test notification sent": "Notification de test envoyée",
+  "It should arrive within a few seconds.": "Elle devrait arriver dans quelques secondes.",
+  "Could not send a test notification": "Impossible d’envoyer une notification de test"
 }

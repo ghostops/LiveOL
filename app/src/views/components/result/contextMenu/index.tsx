@@ -2,6 +2,7 @@ import { useActionSheet } from '@expo/react-native-action-sheet';
 import { useTranslation } from 'react-i18next';
 import { TouchableOpacity } from 'react-native';
 import { useIap } from '~/hooks/useIap';
+import { useFollowLimit } from '~/hooks/useFollowLimit';
 import { useOLNavigation } from '~/hooks/useNavigation';
 import { paths } from '~/lib/react-query/schema';
 
@@ -27,7 +28,8 @@ export const OLRunnerContextMenu: React.FC<Props> = ({
 }) => {
   const { showActionSheetWithOptions } = useActionSheet();
   const { t } = useTranslation();
-  const { plusActive, presentPaywall } = useIap();
+  const { presentPaywall } = useIap();
+  const { canFollowMore } = useFollowLimit();
   const navigation = useOLNavigation();
 
   const onPress = () => {
@@ -42,7 +44,7 @@ export const OLRunnerContextMenu: React.FC<Props> = ({
         id: 'follow',
         label: t('Follow runner'),
         handler: () => {
-          if (!plusActive) {
+          if (!canFollowMore) {
             presentPaywall();
             return;
           }

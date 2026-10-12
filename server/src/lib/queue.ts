@@ -9,6 +9,8 @@ import { SyncLiveCompetitionsJob } from 'jobs/liveresultat/sync-live-competition
 import { SyncActiveLiveCompetitionsJob } from 'jobs/liveresultat/sync-active-live-competitions';
 import { SyncEventorStartsJob } from 'jobs/eventor/sync-eventor-starts';
 import { PurgeOldLiveResultsJob } from 'jobs/liveresultat/purge-old-live-results';
+import { SendPushJob } from 'jobs/push/send-push';
+import { SEND_PUSH_JOB } from './notifications/notifier';
 import { DateResolver } from './helpers/date-resolver';
 import {
   QueueBase,
@@ -71,6 +73,10 @@ JobRegistry.register('parse-eventor-dates', () =>
 
 JobRegistry.register('purge-old-live-results', () =>
   new PurgeOldLiveResultsJob().run(),
+);
+
+JobRegistry.register(SEND_PUSH_JOB, data =>
+  new SendPushJob(JSON.parse(data.events as string)).run(),
 );
 
 /**
@@ -167,6 +173,37 @@ export class RepeatingQueue extends QueueBase {
       concurrency: 1,
       limiter: { duration: 1000, max: 2 },
       jobTimeoutMs: 5 * 60 * 1000,
+    };
+  }
+}
+
+/**
+ * Push Queue - Notification delivery, kept apart so pushes never wait behind
+ * result syncing. Not retried: a retry could deliver the same push twice.
+ */
+export class PushQueue extends QueueBase {
+  public static queueName = 'ol_queue_push';
+
+  constructor(host: string, port: number, password?: string) {
+    super(PushQueue.queueName, host, port, password);
+  }
+
+  protected getQueueConfig(): QueueConfig {
+    return {
+      attempts: 1,
+      removeOnFail: { count: 100 },
+      removeOnComplete: true,
+      backoff: {
+        type: 'exponential',
+        delay: 1000,
+      },
+    };
+  }
+
+  protected getWorkerConfig(): WorkerConfig {
+    return {
+      concurrency: 5,
+      jobTimeoutMs: 60 * 1000,
     };
   }
 }
