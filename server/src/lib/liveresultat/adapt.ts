@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-namespace */
-import { jsonrepair } from 'jsonrepair';
 import type Redis from 'ioredis';
 import type { LiveresultatApi } from './types';
 
@@ -44,20 +43,8 @@ export declare namespace LiveresultatRestApi {
   }
 }
 
-export const jsonParse = <T = object>(data: string | object): T => {
-  try {
-    if (typeof data === 'string') {
-      return JSON.parse(data.replace('\t', '')) as T;
-    }
-    return data as T;
-  } catch (error) {
-    // Only runs on a parse error, so it costs nothing on a healthy response
-    if (error instanceof SyntaxError) {
-      return JSON.parse(jsonrepair(data as string)) as T;
-    }
-    throw error;
-  }
-};
+export const jsonParse = <T = object>(data: string | object): T =>
+  (typeof data === 'string' ? JSON.parse(data) : data) as T;
 
 /** What either HTTP client hands the adapter. */
 export interface RawResponse {

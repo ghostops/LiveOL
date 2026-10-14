@@ -31,7 +31,6 @@ describe('LiveresultatAPIClient (api.orienteering.services)', () => {
         return { status: 404, body: '{"error":"Not found"}' };
       }
       if (url.searchParams.get('class') === 'broken') {
-        // trailing comma + unquoted key: what jsonrepair exists for
         return {
           body: '{ "className": "broken", splitControls: [], "results": [], }',
           etag: '"broken"',
@@ -171,10 +170,10 @@ describe('LiveresultatAPIClient (api.orienteering.services)', () => {
     );
   });
 
-  test('malformed JSON is repaired rather than thrown', async () => {
-    const res = await client.getclassresults(main.comp, 'broken');
-
-    assert.ok(res, 'jsonrepair should have rescued the response');
-    assert.equal(res.className, 'broken');
+  test('malformed JSON throws rather than being repaired', async () => {
+    await assert.rejects(
+      client.getclassresults(main.comp, 'broken'),
+      SyntaxError,
+    );
   });
 });

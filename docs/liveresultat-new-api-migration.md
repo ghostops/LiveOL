@@ -86,8 +86,8 @@ once a minute, and the rest covers job runtime and clock skew. Check it against 
 - `scrape.ts`: already referenced nowhere.
 - The `api.php` URL strings, and `LiveresultatUrl` as the client root (keep the constant if
   other code still uses it for links).
-- `jsonrepair` can stay. It only runs on a parse error, so it costs nothing, and removing it
-  is not needed for the switch.
+- `jsonrepair`: the new API returns valid JSON, so the parser is plain `JSON.parse` and the
+  dependency is removed.
 
 ## 6. Verified quirks to respect
 

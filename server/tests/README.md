@@ -24,7 +24,7 @@ ETag handling, adapter and URL construction all really execute.
 | File | Layer |
 | --- | --- |
 | `liveresultat-adapt.test.ts` | the REST → legacy shape adapter, including the `new_result` window and parity with the legacy recordings |
-| `liveresultat-client.test.ts` | the axios client: ETag store/`If-None-Match`, 304 → `null`, URL shape, `jsonrepair` |
+| `liveresultat-client.test.ts` | the axios client: ETag store/`If-None-Match`, 304 → `null`, URL shape |
 | `liveresultat-http2-client.test.ts` | the HTTP/2 client the bulk sync uses, including recovery after a dropped session |
 | `live-class-writer.test.ts` | every database semantic: identity, dedupe, the soft-delete sweep, `newResultAt`, split parsing, push events |
 | `marshal-results.test.ts` | `isLive` / `hasRecentlyUpdated` / `isTracking` — what the app renders |
