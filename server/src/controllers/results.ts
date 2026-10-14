@@ -17,6 +17,7 @@ import { getTrackedRunnerIds } from 'lib/match/getAllTrackedRunnerIds';
 import createHttpError from 'http-errors';
 import { globalSeparator } from 'lib/match/generateIds';
 import { getActiveTracking, plusRequired } from 'lib/entitlements';
+import { liveCompetitionPreference } from 'lib/helpers/live-competition';
 
 const api = apiSingletons.createApiSingletons();
 
@@ -189,6 +190,7 @@ export const getLiveResultsForOrganisation = defaultEndpointsFactory
         .select()
         .from(LiveCompetitionsTable)
         .where(eq(LiveCompetitionsTable.olCompetitionId, olCompetitionId))
+        .orderBy(liveCompetitionPreference('"live_competitions"'))
         .limit(1);
 
       if (!competition) {
