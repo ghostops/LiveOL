@@ -17,15 +17,18 @@ import { CompetitionId, OrganizationId } from 'lib/match/generateIds';
 import type { LiveresultatApi } from 'lib/liveresultat/types';
 import { createTestDb, type TestDb } from './helpers/db';
 import { createTestRedis } from './helpers/redis';
-import { startLegacyServer } from './helpers/liveresultat-server';
-import { raw, json, fixtureMeta } from './helpers/fixtures';
+import {
+  fixtureRestHandler,
+  startRestServer,
+} from './helpers/liveresultat-server';
+import { json, fixtureMeta } from './helpers/fixtures';
 
 const { main } = fixtureMeta();
 const SNAPSHOT = path.join(__dirname, 'snapshots', 'flow.json');
 
 /**
- * End to end over the real pieces: recorded legacy response -> real HTTP ->
- * real client (hash handling, jsonParse) -> real writer -> real Postgres ->
+ * End to end over the real pieces: recorded api.orienteering.services
+ * response -> real HTTP -> real client (ETag handling, adapter) -> real writer -> real Postgres ->
  * real marshal. Nothing in the chain is stubbed except the upstream server.
  *
  * The snapshot is the point. When the client is repointed at the new API, this
@@ -36,21 +39,14 @@ const SNAPSHOT = path.join(__dirname, 'snapshots', 'flow.json');
 describe('full Liveresultat sync flow', () => {
   let harness: Awaited<ReturnType<typeof createTestDb>>;
   let db: TestDb;
-  let server: Awaited<ReturnType<typeof startLegacyServer>>;
+  let server: Awaited<ReturnType<typeof startRestServer>>;
 
-  const respond = (query: URLSearchParams) => {
-    const method = query.get('method');
-    if (method === 'getcompetitioninfo')
-      return raw('legacy/getcompetitioninfo.json');
-    if (method === 'getclasses') return raw('legacy/getclasses.json');
-    if (method === 'getclassresults') return raw('legacy/getclassresults.json');
-    return { status: 400, body: '{}' };
-  };
+  const respond = fixtureRestHandler();
 
   before(async () => {
     harness = await createTestDb();
     db = harness.db;
-    server = await startLegacyServer(respond);
+    server = await startRestServer(respond);
   });
   after(async () => {
     await server.close();

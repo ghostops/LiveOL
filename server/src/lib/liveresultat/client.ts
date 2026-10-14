@@ -1,7 +1,18 @@
 import axios, { AxiosInstance } from 'axios';
 import { LiveresultatApi } from './types';
 import Redis from 'ioredis';
-import { jsonrepair } from 'jsonrepair';
+import {
+  adaptClasses,
+  adaptClassResults,
+  adaptCompetitionInfo,
+  classesHashKey,
+  classesPath,
+  classResultsHashKey,
+  classResultsPath,
+  fetchConditional,
+  jsonParse,
+  RawResponse,
+} from './adapt';
 
 export class LiveresultatAPIClient {
   private client: AxiosInstance;
@@ -15,99 +26,49 @@ export class LiveresultatAPIClient {
         'User-Agent': 'LiveOL Server',
       },
       baseURL: this.root,
+      // Hand the adapter the raw text; it parses (and repairs) it itself
+      transformResponse: r => r,
+      validateStatus: s => (s >= 200 && s < 300) || s === 304,
     });
   }
 
-  public getcompetitions = async () => {
-    const fetchAllClient = axios.create({
-      headers: {
-        'User-Agent': 'LiveOL Server',
-      },
+  private get = async (
+    path: string,
+    ifNoneMatch?: string | null,
+  ): Promise<RawResponse> => {
+    const res = await this.client.get<string>(path, {
+      headers: ifNoneMatch ? { 'If-None-Match': ifNoneMatch } : {},
     });
-    const res = await fetchAllClient.get<string>(
-      `https://api.orienteering.services/competitions`,
-    );
-    return LiveresultatAPIClient.jsonParse<LiveresultatApi.getcompetitions>(
-      res.data,
-    );
+    return {
+      status: res.status,
+      etag: (res.headers['etag'] as string | undefined) ?? null,
+      body: res.data,
+    };
+  };
+
+  public getcompetitions = async () => {
+    const res = await this.get('/competitions');
+    return jsonParse<LiveresultatApi.getcompetitions>(res.body);
   };
 
   public getcompetitioninfo = async (id: number | string) => {
-    const res = await this.client.get<string>(
-      `/api.php?method=getcompetitioninfo&comp=${id}`,
-    );
-    return LiveresultatAPIClient.jsonParse<LiveresultatApi.getcompetitioninfo>(
-      res.data,
-    );
+    const res = await this.get(`/competitions/${id}`);
+    return adaptCompetitionInfo(res.body);
   };
 
-  public getclasses = async (id: number) => {
-    const hashKey = `liveresultat:lastHash:classes:${id}`;
-    const lastHash = await this.redis.get(hashKey);
-    const res = await this.client.get<string>(
-      `/api.php?method=getclasses&comp=${id}&last_hash=${lastHash}`,
+  public getclasses = async (id: number) =>
+    fetchConditional(
+      this.redis,
+      classesHashKey(id),
+      etag => this.get(classesPath(id), etag),
+      adaptClasses,
     );
 
-    const data = LiveresultatAPIClient.jsonParse<
-      LiveresultatApi.getclasses | { status: 'NOT MODIFIED' }
-    >(res.data);
-
-    if (data.status === 'NOT MODIFIED') {
-      return null;
-    }
-
-    if (data.hash) {
-      // If the data is corrupted or wrong and the hash makes it stale
-      // we force a refresh by setting an expiration time
-      await this.redis.set(hashKey, data.hash, 'EX', 60 * 10);
-    }
-
-    return data;
-  };
-
-  public getclassresults = async (id: number | string, className: string) => {
-    const hashKey = `liveresultat:lastHash:class:${className}:results:${id}`;
-    const lastHash = await this.redis.get(hashKey);
-    const res = await this.client.get<string>(
-      `/api.php?method=getclassresults&comp=${id}&class=${encodeURIComponent(className)}&unformattedTimes=true&last_hash=${lastHash}`,
+  public getclassresults = async (id: number | string, className: string) =>
+    fetchConditional(
+      this.redis,
+      classResultsHashKey(id, className),
+      etag => this.get(classResultsPath(id, className), etag),
+      res => adaptClassResults(res),
     );
-
-    const data = LiveresultatAPIClient.jsonParse<
-      LiveresultatApi.getclassresults | { status: 'NOT MODIFIED' }
-    >(res.data);
-
-    if (data.status === 'NOT MODIFIED') {
-      return null;
-    }
-
-    if (data.hash) {
-      // If the data is corrupted or wrong and the hash makes it stale
-      // we force a refresh by setting an expiration time
-      await this.redis.set(hashKey, data.hash, 'EX', 60 * 10);
-    }
-
-    return data;
-  };
-
-  public static jsonParse = <T = object>(data: string | object): T => {
-    try {
-      let parsedData: T = {} as T;
-
-      if (typeof data === 'string') {
-        data = data.replace('\t', '');
-        parsedData = JSON.parse(data) as T;
-      } else if (typeof data === 'object') {
-        parsedData = data as T;
-      }
-
-      return parsedData;
-    } catch (error) {
-      if (error instanceof SyntaxError) {
-        const repaired = jsonrepair(data as string);
-        const parseAgain = JSON.parse(repaired) as T;
-        return parseAgain;
-      }
-      throw error;
-    }
-  };
 }

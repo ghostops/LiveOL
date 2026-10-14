@@ -1,6 +1,7 @@
 # Migration plan: Liveresultat REST API (`api.orienteering.services`)
 
-Status: proposal. Verified against the live API on 2026-09-19, re-checked 2026-10-14.
+Status: implemented (pending staging, §7.4–7.5). Verified against the live API on 2026-09-19,
+re-checked 2026-10-14.
 
 **Goal:** stop calling the legacy `api.php` endpoints and use `api.orienteering.services`
 instead, with no loss of functionality. Nothing else.
@@ -76,13 +77,17 @@ read the actual interval there and pick the window from it. Too large a window o
 the highlight can last a bit longer, because an unrelated change in the same class refetches
 the class and re-flags the row. Missing a highlight is the worse failure.
 
+Implemented as `NEW_RESULT_WINDOW_SECONDS = 180` in `adapt.ts`: cron patterns are at most
+once a minute, and the rest covers job runtime and clock skew. Check it against the live
+`scheduled_jobs` rows before production.
+
 ## 5. Deletions
 
 - `scrape.ts`: already referenced nowhere.
 - The `api.php` URL strings, and `LiveresultatUrl` as the client root (keep the constant if
   other code still uses it for links).
-- `jsonrepair` can stay. It only runs on a parse error, so it costs nothing, and removing it
-  is not needed for the switch.
+- `jsonrepair`: the new API returns valid JSON, so the parser is plain `JSON.parse` and the
+  dependency is removed.
 
 ## 6. Verified quirks to respect
 

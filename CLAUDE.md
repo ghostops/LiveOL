@@ -236,5 +236,5 @@ npm run test:snapshots   # regenerate tests/snapshots/ (review the diff)
 npm run test:fixtures    # re-record tests/fixtures/ from the live APIs
 npm run tscheck
 ```
-- `tests/snapshots/flow.json` is the regression guard: the synced DB projection must stay byte-identical across the Liveresultat API migration
+- `tests/snapshots/flow.json` is the regression guard for the synced DB projection. The Liveresultat clients use `api.orienteering.services`; `lib/liveresultat/adapt.ts` maps its responses to the legacy `LiveresultatApi` types
 - `tests/fixtures/legacy/` is recorded from `api.php`, which is being retired, so it cannot be re-recorded once that is switched off. See `server/tests/README.md`

@@ -2,8 +2,9 @@
 
 Characterisation tests for the Liveresultat sync flow, written so the migration
 to `api.orienteering.services`
-([plan](../../docs/liveresultat-new-api-migration.md)) can be shown not to
-change behaviour.
+([plan](../../docs/liveresultat-new-api-migration.md)) could be shown not to
+change behaviour. The clients now talk to the new API; the legacy recordings
+remain the reference the adapter is checked against.
 
 ```bash
 cd server
@@ -15,14 +16,15 @@ npm run test:fixtures     # re-record tests/fixtures/ from the live APIs
 No services required. Postgres is [PGlite](https://pglite.dev) — real Postgres
 compiled to WASM — with the project's own `drizzle/` migrations applied, and
 Redis is `ioredis-mock`. Upstream Liveresultat is a local HTTP/1.1 and h2c
-server replaying recorded responses, so the client's own hash handling,
-`jsonParse` and URL construction all really execute.
+server replaying recorded responses with ETags and 304s, so the client's own
+ETag handling, adapter and URL construction all really execute.
 
 ## What each file covers
 
 | File | Layer |
 | --- | --- |
-| `liveresultat-client.test.ts` | the axios client: hash store/replay, `NOT MODIFIED` → `null`, URL shape, `jsonrepair` |
+| `liveresultat-adapt.test.ts` | the REST → legacy shape adapter, including the `new_result` window and parity with the legacy recordings |
+| `liveresultat-client.test.ts` | the axios client: ETag store/`If-None-Match`, 304 → `null`, URL shape |
 | `liveresultat-http2-client.test.ts` | the HTTP/2 client the bulk sync uses, including recovery after a dropped session |
 | `live-class-writer.test.ts` | every database semantic: identity, dedupe, the soft-delete sweep, `newResultAt`, split parsing, push events |
 | `marshal-results.test.ts` | `isLive` / `hasRecentlyUpdated` / `isTracking` — what the app renders |
@@ -35,7 +37,8 @@ server replaying recorded responses, so the client's own hash handling,
 leaving out serial ids and wall-clock columns. **When the client is repointed at
 the new API, that projection must come out byte-identical.** That is the
 evidence the migration is a drop-in; a diff there is the migration changing
-stored data.
+stored data. The one accepted difference, regenerated with the switch, is the
+order of two `D18A` runners tied on time (which one carries `5` and which `=`).
 
 ## Fixtures
 
@@ -55,11 +58,6 @@ Two competitions are recorded:
 
 ## Known gaps
 
-- **`getcompetitions` is not covered.** `LiveresultatAPIClient.getcompetitions`
-  hardcodes `https://api.orienteering.services/competitions` rather than using
-  the client's `root`, so it cannot be pointed at the fixture server without a
-  production change. Making that base URL default-injectable would close the gap
-  with no behaviour change.
 - **BullMQ dispatch is not covered.** The sync jobs call
   `apiSingletons.createApiSingletons()` in their constructors, which opens real
   Redis and queue connections, so they cannot be instantiated under test without
