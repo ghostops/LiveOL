@@ -76,6 +76,12 @@ export class SyncEventorCompetition {
         // ToDo: Parse date correctly
         date: new Date(),
       }),
+      // ToDo: Parse dateString into `date`. Eventor gives free text in the
+      // event's language, often a range ("måndag 16 juni 2025 - söndag 26
+      // oktober 2025"). Store the start in UTC, assume Europe/Stockholm and
+      // 09:00 when the text has no zone or time, and leave `date` null when
+      // it can't be parsed. Until then new Eventor competitions get no `date`
+      // (the old Gemini-based EventorDateParser was removed).
       dateString: event.date,
       punchSystem: event.punchSystem,
       lat: event.lat,

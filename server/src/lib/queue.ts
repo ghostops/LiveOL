@@ -1,4 +1,3 @@
-import { EventorDateParser } from 'jobs/eventor/eventor-date-parser';
 import { SyncEventorCompetition } from 'jobs/eventor/sync-eventor-competition';
 import { SyncEventorCompetitions } from 'jobs/eventor/sync-eventor-competitions';
 import { SyncEventorResultsJob } from 'jobs/eventor/sync-eventor-results';
@@ -65,10 +64,6 @@ JobRegistry.register('sync-eventor-results', data =>
 
 JobRegistry.register('sync-eventor-starts', data =>
   new SyncEventorStartsJob(data.eventorDatabaseId).run(),
-);
-
-JobRegistry.register('parse-eventor-dates', () =>
-  new EventorDateParser().run(),
 );
 
 JobRegistry.register('purge-old-live-results', () =>

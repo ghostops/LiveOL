@@ -62,7 +62,6 @@ npx drizzle-kit studio   # Open Drizzle Studio (DB GUI)
 - `REDIS_HOST`, `REDIS_PASSWORD` - Redis for caching & job queue
 - `EVENTOR_API_KEY_SE`, `EVENTOR_API_KEY_AU` - Eventor API credentials
 - `SLACK_WEBHOOK` - Notifications (optional)
-- `GOOGLE_GENAI_API_KEY` - Google GenAI integration (optional)
 - `FIREBASE_SERVICE_ACCOUNT` - Firebase service account JSON (raw or base64) for push notifications (optional, pushes are skipped when unset)
 
 ## Architecture
