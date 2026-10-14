@@ -1,0 +1,27 @@
+meta {
+  name: Class name with a slash - query form (200)
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{newBase}}/competitions/{{slashCompId}}/classresults?class={{slashClassName}}
+  body: none
+  auth: none
+}
+
+params:query {
+  class: {{slashClassName}}
+}
+
+assert {
+  res.status: eq 200
+}
+
+docs {
+  Class `K20/21` via `?class=` — works, 200.
+
+  Pair this with the next request. The docs mention `/classes/{class}/results` as an
+  alternative form; for any class containing a `/` it 404s, so the client must only
+  ever use the query form.
+}

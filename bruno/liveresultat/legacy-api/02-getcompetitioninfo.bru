@@ -1,0 +1,27 @@
+meta {
+  name: getcompetitioninfo
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{legacyBase}}/api.php?method=getcompetitioninfo&comp={{compId}}
+  body: none
+  auth: none
+}
+
+params:query {
+  method: getcompetitioninfo
+  comp: {{compId}}
+}
+
+assert {
+  res.status: eq 200
+}
+
+docs {
+  Pairs with new-api/Competition.
+
+  Returns `isPublic: 1` where the new API returns a boolean, and has no `serverTime`.
+  An unknown `comp` returns a body here rather than a 404.
+}

@@ -1,0 +1,23 @@
+meta {
+  name: Class name with a slash - path form (404)
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{newBase}}/competitions/{{slashCompId}}/classes/{{slashClassName}}/results
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 404
+}
+
+docs {
+  The same class as the previous request, via the path form — **404**, because the
+  encoded `/` in `K20/21` breaks routing.
+
+  Slash-containing class names are common in Nordic and Polish competitions
+  (`K20/21`, `M35/40`, `K45/50`), so this is not an edge case.
+}

@@ -1,0 +1,33 @@
+meta {
+  name: getclasses
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{legacyBase}}/api.php?method=getclasses&comp={{compId}}
+  body: none
+  auth: none
+}
+
+params:query {
+  method: getclasses
+  comp: {{compId}}
+  ~last_hash: paste-a-hash-here
+}
+
+assert {
+  res.status: eq 200
+}
+
+docs {
+  Pairs with new-api/Classes.
+
+  `{ "classes": [{ "className": "K10" }, ...] }` plus a top-level `hash` and
+  `status: "OK"`.
+
+  To see change detection: run this, copy `hash` from the response into the disabled
+  `last_hash` parameter, enable it and run again — the reply becomes
+  `status: "NOT MODIFIED"`. The new API does the same job with `ETag` /
+  `If-None-Match` and a 304, which needs no body parsing.
+}

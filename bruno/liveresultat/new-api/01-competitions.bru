@@ -1,0 +1,26 @@
+meta {
+  name: Competitions (all)
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{newBase}}/competitions
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 200
+}
+
+docs {
+  The unfiltered archive — ~8000 competitions, ~875 KB. This is what
+  `SyncLiveCompetitionsJob` fetches on every run today.
+
+  Note what is *missing* here: `country`, `hasResults`, `multiDayStage` and
+  `multiDayFirstDay` only appear on the filtered variants below.
+
+  In the plan this call survives only in the nightly stale-competition purge, which
+  needs the full id set to know what has been deleted upstream.
+}

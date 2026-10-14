@@ -1,0 +1,29 @@
+meta {
+  name: Competitions (today)
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{newBase}}/competitions?today=true
+  body: none
+  auth: none
+}
+
+params:query {
+  today: true
+}
+
+assert {
+  res.status: eq 200
+}
+
+docs {
+  The hot path in the plan. Compare the payload size against "Competitions (all)".
+
+  Rows here carry `country`, `hasResults` and the multi-day fields. `hasResults` is
+  the cheap gate for whether a competition is worth polling at all.
+
+  Careful: `purgeStaleCompetitions` deletes every stored competition absent from the
+  response, so it must never run against this filtered list.
+}

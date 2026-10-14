@@ -1,0 +1,2454 @@
+{
+  "classes": [
+    {
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "liveCompetitionId": 40488,
+      "name": "D18A",
+      "status": "OK"
+    }
+  ],
+  "splitControls": [
+    {
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "code": "1102",
+      "name": "102",
+      "order": 0
+    },
+    {
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "code": "1101",
+      "name": "101",
+      "order": 1
+    },
+    {
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "code": "1119",
+      "name": "119",
+      "order": 2
+    },
+    {
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "code": "1112",
+      "name": "112",
+      "order": 3
+    },
+    {
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "code": "1100",
+      "name": "100",
+      "order": 4
+    }
+  ],
+  "results": [
+    {
+      "liveResultId": "0376b67d0140a95d68bb6fc4f69c4ce5",
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "liveCompetitionId": 40488,
+      "olRunnerId": "sofiadellorto~d18a~sundbybergsik",
+      "olOrganizationId": "sundbybergsik",
+      "name": "Sofia Dell'Orto",
+      "organization": "Sundbybergs IK",
+      "result": 433200,
+      "timeplus": 94900,
+      "progress": 100,
+      "status": 0,
+      "place": "30",
+      "start": 4152000,
+      "deletedAt": null
+    },
+    {
+      "liveResultId": "0855d150eca252c3edab0b080739efec",
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "liveCompetitionId": 40488,
+      "olRunnerId": "tuvakarlssonsandberg~d18a~nykopingsok",
+      "olOrganizationId": "nykopingsok",
+      "name": "Tuva Karlsson Sandberg",
+      "organization": "Nyköpings OK",
+      "result": 474900,
+      "timeplus": 136600,
+      "progress": 100,
+      "status": 0,
+      "place": "39",
+      "start": 3810000,
+      "deletedAt": null
+    },
+    {
+      "liveResultId": "118a6c414994e20f1a0242c208a354bc",
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "liveCompetitionId": 40488,
+      "olRunnerId": "miravejedal~d18a~snattringesk",
+      "olOrganizationId": "snattringesk",
+      "name": "Mira Vejedal",
+      "organization": "Snättringe SK",
+      "result": 439600,
+      "timeplus": 101300,
+      "progress": 100,
+      "status": 0,
+      "place": "31",
+      "start": 3954000,
+      "deletedAt": null
+    },
+    {
+      "liveResultId": "12f7538e24cd238de2dc13ffaf3abb69",
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "liveCompetitionId": 40488,
+      "olRunnerId": "majamaxen~d18a~storatunaok",
+      "olOrganizationId": "storatunaok",
+      "name": "Maja Maxén",
+      "organization": "Stora Tuna OK",
+      "result": 362200,
+      "timeplus": 23900,
+      "progress": 100,
+      "status": 0,
+      "place": "7",
+      "start": 4350000,
+      "deletedAt": null
+    },
+    {
+      "liveResultId": "23f0462babc3ea85720f4baaf8605a9d",
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "liveCompetitionId": 40488,
+      "olRunnerId": "lindamononen~d18a~eksjosok",
+      "olOrganizationId": "eksjosok",
+      "name": "Linda Mononen",
+      "organization": "Eksjö SOK",
+      "result": 408400,
+      "timeplus": 70100,
+      "progress": 100,
+      "status": 0,
+      "place": "18",
+      "start": 4206000,
+      "deletedAt": null
+    },
+    {
+      "liveResultId": "24ca4d48fdb42ae7ec0548b52457bbd4",
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "liveCompetitionId": 40488,
+      "olRunnerId": "hilmaodman~d18a~tumba-malarhojdenok",
+      "olOrganizationId": "tumba-malarhojdenok",
+      "name": "Hilma Ödman",
+      "organization": "Tumba-Mälarhöjden OK",
+      "result": 454900,
+      "timeplus": 116600,
+      "progress": 100,
+      "status": 0,
+      "place": "35",
+      "start": 3864000,
+      "deletedAt": null
+    },
+    {
+      "liveResultId": "28a76c169b64952de38f57ad57948094",
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "liveCompetitionId": 40488,
+      "olRunnerId": "elinalmgren~d18a~soders-tyreso",
+      "olOrganizationId": "soders-tyreso",
+      "name": "Elin Almgren",
+      "organization": "Söders-Tyresö",
+      "result": 431200,
+      "timeplus": 92900,
+      "progress": 100,
+      "status": 0,
+      "place": "28",
+      "start": 4008000,
+      "deletedAt": null
+    },
+    {
+      "liveResultId": "2bde37a79ca89ace657bb1849177d497",
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "liveCompetitionId": 40488,
+      "olRunnerId": "eiraolsson~d18a~amalsok",
+      "olOrganizationId": "amalsok",
+      "name": "Eira Olsson",
+      "organization": "Åmåls OK",
+      "result": 472300,
+      "timeplus": 134000,
+      "progress": 100,
+      "status": 0,
+      "place": "37",
+      "start": 4278000,
+      "deletedAt": null
+    },
+    {
+      "liveResultId": "2d2e816f3a2ec90d13b47ae1b4364c11",
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "liveCompetitionId": 40488,
+      "olRunnerId": "elsaehrenborg~d18a~lundsok",
+      "olOrganizationId": "lundsok",
+      "name": "Elsa Ehrenborg",
+      "organization": "Lunds OK",
+      "result": 355800,
+      "timeplus": 17500,
+      "progress": 100,
+      "status": 0,
+      "place": "5",
+      "start": 4386000,
+      "deletedAt": null
+    },
+    {
+      "liveResultId": "30355a8718cbda55fce09e2360f61af4",
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "liveCompetitionId": 40488,
+      "olRunnerId": "alicehellberg~d18a~sundbybergsik",
+      "olOrganizationId": "sundbybergsik",
+      "name": "Alice Hellberg",
+      "organization": "Sundbybergs IK",
+      "result": 339000,
+      "timeplus": 700,
+      "progress": 100,
+      "status": 0,
+      "place": "2",
+      "start": 4548000,
+      "deletedAt": null
+    },
+    {
+      "liveResultId": "3d960aa059203d791ad115cded4e39de",
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "liveCompetitionId": 40488,
+      "olRunnerId": "bodiljohansson~d18a~sundbybergsik",
+      "olOrganizationId": "sundbybergsik",
+      "name": "Bodil Johansson",
+      "organization": "Sundbybergs IK",
+      "result": 425900,
+      "timeplus": 87600,
+      "progress": 100,
+      "status": 0,
+      "place": "26",
+      "start": 4080000,
+      "deletedAt": null
+    },
+    {
+      "liveResultId": "47e1af17c79fab17557414e3bc452d9d",
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "liveCompetitionId": 40488,
+      "olRunnerId": "katjasmitt~d18a~sodertalje-nykvarnof",
+      "olOrganizationId": "sodertalje-nykvarnof",
+      "name": "Katja Smitt",
+      "organization": "Södertälje-Nykvarn OF",
+      "result": 451000,
+      "timeplus": 112700,
+      "progress": 100,
+      "status": 0,
+      "place": "32",
+      "start": 4134000,
+      "deletedAt": null
+    },
+    {
+      "liveResultId": "5934f07f39678e4fab8275aed5484123",
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "liveCompetitionId": 40488,
+      "olRunnerId": "elsareuter~d18a~amalsok",
+      "olOrganizationId": "amalsok",
+      "name": "Elsa Reuter",
+      "organization": "Åmåls OK",
+      "result": 477500,
+      "timeplus": 139200,
+      "progress": 100,
+      "status": 0,
+      "place": "40",
+      "start": 3918000,
+      "deletedAt": null
+    },
+    {
+      "liveResultId": "5d31f7209f1bc6f828f9c4b68e10392c",
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "liveCompetitionId": 40488,
+      "olRunnerId": "gerdamedin~d18a~okorion",
+      "olOrganizationId": "okorion",
+      "name": "Gerda Medin",
+      "organization": "OK Orion",
+      "result": 414400,
+      "timeplus": 76100,
+      "progress": 100,
+      "status": 0,
+      "place": "23",
+      "start": 4026000,
+      "deletedAt": null
+    },
+    {
+      "liveResultId": "61418835a05fc0335f27e05d6d8dcdab",
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "liveCompetitionId": 40488,
+      "olRunnerId": "emmalindkvist~d18a~almbyik",
+      "olOrganizationId": "almbyik",
+      "name": "Emma Lindkvist",
+      "organization": "Almby IK",
+      "result": 400200,
+      "timeplus": 61900,
+      "progress": 100,
+      "status": 0,
+      "place": "17",
+      "start": 3972000,
+      "deletedAt": null
+    },
+    {
+      "liveResultId": "6309469437591e37efe2b21bfa7e9130",
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "liveCompetitionId": 40488,
+      "olRunnerId": "aliceslarspaulsson~d18a~sundbybergsik",
+      "olOrganizationId": "sundbybergsik",
+      "name": "Alice Slars Paulsson",
+      "organization": "Sundbybergs IK",
+      "result": 368400,
+      "timeplus": 30100,
+      "progress": 100,
+      "status": 0,
+      "place": "8",
+      "start": 4440000,
+      "deletedAt": null
+    },
+    {
+      "liveResultId": "6687ae12fbbeb004ec71c699a6887c9c",
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "liveCompetitionId": 40488,
+      "olRunnerId": "hannalinaharaldsson~d18a~strangnas-malmbyol",
+      "olOrganizationId": "strangnas-malmbyol",
+      "name": "Hannalina Haraldsson",
+      "organization": "Strängnäs-Malmby OL",
+      "result": 452200,
+      "timeplus": 113900,
+      "progress": 100,
+      "status": 0,
+      "place": "33",
+      "start": 3882000,
+      "deletedAt": null
+    },
+    {
+      "liveResultId": "79b6d236a3523d22b6e7dc1e81359174",
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "liveCompetitionId": 40488,
+      "olRunnerId": "sannagrendelmeier~d18a~goteborg-majornaok",
+      "olOrganizationId": "goteborg-majornaok",
+      "name": "Sanna Grendelmeier",
+      "organization": "Göteborg-Majorna OK",
+      "result": 462200,
+      "timeplus": 123900,
+      "progress": 100,
+      "status": 0,
+      "place": "36",
+      "start": 3936000,
+      "deletedAt": null
+    },
+    {
+      "liveResultId": "7d2bba261163f037f74348ec002a4f11",
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "liveCompetitionId": 40488,
+      "olRunnerId": "wilmajonsson~d18a~oktyr",
+      "olOrganizationId": "oktyr",
+      "name": "Wilma Jonsson",
+      "organization": "OK Tyr",
+      "result": 393000,
+      "timeplus": 54700,
+      "progress": 100,
+      "status": 0,
+      "place": "15",
+      "start": 4260000,
+      "deletedAt": null
+    },
+    {
+      "liveResultId": "88acc4bd5b708503640859d7074024aa",
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "liveCompetitionId": 40488,
+      "olRunnerId": "lovisathybeck~d18a~lindebygdensok",
+      "olOrganizationId": "lindebygdensok",
+      "name": "Lovisa Thybeck",
+      "organization": "Lindebygdens OK",
+      "result": 421100,
+      "timeplus": 82800,
+      "progress": 100,
+      "status": 0,
+      "place": "25",
+      "start": 3846000,
+      "deletedAt": null
+    },
+    {
+      "liveResultId": "904f3819c562ee979a1b7201d0d2db59",
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "liveCompetitionId": 40488,
+      "olRunnerId": "jonnajensenahl~d18a~amalsok",
+      "olOrganizationId": "amalsok",
+      "name": "Jonna Jensen Åhl",
+      "organization": "Åmåls OK",
+      "result": 391000,
+      "timeplus": 52700,
+      "progress": 100,
+      "status": 0,
+      "place": "14",
+      "start": 4170000,
+      "deletedAt": null
+    },
+    {
+      "liveResultId": "a0d028f7315c78ea28001b02b1eb9fd3",
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "liveCompetitionId": 40488,
+      "olRunnerId": "moajaderberg~d18a~leksandsok",
+      "olOrganizationId": "leksandsok",
+      "name": "Moa Jäderberg",
+      "organization": "Leksands OK",
+      "result": 432800,
+      "timeplus": 94500,
+      "progress": 100,
+      "status": 0,
+      "place": "29",
+      "start": 4044000,
+      "deletedAt": null
+    },
+    {
+      "liveResultId": "a1a8102a9ecc3eddfdd9e7153b0666d9",
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "liveCompetitionId": 40488,
+      "olRunnerId": "tessrylander~d18a~snattringesk",
+      "olOrganizationId": "snattringesk",
+      "name": "Tess Rylander",
+      "organization": "Snättringe SK",
+      "result": 409600,
+      "timeplus": 71300,
+      "progress": 100,
+      "status": 0,
+      "place": "19",
+      "start": 4098000,
+      "deletedAt": null
+    },
+    {
+      "liveResultId": "a3a943e2bd5b2ee488ff08a7922e124a",
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "liveCompetitionId": 40488,
+      "olRunnerId": "ellenwestman~d18a~sundbybergsik",
+      "olOrganizationId": "sundbybergsik",
+      "name": "Ellen Westman",
+      "organization": "Sundbybergs IK",
+      "result": 355800,
+      "timeplus": 17500,
+      "progress": 100,
+      "status": 0,
+      "place": "=",
+      "start": 4494000,
+      "deletedAt": null
+    },
+    {
+      "liveResultId": "a97fa1939ec2afc96f69b5bb860406b7",
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "liveCompetitionId": 40488,
+      "olRunnerId": "sigridohlsson~d18a~okstorsjon",
+      "olOrganizationId": "okstorsjon",
+      "name": "Sigrid Ohlsson",
+      "organization": "OK Storsjön",
+      "result": 416000,
+      "timeplus": 77700,
+      "progress": 100,
+      "status": 0,
+      "place": "24",
+      "start": 4332000,
+      "deletedAt": null
+    },
+    {
+      "liveResultId": "ac07ffdfa7cd2be7580d61c4c379ff5f",
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "liveCompetitionId": 40488,
+      "olRunnerId": "elinanzelius~d18a~hastvedaok",
+      "olOrganizationId": "hastvedaok",
+      "name": "Elin Anzelius",
+      "organization": "Hästveda OK",
+      "result": 389400,
+      "timeplus": 51100,
+      "progress": 100,
+      "status": 0,
+      "place": "13",
+      "start": 4116000,
+      "deletedAt": null
+    },
+    {
+      "liveResultId": "afbfb36ab6409ee3dc8e45fa568af8d2",
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "liveCompetitionId": 40488,
+      "olRunnerId": "ebbasahlstedt~d18a~soders-tyreso",
+      "olOrganizationId": "soders-tyreso",
+      "name": "Ebba Sahlstedt",
+      "organization": "Söders-Tyresö",
+      "result": 411300,
+      "timeplus": 73000,
+      "progress": 100,
+      "status": 0,
+      "place": "21",
+      "start": 3828000,
+      "deletedAt": null
+    },
+    {
+      "liveResultId": "bcdae1976f72b40e3c54b17b3481e1c9",
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "liveCompetitionId": 40488,
+      "olRunnerId": "irisbergkvist~d18a~okrenen",
+      "olOrganizationId": "okrenen",
+      "name": "Iris Bergkvist",
+      "organization": "OK Renen",
+      "result": 410300,
+      "timeplus": 72000,
+      "progress": 100,
+      "status": 0,
+      "place": "20",
+      "start": 4242000,
+      "deletedAt": null
+    },
+    {
+      "liveResultId": "beda6243e5a20c0a17fee929ffcfc20e",
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "liveCompetitionId": 40488,
+      "olRunnerId": "wilmarosen~d18a~goteborg-majornaok",
+      "olOrganizationId": "goteborg-majornaok",
+      "name": "Wilma Rosén",
+      "organization": "Göteborg-Majorna OK",
+      "result": 381700,
+      "timeplus": 43400,
+      "progress": 100,
+      "status": 0,
+      "place": "12",
+      "start": 4422000,
+      "deletedAt": null
+    },
+    {
+      "liveResultId": "cf0cb501df47185f8b1bd86ce5286f8e",
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "liveCompetitionId": 40488,
+      "olRunnerId": "mollyboman~d18a~sundbybergsik",
+      "olOrganizationId": "sundbybergsik",
+      "name": "Molly Boman",
+      "organization": "Sundbybergs IK",
+      "result": 398300,
+      "timeplus": 60000,
+      "progress": 100,
+      "status": 0,
+      "place": "16",
+      "start": 4404000,
+      "deletedAt": null
+    },
+    {
+      "liveResultId": "d8f13927f52a6b5068426d7f6c94db15",
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "liveCompetitionId": 40488,
+      "olRunnerId": "elsiehordegardh~d18a~ifkgoteborgorientering",
+      "olOrganizationId": "ifkgoteborgorientering",
+      "name": "Elsie Hördegårdh",
+      "organization": "IFK Göteborg Orientering",
+      "result": 338300,
+      "timeplus": null,
+      "progress": 100,
+      "status": 0,
+      "place": "1",
+      "start": 4512000,
+      "deletedAt": null
+    },
+    {
+      "liveResultId": "e0d45ffc4459263f67866b61fe2717af",
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "liveCompetitionId": 40488,
+      "olRunnerId": "hilmadalin~d18a~okkare",
+      "olOrganizationId": "okkare",
+      "name": "Hilma Dalin",
+      "organization": "OK Kåre",
+      "result": 372400,
+      "timeplus": 34100,
+      "progress": 100,
+      "status": 0,
+      "place": "10",
+      "start": 4188000,
+      "deletedAt": null
+    },
+    {
+      "liveResultId": "e242633533e27f6a9b2c607e4874d869",
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "liveCompetitionId": 40488,
+      "olRunnerId": "elsafallgren~d18a~ulricehamnsok",
+      "olOrganizationId": "ulricehamnsok",
+      "name": "Elsa Fallgren",
+      "organization": "Ulricehamns OK",
+      "result": 411400,
+      "timeplus": 73100,
+      "progress": 100,
+      "status": 0,
+      "place": "22",
+      "start": 4296000,
+      "deletedAt": null
+    },
+    {
+      "liveResultId": "e3c524a8bc248c30030ddd517777dc98",
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "liveCompetitionId": 40488,
+      "olRunnerId": "idapauler~d18a~skogsloparna",
+      "olOrganizationId": "skogsloparna",
+      "name": "Ida Pauler",
+      "organization": "Skogslöparna",
+      "result": 492200,
+      "timeplus": 153900,
+      "progress": 100,
+      "status": 0,
+      "place": "42",
+      "start": 4368000,
+      "deletedAt": null
+    },
+    {
+      "liveResultId": "e4210077791044388c430e8c37427af2",
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "liveCompetitionId": 40488,
+      "olRunnerId": "elinakarlsson~d18a~fkherkules",
+      "olOrganizationId": "fkherkules",
+      "name": "Elina Karlsson",
+      "organization": "FK Herkules",
+      "result": 428900,
+      "timeplus": 90600,
+      "progress": 100,
+      "status": 0,
+      "place": "27",
+      "start": 4224000,
+      "deletedAt": null
+    },
+    {
+      "liveResultId": "e6bac6d345911aa96767e61fd3d4b852",
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "liveCompetitionId": 40488,
+      "olRunnerId": "feliciapersson~d18a~helsingborgssok",
+      "olOrganizationId": "helsingborgssok",
+      "name": "Felicia Persson",
+      "organization": "Helsingborgs SOK",
+      "result": 343000,
+      "timeplus": 4700,
+      "progress": 100,
+      "status": 0,
+      "place": "3",
+      "start": 4458000,
+      "deletedAt": null
+    },
+    {
+      "liveResultId": "ecc99d36036f18b13afd56fc601c7666",
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "liveCompetitionId": 40488,
+      "olRunnerId": "agnesaberg~d18a~tolered-utbyol-klubb",
+      "olOrganizationId": "tolered-utbyol-klubb",
+      "name": "Agnes Åberg",
+      "organization": "Tolered-Utby Ol-klubb",
+      "result": 486600,
+      "timeplus": 148300,
+      "progress": 100,
+      "status": 0,
+      "place": "41",
+      "start": 3990000,
+      "deletedAt": null
+    },
+    {
+      "liveResultId": "eddd2e19c8f862792e66753e2ddad13e",
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "liveCompetitionId": 40488,
+      "olRunnerId": "tovaborggren~d18a~lundsok",
+      "olOrganizationId": "lundsok",
+      "name": "Tova Borggren",
+      "organization": "Lunds OK",
+      "result": 496600,
+      "timeplus": 158300,
+      "progress": 100,
+      "status": 0,
+      "place": "43",
+      "start": 3900000,
+      "deletedAt": null
+    },
+    {
+      "liveResultId": "f1276f7e1f08f8a1d57fcfe300e0067d",
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "liveCompetitionId": 40488,
+      "olRunnerId": "elvirakarmstig~d18a~oktisaren",
+      "olOrganizationId": "oktisaren",
+      "name": "Elvira Karmstig",
+      "organization": "OK Tisaren",
+      "result": 380300,
+      "timeplus": 42000,
+      "progress": 100,
+      "status": 0,
+      "place": "11",
+      "start": 4476000,
+      "deletedAt": null
+    },
+    {
+      "liveResultId": "f501eaa62fa832e30fc7732251dc9b2c",
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "liveCompetitionId": 40488,
+      "olRunnerId": "hannahassler~d18a~sundsvallsok",
+      "olOrganizationId": "sundsvallsok",
+      "name": "Hanna Hässler",
+      "organization": "Sundsvalls OK",
+      "result": 454100,
+      "timeplus": 115800,
+      "progress": 100,
+      "status": 0,
+      "place": "34",
+      "start": 3792000,
+      "deletedAt": null
+    },
+    {
+      "liveResultId": "f71351c1f17242aad42608a6d4e2bd59",
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "liveCompetitionId": 40488,
+      "olRunnerId": "alvamattsson~d18a~skogsloparna",
+      "olOrganizationId": "skogsloparna",
+      "name": "Alva Mattsson",
+      "organization": "Skogslöparna",
+      "result": 474700,
+      "timeplus": 136400,
+      "progress": 100,
+      "status": 0,
+      "place": "38",
+      "start": 4062000,
+      "deletedAt": null
+    },
+    {
+      "liveResultId": "f7ddef0919aa6523f1475ea39965aa9c",
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "liveCompetitionId": 40488,
+      "olRunnerId": "veradahlberg~d18a~jonkopingsok",
+      "olOrganizationId": "jonkopingsok",
+      "name": "Vera Dahlberg",
+      "organization": "Jönköpings OK",
+      "result": 369000,
+      "timeplus": 30700,
+      "progress": 100,
+      "status": 0,
+      "place": "9",
+      "start": 4314000,
+      "deletedAt": null
+    },
+    {
+      "liveResultId": "fa93291e435b8052b8c816119375fa18",
+      "liveClassId": "e5bd1be7cc6817c765f90972189d059e",
+      "liveCompetitionId": 40488,
+      "olRunnerId": "elviralindsten~d18a~nykopingsok",
+      "olOrganizationId": "nykopingsok",
+      "name": "Elvira Lindsten",
+      "organization": "Nyköpings OK",
+      "result": 348700,
+      "timeplus": 10400,
+      "progress": 100,
+      "status": 0,
+      "place": "4",
+      "start": 4530000,
+      "deletedAt": null
+    }
+  ],
+  "splitResults": [
+    {
+      "liveResultId": "0376b67d0140a95d68bb6fc4f69c4ce5",
+      "code": "1100",
+      "time": 429400,
+      "place": 30,
+      "timeplus": 94800,
+      "status": 0
+    },
+    {
+      "liveResultId": "0376b67d0140a95d68bb6fc4f69c4ce5",
+      "code": "1101",
+      "time": 187100,
+      "place": 33,
+      "timeplus": 48900,
+      "status": 0
+    },
+    {
+      "liveResultId": "0376b67d0140a95d68bb6fc4f69c4ce5",
+      "code": "1102",
+      "time": 180300,
+      "place": 35,
+      "timeplus": 47100,
+      "status": 0
+    },
+    {
+      "liveResultId": "0376b67d0140a95d68bb6fc4f69c4ce5",
+      "code": "1112",
+      "time": 389300,
+      "place": 28,
+      "timeplus": 78400,
+      "status": 0
+    },
+    {
+      "liveResultId": "0376b67d0140a95d68bb6fc4f69c4ce5",
+      "code": "1119",
+      "time": 290300,
+      "place": 28,
+      "timeplus": 66900,
+      "status": 0
+    },
+    {
+      "liveResultId": "0855d150eca252c3edab0b080739efec",
+      "code": "1100",
+      "time": 469900,
+      "place": 38,
+      "timeplus": 135300,
+      "status": 0
+    },
+    {
+      "liveResultId": "0855d150eca252c3edab0b080739efec",
+      "code": "1101",
+      "time": 202300,
+      "place": 39,
+      "timeplus": 64100,
+      "status": 0
+    },
+    {
+      "liveResultId": "0855d150eca252c3edab0b080739efec",
+      "code": "1102",
+      "time": 194200,
+      "place": 38,
+      "timeplus": 61000,
+      "status": 0
+    },
+    {
+      "liveResultId": "0855d150eca252c3edab0b080739efec",
+      "code": "1112",
+      "time": 438600,
+      "place": 40,
+      "timeplus": 127700,
+      "status": 0
+    },
+    {
+      "liveResultId": "0855d150eca252c3edab0b080739efec",
+      "code": "1119",
+      "time": 314300,
+      "place": 39,
+      "timeplus": 90900,
+      "status": 0
+    },
+    {
+      "liveResultId": "118a6c414994e20f1a0242c208a354bc",
+      "code": "1100",
+      "time": 435100,
+      "place": 31,
+      "timeplus": 100500,
+      "status": 0
+    },
+    {
+      "liveResultId": "118a6c414994e20f1a0242c208a354bc",
+      "code": "1101",
+      "time": 183500,
+      "place": 30,
+      "timeplus": 45300,
+      "status": 0
+    },
+    {
+      "liveResultId": "118a6c414994e20f1a0242c208a354bc",
+      "code": "1102",
+      "time": 176100,
+      "place": 30,
+      "timeplus": 42900,
+      "status": 0
+    },
+    {
+      "liveResultId": "118a6c414994e20f1a0242c208a354bc",
+      "code": "1112",
+      "time": 387600,
+      "place": 27,
+      "timeplus": 76700,
+      "status": 0
+    },
+    {
+      "liveResultId": "118a6c414994e20f1a0242c208a354bc",
+      "code": "1119",
+      "time": 288100,
+      "place": 23,
+      "timeplus": 64700,
+      "status": 0
+    },
+    {
+      "liveResultId": "12f7538e24cd238de2dc13ffaf3abb69",
+      "code": "1100",
+      "time": 358200,
+      "place": 7,
+      "timeplus": 23600,
+      "status": 0
+    },
+    {
+      "liveResultId": "12f7538e24cd238de2dc13ffaf3abb69",
+      "code": "1101",
+      "time": 151200,
+      "place": 6,
+      "timeplus": 13000,
+      "status": 0
+    },
+    {
+      "liveResultId": "12f7538e24cd238de2dc13ffaf3abb69",
+      "code": "1102",
+      "time": 144600,
+      "place": 7,
+      "timeplus": 11400,
+      "status": 0
+    },
+    {
+      "liveResultId": "12f7538e24cd238de2dc13ffaf3abb69",
+      "code": "1112",
+      "time": 337300,
+      "place": 8,
+      "timeplus": 26400,
+      "status": 0
+    },
+    {
+      "liveResultId": "12f7538e24cd238de2dc13ffaf3abb69",
+      "code": "1119",
+      "time": 251000,
+      "place": 9,
+      "timeplus": 27600,
+      "status": 0
+    },
+    {
+      "liveResultId": "23f0462babc3ea85720f4baaf8605a9d",
+      "code": "1100",
+      "time": 404300,
+      "place": 18,
+      "timeplus": 69700,
+      "status": 0
+    },
+    {
+      "liveResultId": "23f0462babc3ea85720f4baaf8605a9d",
+      "code": "1101",
+      "time": 176100,
+      "place": 19,
+      "timeplus": 37900,
+      "status": 0
+    },
+    {
+      "liveResultId": "23f0462babc3ea85720f4baaf8605a9d",
+      "code": "1102",
+      "time": 169000,
+      "place": 18,
+      "timeplus": 35800,
+      "status": 0
+    },
+    {
+      "liveResultId": "23f0462babc3ea85720f4baaf8605a9d",
+      "code": "1112",
+      "time": 368600,
+      "place": 17,
+      "timeplus": 57700,
+      "status": 0
+    },
+    {
+      "liveResultId": "23f0462babc3ea85720f4baaf8605a9d",
+      "code": "1119",
+      "time": 276700,
+      "place": 18,
+      "timeplus": 53300,
+      "status": 0
+    },
+    {
+      "liveResultId": "24ca4d48fdb42ae7ec0548b52457bbd4",
+      "code": "1100",
+      "time": 451100,
+      "place": 35,
+      "timeplus": 116500,
+      "status": 0
+    },
+    {
+      "liveResultId": "24ca4d48fdb42ae7ec0548b52457bbd4",
+      "code": "1101",
+      "time": 188500,
+      "place": 35,
+      "timeplus": 50300,
+      "status": 0
+    },
+    {
+      "liveResultId": "24ca4d48fdb42ae7ec0548b52457bbd4",
+      "code": "1102",
+      "time": 178900,
+      "place": 32,
+      "timeplus": 45700,
+      "status": 0
+    },
+    {
+      "liveResultId": "24ca4d48fdb42ae7ec0548b52457bbd4",
+      "code": "1112",
+      "time": 399600,
+      "place": 34,
+      "timeplus": 88700,
+      "status": 0
+    },
+    {
+      "liveResultId": "24ca4d48fdb42ae7ec0548b52457bbd4",
+      "code": "1119",
+      "time": 290800,
+      "place": 30,
+      "timeplus": 67400,
+      "status": 0
+    },
+    {
+      "liveResultId": "28a76c169b64952de38f57ad57948094",
+      "code": "1100",
+      "time": 426500,
+      "place": 28,
+      "timeplus": 91900,
+      "status": 0
+    },
+    {
+      "liveResultId": "28a76c169b64952de38f57ad57948094",
+      "code": "1101",
+      "time": 187700,
+      "place": 34,
+      "timeplus": 49500,
+      "status": 0
+    },
+    {
+      "liveResultId": "28a76c169b64952de38f57ad57948094",
+      "code": "1102",
+      "time": 180200,
+      "place": 34,
+      "timeplus": 47000,
+      "status": 0
+    },
+    {
+      "liveResultId": "28a76c169b64952de38f57ad57948094",
+      "code": "1112",
+      "time": 397500,
+      "place": 32,
+      "timeplus": 86600,
+      "status": 0
+    },
+    {
+      "liveResultId": "28a76c169b64952de38f57ad57948094",
+      "code": "1119",
+      "time": 291000,
+      "place": 31,
+      "timeplus": 67600,
+      "status": 0
+    },
+    {
+      "liveResultId": "2bde37a79ca89ace657bb1849177d497",
+      "code": "1100",
+      "time": 468100,
+      "place": 37,
+      "timeplus": 133500,
+      "status": 0
+    },
+    {
+      "liveResultId": "2bde37a79ca89ace657bb1849177d497",
+      "code": "1101",
+      "time": 181500,
+      "place": 27,
+      "timeplus": 43300,
+      "status": 0
+    },
+    {
+      "liveResultId": "2bde37a79ca89ace657bb1849177d497",
+      "code": "1102",
+      "time": 175700,
+      "place": 28,
+      "timeplus": 42500,
+      "status": 0
+    },
+    {
+      "liveResultId": "2bde37a79ca89ace657bb1849177d497",
+      "code": "1112",
+      "time": 391800,
+      "place": 30,
+      "timeplus": 80900,
+      "status": 0
+    },
+    {
+      "liveResultId": "2bde37a79ca89ace657bb1849177d497",
+      "code": "1119",
+      "time": 276600,
+      "place": 17,
+      "timeplus": 53200,
+      "status": 0
+    },
+    {
+      "liveResultId": "2d2e816f3a2ec90d13b47ae1b4364c11",
+      "code": "1100",
+      "time": 351900,
+      "place": 5,
+      "timeplus": 17300,
+      "status": 0
+    },
+    {
+      "liveResultId": "2d2e816f3a2ec90d13b47ae1b4364c11",
+      "code": "1101",
+      "time": 142100,
+      "place": 3,
+      "timeplus": 3900,
+      "status": 0
+    },
+    {
+      "liveResultId": "2d2e816f3a2ec90d13b47ae1b4364c11",
+      "code": "1102",
+      "time": 136200,
+      "place": 3,
+      "timeplus": 3000,
+      "status": 0
+    },
+    {
+      "liveResultId": "2d2e816f3a2ec90d13b47ae1b4364c11",
+      "code": "1112",
+      "time": 311400,
+      "place": 2,
+      "timeplus": 500,
+      "status": 0
+    },
+    {
+      "liveResultId": "2d2e816f3a2ec90d13b47ae1b4364c11",
+      "code": "1119",
+      "time": 233300,
+      "place": 2,
+      "timeplus": 9900,
+      "status": 0
+    },
+    {
+      "liveResultId": "30355a8718cbda55fce09e2360f61af4",
+      "code": "1100",
+      "time": 335200,
+      "place": 2,
+      "timeplus": 600,
+      "status": 0
+    },
+    {
+      "liveResultId": "30355a8718cbda55fce09e2360f61af4",
+      "code": "1101",
+      "time": 141400,
+      "place": 2,
+      "timeplus": 3200,
+      "status": 0
+    },
+    {
+      "liveResultId": "30355a8718cbda55fce09e2360f61af4",
+      "code": "1102",
+      "time": 135400,
+      "place": 2,
+      "timeplus": 2200,
+      "status": 0
+    },
+    {
+      "liveResultId": "30355a8718cbda55fce09e2360f61af4",
+      "code": "1112",
+      "time": 317500,
+      "place": 5,
+      "timeplus": 6600,
+      "status": 0
+    },
+    {
+      "liveResultId": "30355a8718cbda55fce09e2360f61af4",
+      "code": "1119",
+      "time": 238300,
+      "place": 5,
+      "timeplus": 14900,
+      "status": 0
+    },
+    {
+      "liveResultId": "3d960aa059203d791ad115cded4e39de",
+      "code": "1100",
+      "time": 421700,
+      "place": 26,
+      "timeplus": 87100,
+      "status": 0
+    },
+    {
+      "liveResultId": "3d960aa059203d791ad115cded4e39de",
+      "code": "1101",
+      "time": 169000,
+      "place": 14,
+      "timeplus": 30800,
+      "status": 0
+    },
+    {
+      "liveResultId": "3d960aa059203d791ad115cded4e39de",
+      "code": "1102",
+      "time": 162400,
+      "place": 14,
+      "timeplus": 29200,
+      "status": 0
+    },
+    {
+      "liveResultId": "3d960aa059203d791ad115cded4e39de",
+      "code": "1112",
+      "time": 391400,
+      "place": 29,
+      "timeplus": 80500,
+      "status": 0
+    },
+    {
+      "liveResultId": "3d960aa059203d791ad115cded4e39de",
+      "code": "1119",
+      "time": 289700,
+      "place": 25,
+      "timeplus": 66300,
+      "status": 0
+    },
+    {
+      "liveResultId": "47e1af17c79fab17557414e3bc452d9d",
+      "code": "1100",
+      "time": 447000,
+      "place": 32,
+      "timeplus": 112400,
+      "status": 0
+    },
+    {
+      "liveResultId": "47e1af17c79fab17557414e3bc452d9d",
+      "code": "1101",
+      "time": 178400,
+      "place": 21,
+      "timeplus": 40200,
+      "status": 0
+    },
+    {
+      "liveResultId": "47e1af17c79fab17557414e3bc452d9d",
+      "code": "1102",
+      "time": 169500,
+      "place": 19,
+      "timeplus": 36300,
+      "status": 0
+    },
+    {
+      "liveResultId": "47e1af17c79fab17557414e3bc452d9d",
+      "code": "1112",
+      "time": 394300,
+      "place": 31,
+      "timeplus": 83400,
+      "status": 0
+    },
+    {
+      "liveResultId": "47e1af17c79fab17557414e3bc452d9d",
+      "code": "1119",
+      "time": 289700,
+      "place": 25,
+      "timeplus": 66300,
+      "status": 0
+    },
+    {
+      "liveResultId": "5934f07f39678e4fab8275aed5484123",
+      "code": "1100",
+      "time": 473300,
+      "place": 40,
+      "timeplus": 138700,
+      "status": 0
+    },
+    {
+      "liveResultId": "5934f07f39678e4fab8275aed5484123",
+      "code": "1101",
+      "time": 181500,
+      "place": 27,
+      "timeplus": 43300,
+      "status": 0
+    },
+    {
+      "liveResultId": "5934f07f39678e4fab8275aed5484123",
+      "code": "1102",
+      "time": 173900,
+      "place": 26,
+      "timeplus": 40700,
+      "status": 0
+    },
+    {
+      "liveResultId": "5934f07f39678e4fab8275aed5484123",
+      "code": "1112",
+      "time": 423100,
+      "place": 38,
+      "timeplus": 112200,
+      "status": 0
+    },
+    {
+      "liveResultId": "5934f07f39678e4fab8275aed5484123",
+      "code": "1119",
+      "time": 290300,
+      "place": 28,
+      "timeplus": 66900,
+      "status": 0
+    },
+    {
+      "liveResultId": "5d31f7209f1bc6f828f9c4b68e10392c",
+      "code": "1100",
+      "time": 410500,
+      "place": 23,
+      "timeplus": 75900,
+      "status": 0
+    },
+    {
+      "liveResultId": "5d31f7209f1bc6f828f9c4b68e10392c",
+      "code": "1101",
+      "time": 179400,
+      "place": 23,
+      "timeplus": 41200,
+      "status": 0
+    },
+    {
+      "liveResultId": "5d31f7209f1bc6f828f9c4b68e10392c",
+      "code": "1102",
+      "time": 172700,
+      "place": 23,
+      "timeplus": 39500,
+      "status": 0
+    },
+    {
+      "liveResultId": "5d31f7209f1bc6f828f9c4b68e10392c",
+      "code": "1112",
+      "time": 380300,
+      "place": 21,
+      "timeplus": 69400,
+      "status": 0
+    },
+    {
+      "liveResultId": "5d31f7209f1bc6f828f9c4b68e10392c",
+      "code": "1119",
+      "time": 288300,
+      "place": 24,
+      "timeplus": 64900,
+      "status": 0
+    },
+    {
+      "liveResultId": "61418835a05fc0335f27e05d6d8dcdab",
+      "code": "1100",
+      "time": 396300,
+      "place": 17,
+      "timeplus": 61700,
+      "status": 0
+    },
+    {
+      "liveResultId": "61418835a05fc0335f27e05d6d8dcdab",
+      "code": "1101",
+      "time": 180100,
+      "place": 24,
+      "timeplus": 41900,
+      "status": 0
+    },
+    {
+      "liveResultId": "61418835a05fc0335f27e05d6d8dcdab",
+      "code": "1102",
+      "time": 173300,
+      "place": 24,
+      "timeplus": 40100,
+      "status": 0
+    },
+    {
+      "liveResultId": "61418835a05fc0335f27e05d6d8dcdab",
+      "code": "1112",
+      "time": 376100,
+      "place": 19,
+      "timeplus": 65200,
+      "status": 0
+    },
+    {
+      "liveResultId": "61418835a05fc0335f27e05d6d8dcdab",
+      "code": "1119",
+      "time": 277800,
+      "place": 19,
+      "timeplus": 54400,
+      "status": 0
+    },
+    {
+      "liveResultId": "6309469437591e37efe2b21bfa7e9130",
+      "code": "1100",
+      "time": 364600,
+      "place": 8,
+      "timeplus": 30000,
+      "status": 0
+    },
+    {
+      "liveResultId": "6309469437591e37efe2b21bfa7e9130",
+      "code": "1101",
+      "time": 152700,
+      "place": 7,
+      "timeplus": 14500,
+      "status": 0
+    },
+    {
+      "liveResultId": "6309469437591e37efe2b21bfa7e9130",
+      "code": "1102",
+      "time": 143700,
+      "place": 5,
+      "timeplus": 10500,
+      "status": 0
+    },
+    {
+      "liveResultId": "6309469437591e37efe2b21bfa7e9130",
+      "code": "1112",
+      "time": 343100,
+      "place": 10,
+      "timeplus": 32200,
+      "status": 0
+    },
+    {
+      "liveResultId": "6309469437591e37efe2b21bfa7e9130",
+      "code": "1119",
+      "time": 247900,
+      "place": 8,
+      "timeplus": 24500,
+      "status": 0
+    },
+    {
+      "liveResultId": "6687ae12fbbeb004ec71c699a6887c9c",
+      "code": "1100",
+      "time": 447800,
+      "place": 33,
+      "timeplus": 113200,
+      "status": 0
+    },
+    {
+      "liveResultId": "6687ae12fbbeb004ec71c699a6887c9c",
+      "code": "1101",
+      "time": 213300,
+      "place": 41,
+      "timeplus": 75100,
+      "status": 0
+    },
+    {
+      "liveResultId": "6687ae12fbbeb004ec71c699a6887c9c",
+      "code": "1102",
+      "time": 206000,
+      "place": 41,
+      "timeplus": 72800,
+      "status": 0
+    },
+    {
+      "liveResultId": "6687ae12fbbeb004ec71c699a6887c9c",
+      "code": "1112",
+      "time": 419000,
+      "place": 37,
+      "timeplus": 108100,
+      "status": 0
+    },
+    {
+      "liveResultId": "6687ae12fbbeb004ec71c699a6887c9c",
+      "code": "1119",
+      "time": 326100,
+      "place": 41,
+      "timeplus": 102700,
+      "status": 0
+    },
+    {
+      "liveResultId": "79b6d236a3523d22b6e7dc1e81359174",
+      "code": "1100",
+      "time": 456900,
+      "place": 36,
+      "timeplus": 122300,
+      "status": 0
+    },
+    {
+      "liveResultId": "79b6d236a3523d22b6e7dc1e81359174",
+      "code": "1101",
+      "time": 185300,
+      "place": 31,
+      "timeplus": 47100,
+      "status": 0
+    },
+    {
+      "liveResultId": "79b6d236a3523d22b6e7dc1e81359174",
+      "code": "1102",
+      "time": 177000,
+      "place": 31,
+      "timeplus": 43800,
+      "status": 0
+    },
+    {
+      "liveResultId": "79b6d236a3523d22b6e7dc1e81359174",
+      "code": "1112",
+      "time": 416300,
+      "place": 36,
+      "timeplus": 105400,
+      "status": 0
+    },
+    {
+      "liveResultId": "79b6d236a3523d22b6e7dc1e81359174",
+      "code": "1119",
+      "time": 298800,
+      "place": 36,
+      "timeplus": 75400,
+      "status": 0
+    },
+    {
+      "liveResultId": "7d2bba261163f037f74348ec002a4f11",
+      "code": "1100",
+      "time": 389200,
+      "place": 15,
+      "timeplus": 54600,
+      "status": 0
+    },
+    {
+      "liveResultId": "7d2bba261163f037f74348ec002a4f11",
+      "code": "1101",
+      "time": 182200,
+      "place": 29,
+      "timeplus": 44000,
+      "status": 0
+    },
+    {
+      "liveResultId": "7d2bba261163f037f74348ec002a4f11",
+      "code": "1102",
+      "time": 175800,
+      "place": 29,
+      "timeplus": 42600,
+      "status": 0
+    },
+    {
+      "liveResultId": "7d2bba261163f037f74348ec002a4f11",
+      "code": "1112",
+      "time": 370400,
+      "place": 18,
+      "timeplus": 59500,
+      "status": 0
+    },
+    {
+      "liveResultId": "7d2bba261163f037f74348ec002a4f11",
+      "code": "1119",
+      "time": 288000,
+      "place": 22,
+      "timeplus": 64600,
+      "status": 0
+    },
+    {
+      "liveResultId": "88acc4bd5b708503640859d7074024aa",
+      "code": "1100",
+      "time": 416600,
+      "place": 25,
+      "timeplus": 82000,
+      "status": 0
+    },
+    {
+      "liveResultId": "88acc4bd5b708503640859d7074024aa",
+      "code": "1101",
+      "time": 178800,
+      "place": 22,
+      "timeplus": 40600,
+      "status": 0
+    },
+    {
+      "liveResultId": "88acc4bd5b708503640859d7074024aa",
+      "code": "1102",
+      "time": 171200,
+      "place": 22,
+      "timeplus": 38000,
+      "status": 0
+    },
+    {
+      "liveResultId": "88acc4bd5b708503640859d7074024aa",
+      "code": "1112",
+      "time": 386900,
+      "place": 26,
+      "timeplus": 76000,
+      "status": 0
+    },
+    {
+      "liveResultId": "88acc4bd5b708503640859d7074024aa",
+      "code": "1119",
+      "time": 297300,
+      "place": 34,
+      "timeplus": 73900,
+      "status": 0
+    },
+    {
+      "liveResultId": "904f3819c562ee979a1b7201d0d2db59",
+      "code": "1100",
+      "time": 387300,
+      "place": 14,
+      "timeplus": 52700,
+      "status": 0
+    },
+    {
+      "liveResultId": "904f3819c562ee979a1b7201d0d2db59",
+      "code": "1101",
+      "time": 176300,
+      "place": 20,
+      "timeplus": 38100,
+      "status": 0
+    },
+    {
+      "liveResultId": "904f3819c562ee979a1b7201d0d2db59",
+      "code": "1102",
+      "time": 170200,
+      "place": 21,
+      "timeplus": 37000,
+      "status": 0
+    },
+    {
+      "liveResultId": "904f3819c562ee979a1b7201d0d2db59",
+      "code": "1112",
+      "time": 367700,
+      "place": 15,
+      "timeplus": 56800,
+      "status": 0
+    },
+    {
+      "liveResultId": "904f3819c562ee979a1b7201d0d2db59",
+      "code": "1119",
+      "time": 273700,
+      "place": 16,
+      "timeplus": 50300,
+      "status": 0
+    },
+    {
+      "liveResultId": "a0d028f7315c78ea28001b02b1eb9fd3",
+      "code": "1100",
+      "time": 428500,
+      "place": 29,
+      "timeplus": 93900,
+      "status": 0
+    },
+    {
+      "liveResultId": "a0d028f7315c78ea28001b02b1eb9fd3",
+      "code": "1101",
+      "time": 172100,
+      "place": 16,
+      "timeplus": 33900,
+      "status": 0
+    },
+    {
+      "liveResultId": "a0d028f7315c78ea28001b02b1eb9fd3",
+      "code": "1102",
+      "time": 165200,
+      "place": 16,
+      "timeplus": 32000,
+      "status": 0
+    },
+    {
+      "liveResultId": "a0d028f7315c78ea28001b02b1eb9fd3",
+      "code": "1112",
+      "time": 398200,
+      "place": 33,
+      "timeplus": 87300,
+      "status": 0
+    },
+    {
+      "liveResultId": "a0d028f7315c78ea28001b02b1eb9fd3",
+      "code": "1119",
+      "time": 292100,
+      "place": 32,
+      "timeplus": 68700,
+      "status": 0
+    },
+    {
+      "liveResultId": "a1a8102a9ecc3eddfdd9e7153b0666d9",
+      "code": "1100",
+      "time": 405500,
+      "place": 19,
+      "timeplus": 70900,
+      "status": 0
+    },
+    {
+      "liveResultId": "a1a8102a9ecc3eddfdd9e7153b0666d9",
+      "code": "1101",
+      "time": 173400,
+      "place": 17,
+      "timeplus": 35200,
+      "status": 0
+    },
+    {
+      "liveResultId": "a1a8102a9ecc3eddfdd9e7153b0666d9",
+      "code": "1102",
+      "time": 166300,
+      "place": 17,
+      "timeplus": 33100,
+      "status": 0
+    },
+    {
+      "liveResultId": "a1a8102a9ecc3eddfdd9e7153b0666d9",
+      "code": "1112",
+      "time": 380800,
+      "place": 22,
+      "timeplus": 69900,
+      "status": 0
+    },
+    {
+      "liveResultId": "a1a8102a9ecc3eddfdd9e7153b0666d9",
+      "code": "1119",
+      "time": 272900,
+      "place": 15,
+      "timeplus": 49500,
+      "status": 0
+    },
+    {
+      "liveResultId": "a3a943e2bd5b2ee488ff08a7922e124a",
+      "code": "1100",
+      "time": 351900,
+      "place": 5,
+      "timeplus": 17300,
+      "status": 0
+    },
+    {
+      "liveResultId": "a3a943e2bd5b2ee488ff08a7922e124a",
+      "code": "1101",
+      "time": 160600,
+      "place": 12,
+      "timeplus": 22400,
+      "status": 0
+    },
+    {
+      "liveResultId": "a3a943e2bd5b2ee488ff08a7922e124a",
+      "code": "1102",
+      "time": 153900,
+      "place": 12,
+      "timeplus": 20700,
+      "status": 0
+    },
+    {
+      "liveResultId": "a3a943e2bd5b2ee488ff08a7922e124a",
+      "code": "1112",
+      "time": 331100,
+      "place": 6,
+      "timeplus": 20200,
+      "status": 0
+    },
+    {
+      "liveResultId": "a3a943e2bd5b2ee488ff08a7922e124a",
+      "code": "1119",
+      "time": 246100,
+      "place": 6,
+      "timeplus": 22700,
+      "status": 0
+    },
+    {
+      "liveResultId": "a97fa1939ec2afc96f69b5bb860406b7",
+      "code": "1100",
+      "time": 412300,
+      "place": 24,
+      "timeplus": 77700,
+      "status": 0
+    },
+    {
+      "liveResultId": "a97fa1939ec2afc96f69b5bb860406b7",
+      "code": "1101",
+      "time": 195200,
+      "place": 36,
+      "timeplus": 57000,
+      "status": 0
+    },
+    {
+      "liveResultId": "a97fa1939ec2afc96f69b5bb860406b7",
+      "code": "1102",
+      "time": 189200,
+      "place": 36,
+      "timeplus": 56000,
+      "status": 0
+    },
+    {
+      "liveResultId": "a97fa1939ec2afc96f69b5bb860406b7",
+      "code": "1112",
+      "time": 368100,
+      "place": 16,
+      "timeplus": 57200,
+      "status": 0
+    },
+    {
+      "liveResultId": "a97fa1939ec2afc96f69b5bb860406b7",
+      "code": "1119",
+      "time": 286000,
+      "place": 21,
+      "timeplus": 62600,
+      "status": 0
+    },
+    {
+      "liveResultId": "ac07ffdfa7cd2be7580d61c4c379ff5f",
+      "code": "1100",
+      "time": 386100,
+      "place": 13,
+      "timeplus": 51500,
+      "status": 0
+    },
+    {
+      "liveResultId": "ac07ffdfa7cd2be7580d61c4c379ff5f",
+      "code": "1101",
+      "time": 161100,
+      "place": 13,
+      "timeplus": 22900,
+      "status": 0
+    },
+    {
+      "liveResultId": "ac07ffdfa7cd2be7580d61c4c379ff5f",
+      "code": "1102",
+      "time": 154100,
+      "place": 13,
+      "timeplus": 20900,
+      "status": 0
+    },
+    {
+      "liveResultId": "ac07ffdfa7cd2be7580d61c4c379ff5f",
+      "code": "1112",
+      "time": 361700,
+      "place": 14,
+      "timeplus": 50800,
+      "status": 0
+    },
+    {
+      "liveResultId": "ac07ffdfa7cd2be7580d61c4c379ff5f",
+      "code": "1119",
+      "time": 271600,
+      "place": 14,
+      "timeplus": 48200,
+      "status": 0
+    },
+    {
+      "liveResultId": "afbfb36ab6409ee3dc8e45fa568af8d2",
+      "code": "1100",
+      "time": 407100,
+      "place": 22,
+      "timeplus": 72500,
+      "status": 0
+    },
+    {
+      "liveResultId": "afbfb36ab6409ee3dc8e45fa568af8d2",
+      "code": "1101",
+      "time": 181300,
+      "place": 26,
+      "timeplus": 43100,
+      "status": 0
+    },
+    {
+      "liveResultId": "afbfb36ab6409ee3dc8e45fa568af8d2",
+      "code": "1102",
+      "time": 174400,
+      "place": 27,
+      "timeplus": 41200,
+      "status": 0
+    },
+    {
+      "liveResultId": "afbfb36ab6409ee3dc8e45fa568af8d2",
+      "code": "1112",
+      "time": 385400,
+      "place": 23,
+      "timeplus": 74500,
+      "status": 0
+    },
+    {
+      "liveResultId": "afbfb36ab6409ee3dc8e45fa568af8d2",
+      "code": "1119",
+      "time": 297300,
+      "place": 34,
+      "timeplus": 73900,
+      "status": 0
+    },
+    {
+      "liveResultId": "bcdae1976f72b40e3c54b17b3481e1c9",
+      "code": "1100",
+      "time": 406200,
+      "place": 20,
+      "timeplus": 71600,
+      "status": 0
+    },
+    {
+      "liveResultId": "bcdae1976f72b40e3c54b17b3481e1c9",
+      "code": "1101",
+      "time": 180600,
+      "place": 25,
+      "timeplus": 42400,
+      "status": 0
+    },
+    {
+      "liveResultId": "bcdae1976f72b40e3c54b17b3481e1c9",
+      "code": "1102",
+      "time": 173700,
+      "place": 25,
+      "timeplus": 40500,
+      "status": 0
+    },
+    {
+      "liveResultId": "bcdae1976f72b40e3c54b17b3481e1c9",
+      "code": "1112",
+      "time": 385600,
+      "place": 24,
+      "timeplus": 74700,
+      "status": 0
+    },
+    {
+      "liveResultId": "bcdae1976f72b40e3c54b17b3481e1c9",
+      "code": "1119",
+      "time": 292800,
+      "place": 33,
+      "timeplus": 69400,
+      "status": 0
+    },
+    {
+      "liveResultId": "beda6243e5a20c0a17fee929ffcfc20e",
+      "code": "1100",
+      "time": 377300,
+      "place": 12,
+      "timeplus": 42700,
+      "status": 0
+    },
+    {
+      "liveResultId": "beda6243e5a20c0a17fee929ffcfc20e",
+      "code": "1101",
+      "time": 154200,
+      "place": 8,
+      "timeplus": 16000,
+      "status": 0
+    },
+    {
+      "liveResultId": "beda6243e5a20c0a17fee929ffcfc20e",
+      "code": "1102",
+      "time": 147800,
+      "place": 8,
+      "timeplus": 14600,
+      "status": 0
+    },
+    {
+      "liveResultId": "beda6243e5a20c0a17fee929ffcfc20e",
+      "code": "1112",
+      "time": 334400,
+      "place": 7,
+      "timeplus": 23500,
+      "status": 0
+    },
+    {
+      "liveResultId": "beda6243e5a20c0a17fee929ffcfc20e",
+      "code": "1119",
+      "time": 247700,
+      "place": 7,
+      "timeplus": 24300,
+      "status": 0
+    },
+    {
+      "liveResultId": "cf0cb501df47185f8b1bd86ce5286f8e",
+      "code": "1100",
+      "time": 394500,
+      "place": 16,
+      "timeplus": 59900,
+      "status": 0
+    },
+    {
+      "liveResultId": "cf0cb501df47185f8b1bd86ce5286f8e",
+      "code": "1101",
+      "time": 155400,
+      "place": 9,
+      "timeplus": 17200,
+      "status": 0
+    },
+    {
+      "liveResultId": "cf0cb501df47185f8b1bd86ce5286f8e",
+      "code": "1102",
+      "time": 148500,
+      "place": 9,
+      "timeplus": 15300,
+      "status": 0
+    },
+    {
+      "liveResultId": "cf0cb501df47185f8b1bd86ce5286f8e",
+      "code": "1112",
+      "time": 357400,
+      "place": 12,
+      "timeplus": 46500,
+      "status": 0
+    },
+    {
+      "liveResultId": "cf0cb501df47185f8b1bd86ce5286f8e",
+      "code": "1119",
+      "time": 252200,
+      "place": 10,
+      "timeplus": 28800,
+      "status": 0
+    },
+    {
+      "liveResultId": "d8f13927f52a6b5068426d7f6c94db15",
+      "code": "1100",
+      "time": 334600,
+      "place": 1,
+      "timeplus": 0,
+      "status": 0
+    },
+    {
+      "liveResultId": "d8f13927f52a6b5068426d7f6c94db15",
+      "code": "1101",
+      "time": 145600,
+      "place": 4,
+      "timeplus": 7400,
+      "status": 0
+    },
+    {
+      "liveResultId": "d8f13927f52a6b5068426d7f6c94db15",
+      "code": "1102",
+      "time": 139100,
+      "place": 4,
+      "timeplus": 5900,
+      "status": 0
+    },
+    {
+      "liveResultId": "d8f13927f52a6b5068426d7f6c94db15",
+      "code": "1112",
+      "time": 316400,
+      "place": 4,
+      "timeplus": 5500,
+      "status": 0
+    },
+    {
+      "liveResultId": "d8f13927f52a6b5068426d7f6c94db15",
+      "code": "1119",
+      "time": 236200,
+      "place": 4,
+      "timeplus": 12800,
+      "status": 0
+    },
+    {
+      "liveResultId": "e0d45ffc4459263f67866b61fe2717af",
+      "code": "1100",
+      "time": 368800,
+      "place": 10,
+      "timeplus": 34200,
+      "status": 0
+    },
+    {
+      "liveResultId": "e0d45ffc4459263f67866b61fe2717af",
+      "code": "1101",
+      "time": 159200,
+      "place": 11,
+      "timeplus": 21000,
+      "status": 0
+    },
+    {
+      "liveResultId": "e0d45ffc4459263f67866b61fe2717af",
+      "code": "1102",
+      "time": 152600,
+      "place": 11,
+      "timeplus": 19400,
+      "status": 0
+    },
+    {
+      "liveResultId": "e0d45ffc4459263f67866b61fe2717af",
+      "code": "1112",
+      "time": 345500,
+      "place": 11,
+      "timeplus": 34600,
+      "status": 0
+    },
+    {
+      "liveResultId": "e0d45ffc4459263f67866b61fe2717af",
+      "code": "1119",
+      "time": 258400,
+      "place": 12,
+      "timeplus": 35000,
+      "status": 0
+    },
+    {
+      "liveResultId": "e242633533e27f6a9b2c607e4874d869",
+      "code": "1100",
+      "time": 407000,
+      "place": 21,
+      "timeplus": 72400,
+      "status": 0
+    },
+    {
+      "liveResultId": "e242633533e27f6a9b2c607e4874d869",
+      "code": "1101",
+      "time": 175500,
+      "place": 18,
+      "timeplus": 37300,
+      "status": 0
+    },
+    {
+      "liveResultId": "e242633533e27f6a9b2c607e4874d869",
+      "code": "1102",
+      "time": 169500,
+      "place": 19,
+      "timeplus": 36300,
+      "status": 0
+    },
+    {
+      "liveResultId": "e242633533e27f6a9b2c607e4874d869",
+      "code": "1112",
+      "time": 385700,
+      "place": 25,
+      "timeplus": 74800,
+      "status": 0
+    },
+    {
+      "liveResultId": "e242633533e27f6a9b2c607e4874d869",
+      "code": "1119",
+      "time": 284100,
+      "place": 20,
+      "timeplus": 60700,
+      "status": 0
+    },
+    {
+      "liveResultId": "e3c524a8bc248c30030ddd517777dc98",
+      "code": "1100",
+      "time": 487100,
+      "place": 42,
+      "timeplus": 152500,
+      "status": 0
+    },
+    {
+      "liveResultId": "e3c524a8bc248c30030ddd517777dc98",
+      "code": "1101",
+      "time": 199800,
+      "place": 37,
+      "timeplus": 61600,
+      "status": 0
+    },
+    {
+      "liveResultId": "e3c524a8bc248c30030ddd517777dc98",
+      "code": "1102",
+      "time": 194300,
+      "place": 39,
+      "timeplus": 61100,
+      "status": 0
+    },
+    {
+      "liveResultId": "e3c524a8bc248c30030ddd517777dc98",
+      "code": "1112",
+      "time": 456900,
+      "place": 42,
+      "timeplus": 146000,
+      "status": 0
+    },
+    {
+      "liveResultId": "e3c524a8bc248c30030ddd517777dc98",
+      "code": "1119",
+      "time": 313500,
+      "place": 38,
+      "timeplus": 90100,
+      "status": 0
+    },
+    {
+      "liveResultId": "e4210077791044388c430e8c37427af2",
+      "code": "1100",
+      "time": 424800,
+      "place": 27,
+      "timeplus": 90200,
+      "status": 0
+    },
+    {
+      "liveResultId": "e4210077791044388c430e8c37427af2",
+      "code": "1101",
+      "time": 185800,
+      "place": 32,
+      "timeplus": 47600,
+      "status": 0
+    },
+    {
+      "liveResultId": "e4210077791044388c430e8c37427af2",
+      "code": "1102",
+      "time": 179400,
+      "place": 33,
+      "timeplus": 46200,
+      "status": 0
+    },
+    {
+      "liveResultId": "e4210077791044388c430e8c37427af2",
+      "code": "1112",
+      "time": 377700,
+      "place": 20,
+      "timeplus": 66800,
+      "status": 0
+    },
+    {
+      "liveResultId": "e4210077791044388c430e8c37427af2",
+      "code": "1119",
+      "time": 290200,
+      "place": 27,
+      "timeplus": 66800,
+      "status": 0
+    },
+    {
+      "liveResultId": "e6bac6d345911aa96767e61fd3d4b852",
+      "code": "1100",
+      "time": 339200,
+      "place": 3,
+      "timeplus": 4600,
+      "status": 0
+    },
+    {
+      "liveResultId": "e6bac6d345911aa96767e61fd3d4b852",
+      "code": "1101",
+      "time": 138200,
+      "place": 1,
+      "timeplus": 0,
+      "status": 0
+    },
+    {
+      "liveResultId": "e6bac6d345911aa96767e61fd3d4b852",
+      "code": "1102",
+      "time": 133200,
+      "place": 1,
+      "timeplus": 0,
+      "status": 0
+    },
+    {
+      "liveResultId": "e6bac6d345911aa96767e61fd3d4b852",
+      "code": "1112",
+      "time": 310900,
+      "place": 1,
+      "timeplus": 0,
+      "status": 0
+    },
+    {
+      "liveResultId": "e6bac6d345911aa96767e61fd3d4b852",
+      "code": "1119",
+      "time": 223400,
+      "place": 1,
+      "timeplus": 0,
+      "status": 0
+    },
+    {
+      "liveResultId": "ecc99d36036f18b13afd56fc601c7666",
+      "code": "1100",
+      "time": 482100,
+      "place": 41,
+      "timeplus": 147500,
+      "status": 0
+    },
+    {
+      "liveResultId": "ecc99d36036f18b13afd56fc601c7666",
+      "code": "1101",
+      "time": 214300,
+      "place": 42,
+      "timeplus": 76100,
+      "status": 0
+    },
+    {
+      "liveResultId": "ecc99d36036f18b13afd56fc601c7666",
+      "code": "1102",
+      "time": 206100,
+      "place": 42,
+      "timeplus": 72900,
+      "status": 0
+    },
+    {
+      "liveResultId": "ecc99d36036f18b13afd56fc601c7666",
+      "code": "1112",
+      "time": 451900,
+      "place": 41,
+      "timeplus": 141000,
+      "status": 0
+    },
+    {
+      "liveResultId": "ecc99d36036f18b13afd56fc601c7666",
+      "code": "1119",
+      "time": 359100,
+      "place": 43,
+      "timeplus": 135700,
+      "status": 0
+    },
+    {
+      "liveResultId": "eddd2e19c8f862792e66753e2ddad13e",
+      "code": "1100",
+      "time": 492200,
+      "place": 43,
+      "timeplus": 157600,
+      "status": 0
+    },
+    {
+      "liveResultId": "eddd2e19c8f862792e66753e2ddad13e",
+      "code": "1101",
+      "time": 221900,
+      "place": 43,
+      "timeplus": 83700,
+      "status": 0
+    },
+    {
+      "liveResultId": "eddd2e19c8f862792e66753e2ddad13e",
+      "code": "1102",
+      "time": 214400,
+      "place": 43,
+      "timeplus": 81200,
+      "status": 0
+    },
+    {
+      "liveResultId": "eddd2e19c8f862792e66753e2ddad13e",
+      "code": "1112",
+      "time": 463900,
+      "place": 43,
+      "timeplus": 153000,
+      "status": 0
+    },
+    {
+      "liveResultId": "eddd2e19c8f862792e66753e2ddad13e",
+      "code": "1119",
+      "time": 353400,
+      "place": 42,
+      "timeplus": 130000,
+      "status": 0
+    },
+    {
+      "liveResultId": "f1276f7e1f08f8a1d57fcfe300e0067d",
+      "code": "1100",
+      "time": 376300,
+      "place": 11,
+      "timeplus": 41700,
+      "status": 0
+    },
+    {
+      "liveResultId": "f1276f7e1f08f8a1d57fcfe300e0067d",
+      "code": "1101",
+      "time": 170500,
+      "place": 15,
+      "timeplus": 32300,
+      "status": 0
+    },
+    {
+      "liveResultId": "f1276f7e1f08f8a1d57fcfe300e0067d",
+      "code": "1102",
+      "time": 164800,
+      "place": 15,
+      "timeplus": 31600,
+      "status": 0
+    },
+    {
+      "liveResultId": "f1276f7e1f08f8a1d57fcfe300e0067d",
+      "code": "1112",
+      "time": 358000,
+      "place": 13,
+      "timeplus": 47100,
+      "status": 0
+    },
+    {
+      "liveResultId": "f1276f7e1f08f8a1d57fcfe300e0067d",
+      "code": "1119",
+      "time": 271200,
+      "place": 13,
+      "timeplus": 47800,
+      "status": 0
+    },
+    {
+      "liveResultId": "f501eaa62fa832e30fc7732251dc9b2c",
+      "code": "1100",
+      "time": 449700,
+      "place": 34,
+      "timeplus": 115100,
+      "status": 0
+    },
+    {
+      "liveResultId": "f501eaa62fa832e30fc7732251dc9b2c",
+      "code": "1101",
+      "time": 201100,
+      "place": 38,
+      "timeplus": 62900,
+      "status": 0
+    },
+    {
+      "liveResultId": "f501eaa62fa832e30fc7732251dc9b2c",
+      "code": "1102",
+      "time": 193200,
+      "place": 37,
+      "timeplus": 60000,
+      "status": 0
+    },
+    {
+      "liveResultId": "f501eaa62fa832e30fc7732251dc9b2c",
+      "code": "1112",
+      "time": 414200,
+      "place": 35,
+      "timeplus": 103300,
+      "status": 0
+    },
+    {
+      "liveResultId": "f501eaa62fa832e30fc7732251dc9b2c",
+      "code": "1119",
+      "time": 312700,
+      "place": 37,
+      "timeplus": 89300,
+      "status": 0
+    },
+    {
+      "liveResultId": "f71351c1f17242aad42608a6d4e2bd59",
+      "code": "1100",
+      "time": 470000,
+      "place": 39,
+      "timeplus": 135400,
+      "status": 0
+    },
+    {
+      "liveResultId": "f71351c1f17242aad42608a6d4e2bd59",
+      "code": "1101",
+      "time": 211600,
+      "place": 40,
+      "timeplus": 73400,
+      "status": 0
+    },
+    {
+      "liveResultId": "f71351c1f17242aad42608a6d4e2bd59",
+      "code": "1102",
+      "time": 204000,
+      "place": 40,
+      "timeplus": 70800,
+      "status": 0
+    },
+    {
+      "liveResultId": "f71351c1f17242aad42608a6d4e2bd59",
+      "code": "1112",
+      "time": 430900,
+      "place": 39,
+      "timeplus": 120000,
+      "status": 0
+    },
+    {
+      "liveResultId": "f71351c1f17242aad42608a6d4e2bd59",
+      "code": "1119",
+      "time": 323000,
+      "place": 40,
+      "timeplus": 99600,
+      "status": 0
+    },
+    {
+      "liveResultId": "f7ddef0919aa6523f1475ea39965aa9c",
+      "code": "1100",
+      "time": 365200,
+      "place": 9,
+      "timeplus": 30600,
+      "status": 0
+    },
+    {
+      "liveResultId": "f7ddef0919aa6523f1475ea39965aa9c",
+      "code": "1101",
+      "time": 156800,
+      "place": 10,
+      "timeplus": 18600,
+      "status": 0
+    },
+    {
+      "liveResultId": "f7ddef0919aa6523f1475ea39965aa9c",
+      "code": "1102",
+      "time": 150500,
+      "place": 10,
+      "timeplus": 17300,
+      "status": 0
+    },
+    {
+      "liveResultId": "f7ddef0919aa6523f1475ea39965aa9c",
+      "code": "1112",
+      "time": 342400,
+      "place": 9,
+      "timeplus": 31500,
+      "status": 0
+    },
+    {
+      "liveResultId": "f7ddef0919aa6523f1475ea39965aa9c",
+      "code": "1119",
+      "time": 256500,
+      "place": 11,
+      "timeplus": 33100,
+      "status": 0
+    },
+    {
+      "liveResultId": "fa93291e435b8052b8c816119375fa18",
+      "code": "1100",
+      "time": 344800,
+      "place": 4,
+      "timeplus": 10200,
+      "status": 0
+    },
+    {
+      "liveResultId": "fa93291e435b8052b8c816119375fa18",
+      "code": "1101",
+      "time": 149900,
+      "place": 5,
+      "timeplus": 11700,
+      "status": 0
+    },
+    {
+      "liveResultId": "fa93291e435b8052b8c816119375fa18",
+      "code": "1102",
+      "time": 144100,
+      "place": 6,
+      "timeplus": 10900,
+      "status": 0
+    },
+    {
+      "liveResultId": "fa93291e435b8052b8c816119375fa18",
+      "code": "1112",
+      "time": 312000,
+      "place": 3,
+      "timeplus": 1100,
+      "status": 0
+    },
+    {
+      "liveResultId": "fa93291e435b8052b8c816119375fa18",
+      "code": "1119",
+      "time": 235700,
+      "place": 3,
+      "timeplus": 12300,
+      "status": 0
+    }
+  ]
+}

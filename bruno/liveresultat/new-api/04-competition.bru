@@ -1,0 +1,29 @@
+meta {
+  name: Competition
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{newBase}}/competitions/{{compId}}
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 200
+  res.body.id: isNumber
+}
+
+docs {
+  Adds three fields over the legacy `getcompetitioninfo`:
+
+  - `timezone` — IANA, replaces the DST-lossy `timediff` → zone lookup table in
+    `lib/helpers/time.ts`. **Optional**: competition 40488 returns it empty, so
+    `timediff` has to stay as the fallback.
+  - `isPublic` — a real boolean, was `1`.
+  - `serverTime` — epoch ms, usable to correct clock skew in the `isLive` check.
+
+  Unknown ids 404 here, where the legacy endpoint returned a body. See
+  quirks/Unknown competition.
+}

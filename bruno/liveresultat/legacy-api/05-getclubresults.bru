@@ -1,0 +1,29 @@
+meta {
+  name: getclubresults
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{legacyBase}}/api.php?method=getclubresults&comp={{compId}}&club={{clubName}}
+  body: none
+  auth: none
+}
+
+params:query {
+  method: getclubresults
+  comp: {{compId}}
+  club: {{clubName}}
+}
+
+assert {
+  res.status: eq 200
+}
+
+docs {
+  Pairs with new-api/Club results.
+
+  This endpoint has no `unformattedTimes` switch at all, so `result` and `timeplus`
+  are always formatted strings (`"19:03"`, `"+02:51"`). The new API returns integers,
+  consistently with its other endpoints.
+}

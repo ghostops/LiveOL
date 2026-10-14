@@ -1,0 +1,27 @@
+meta {
+  name: Classes (conditional, expect 304)
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{newBase}}/competitions/{{compId}}/classes
+  body: none
+  auth: none
+}
+
+headers {
+  If-None-Match: {{classesEtag}}
+}
+
+assert {
+  res.status: eq 304
+}
+
+docs {
+  Run "Classes" first to capture the ETag, then this. A **304** with an empty body is
+  the replacement for the legacy `status: "NOT MODIFIED"`.
+
+  In the plan the client returns `null` on a 304, which is exactly what the jobs
+  already expect from the `last_hash` path — so no caller changes.
+}

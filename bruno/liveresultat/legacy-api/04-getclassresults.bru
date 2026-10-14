@@ -1,0 +1,43 @@
+meta {
+  name: getclassresults
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{legacyBase}}/api.php?method=getclassresults&comp={{compId}}&class={{className}}&unformattedTimes=true
+  body: none
+  auth: none
+}
+
+params:query {
+  method: getclassresults
+  comp: {{compId}}
+  class: {{className}}
+  unformattedTimes: true
+  ~last_hash: paste-a-hash-here
+}
+
+assert {
+  res.status: eq 200
+}
+
+docs {
+  Pairs with new-api/Class results. The important side-by-side.
+
+  Sent with `unformattedTimes=true`, as the server does today. **Disable that
+  parameter** to see the formatted variant (`"19:03"`, `"+02:51"`) — the new API has
+  no such switch and is always integers.
+
+  Look for:
+
+  - `splitcontrols` (lowercase c) → `splitControls`
+  - `hash` + `status` → `ETag` header
+  - `DT_RowClass: "new_result"` → `changed` / `startChanged` UNIX seconds
+  - no `bib`, no `isMultiDay` / `isMassStart` / `qualificationLimits`
+  - split maps have no `_changed` key
+
+  `DT_RowClass` is the one the plan has to synthesise: the client compares each row's
+  `changed` against a stored high-water mark and re-adds the flag, so
+  `live-class-writer.ts` and the app's "new result" highlight keep working unchanged.
+}

@@ -1,0 +1,12 @@
+meta {
+  name: new-api
+  seq: 1
+}
+
+docs {
+  `https://api.orienteering.services` — the endpoints LiveOL migrates to.
+
+  Every read returns an `ETag` and `cache-control: public, max-age=5` behind
+  CloudFront, and honours `If-None-Match` with a 304. The documented contract is at
+  most one poll per 10 s per endpoint, always conditional.
+}

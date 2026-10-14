@@ -1,0 +1,23 @@
+name: Test
+
+on:
+  - push
+
+jobs:
+  test-api:
+    name: test-api
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@master
+
+      - name: Set up Node.js
+        uses: actions/setup-node@master
+        with:
+          node-version: 20
+
+      - name: npm install
+        run: cd ./server && npm install
+
+      - name: npm test
+        run: cd ./server && npm test

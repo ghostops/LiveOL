@@ -1,0 +1,34 @@
+meta {
+  name: Passings
+  type: http
+  seq: 10
+}
+
+get {
+  url: {{newBase}}/competitions/{{compId}}/passings
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 200
+}
+
+docs {
+  The 50 newest radio/finish punches, newest first. One request regardless of class
+  count.
+
+  Fully reshaped from legacy `getlastpassings` — integers instead of formatted
+  strings, and three fields the legacy version never had:
+
+  | legacy | new |
+  | --- | --- |
+  | `passtime: "11:43:05"` | `wallClock: 3619200` |
+  | `runnerName` | `name` + `club` |
+  | `time: "123:55"` | `time: 199200` |
+  | — | `place`, `timeplus`, `bib`, `changed` |
+
+  Worth noting: the app still carries a type reference to
+  `/v1/competitions/{id}/last-passings` with no server route behind it, so this would
+  restore a feature rather than add one.
+}

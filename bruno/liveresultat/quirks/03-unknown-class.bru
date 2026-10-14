@@ -1,0 +1,33 @@
+meta {
+  name: Unknown class - 200 with empty results
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{newBase}}/competitions/{{compId}}/classresults?class=NoSuchClass
+  body: none
+  auth: none
+}
+
+params:query {
+  class: NoSuchClass
+}
+
+assert {
+  res.status: eq 200
+}
+
+docs {
+A class that does not exist returns `200` with `results: []` rather than an error.
+
+  This looked dangerous — `insertResults` ends with a `notInArray` sweep that
+  soft-deletes stored rows missing from the incoming set, so an empty set reads like
+  it would wipe the class.
+
+  It does not. `insertResults` returns early when the parsed list is empty, ahead of
+  the sweep, so an empty payload is a no-op. Proved by
+  `server/tests/live-class-writer.test.ts` ("an empty result list is a no-op, not a
+  mass soft-delete"), and the plan was corrected accordingly — no client-side guard
+  is needed.
+}

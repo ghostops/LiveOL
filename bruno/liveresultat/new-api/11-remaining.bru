@@ -1,0 +1,24 @@
+meta {
+  name: Remaining
+  type: http
+  seq: 11
+}
+
+get {
+  url: {{newBase}}/competitions/{{compId}}/remaining
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 200
+}
+
+docs {
+  Runners still out on course — not started, running, or OK without a finish time —
+  capped at 100, in start order. No legacy equivalent.
+
+  Two uses in the plan: a genuinely new "who is still out" screen, and the cheapest
+  possible signal that a competition is finished (this list going empty) so it can
+  drop to a cold poll tier.
+}

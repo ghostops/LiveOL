@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "LiveOL - Liveresultat",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}
