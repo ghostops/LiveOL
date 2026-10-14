@@ -13,6 +13,7 @@ import { URL } from 'url';
 import createHttpError from 'http-errors';
 import { fromZonedTime, toZonedTime } from 'date-fns-tz';
 import { endOfDay, nextMonday, startOfDay } from 'date-fns';
+import { preferredLiveCompetitionJoin } from 'lib/helpers/live-competition';
 
 const api = apiSingletons.createApiSingletons();
 
@@ -337,8 +338,7 @@ export const getCompetition = defaultEndpointsFactory.build({
           'eventor', to_jsonb(ec)
         ) AS competition
       FROM ol_competitions AS oc
-      LEFT JOIN live_competitions AS lc 
-        ON lc."olCompetitionId" = oc.id
+      ${preferredLiveCompetitionJoin}
       LEFT JOIN eventor_competitions AS ec 
         ON ec."olCompetitionId" = oc.id
       WHERE oc.id = ${id}

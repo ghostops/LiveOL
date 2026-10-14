@@ -1,0 +1,1 @@
+CREATE INDEX "live_classes_liveCompetitionId_idx" ON "live_classes" USING btree ("liveCompetitionId");
