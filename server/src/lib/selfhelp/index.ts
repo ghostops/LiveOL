@@ -2,6 +2,7 @@ import * as cron from 'node-cron';
 import { getEnv } from 'lib/helpers/env';
 import axios from 'axios';
 import { LiveresultatUrl } from 'lib/eventor/scrapers/urls';
+import { LiveresultatApiUrl } from 'lib/liveresultat/adapt';
 import { ServiceStatusTable } from 'lib/db/schema';
 import { apiSingletons } from 'lib/singletons';
 import { eq } from 'drizzle-orm/sql/expressions/conditions';
@@ -46,9 +47,10 @@ export class OLSelfHelper {
   private externalHealthchecks = async () => {
     const checks: HealthCheck[] = [
       {
+        // The name is the service_status row id that /status reads, so it stays
         name: LiveresultatUrl,
         query: async () => {
-          const url = `${LiveresultatUrl}/api.php?method=getcompetitions`;
+          const url = `${LiveresultatApiUrl}/competitions`;
           const res = await axios.get(url, {
             timeout: 8_000,
             // Just return the string data, it may not always be valid JSON.

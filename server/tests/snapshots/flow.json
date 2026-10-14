@@ -180,7 +180,7 @@
       "timeplus": 17500,
       "progress": 100,
       "status": 0,
-      "place": "5",
+      "place": "=",
       "start": 4386000,
       "deletedAt": null
     },
@@ -420,7 +420,7 @@
       "timeplus": 17500,
       "progress": 100,
       "status": 0,
-      "place": "=",
+      "place": "5",
       "start": 4494000,
       "deletedAt": null
     },

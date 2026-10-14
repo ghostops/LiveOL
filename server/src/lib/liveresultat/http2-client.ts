@@ -1,9 +1,19 @@
 import http2 from 'http2';
 import type Redis from 'ioredis';
 import type { LiveresultatApi } from './types';
-import { LiveresultatAPIClient } from './client';
+import {
+  adaptClasses,
+  adaptClassResults,
+  classesHashKey,
+  classesPath,
+  classResultsHashKey,
+  classResultsPath,
+  fetchConditional,
+  LiveresultatApiUrl,
+  RawResponse,
+} from './adapt';
 
-const HOST = 'https://liveresultat.orientering.se';
+const HOST = LiveresultatApiUrl;
 
 let sharedClient: LiveresultatHttp2Client | null = null;
 
@@ -87,7 +97,10 @@ export class LiveresultatHttp2Client {
     }
   }
 
-  private request(path: string): Promise<string> {
+  private request(
+    path: string,
+    ifNoneMatch?: string | null,
+  ): Promise<RawResponse> {
     return new Promise((resolve, reject) => {
       let session: http2.ClientHttp2Session;
       let req: http2.ClientHttp2Stream;
@@ -98,6 +111,7 @@ export class LiveresultatHttp2Client {
           ':method': 'GET',
           'user-agent': 'LiveOL Server http2 client',
           accept: 'application/json',
+          ...(ifNoneMatch ? { 'if-none-match': ifNoneMatch } : {}),
         });
       } catch (err) {
         // e.g. ERR_HTTP2_GOAWAY_SESSION / ERR_HTTP2_INVALID_SESSION
@@ -111,7 +125,7 @@ export class LiveresultatHttp2Client {
         if (settled) return;
         settled = true;
         if (err) reject(err);
-        else resolve(body!);
+        else resolve({ status, etag, body: body! });
       };
 
       // Without this a stalled stream never settles and blocks the job forever
@@ -125,8 +139,10 @@ export class LiveresultatHttp2Client {
       });
 
       let status = 0;
+      let etag: string | null = null;
       req.on('response', headers => {
         status = Number(headers[':status']);
+        etag = (headers['etag'] as string | undefined) ?? null;
       });
 
       req.setEncoding('utf8');
@@ -153,58 +169,24 @@ export class LiveresultatHttp2Client {
   public async getclasses(
     id: number,
   ): Promise<LiveresultatApi.getclasses | null> {
-    const hashKey = `liveresultat:lastHash:classes:${id}`;
-    const lastHash = await this.redis.get(hashKey);
-
-    const raw = await this.request(
-      `/api.php?method=getclasses&comp=${id}&last_hash=${lastHash}`,
+    return fetchConditional(
+      this.redis,
+      classesHashKey(id),
+      etag => this.request(classesPath(id), etag),
+      adaptClasses,
     );
-
-    const data = LiveresultatAPIClient.jsonParse<
-      LiveresultatApi.getclasses | { status: 'NOT MODIFIED' }
-    >(raw);
-
-    if (data.status === 'NOT MODIFIED') {
-      return null;
-    }
-
-    const typed = data as LiveresultatApi.getclasses;
-    if (typed.hash) {
-      // If the data is corrupted or wrong and the hash makes it stale
-      // we force a refresh by setting an expiration time
-      await this.redis.set(hashKey, typed.hash, 'EX', 60 * 10);
-    }
-
-    return typed;
   }
 
   public async getclassresults(
     id: number,
     className: string,
   ): Promise<LiveresultatApi.getclassresults | null> {
-    const hashKey = `liveresultat:lastHash:class:${className}:results:${id}`;
-    const lastHash = await this.redis.get(hashKey);
-
-    const raw = await this.request(
-      `/api.php?method=getclassresults&comp=${id}&class=${encodeURIComponent(className)}&unformattedTimes=true&last_hash=${lastHash}`,
+    return fetchConditional(
+      this.redis,
+      classResultsHashKey(id, className),
+      etag => this.request(classResultsPath(id, className), etag),
+      res => adaptClassResults(res),
     );
-
-    const data = LiveresultatAPIClient.jsonParse<
-      LiveresultatApi.getclassresults | { status: 'NOT MODIFIED' }
-    >(raw);
-
-    if (data.status === 'NOT MODIFIED') {
-      return null;
-    }
-
-    const typed = data as LiveresultatApi.getclassresults;
-    if (typed.hash) {
-      // If the data is corrupted or wrong and the hash makes it stale
-      // we force a refresh by setting an expiration time
-      await this.redis.set(hashKey, typed.hash, 'EX', 60 * 10);
-    }
-
-    return typed;
   }
 
   public close(): void {

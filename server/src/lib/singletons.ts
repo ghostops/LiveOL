@@ -5,7 +5,7 @@ import { FastQueue, PushQueue, RegularQueue, RepeatingQueue } from './queue';
 import { PushNotifier } from './notifications/notifier';
 import { JobScheduler } from './scheduler';
 import Redis from 'ioredis';
-import { LiveresultatUrl } from './eventor/scrapers/urls';
+import { LiveresultatApiUrl } from './liveresultat/adapt';
 
 export interface APIResponse {
   Liveresultat: LiveresultatAPIClient;
@@ -33,7 +33,10 @@ class ApiSingletons {
       port: 6379,
     });
 
-    const liveresultatApi = new LiveresultatAPIClient(LiveresultatUrl, cache);
+    const liveresultatApi = new LiveresultatAPIClient(
+      LiveresultatApiUrl,
+      cache,
+    );
 
     const redisHost = process.env.REDIS_HOST!;
     const redisPassword = process.env.REDIS_PASSWORD;
