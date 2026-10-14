@@ -47,6 +47,7 @@ npm start                # Production start (ts-node)
 
 # Testing & Quality
 npm run tscheck          # TypeScript type checking (no emit)
+npm test                 # Integration tests (no services needed)
 npm run lint            # ESLint check
 npm run format          # Prettier format
 
@@ -227,7 +228,13 @@ npm run archive:android
 cd App && npm test
 ```
 
-**Server**: No test suite currently configured (manual testing + type checking)
+**Server**: Integration tests for the Liveresultat sync flow in `server/tests/` (Node test runner via `tsx`). No services required: Postgres is PGlite with the `drizzle/` migrations applied, Redis is `ioredis-mock`, and upstream Liveresultat is a local server replaying recorded fixtures. Run in CI on every push (`.github/workflows/test.yml`)
 ```bash
-cd Server && npm run tscheck
+cd Server
+npm test                 # whole suite
+npm run test:snapshots   # regenerate tests/snapshots/ (review the diff)
+npm run test:fixtures    # re-record tests/fixtures/ from the live APIs
+npm run tscheck
 ```
+- `tests/snapshots/flow.json` is the regression guard: the synced DB projection must stay byte-identical across the Liveresultat API migration
+- `tests/fixtures/legacy/` is recorded from `api.php`, which is being retired, so it cannot be re-recorded once that is switched off. See `server/tests/README.md`
