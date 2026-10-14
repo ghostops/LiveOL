@@ -1,6 +1,7 @@
 import { and, eq, inArray, isNull, notInArray, sql } from 'drizzle-orm';
 import {
   LiveClassesTable,
+  LiveCompetitionsTable,
   LiveResultsTable,
   LiveSplitControllsTable,
   LiveSplitResultsTable,
@@ -157,6 +158,16 @@ export class LiveClassWriter {
         liveClassId: hashedClassId,
         ...body,
       });
+      // Only on a new class, so ordinary result writes don't touch the row
+      await this.db
+        .update(LiveCompetitionsTable)
+        .set({ hasClasses: true })
+        .where(
+          and(
+            eq(LiveCompetitionsTable.id, competitionId),
+            eq(LiveCompetitionsTable.hasClasses, false),
+          ),
+        );
     } else {
       await this.db
         .update(LiveClassesTable)
