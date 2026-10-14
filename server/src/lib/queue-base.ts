@@ -1,4 +1,4 @@
-import { Job, Queue, Worker } from 'bullmq';
+import { Job, KeepJobs, Queue, Worker } from 'bullmq';
 import logger from './logger';
 
 type OLQueueMessage = {
@@ -27,8 +27,8 @@ export class JobRegistry {
 
 export interface QueueConfig {
   attempts: number;
-  removeOnFail: boolean | { age?: number; count?: number };
-  removeOnComplete: boolean | { age?: number; count?: number };
+  removeOnFail: boolean | KeepJobs;
+  removeOnComplete: boolean | KeepJobs;
   backoff: {
     type: 'exponential';
     delay: number;
