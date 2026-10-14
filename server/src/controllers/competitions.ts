@@ -122,8 +122,7 @@ export const getTodaysCompetitions = defaultEndpointsFactory.build({
         to_jsonb(lc) AS live,
         to_jsonb(ec) AS eventor
       FROM ol_competitions AS oc
-      LEFT JOIN live_competitions AS lc 
-        ON lc."olCompetitionId" = oc.id
+      ${preferredLiveCompetitionJoin}
       LEFT JOIN eventor_competitions AS ec 
         ON ec."olCompetitionId" = oc.id
       WHERE COALESCE(ec.date, lc.date) >= ${startUTC} AND COALESCE(ec.date, lc.date) < ${endUTC};
@@ -165,7 +164,7 @@ export const getCompetitions = defaultEndpointsFactory.build({
     const countRes = await api.Drizzle.db.execute<{ total: string }>(sql`
       SELECT COUNT(DISTINCT DATE(COALESCE(ec.date, lc.date) AT TIME ZONE 'UTC' AT TIME ZONE ${timezone})) as total
       FROM ol_competitions AS oc
-      LEFT JOIN live_competitions AS lc ON lc."olCompetitionId" = oc.id
+      ${preferredLiveCompetitionJoin}
       LEFT JOIN eventor_competitions AS ec ON ec."olCompetitionId" = oc.id
       ${shouldShowFuture ? sql`` : sql`WHERE DATE(COALESCE(ec.date, lc.date) AT TIME ZONE 'UTC' AT TIME ZONE ${timezone}) <= ${startOfNextWeek.toISOString()}`}
     `);
@@ -196,8 +195,7 @@ export const getCompetitions = defaultEndpointsFactory.build({
           ec,
           DATE(COALESCE(ec.date, lc.date) AT TIME ZONE 'UTC' AT TIME ZONE ${timezone}) AS local_date
         FROM ol_competitions AS oc
-        LEFT JOIN live_competitions AS lc 
-          ON lc."olCompetitionId" = oc.id
+        ${preferredLiveCompetitionJoin}
         LEFT JOIN eventor_competitions AS ec 
           ON ec."olCompetitionId" = oc.id
       ) sub
@@ -292,8 +290,7 @@ export const searchCompetitions = defaultEndpointsFactory.build({
         to_jsonb(lc) AS live,
         to_jsonb(ec) AS eventor
       FROM ol_competitions AS oc
-      LEFT JOIN live_competitions AS lc
-        ON lc."olCompetitionId" = oc.id
+      ${preferredLiveCompetitionJoin}
       LEFT JOIN eventor_competitions AS ec
         ON ec."olCompetitionId" = oc.id
       ${whereClause}
