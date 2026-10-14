@@ -95,8 +95,12 @@ once a minute, and the rest covers job runtime and clock skew. Check it against 
   `?class=K20%2F21` → 200, `/classes/K20%2F21/results` → 404.
 - **Unknown class → 200 with empty `results`.** Harmless: `insertResults` returns early on an
   empty list, before the soft-delete sweep (pinned by `live-class-writer.test.ts`).
-- **Unknown competition → 404.** The axios client throws and the job logs it, same as any
-  other fetch error.
+- **Unknown competition depends on the endpoint.** `/competitions/{id}` and `/classresults`
+  return 404 (`{"error":"Tävlingen finns inte"}`), so the client throws and the job logs it,
+  same as any other fetch error. `/classes` returns **200 with `{"classes":[]}`** and an ETag:
+  the client stores the ETag and the job finds no classes to dispatch, so it is silent rather
+  than logged. Harmless, but a removed competition does not show up as an error from
+  `getclasses` alone. Verified live 2026-10-14.
 - **`result` / `timeplus` are integers** in the new API, strings in legacy. `parseResultNumber`
   already handles both.
 - **Tie order can differ.** For runners tied on time, legacy and new may list them in a
@@ -166,6 +170,12 @@ HTTP/2 304
 
 GET /competitions/999999999
 404
+
+GET /competitions/999999999/classes
+200 {"classes":[]}
+
+GET /competitions/999999999/classresults?class=H21
+404 {"error":"Tävlingen finns inte"}
 ```
 
 Conventions: times in hundredths of a second, start times from local midnight, status codes
