@@ -99,6 +99,13 @@
       "when": 1791719668849,
       "tag": "0013_changelog_min_app_version",
       "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "7",
+      "when": 1792002328428,
+      "tag": "0014_live_classes_competition_idx",
+      "breakpoints": true
     }
   ]
 }
