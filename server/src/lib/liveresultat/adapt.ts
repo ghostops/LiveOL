@@ -11,8 +11,11 @@ import type { LiveresultatApi } from './types';
 export const LiveresultatApiUrl = 'https://api.orienteering.services';
 
 /**
- * A row is flagged `new_result` when its `changed` timestamp is at most this
- * old. It must be at least the poll interval of the sync jobs (stored in
+ * A row is flagged `new_result` when one of its `<code>_changed` split
+ * timestamps is at most this old. The row-level `changed` is not used: it also
+ * moves when only the place does, e.g. because another runner finished. A
+ * changed result time is detected by `LiveClassWriter` instead, since upstream
+ * has no timestamp for it alone. It must be at least the poll interval of the sync jobs (stored in
  * `scheduled_jobs`, at most once a minute), or a change landing between two
  * polls is never flagged. The slack covers job runtime and clock skew with
  * upstream; a too-large window only makes the highlight last a little longer.
@@ -89,6 +92,7 @@ export const adaptClassResults = (
     splitcontrols: data.splitControls ?? [],
     results: (data.results ?? []).map(row => {
       // Pull out the fields legacy never sent; everything else passes through
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { changed, splits, ...rest } = row;
 
       // Legacy omits `splits` for rows without any, so keep it absent too
@@ -98,8 +102,12 @@ export const adaptClassResults = (
       } as LiveresultatApi.result;
 
       if (
-        typeof changed === 'number' &&
-        nowSeconds - changed <= NEW_RESULT_WINDOW_SECONDS
+        splits &&
+        Object.entries(splits).some(
+          ([key, value]) =>
+            key.endsWith('_changed') &&
+            nowSeconds - value <= NEW_RESULT_WINDOW_SECONDS,
+        )
       ) {
         result.DT_RowClass = 'new_result';
       }

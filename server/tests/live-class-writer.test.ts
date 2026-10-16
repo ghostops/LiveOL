@@ -270,6 +270,37 @@ describe('LiveClassWriter', () => {
     assert.deepEqual(after!.newResultAt, flagged!.newResultAt);
   });
 
+  test('a changed result time sets newResultAt, a changed place alone does not', async () => {
+    const base = clone(fixture());
+    for (const r of base.results) delete r.DT_RowClass;
+    await writer.write(COMP, base);
+
+    const classId = classIdFor(COMP, main.className);
+    const newResultAt = async (r: LiveresultatApi.result) => {
+      const [row] = await db
+        .select()
+        .from(LiveResultsTable)
+        .where(
+          eq(
+            LiveResultsTable.liveResultId,
+            resultIdFor(classId, r.name, r.club ?? ''),
+          ),
+        );
+      return row!.newResultAt;
+    };
+
+    const placeOnly = clone(base);
+    placeOnly.results[0]!.place = '99';
+    await writer.write(COMP, placeOnly);
+    assert.equal(await newResultAt(base.results[0]!), null);
+
+    const resultChanged = clone(base);
+    resultChanged.results[0]!.result = 123456;
+    await writer.write(COMP, resultChanged);
+    assert.ok(await newResultAt(base.results[0]!));
+    assert.equal(await newResultAt(base.results[1]!), null);
+  });
+
   test('rows missing from a later response are soft-deleted, and restored if they return', async () => {
     const full = fixture();
     await writer.write(COMP, full);
