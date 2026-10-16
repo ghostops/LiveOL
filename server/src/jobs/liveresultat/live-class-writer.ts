@@ -346,7 +346,12 @@ export class LiveClassWriter {
           place: sql`excluded.place`,
           status: sql`excluded.status`,
           start: sql`excluded.start`,
-          newResultAt: sql`COALESCE(excluded."newResultAt", ${LiveResultsTable.newResultAt})`,
+          // Highlight a changed result time even when the source did not flag it
+          newResultAt: sql`CASE
+            WHEN excluded."newResultAt" IS NOT NULL THEN excluded."newResultAt"
+            WHEN excluded.result IS DISTINCT FROM ${LiveResultsTable.result} THEN NOW()
+            ELSE ${LiveResultsTable.newResultAt}
+          END`,
         },
       });
 

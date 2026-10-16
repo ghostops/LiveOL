@@ -125,9 +125,12 @@ describe('Liveresultat REST adapter', () => {
     assert.ok(!('splits' in res.results[0]!));
   });
 
-  test('changed inside the window flags new_result', () => {
+  test('a split changed inside the window flags new_result', () => {
     const at = (changed: number) =>
-      adaptClassResults(ok(oneRow({ changed })), NOW)!.results[0]!;
+      adaptClassResults(
+        ok(oneRow({ splits: { '31': 1000, '31_changed': changed } })),
+        NOW,
+      )!.results[0]!;
 
     assert.equal(at(nowSeconds).DT_RowClass, 'new_result');
     assert.equal(
@@ -138,16 +141,34 @@ describe('Liveresultat REST adapter', () => {
     assert.equal(at(nowSeconds + 5).DT_RowClass, 'new_result');
   });
 
-  test('changed outside the window, or absent, does not flag', () => {
+  test('splits changed outside the window, or absent, do not flag', () => {
     const at = (fields: Record<string, unknown>) =>
       adaptClassResults(ok(oneRow(fields)), NOW)!.results[0]!;
 
+    const old = nowSeconds - NEW_RESULT_WINDOW_SECONDS - 1;
     assert.equal(
-      at({ changed: nowSeconds - NEW_RESULT_WINDOW_SECONDS - 1 }).DT_RowClass,
+      at({ splits: { '31': 1000, '31_changed': old } }).DT_RowClass,
       undefined,
     );
     assert.equal(at({}).DT_RowClass, undefined);
-    assert.ok(!('changed' in at({ changed: nowSeconds })));
+  });
+
+  test('a recent row-level changed alone does not flag, it also moves on place changes', () => {
+    const row = adaptClassResults(
+      ok(
+        oneRow({
+          changed: nowSeconds,
+          splits: {
+            '31': 1000,
+            '31_changed': nowSeconds - NEW_RESULT_WINDOW_SECONDS - 1,
+          },
+        }),
+      ),
+      NOW,
+    )!.results[0]!;
+
+    assert.equal(row.DT_RowClass, undefined);
+    assert.ok(!('changed' in row));
   });
 
   test('the window covers at least a once-a-minute poll', () => {
