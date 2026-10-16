@@ -5,6 +5,7 @@ import { RootStack } from '~/lib/nav/router';
 import { $api } from '~/lib/react-query/api';
 import { OLText } from '~/views/components/text';
 import { useOLNavigation } from '~/hooks/useNavigation';
+import { usePullToRefresh } from '~/hooks/usePullToRefresh';
 import { useCallback, useLayoutEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toZonedTime, format } from 'date-fns-tz';
@@ -38,6 +39,8 @@ export const OLSceneCompetition = () => {
     }, [refetch]),
   );
 
+  const { refreshing, onRefresh } = usePullToRefresh(refetch);
+
   const title = getCompetitionQuery.data?.data.competition.name;
   const date = useMemo(() => {
     if (!getCompetitionQuery.data?.data.competition.date) {
@@ -67,8 +70,8 @@ export const OLSceneCompetition = () => {
         contentContainerStyle={{ paddingBottom: 128 }}
         refreshControl={
           <RefreshControl
-            refreshing={getCompetitionQuery.isRefetching}
-            onRefresh={() => getCompetitionQuery.refetch()}
+            refreshing={refreshing}
+            onRefresh={onRefresh}
             colors={[colors.MAIN]}
             tintColor={colors.MAIN}
           />
