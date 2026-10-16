@@ -6,6 +6,7 @@ import {
   View,
 } from 'react-native';
 import { useOLNavigation } from '~/hooks/useNavigation';
+import { usePullToRefresh } from '~/hooks/usePullToRefresh';
 import { useTheme } from '~/hooks/useTheme';
 import { $api } from '~/lib/react-query/api';
 import { paths } from '~/lib/react-query/schema';
@@ -68,16 +69,12 @@ export const OLSceneHome = () => {
     },
   );
 
-  const isRefreshing =
-    getTodaysCompetitionsQuery.isRefetching ||
-    getCompetitionsQuery.isRefetching;
-
-  const refetch = async () => {
-    await Promise.all([
+  const { refreshing, onRefresh } = usePullToRefresh(() =>
+    Promise.all([
       getTodaysCompetitionsQuery.refetch(),
       getCompetitionsQuery.refetch(),
-    ]);
-  };
+    ]),
+  );
 
   const hasCompetitionsToday =
     !!getTodaysCompetitionsQuery.data?.data.competitions.length;
@@ -175,8 +172,8 @@ export const OLSceneHome = () => {
           style={{ flex: 1 }}
           refreshControl={
             <RefreshControl
-              refreshing={isRefreshing}
-              onRefresh={refetch}
+              refreshing={refreshing}
+              onRefresh={onRefresh}
               tintColor={colors.MAIN}
             />
           }
