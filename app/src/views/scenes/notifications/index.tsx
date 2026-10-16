@@ -132,13 +132,24 @@ export const OLSceneNotificationSettings = () => {
           <OLText size={14} style={{ color: COLORS.WHITE, flex: 1 }}>
             {t('Notifications are off in system settings')}
           </OLText>
-          <OLButton
-            small
-            onPress={openSystemSettings}
-            style={{ backgroundColor: COLORS.DARK }}
-          >
-            {t('Open settings')}
-          </OLButton>
+          {permissionStatus === 'not_determined' ? (
+            // Never asked (e.g. after a reinstall): system settings has no toggle yet
+            <OLButton
+              small
+              onPress={() => enable()}
+              style={{ backgroundColor: COLORS.DARK }}
+            >
+              {t('Turn on')}
+            </OLButton>
+          ) : (
+            <OLButton
+              small
+              onPress={openSystemSettings}
+              style={{ backgroundColor: COLORS.DARK }}
+            >
+              {t('Open settings')}
+            </OLButton>
+          )}
         </View>
       )}
 

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { AppState, Linking } from 'react-native';
 import {
   getInitialNotification,
@@ -7,7 +7,8 @@ import {
   onTokenRefresh,
 } from '@react-native-firebase/messaging';
 import { getNavigationRef } from '~/hooks/useNavigation';
-import { getMessagingSafe } from '~/lib/push';
+import { useNotificationSettings } from '~/hooks/useNotificationSettings';
+import { getMessagingSafe, requestPushPermission } from '~/lib/push';
 import {
   parsePushLink,
   showForegroundNotification,
@@ -25,6 +26,25 @@ const NAV_READY_RETRIES = 20;
  */
 export const PushRegistration = () => {
   const userId = useUserIdStore(state => state.userId);
+  const { settings } = useNotificationSettings();
+  const prefsEnabled = settings?.prefs.enabled;
+  const hasReprompted = useRef(false);
+
+  // Prefs are stored per user and survive a reinstall, the OS permission
+  // doesn't. The user already opted in, so ask the OS again right away.
+  useEffect(() => {
+    if (!userId || !prefsEnabled || hasReprompted.current) {
+      return;
+    }
+    hasReprompted.current = true;
+
+    (async () => {
+      const status = await syncPushRegistration(userId);
+      if (status === 'not_determined') {
+        syncPushRegistration(userId, await requestPushPermission());
+      }
+    })();
+  }, [prefsEnabled, userId]);
 
   useEffect(() => {
     if (!userId) {
