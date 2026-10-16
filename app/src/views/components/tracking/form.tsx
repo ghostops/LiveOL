@@ -18,6 +18,7 @@ import { useIap } from '~/hooks/useIap';
 import { isPlusRequiredError } from '~/lib/react-query/errors';
 import { usePushStore } from '~/store/push';
 import { useEnableNotifications } from '~/hooks/useEnableNotifications';
+import { canReceivePush } from '~/lib/push';
 import { useNotificationSettings } from '~/hooks/useNotificationSettings';
 
 export type OLTrackingFormMode = 'create' | 'edit';
@@ -51,6 +52,7 @@ export const OLTrackingForm = ({
   const setHasPromptedOnFollow = usePushStore(
     state => state.setHasPromptedOnFollow,
   );
+  const permissionStatus = usePushStore(state => state.permissionStatus);
 
   const [name, setName] = useState(initialRunner?.name || '');
   const [debouncedName] = useDebounce(name, 500);
@@ -155,7 +157,9 @@ export const OLTrackingForm = ({
             mode === 'create' &&
             !hasPromptedOnFollow &&
             notificationSettings &&
-            !notificationSettings.prefs.enabled
+            // Server prefs outlive a reinstall, the OS permission does not
+            (!notificationSettings.prefs.enabled ||
+              !canReceivePush(permissionStatus))
           ) {
             setHasPromptedOnFollow();
             enable({
