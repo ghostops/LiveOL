@@ -1,11 +1,11 @@
-import { RouteProp, useRoute } from '@react-navigation/native';
+import { RouteProp, useFocusEffect, useRoute } from '@react-navigation/native';
 import { FlatList, RefreshControl, TouchableOpacity, View } from 'react-native';
 import { useTheme } from '~/hooks/useTheme';
 import { RootStack } from '~/lib/nav/router';
 import { $api } from '~/lib/react-query/api';
 import { OLText } from '~/views/components/text';
 import { useOLNavigation } from '~/hooks/useNavigation';
-import { useLayoutEffect, useMemo } from 'react';
+import { useCallback, useLayoutEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toZonedTime, format } from 'date-fns-tz';
 import { CompetitionInfoBox } from '~/views/components/competition/info';
@@ -24,6 +24,19 @@ export const OLSceneCompetition = () => {
       },
     },
   });
+
+  // Refetch when returning to this screen (e.g. back from results) so classes
+  // added during the day show up. The first focus is covered by the mount fetch.
+  const { refetch } = getCompetitionQuery;
+  const hasFocused = useRef(false);
+  useFocusEffect(
+    useCallback(() => {
+      if (hasFocused.current) {
+        refetch();
+      }
+      hasFocused.current = true;
+    }, [refetch]),
+  );
 
   const title = getCompetitionQuery.data?.data.competition.name;
   const date = useMemo(() => {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { View } from 'react-native';
+import { AppState, View } from 'react-native';
 import { Easing, Animated, Dimensions } from 'react-native';
 import { COLORS, px } from '~/util/const';
 
@@ -45,9 +45,23 @@ export const OLRefetcherBar: React.FunctionComponent<Props> = ({
       refresh();
     }
 
-    const timer = setInterval(() => refresh(), interval);
+    let timer = setInterval(() => refresh(), interval);
 
-    return () => clearInterval(timer);
+    // Timers pause in the background, so refresh as soon as the app is active
+    // again and restart the interval from there.
+    const appState = AppState.addEventListener('change', state => {
+      if (state !== 'active') {
+        return;
+      }
+      clearInterval(timer);
+      refresh();
+      timer = setInterval(() => refresh(), interval);
+    });
+
+    return () => {
+      clearInterval(timer);
+      appState.remove();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [interval, enabled]);
 
