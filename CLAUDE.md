@@ -221,10 +221,10 @@ npm run archive:android
 - Builds an App Bundle (`.aab`, native debug symbols included) and uploads it to the Google Play internal track, then sourcemaps to Bugsnag
 - `increment_version_code` bumps `versionCode` in `android/app/build.gradle`; commit that bump afterwards (e.g. `App: release 4.1.0 (Android 117)`)
 
-**Releasing from a worktree**: the signing secrets and Ruby gems are gitignored, so a fresh worktree lacks them. Copy them from the main checkout (`/Users/ghost/Projects/LiveOL/app`) first:
+**Releasing from a worktree**: the signing secrets and Ruby gems are gitignored, so a fresh worktree lacks them. Copy them from the main checkout first:
 ```bash
 cd app
-MAIN=/Users/ghost/Projects/LiveOL/app
+MAIN="$(git worktree list --porcelain | head -1 | cut -d' ' -f2)/app"   # main checkout
 cp $MAIN/.env.local $MAIN/LiveOL.jks $MAIN/google-key.json .   # Android
 cp $MAIN/AuthKey_*.p8 .                                         # iOS
 ln -s $MAIN/vendor vendor                                       # fastlane gems (BUNDLE_PATH: vendor/bundle)
