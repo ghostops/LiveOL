@@ -43,7 +43,7 @@ platform :android do
     )
 
     gradle(
-      task: 'assemble',
+      task: 'bundle',
       build_type: 'release',
       properties: getGradleProperties,
     )
@@ -52,7 +52,7 @@ platform :android do
       track: 'internal',
       release_status: 'completed',
       version_name: getPackageVersion,
-      apk: './app/build/outputs/apk/release/app-release.apk'
+      aab: './app/build/outputs/bundle/release/app-release.aab'
     )
   end
 
