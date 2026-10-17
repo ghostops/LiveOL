@@ -218,7 +218,19 @@ cd App
 npm run archive:android
 ```
 - Requires: `.env.local` with `ANDROID_STORE_PASSWORD`, `ANDROID_KEY_ALIAS`, `ANDROID_KEY_PASSWORD`
-- Uploads to Google Play + sourcemaps to Bugsnag
+- Builds an App Bundle (`.aab`, native debug symbols included) and uploads it to the Google Play internal track, then sourcemaps to Bugsnag
+- `increment_version_code` bumps `versionCode` in `android/app/build.gradle`; commit that bump afterwards (e.g. `App: release 4.1.0 (Android 117)`)
+
+**Releasing from a worktree**: the signing secrets and Ruby gems are gitignored, so a fresh worktree lacks them. Copy them from the main checkout (`/Users/ghost/Projects/LiveOL/app`) first:
+```bash
+cd app
+MAIN=/Users/ghost/Projects/LiveOL/app
+cp $MAIN/.env.local $MAIN/LiveOL.jks $MAIN/google-key.json .   # Android
+cp $MAIN/AuthKey_*.p8 .                                         # iOS
+ln -s $MAIN/vendor vendor                                       # fastlane gems (BUNDLE_PATH: vendor/bundle)
+npm ci --ignore-scripts && npx patch-package                    # skip `npm run schema`, it needs the local server
+```
+- Release from a branch based on the latest `master`, or the version code bump collides with one already on Play
 
 ## Testing
 
