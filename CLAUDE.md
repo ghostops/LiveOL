@@ -211,6 +211,8 @@ npm run archive:ios
 ```
 - Requires: `.env.local` with `IOS_KEY_FILENAME`, `IOS_ISSUER_ID`, `IOS_KEY_ID`
 - Uploads to TestFlight
+- Signing goes through the API key (cloud-managed distribution certificate), so no Apple ID needs to be signed in to Xcode. The key needs the Admin role
+- Each marketing version (`package.json` `version`) closes for new builds once it is released; bump it if the upload fails with "train version is closed"
 
 **Android** (via Fastlane):
 ```bash
