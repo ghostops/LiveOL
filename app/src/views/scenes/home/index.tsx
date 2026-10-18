@@ -22,6 +22,7 @@ import { useCallback, useEffect, useMemo, useState, memo, useRef } from 'react';
 import BootSplash from 'react-native-bootsplash';
 import { OLButton } from '~/views/components/button';
 import { OLHomeSkeletonList } from './skeleton';
+import { FlashingRedDot } from '~/views/components/flashing/dot';
 
 export const OLSceneHome = () => {
   const { colors, px } = useTheme();
@@ -232,6 +233,7 @@ export const OLSceneHome = () => {
                         key={item.id}
                         item={item}
                         showOrganizationName
+                        showLiveIndicator
                       />
                     ),
                   )}
@@ -251,11 +253,13 @@ export const HomeRowItem = memo(
     onPress,
     showDate = false,
     showOrganizationName = false,
+    showLiveIndicator = false,
   }: {
     item: paths['/v2/competitions']['get']['responses']['200']['content']['application/json']['data']['competitions'][number]['competitions'][number];
     onPress?: () => void;
     showDate?: boolean;
     showOrganizationName?: boolean;
+    showLiveIndicator?: boolean;
   }) => {
     const { colors, px } = useTheme();
     const { navigate } = useOLNavigation();
@@ -272,6 +276,9 @@ export const HomeRowItem = memo(
         }
       >
         <View style={style.row}>
+          {showLiveIndicator && item.isLive && (
+            <FlashingRedDot size={px(8)} style={{ marginRight: px(8) }} />
+          )}
           <View style={{ flex: 1 }}>
             <OLText size={16} numberOfLines={1} style={{ flexShrink: 1 }}>
               {item.name}

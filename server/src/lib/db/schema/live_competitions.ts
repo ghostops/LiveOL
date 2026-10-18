@@ -21,6 +21,8 @@ export const LiveCompetitionsTable = pgTable(
     // Set once the first class is written. Picks the real upload when several
     // share an olCompetitionId (see lib/helpers/live-competition.ts)
     hasClasses: boolean().notNull().default(false),
+    // Latest newResultAt across the competition's results, drives `isLive`
+    lastResultAt: timestamp(),
     ...commonFields,
   },
   t => [

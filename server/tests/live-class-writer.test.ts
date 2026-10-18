@@ -4,6 +4,7 @@ import crypto from 'crypto';
 import { eq, isNull, isNotNull } from 'drizzle-orm';
 import {
   LiveClassesTable,
+  LiveCompetitionsTable,
   LiveResultsTable,
   LiveSplitControllsTable,
   LiveSplitResultsTable,
@@ -268,6 +269,35 @@ describe('LiveClassWriter', () => {
       .from(LiveResultsTable)
       .where(eq(LiveResultsTable.liveResultId, resultId));
     assert.deepEqual(after!.newResultAt, flagged!.newResultAt);
+  });
+
+  test('bumps the competition lastResultAt to the newest result, never back', async () => {
+    await db.insert(LiveCompetitionsTable).values({
+      id: COMP,
+      name: 'Test',
+      olOrganizationId: 'org',
+      olCompetitionId: 'comp',
+      date: new Date(),
+    });
+    const lastResultAt = async () =>
+      (
+        await db
+          .select({ at: LiveCompetitionsTable.lastResultAt })
+          .from(LiveCompetitionsTable)
+          .where(eq(LiveCompetitionsTable.id, COMP))
+      )[0]!.at;
+
+    await writer.write(COMP, fixture());
+    assert.equal(await lastResultAt(), null);
+
+    const data = clone(fixture());
+    data.results[0]!.DT_RowClass = 'new_result';
+    await writer.write(COMP, data);
+    const bumped = await lastResultAt();
+    assert.ok(bumped, 'expected lastResultAt to be set');
+
+    await writer.write(COMP, fixture());
+    assert.deepEqual(await lastResultAt(), bumped);
   });
 
   test('a changed result time sets newResultAt, a changed place alone does not', async () => {
