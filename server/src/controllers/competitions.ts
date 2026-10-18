@@ -50,7 +50,7 @@ export const competitionSchema = z.object({
 
 export type Competition = z.infer<typeof competitionSchema>;
 
-export const LIVE_THRESHOLD_MINUTES = 30;
+export const LIVE_THRESHOLD_MINUTES = 60;
 
 const marshalCompetition = (competition: {
   id: string;
