@@ -356,6 +356,16 @@ export class LiveClassWriter {
       });
 
     await this.db
+      .update(LiveCompetitionsTable)
+      .set({
+        lastResultAt: sql`GREATEST(${LiveCompetitionsTable.lastResultAt}, (
+          SELECT MAX(${LiveResultsTable.newResultAt}) FROM ${LiveResultsTable}
+          WHERE ${LiveResultsTable.liveClassId} = ${hashedClassId}
+        ))`,
+      })
+      .where(eq(LiveCompetitionsTable.id, competitionId));
+
+    await this.db
       .update(LiveResultsTable)
       .set({ deletedAt: new Date() })
       .where(
