@@ -1,11 +1,13 @@
 /* eslint-disable react/no-unstable-nested-components */
 import { useTranslation } from 'react-i18next';
-import { StatusBar } from 'react-native';
+import { Platform, StatusBar } from 'react-native';
 import { OLProfile } from '~/views/scenes/profile';
 import { NavigationContainer } from '@react-navigation/native';
 import { HomeHeader } from '~/views/scenes/home/header';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeBottomTabNavigator } from '@bottom-tabs/react-navigation';
+import type { AppleIcon } from 'react-native-bottom-tabs';
+import { Ionicons } from '@react-native-vector-icons/ionicons';
 import { COLORS } from '~/util/const';
 import { BackButton } from './backButton';
 import { OLLanguageModal } from '~/views/scenes/language_modal/component';
@@ -14,8 +16,6 @@ import { OLSceneHome } from '~/views/scenes/home';
 import { OLSceneTracking } from '~/views/scenes/tracking';
 import { OLSceneEditTrackRunner } from '~/views/scenes/tracking/edit';
 import { OLSceneCompetition } from '~/views/scenes/competition';
-import { OLIcon } from '~/views/components/icon';
-import { OLText } from '~/views/components/text';
 import { OLSceneLiveResults } from '~/views/scenes/live-results';
 import { OLSceneClubResults } from '~/views/scenes/club-results';
 import { OLSceneTrackingResults } from '~/views/scenes/tracking/results';
@@ -61,87 +61,67 @@ export type RootStack = {
 };
 
 const Stack = createNativeStackNavigator<RootStack>();
-const Tabs = createBottomTabNavigator<TabStack>();
+const Tabs = createNativeBottomTabNavigator<TabStack>();
+
+type IoniconName = React.ComponentProps<typeof Ionicons>['name'];
+
+// iOS gets SF Symbols so the native tab bar (Liquid Glass on iOS 26) can tint them,
+// Android gets the Ionicons rendered to images
+const tabIcon =
+  (
+    sfSymbol: AppleIcon['sfSymbol'],
+    ionicon: IoniconName,
+    ioniconFocused: IoniconName,
+  ) =>
+  ({ focused }: { focused: boolean }) =>
+    Platform.OS === 'ios'
+      ? { sfSymbol }
+      : Ionicons.getImageSourceSync(
+          focused ? ioniconFocused : ionicon,
+          24,
+          COLORS.WHITE,
+        )!;
 
 const OLHomeTabs: React.FC = () => {
   const { t } = useTranslation();
 
   return (
     <Tabs.Navigator
+      initialRouteName="Home"
+      tabBarActiveTintColor={Platform.OS === 'ios' ? COLORS.MAIN : COLORS.WHITE}
+      tabBarInactiveTintColor={
+        Platform.OS === 'ios' ? undefined : 'rgba(255, 255, 255, 0.8)'
+      }
+      tabBarStyle={
+        Platform.OS === 'ios' ? undefined : { backgroundColor: COLORS.MAIN }
+      }
+      activeIndicatorColor={COLORS.DARK}
       screenOptions={{
-        headerShown: false,
-        tabBarStyle: {
-          backgroundColor: COLORS.MAIN,
-          borderTopColor: COLORS.DARK,
-        },
         title: '...',
       }}
-      initialRouteName="Home"
     >
       <Tabs.Screen
         name="Tracking"
         component={OLSceneTracking}
         options={{
-          tabBarIcon: ({ focused }) => (
-            <OLIcon
-              name={focused ? 'people' : 'people-outline'}
-              size={20}
-              color={COLORS.WHITE}
-              style={{ opacity: focused ? 1 : 0.8 }}
-            />
-          ),
-          tabBarLabel: ({ focused }) => (
-            <OLText
-              size={11}
-              style={{ opacity: focused ? 1 : 0.8, color: COLORS.WHITE }}
-            >
-              {t('Following')}
-            </OLText>
-          ),
+          tabBarLabel: t('Following'),
+          tabBarIcon: tabIcon('person.2.fill', 'people-outline', 'people'),
         }}
       />
       <Tabs.Screen
         name="Home"
         component={OLSceneHome}
         options={{
-          tabBarIcon: ({ focused }) => (
-            <OLIcon
-              name={focused ? 'list' : 'list-outline'}
-              size={20}
-              color={COLORS.WHITE}
-              style={{ opacity: focused ? 1 : 0.8 }}
-            />
-          ),
-          tabBarLabel: ({ focused }) => (
-            <OLText
-              size={11}
-              style={{ opacity: focused ? 1 : 0.8, color: COLORS.WHITE }}
-            >
-              {t('Competitions')}
-            </OLText>
-          ),
+          tabBarLabel: t('Competitions'),
+          tabBarIcon: tabIcon('list.bullet', 'list-outline', 'list'),
         }}
       />
       <Tabs.Screen
         name="Profile"
         component={OLProfile}
         options={{
-          tabBarIcon: ({ focused }) => (
-            <OLIcon
-              name={focused ? 'person' : 'person-outline'}
-              size={20}
-              color={COLORS.WHITE}
-              style={{ opacity: focused ? 1 : 0.8 }}
-            />
-          ),
-          tabBarLabel: ({ focused }) => (
-            <OLText
-              size={11}
-              style={{ opacity: focused ? 1 : 0.8, color: COLORS.WHITE }}
-            >
-              {t('Me')}
-            </OLText>
-          ),
+          tabBarLabel: t('Me'),
+          tabBarIcon: tabIcon('person.fill', 'person-outline', 'person'),
         }}
       />
     </Tabs.Navigator>
