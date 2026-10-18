@@ -35,9 +35,18 @@ platform :ios do
     # We don't *have* to do this every time..?
     # clear_derived_data
 
+    # Sign with the API key instead of the Xcode account, which isn't
+    # signed in on fresh worktrees. The key needs the Admin role
+    signing_xcargs = [
+      "-allowProvisioningUpdates",
+      "-authenticationKeyPath #{Dir.pwd}/../../#{ENV["IOS_KEY_FILENAME"]}",
+      "-authenticationKeyID #{ENV["IOS_KEY_ID"]}",
+      "-authenticationKeyIssuerID #{ENV["IOS_ISSUER_ID"]}",
+    ].join(" ")
+
     build_app(
       workspace: "LiveOL.xcworkspace",
-      xcargs: "-allowProvisioningUpdates",
+      xcargs: signing_xcargs, # gym reuses these for the export step
       scheme: scheme
     )
 
