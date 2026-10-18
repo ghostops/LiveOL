@@ -12,7 +12,12 @@ import { EventorUrls } from 'lib/eventor/scrapers/urls';
 import { URL } from 'url';
 import createHttpError from 'http-errors';
 import { fromZonedTime, toZonedTime } from 'date-fns-tz';
-import { endOfDay, nextMonday, startOfDay } from 'date-fns';
+import {
+  differenceInMinutes,
+  endOfDay,
+  nextMonday,
+  startOfDay,
+} from 'date-fns';
 import { preferredLiveCompetitionJoin } from 'lib/helpers/live-competition';
 
 const api = apiSingletons.createApiSingletons();
@@ -39,9 +44,14 @@ export const competitionSchema = z.object({
   countryCode: z.string().nullish(),
   hasLiveData: z.boolean(),
   hasEventorData: z.boolean(),
+  // A result came in within LIVE_THRESHOLD_MINUTES
+  isLive: z.boolean(),
 });
 
 export type Competition = z.infer<typeof competitionSchema>;
+
+export const LIVE_THRESHOLD_MINUTES = 60;
+
 const marshalCompetition = (competition: {
   id: string;
   live: typeof LiveCompetitionsTable.$inferSelect | null;
@@ -89,6 +99,10 @@ const marshalCompetition = (competition: {
     countryCode: e?.countryCode ?? null,
     hasLiveData: !!l,
     hasEventorData: !!e,
+    isLive:
+      !!l?.lastResultAt &&
+      differenceInMinutes(new Date(), new Date(l.lastResultAt)) <
+        LIVE_THRESHOLD_MINUTES,
   };
 };
 
