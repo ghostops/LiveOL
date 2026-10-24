@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { AppState, Linking } from 'react-native';
+import { AppState, Linking, Platform } from 'react-native';
 import {
   getInitialNotification,
   onMessage,
@@ -106,17 +106,45 @@ export const PushRegistration = () => {
       }
     };
 
+    // A tap can arrive both as an event and through getInitialNotification
+    const openedMessageIds = new Set<string>();
     const openMessage = (
       message: {
+        messageId?: string;
         data?: Record<string, unknown>;
         notification?: { title?: string };
       } | null,
-    ) =>
-      message &&
+    ) => {
+      if (!message) {
+        return;
+      }
+      if (message.messageId) {
+        if (openedMessageIds.has(message.messageId)) {
+          return;
+        }
+        openedMessageIds.add(message.messageId);
+      }
       openResults(toPushData(message.data), message.notification?.title);
+    };
 
     getInitialNotification(messaging).then(openMessage);
     const unsubscribeOpened = onNotificationOpenedApp(messaging, openMessage);
+
+    // On iOS the opened event can get lost since the UIScene switch (#106).
+    // RNFB keeps every tapped notification for getInitialNotification, so
+    // read it again whenever the app comes back. The tap can be delivered just
+    // after the app turns active, so check once more shortly after.
+    const checkTapped = () =>
+      getInitialNotification(messaging).then(openMessage);
+    const appState =
+      Platform.OS === 'ios'
+        ? AppState.addEventListener('change', state => {
+            if (state === 'active') {
+              checkTapped();
+              setTimeout(checkTapped, 1000);
+            }
+          })
+        : undefined;
 
     // Taps on Android foreground notifications (see lib/push/foreground.ts)
     Linking.getInitialURL().then(url => openResults(parsePushLink(url)));
@@ -141,6 +169,7 @@ export const PushRegistration = () => {
     return () => {
       unsubscribeOpened();
       unsubscribeMessage();
+      appState?.remove();
       linkSubscription.remove();
     };
   }, []);
