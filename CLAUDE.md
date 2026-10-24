@@ -229,10 +229,18 @@ cd app
 MAIN="$(git worktree list --porcelain | head -1 | cut -d' ' -f2)/app"   # main checkout
 cp $MAIN/.env.local $MAIN/LiveOL.jks $MAIN/google-key.json .   # Android
 cp $MAIN/AuthKey_*.p8 .                                         # iOS
+cp $MAIN/android/app/google-services.json android/app/          # Firebase, push is silently disabled without these
+cp $MAIN/ios/LiveOL/GoogleService-Info.plist ios/LiveOL/
 ln -s $MAIN/vendor vendor                                       # fastlane gems (BUNDLE_PATH: vendor/bundle)
 npm ci --ignore-scripts && npx patch-package                    # skip `npm run schema`, it needs the local server
+(cd ios && bundle exec pod install)
 ```
 - Release from a branch based on the latest `master`, or the version code bump collides with one already on Play
+- **Before every build, in any checkout**, confirm the Firebase config is present. Without it the build succeeds but ships with push disabled (no token sync, notification taps do nothing):
+  ```bash
+  ls android/app/google-services.json ios/LiveOL/GoogleService-Info.plist
+  ```
+- `pod install` rewrites `ios/Podfile.lock` checksums. Leave it changed until the iOS build finishes (reverting it fails the build with "sandbox is not in sync"), then `git checkout ios/Podfile.lock` before committing the version bump
 
 ## Testing
 
